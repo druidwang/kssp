@@ -1,0 +1,159 @@
+﻿@model IEnumerable<com.Sconit.Entity.INP.InspectResult>
+<script language="javascript" type="text/javascript">
+    function onDataBinding(e) {
+        e.data = {
+            InspectNo: $('#InspectNo').val(),
+            Item: $('#Item').val()
+        };
+    }
+
+    function onDataBound(e) {
+        $("tr.t-no-data td").html("@Resources.GridLocalization.NoRecords");
+    }
+
+    function onRowDataBound(e) {
+   //debugger
+        var row = $(e.row.childNodes);
+        if (e.dataItem.FailCode == "1") {
+            $(e.row).find("td")[12].onclick = function (e) {
+                e.stopPropagation();
+            };
+            $(e.row).find("td")[13].onclick = function (e) {
+                e.stopPropagation();
+            };
+            $(e.row).find("td")[14].onclick = function (e) {
+                e.stopPropagation();
+            };
+        }
+    }
+
+    function onSearchInspectResult() {
+        var data = {
+            InspectNo: $('#InspectNo').val(),
+            Item: $('#Item').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/InspectionOrder/InspectionResult/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent).html(data);
+            }
+        });
+    }
+
+    function onSaveInspectResult(e) {
+        var grid = $("#InspectResultGrid").data("tGrid");
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+        var inspectResults = grid.changeLog.serialize(inserted, updated, deleted);
+        grid._convert(inspectResults);
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/InspectionOrder/SaveInspectResult/",
+            data: inspectResults,
+            success: function (data) {
+                $message.success("保存成功");
+                onSearchInspectResult();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="InspectMaster_InspectNo">
+                    @Resources.INP.InspectResult.InspectResult_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = ViewBag.Item
+            });
+                }
+            </div>
+        </div>
+        <div class="search-footer">
+            <button type="button" id="btnSearch" onclick="onSearchInspectResult();">
+                @Resources.SYS.Global.Button_Search</button>
+            @*<button type="button" id="btnonSave" onclick="onSaveInspectResult();">
+                @Resources.SYS.Global.Button_Save</button>*@
+            @{
+                @Html.Button(Resources.SYS.Global.Button_Save, "Url_InspectionOrder_SaveInspectResult", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnonSave"},
+        {"needconfirm","true"},
+        {"onclick","onSaveInspectResult()"}
+	})
+            }
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/InspectionOrder/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    }
+</fieldset>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("InspectResultGrid").DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden().ReadOnly();
+            columns.Bound(o => o.InspectDetailSequence).ReadOnly();
+            columns.Bound(o => o.InspectNo).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.ItemFullDescription).ReadOnly();
+            //columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom).ReadOnly();
+            //columns.Bound(o => o.UnitCount).Format("{0:0.########}");
+            columns.Bound(o => o.HuId).ReadOnly();
+            columns.Bound(o => o.LotNo).Title(Resources.INV.Hu.Hu_manufacture_date).ReadOnly();
+            columns.Bound(o => o.SupplierLotNo).ReadOnly();
+            columns.Bound(o => o.ExpireDate).ReadOnly().Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.CurrentLocation).ReadOnly();
+            columns.Bound(o => o.JudgeQty).Format("{0:0.###}").ReadOnly();
+            //columns.Bound(o => o.JudgeResultDescription);
+            columns.Bound(o => o.CreateUserName).ReadOnly();
+            columns.Bound(o => o.CreateDate).ReadOnly();
+            columns.Bound(o => o.LastModifyDate).ReadOnly();
+            columns.Bound(o => o.LastModifyUserName).ReadOnly().Title(@Resources.ACC.User.User_User);
+            columns.Bound(o => o.RejectHandleResultDescription).ReadOnly();//17
+            columns.Bound(o => o.CurrentFailCode).EditorTemplateName("FailCodeGridComboBox").Width(90);//18
+            columns.Bound(o => o.Note);//19
+            columns.Bound(o => o.CurrentIsHandle)//20
+                .ClientTemplate("<input type='checkbox'  disabled='disabled' id='CurrentHandleQty' name='CurrentHandleQty' <#= CurrentIsHandle ? checked='checked' : '' #> />");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxInspectionResultList", "InspectionOrder"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .NoRecordsTemplate("Loading...")
+        .ClientEvents(e => e.OnDataBinding("onDataBinding").OnDataBound("onDataBound").OnRowDataBound("onRowDataBound"))
+        .Resizable(resizing => resizing.Columns(true))
+      )
+</fieldset>

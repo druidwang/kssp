@@ -1,0 +1,39 @@
+﻿@model IEnumerable<com.Sconit.Entity.ACC.Role>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("RoleGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#=Code#>", "Edit", "Role", new { ID = "<#=Id #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Role"))
+        .ClientEvents(events => events.OnDataBinding("RoleGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function RoleGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,29 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SCM
+@model IEnumerable<com.Sconit.Entity.SCM.FlowBinding>
+
+<fieldset>
+<legend>@Resources.SCM.FlowBinding.FlowBinding_BindedFlow</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("FlowBinded")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.MasterFlow.Code);
+            columns.Bound(o => o.MasterFlow.Description);
+            //columns.Bound(o => o.MasterFlowType);
+            columns.Bound(o => o.BindTypeDescription);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxBinded", "SubconctractingFlow"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

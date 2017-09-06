@@ -1,0 +1,23 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    AutoCompleteFilterMode unitCountFilterMode = Enum.Parse(typeof(AutoCompleteFilterMode), ViewBag.UnitCountFilterMode, true);
+    int unitCountFilterMinimumChars = ViewBag.UnitCountFilterMinimumChars;
+}
+
+ @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax().Select("_ItemPackageAjaxLoading", "Common").Cache(true))
+                .ClientEvents(events => events.OnChange("UnitCount_Change").OnDataBinding("UnitCount_DataBinding"))
+                .Filterable(filtering =>
+                {
+                    filtering.FilterMode(unitCountFilterMode);
+                    filtering.MinimumChars(unitCountFilterMinimumChars);
+                })
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+)
+
+
+    

@@ -1,0 +1,60 @@
+﻿@{
+    try
+    {
+    @(Html.Telerik().ScriptRegistrar().Globalization(true)
+      .DefaultGroup(group => group.Add("~/Scripts/Sconit.Message.js").Combined(true).Compress(true)))
+    }
+    catch (Exception)
+    {
+
+    }
+}
+<style type="text/css">
+        .header
+        {
+            padding: 2px;
+            position: fixed;
+            width: 50px;
+        }
+        #divMessage li.error
+        {
+            @*list-style-image: url('/Content/Images/Message/Error.gif');*@
+            list-style-type: circle;
+            color: Red;
+        }
+        #divMessage li.warning
+        {
+            @*list-style-image: url('/Content/Images/Message/Warning.gif');*@
+            color: Orange;
+        }
+        #divMessage li.success
+        {
+            @*list-style-image: url('/Content/Images/Message/Success.gif');*@
+            color: Green;
+        }
+        #divMessage li
+        {
+            padding-left: 15px;
+            height: 18px;
+            margin-bottom: 1px;
+            margin-right: 0px;
+            list-style-type: circle;
+        }
+        #divMessage
+        {
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height:58px;
+            border:1px dashed #CDCDCD;
+            display: none;
+        }
+    </style>
+<div style="position: absolute; right: 70px; top: 0px; display: none;" id="messagebtn">
+    <div class="header">
+        <input name="Normal" title="窗口缩放" type="button" onclick="Resize()" id="Normal" style="width: 20px; height: 20px; background: url('/Content/Images/Message/ico_resize.gif') no-repeat; border: none;" />
+        <input name="Clear" title="清除日志" type="button" onclick="ClearMessage()" id="Clear"
+            style="width: 20px; height: 20px; background: url('/Content/Images/Message/ico_clear.gif') no-repeat; border: none;" />
+    </div>
+</div>
+<div id="divMessage">
+</div>

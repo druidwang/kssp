@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.ISS.IssueDetail, com.Sconit.Entity" table="ISS_IssueDet" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="IssueCode" column="IssueCode" type="String" length="50"/>	
+		<property name="Sequence" column="Seq" type="Int32"/>	
+		<property name="IssueLevel" column="IssueLevel" type="String" length="50"/>
+        <property name="IssueTypeToUserDetailId" column="IssueTypeToUserDetId" type="Int32"/>
+        <property name="IssueTypeToRoleDetailId" column="IssueTypeToRoleDetId" type="Int32"/>
+        <property name="IsEmail" column="IsEmail" type="Boolean"/>
+        <property name="IsSMS" column="IsSMS" type="Boolean"/>
+        <property name="IsSubmit" column="IsSubmit" type="Boolean"/>	
+		<property name="IsInProcess" column="IsInProcess" type="Boolean"/>	
+		<property name="IsDefault" column="IsDefault" type="Boolean"/>	
+		<property name="Priority" column="Priority"/>	
+        <many-to-one name="User" column="UserId" class="com.Sconit.Entity.ACC.User, com.Sconit.Entity" cascade="none" />
+		<property name="Email" column="Email" type="String" length="50"/>	
+		<property name="EmailStatus" column="EmailStatus"/>	
+		<property name="EmailCount" column="EmailCount" type="Int32"/>	
+		<property name="MobilePhone" column="MobilePhone" type="String" length="50"/>	
+		<property name="SMSStatus" column="SMSStatus"/>	
+		<property name="SMSCount" column="SMSCount" type="Int32"/>	
+		<property name="IsActive" column="IsActive" type="Boolean"/>	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+  	</class>
+</hibernate-mapping>

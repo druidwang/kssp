@@ -1,0 +1,64 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.HuMemo>
+<fieldset>
+<script type="text/javascript">
+    function onEdit(e) {
+        if (e.mode == "edit") {
+            $(e.form).find("#Code").attr("disabled", true);
+        }
+    }
+</script>
+    @(Html.Telerik().Grid(Model)
+       .Name("FailCodeGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+                .ToolBar(commands =>
+                {
+
+                    commands.Insert();
+
+                })
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_AjaxList", "HuMemo")
+                .Insert("_Insert", "HuMemo", new { CodeTo = ViewBag.Code, DescriptionTo = ViewBag.Description, ResourceGroupTo = ViewBag.ResourceGroup })
+                .Update("_Update", "HuMemo", new { CodeTo = ViewBag.Code, DescriptionTo = ViewBag.Description, ResourceGroupTo = ViewBag.ResourceGroup })
+                .Delete("_Delete", "HuMemo", new { CodeTo = ViewBag.Code, DescriptionTo = ViewBag.Description }))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code);
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.ResourceGroupDescription).EditorTemplateName("ResourceGroupGridForeignKey").Width(120);
+            columns.Command(commands =>
+            {
+
+                commands.Edit();
+                commands.Delete();
+
+            });
+            
+
+        }).ClientEvents(events =>{ events
+                             .OnEdit("onEdit")
+                                    //.OnRowDataBound("ProductLineFacilityGrid_OnRowDataBound");
+        .OnDataBinding("HuMemo_OnDataBinding");
+        })
+        .EnableCustomBinding(true)
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable()
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function HuMemo_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val()
+            };
+        } 
+    </script>
+</fieldset>

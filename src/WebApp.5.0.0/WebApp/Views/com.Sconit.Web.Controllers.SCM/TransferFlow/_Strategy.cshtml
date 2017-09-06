@@ -1,0 +1,362 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.SCM.FlowStrategy
+@Html.Partial("_AjaxMessage")
+@{
+    Layout = null;
+}
+<script type="text/javascript">
+
+    $(function () {
+        $("input[name=WindowTimeType]").change(function () {
+            if ($(this).val() == '@((int)com.Sconit.CodeMaster.WindowTimeType.FixedWindowTime)') {
+                $('#label-WeekInterval,#field-WeekInterval').hide();
+                $('#label-Empty,#field-Empty').show();
+                //                $('#divFixedWindowTime').show();
+            } else {
+                $('#label-WeekInterval,#field-WeekInterval').show();
+                $('#label-Empty,#field-Empty').hide();
+                //                $('#divFixedWindowTime').hide();
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        if ($('#Strategy').val() != '@((int)com.Sconit.CodeMaster.FlowStrategy.KB)' && $('#Strategy').val() != '@((int)com.Sconit.CodeMaster.FlowStrategy.JIT)') {
+            $('#divWindowTimeType').hide();
+        }
+        $("input[name=WindowTimeType]").eq('@((int)Model.WindowTimeType)').change();
+    });
+
+    function FlowStrategy_Change(e) {
+        // 紧急发单提前期
+        if (e.value == '@((int)com.Sconit.CodeMaster.FlowStrategy.KB)' || e.value == '@((int)com.Sconit.CodeMaster.FlowStrategy.JIT)' || e.value == '@((int)com.Sconit.CodeMaster.FlowStrategy.SEQ)') {
+            $('#label-EmergencyLeadTime,#field-EmergencyLeadTime').show();
+        }
+        else {
+            $('#label-EmergencyLeadTime,#field-EmergencyLeadTime').hide();
+        }
+
+        // 间隔周期,上次窗口时间
+        if (e.value == '@((int)com.Sconit.CodeMaster.FlowStrategy.KB)' || e.value == '@((int)com.Sconit.CodeMaster.FlowStrategy.JIT)') {
+            $('#label-NextWindowTime,#field-NextWindowTime').show();
+            $('#divWindowTimeType').show();
+            $("input[name=WindowTimeType]:eq(0)").attr("checked", 'checked').change();
+        }
+        else {
+            $('#label-NextWindowTime,#field-NextWindowTime').hide();
+            $('#divWindowTimeType').hide();
+        }
+
+        // 进料提前期WinTimeDiff
+        if (e.value == '@((int)com.Sconit.CodeMaster.FlowStrategy.JIT)' || e.value == '@((int)com.Sconit.CodeMaster.FlowStrategy.SEQ)') {
+            $('#label-WinTimeDiff,#field-WinTimeDiff').show();
+        }
+        else {
+            $('#label-WinTimeDiff,#field-WinTimeDiff').hide();
+        }
+
+        if (e.value == '@((int)com.Sconit.CodeMaster.FlowStrategy.JIT)') {
+            $('#label-jitempty,#field-jitempty').show();
+        }
+        else {
+            $('#label-jitempty,#field-jitempty').hide();
+        }
+
+//        // 序列组
+//        if (e.value == '@((int)com.Sconit.CodeMaster.FlowStrategy.SEQ)') {
+//            $('#label-SeqGroup,#field-SeqGroup').show();
+//        }
+//        else {
+//            $('#label-SeqGroup,#field-SeqGroup').hide();
+//        }
+        $("#BatchNo").text("");
+    }
+
+    function SeqGroup_Change(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+                $("#BatchNo").text("");
+            } else {
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "@Url.Content("~/ProcurementFlow/_GetSeqGroup/")",
+                    data: { "seqGroup": e.value },
+                    success: function (data, textStatus) {
+                        $("#BatchNo").text(data.SequenceBatch);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+</script>
+<form action="@Url.Content("~/TransferFlow/_Strategy")" method="post">
+<fieldset>
+    <legend>@Resources.SCM.FlowStrategy.FlowStrategy_Strategy</legend>
+    <div class="editor">
+        <div class="editor-label-2">
+            <label>@Resources.SCM.FlowStrategy.FlowStrategy_Strategy</label>
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_FlowStrategyDropDownList", "Common", new
+                {
+                    isChange = true,
+                    controlName = "Strategy",
+                    selectedValue = (Int16)Model.Strategy,
+                });
+            }
+            @Html.HiddenFor(model => model.Flow)
+        </div>
+        <div class="editor-label-2">
+            <label>@Resources.SCM.FlowStrategy.FlowStrategy_LeadTimeOption</label>
+        </div>
+        <div class="editor-field-2">
+            @{
+                bool leadTimeOptStrategyChecked = ViewBag.LeadTimeOption == com.Sconit.CodeMaster.LeadTimeOption.Strategy;
+                @Html.RadioButton("LeadTimeOption", (int)com.Sconit.CodeMaster.LeadTimeOption.Strategy, leadTimeOptStrategyChecked)@Resources.CodeDetail.CodeDetail_LeadTimeOption_Strategy<span
+                    style="margin: 4px"></span>
+                @Html.RadioButton("LeadTimeOption", (int)com.Sconit.CodeMaster.LeadTimeOption.ShiftDetail, !leadTimeOptStrategyChecked)@Resources.CodeDetail.CodeDetail_LeadTimeOption_ShiftDetail
+            }
+        </div>
+        <div class="editor-label-2">
+            <label>@Resources.SCM.FlowStrategy.FlowStrategy_LeadTime</label>
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.LeadTime).MinValue(0).DecimalDigits(2)
+            <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+            @Html.ValidationMessageFor(model => model.LeadTime)
+        </div>
+        @{
+            if (Model.Strategy == com.Sconit.CodeMaster.FlowStrategy.KB || Model.Strategy == com.Sconit.CodeMaster.FlowStrategy.JIT || Model.Strategy == com.Sconit.CodeMaster.FlowStrategy.SEQ)
+            {
+            <div class="editor-label-2" id="label-EmergencyLeadTime">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_EmLeadTime</label>
+            </div>
+            <div class="editor-field-2" id="field-EmergencyLeadTime">
+                @Html.Telerik().NumericTextBoxFor(model => model.EmergencyLeadTime).MinValue(0).DecimalDigits(2)
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+                @Html.ValidationMessageFor(model => model.EmergencyLeadTime)
+            </div>
+            }
+            else
+            {
+            <div class="editor-label-2" id="label-EmergencyLeadTime" style="display: none;">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_EmLeadTime</label>
+            </div>
+            <div class="editor-field-2" id="field-EmergencyLeadTime" style="display: none;">
+                @Html.Telerik().NumericTextBoxFor(model => model.EmergencyLeadTime).MinValue(0).DecimalDigits(2)
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+                @Html.ValidationMessageFor(model => model.EmergencyLeadTime)
+            </div>
+            }
+        }
+        @{
+            if (Model.Strategy == com.Sconit.CodeMaster.FlowStrategy.KB || Model.Strategy == com.Sconit.CodeMaster.FlowStrategy.JIT)
+            {
+            <div class="editor-label-2" id="label-NextWindowTime">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_NextWindowTime</label>
+            </div>
+            <div class="editor-field-2" id="field-NextWindowTime">
+                @(Html.Telerik().DateTimePicker().Enable(false).Format("yyyy-MM-dd HH:mm:ss").Name("NextWindowTime").Value(Model.NextWindowTime)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px;disabled:disabled;" }))
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+            </div>
+            }
+            else
+            {
+           
+            <div class="editor-label-2" id="label-NextWindowTime" style="display: none;">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_NextWindowTime</label>
+            </div>
+            <div class="editor-field-2" id="field-NextWindowTime" style="display: none;">
+                @(Html.Telerik().DatePicker().Enable(false).Format("yyyy-MM-dd HH:mm:ss").Name("NextWindowTime").Value(Model.NextWindowTime)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px;disabled:disabled;" }))
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+            </div>
+            }
+        }
+        @{
+            if (Model.Strategy == com.Sconit.CodeMaster.FlowStrategy.JIT || Model.Strategy == com.Sconit.CodeMaster.FlowStrategy.SEQ)
+            {
+            <div class="editor-label-2" id="label-WinTimeDiff">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTimeDiff</label>
+            </div>
+            <div class="editor-field-2" id="field-WinTimeDiff">
+                @Html.Telerik().NumericTextBoxFor(model => model.WinTimeDiff).MinValue(0).DecimalDigits(2)
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+                @Html.ValidationMessageFor(model => model.WinTimeDiff)
+            </div>
+                if (Model.Strategy == com.Sconit.CodeMaster.FlowStrategy.JIT)
+                {
+            <div class="editor-label-2" id="label-jitempty">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_SafeTime</label>
+            </div>
+            <div class="editor-field-2" id="field-jitempty">
+                @Html.Telerik().NumericTextBoxFor(model => model.SafeTime).MinValue(0).DecimalDigits(2)
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+                @Html.ValidationMessageFor(model => model.SafeTime)
+            </div>
+                }
+            }
+            else
+            {
+            <div class="editor-label-2" id="label-WinTimeDiff" style="display: none;">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTimeDiff</label>
+            </div>
+            <div class="editor-field-2" id="field-WinTimeDiff" style="display: none;">
+                @Html.Telerik().NumericTextBoxFor(model => model.WinTimeDiff).MinValue(0).DecimalDigits(2)
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+                @Html.ValidationMessageFor(model => model.WinTimeDiff)
+            </div>
+            <div class="editor-label-2" id="label-jitempty" style="display: none;">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_SafeTime</label>
+            </div>
+            <div class="editor-field-2" id="field-jitempty" style="display: none;">
+                @Html.Telerik().NumericTextBoxFor(model => model.SafeTime).MinValue(0).DecimalDigits(2)
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+                @Html.ValidationMessageFor(model => model.SafeTime)
+            </div>
+            }
+        }
+        @{
+            if (Model.Strategy == com.Sconit.CodeMaster.FlowStrategy.SEQ)
+            {
+            <div id="label-SeqGroup">
+                <div class="editor-label-2">
+                    <label>@Resources.SCM.FlowStrategy.FlowStrategy_SeqGroup</label>
+                </div>
+                <div class="editor-field-2">
+                    @{
+                Html.RenderAction("_SeqGroupComboBox", "Common", new
+                {
+                    controlName = "SeqGroup",
+                    includeBlankOption = true,
+                    isChange = true,
+                    selectedValue = Model.SeqGroup ?? string.Empty,
+                });
+                    }
+                    <span id="BatchNo"></span>
+                </div>
+            @*    <div class="editor-label-2">
+                    <label>
+                        是否建议供应商</label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.IsCreatePickList)
+                </div>*@
+            </div>
+            }
+            else
+            {
+            <div id="label-SeqGroup" style="display: none;">
+                <div class="editor-label-2">
+                    <label>@Resources.SCM.FlowStrategy.FlowStrategy_SeqGroup</label>
+                </div>
+                <div class="editor-field-2">
+                    @{
+                Html.RenderAction("_SeqGroupComboBox", "Common", new
+                {
+                    controlName = "SeqGroup",
+                    isChange = true,
+                    includeBlankOption = true,
+                    selectedValue = Model.SeqGroup ?? string.Empty,
+                });
+                    }
+                    <span id="BatchNo"></span>
+                </div>
+             @*   <div class="editor-label-2">
+                    <label>
+                        是否建议供应商</label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.IsCreatePickList)
+                </div>*@
+            </div>
+            }
+        }
+        <div class="editor" id="divWindowTimeType">
+            @{ 
+                var aa = ViewBag.WindowTimeType != null ? (ViewBag.WindowTimeType == (int)com.Sconit.CodeMaster.WindowTimeType.FixedWindowTime ? true : false) : true;
+                <div class="editor-label-2">
+                    <label>@Resources.SCM.FlowStrategy.FlowStrategy_WindowTimeType</label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.RadioButton("WindowTimeType", (int)com.Sconit.CodeMaster.WindowTimeType.FixedWindowTime, aa)@Resources.CodeDetail.CodeDetail_WindowTimeType_Fixed<span
+                        style="margin: 4px"></span>
+                    @Html.RadioButton("WindowTimeType", (int)com.Sconit.CodeMaster.WindowTimeType.CycledWindowTime, !aa)@Resources.CodeDetail.CodeDetail_WindowTimeType_Cycled
+                </div>
+                if (aa)
+                {
+                <div class="editor-label-2" id="label-WeekInterval" style="display: none;">
+                    <label>@Resources.SCM.FlowStrategy.FlowStrategy_WeekInterval</label>
+                </div>
+                <div class="editor-field-2" id="field-WeekInterval" style="display: none;">
+                    @Html.Telerik().NumericTextBoxFor(model => model.WeekInterval).MinValue(0).DecimalDigits(0)
+                    @Html.ValidationMessageFor(model => model.WeekInterval)
+                </div>
+                
+                <div class="editor-label-2" id="label-Empty">
+                </div>
+                <div class="editor-field-2" id="field-Empty">
+                </div>
+                }
+                else
+                {
+                <div class="editor-label-2" id="label-WeekInterval">
+                    <label>@Resources.SCM.FlowStrategy.FlowStrategy_WeekInterval</label>
+                </div>
+                <div class="editor-field-2" id="field-WeekInterval">
+                    @Html.Telerik().NumericTextBoxFor(model => model.WeekInterval).MinValue(0).DecimalDigits(0)
+                    @Html.ValidationMessageFor(model => model.WeekInterval)
+                </div>
+                    
+                <div class="editor-label-2" id="label-Empty" style="display: none;">
+                </div>
+                <div class="editor-field-2" id="field-Empty" style="display: none;">
+                </div>
+                }
+            }
+        </div>
+    </div>
+</fieldset>
+<div class="editor-footer">
+    @Html.Button(Resources.Global.Button_Save, "Url_TransferFlow_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnEdit"},
+        {"needconfirm","true"}
+	})
+    <button type="button" id="btnBackStrategy" onclick="location.href='@Url.Content("~/TransferFlow/List")'">
+        @Resources.Global.Button_Back</button>
+</div>
+</form>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("form[action$='_Strategy']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(response);
+            });
+            return false;
+        });
+    });
+
+//    $(function () {
+//        if ($("#IsReturn").val() == "False") {
+//            $("#btnBackStrategy").show();
+//            $("#btnIsReturn").hide();
+//        }
+//        else {
+//            $("#btnBackStrategy").hide();
+//            $("#btnIsReturn").show();
+//        }
+//    });
+</script>

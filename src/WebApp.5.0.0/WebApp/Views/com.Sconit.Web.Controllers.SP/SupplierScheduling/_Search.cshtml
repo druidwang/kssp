@@ -1,0 +1,201 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.ORD
+ <script type="text/javascript">
+     function Flow_Change(e) {
+         if (e.value != "") {
+             var combobox = $(this).data("tComboBox");
+             if (combobox == undefined) {
+                 return;
+             }
+             if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                 combobox.value("");
+                 combobox.reload();
+             }
+         }
+     }
+
+     function onScheduleRefresh(e) {
+         var data = {
+             "flow": $("#Flow").val()
+         };
+         $.ajax({
+             type: "post",
+             dataType: "html",
+             url: "/SupplierScheduling/Refresh/",
+             data: data,
+             cache: false,
+             success: function (data, textStatus) {
+                 var $tGrid = $("#content");
+                 $($tGrid).html(data);
+             }
+         });
+     }
+
+
+     function onBtnShipByQty() {
+         
+        
+         var dateStr = "";
+         var errorStr = "";
+         var bb = false;
+         var OrderNoStr = "";
+         var SequenceStr = "";
+         var CurrentShipQtyStr = "";
+         var rows = $("tbody").children("tr:not(.t-no-data)");
+         for (var i = 0; i < rows.length; i++) {
+             var cells = $(rows[i]).children();
+             var CurrentShipQty = cells.find("#CurrentShipQty").val();
+             if (CurrentShipQty != "" && CurrentShipQty != undefined) {
+                 if (isNaN(CurrentShipQty) || !(parseFloat(CurrentShipQty) > 0)) {
+                     $message.error("第" + (i + 1) + "行发货数填写不正确。");
+                     bb = true;
+                 }
+                 else {
+                     if (OrderNoStr == "") {
+                         OrderNoStr = cells.eq(0).text();
+                         SequenceStr = cells.eq(1).text();
+                         CurrentShipQtyStr = CurrentShipQty;
+                     } else {
+                         OrderNoStr += "," + cells.eq(0).text();
+                         SequenceStr += "," + cells.eq(1).text();
+                         CurrentShipQtyStr += "," + CurrentShipQty;
+                     }
+                 }
+             }
+         }
+         if (bb) {
+            
+             return;
+         }
+         if (OrderNoStr == "") {
+             $message.error('发货明细不能为空，请填写发货数量。');
+             return;
+         }
+
+         var data = {
+             "OrderNoStr": OrderNoStr,
+             "SequenceStr": SequenceStr,
+             "CurrentShipQtyStr": CurrentShipQtyStr
+         }
+         $.ajax({
+             type: "post",
+             // dataType: "html",
+             url: "/SupplierScheduling/ShipOrderByQty/",
+             data: data,
+             cache: false,
+             success: function (data, textStatus) {
+                 var successesul = data.SuccessMessage;
+                 $.ajax({
+                     type: "post",
+                     dataType: "html",
+                     data: { IpNo: data.IpNo },
+                     url: "/SupplierIpMaster/_Edit/",
+                     cache: false,
+                     success: function (data, textStatus) {
+                         var $tGrid = $("#content");
+                         $($tGrid).html(data);
+                         $message.success(successesul);
+                        
+                     }
+                 });
+
+             },
+             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                 var errorMessages = XMLHttpRequest.responseText;
+                 
+                 $message.error(errorMessages);
+             }
+         });
+     }
+        
+    </script>
+<fieldset>
+    @using (Html.BeginForm("List", "SupplierScheduling"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                isChange=true,
+                isSupplier = true,
+                type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderDetail.OrderDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Item : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+        .Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateFrom : null)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+.Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateTo : null)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderDetail.OrderDetail_ScheduleType
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.RadioButton("ScheduleType", com.Sconit.CodeMaster.ScheduleType.Firm)
+                @Resources.SYS.CodeDetail.CodeDetail_ScheduleType_Firm
+                @Html.RadioButton("ScheduleType", com.Sconit.CodeMaster.ScheduleType.Forecast)
+                @Resources.SYS.CodeDetail.CodeDetail_ScheduleType_Forecast
+                @Html.RadioButton("ScheduleType", "")
+                @Resources.ORD.OrderDetail.OrderDetail_ScheduleType_All
+            </div>
+        </div>
+        <div class="search-footer">
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnShip" onclick="onScheduleShip()" style="display: none">
+                @Resources.SYS.Global.Button_Ship</button>
+            @*<button type="button" id="btnShipByQty" onclick="onBtnShipByQty()" >
+                @Resources.SYS.Global.Button_Ship</button>*@
+             @Html.Button(Resources.SYS.Global.Button_Ship, "Url_OrderMstr_ScheduleLine_Ship", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnShipByQty"},
+                {"needconfirm","true"},
+                {"onclick","onBtnShipByQty()"}
+	        })
+            <button type="button" id="btnRefresh" onclick="onScheduleRefresh()" >
+                @Resources.SYS.Global.Button_Refresh</button>
+        </div>
+    }
+   
+</fieldset>

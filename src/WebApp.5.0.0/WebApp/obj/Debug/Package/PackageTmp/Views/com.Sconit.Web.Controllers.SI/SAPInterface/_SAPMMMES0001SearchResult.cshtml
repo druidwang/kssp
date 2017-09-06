@@ -1,0 +1,78 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPMMMES0001>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("SAPMMMES001Grid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ZMESPO).Width(110);
+            columns.Bound(o => o.LIFNR);
+            //columns.Bound(o => o.BSART);
+            //columns.Bound(o => o.EKORG);
+            //columns.Bound(o => o.EKGRP);
+            //columns.Bound(o => o.BUKRS);
+            columns.Bound(o => o.BWART_H);
+            columns.Bound(o => o.BUDAT);
+            //columns.Bound(o => o.BLDAT);
+            columns.Bound(o => o.EBELP_I);
+            columns.Bound(o => o.EPSTP);
+            columns.Bound(o => o.MATNR);
+            columns.Bound(o => o.LFSNR);
+            columns.Bound(o => o.TARGET_QTY_I);
+            columns.Bound(o => o.NETPR);
+            columns.Bound(o => o.PEINH);
+            columns.Bound(o => o.WAERS);
+            columns.Bound(o => o.BPRME_I);
+            columns.Bound(o => o.EINDT);
+            //columns.Bound(o => o.WERKS);
+            columns.Bound(o => o.LGORT);
+            columns.Bound(o => o.RETPO);
+            columns.Bound(o => o.BWART_C);
+            columns.Bound(o => o.MATNR_C);
+            columns.Bound(o => o.TARGET_QTY_C);
+            columns.Bound(o => o.BPRME_C);
+            columns.Bound(o => o.ZMESGUID);
+            //columns.Bound(o => o.ZCSRQSJ);
+            columns.Bound(o => o.Status);
+            //columns.Bound(o => o.BatchNo);
+            //columns.Bound(o => o.UniqueCode);
+        })
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSAPMMMES0001List", "SAPInterface"))
+        .ClientEvents(events => events.OnDataBinding("SAPMMMES0001_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAPMMMES0001_OnDataBinding(e) {
+            e.data = {
+                BatchNo: $('#BatchNo').val(),
+                ZMESPO: $('#ZMESPO').val(),
+                LFSNR: $('#LFSNR').val(),
+                LIFNR: $('#LIFNR').val(),
+                LGORT: $('#LGORT').val(),
+                MATNR: $('#MATNR').val(),
+                MATNR_C: $('#MATNR_C').val(),
+                BWART_C: $('#BWART_C').val(),
+                BWART_H: $('#BWART_H').val(),
+                TransStartDate: $('#TransStartDate').val(),
+                TransEndDate: $("#TransEndDate").val(),
+                Status: $("input[name='Status']:checked").val(),
+                TimeType: $("input[name='TimeType']:checked").val()
+            }; 
+        } 
+    </script>
+</fieldset>

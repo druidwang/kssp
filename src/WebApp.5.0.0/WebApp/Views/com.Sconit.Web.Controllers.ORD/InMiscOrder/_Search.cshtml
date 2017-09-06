@@ -1,0 +1,149 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.INV
+<script type="text/javascript">
+    function PartyTo_Change(e) {
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+        }
+        $('#Location').data('tComboBox').value('');
+        $('#Location').data('tComboBox').text('');
+        $("#Location").data("tComboBox").reload();
+    }
+
+    function Location_DataBinding(e) {
+        e.data = {
+            region: $("#PartyTo").val()
+        };
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("List", "InMiscOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="MiscOrderMstr_MiscOrderNo">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_MiscOrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MiscOrderNo")
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_Status">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_Status
+                </label>
+            </div>
+            <div class="search-field">
+                 @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.MiscOrderStatus,
+            controlName = "Status",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["InMiscOrderSearchModel"] != null ? ((InMiscOrderSearchModel)TempData["InMiscOrderSearchModel"]).Status.ToString() : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_MoveType">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_MoveType
+                </label>
+            </div>
+            <div class="search-field">
+               @{
+    Html.RenderAction("_MoveTypeDropDownList", "Common", new
+        {
+            IOType = (int)com.Sconit.CodeMaster.MiscOrderType.GR,
+            controlName = "MoveType",
+            includeBlankOption = true,
+            blankOptionValue = "",
+            selectedValue = TempData["InMiscOrderSearchModel"] != null ? ((InMiscOrderSearchModel)TempData["InMiscOrderSearchModel"]).MoveType : string.Empty
+            
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_CostCenter">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_CostCenter
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("CostCenter")
+            </div>
+            <div class="editor-label-2">
+                <label for="MiscOrderMstr_Region">
+                 @Resources.ORD.MiscOrderMstr.MiscOrderMstr_Region
+                 </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_RegionComboBox", "Common", new
+        {
+            ControlId = "PartyTo",
+            controlName = "Region",
+           isChange = true,
+            selectedValue = TempData["InMiscOrderSearchModel"] != null ? ((InMiscOrderSearchModel)TempData["InMiscOrderSearchModel"]).Region : string.Empty
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="MiscOrderMstr_Location">
+                     @Resources.ORD.MiscOrderMstr.MiscOrderMstr_Location
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "Location",
+            checkRegion = true,
+            selectedValue = TempData["InMiscOrderSearchModel"] != null ? ((InMiscOrderSearchModel)TempData["InMiscOrderSearchModel"]).Location : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_StartDate">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("StartDate")
+.Value(TempData["InMiscOrderSearchModel"] != null ? ((InMiscOrderSearchModel)TempData["InMiscOrderSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_EndDate">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("EndDate")
+.Value(TempData["InMiscOrderSearchModel"] != null ? ((InMiscOrderSearchModel)TempData["InMiscOrderSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_CreateUserName">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName")
+            </div>            
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+</div>
+    }
+</fieldset>

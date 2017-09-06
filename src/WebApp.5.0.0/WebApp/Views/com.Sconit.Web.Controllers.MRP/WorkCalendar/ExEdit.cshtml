@@ -1,0 +1,258 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_WorkCalendar_ExEdit" });
+}
+<script type="text/javascript">
+    function CodeMaster_Change(e) {
+        if (e.value == 4) {
+            document.getElementById("Dateindexlabel").style.display = 'none';
+            document.getElementById("Dateindexfield").style.display = 'none';
+            document.getElementById("DateindexTolabel").style.display = 'none';
+            document.getElementById("DateindexTofield").style.display = 'none';
+            document.getElementById("DateIndexDatelabel").style.display = 'inline';
+            document.getElementById("DateIndexDatefield").style.display = 'inline';
+            document.getElementById("DateindexToDatelabel").style.display = 'inline';
+            document.getElementById("DateIndexToDatefield").style.display = 'inline';
+            document.getElementById("DateIndexDatelabel").innerHTML = "<label>起始日期</label>"
+            document.getElementById("DateindexToDatelabel").innerHTML = "<label>结束日期</label>"
+
+        }
+        else if (e.value == 5) {
+            document.getElementById("Dateindexlabel").innerHTML = "<label>开始周</label>"
+            document.getElementById("DateindexTolabel").innerHTML = "<label>结束周</label>"
+            document.getElementById("Dateindexlabel").style.display = 'inline';
+            document.getElementById("Dateindexfield").style.display = 'inline';
+            document.getElementById("DateindexTolabel").style.display = 'inline';
+            document.getElementById("DateindexTofield").style.display = 'inline';
+            document.getElementById("DateIndexDatelabel").style.display = 'none';
+            document.getElementById("DateIndexDatefield").style.display = 'none';
+            document.getElementById("DateindexToDatelabel").style.display = 'none';
+            document.getElementById("DateIndexToDatefield").style.display = 'none';
+            if ($('#DateIndex') != undefined) {
+                //$('#DateIndex').data('tComboBox').value('');
+                //$('#DateIndex').data('tComboBox').text('');
+                //$('#DateIndexTo').data('tComboBox').value('');
+                //$('#DateIndexTo').data('tComboBox').text('');
+                $.ajax({
+                    type: "get",
+                    dataType: "text",
+                    url: "/Common/DateWeek/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var strArray = data.split(',');
+                        $('#DateIndex').val(strArray[0]);
+                        $('#DateIndexTo').val(strArray[1]);
+                    }
+
+                });
+                //$("#DateIndexTo").data("tComboBox").reload();
+                //$("#DateIndex").data("tComboBox").reload();
+            }
+        }
+        else {
+            document.getElementById("Dateindexlabel").innerHTML = "<label>开始月</label>"
+            document.getElementById("DateindexTolabel").innerHTML = "<label>结束月</label>"
+            document.getElementById("Dateindexlabel").style.display = 'inline';
+            document.getElementById("Dateindexfield").style.display = 'inline';
+            document.getElementById("DateindexTolabel").style.display = 'inline';
+            document.getElementById("DateindexTofield").style.display = 'inline';
+            document.getElementById("DateIndexDatelabel").style.display = 'none';
+            document.getElementById("DateIndexDatefield").style.display = 'none';
+            document.getElementById("DateindexToDatelabel").style.display = 'none';
+            document.getElementById("DateIndexToDatefield").style.display = 'none';
+            if ($('#DateIndex') != undefined) {
+                //$('#DateIndex').data('tComboBox').value('');
+                //$('#DateIndex').data('tComboBox').text('');
+                //$('#DateIndexTo').data('tComboBox').value('');
+                //$('#DateIndexTo').data('tComboBox').text('');
+                $.ajax({
+                    type: "get",
+                    dataType: "text",
+                    url: "/Common/DateMonth/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var strArray = data.split(',');
+                        $('#DateIndex').val(strArray[0])
+                        $('#DateIndexTo').val(strArray[1])
+                    }
+                });
+                //$("#DateIndexTo").data("tComboBox").reload();
+                //$("#DateIndex").data("tComboBox").reload();
+            }
+
+        }
+        $('#DateIndex').data('tComboBox').value('');
+        $('#DateIndex').data('tComboBox').text('');
+        $("#DateIndex").data("tComboBox").reload();
+
+        $('#DateIndexTo').data('tComboBox').value('');
+        $('#DateIndexTo').data('tComboBox').text('');
+        $("#DateIndexTo").data("tComboBox").reload();
+    }
+
+    function DateIndex_DataBinding(e) {
+        if ($('#DateType').val() != 4) {
+            e.data = {
+                dateType: $('#DateType').val()
+            }
+        }
+
+    }
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MrpWorkCalendar.MrpWorkCalendar_DateType
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CodeMasterComboBox", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+                    includeBlankOption = true,
+                    isMrp = true,
+                    isChange = true,
+                    controlName = "DateType",
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MrpWorkCalendar.MrpWorkCalendar_ProductLine
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common",
+                    new
+                    {
+                        controlName = "ProductLine",
+                        resourceGroup = 20,
+                        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                    });
+            }
+        </div>
+        <div class="search-label" id="Dateindexlabel">
+            <label>
+                @Resources.MRP.MrpWorkCalendar.MrpWorkCalendar_DateIndex
+            </label>
+        </div>
+        <div class="search-field" id="Dateindexfield">
+              @{
+                  Html.RenderAction("_DateIndexComboBox", "Common", new
+                  {
+                      includeBlankOption = true,
+                      controlName = "DateIndex"
+                  });
+                }
+        </div>
+        <div class="search-label" id="DateindexTolabel">
+            <label>
+                @Resources.MRP.MrpWorkCalendar.MrpWorkCalendar_DateIndexTo
+            </label>
+        </div>
+        <div class="search-field" id="DateindexTofield">
+            @{
+                Html.RenderAction("_DateIndexComboBox", "Common", new
+                {
+                    includeBlankOption = true,
+                    controlName = "DateIndexTo"
+                });
+                }
+        </div>
+        <div class="search-label" id="DateIndexDatelabel" style="display: none">
+            <label>
+                @Resources.MRP.MrpWorkCalendar.MrpWorkCalendar_DateIndex
+            </label>
+        </div>
+        <div class="search-field" id="DateIndexDatefield" style="display: none">
+            @(Html.Telerik().DatePicker().Name("DateIndexDate").Min(System.DateTime.Today)
+            .Value(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label" id="DateindexToDatelabel" style="display: none">
+            <label>
+                @Resources.MRP.MrpWorkCalendar.MrpWorkCalendar_DateIndexTo
+            </label>
+        </div>
+        <div class="search-field" id="DateIndexToDatefield" style="display: none">
+            @(Html.Telerik().DatePicker().Name("DateIndexToDate").Min(System.DateTime.Today)
+            .Value(System.DateTime.Today.AddDays(14))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="Search" onclick="QueryMRPWorkCalendarList()">
+            @Resources.SYS.Global.Button_Search</button>
+    </div>
+</fieldset>
+<div id="divMrpWorkCalendarList">
+</div>
+<script type="text/javascript">
+    function QueryMRPWorkCalendarList() {
+
+        if ($('#DateType').val() == "") {
+            $message.error('计划类型为必填项。');
+            return;
+        }
+
+        if ($('#DateType').val() == 4) {
+            if ($('#DateIndexDate').val() == "") {
+                $message.error('起始日期为必填项.');
+                return;
+            }
+            if ($('#DateIndexToDate').val() == "") {
+                $message.error('结束日期为必填项。');
+                return;
+            }
+        }
+        else if ($('#DateType').val() == 5) {
+            if ($('#DateIndex').val() == "") {
+                $message.error('起始周为必填项。');
+                return;
+            }
+            if ($('#DateIndexTo').val() == "") {
+                $message.error('结束周为必填项。');
+                return;
+            }
+        }
+        else {
+            if ($('#DateIndex').val() == "") {
+                $message.error('起始月为必填项。');
+                return;
+            }
+            if ($('#DateIndexTo').val() == "") {
+                $message.error('结束月为必填项。');
+                return;
+            }
+        }
+
+        var data = {
+            "DateIndexTo": $('#DateIndexTo').val(),
+            "DateType": $('#DateType').val(),
+            "DateIndex": $('#DateIndex').val(),
+            "DateIndexDate": $('#DateIndexDate').val(),
+            "DateIndexToDate": $('#DateIndexToDate').val(),
+            "ProductLine": $('#ProductLine').val(),
+            "ResourceGroup":20
+        };
+
+
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/WorkCalendar/_GetWorkCalendarList/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divMrpWorkCalendarList");
+                $(tabStrip).html(data);
+
+          
+            }
+        });
+    }
+</script>

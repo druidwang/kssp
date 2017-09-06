@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.TMS.TransportOrderRoute, com.Sconit.Entity" table="TMS_OrderRoute" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<version name="Version" column="Version" type="Int32" />	
+		<property name="OrderNo" column="OrderNo" type="String" length="50"/>	
+		<property name="Sequence" column="Seq" type="Int32"/>	
+		<property name="ShipAddress" column="ShipAddr" type="String" length="50"/>	
+		<property name="ShipAddressDescription" column="ShipAddrDesc" type="String" length="255"/>	
+		<property name="Distance" column="Distance" type="Decimal"/>	
+		<property name="EstDepartTime" column="EstDepartTime" type="DateTime"/>	
+		<property name="EstArriveTime" column="EstArriveTime" type="DateTime"/>	
+		<property name="DepartTime" column="DepartTime" type="DateTime"/>	
+		<property name="DepartInputUser" column="DepartInputUser" type="String" length="50"/>	
+		<property name="DepartInputUserName" column="DepartInputUserNm" type="String" length="255"/>	
+		<property name="ArriveTime" column="ArriveTime" type="DateTime"/>	
+		<property name="ArriveInputUser" column="ArriveInputUser" type="String" length="50"/>	
+		<property name="ArriveInputUserName" column="ArriveInputUserNm" type="String" length="255"/>	
+		<property name="LoadRate" column="LoadRate" type="Decimal"/>	
+		<property name="WeightRate" column="WeightRate" type="Decimal"/>
+        <property name="IsArrive" column="IsArrive" type="Boolean"/>
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="255" update="false"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="255"/>	
+  	</class>
+</hibernate-mapping>

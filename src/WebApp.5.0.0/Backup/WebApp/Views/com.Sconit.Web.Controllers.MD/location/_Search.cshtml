@@ -1,0 +1,90 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MD
+@using com.Sconit.Entity.SYS;
+<fieldset>
+    @using (Html.BeginForm("List", "Location"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Location_Code">
+                    @Resources.MD.Location.Location_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["LocationSearchModel"] != null ? ((LocationSearchModel)TempData["LocationSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Location_Name">
+                    @Resources.MD.Location.Location_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Name", TempData["LocationSearchModel"] != null ? ((LocationSearchModel)TempData["LocationSearchModel"]).Name : string.Empty)
+            </div>
+             <div class="editor-label-2">
+              <label for="Location_SAPLocation">
+                @Resources.MD.Location.Location_SAPLocation
+                </label>
+            </div>
+            <div class="editor-field-2">
+                 @Html.TextBox("SAPLocation", TempData["LocationSearchModel"] != null ? ((LocationSearchModel)TempData["LocationSearchModel"]).SAPLocation : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Location_Region">
+                    @Resources.MD.Location.Location_Region
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_RegionComboBox", "Common", new
+        {
+            controlName = "Region", 
+                    selectedValue = TempData["LocationSearchModel"] != null ? ((LocationSearchModel)TempData["LocationSearchModel"]).Region : string.Empty
+                });
+                }
+            </div>
+            <div class="search-label">
+                <label for="Location_IsActive">
+                    @Resources.MD.Location.Location_IsIncludeActive
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsIncludeInActive", TempData["LocationSearchModel"] != null ? ((LocationSearchModel)TempData["LocationSearchModel"]).IsIncludeInActive : false)
+            </div>
+            <div class="search-label">
+                <label for="Location_AllowNegaInv">
+                    @Resources.MD.Location.Location_AllowNegaInv
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("AllowNegaInv", TempData["LocationSearchModel"] != null ? ((LocationSearchModel)TempData["LocationSearchModel"]).AllowNegaInv : false)
+            </div>
+            <div class="search-label">
+                <label for="Location_IsMRP">
+                    @Resources.MD.Location.Location_IsMRP
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsMRP", TempData["LocationSearchModel"] != null ? ((LocationSearchModel)TempData["LocationSearchModel"]).IsMRP : false)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @*<button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/Location/New")'">
+                @Resources.SYS.Global.Button_New</button>*@
+                @Html.Button(Resources.SYS.Global.Button_Search, "Url_Location_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_Location_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/Location/New")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>

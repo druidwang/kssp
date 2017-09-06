@@ -1,0 +1,63 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="com.Sconit.Service.SI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="com_Sconit_Service_SI_SDMES0002_ZWS_SDMES0002" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_sdmes0002/800/zws_sdmes0002/zws_sdmes0002</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_MMMES0001_ZWS_MMMES0001" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_mmmes0001/800/zws_mmmes0001/zws_mmmes0001</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_PPMES0001_ZWS_PPMES0001" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_ppmes0001/800/zws_ppmes0001/zws_ppmes0001</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_PPMES0004_ZWS_PPMES0004" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_ppmes0004/800/zws_ppmes0004/zws_ppmes0004</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_PPMES0003_ZWS_PPMES0003" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_ppmes0003/800/zws_ppmes0003/zws_ppmes0003</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_PPMES0006_ZWS_PPMES0006" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_ppmes0006/800/zws_ppmes0006/zws_ppmes0006</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_MDMMES0001_ZWS_MDMMES0001" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_mdmmes0001/800/zws_mdmmes0001/zws_mdmmes0001</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_MDMMES0002_ZWS_MDMMES0002" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_mdmmes0002/800/zws_mdmmes0002/zws_mdmmes0002</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_MDMMES0003_ZWS_MDMMES0003" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_mdmmes0003/800/zws_mdmmes0003/zws_mdmmes0003</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_MDMMES0004_ZWS_MDMMES0004" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_mdmmes0004/800/zws_mdmmes0004/zws_mdmmes0004</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_MDMMES0005_ZWS_MDMMES0005" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_mdmmes0005/800/zws_mdmmes0005/zws_mdmmes0005</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_MDMMES0006_ZWS_MDMMES0006" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_mdmmes0006/800/zws_mdmmes0006/zws_mdmmes0006</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_STMES0001_ZWS_STMES0001" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_stmes0001/800/zws_stmes0001/zws_stmes0001</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_SDMES0001_ZWS_SDMES0001" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_sdmes0001/800/zws_sdmes0001/zws_sdmes0001</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_MESQTY0001_ZWS_MESQTY0001" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_mesqty0001/800/zws_mesqty0001/zws_mesqty0001</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_PPMES0005_ZWS_PPMES0005" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_ppmes0005/800/zws_ppmes0005/zws_ppmes0005</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_PPMES0002_ZWS_PPMES0002" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_ppmes0002/800/zws_ppmes0002/zws_ppmes0002</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_MMMES0002_ZWS_MMMES0002" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_mmmes0002/800/zws_mmmes0002/zws_mmmes0002</Value>
+    </Setting>
+    <Setting Name="com_Sconit_Service_SI_WSMes_WSMes" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.136.3.28:9000/ws</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

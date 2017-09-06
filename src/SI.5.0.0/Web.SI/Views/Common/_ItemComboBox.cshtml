@@ -1,0 +1,25 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    AutoCompleteFilterMode itemFilterMode = Enum.Parse(typeof(AutoCompleteFilterMode), ViewBag.ItemFilterMode, true);
+    int itemFilterMinimumChars = ViewBag.ItemFilterMinimumChars;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool coupled = ViewBag.Coupled != null ? ViewBag.Coupled : false;
+    //string onChangeName = coupled ? "Item_Change" : "EmptyChange";
+}
+@(Html.Telerik().ComboBox()
+                .Name(name)
+                .HiddenInputHtmlAttributes(new { id = id })
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax().Select("_ItemAjaxLoading", "Common"))
+                    //.ClientEvents(events => events.OnChange(onChangeName))
+                //.Filterable(filtering =>
+                //{
+                //    filtering.FilterMode(itemFilterMode);
+                //    filtering.MinimumChars(itemFilterMinimumChars);
+                //})
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                .Enable(enable)
+        )

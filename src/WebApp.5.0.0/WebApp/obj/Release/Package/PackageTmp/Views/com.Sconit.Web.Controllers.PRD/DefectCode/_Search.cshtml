@@ -1,0 +1,72 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.CUST
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("List", "DefectCode"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.DefectCode.DefectCode_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["DefectCodeSearchModel"] != null ? ((DefectCodeSearchModel)TempData["DefectCodeSearchModel"]).Code : string.Empty)
+
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.CUST.DefectCode.DefectCode_ProductCode
+                </label>
+            </div>
+            <div class="search-field">
+                               @{
+                Html.RenderAction("_FlowComboBox", "Common",
+                new
+                {
+                    controlName = "ProductCode",
+                    type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                    selectedValue = TempData["DefectCodeSearchModel"] != null ? ((DefectCodeSearchModel)TempData["DefectCodeSearchModel"]).ProductCode : string.Empty
+                });
+                }
+            </div>
+
+
+          
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                 @Resources.CUST.DefectCode.DefectCode_CreateDateStart
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("CreateDateStart")
+.Value(TempData["DefectCodeSearchModel"] != null ? ((DefectCodeSearchModel)TempData["DefectCodeSearchModel"]).CreateDateStart : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                      @Resources.CUST.DefectCode.DefectCode_CreateDateEnd
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("CreateDateEnd")
+        .Value(TempData["DefectCodeSearchModel"] != null ? ((DefectCodeSearchModel)TempData["DefectCodeSearchModel"]).CreateDateEnd : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+          
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+                @Html.Button(Resources.SYS.Global.Button_New, "Url_Assembly_DefectCode", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnInsert"},
+                    {"onclick","location.href='"+@Url.Content("~/DefectCode/DefectCodeSeachAdd")+"'"}
+	            })
+        </div>
+
+    }
+</fieldset>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ISI.Checkup, com.Sconit.Entity" table="ISI_Checkup" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <version name="Version" column="Version" type="Int32" />
+    <property name="CheckupUser" column="CheckupUser" type="String" length="50" />
+    <property name="CheckupUserNm" column="CheckupUserNm" type="String" length="50" />
+    <property name="Department" column="Dept" type="String" length="50" />
+    <property name="Dept2" column="Dept2" type="String" length="50" />
+    <property name="JobNo" column="JobNo" type="String" length="10" />
+    <many-to-one name="CheckupProject" column="CheckupProject" class="com.Sconit.Entity.ISI.CheckupProject, com.Sconit.Entity" cascade="none" />
+    <property name="Content" column="Content" type="String" length="1000" />
+    <property name="Amount" column="Amount" type="Decimal"  />
+    <property name="ApprovalUser" column="ApprovalUser" type="String" length="50" />
+    <property name="ApprovalUserNm" column="ApprovalUserNm" type="String" length="50" />
+    <property name="AuditInstructions" column="AuditInstructions" type="String" length="1000" />
+    <property name="CheckupDate" column="CheckupDate" type="DateTime"  />
+    <property name="ApprovalDate" column="ApprovalDate" type="DateTime"  />
+    <property name="Status" column="Status" type="String" length="50" />
+    <property name="Type" column="Type" type="String" length="10" />
+    <property name="CreateUserNm" column="CreateUserNm" type="String" length="50" />
+    <property name="CreateUser" column="CreateUser" type="String" length="50" />
+    <property name="CreateDate" column="CreateDate" type="DateTime"  />
+    <property name="LastModifyUser" column="LastModifyUser" type="String" length="50" />
+    <property name="LastModifyUserNm" column="LastModifyUserNm" type="String" length="50" />
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+    <property name="SubmitUser" column="SubmitUser" type="String" length="50" />
+    <property name="SubmitUserNm" column="SubmitUserNm" type="String" length="50" />
+    <property name="SubmitDate" column="SubmitDate" type="DateTime"  />
+    <property name="CancelUser" column="CancelUser" type="String" length="50" />
+    <property name="CancelUserNm" column="CancelUserNm" type="String" length="50" />
+    <property name="CancelDate" column="CancelDate" type="DateTime"  />
+    <property name="CloseUser" column="CloseUser" type="String" length="50" />
+    <property name="CloseUserNm" column="CloseUserNm" type="String" length="50" />
+    <property name="CloseDate" column="CloseDate" type="DateTime"  />
+  </class>
+</hibernate-mapping>

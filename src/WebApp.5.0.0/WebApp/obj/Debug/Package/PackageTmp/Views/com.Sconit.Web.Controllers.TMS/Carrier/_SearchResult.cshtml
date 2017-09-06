@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.MD.Carrier>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("CarrierGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code)
+                .ClientTemplate(Html.ActionLink("<#=Code#>", "Edit", "Carrier", new { ID = "<#=Code #>" }, null).ToString())
+                .HeaderTemplate(Resources.MD.Party.Party_Carrier_Code);
+            columns.Bound(o => o.Name).HeaderTemplate(Resources.MD.Party.Party_Carrier_Name);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />")
+                .HeaderTemplate(Resources.MD.Party.Party_IsActive);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Carrier"))
+        .ClientEvents(events => events.OnDataBinding("CarrierGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 50);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function CarrierGrid_OnDataBinding(e) {
+            e.data = {
+
+                Code: $('#Code').val(),
+                Name: $('#Name').val(),
+                IsActive: $('#IsActive').is(':checked')
+            };
+        } 
+    </script>
+</fieldset>

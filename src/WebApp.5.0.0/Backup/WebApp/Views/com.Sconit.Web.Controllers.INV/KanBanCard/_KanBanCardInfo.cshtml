@@ -1,0 +1,128 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.KanBanCardInfo>
+            <script type="text/javascript">
+                $(function () {
+                    $("#checkAll").click(function () {
+                        $('input[name="checkedRecords"]').attr("checked", this.checked);
+                        $("#btnPrint").attr("style", this.checked ? "display:inline" : "display:none");
+                        $("#btnExport").attr("style", this.checked ? "display:inline" : "display:none");
+                    });
+                });
+
+                function showButtons() {
+                    var $checkRecords = $("input[name='checkedRecords']");
+                    var showButton = false;
+                    for (var i = 0; i < $checkRecords.length; i++) {
+                        if ($checkRecords[i].checked) {
+                            showButton = true;
+                            break;
+                        }
+                    }
+                    $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+                    $("#btnPrint").attr("style", showButton ? "display:inline" : "display:none");
+                    $("#btnExport").attr("style", showButton ? "display:inline" : "display:none");
+                }
+
+                function editCheckedOrders() {
+                    var $checkRecords = $("input[name='checkedRecords']");
+                    var checkedOrders = "";
+                    for (var i = 0; i < $checkRecords.length; i++) {
+                        if ($checkRecords[i].checked) {
+                            if (checkedOrders == "") {
+                                checkedOrders = $checkRecords[i].value;
+                            } else {
+                                checkedOrders += "," + $checkRecords[i].value;
+                            }
+                        }
+                    }
+                    if (checkedOrders == "") {
+                        alert('Must Check One');
+                        return;
+                    }
+
+                    var data = {
+                        "cardNoStr": checkedOrders,
+                        "Code": $('#Code').val()
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "/KanBanCard/KanBanCardPrint/",
+                        data: data,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            if (data != "") {
+                                PrintOrder(data);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            var errorMessages = XMLHttpRequest.responseText;
+                            $message.error(errorMessages);
+                        }
+                    });
+
+                }
+
+                function CheckedbtnExport() {
+                    var $checkRecords = $("input[name='checkedRecords']");
+                    var checkedOrders = "";
+                    for (var i = 0; i < $checkRecords.length; i++) {
+                        if ($checkRecords[i].checked) {
+                            if (checkedOrders == "") {
+                                checkedOrders = $checkRecords[i].value;
+                            } else {
+                                checkedOrders += "," + $checkRecords[i].value;
+                            }
+                        }
+                    }
+                    if (checkedOrders == "") {
+                        alert('Must Check One');
+                        return;
+                    }
+
+                      $("#cardNoStr").val(checkedOrders);
+                     $("#CodeValue").val($('#Code').val());
+                     $("#hiddenForm").submit();
+                }
+
+</script>
+
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                        .Name("KanBanCardInfoGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(k => k.CardNo);
+        })
+        .Columns(columns =>
+        {
+            //columns.Bound(o => o.CardNo)
+            //   .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#=CardNo #>'   onClick='showButtons()' />")
+            //  .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+            //  .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.CardNo);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        //.CellAction(cell =>
+        //{
+        //    if (cell.Column.Member == "CardNo"&&!cell.Column.IsLast)
+        //    {
+        //        cell.Text = string.Format("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='" + cell.DataItem.CardNo + "'   onClick='showButtons()' />");
+        //    }
+        //})
+        //    .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxFlowDetailList", "SupplierPrintHu"))
+        //.ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding")
+        //      .OnRowDataBound("FlowDetailGrid_OnRowDataBound"))
+        //.Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+            )
+
+</fieldset>
+<form id="hiddenForm" action="/KanBanCard/KanBanCardExport" target="_blank"  method="post">
+    <input id="cardNoStr" name="cardNoStr" type="hidden" />
+    <input id="CodeValue"  name="CodeValue" type="hidden" />
+</form>

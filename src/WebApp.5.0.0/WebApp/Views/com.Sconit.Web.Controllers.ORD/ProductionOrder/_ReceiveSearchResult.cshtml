@@ -1,0 +1,52 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo).ClientTemplate(Html.ActionLink("<#= OrderNo #>", "ReceiveEdit", "ProductionOrder", new { orderNo = "<#= OrderNo #>" }, null).ToString());
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Flow).Title(@Resources.ORD.OrderMaster.OrderMaster_Flow_Production);
+            columns.Bound(o => o.OrderTypeDescription);
+            columns.Bound(o => o.OrderPriorityDescription);
+            columns.Bound(o => o.PartyFromName).Title(@Resources.ORD.OrderMaster.OrderMaster_PartyFromName_Production);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.OrderStatusDescription);
+            columns.Bound(o => o.CurrentOperation);
+            columns.Bound(o => o.CreateUserName);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_ReceiveAjaxList", "ProductionOrder"))
+                 .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize );
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                CreateUserName: $('#CreateUserName').val()
+            };
+        } 
+    </script>
+</fieldset>

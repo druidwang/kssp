@@ -1,0 +1,219 @@
+﻿@{
+    var permissiongroupid = Request.RequestContext.RouteData.Values["Id"];
+}
+<script src="@Url.Content("~/Scripts/jquery.dualListBox-1.3.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $.configureBoxes(
+        {
+            box1View: 'boxView_UnAssignedPermissions',
+            box1Storage: 'boxStorage_UnAssignedPermissions',
+            box2View: 'boxView_AssignedPermissions',
+            box2Storage: 'boxStorage_AssignedPermissions',
+            to1: 'to_UnAssignedPermissions',
+            allTo1: 'allTo_UnAssignedPermissions',
+            to2: 'to_AssignedPermissions',
+            allTo2: 'allTo_AssignedPermissions',
+            transferMode: 'move',
+            useFilters: false,
+            useCounters: false,
+            useSorting: false,
+            selectOnSubmit: true
+        }
+        );
+    });
+
+    $(document).ready(function () {
+        $("#btnSubmit_AssignedPermissions").click(function () {
+            //$("#boxView_AssignedPermissions").each(function () {
+            //    $(this).find("option").each(function () {
+            //        $(this).attr("selected", "selected");
+            //    });
+            //});
+
+            var assignedPermissionIds = new Array();
+            var i = 0;
+            $("#boxView_AssignedPermissions").each(function () {
+                $(this).find("option").each(function () {
+                    assignedPermissionIds[i] = $(this).val();
+                    i++;
+                });
+            });
+
+            var data = {
+                id: "@permissiongroupid",
+                permissionCategoryCode: $("#permissionCategoryCode").val(),
+                assignedPermissionIds: assignedPermissionIds
+            };
+
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/PermissionGroup/_PermissionGroupPermission/",
+                data: data,
+                traditional: true,
+                success: function (data, textStatus) {
+                    $message.success("@Resources.EXT.PageLan.SaveSuccess");
+                },
+                complete: function () {
+                    //$("button").each(function () {
+                    //    $(this).removeAttr("Disabled");
+                    //});
+                }
+            });
+
+        });
+    });
+
+
+
+    function PermissionCategoryType_Change(e) {
+        $("#permissionCategoryCode").data("tDropDownList").reload();
+    }
+
+    function permissionCategoryCode_Change(e) {
+        var $permissionCategoryCode = $("#permissionCategoryCode");
+        
+        $("button").each(function () { $(this).attr("Disabled", "Disabled"); });
+        var data = {
+            permissiongroupid: "@permissiongroupid",
+            permissionCategoryCode: $permissionCategoryCode.val()
+        };
+
+        $.ajax(
+                {
+                    type: "post",
+                    dataType: "json",
+                    url: "/PermissionGroup/_AjaxLoadingPermissions/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        $("#boxView_UnAssignedPermissions option").remove();
+                        for (var i = 0; i < data[0].length; i++) {
+                            var op = $("<option/>").text(data[0][i].Text).val(data[0][i].Value);
+                            $("#boxView_UnAssignedPermissions").append(op);
+                        }
+
+                        $("#boxView_AssignedPermissions option").remove();
+                        for (var i = 0; i < data[1].length; i++) {
+                            var op = $("<option />").text(data[1][i].Text).val(data[1][i].Value);
+                            $("#boxView_AssignedPermissions").append(op);
+                        }
+                    },
+                    complete: function () {
+                        $("button").each(function () {
+                            $(this).removeAttr("Disabled");
+                        });
+                    }
+                });
+    }
+
+    function permissionCategoryCode_DataBinding(e) {
+        var $permissionCategoryType = $("#permissionCategoryType");
+        e.data = {
+            permissiongroupid: "@permissiongroupid",
+            permissionCategoryType: $permissionCategoryType.val()
+        };
+    }
+</script>
+@using (Html.BeginForm("_PermissionGroupPermission", "PermissionGroup"))
+{
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="User_Code">
+                    @Resources.ACC.User.User_PermissionCategoryType
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DropDownList()
+                .Name("permissionCategoryType")
+                .ClientEvents(events => events.OnChange("PermissionCategoryType_Change"))
+                .BindTo(ViewBag.PermissionCategoryTypeList)
+            )
+            </div>
+            <div class="search-label">
+                <label for="User_IsActive">
+                    @Resources.ACC.User.User_PermissionCategoryCode
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DropDownList()
+             .Name("permissionCategoryCode")
+             .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingPermissionCategory", "User"
+             , new
+             {
+                 code = ViewBag.Code,
+             }).Enabled(true))
+             .ClientEvents(events =>
+                 events.OnChange("permissionCategoryCode_Change").OnDataBinding("permissionCategoryCode_DataBinding")
+             )
+            .BindTo(ViewBag.PermissionCategoryCodeList)
+            )
+            </div>
+            @*  </div>
+    <div>*@
+            <br />
+            <table width="100%">
+                <tr>
+                    <td>
+                        @Resources.ACC.PermissionGroup.PermissionGroup_UnAssignedPermissions<p />
+                        <select id="boxView_UnAssignedPermissions" name="toBeAssignPermissionIds" multiple="multiple"
+                            style="height: 350px; width: 350px;">
+                            @if (ViewBag.UnAssignedPermissions != null)
+                            {
+                                foreach (com.Sconit.Entity.ACC.Permission item in ViewBag.UnAssignedPermissions)
+                                {
+                                <option value="@item.Id">@item.Description</option>  
+                                }
+                            }
+                        </select><br />
+                        <select id="boxStorage_UnAssignedPermissions">
+                        </select>
+                    </td>
+                    <td align="center">
+                        <table>
+                            <tr>
+                                <td>
+                                    <button id="to_AssignedPermissions" type="button" style="width: 70px">
+                                        ></button>
+                                    <button id="allTo_AssignedPermissions" type="button" style="width: 70px">
+                                        >></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button id="to_UnAssignedPermissions" type="button" style="width: 70px">
+                                        <</button>
+                                    <button id="allTo_UnAssignedPermissions" type="button" style="width: 70px">
+                                        <<</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        @Resources.ACC.PermissionGroup.PermissionGroup_AssignedPermissions<p />
+                        <select id="boxView_AssignedPermissions" name="assignedPermissionIds" multiple="multiple"
+                            style="height: 350px; width: 350px;">
+                            @if (ViewBag.AssignedPermissions != null)
+                            {
+                                foreach (com.Sconit.Entity.ACC.Permission item in ViewBag.AssignedPermissions)
+                                {
+                                <option value="@item.Id">@item.Description</option>  
+                                }
+                            }
+                        </select><br />
+                        <select id="boxStorage_AssignedPermissions">
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div class="editor-footer">
+                <button type="button" id="btnSubmit_AssignedPermissions">
+                    @Resources.SYS.Global.Button_Save</button>
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/PermissionGroup/List")'">
+                    @Resources.SYS.Global.Button_Back</button>
+            </div>
+        </div>
+    </fieldset>
+}

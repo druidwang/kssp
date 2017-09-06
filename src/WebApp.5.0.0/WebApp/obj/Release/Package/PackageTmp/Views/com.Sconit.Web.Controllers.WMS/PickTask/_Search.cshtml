@@ -1,0 +1,84 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<fieldset>
+    @using (Html.BeginForm("List", "PickTask"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="PickTask_Item">
+                    @Resources.WMS.PickTask.PickTask_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["PickTaskSearchModel"] != null ? ((PickTaskSearchModel)TempData["PickTaskSearchModel"]).Item : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="PickTask_OrderNo">
+                    @Resources.WMS.PickTask.PickTask_Location
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common",
+            new
+            {
+                controlName = "Location",
+                selectedValue = TempData["PickTaskSearchModel"] != null ? ((PickTaskSearchModel)TempData["PickTaskSearchModel"]).Location : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="PickTask_DateFrom">
+                    @Resources.WMS.PickTask.PickTask_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+.Value(TempData["PickTaskSearchModel"] != null ? ((PickTaskSearchModel)TempData["PickTaskSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+.Value(TempData["PickTaskSearchModel"] != null ? ((PickTaskSearchModel)TempData["PickTaskSearchModel"]).DateTo : System.DateTime.Today.AddDays(0))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+           <div class="search-label">
+                <label for="PickTask_PickUserName">
+                    @Resources.WMS.PickTask.PickTask_PickUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PickUserName", TempData["PickTaskSearchModel"] != null ? ((PickTaskSearchModel)TempData["PickTaskSearchModel"]).PickUser : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="PickTask_IsActive">
+                    @Resources.WMS.PickTask.PickTask_IsActive
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsActive", TempData["PickTaskSearchModel"] != null ? ((PickTaskSearchModel)TempData["PickTaskSearchModel"]).IsActive : true)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_PickTask_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+        </div>
+
+    }
+</fieldset>

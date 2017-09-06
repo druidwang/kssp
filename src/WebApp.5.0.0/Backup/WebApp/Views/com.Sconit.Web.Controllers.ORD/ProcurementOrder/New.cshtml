@@ -1,0 +1,258 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Procurement_New" });
+}
+<script type="text/javascript">
+    function Flow_Change(e) {
+        $("#WindowTime").val('');
+        $("#StartTime").val('');
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+                $("#fdOrderDetail").hide();
+            } else {
+                $("#fdOrderDetail").html("Loading...");
+                $("#fdOrderDetail").show();
+                var data = { "flow": e.value };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/ProcurementOrder/_OrderDetailList/",
+                    data: data,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $("#fdOrderDetail").html(data);
+                        $("#fdOrderDetail").show();
+                        $("tr.t-no-data").find("td").text("Loading...");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $message.error(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+
+    function onWindowTimeChange(e) {
+        if ($("#Flow").val() != null && $("#Flow").val() != "") {
+            $.ajax({
+                type: "Post",
+                dataType: "text",
+                url: "/ProcurementOrder/_WindowTime/",
+                data: { "windowTime": e.value.toLocaleString(), "flow": $("#Flow").val() },
+                success: function (data, textStatus) {
+                    var newDate = new Date(data);
+                    // $("#StartTime").val(data);
+                    $("#StartTime").val(data);
+                    // $("#StartTime").data("tDateTimePicker").selectedValue = newDate;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    $message.error(errorThrown);
+                }
+            });
+        }
+    }
+
+    function onCreate() {
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error('订单明细不能为空。');
+            return;
+        }
+        if ($("#onsumitType").val() == 0) {
+        //debugger
+            var Sequences = new Array();
+            var Items = new Array();
+            var ReferenceItemCodes = new Array();
+            var ItemDescriptions = new Array();
+            var UnitCounts = new Array();
+            var UnitCountDescriptions = new Array();
+            var Uoms = new Array();
+            var LocationFroms = new Array();
+            var LocationTos = new Array();
+            var OrderedQtys = new Array();
+            var HuTos = new Array();
+            var RequiredQtys = new Array();
+            var Remarks = new Array();
+
+            var isProcurement = ($("#IsProcurement").val().toUpperCase() == "TRUE");
+            var isFromReferenceOrder = ($("#IsFromReferenceOrder").val().toUpperCase() == "TRUE");
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");//grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            var i = 0;
+            var orderedIndex = grid.columns.length - 3;
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var row = $(rows[rowIndex]);
+                if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim(row[0].childNodes[orderedIndex].innerText)) > 0) {
+                    Sequences[i] = $.trim(row[0].childNodes[1].innerText);
+                    Items[i] = $.trim(row[0].childNodes[2].innerText);
+                    UnitCounts[i] = $.trim(row[0].childNodes[5].innerText);
+                    Uoms[i] = $.trim(row[0].childNodes[6].innerText);
+                    if (!isProcurement) {
+                        LocationFroms[i] = $.trim(row[0].childNodes[8].innerText);
+                        LocationTos[i] = $.trim(row[0].childNodes[9].innerText);
+                    }
+                    else {
+                        LocationTos[i] = $.trim(row[0].childNodes[8].innerText);
+                    }
+                    HuTos[i] = $.trim(row[0].childNodes[orderedIndex - 2].innerText);
+                    if (isFromReferenceOrder) {
+                        RequiredQtys[i] = $.trim(row[0].childNodes[orderedIndex - 1].innerText);
+                    }
+                    else {
+                        RequiredQtys[i] = $.trim(row[0].childNodes[orderedIndex].innerText);
+                    }
+                    OrderedQtys[i] = $.trim(row[0].childNodes[orderedIndex].innerText);
+                    Remarks[i] = $.trim(row[0].childNodes[orderedIndex + 1].innerText);
+                    i++;
+                }
+            }
+            var ordermstr = {
+                "Flow": $("#Flow").val(),
+                "StartTime": $("#StartTime").val(),
+                "WindowTime": $("#WindowTime").val(),
+                "EffectiveDate": $("#EffectiveDate").val(),
+                "ReferenceOrderNo": $("#ReferenceOrderNo").val(),
+                "Priority": $("input[type=radio][name=Priority]:checked").val()
+            }
+            var made = {
+                "Sequences": Sequences,
+                "Items": Items,
+                "UnitCounts": UnitCounts,
+                "Uoms": Uoms,
+                "LocationFroms": LocationFroms,
+                "LocationTos": LocationTos,
+                "OrderedQtys": OrderedQtys,
+                "HuTos": HuTos,
+                "RequiredQtys": RequiredQtys,
+                "Remarks": Remarks
+            }
+
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/ProcurementOrder/NewOrder/",
+                data: $.extend(made, ordermstr),
+                traditional: true,
+                success: function (data, ordermstr) {
+                    if (data != null && data.Data != null && data.Data.OrderNo != undefined) {
+                        window.location.href = "/ProcurementOrder/Edit/?orderNo=" + data.Data.OrderNo;
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new
+    {
+        controlName = "Flow",
+        type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+        isChange = true,
+        isCreateOrder = true
+    });
+                }
+                @Html.ValidationMessageFor(model => model.Flow)
+            </div>
+            <div class="editor-label-2" style="display: none">
+                @Html.LabelFor(model => model.EffectiveDate)
+            </div>
+            <div class="editor-field-2" style="display: none">
+                <div class="editor-field-2">
+                    @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EffectiveDate"))
+                </div>
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Priority)
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("Priority", (int)com.Sconit.CodeMaster.OrderPriority.Normal, true)@Resources.SYS.CodeDetail.CodeDetail_OrderPriority_Normal
+                @Html.RadioButton("Priority", (int)com.Sconit.CodeMaster.OrderPriority.Urgent)@Resources.SYS.CodeDetail.CodeDetail_OrderPriority_Urgent
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.WindowTime)
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm")
+                            .Name("WindowTime")
+                            .ClientEvents(events => events
+                            .OnChange("onWindowTimeChange")
+                        )
+                    )
+                @Html.ValidationMessageFor(model => model.WindowTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartTime)
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartTime"))
+                @Html.ValidationMessageFor(model => model.StartTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReferenceOrderNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ReferenceOrderNo)
+                <button type="button" id="refSearch" onclick="loadOrderDetail();">
+                    @Resources.SYS.Global.Button_Reference</button>
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_OrderMstr_Procurement_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"onclick","onCreate()"}
+	        })
+        </div>
+    </fieldset>
+   
+    <div id="fdOrderDetail" style="display: none;">
+    </div>
+}
+<script type="text/javascript">
+    function loadOrderDetail() {
+        if ($("#Flow").val() == "") {
+            $message.success('引用明细路线不能为空！');
+            return;
+        }
+        if ($("#ReferenceOrderNo").val() == "") {
+            $message.success('引用明细外部订单号不能为空！');
+            return;
+        }
+
+        var data = { "flow": $("#Flow").val(), "ReferenceOrderNo": $("#ReferenceOrderNo").val() };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ProcurementOrder/_OrderDetailListFromReferenceOrder/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#fdOrderDetail").html(data);
+                $("#fdOrderDetail").show();
+                $("tr.t-no-data").find("td").text("Loading...");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $message.error(errorThrown);
+            }
+        });
+    }
+</script>

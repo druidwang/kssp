@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_TransferOrder_View" });
+}
+<script type="text/javascript">
+    function onSuccess(e) {
+        $message.success(e.response.status);
+    }
+    function onUploadError(e) {
+        $('.t-upload-files').remove();
+        var errorMessages =  e.XMLHttpRequest.responseText ;
+        $message.error(errorMessages);
+        
+        e.preventDefault();
+    }
+
+    function onUpload(e) {
+        e.data = { PartyFrom: $("#PartyFrom").val(),
+            StartTime: $("#StartTime").val(),
+            "PartyTo": $("#PartyTo").val()
+        };
+
+    }
+
+    function OrderMasterPartyFrom(e) {
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+            else {
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/TransferOrder/_OrderDetailList/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $("#fdOrderDetail").html(data);
+                        $("#fdOrderDetail").show();
+                        $("tr.t-no-data").find("td").text("Loading...");
+                    }
+                });
+            }
+        }
+    }
+
+
+    function onCreate() {
+ 
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error('@Resources.ORD.FreeLocation.Errors_OrderDetailIsEmpty');
+            
+            return;
+        }
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+        var oderDetails = grid.changeLog.serialize(inserted, updated, deleted);
+        var ordermstr = {
+            "PartyFrom": $("#PartyFrom").val(),
+            "StartTime": $("#StartTime").val(),
+            "PartyTo": $("#PartyTo").val()
+        }
+        grid._convert(oderDetails);
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/TransferOrder/CreateOrder/",
+            data: $.extend(oderDetails, ordermstr),
+            success: function (data) {
+                if (data != "") {
+                   
+                    $message.success('移库单' + data.message + '创建成功');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+                
+            }
+        });
+    }
+
+</script>
+<fieldset>
+    <legend>@Resources.ORD.FreeLocation.FreeLocation_Detail</legend>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.ORD.FreeLocation.FreeLocation_PartyFrom</label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+                    new
+                    {
+                        controlName = "PartyFrom",
+                        orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                        isChange=true
+                        
+                    });
+            }
+        </div>
+              <div class="search-label">
+            <label for="OrderMaster_PartyTo">
+                @Resources.ORD.FreeLocation.FreeLocation_PartyTo
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+                                new
+                                {
+                                    controlName = "PartyTo",
+                                    orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+
+                                });
+            }
+        </div>
+        <div class="search-label">
+            <label for="OrderMaster_PartyTo">
+                @Resources.ORD.FreeLocation.FreeLocation_StartTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("StartTime")
+            .Value(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        @* <div class="search-label">
+        </div>
+        <div class="search-field">
+        </div>*@
+        <div class="search-label">
+            <label>
+                <a href='/Resource/Templates/UploadTemplate/TransferOrder.xls'>@Resources.EXT.PageLan.TemplateDownload</a>
+            </label>
+        </div>
+                <div class="search-field">
+                    @(Html.Telerik().Upload()
+                            .Name("attachments")
+                            .Multiple(false)
+                            .Async(async => async
+                                        .Save("ImportFreeLocationDetail", "TransferOrder"
+                                       )
+
+                                .AutoUpload(true))
+                                        .ClientEvents(e => e.OnSuccess("onSuccess").OnError("onUploadError"))
+                                                 .ClientEvents(c => c
+                                                        .OnUpload("onUpload")
+                                                       ))
+                </div>
+    </div>
+    <div class="editor-footer">
+        @Html.Button(Resources.SYS.Global.Button_New, "Url_TransferOrder_View", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"onclick","onCreate()"}
+	        })
+    </div>
+</fieldset>
+<div id="fdOrderDetail"  style="display: none;">
+  
+</div>

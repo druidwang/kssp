@@ -1,0 +1,139 @@
+﻿
+@Html.Partial("_AjaxMessage")
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_BindTraceCode" });
+}
+
+<script type="text/javascript">
+    var rows = [];
+    function orderNoKeyDown(e) {
+        if (event.keyCode == 13) {
+            var orderNo = $('#orderNo').val();
+            if (orderNo == "") {
+                $message.error('生产单号不允许为空。');
+                return;
+            }
+            var data = {
+                "orderNo": orderNo
+            };
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/ProductionOrder/BindCheckOrderNo/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    debugger;
+                    if (data.Data.Status === 0) {
+                        DisplayJsonMessages(data);
+                    }
+                    else {
+                        if (data.Data.ProdTraces !== undefined && data.Data.ProdTraces.length > 0) {
+                            rows = data.Data.ProdTraces;
+                            var grid = $("#ProdTraceCodeGrid").data("tGrid");
+                            grid.dataBind(rows);
+                        }
+                        $('#orderNo').attr("disabled", "disabled");
+                        $('#traceCode').focus();
+                    }
+                }
+            });
+        }
+    }
+
+    function traceCodeKeyDown(e) {
+        if (event.keyCode == 13) {
+            var traceCode = $('#traceCode').val();
+            if (traceCode == "") {
+                $message.error('追溯码不允许为空。');
+                return;
+            }
+            if (traceCode == "OK") {
+                $('#orderNo').removeAttr("disabled");
+                $('#orderNo').focus();
+                $('#traceCode').val("");
+                $('#huId').val("");
+                row = [];
+                var grid = $("#ProdTraceCodeGrid").data("tGrid");
+                grid.dataBind(rows);
+            }
+            else {
+                var data = {
+                    "traceCode": traceCode,
+                    "orderNo": $('#orderNo').val()
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/ProductionOrder/BindCheckTraceCode/",
+                    cache: false,
+                    data: data,
+                    success: function (data, textStatus) {
+                        debugger;
+                        if (data.Data.Status === 0) {
+                            DisplayJsonMessages(data);
+                        }
+                        else {
+                            rows.push(data.Data.ProdTrace);
+                            var grid = $("#ProdTraceCodeGrid").data("tGrid");
+                            grid.dataBind(rows);
+                            $('#traceCode').val("");
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    $(document).ready(function (e) {
+        var grid = $("#ProdTraceCodeGrid").data("tGrid");
+        grid.dataBind(rows);
+    })
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                生产单号
+            </label>
+        </div>
+        <div class="search-field">
+            <input type="text" name="orderNo" id="orderNo" value="" onkeydown="orderNoKeyDown(this)" />
+        </div>
+        <div class="search-label">
+            <label>
+                追溯码
+            </label>
+        </div>
+        <div class="search-field">
+            <input type="text" name="traceCode" id="traceCode" value="" onkeydown="traceCodeKeyDown(this)" />
+        </div>
+
+    </div>
+@*    <div class="editor-footer">
+        <button type="button" id="btnSearch" onclick="BillMasterQuery()">@Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnCreateActingBill" onclick="CreateActingBill()" style="display: none">@Resources.SYS.Global.Button_Create</button>
+        <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+    </div>*@
+</fieldset>
+<div id="traceCodeList">
+    @(Html.Telerik().Grid<com.Sconit.Entity.INP.ProdTraceCode>()
+            .Name("ProdTraceCodeGrid")
+            .DataKeys(keys =>
+            {
+                keys.Add(p => p.TraceCode);
+            })
+            .Columns(columns =>
+            {
+                columns.Bound(o => o.TraceCode).Title("追溯码");
+                columns.Bound(o => o.OrderNo).Title("生产单号");
+                columns.Bound(o => o.Item).Title("零件号");
+                columns.Bound(o => o.ItemDesc).Title("零件描述");
+            })
+            .Scrollable(c => c.Enabled(false))
+
+            .Sortable(s=>s.Enabled(false))
+            .Resizable(resizing => resizing.Columns(true))
+        )
+</div>
+

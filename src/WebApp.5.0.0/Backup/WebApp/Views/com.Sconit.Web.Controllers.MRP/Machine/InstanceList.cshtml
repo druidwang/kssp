@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_MRP_MachineInstance_View" });
+}
+
+@Html.Partial("_InstanceSearch")
+
+@Html.Partial("_InstanceSearchResult")

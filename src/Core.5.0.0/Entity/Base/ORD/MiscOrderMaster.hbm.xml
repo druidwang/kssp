@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ORD.MiscOrderMaster, com.Sconit.Entity" table="ORD_MiscOrderMstr" lazy="false">
+    <id name="MiscOrderNo" column="MiscOrderNo" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <version name="Version" column="Version" type="Int32" />
+    <property name="Type" column="Type"/>
+    <property name="SubType" column="SubType"/>
+    <property name="Status" column="Status"/>
+    <property name="IsScanHu" column="IsScanHu" type="Boolean"  />
+    <property name="IsCs" column="IsCs" type="Boolean"  />
+    <property name="QualityType" column="QualityType"/>
+    <property name="MoveType" column="MoveType" type="String" length="5"/>
+    <property name="CancelMoveType" column="CancelMoveType" type="String" length="5"/>
+    <property name="Region" column="Region" type="String" length="50"/>
+    <property name="Location" column="Location" type="String" length="50"/>
+    <property name="ReceiveLocation" column="RecLoc" type="String" length="50"/>
+    <property name="GeneralLedger" column="GeneralLedger" type="String" length="50"/>
+    <property name="Note" column="Note" type="String" length="256"/>
+    <property name="CostCenter" column="CostCenter" type="String" length="50"/>
+    <property name="Asn" column="Asn" type="String" length="50"/>
+    <property name="ReferenceNo" column="RefNo" type="String" length="50"/>
+    <property name="DeliverRegion" column="DeliverRegion" type="String" length="50"/>
+    <property name="WBS" column="WBS" type="String" length="50"/>
+    <property name="EffectiveDate" column="EffDate" type="DateTime"/>
+    <property name="WMSNo" column="WMSNo" type="String" length="50"/>
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+    <property name="CloseDate" column="CloseDate" type="DateTime"  />
+    <property name="CloseUserId" column="CloseUser" type="Int32"  />
+    <property name="CloseUserName" column="CloseUserNm" type="String" length="100" />
+    <property name="CancelDate" column="CancelDate" type="DateTime"  />
+    <property name="CancelUserId" column="CancelUser" type="Int32"  />
+    <property name="CancelUserName" column="CancelUserNm" type="String" length="100" />
+    <property name="Flow" column="Flow" type="String" length="50"/>
+  </class>
+</hibernate-mapping>

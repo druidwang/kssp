@@ -1,0 +1,273 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+<script type="text/javascript">
+//    function OrderMasterGrid_OnRowDataBound(e) {
+//        if (e.dataItem.IsPause) {
+//            $(e.row.cells[13]).find("a:first").attr("style", "display:none");
+//        } 
+//        else {
+//            $(e.row.cells[13]).find("a:last").attr("style", "display:none");
+//        }
+//    }
+    function OrderMasterGrid_OnDataBinding(e) {
+        e.data = {
+            OrderNo: $('#OrderNo').val(),
+            Flow: $('#Flow').val(),
+            DateFrom: $('#DateFrom').val(),
+            DateTo: $('#DateTo').val(),
+            CreateUserName: $('#CreateUserName').val(),
+            IsPause: $("#IsPause").is(':checked')
+        };
+    }
+    function onComplete(e) {
+        if (e.name == "Pause") {
+            var status = e.response.status;
+            if (status == 1) {
+                $("#pauseListForm").submit();
+//                var data = {
+//                    OrderNo: $('#OrderNo').val(),
+//                    Flow: $('#Flow').val(),
+//                    DateFrom: $('#DateFrom').val(),
+//                    DateTo: $('#DateTo').val(),
+//                    IsPause: $("#IsPause").is(':checked')
+//                };
+//                $.ajax({
+//                    type: "post",
+//                    dataType: "html",
+//                    url: "/ProductionOrder/PauseList/",
+//                    data: data,
+//                    success: function (data, textStatus) {
+//                        var $tGrid = $("#content");
+//                        $($tGrid).html(data);
+//                        $message.success(e.response.successMessage);
+//                        $message.error(e.response.errorMessage);
+//                    }
+//                });
+
+            } else {
+                var data = {
+                    controlName: "PauseOperation",
+                    Routing: e.response.Routing,
+                    CurrentOperation: e.response.CurrentOperation
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/Common/_OperationDropDownList/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        
+                        $("#OperationDiv").html(data);
+                    }
+                });
+
+                $("#popPauseErrorsul").html('');
+                //$("#routing").find("#PauseOperation").val('');
+                var detailWindow = $("#PauseOrder").data("tWindow");
+                var orderNo = e.response.orderNo;
+                $("#routing").find("input#PauseOrderNo").val(orderNo);
+                detailWindow.center().open();
+            }
+       }
+    }
+    function popPause(e) {
+        var data = {
+            "orderNo": $("#PauseOrderNo").val(),
+            "pauseOperation": $("#PauseOperation").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/ProductionOrder/Pause/",
+            data: data,
+            cache: false,
+            success: function (data) {
+                if (data != "") {
+                    $('#PauseOrder').data('tWindow').close();
+                    var datas = {
+                        OrderNo: $('#OrderNo').val(),
+                        Flow: $('#Flow').val(),
+                        DateFrom: $('#DateFrom').val(),
+                        DateTo: $('#DateTo').val(),
+                        IsPause: $("#IsPause").is(':checked')
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "/ProductionOrder/PauseList/",
+                        data: datas,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $("#popPauseErrorsul").html(errorMessages);
+            }
+        });
+    }
+    function PopPauseOrderClick(e) {
+        $(e).attr("href", "#");
+        if (confirm("确定要暂停吗？")) {
+            var data = {
+                "orderNo": $(e).parent().parent().children().eq(0).text()
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                url: "/ProductionOrder/PopPauseOrder/",
+                data: data,
+                cache: false,
+                success: function (data) {
+                    var orderNo = data.orderNo;
+                    var Routing = data.Routing;
+                    var successMessage = data.successMessage;
+                    var errorMessage = data.errorMessage;
+                    var CurrentOperation = data.CurrentOperation;
+                    if (data.status.toString() == "1") {
+                        var data = {
+                            OrderNo: $('#OrderNo').val(),
+                            Flow: $('#Flow').val(),
+                            DateFrom: $('#DateFrom').val(),
+                            DateTo: $('#DateTo').val(),
+                            IsPause: $("#IsPause").is(':checked')
+                        };
+                        $.ajax({
+                            type: "post",
+                            dataType: "html",
+                            url: "/ProductionOrder/PauseList/",
+                            data: data,
+                            success: function (data, textStatus) {
+                                var $tGrid = $("#content");
+                                $($tGrid).html(data);
+                                $message.success(successMessage);
+                                $message.error(errorMessage);
+                            }
+                        });
+                    }
+                    else {
+                        var data = {
+                            controlName: "PauseOperation",
+                            Routing: Routing,
+                            CurrentOperation: CurrentOperation
+                        };
+                        $.ajax({
+                            type: "post",
+                            dataType: "html",
+                            url: "/Common/_OperationDropDownList/",
+                            data: data,
+                            success: function (data, textStatus) {
+                                $("#OperationDiv").html(data);
+                            }
+                        });
+                        $("#popPauseErrorsul").html('');
+                        var detailWindow = $("#PauseOrder").data("tWindow");
+                        $("#routing").find("input#PauseOrderNo").val(orderNo);
+                        detailWindow.center().open();
+                    }
+
+                }
+            });
+        } 
+    }
+
+</script>
+<form id="pauseListForm" action="/ProductionOrder/PauseList" target="_self" />
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Flow).Title(@Resources.ORD.OrderMaster.OrderMaster_Flow_Production);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.ReferenceOrderNo);
+            columns.Bound(o => o.ExternalOrderNo);
+            columns.Bound(o => o.TraceCode);
+            columns.Bound(o => o.OrderPriorityDescription);
+            columns.Bound(o => o.PartyFromName);
+            columns.Bound(o => o.CurrentOperation);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.OrderStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Command(
+                commands =>
+                {
+                    commands.Custom("Pause").Text("暂停")
+                        .HtmlAttributes(new { onClick = "PopPauseOrderClick(this)", id = "PopPauseOrder", href = "#" });
+                    //commands.Custom("Pause")
+                    //    .Text("暂停")
+                    //    .DataRouteValues(route => route.Add(o => o.OrderNo).RouteKey("orderNo"))
+                    //    .Ajax(true)
+                    //    .Action("PopPauseOrder", "ProductionOrder");
+                    //commands.Custom("Resume")
+                    // .Text("恢复")
+                    // .DataRouteValues(route => route.Add(o => o.OrderNo).RouteKey("orderNo"))
+                    // .Ajax(true)
+                    // .Action("PopResumeOrder", "ProductionOrder");
+                });
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxPauseOrderList", "ProductionOrder"))
+        .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding")
+            //  .OnRowDataBound("OrderMasterGrid_OnRowDataBound")
+            .OnComplete("onComplete"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    @{ Html.Telerik().Window()
+        .Name("PauseOrder")
+        .Title("暂停工序")
+        .Draggable(true)
+        .Scrollable(true)
+        .Resizable()
+        .Height(100)
+        .Width(300)
+        .Modal(true)
+       .Content(@<text>
+        <div class="validation-summary-errors">
+            <ul id="popPauseErrorsul">
+            </ul>
+        </div>
+        <div class="search" id="routing">
+            <div class="search-label">
+                <label for="OrderMaster_Operation">
+                    @Resources.ORD.OrderMaster.OrderMaster_Operation
+                </label>
+            </div>
+            <div id="OperationDiv" class="search-field">
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+            <div>
+                <input id="PauseOrderNo" type="hidden" value="@ViewBag.orderNo" />
+                <button type="button" id="btnPause" onclick="popPause();">
+                    @Resources.SYS.Global.Button_Pause</button>
+            </div>
+        </div>
+        </text>)
+        .Visible(false)
+        .Render();
+    }
+</fieldset>
+</form>

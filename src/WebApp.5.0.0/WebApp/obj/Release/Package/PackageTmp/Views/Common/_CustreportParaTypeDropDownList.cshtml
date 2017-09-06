@@ -1,0 +1,25 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string ajaxActionName = ViewBag.AjaxActionName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "ParaType_Change" : "EmptyChange";
+}
+@{
+    if (enable)
+    {
+    @(Html.Telerik().DropDownList()
+        .Name(name)
+        .HiddenInputHtmlAttributes(new { id = id })
+        .BindTo(Model)
+        .Enable(enable)
+            .ClientEvents(events => events.OnChange(onChangeName)))
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)     }
+    }
+}

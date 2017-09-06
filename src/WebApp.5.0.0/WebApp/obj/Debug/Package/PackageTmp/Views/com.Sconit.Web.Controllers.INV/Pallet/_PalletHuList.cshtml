@@ -1,0 +1,25 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.PalletHu>
+@using com.Sconit.Entity.ORD;
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PalletHuGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+          
+                 })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+                .Footer(false)
+            )
+</fieldset>
+

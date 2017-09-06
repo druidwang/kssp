@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="urn:sap-com:document:sap:soap:functions:mc-style" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:n1="urn:sap-com:document:sap:rfc:functions" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>
+    <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl" />
+  </wsdl:documentation>
+  <wsp:UsingPolicy wsdl:required="true" />
+  <wsp:Policy wsu:Id="BN_BN_ZWS_PPMES0004">
+    <saptrnbnd:OptimizedXMLTransfer uri="http://xml.sap.com/2006/11/esi/esp/binxml" xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/" wsp:Optional="true" />
+    <saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true" />
+    <wsp:ExactlyOne xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" />
+    <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true" />
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="BN_BN_ZWS_PPMES0004_SOAP12">
+    <saptrnbnd:OptimizedXMLTransfer uri="http://xml.sap.com/2006/11/esi/esp/binxml" xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/" wsp:Optional="true" />
+    <saptrnbnd:OptimizedMimeSerialization xmlns:saptrnbnd="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true" />
+    <wsp:ExactlyOne xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" />
+    <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true" />
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="IF_IF_ZWS_PPMES0004">
+    <sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
+      <sapsession:enableSession>false</sapsession:enableSession>
+    </sapsession:Session>
+    <sapcentraladmin:CentralAdministration xmlns:sapcentraladmin="http://www.sap.com/webas/700/soap/features/CentralAdministration/" wsp:Optional="true">
+      <sapcentraladmin:BusinessApplicationID>10604B9A4DED1ED3B4FD7B3925124F7C</sapcentraladmin:BusinessApplicationID>
+    </sapcentraladmin:CentralAdministration>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="OP_IF_OP_ZfunPpmes0004">
+    <sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
+    <sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
+    <saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
+    <saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions">
+      <xsd:simpleType name="char1">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="1" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char10">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="10" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char12">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="12" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char13">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="13" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char14">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="14" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char16">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="16" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char18">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="18" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char20">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="20" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char220">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="220" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char3">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="3" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char30">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="30" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char32">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="32" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char4">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="4" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char50">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="50" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="char8">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="8" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="numeric3">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="3" />
+          <xsd:pattern value="\d*" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="numeric6">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="6" />
+          <xsd:pattern value="\d*" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
+    <xsd:schema xmlns:n0="urn:sap-com:document:sap:rfc:functions" attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style">
+      <xsd:import namespace="urn:sap-com:document:sap:rfc:functions" />
+      <xsd:complexType name="ZstrPpmes0004">
+        <xsd:sequence>
+          <xsd:element name="Zmessc" type="n0:char20" />
+          <xsd:element name="Zmesln" type="n0:char4" />
+          <xsd:element name="Zptype" type="n0:char8" />
+          <xsd:element name="Lfsnr" type="n0:char16" />
+          <xsd:element name="Bldat" type="n0:char8" />
+          <xsd:element name="Budat" type="n0:char8" />
+          <xsd:element name="BwartH" type="n0:char3" />
+          <xsd:element name="LgortH" type="n0:char4" />
+          <xsd:element name="ErfmgH" type="n0:char13" />
+          <xsd:element name="Zcomnum" type="n0:char12" />
+          <xsd:element name="LmngaH" type="n0:char13" />
+          <xsd:element name="Xmnga" type="n0:char13" />
+          <xsd:element name="Grund" type="n0:char4" />
+          <xsd:element name="Zmesguid" type="n0:char18" />
+          <xsd:element name="Zcsrqsj" type="n0:char14" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Bapiret2">
+        <xsd:sequence>
+          <xsd:element name="Type" type="n0:char1" />
+          <xsd:element name="Id" type="n0:char20" />
+          <xsd:element name="Number" type="n0:numeric3" />
+          <xsd:element name="Message" type="n0:char220" />
+          <xsd:element name="LogNo" type="n0:char20" />
+          <xsd:element name="LogMsgNo" type="n0:numeric6" />
+          <xsd:element name="MessageV1" type="n0:char50" />
+          <xsd:element name="MessageV2" type="n0:char50" />
+          <xsd:element name="MessageV3" type="n0:char50" />
+          <xsd:element name="MessageV4" type="n0:char50" />
+          <xsd:element name="Parameter" type="n0:char32" />
+          <xsd:element name="Row" type="xsd:int" />
+          <xsd:element name="Field" type="n0:char30" />
+          <xsd:element name="System" type="n0:char10" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ZtPpmes0004">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="item" type="tns:ZstrPpmes0004" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Bapiret2T">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="item" type="tns:Bapiret2" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="ZfunPpmes0004">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ItPpmes0004" type="tns:ZtPpmes0004" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ZfunPpmes0004Response">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ItReturn" type="tns:Bapiret2T" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ZfunPpmes0004">
+    <wsdl:part name="parameters" element="tns:ZfunPpmes0004" />
+  </wsdl:message>
+  <wsdl:message name="ZfunPpmes0004Response">
+    <wsdl:part name="parameter" element="tns:ZfunPpmes0004Response" />
+  </wsdl:message>
+  <wsdl:portType name="ZWS_PPMES0004">
+    <wsdl:documentation>
+      <sapdoc:sapdoc xmlns:sapdoc="urn:sap:esi:documentation">
+        <sapdoc:docitem docURL="http://SHQVSAPP1.shenya.com:8001/sap/bc/esdt/docu/sd_text?sap-client=800&amp;sd_name=ZWS_PPMES0004" />
+      </sapdoc:sapdoc>
+    </wsdl:documentation>
+    <wsp:Policy>
+      <wsp:PolicyReference URI="#IF_IF_ZWS_PPMES0004" />
+    </wsp:Policy>
+    <wsdl:operation name="ZfunPpmes0004">
+      <wsp:Policy>
+        <wsp:PolicyReference URI="#OP_IF_OP_ZfunPpmes0004" />
+      </wsp:Policy>
+      <wsdl:input message="tns:ZfunPpmes0004" />
+      <wsdl:output message="tns:ZfunPpmes0004Response" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ZWS_PPMES0004" type="tns:ZWS_PPMES0004">
+    <wsp:Policy>
+      <wsp:PolicyReference URI="#BN_BN_ZWS_PPMES0004" />
+    </wsp:Policy>
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ZfunPpmes0004">
+      <soap:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:ZWS_PPMES0004:ZfunPpmes0004Request" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ZWS_PPMES0004_SOAP12" type="tns:ZWS_PPMES0004">
+    <wsp:Policy>
+      <wsp:PolicyReference URI="#BN_BN_ZWS_PPMES0004_SOAP12" />
+    </wsp:Policy>
+    <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ZfunPpmes0004">
+      <wsoap12:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:ZWS_PPMES0004:ZfunPpmes0004Request" style="document" />
+      <wsdl:input>
+        <wsoap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsoap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ZWS_PPMES0004">
+    <wsdl:port name="ZWS_PPMES0004" binding="tns:ZWS_PPMES0004">
+      <soap:address location="http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_ppmes0004/800/zws_ppmes0004/zws_ppmes0004" />
+    </wsdl:port>
+    <wsdl:port name="ZWS_PPMES0004_SOAP12" binding="tns:ZWS_PPMES0004_SOAP12">
+      <wsoap12:address location="http://SHQVSAPP1.shenya.com:8001/sap/bc/srt/rfc/sap/zws_ppmes0004/800/zws_ppmes0004/zws_ppmes0004" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

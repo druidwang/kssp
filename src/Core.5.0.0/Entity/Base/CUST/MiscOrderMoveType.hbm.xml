@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.CUST.MiscOrderMoveType, com.Sconit.Entity" table="CUST_MiscOrderMoveType" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="IOType" column="IOType"/>
+    <property name="SubType" column="SubType"/>
+    <property name="MoveType" column="MoveType" type="String" length="5"/>
+    <property name="CancelMoveType" column="CancelMoveType" type="String" length="5"/>
+    <property name="Description" column="Desc1" type="String" length="50"/>
+    <property name="CheckRecLoc" column="CheckRecLoc" type="Boolean"/>
+    <property name="CheckNote" column="CheckNote" type="Boolean"/>
+    <property name="CheckCostCenter" column="CheckCostCenter" type="Boolean"/>
+    <property name="CheckAsn" column="CheckAsn" type="Boolean"/>
+    <property name="CheckReserveNo" column="CheckReserveNo" type="Boolean"/>
+    <property name="CheckReserveLine" column="CheckReserveLine" type="Boolean"/>
+    <property name="CheckRefNo" column="CheckRefNo" type="Boolean"/>
+    <property name="CheckDeliverRegion" column="CheckDeliverRegion" type="Boolean"/>
+    <property name="CheckWBS" column="CheckWBS" type="Boolean"/>
+    <property name="CheckQualityType" column="CheckQualityType"/>
+    <property name="CheckEBELN" column="CheckEBELN" type="Boolean"/>
+    <property name="CheckEBELP" column="CheckEBELP" type="Boolean"/>
+    <property name="CheckFlow" column="CheckFlow" type="Boolean"/>
+  </class>
+</hibernate-mapping>

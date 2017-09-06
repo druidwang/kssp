@@ -1,0 +1,52 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPPriceList>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("SAPPriceListGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.LIFNR);
+            columns.Bound(o => o.WAERS);
+            columns.Bound(o => o.MATNR);
+            columns.Bound(o => o.BPRME);
+            columns.Bound(o => o.NETPR);
+            columns.Bound(o => o.MWSKZ);
+            columns.Bound(o => o.ERDAT);
+            columns.Bound(o => o.PRDAT);
+            columns.Bound(o => o.NORMB);
+            columns.Bound(o => o.BatchNo);
+            columns.Bound(o => o.StatusDesc);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSAPPriceListList", "SAPInterface"))
+                        .ClientEvents(events => events.OnDataBinding("SAPPriceList_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAPPriceList_OnDataBinding(e) {
+            e.data = {
+                BatchNo: $('#BatchNo').val(),
+                ItemCode: $('#ItemCode').val(),
+                SupplierCode: $('#SupplierCode').val(),
+                TransStartDate: $('#TransStartDate').val(),
+                TransEndDate: $("#TransEndDate").val(),
+                Status: $("input[name='Status']:checked").val()
+            }; 
+        } 
+    </script>
+</fieldset>

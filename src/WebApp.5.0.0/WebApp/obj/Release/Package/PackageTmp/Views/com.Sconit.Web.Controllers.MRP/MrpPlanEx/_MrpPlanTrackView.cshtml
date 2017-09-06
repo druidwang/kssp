@@ -1,0 +1,192 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@using com.Sconit.CodeMaster;
+@using com.Sconit.Utility;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpExSectionPlan>
+@{  
+    var startDate = Model.Select(p => p.StartTime).Min().AddHours(4).Date;
+    startDate = DateTimeHelper.GetStartTime(TimeUnit.Week, startDate).Date;
+    var endDate = DateTimeHelper.GetEndTime(TimeUnit.Week, startDate).Date.AddDays(1);
+    var planHeadDic = new Dictionary<DateTime, DayOfWeek>();
+    while (startDate <= endDate)
+    {
+        planHeadDic.Add(startDate, startDate.DayOfWeek);
+        startDate = startDate.AddDays(1);
+    }
+    var planBodyList = Model.GroupBy(p => p.ProductLine, (k, g) => new { Flow = k, List = g.ToList() }).OrderBy(p => p.Flow).ToList();
+}
+@Html.Partial("_AjaxMessage")
+<table border="0" id="datatable" style="width: 100%">
+    <thead>
+        <tr style="text-align: center">
+            <th rowspan="2" style="min-width: 40px">
+                生产线
+            </th>
+            <th>
+                星期一
+            </th>
+            <th colspan="2">@planHeadDic.ElementAt(0).Key.ToString("yyyy-MM-dd")
+            </th>
+            <th>
+                星期二
+            </th>
+            <th colspan="2">@planHeadDic.ElementAt(1).Key.ToString("yyyy-MM-dd")
+            </th>
+            <th>
+                星期三
+            </th>
+            <th colspan="2">@planHeadDic.ElementAt(2).Key.ToString("yyyy-MM-dd")
+            </th>
+            <th>
+                星期四
+            </th>
+            <th colspan="2">@planHeadDic.ElementAt(3).Key.ToString("yyyy-MM-dd")
+            </th>
+            <th>
+                星期五
+            </th>
+            <th colspan="2">@planHeadDic.ElementAt(4).Key.ToString("yyyy-MM-dd")
+            </th>
+            <th>
+                星期六
+            </th>
+            <th colspan="2">@planHeadDic.ElementAt(5).Key.ToString("yyyy-MM-dd")
+            </th>
+            <th>
+                星期日
+            </th>
+            <th colspan="2">@planHeadDic.ElementAt(6).Key.ToString("yyyy-MM-dd")
+            </th>
+            <th>
+                溢出
+            </th>
+            <th colspan="2">@planHeadDic.ElementAt(7).Key.ToString("yyyy-MM-dd") ~
+            </th>
+        </tr>
+        <tr>
+            @foreach (var planHead in planHeadDic)
+            {
+                <th style="min-width: 38px">
+                    断面
+                </th>
+                <th style="min-width: 70px; max-width: 70px">
+                    描述
+                </th>
+                <th style="min-width: 28px">
+                    班数
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var planBody in planBodyList)
+        {
+            var list = new List<List<MrpExSectionPlan>>();
+            var lastPlanDate = planHeadDic.Last().Key;
+            foreach (var planHead in planHeadDic)
+            {
+                if (planHead.Key == lastPlanDate)
+                {
+                    var plans = planBody.List.Where(p => p.PlanDate >= planHead.Key)
+                        .GroupBy(p => p.Section, (k, g) => new { k, g }).Select(p =>
+                        {
+                            var plan = p.g.First();
+                            plan.ShiftQty = p.g.Sum(q => q.ShiftQty);
+                            return plan;
+                        }).ToList();
+                    list.Add(plans);
+                }
+                else
+                {
+                    list.Add(planBody.List.Where(p => p.PlanDate == planHead.Key).ToList());
+                }
+            }
+            var rowspan = list.Max(p => p.Count());
+            <tr>
+                <td rowspan="@rowspan">@planBody.Flow
+                </td>
+                @for (int i = 0; i < rowspan; i++)
+                {
+                    if (i > 0)
+                    {
+                        Output.Write("<tr>");
+                    }
+                    foreach (var planList in list)
+                    {
+                        if (i < planList.Count())
+                        {
+                            var plan = planList[i];
+                            var itemCode = plan.Section;
+                            if (itemCode == "290112" && @planBody.Flow == "EX07")
+                            { 
+                            
+                            }
+                            //if (plan.Section == "299999")
+                            //{
+                            //    itemCode = plan.Remark;
+                            //}
+                            if (string.IsNullOrWhiteSpace(plan.PrevProductType)  || plan.PrevShiftQty==0) 
+                            {//添加
+                                <text>
+                                <td  style="background-color:YellowGreen"  >@itemCode
+                                </td>
+                                <td  style="background-color:YellowGreen"  >@plan.SectionDescription
+                                </td>
+                                <td style="background-color:YellowGreen">@string.Format("{0}{1}", plan.ProductType.ToString(), plan.ShiftQty)
+                                </td>
+                                </text>
+
+                            }
+                            else if (string.IsNullOrWhiteSpace(plan.ProductType) || plan.ShiftQty == 0)
+                            {//删除
+                                <text>
+                                <td  style="background-color:Orange"  >@itemCode
+                                </td>
+                                <td  style="background-color:Orange"  >@plan.SectionDescription
+                                </td>
+                                <td style="background-color:Orange"  title="@string.Format("{0}{1}", plan.PrevProductType.ToString(), plan.PrevShiftQty)">@string.Format("{0}{1}", plan.PrevProductType.ToString(), 0)
+                                </td>
+                                </text>
+
+                            }
+                            else if (plan.PrevProductType + plan.PrevShiftQty != plan.ProductType + plan.ShiftQty)
+                            {//变更
+                                <text>
+                                <td>@itemCode
+                                </td>
+                                <td >@plan.SectionDescription
+                                </td>
+                                <td style="background-color:Yellow" title="@string.Format("{0}{1}", plan.PrevProductType.ToString(), plan.PrevShiftQty)">@string.Format("{0}{1}", plan.ProductType.ToString(), plan.ShiftQty)
+                                </td>
+                                </text>
+
+                            }
+                            else
+                            {//保持不变
+                                <text>
+                                <td>@itemCode
+                                </td>
+                                <td>@plan.SectionDescription
+                                </td>
+                                <td>@string.Format("{0}{1}", plan.ProductType.ToString(), plan.ShiftQty)
+                                </td>
+                                </text>
+                            }
+                        }
+                        else
+                        {
+                            <text>
+                            <td>&nbsp
+                            </td>
+                            <td>&nbsp
+                            </td>
+                            <td>&nbsp
+                            </td>
+                            </text>
+                        }
+                    }
+                    Output.Write("</tr>");
+                }
+            </tr>
+        }
+    </tbody>
+</table>

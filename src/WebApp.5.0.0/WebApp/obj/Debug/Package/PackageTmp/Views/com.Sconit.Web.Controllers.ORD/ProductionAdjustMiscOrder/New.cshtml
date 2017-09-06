@@ -1,0 +1,197 @@
+﻿@model com.Sconit.Entity.ORD.MiscOrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProductionAdjustMiscOrder_New" });
+}
+<script type="text/javascript">
+    function onCreate() {
+        //debugger
+        var grid = $("#MiscOrderDetailGrid").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            return;
+        }
+
+        if ($("#EffectiveDate").val() == "") {
+            $message.error('生效日期为必填项。');
+            return;
+        }
+
+        if ($("#Location").val() == "") {
+            $message.error('库位为必填项。');
+            return;
+        }
+
+        if ($("#MoveType").val() == "") {
+            $message.error('移动类型为必填项。');
+            return;
+        }
+
+        var miscmstr = {
+            "MoveType": $("#MoveType").val(),
+            "Location": $("#Location").val(),
+            "EffectiveDate": $("#EffectiveDate").val(),
+            "Note": $("#Note").val(),
+            "QualityType": $("#QualityType").val()
+        }
+
+        var sequences = "";
+        var items = "";
+        var qtys = "";
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim(row[0].childNodes[5].innerText)) != 0) {
+                if (items != "") {
+                    sequences += ",";
+                    items += ",";
+                    qtys += ",";
+                }
+                sequences += $.trim(row[0].childNodes[0].innerText);
+                items += $.trim(row[0].childNodes[1].innerText);
+                qtys += $.trim(row[0].childNodes[5].innerText);
+            }
+        }
+
+        var made = {
+            "sequences": sequences,
+            "items": items,
+            "qtys": qtys
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProductionAdjustMiscOrder/CreateMiscOrder/",
+            data: $.extend(miscmstr, made),
+            cache: false,
+            success: function (data) {
+                $("#content").html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function MoveType_Change(e) {
+
+    }
+    function onUpload(e) {
+        e.data = { MiscOrderNo: "NotRelyOnMiscOrdNo"
+        };
+
+    }
+    function onSuccess(e) {
+        TelerikonUpload_OnSuccess(e);
+        var data = {
+            "MiscOrderNo": $("#MiscOrderNo").val(),
+            "MoveType": $("#MoveType").val(),
+            "Status": $("#Status").val()
+        }
+        var url = "";
+        url = "/CostCenterMiscOrder/_MiscOrderDetail/";
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: url,
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var $tGrid = $("#divOutMiscOrderDetailList");
+                $($tGrid).html(data);
+            }
+        });
+    }
+</script>
+
+<fieldset>
+    <legend>@Resources.ORD.IpMaster.IpMaster_BaseInfo</legend>
+    <div class="editor">
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.MoveType)
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_MoveTypeDropDownList", "Common", new
+                    {
+                        //IOType = (int)com.Sconit.CodeMaster.MiscOrderType.GI,
+                        SubType = (int)com.Sconit.CodeMaster.MiscOrderSubType.SY05,
+                        isChange = false,
+                        controlName = "MoveType",
+                        blankOptionValue = "",
+                        selectedValue = Model != null && Model.MoveType != null ? Model.MoveType : string.Empty
+                    });
+            }
+            @Html.ValidationMessageFor(model => model.MoveType)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.EffectiveDate)
+        </div>
+        <div class="editor-field-2">
+            @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EffectiveDate").Value(DateTime.Now)
+             .Min(DateTime.Now.AddDays(-30)).Max(DateTime.Now)
+            .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            @Html.ValidationMessageFor(model => model.EffectiveDate)
+        </div>
+        <div class="editor-label-2">
+              @Html.LabelFor(model => model.Location)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_ProductionAdjustLocationComboBox", "Common", new
+                {
+                    controlName = "Location",
+                    selectedValue = Model != null ? Model.Location : null,
+                });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Note)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.Note)
+        </div>
+         <div class="editor-label-2">
+            @Html.LabelFor(model => model.QualityType)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                   {
+                       code = com.Sconit.CodeMaster.CodeMaster.QualityType,
+                       controlName = "QualityType",
+                       selectedValue = Model != null ? ((int)Model.QualityType).ToString() : null,
+                       //includeBlankOption = true
+                   });
+            }
+        </div>
+        @{
+                <div class="search-label">
+                    <label>
+                        <a href='/Resource/Templates/UploadTemplate/ImportAdjustMiscOrder.xls'>@Resources.EXT.PageLan.TemplateDownload</a>
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().Upload()
+                    .Name("attachments")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("ImportMiscOrderDetail", "ProductionAdjustMiscOrder")
+                    .AutoUpload(true))
+                    .ClientEvents(e => e.OnSuccess("onSuccess").OnUpload("onUpload")))
+                </div>
+            }
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_ProductionAdjustMiscOrder_New", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"onclick","onCreate()"}
+	        })
+        </div>
+    </div>
+</fieldset>
+@{
+    Html.RenderAction("_MiscOrderDetail", "ProductionAdjustMiscOrder", new { miscOrderNo = string.Empty });
+}

@@ -1,0 +1,7 @@
+@model Nullable<System.DateTime> 
+
+@(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm")
+        .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty))
+        .HtmlAttributes(new { id = ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty) + "_wrapper" })
+        .Value(Model > DateTime.MinValue? Model : DateTime.Now)
+)

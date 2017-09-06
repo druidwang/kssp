@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.MSG.MessageQueue, com.Sconit.Entity" table="MSG_MessageQueue" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="MethodName" column="MethodName" type="String" length="50"/>	
+		<property name="ParamValue" column="ParamValue" type="String" length="50"/>	
+		<property name="CreateTime" column="CreateTime" type="DateTime" update="false" insert="false"/>	
+		<property name="Status" column="Status" type="Int32"/>		
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+		<property name="ErrorCount" column="ErrorCount" type="Int32"/>		
+  	</class>
+</hibernate-mapping>

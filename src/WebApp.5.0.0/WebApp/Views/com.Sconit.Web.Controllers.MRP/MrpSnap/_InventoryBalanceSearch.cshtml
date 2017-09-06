@@ -1,0 +1,72 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.MRP
+<fieldset>
+    @using (Html.BeginForm("InventoryBalanceList", "MrpSnap"))
+    {   
+        <div class="search">
+           <div class="search-label">
+                <label>
+                   @Resources.MRP.MrpFlowDetail.MrpFlowDetail_SnapTime
+                </label>
+            </div>
+             <div class="search-field">
+                 @{
+           Html.RenderAction("_MrpSnapMasterComboBox", "Common", new
+               {
+                   controlName = "SnapTime",
+                   SnapType = com.Sconit.CodeMaster.SnapType.Mrp,
+                   selectedValue = TempData["InventoryBalanceSearchModel"] != null ? ((InventoryBalanceSearchModel)TempData["InventoryBalanceSearchModel"]).SnapTime : DateTime.MinValue
+
+               });
+                }
+            </div>
+               <div class="search-label">
+                <label>
+                 
+                </label>
+            </div>
+               <div class="search-field">
+              
+            </div>
+             <div class="search-label">
+                <label>
+                    @Resources.MRP.InventoryBalance.InventoryBalance_Location
+                </label>
+            </div>
+             <div class="search-field">
+                    @{
+               Html.RenderAction("_LocationComboBox", "Common", new
+               {
+                   controlName = "Location",
+                   selectedValue = TempData["InventoryBalanceSearchModel"] != null ? ((InventoryBalanceSearchModel)TempData["InventoryBalanceSearchModel"]).Location : string.Empty
+
+               });
+                }
+            </div>
+
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.InventoryBalance.InventoryBalance_Item
+                </label>
+            </div>
+             <div class="search-field">
+                @{
+               Html.RenderAction("_ItemComboBox", "Common",
+                   new
+                   {
+                       controlName = "Item",
+                       selectedValue = TempData["InventoryBalanceSearchModel"] != null ? ((InventoryBalanceSearchModel)TempData["InventoryBalanceSearchModel"]).Item : string.Empty
+                   }); 
+                }
+            </div>
+            
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+           <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>
+

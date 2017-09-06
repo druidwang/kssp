@@ -1,0 +1,372 @@
+﻿@using com.Sconit.Entity.ORD
+@using com.Sconit.Web.Models.SearchModels.ORD
+<fieldset>
+    @using (Html.BeginForm("DetailNew", "PickList"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="">
+                    @Resources.ORD.OrderMaster.OrderMaster_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).OrderNo : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_PartyFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+                controlName = "PartyFrom",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_PartyTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+            new
+            {
+                controlName = "PartyTo",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).PartyTo : string.Empty
+            });
+                }
+            </div>
+           
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_LocationFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "LocationFrom",
+           
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).LocationFrom : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label" >
+                <label for="Hu_HuId">
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_LocationTo
+                </label>
+            </div>
+            <div class="search-field">
+            <div id="divLocationFromTo">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "LocationFromTo",
+
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).LocationFromTo : string.Empty
+
+        });
+                }
+                </div>
+            </div>
+            <div class="search-label" >
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_LocationTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "LocationTo",
+           
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).LocationTo : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label" >
+                <label for="Hu_HuId">
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_LocationTo
+                </label>
+            </div>
+            <div class="search-field">
+            <div id="divLocationToTo">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "LocationToTo",
+
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).LocationToTo : string.Empty
+
+        });
+                }
+                </div>
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+                 .Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+                 .Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateTo : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+             <div class="search-label">
+                <label for="OrderMaster_Item">
+                    @Resources.ORD.OrderMaster.OrderMaster_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Item : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.EXT.PageLan.ShowRows
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PageSize", ViewBag.PageSize != null ? (int)ViewBag.PageSize : 20, new { onblur = "Onblur(this)", onfocus = "OnFocus(this)" })
+                <span id="span" style="display: none"><font color="red">行号必须为大于0小于200。</font></span>
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch" onclick="onSearchClick()">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_Create, "Url_PickList_New", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnCreate"},
+                {"needconfirm","true"},
+                {"style","display:none"},
+                {"onclick","onSubmit()"}
+	        })
+        </div>
+        <div style="display: none">
+            <table id="tbl">
+                <tr id="row">
+                </tr>
+            </table>
+            <table id="tbVal">
+            </table>
+        </div>
+        
+        <div id="Result">
+        </div>
+    }
+    <script type="text/javascript">
+//        function LocationFromTocomboBoxLoad(e) {
+//            var data = {
+//                "controlName": "LocationFromTo",
+//                "selectedValue": $("#LocationFromTo").val(),
+//                "enable": e
+//            }
+//            $.ajax({
+//                type: "Get",
+//                dataType: "html",
+//                data: data,
+//                url: "/Common/_LocationComboBox/",
+//                cache: false,
+//                success: function (data, textStatus) {
+//                    $("#divLocationFromTo").html(data);
+//                }
+//            });
+//        }
+//        function LocationToTocomboBoxLoad(e) {
+//            var data = {
+//                "controlName": "LocationToTo",
+//                "selectedValue": $("#LocationToTo").val(),
+//                "enable": e
+//            }
+//            $.ajax({
+//                type: "Get",
+//                dataType: "html",
+//                data: data,
+//                url: "/Common/_LocationComboBox/",
+//                cache: false,
+//                success: function (data, textStatus) {
+//                    $("#divLocationToTo").html(data);
+//                }
+//            });
+//        }
+//        $(function () {
+//            var LocationFromIndex = $("#LocationFrom").data("tComboBox").index;
+//            if (LocationFromIndex == undefined || LocationFromIndex == -1) {
+//                LocationFromTocomboBoxLoad(false);
+//            }
+//            var LocationToIndex = $("#LocationTo").data("tComboBox").index;
+//            if (LocationToIndex == undefined || LocationToIndex == -1) {
+//                LocationToTocomboBoxLoad(false);
+//            }
+//        });
+
+//        function LocationFrom_Change() {
+//            var combobox = $(this).data("tComboBox");
+//            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+//                
+//                combobox.value("");
+//                combobox.reload();
+//                LocationFromTocomboBoxLoad(false);
+//            }
+//            else {
+//                LocationFromTocomboBoxLoad(true);
+//            }
+//        }
+
+//        function LocationTo_Change() {
+
+//            var combobox = $(this).data("tComboBox");
+//            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+//              
+//                combobox.value("");
+//                combobox.reload();
+//                LocationToTocomboBoxLoad(false);
+//            }
+//            else {
+//                LocationToTocomboBoxLoad(true);
+//            }
+//        }
+
+        function onSearchClick() {
+           
+            
+            if ($('#LocationTo').val() == "" && $('#LocationToTo').val()!="") {
+                $message.error("收货方库位填写不正确。如 从 A → B 或 A →");
+                return;
+            }
+            if ($('#LocationFrom').val() == "" && $('#LocationFromTo').val() != "") {
+                $message.error("发货方库位填写不正确。如 从 A → B 或 A →");
+                return;
+            }
+            var data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                PartyTo: $('#PartyTo').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                Item: $('#Item').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                LocationTo: $('#LocationTo').val(),
+                LocationToTo: $('#LocationToTo').val(),
+                LocationFrom: $('#LocationFrom').val(),
+                LocationFromTo: $('#LocationFromTo').val(),
+                PageSize: $("#PageSize").val()
+            }
+             $.ajax({
+                type: "Post",
+                dataType: "html",
+                data: data,
+                url: "/PickList/DetailNew/",
+                cache: false,
+                success: function (data, textStatus) {
+                    var $tGrid = $("#content");
+                    $($tGrid).html(data);
+                }
+            });
+        }
+
+        function Onblur(e) {
+            if (e.value != null && e.value != "") {
+                if (isNaN(e.value) || e.value <= 0) {
+                    $("#span").attr("style", "display:inline");
+                    $("#PageSize").val("");
+                }
+            }
+        }
+        function OnFocus(e) {
+            $("#span").attr("style", "display:none");
+        }
+
+        function onSubmit(e) {
+            var grid = $("#OrderDetail").data("tGrid");
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            var idStr = "";
+            var qtyStr = "";
+            var $checkRecords = $("input[name='checkedRecords']");
+            $checkRecords.each(function (a, b) {
+                if ($(b).attr("checked")) {
+                    if (idStr == "") {
+                        idStr = $(b).val();
+                        qtyStr = $(b).parent().parent().find("#CurrentPickQty").val();
+                    } else {
+                        idStr += "," + $(b).val();
+                        qtyStr += "," + $(b).parent().parent().find("#CurrentPickQty").val();
+                    }
+                }
+            });
+
+            var data = {
+                "idStr": idStr,
+                "qtyStr": qtyStr,
+                "OrderNo": $('#OrderNo').val(),
+                "Item": $('#Item').val(),
+                "PartyTo": $("#PartyTo").val(),
+                "Flow": $("#Flow").val()
+            }
+
+            $.ajax({
+                type: "Post",
+                dataType: "html",
+                data: data,
+                url: "/PickList/CreatePickList/",
+                cache: false,
+                success: function (data, textStatus) {
+                    var $tGrid = $("#content");
+                    $($tGrid).html(data);
+                },
+
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                    
+
+                }
+            });
+        }
+    </script>
+</fieldset>

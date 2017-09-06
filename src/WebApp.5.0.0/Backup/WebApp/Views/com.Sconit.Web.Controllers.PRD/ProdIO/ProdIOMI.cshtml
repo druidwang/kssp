@@ -1,0 +1,122 @@
+﻿@using com.Sconit.Web.Models.SearchModels.ORD
+@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Production_ProdIOMI" });
+}
+<script type="text/javascript">
+    function CodeMaster_Change(e) {
+        if (e.value != "") {
+            $('#Flow').data('tComboBox').value('');
+            $('#Flow').data('tComboBox').text('');
+            $("#Flow").data("tComboBox").reload();
+        }
+    }
+    function Flow_DataBinding(e) {
+        e.data =
+        {
+            resourceGroup: $("#ResourceGroup").val()
+        }
+    }
+</script>
+<fieldset>
+    <div class="search">
+        @*<div class="search-label">
+            <label>
+                资源组
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CodeMasterComboBox", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.ResourceGroup,
+                    controlName = "ResourceGroup",
+                    isChange = true
+                });
+            }
+        </div>*@
+        <div class="editor-label-2">
+            <label>
+                @Resources.EXT.PageLan.ProductionLine
+                @Html.Hidden("ResourceGroup", (int)com.Sconit.CodeMaster.ResourceGroup.MI)
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                    isChange = false,
+                    isCreateOrder = false,
+                    resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.MI,
+                    isMrp = true
+                });
+            }
+         </div>
+        <div class="search-label">
+            <label>
+            </label>
+        </div>
+        <div class="search-field">
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.ORD.OrderMaster.OrderMaster_DateFrom
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("DateFrom")
+            .Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+            .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.ORD.OrderMaster.OrderMaster_DateTo
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("DateTo")
+                .Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateTo : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        </div>
+
+    <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="doSearch(this)">
+            @Resources.SYS.Global.Button_Search</button>
+    </div>
+</fieldset>
+<div id="divLog">
+</div>
+<script type="text/javascript">
+    function doSearch() {
+        $("#divLog").html("Loading...");
+        var data = {
+            ResourceGroup : $('#ResourceGroup').val(),
+            Flow : $('#Flow').val(),
+            DateFrom : $('#DateFrom').val(),
+            DateTo : $('#DateTo').val(),
+            SPName : "USP_Report_InPutOutPut_MI",
+            searchType: 1
+        };
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/ProdIO/_GetProductionInOut/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>

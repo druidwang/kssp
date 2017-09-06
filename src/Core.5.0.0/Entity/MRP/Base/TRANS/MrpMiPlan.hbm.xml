@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.MrpMiPlan, com.Sconit.Entity" table="MRP_MrpMiPlan" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="assigned" />
+    </id>
+    <property name="ProductLine" column="ProductLine" type="String"  length="50" />
+    <property name="Item" column="Item" type="String"  length="50" />
+    <property name="PlanDate" column="PlanDate" type="DateTime"  />
+    <property name="LocationFrom" column="LocationFrom" type="String"  length="50" />
+    <property name="LocationTo" column="LocationTo" type="String"  length="50" />
+    <property name="PlanVersion" column="PlanVersion" type="DateTime"  />
+    <property name="Sequence" column="Sequence" type="Int32"/>
+    <property name="WorkHour" column="WorkHour" type="Double"/>
+    <property name="UnitCount" column="UnitCount" type="Double"/>
+    <property name="Qty" column="Qty" type="Double"/>
+    <property name="AdjustQty" column="AdjustQty" type="Double"/>
+    <property name="MrpPriority" column="MrpPriority" type="Double"/>
+    <property name="MaxStock" column="MaxStock" type="Double"/>
+    <property name="SafeStock" column="SafeStock" type="Double"/>
+    <property name="InvQty" column="InvQty" type="Double"/>
+    <property name="Bom" column="Bom" type="String"  length="50" />
+    <property name="Uom" column="Uom" type="String"  length="50" />
+    <!--<property name="ParentItem" column="ParentItem" type="String" length="50" />
+    <property name="SourceFlow" column="SourceFlow" type="String" length="50" />
+    <property name="SourceParty" column="SourceParty" type="String" length="50" />-->
+    <property name="HuTo" column="HuTo" type="String" length="50" />
+    <property name="BatchSize" column="BatchSize" type="Double"/>
+    <property name="Logs" column="Logs" type="String"  length="4000" />
+  </class>
+</hibernate-mapping>

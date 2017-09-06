@@ -1,0 +1,45 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.WMS.PickGroup
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PickGroup_View" });
+}
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.WMS.PickGroup.PickGroup_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.PickGroupCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.PickGroupCode)
+                @Html.ValidationMessageFor(model => model.PickGroupCode)
+            </div>
+           <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBoxFor(model => model.IsActive)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsAutoAssign)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBoxFor(model => model.IsAutoAssign)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/PickGroup/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

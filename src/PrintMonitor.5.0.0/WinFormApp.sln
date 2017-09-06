@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SconitPrintMonitor", "SconitPrintMonitor.csproj", "{D94B24BD-F2F9-4706-AC84-046A67188635}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D94B24BD-F2F9-4706-AC84-046A67188635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94B24BD-F2F9-4706-AC84-046A67188635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94B24BD-F2F9-4706-AC84-046A67188635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94B24BD-F2F9-4706-AC84-046A67188635}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

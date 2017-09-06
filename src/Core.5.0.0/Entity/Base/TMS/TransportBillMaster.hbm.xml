@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.TMS.TransportBillMaster, com.Sconit.Entity" table="TMS_BillMstr" lazy="false">
+		<id name="BillNo" column="BillNo" type="String" unsaved-value="null" >
+			<generator class="assigned" />
+		</id>
+		<property name="Type" column="Type"/>
+		<property name="SubType" column="SubType"/>
+		<property name="Status" column="Status"/>
+		<property name="ExternalBillNo" column="ExtBillNo" type="String" length="50" />
+		<property name="IsIncludeTax" column="IsIncludeTax" type="Boolean"  />
+		<property name="TaxCode" column="TaxCode" type="String" length="50" />
+		<property name="RefBillNo" column="RefBillNo" type="String" length="50" />
+		<property name="BillAddress" column="BillAddr" type="String" length="50" />
+		<property name="BillAddressDescription" column="BillAddrDesc" type="String" length="255"/>
+		<property name="Currency" column="Currency" type="String" length="50" />
+		<property name="Discount" column="Discount" type="Decimal"  />
+		<property name="CarrierDescription" column="CarrierDesc" type="String" length="255" />
+		<property name="Carrier" column="Carrier" type="String" length="50" />
+		<property name="BillAmount" column="BillAmount" type="Decimal"  />
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+		<property name="CancelDate" column="CancelDate" type="DateTime"  />
+		<property name="CancelUserName" column="CancelUserNm" type="String" length="255" />
+		<property name="CancelUser" column="CancelUser" type="Int32" />
+		<property name="SubmitDate" column="SubmitDate" type="DateTime"  />
+		<property name="SubmitUser" column="SubmitUser" type="Int32"/>
+		<property name="SubmitUserName" column="SubmitUserNm" type="String" length="255" />
+		<property name="VoidDate" column="VoidDate" type="DateTime"  />
+		<property name="VoidUserName" column="VoidUserNm" type="String" length="255" />
+		<property name="VoidUser" column="VoidUser" type="Int32"/>
+		<property name="CloseUserName" column="CloseUserNm" type="String" length="255" />
+		<property name="CloseDate" column="CloseDate" type="DateTime"  />
+		<property name="CloseUser" column="CloseUser" type="Int32"/>
+		<property name="InvoiceNo" column="InvoiceNo" type="String" length="50" />
+		<property name="InvoiceDate" column="InvoiceDate" type="DateTime" />
+	</class>
+</hibernate-mapping>

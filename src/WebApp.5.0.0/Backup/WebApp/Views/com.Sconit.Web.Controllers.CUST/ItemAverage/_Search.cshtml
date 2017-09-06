@@ -1,0 +1,35 @@
+﻿@using com.Sconit.Web.Models.SearchModels.CUST
+@using com.Sconit.Entity.CUST
+<fieldset>
+    @using (Html.BeginForm("List", "ItemAverage"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="FailCode_Code">
+                    @Resources.CUST.ItemTrace.ItemTrace_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+                               {
+                                   controlName = "Item",
+                                   selectedValue = TempData["ItemAverage"] != null ? ((ItemAverageSearchModel)TempData["ItemAverage"]).Item : string.Empty
+                                });
+                }
+            </div>
+            
+        </div>
+        <div class="search-footer">
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_ItemAverage_View", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnAdd"},
+            {"onclick","location.href='"+@Url.Content("~/ItemAverage/New")+"'"}
+	    })
+        </div>
+
+    }
+</fieldset>

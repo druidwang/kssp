@@ -1,0 +1,97 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label for="Item_Code">
+                @Resources.MD.UomConvert.UomConvert_Uom
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_UomDropDownList", "Common", new
+                {
+                    controlName = "Uom",
+                    includeBlankOption = true,
+                    selectedValue = TempData["UomConversionSearchModel"] != null ? ((UomConversionSearchModel)TempData["UomConversionSearchModel"]).Uom : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label for="Item_Code">
+                @Resources.MD.UomConvert.UomConvert_Item
+            </label>
+        </div>
+        <div class="search-field">
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_ItemComboBox", "Common", new
+                    {
+                        controlName = "ItemCode",
+                        selectedValue = TempData["UomConversionSearchModel"] != null ? ((UomConversionSearchModel)TempData["UomConversionSearchModel"]).ItemCode : string.Empty
+                    });
+                }
+            </div>
+        </div>
+    </div>
+    <div class="search-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="btnSearch" onclick="btnSearchUomConv_Click();">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+
+    @Html.Button(Resources.SYS.Global.Button_New, "Url_Uom_Edit", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew"},
+            {"needconfirm","false"},
+            {"onclick","btnNewUomConv_Click()"}
+	    })
+    @*<button type="button" id="btnNew" onclick="btnNewUomConv_Click();">
+            @Resources.SYS.Global.Button_New</button>*@
+    </div>
+</fieldset>
+<script type="text/javascript">
+    function btnNewUomConv_Click() {
+        var data = {
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Uom/_UomConvertNew/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnSearchUomConv_Click() {
+        
+        var data = {
+            "ItemCode": $('#ItemCode').val(),
+            "Uom": $("#Uom").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Uom/_UomConvertList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+    function ExportClick() {
+        
+        location.href = '/Uom/ExportXLS/?Uom=' + $('#Uom').val()
+            + '&ItemCode=' + $('#ItemCode').val()
+    }
+</script>

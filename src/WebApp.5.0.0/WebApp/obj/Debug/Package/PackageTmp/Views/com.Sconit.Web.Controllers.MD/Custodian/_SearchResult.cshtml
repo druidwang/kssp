@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MD.Custodian>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("CustodianGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.UserCode);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Item);
+            columns.Command(commands =>
+            {
+                commands.Custom("Delete")
+                        .Text("删除")
+                        .DataRouteValues(route => route.Add(o => o.Id).RouteKey("Id"))
+                        .Ajax(true)
+                        .Action("_DeleteCustodian", "Custodian");
+            });
+                 })   
+                .Scrollable(c => c.Enabled(false))
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Custodian"))
+                        .ClientEvents(events =>
+                        { 
+                            events.OnDataBinding("CustodianGrid_OnDataBinding");
+                            events.OnComplete("onComplete");
+                        })
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function CustodianGrid_OnDataBinding(e) {
+            e.data = {
+                UserCode: $('#UserCode').val()
+            };
+        }
+
+        function onComplete(e) {
+            if (e.name == "Delete") {
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/Custodian/List/",
+                    data:{"UserCode": e.response.UserCode,"isFromList":true },
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#content");
+                        $($tGrid).html(data);
+                    }
+                });
+            }
+        }
+    </script>
+</fieldset>

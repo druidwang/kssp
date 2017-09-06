@@ -1,0 +1,90 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.FMS.FacilityMaintainPlan
+@Html.Partial("_AjaxMessage")
+@using (Html.BeginForm("_FacilityMaintainPlanNew", "FacilityMaster"))
+{
+    <fieldset>
+        <legend>@Resources.FMS.FacilityMaintainPlan.FacilityMaintainPlan_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label for="Location_Code">
+                    @Resources.FMS.FacilityMaintainPlan.FacilityMaintainPlan_FCID
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.FCID)
+                 @Html.HiddenFor(model => model.FCID)
+            </div>
+           
+            <div class="editor-label-2">
+                <label for="LocationArea_Code">
+                    @Resources.FMS.FacilityMaintainPlan.FacilityMaintainPlan_Code
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+               Html.RenderAction("_MaintainPlanComboBox", "Common", new
+               {
+                   controlName = "Code",
+                   includeBlankOption = true,
+                   coupled = false
+                  
+               });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="LocationArea_Name">
+                    @Resources.FMS.FacilityMaintainPlan.FacilityMaintainPlan_StartDate
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.StartDate)
+            </div>
+            <div class="editor-label-2">
+                <label for="FacilityMaintainPlan_IsActive">
+                    @Resources.FMS.FacilityMaintainPlan.FacilityMaintainPlan_StartQty
+                </label>
+            </div>
+            <div class="editor-field-2">
+               @Html.EditorFor(model => model.StartQty)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <input type="submit" value="@Resources.SYS.Global.Button_New" />
+            <button type="button" id="btnBack" onclick="btnBackFacilityMaintainPlanList_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+<script language="javascript" type="text/javascript">
+    function btnBackFacilityMaintainPlanList_Click() {
+        var data = {
+            "id": $("#FCID").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/FacilityMaster/_FacilityMaintainPlan/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("form[action$='_FacilityMaintainPlanNew']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(response);
+            });
+            return false;
+        });
+    });
+    
+
+</script>

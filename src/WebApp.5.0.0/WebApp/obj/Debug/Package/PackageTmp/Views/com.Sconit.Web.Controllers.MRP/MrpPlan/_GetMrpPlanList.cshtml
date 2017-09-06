@@ -1,0 +1,89 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.ORD.MrpPlan>
+<script type="text/javascript">
+    function MrpPlanGrid_OnDataBinding(e) {
+        var flow;
+        var item;
+        var ImportType = $("input[type=radio][name=ImportType]:checked").val();
+        if (ImportType == "0") {
+            flow = $("#Flow").val();
+            item = $("#Item").val();
+        }
+        else {
+            flow = $("#FlowTo").val();
+            item = $("#ItemTo").val();
+        }
+        e.data = {
+            ImportType: $("input[type=radio][name=ImportType]:checked").val(),
+            startWeek: $("#WeekOfYearStart").val(),
+            StartDate: $("#StartDate").val(),
+            EndDate: $("#EndDate").val(),
+            Flow: flow,
+            Item:item,
+            EndWeek: $("#WeekOfYearEnd").val()
+        };
+    } 
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpPlanGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PlanDate);
+            keys.Add(p => p.Item);
+            keys.Add(p => p.Flow);
+            keys.Add(p => p.Location);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InLine))
+        .Columns(columns =>
+        {
+
+            columns.Bound(o => o.PlanToDate).Hidden();
+            columns.Bound(o => o.Item).Hidden();
+            columns.Bound(o => o.Flow).Hidden();
+            columns.Bound(o => o.Location).Hidden();
+            columns.Bound(o => o.PlanDate).ReadOnly(true).Width(150); ;
+            columns.Bound(o => o.Item).ReadOnly(true).Width(120);
+            columns.Bound(o => o.Flow).ReadOnly(true).Width(100);
+            columns.Bound(o => o.Location).ReadOnly(true).Width(100);
+            columns.Bound(o => o.OrderTypeDescription).ReadOnly(true).Width(100);
+            columns.Bound(o => o.Party).ReadOnly(true).Width(100);
+            columns.Bound(o => o.PlanVersion).ReadOnly(true).Width(50);
+            columns.Bound(o => o.Qty).Width(100);
+            columns.Bound(o => o.OrderQty).Width(100).Title("订单数");
+            columns.Bound(o => o.LeftQty).Width(100).Title("剩余数");
+            //columns.Bound(o => o.OrderQty).ReadOnly(true);
+            //columns.Bound(o => o.ShippedQty).ReadOnly(true);
+            //columns.Bound(o => o.ReceivedQty).ReadOnly(true);
+            columns.Command(commands =>
+            {
+                commands.Edit();
+            });
+
+
+        })
+        .DataBinding(dataBinding =>
+        {
+            dataBinding.Ajax()
+                .Update("_Update", "MrpPlan", new
+                {
+                    importTypeTo = ViewBag.ImportType,
+                    flowTo = ViewBag.Flow,
+                    itemTo=ViewBag.Item,
+                    startDateTo = ViewBag.StartDate,
+                    endDateTo = ViewBag.EndDate,
+                    startWeekTo = ViewBag.StartWeek,
+                    endWeekTo = ViewBag.EndWeek
+                })
+                .Select("_AjaxList", "MrpPlan");
+        }) 
+        .ClientEvents(events => events.OnDataBinding("MrpPlanGrid_OnDataBinding"))
+
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+    )
+</fieldset>

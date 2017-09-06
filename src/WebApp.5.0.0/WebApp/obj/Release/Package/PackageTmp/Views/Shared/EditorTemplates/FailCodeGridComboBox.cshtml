@@ -1,0 +1,6 @@
+﻿@(Html.Telerik().ComboBox().HtmlAttributes(new { style = "width: 80px" })
+      .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(""))
+      .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingFailCode", "Common").Cache(true))
+      .AutoFill(true)
+      .HighlightFirstMatch(true)
+      )

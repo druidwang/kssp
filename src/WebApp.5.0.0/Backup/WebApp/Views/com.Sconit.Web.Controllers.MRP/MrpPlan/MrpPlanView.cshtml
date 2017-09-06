@@ -1,0 +1,169 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlan_View" });
+}
+<script type="text/javascript">
+    function Flow_Change(e) {
+        
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+
+        var data = {
+            "flow": e.value
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpPlan/_GetMaxPlanVersion/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                document.getElementById("CurrentPlanVersion").innerHTML = data;
+            }
+        });
+    }
+    function QueryMrpPlanView() {
+        //if ($('#Flow').val() == "") {
+            //$message.error('路线为必填项。');
+            //return;
+        //}
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+        if ($('#PlanVersion').val() == "") {
+            $message.error('版本为必填项.');
+            return;
+        }
+        var data = {
+            "flow": $('#Flow').val(),
+            "startDate": $('#StartDate').val(),
+            "item": $('#Item').val(),
+            "planVersion": $('#PlanVersion').val()
+        };
+
+        $("#divMrpPlanView").html("Loading...");
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpPlan/_GetMrpPlanView/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divMrpPlanView");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    highlightrow: true
+                });
+            }
+        });
+    }
+
+   ///////
+    function PlanVersion1(tis) {
+
+        if (isNaN(tis.value)) {
+            $message.error('版本号只能位数字。');
+            tis.value = "0";
+            tis.focus();
+            return;
+        }
+        var CurrentPlanVersion = document.getElementById("CurrentPlanVersion").innerHTML;
+        if (parseInt(tis.value) < 0 || parseInt(tis.value) >= parseInt(CurrentPlanVersion)) {
+            $message.error('查询版本号不能大于等于当前版本号。');
+            tis.value = "0";
+            tis.focus();
+            return;
+        }
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("Export", "MrpPlan"))
+    { 
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MrpPlan.MrpPlan_Flow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                isSupplier = true,
+                isChange = true,
+                type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["MrpPlanSearchModel"] != null ? ((MrpPlanSearchModel)TempData["MrpPlanSearchModel"]).Flow : null
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MrpPlan.MrpPlan_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = TempData["MrpPlanSearchModel"] != null ? ((MrpPlanSearchModel)TempData["MrpPlanSearchModel"]).Item : null
+        });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MrpPlan.MrpPlan_StartDate
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("StartDate").Format("yyyy-MM-dd")
+               .Value(TempData["MrpPlanSearchModel"] != null ? ((MrpPlanSearchModel)TempData["MrpPlanSearchModel"]).StartDate : DateTime.Today)
+               .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MrpPlan.MrpPlan_PlanVersion
+            </label>
+        </div>
+        <div class="search-field">
+            @*  @Html.TextBox("planVersion", ViewBag.PlanVersion)当前版本: @Html.Label("ddd",ViewBag.ddd)*@
+            <input name="PlanVersion" id="PlanVersion" type="text" value="0" onblur="PlanVersion1(this)" />当前版本:<span
+                id="CurrentPlanVersion">无</span>
+        </div>
+    </div>
+    <div class="editor-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="Search" onclick="QueryMrpPlanView()">
+            @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    }
+</fieldset>
+<script type="text/javascript">
+    //Export
+    $('#btnExport').click(function () {
+        if ($('#Flow').val() == "") {
+            $message.error('路线为必填项。');
+            return;
+        }
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+        if ($('#PlanVersion').val() == "") {
+            $message.error('版本为必填项.');
+            return;
+        }
+
+        $('form').submit();
+    }); 
+</script>
+<div id="divMrpPlanView">
+</div>

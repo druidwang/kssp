@@ -1,0 +1,48 @@
+﻿@model com.Sconit.Entity.MD.FinanceCalendar
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_FinanceCalendar_View" });
+}
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MD.FinanceCalendar.FinanceCalendar_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.FinanceYear)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.FinanceYear)
+                @Html.ValidationMessageFor(model => model.FinanceYear)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.FinanceMonth)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.FinanceMonth)
+                @Html.ValidationMessageFor(model => model.FinanceMonth)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DatePickerFor(model => model.StartDate)
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DatePickerFor(model => model.EndDate)
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
+      
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/FinanceCalendar/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

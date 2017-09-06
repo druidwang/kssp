@@ -1,0 +1,88 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.ACC
+<fieldset>
+    @using (Html.BeginForm("List", "User"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="User_Code">
+                    @Resources.ACC.User.User_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["UserSearchModel"] != null ? ((UserSearchModel)TempData["UserSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="User_IsActive">
+                    @Resources.ACC.User.User_IsActive
+                </label>
+            </div>
+            <div class="search-field">
+                
+                @Html.CheckBox("IsActive", TempData["UserSearchModel"] != null ? ((UserSearchModel)TempData["UserSearchModel"]).IsActive : true)
+            </div>
+            <div class="search-label">
+                <label for="User_FirstName">
+                    @Resources.ACC.User.User_FirstName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("FirstName", TempData["UserSearchModel"] != null ? ((UserSearchModel)TempData["UserSearchModel"]).FirstName : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="User_LastName">
+                    @Resources.ACC.User.User_LastName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LastName", TempData["UserSearchModel"] != null ? ((UserSearchModel)TempData["UserSearchModel"]).LastName : string.Empty)
+            </div>
+
+            
+            <div class="search-label">
+                <label for="User_LastName">
+                    @Resources.ACC.User.User_Depart
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Depart", TempData["UserSearchModel"] != null ? ((UserSearchModel)TempData["UserSearchModel"]).Depart : string.Empty)
+            </div>
+
+            
+            <div class="search-label">
+                <label for="User_LastName">
+                    @Resources.ACC.User.User_Position
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Position", TempData["UserSearchModel"] != null ? ((UserSearchModel)TempData["UserSearchModel"]).Position : string.Empty)
+            </div>
+
+            <div class="search-label">
+                <label for="User_LastName">
+                    @Resources.ACC.User.User_Type
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.UserType,
+            controlName = "Type",
+            includeBlankOption = true,
+            selectedValue = TempData["UserSearchModel"] != null ? ((UserSearchModel)TempData["UserSearchModel"]).Type : null
+        });
+                }
+            </div>
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/User/New")'">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+
+    }
+</fieldset>

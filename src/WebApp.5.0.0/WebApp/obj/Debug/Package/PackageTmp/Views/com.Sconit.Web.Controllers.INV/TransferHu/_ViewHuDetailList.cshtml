@@ -1,0 +1,38 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.Hu>
+<fieldset>
+    <legend>@Resources.ORD.TransferHu.TransferHu_HuDetail</legend>
+    @(
+ Html.Telerik().Grid(Model)
+          .Name("VehicleInFactoryDetail")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.HuId);
+          })
+          
+          .Columns(columns =>
+          {
+              columns.Bound(o => o.HuId).ReadOnly();
+              columns.Bound(o => o.Item);
+              columns.Bound(o => o.ReferenceItemCode);
+              columns.Bound(o => o.ItemDescription);
+              columns.Bound(o => o.LotNo);
+              columns.Bound(o => o.SupplierLotNo);
+              columns.Bound(o => o.UnitCount);
+              columns.Bound(o => o.Uom);
+              columns.Bound(o => o.Qty);
+              columns.Command(commands => commands.Delete());
+          })
+          .Scrollable()
+        .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax()
+                                            .Select("_SelectTransferHuDetail", "TransferHu")
+                                                    .Delete("_DeleteHuDetail", "TransferHu"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 50 : ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

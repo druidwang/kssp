@@ -1,0 +1,45 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.ReportModels
+@{
+    Layout = null;
+}
+<fieldset>
+    @using (Html.BeginForm("List", "CustReport"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ProductType_Code">
+                    @Resources.Report.CustReport.CustReport_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["CustReportModel"] != null ? ((CustReportModel)TempData["CustReportModel"]).Code : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="ProductType_Description">
+                    @Resources.Report.CustReport.CustReport_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Name", TempData["CustReportModel"] != null ? ((CustReportModel)TempData["CustReportModel"]).Name : string.Empty)
+            </div>
+
+
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_CustReport_ReportMenu", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnSearch"}
+	        })
+         @Html.Button(Resources.SYS.Global.Button_New, "Url_CustReport_ReportMenu", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"onclick","location.href='"+@Url.Content("~/CustReport/New")+"'"}
+	        })
+        </div>
+
+    }
+</fieldset>

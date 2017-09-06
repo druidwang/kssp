@@ -1,0 +1,83 @@
+﻿@model com.Sconit.Entity.WMS.PickRule 
+@Html.Partial("_AjaxMessage")
+
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.WMS.PickRule.PickRule_New_Title </legend>
+        <div class="editor">
+          <div class="editor-label-2">
+                @Resources.WMS.RepackRule.RepackRule_RepackGroupCode
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PickGroupCode)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_LocationComboBox", "Common", new
+                    {
+                        checkRegion = false,
+                        controlName = "Location"
+                    });
+                }
+                @Html.ValidationMessageFor(model => model.Location)
+            </div>
+        </div>
+
+        <div class="editor-footer">
+             @Html.Button(Resources.SYS.Global.Button_New, "Url_PickGroup_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNewPickRule"},
+                {"needconfirm","true"},
+                {"onclick","btnNew_PickRule_Click()"}
+	        })
+            <button type="button" id="btnBack_PickRule" onclick="btnBack_PickRule_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+
+
+<script language="javascript" type="text/javascript">
+    function btnBack_PickRule_Click() {
+        var data = {
+            "PickGroupCode": $("#PickGroupCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/RepackGroup/_PickRuleList/",
+            data: data,
+            cache:false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnNew_PickRule_Click() {
+        var data = {
+            "PickGroupCode": $("#PickGroupCode").val(),
+            "Location": $("#Location").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/RepackGroup/_PickRuleNew/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+</script>

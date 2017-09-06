@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BDCE5982-A100-423F-9BC4-234E5DA1E89C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.Sconit.WebService.SI</RootNamespace>
+    <AssemblyName>com.Sconit.WebService.SI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseWebService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LeanEngineService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core.5.0.0\Entity\Entity.csproj">
+      <Project>{E4710EAE-2F94-423E-BD3E-258E054714AE}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\Service\Service.csproj">
+      <Project>{C404091C-8C1D-42BE-BA63-919BB8B5900A}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\WebService\WebService.csproj">
+      <Project>{3536D590-4AA5-4681-BD46-20C182652197}</Project>
+      <Name>WebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.MRP.5.0.0\Service.MRP\Service.MRP.csproj">
+      <Project>{38889667-9F2A-42F1-B120-8DBEEFFCAAE3}</Project>
+      <Name>Service.MRP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WebApp.5.0.0\WebUtil\WebUtil.csproj">
+      <Project>{E1DEA368-D891-42C2-AB25-2A5E3BF0437A}</Project>
+      <Name>WebUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service.SI\Service.SI.csproj">
+      <Project>{3A94E8A3-6ED2-4BEB-9816-EE24510F6FC3}</Project>
+      <Name>Service.SI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,210 @@
+﻿@using com.Sconit.Web.Models.SearchModels.TMS
+@using com.Sconit.Entity.SYS
+<fieldset>
+    @using (Html.BeginForm("List", "TransportOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_CreateUserName">
+                    @Resources.TMS.TransportOrder.TransportOrderMaster_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).OrderNo : string.Empty)
+            </div>
+
+
+
+            <div class="search-label">
+                <label for="OrderMaster_CreateUserName">
+                     @Resources.TMS.TransportOrder.TransportOrderMaster_Carrier
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                   Html.RenderAction("_CarrierComboBox", "Common", 
+                       new {
+                           controlName = "Carrier",
+                           selectedValue = TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).Carrier : string.Empty
+                   });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_CreateUserName">
+                     @Resources.TMS.TransportOrder.TransportOrderMaster_ShipFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_AddressComboBox", "Common",
+                         new
+                         {
+                             controlName = "ShipFrom",
+                             type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+                             enable = true,
+                             selectedValue = TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).ShipFrom : string.Empty
+                         });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_CreateUserName">
+                     @Resources.TMS.TransportOrder.TransportOrderMaster_ShipTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_AddressComboBox", "Common",
+                        new
+                        {
+                            controlName = "ShipTo",
+                            type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+                            enable = true,
+                            selectedValue = TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).ShipTo : string.Empty
+                        });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_CreateUserName">
+                    @Resources.TMS.TransportOrder.TransportOrderDetail_IpNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("IpNo", TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).IpNo : string.Empty)
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+
+            <div class="search-label">
+                <label>
+                    @Resources.TMS.TransportOrder.TransportOrderMaster_TransportMode
+                </label>
+            </div>
+            <div class="search-field">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.TransportMode,
+                    controlName = "TransportMode",
+                    selectedValue = TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).TransportMode : null
+                });
+            }
+            </div>
+            <div class="search-label">
+                <label>
+                   @Resources.TMS.TransportOrder.TransportOrderMaster_Status
+                </label>
+            </div>
+            <div class="search-field">
+@*            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.TransportStatus,
+                    controlName = "Status",
+                    selectedValue = TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).Status : null
+                });
+            }*@
+              @{
+                 Html.RenderAction("_CodeMasterMultiSelectBox", "Common", new
+                 {
+                     checkedValues = TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).MultiStatus : "0,1,2",
+                     code = com.Sconit.CodeMaster.CodeMaster.TransportStatus,
+                     controlName = "MultiSelectStatus",
+                     controlId = "MultiSelectStatus"
+                 });
+              }
+              @Html.Hidden("MultiStatus", TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).MultiStatus : "0,1,2")
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+                .Value(TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).DateFrom : null)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+                .Value(TempData["TransportOrderSearchModel"] != null ? ((TransportOrderSearchModel)TempData["TransportOrderSearchModel"]).DateTo : null)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport">
+                @Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+
+        if (t == "") {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/DistributionOrder/ExportMstr/");
+        $('form').submit();
+    });
+
+
+    $(function () {
+        $('#MultiSelectStatus').multiselect({
+            noneSelectedText: "选择状态...",
+            selectedText: "已选#个状态",
+            checkAllText: "全选",
+            uncheckAllText: "取消全选",
+            selectedList: 3,
+            click: function (event, ui) {
+                $('#MultiStatus').attr("value", getMultiRegions());
+            },
+            checkAll: function () {
+                $('#MultiStatus').attr("value", getMultiRegions());
+            },
+            uncheckAll: function () {
+                $('#MultiStatus').attr("value", getMultiRegions());
+            }
+        });
+    });
+
+
+
+    function getMultiRegions() {
+        var m = "";
+        var array_of_checked_values = $("#MultiSelectStatus").multiselect("getChecked").map(function () {
+            return this.value;
+        }).get();
+        if (array_of_checked_values != null) {
+            if (array_of_checked_values.length > 0) {
+                m = array_of_checked_values[0];
+                for (var i = 1; i < array_of_checked_values.length; i++) {
+                    m = m + "," + array_of_checked_values[i];
+                };
+            }
+        }
+        return m;
+    }
+</script>

@@ -1,0 +1,57 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.Report.CustReportDetail>
+<script language="javascript" type="text/javascript">
+
+    function onDetailclick(Id) {
+        var data = {
+            "Id": Id
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/CustReport/_DetailEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("CustReportGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ParamType).ClientTemplate(string.Format("<a href=\"javascript:onDetailclick('{0}')\">{1}</a>", "<#= Id #>", "<#= ParamType #>"));
+            columns.Bound(o => o.Code);
+            columns.Bound(o => o.ParamKey);
+            columns.Bound(o => o.ParamText);
+                 })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxDetList", "CustReport"))
+                .ClientEvents(events => events.OnDataBinding("CustReportGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function CustReportGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Name: $('#Name').val()
+            };
+        } 
+    </script>
+</fieldset>

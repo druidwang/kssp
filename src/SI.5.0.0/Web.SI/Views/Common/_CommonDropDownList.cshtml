@@ -1,0 +1,133 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string Id = ViewBag.ControlId;
+    if (string.IsNullOrWhiteSpace(Id))
+    {
+        Id = name;
+    }
+    string ajaxActionName = ViewBag.AjaxActionName;
+    bool enable = true;
+    if (ViewBag.Enable!=null)
+    {
+        enable = ViewBag.Enable;
+    }
+}
+
+@(Html.Telerik().DropDownList()
+    .Name(name)
+    .HiddenInputHtmlAttributes(new { id = Id })
+    .BindTo(Model)
+    .Enable(enable)
+)
+
+
+@*@{
+    if (ViewBag.CascadingControlNames != null && ViewBag.CascadingControlNames.Length > 0)
+    {
+        <text>
+            <script language="javascript" type="text/javascript">
+                var @name = $("#@name");
+            </script>
+        </text>
+    }
+}
+
+@{
+    //现在联动的下拉框会被加载两次
+    //第一次是页面Load的时候，
+    //第二次是点击下拉框的时候，
+    //没有好的方法解决
+    if (ajaxActionName != null && ajaxActionName.Trim() != string.Empty)
+    {
+    @(
+    Html.Telerik().DropDownList()
+             .Name(name)
+             .BindTo(Model)
+             .DataBinding(binding => binding.Ajax().Select(ajaxActionName, "Common"
+             , new
+             {
+                 code = ViewBag.Code,
+                 includeBlankOption = ViewBag.IncludeBlankOption,
+                 blankOptionDescription = ViewBag.BlankOptionDescription,
+                 blankOptionValue = ViewBag.BlankOptionValue
+             }).Enabled(true))
+             .ClientEvents(events => events.OnChange(
+                 @<text>
+                    function(e) {
+                         @if (ViewBag.CascadingControlNames != null && ViewBag.CascadingControlNames.Length > 0)
+                         {
+                             foreach (string cascadingControlName in ViewBag.CascadingControlNames)
+                             {
+                                 <text>
+                                 ctrl = @cascadingControlName;
+                                 if (ctrl != null) {
+                                     if (ctrl.data("tDropDownList") != null) {
+                                        ctrl.data("tDropDownList").reload();
+                                     }else if (ctrl.data("tComboBox") != null) {
+                                        ctrl.data("tComboBox").reload();
+                                     }else if (ctrl.data("tAutoComplete") != null) {
+                                        ctrl.data("tAutoComplete").reload();
+                                     }
+                                 }
+                                 </text>
+                             }
+                         }
+                    }
+                 </text>
+                ).OnDataBinding(
+                @<text>
+                    function(e) {
+                        @if (ViewBag.ParentCascadeControlNames != null && ViewBag.ParentCascadeControlNames.Length > 0)
+                        {
+                         <text>
+                            e.data = {
+                                @foreach (string parentCascadeControlName in ViewBag.ParentCascadeControlNames)
+                                {
+                                <text>
+                                "@parentCascadeControlName" : $(@parentCascadeControlName).val(),
+                                </text>
+                                }
+                            };
+                        </text>
+                        }
+                    }
+                 </text>
+                ))
+            .Value(selectedValue)
+        )
+    }
+    else
+    {
+        @(
+        Html.Telerik().DropDownList()
+             .Name(name)
+             .ClientEvents(events => events.OnChange(
+                 @<text>
+                    function(e) {
+                         @if (ViewBag.CascadingControlNames != null && ViewBag.CascadingControlNames.Length > 0)
+                         {
+                             foreach (string cascadingControlName in ViewBag.CascadingControlNames)
+                             {
+                                 <text>
+                                 ctrl = @cascadingControlName;
+                                 if (ctrl != null) {
+                                     if (ctrl.data("tDropDownList") != null) {
+                                        ctrl.data("tDropDownList").reload();
+                                     }else if (ctrl.data("tComboBox") != null) {
+                                        ctrl.data("tComboBox").reload();
+                                     }else if (ctrl.data("tAutoComplete") != null) {
+                                        ctrl.data("tAutoComplete").reload();
+                                     }
+                                 }
+                                 </text>
+                             }
+                         }
+                    }
+                 </text>
+                ))
+             .BindTo(Model)
+             .Value(selectedValue)
+        )
+    }
+}*@

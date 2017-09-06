@@ -1,0 +1,116 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpExOrder>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function RebindingOrderClick(e) {
+        $(e).attr("href", "#");
+        var planNo = $(e).parent().parent().children().eq(1).text();
+        var startDate = $(e).parent().parent().children().eq(6).text();
+        var closeDate = $(e).parent().parent().children().eq(7).text();
+        var status = $(e).parent().parent().children().eq(8).text();
+
+        var data = {
+            "planNo": planNo,
+            "startDate": startDate,
+            "closeDate": closeDate
+
+        }
+        if (startDate == "") {
+            $message.error("请输入上线时间.");
+            return;
+        }
+
+        if (status == "执行中" && closeDate == "") {
+            $message.error("请输入下线时间.");
+            return;
+        }
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: data,
+            url: "/MrpPlanEx/_ProcessOrder",
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                var data = {
+                    flow: $('#Flow').val(),
+                    dateIndex: $('#DateIndex').val()
+                };
+
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/MrpPlanEx/_MrpOrderList/",
+                    data: data,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        DisplayJsonMessages(data);
+                        $("#fdOrderDetail").html(data);
+                        $("#fdOrderDetail").show();
+                        $("tr.t-no-data").find("td").text("Loading...");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function onRowDataBound(e) {
+        var row = $(e.row.childNodes);
+        var l = row.length;
+        if (e.dataItem.Status == "0") {
+            e.row.childNodes[l - 3].disabled = true;
+            row.find("#RebindingId").text("上线");
+        }
+        else if (e.dataItem.Status == "2") {
+            e.row.childNodes[l - 4].disabled = true;
+            row.find("#RebindingId").text("下线");
+        }
+        else {
+            e.row.childNodes[l - 4].disabled = true;
+            e.row.childNodes[l - 3].disabled = true;
+            row.find("#RebindingId").hide();
+        }
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PlanNo);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_SelectOrders", "MrpPlanEx", new { flow = ViewBag.Flow, dateIndex = ViewBag.DateIndex })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence).ReadOnly();
+            columns.Bound(o => o.PlanNo).ReadOnly();//1
+            //columns.Bound(o => o.ProductLine).Width(40).ReadOnly();
+            //columns.Bound(o => o.DateIndex).Width(60).ReadOnly();
+            columns.Bound(o => o.Section).ReadOnly();
+            columns.Bound(o => o.SectionDescription).ReadOnly();
+            //columns.Bound(o => o.PlanVersion).Format("{0:MM-dd HH:mm:ss}").ReadOnly();
+            columns.Bound(o => o.StartTime).Format("{0:MM-dd HH:mm}").ReadOnly();
+            columns.Bound(o => o.WindowTime).Format("{0:MM-dd HH:mm}").ReadOnly();
+            columns.Bound(o => o.StartDate).Format("{0:yyyy-MM-dd HH:mm}").Width(170);//6
+            columns.Bound(o => o.CloseDate).Format("{0:yyyy-MM-dd HH:mm}").Width(170);//7
+            columns.Bound(o => o.OrderStatusDescription).ReadOnly();
+            columns.Command(commands => commands.Custom("Rebinding").Text("上线")
+                   .HtmlAttributes(new { onClick = "RebindingOrderClick(this)", id = "RebindingId", href = "#" }));
+        })
+        .ClientEvents(c => c.OnRowDataBound("onRowDataBound"))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

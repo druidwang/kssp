@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.INV.FreezeTransaction, com.Sconit.Entity" table="INV_FreezeTrans" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+			<generator class="identity" />
+		</id>
+		<property name="HuId" column="HuId" type="String" length="50" />
+		<property name="Item" column="Item" type="String" length="50" />
+		<property name="LotNo" column="LotNo" type="String" length="50" />
+		<property name="Bin" column="Bin" type="String" length="50" />
+    <property name="Location" column="Location" type="String" length="50" />
+    <property name="Reason" column="Reason" type="String" length="50" />
+    <property name="ItemVersion" column="ItemVersion" type="String" length="50" />
+		<property name="Freeze" column="Freeze" type="Boolean"  />
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="50" update="false"/>
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+	</class>
+</hibernate-mapping>

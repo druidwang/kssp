@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.MD.Custodian, com.Sconit.Entity" table="MD_Custodian" lazy="false">
+      <cache usage="read-write" />
+        <id name="Id" column="Id" type="Int32" unsaved-value="null" >
+            <generator class="identity" />
+        </id>
+		<property name="UserCode" column="usercode" type="String" length="50"  />
+        <property name="Item" column="Item" type="String" length="50" />
+        <property name="Location" column="Location" type="String" length="50" />
+        
+        
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.INV.StockTakeInv, com.Sconit.Entity" table="INV_StockTakeInv" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="StNo" column="StNo" type="String" length="50" />
+    <property name="Location" column="Location" type="String" length="50" />
+    <property name="Item" column="Item" type="String" length="50" />
+    <property name="QualityType" column="QualityType"/>
+    <property name="Qty" column="Qty" type="Decimal"  />
+    <property name="LotNo" column="LotNo" type="String" length="50" />
+    <property name="Bin" column="Bin" type="String" length="50" />
+    <property name="HuId" column="HuId" type="String" length="50" />
+    <property name="IsCS" column="IsCS" type="Boolean"  />
+  </class>
+</hibernate-mapping>

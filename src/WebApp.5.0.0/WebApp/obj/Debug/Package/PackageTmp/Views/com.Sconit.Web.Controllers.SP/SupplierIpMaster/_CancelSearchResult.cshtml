@@ -1,0 +1,44 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.ORD.IpMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("IpMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.IpNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.IpNo).ClientTemplate(Html.ActionLink("<#= IpNo #>", "CancelEdit", "SupplierIpMaster", new { Id = "<#= IpNo #>" }, null).ToString());
+            columns.Bound(o => o.PartyFromName);
+            columns.Bound(o => o.PartyToName);
+            columns.Bound(o => o.ShipFromAddress);
+            columns.Bound(o => o.ShipToAddress);
+            columns.Bound(o => o.Dock);
+            columns.Bound(o => o.IpMasterStatusDescription);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+                 })
+                        .CellAction(cell =>
+                        {
+                            if (cell.Column.Member == "IpNo")
+                            {
+                                cell.Text = string.Format("<a href=\"CancelEdit/{0}\">{1}</a>", cell.DataItem.IpNo, cell.DataItem.IpNo);
+                            }
+                        })     
+                .Scrollable(c => c.Enabled(false))
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_CancelAjaxList", "SupplierIpMaster"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total);
+                    settings.PageSize(ViewBag.PageSize != 0 ? ViewBag.PageSize : 10);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>

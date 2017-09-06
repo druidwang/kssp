@@ -1,0 +1,63 @@
+﻿@using com.Sconit.Entity.ORD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.ORD
+<fieldset>
+    @using (Html.BeginForm("ShipList", "PickList"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="PickListMaster_PickListNo">
+                    @Resources.ORD.PickListMaster.PickListMaster_PickListNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PickListNo", TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).PickListNo : string.Empty)
+            </div>
+               <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.PickListMaster.PickListMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new { 
+                controlName = "Flow", 
+                type = (int)com.Sconit.CodeMaster.OrderType.Distribution ,
+                selectedValue = TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+          <div class="search-label">
+                <label for="PickListMaster_StartDate">
+                   @Resources.ORD.PickListMaster.PickListMaster_StartTime
+                </label>
+            </div>
+            <div class="search-field">
+            @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("StartTime")
+             .Value(TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).StartTime : System.DateTime.Today.AddDays(-7))
+            .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+             <div class="search-label">
+                <label for="PickListMaster_EndDate">
+                   @Resources.ORD.PickListMaster.PickListMaster_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+            @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("EndTime")
+            .Value(TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).EndTime : System.DateTime.Today.AddDays(1))
+            .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            
+            </div>
+           
+
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

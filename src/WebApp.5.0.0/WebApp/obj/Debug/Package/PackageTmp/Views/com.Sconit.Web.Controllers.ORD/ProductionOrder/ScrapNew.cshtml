@@ -1,0 +1,193 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ExProductionOrder_Scrap" });
+}
+<script type="text/javascript">
+    function onSearch(e) {
+        if ($('#PlanNo').val() != "") {
+
+        }
+        else if ($('#Flow').val() != "" && $('#DateIndex').val() != "") {
+
+        }
+        else {
+            $message.error('请输入计划订单号或生产线、周。');
+            return;
+        }
+
+        var data = {
+            "planNo": $('#PlanNo').val(),
+            "dateIndex": $('#DateIndex').val(),
+            "flow": $('#Flow').val(),
+            "section": $('#Section').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ProductionOrder/_ScrapDetailList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                //debugger
+                //DisplayTextMessages(data);
+                $("#fdOrderDetail").html(data);
+                $("#fdOrderDetail").show();
+                $("tr.t-no-data").find("td").text("Loading...");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function onCreate() {
+        //debugger
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error('@Resources.ORD.OrderMaster.Errors_OrderDetailIsEmpty');
+            return;
+        }
+
+        var planNos = new Array();
+        var scrapTypes = new Array();
+        var qtys = new Array();
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var gridLength = grid.columns.length;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            planNos[rowIndex] = $.trim(row[0].childNodes[1].innerText);
+            scrapTypes[rowIndex] = $.trim(row[0].childNodes[gridLength - 2].innerText);
+            qtys[rowIndex] = $.trim(row[0].childNodes[gridLength - 1].innerText);
+        }
+
+        var details = {
+            "planNos": planNos,
+            "scrapTypes":scrapTypes,
+            "qtys": qtys
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/ProductionOrder/_CreateScrapOrder/",
+            data: $.extend(details, null),
+            traditional: true,
+            success: function (data) {
+                DisplayTextMessages(data);
+                $message.success("挤出废品报工成功");
+                window.location.href = "/ProductionOrder/ScrapNew";
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function DateIndex_DataBinding(e) {
+        if ($('#DateType').val() != 4) {
+            e.data = {
+                dateType: 5
+            }
+        }
+    }
+
+    function Section_DataBinding(e) {
+        e.data = {
+            flow: $('#Flow').val()
+        }
+    }
+
+    function Section_Change(e) { }
+
+    function Flow_Change(e) {
+        $("#Section").data("tComboBox").reload();
+        $('#Section').data('tComboBox').value('');
+        $('#Section').data('tComboBox').text('');
+    }
+
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_Dock">
+                    @Resources.MRP.MrpExOrder.MrpExOrder_PlanNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PlanNo", TempData["MrpExOrderSearchModel"] != null ? ((MrpExOrderSearchModel)TempData["MrpExOrderSearchModel"]).PlanNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.MrpExOrder.MrpExOrder_DateIndex
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+    {
+        includeBlankOption = true,
+        controlName = "DateIndex",
+        dateType = (int)com.Sconit.CodeMaster.TimeUnit.Week,
+        selectedValue = TempData["MrpExOrderSearchModel"] != null ? ((MrpExOrderSearchModel)TempData["MrpExOrderSearchModel"]).DateIndex : null
+    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.MrpExOrder.MrpExOrder_ProductLine
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new
+    {
+        controlName = "Flow",
+        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+        isChange = true,
+        isCreateOrder = false,
+        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+        selectedValue = TempData["MrpExOrderSearchModel"] != null ? ((MrpExOrderSearchModel)TempData["MrpExOrderSearchModel"]).Production : null
+    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_Section
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_SectionComboBox", "Common", new
+    {
+        controlName = "Section",
+        coupled = true,
+        selectedValue = TempData["MrpExOrderSearchModel"] != null ? ((MrpExOrderSearchModel)TempData["MrpExOrderSearchModel"]).Section : null
+    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_ExProductionOrder_Scrap", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnSearch"},
+        {"needconfirm","false"},
+        {"onclick","onSearch()"},
+	})
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_ExProductionOrder_Scrap", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"needconfirm","true"},
+        {"onclick","onCreate()"}
+	})
+        </div>
+    </fieldset>
+   
+    <div id="fdOrderDetail" style="display: none;">
+    </div>
+}

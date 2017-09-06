@@ -1,0 +1,52 @@
+﻿@using com.Sconit.Entity.SAP.TRANS;
+@model IEnumerable<com.Sconit.Entity.SAP.ORD.PostDO>
+ 
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                        .Name("SAP_PostDOGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Title(@Resources.SI.InvTrans.InvTrans_BLDAT).Hidden();
+            columns.Bound(o => o.OrderNo).Title(@Resources.SI.PostDO.SAPPostDO_OrderNo);
+            columns.Bound(o => o.ReceiptNo).Title(@Resources.SI.PostDO.SAPPostDO_ReceiptNo);
+
+            columns.Bound(o => o.Result).Title(@Resources.SI.PostDO.SAPPostDO_Result);
+            columns.Bound(o => o.ZTCODE).Title(@Resources.SI.PostDO.SAPPostDO_ZTCODE);
+            columns.Bound(o => o.Success).Title(@Resources.SI.PostDO.SAPPostDO_Success);
+            columns.Bound(o => o.LastModifyDate).Title(@Resources.SI.PostDO.SAPPostDO_LastModifyDate);
+            columns.Bound(o => o.StatusName).Title(@Resources.SI.PostDO.SAPPostDO_Status);
+            columns.Bound(o => o.CreateDate).Title(@Resources.SI.PostDO.SAPPostDO_CreateDate);
+            columns.Bound(o => o.ErrorCount).Title(@Resources.SI.PostDO.SAPPostDO_ErrorCount);
+        })
+           
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SAPPostDO"))
+                        .ClientEvents(events => events.OnDataBinding("SAP_PostDOGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAP_PostDOGrid_OnDataBinding(e) {
+          
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Status: $("input[type=radio][name=Status]:checked").val(),
+
+                ReceiptNo: $('#ReceiptNo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+                
+            };
+        }
+     
+
+    </script>
+</fieldset>

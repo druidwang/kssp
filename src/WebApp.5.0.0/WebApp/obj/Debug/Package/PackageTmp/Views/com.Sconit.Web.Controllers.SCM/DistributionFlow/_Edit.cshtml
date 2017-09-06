@@ -1,0 +1,503 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.SCM.FlowMaster
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function Customer_Change(e) {
+
+        $("#ShipTo").data("tComboBox").value('');
+        $("#ShipTo").data("tComboBox").text('');
+        $("#ShipTo").data("tComboBox").reload();
+
+        $("#BillAddress").data("tComboBox").value('');
+        $("#BillAddress").data("tComboBox").text('');
+        $("#BillAddress").data("tComboBox").reload();
+
+        $("#PriceList").data("tComboBox").value('');
+        $("#PriceList").data("tComboBox").text('');
+        $("#PriceList").data("tComboBox").reload();
+    }
+
+    function PartyFrom_Change(e) {
+        $('#LocationFrom').data('tComboBox').value('');
+        $('#LocationFrom').data('tComboBox').text('');
+        $("#LocationFrom").data("tComboBox").reload();
+
+        $("#ShipFrom").data("tComboBox").value('');
+        $("#ShipFrom").data("tComboBox").text('');
+        $("#ShipFrom").data("tComboBox").reload();
+
+    }
+
+    function ShipTo_DataBinding(e) {
+        e.data = {
+            party: $("#PartyTo").val()
+        };
+    }
+
+    function ShipFrom_DataBinding(e) {
+        e.data = {
+            party: $("#PartyFrom").val()
+        };
+    }
+
+    function BillAddress_DataBinding(e) {
+        e.data = {
+            party: $("#PartyTo").val()
+        };
+    }
+
+    function PriceList_DataBinding(e) {
+        e.data = {
+            party: $("#PartyTo").val()
+        };
+    }
+</script>
+<form action="/DistributionFlow/_Edit" method="post">
+<fieldset>
+    <legend>@Resources.SCM.FlowMaster.FlowMaster_LegendBaseInfo</legend>
+    <div class="editor">
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Code)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.Code)
+            @Html.Hidden("Code", Model != null ? Model.Code : string.Empty)
+            @Html.Hidden("FlowStrategy", Model.FlowStrategy)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsActive)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsActive)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ReferenceFlow)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common",
+                    new { controlName = "ReferenceFlow", selectedValue = Model.ReferenceFlow });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelForModel(Resources.SCM.FlowMaster.FlowMaster_DistributionPartyFrom)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_RegionComboBox", "Common",
+                    new { controlName = "PartyFrom", selectedValue = Model.PartyFrom, isChange = true });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelForModel(Resources.SCM.FlowMaster.FlowMaster_DistributionPartyTo)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CustomerComboBox", "Common",
+                    new { controlName = "PartyTo", selectedValue = Model.PartyTo, isChange = true });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.LocationFrom)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_LocationComboBox", "Common",
+                    new { controlName = "LocationFrom", selectedValue = Model.LocationFrom });
+            }
+        </div>
+        <div class="editor-label-2">
+        </div>
+        <div class="editor-field-2">
+        </div>
+        @*<div class="editor-label-1">
+            <label>@Resources.SCM.FlowDetail.FlowDetail_ExtraDemandSourceFormat</label>
+        </div>
+        <div class="editor-field-1">
+            @Resources.SCM.FlowDetail.FlowDetail_ExtraDemandSourceToolTips
+        </div>
+
+        <div class="editor-label-1">
+            @Html.LabelFor(model => model.ExtraLocationFrom)
+        </div>
+        <div class="editor-field-1">
+            @Html.TextBoxFor(model => model.ExtraLocationFrom)
+        </div>*@
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ShipFrom)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_AddressComboBox", "Common",
+                    new
+                    {
+                        controlName = "ShipFrom",
+                        selectedValue = Model.ShipFrom,
+                        checkParty = true,
+                        type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress
+                    });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ShipTo)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_AddressComboBox", "Common",
+                    new
+                    {
+                        controlName = "ShipTo",
+                        selectedValue = Model.ShipTo,
+                        checkParty = true,
+                        type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress
+                    });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.BillAddress)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_AddressComboBox", "Common",
+                    new
+                    {
+                        controlName = "BillAddress",
+                        checkParty = true,
+                        type = (int)com.Sconit.CodeMaster.AddressType.BillAddress,
+                        selectedValue = Model.BillAddress
+                    });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.PriceList)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_PriceListComboBox", "Common",
+                    new { controlName = "PriceList", selectedValue = Model.PriceList, checkParty = true });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.BillTerm)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common",
+                    new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.OrderBillTerm,
+                        controlName = "BillTerm",
+                        selectedValue = Model != null ? (int)Model.BillTerm : 1,
+                        isConsignment = true,
+                        isShowNA = false
+                    });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ReceiveGapTo)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common",
+                    new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.ReceiveGapTo,
+                        controlName = "ReceiveGapTo",
+                        selectedValue = Model != null ? (int)Model.ReceiveGapTo : 0
+                    });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.PickStrategy)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_PickStrategyComboBox", "Common",
+                 new
+                 {
+                     controlName = "PickStrategy",
+                     selectedValue = Model != null ? Model.PickStrategy : string.Empty
+                 });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.SalesOrg)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.SalesOrg)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.DistrChan)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.DistrChan)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Dock)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.Dock)
+            @Html.ValidationMessageFor(model => model.Dock)
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>@Resources.SCM.FlowMaster.FlowMaster_LegendBarCode</legend>
+    <div class="editor">
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.HuTemplate)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common",
+                    new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.HuTemplate,
+                        controlName = "HuTemplate",
+                        selectedValue = Model != null ? Model.HuTemplate : string.Empty
+                    });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsShipScanHu)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsShipScanHu)
+        </div>
+        @*            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsPickFromBin)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsPickFromBin)
+            </div>*@
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsShipFifo)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsShipFifo)
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>@Resources.SCM.FlowMaster.FlowMaster_LegendPrint</legend>
+    <div class="editor">
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsPrintOrder)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsPrintOrder)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.OrderTemplate)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common",
+                    new { code = com.Sconit.CodeMaster.CodeMaster.OrderTemplate, controlName = "OrderTemplate", selectedValue = Model.OrderTemplate });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsPrintAsn)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsPrintAsn)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.AsnTemplate)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common",
+                    new { code = com.Sconit.CodeMaster.CodeMaster.AsnTemplate, controlName = "AsnTemplate", selectedValue = Model.AsnTemplate });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsPrintRceipt)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsPrintRceipt)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ReceiptTemplate)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common",
+                    new { code = com.Sconit.CodeMaster.CodeMaster.ReceiptTemplate, controlName = "ReceiptTemplate", selectedValue = Model.ReceiptTemplate });
+            }
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>@Resources.SCM.FlowMaster.FlowMaster_LegendOrderControl</legend>
+    <div class="editor">
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsOrderFulfillUC)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsOrderFulfillUC)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsShipFulfillUC)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsShipFulfillUC)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsReceiveFulfillUC)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsReceiveFulfillUC)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsListDet)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsListDet)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsManualCreateDetail)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsManualCreateDetail)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsListPrice)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsListPrice)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsShipByOrder)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsShipByOrder)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsCreatePickList)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsCreatePickList)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsShipExceed)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsShipExceed)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsReceiveExceed)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsReceiveExceed)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsAsnUniqueReceive)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsAsnUniqueReceive)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsCheckPartyFromAuthority)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsCheckPartyFromAuthority)
+        </div>
+        @*<div class="editor-label-3">
+            @Html.LabelFor(model => model.IsCheckPartyToAuthority)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsCheckPartyToAuthority)
+        </div>*@
+    </div>
+</fieldset>
+<fieldset>
+    <legend>@Resources.SCM.FlowMaster.FlowMaster_LegendAutomatic</legend>
+    <div class="editor">
+        @*<div class="editor-label-3">
+                @Html.LabelFor(model => model.IsAutoCreate)
+            </div>
+            <div class="editor-field-3">
+                @Html.EditorFor(model => model.IsAutoCreate)
+            </div>*@
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsAutoRelease)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsAutoRelease)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsAutoStart)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsAutoStart)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsAutoShip)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsAutoShip)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsAutoReceive)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsAutoReceive)
+        </div>
+        @*      <div class="editor-label-3">
+                @Html.LabelFor(model => model.IsAutoBill)
+            </div>
+            <div class="editor-field-3">
+                @Html.EditorFor(model => model.IsAutoBill)
+            </div>*@
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsRejectInspect)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsRejectInspect)
+        </div>
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.IsMRP)
+        </div>
+        <div class="editor-field-3">
+            @Html.EditorFor(model => model.IsMRP)
+        </div>
+    </div>
+</fieldset>
+<div class="editor-footer">
+    @Html.Button(Resources.SYS.Global.Button_Save, "Url_DistributionFlow_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnEdit"},
+        {"needconfirm","true"}
+	})
+    @Html.Button(Resources.SYS.Global.Button_Delete, "Url_DistributionFlow_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDel"},
+        {"needconfirm","true"},
+        {"onclick","location.href='"+Url.Content("~/DistributionFlow/FlowDel/" +Model.Code)+"'"}
+	})
+    <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/DistributionFlow/List")'">
+        @Resources.SYS.Global.Button_Back</button>
+</div>
+</form>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("form[action$='_Edit']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(response);
+            });
+            return false;
+        });
+    });
+</script>

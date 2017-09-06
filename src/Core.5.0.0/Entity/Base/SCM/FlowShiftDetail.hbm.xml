@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.SCM.FlowShiftDetail, com.Sconit.Entity" table="SCM_FlowShiftDet" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Flow" column="Flow" type="String" length="50"/>
+    <property name="Shift" column="Shift" type="String" length="50" />
+    <property name="WindowTime" column="WinTime" type="String" length="256" />
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+    <property name="OrderLeadTime" column="OrderLeadTime" type="Decimal"  />
+    <property name="OrderEMLeadTime" column="OrderEMLeadTime" type="Decimal"  />
+    <property name="UnloadLeadTime" column="UnloadLeadTime" type="Decimal"  />
+    <property name="SafeTime" column="SafeTime" type="Decimal"  />
+  </class>
+</hibernate-mapping>
+
+<?xml version="1.0" encoding="utf-8" ?>
+-->
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.SCM.FlowShiftDetail, com.Sconit.Entity" table="SCM_FlowShiftDet" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Flow" column="Flow" type="String" length="50"/>
+    <property name="Shift" column="Shift" type="String" length="50" />
+    <property name="WindowTime" column="WinTime" type="String" length="256" />
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+    <property name="OrderLeadTime" column="OrderLeadTime" type="Decimal"  />
+    <property name="OrderEMLeadTime" column="OrderEMLeadTime" type="Decimal"  />
+    <property name="UnloadLeadTime" column="UnloadLeadTime" type="Decimal"  />
+    <property name="SafeTime" column="SafeTime" type="Decimal"  />
+  </class>
+</hibernate-mapping>
+
+

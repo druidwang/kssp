@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.ORD.IpDetail, com.Sconit.Entity" table="VIEW_IpDet" lazy="false">
+        <!--<class name="com.Sconit.Entity.ORD.IpDetail, com.Sconit.Entity" table="ORD_IpDet" lazy="false">-->
+        <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+            <generator class="identity" />
+        </id>
+        <version name="Version" column="Version" type="Int32" />
+        <property name="Type" column="Type"  />
+        <property name="IpNo" column="IpNo" type="String" length="50" />
+        <property name="Sequence" column="Seq" type="Int32"  />
+        <property name="OrderNo" column="OrderNo" type="String" length="50" />
+        <property name="OrderType" column="OrderType"  />
+        <property name="OrderSubType" column="OrderSubType"  />
+        <property name="OrderDetailSequence" column="OrderDetSeq" type="Int32" />
+        <property name="OrderDetailId" column="OrderDetId" type="Int32"  />
+        <property name="ExternalOrderNo" column="ExtNo" type="String" length="50" />
+        <property name="ExternalSequence" column="ExtSeq" type="String" length="50" />
+        <property name="Flow" column="Flow" type="String" length="50" />
+        <property name="Item" column="Item" type="String" length="50" />
+        <property name="ItemDescription" column="ItemDesc" type="String" length="100" />
+        <property name="ReferenceItemCode" column="RefItemCode" type="String" length="50" />
+        <property name="Uom" column="Uom" type="String" length="5" />
+        <property name="BaseUom" column="BaseUom" type="String" length="5" />
+        <property name="UnitCount" column="UC" type="Decimal"  />
+        <property name="UnitCountDescription" column="UCDesc" type="String" length="50" />
+        <property name="StartTime" column="StartTime" type="DateTime" />
+        <property name="WindowTime" column="WindowTime" type="DateTime" />
+        <property name="QualityType" column="QualityType"/>
+        <property name="ManufactureParty" column="ManufactureParty" type="String" length="50"/>
+        <!--<property name="HuId" column="HuId" type="String" length="50" />	
+		<property name="LotNo" column="LotNo" type="String" length="50" />	
+		<property name="IsConsignment" column="IsCS" type="Boolean"  />	
+		<property name="PlanBillId" column="PlanBill" type="Int32"  />	
+		<property name="QualityType" column="QualityType"  />
+        <property name="IsFreeze" column="IsFreeze" type="Boolean"  />
+        <property name="IsATP" column="IsATP" type="Boolean"  />-->
+        <property name="Qty" column="Qty" type="Decimal"  />
+        <property name="ReceivedQty" column="RecQty" type="Decimal"  />
+        <property name="UnitQty" column="UnitQty" type="Decimal"  />
+        <property name="LocationFrom" column="LocFrom" type="String" length="50" />
+        <property name="LocationFromName" column="LocFromNm" type="String" length="100" />
+        <property name="LocationTo" column="LocTo" type="String" length="50" />
+        <property name="LocationToName" column="LocToNm" type="String" length="100" />
+        <property name="IsInspect" column="IsInspect" type="Boolean"  />
+        <!--<property name="InspectLocation" column="InspLoc" type="String" length="50" />	
+		<property name="InspectLocationName" column="InspLocNm" type="String" length="100" />	
+		<property name="RejectLocation" column="RejLoc" type="String" length="50" />	
+		<property name="RejectLocationName" column="RejLocNm" type="String" length="100" />-->
+        <property name="BillAddress" column="BillAddr" type="String" length="50" />
+        <property name="PriceList" column="PriceList" type="String" length="50" />
+        <property name="UnitPrice" column="UnitPrice" type="Decimal"  />
+        <property name="Currency" column="Currency" type="String" length="50" />
+        <property name="IsProvisionalEstimate" column="IsProvEst" type="Boolean"  />
+        <property name="Tax" column="Tax" type="String" length="50" />
+        <property name="IsIncludeTax" column="IsIncludeTax" type="Boolean"  />
+        <property name="BillTerm" column="BillTerm"  />
+        <!--<property name="EffectiveDate" column="EffDate" type="DateTime"  />-->
+        <property name="IsClose" column="IsClose" type="Boolean"  />
+        <property name="GapReceiptNo" column="GapRecNo" type="String" length="50" />
+        <property name="GapIpDetailId" column="GapIpDetId" type="Int32" />
+        <property name="BinTo" column="BinTo" type="String" length="50" />
+        <property name="IsScanHu" column="IsScanHu" type="Boolean"  />
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+        <property name="Container" column="Container" type="String" length="50"/>
+        <property name="ContainerDescription" column="ContainerDesc" type="String" length="50" />
+        <property name="IsChangeUnitCount" column="IsChangeUC" type="Boolean" />
+        <property name="PalletCode" column="PalletCode" type="String" length="50" />
+        <property name="PalletLotSize" column="PalletLotSize" type="Decimal" />
+        <property name="PackageVolume" column="PackageVolume" type="Decimal" />
+        <property name="PackageWeight" column="PackageWeight" type="Decimal" />
+        <!--<bag name="IpLocationDetails" table="ORD_IpLocationDet" inverse="true" lazy="true">
+            <key column="IpDetailId" />
+            <one-to-many class="com.Sconit.Entity.ORD.IpLocationDetail, com.Sconit.Entity" />
+        </bag>-->
+        <sql-insert>
+            exec USP_Split_IpDet_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+        </sql-insert>
+        <sql-update>
+            exec USP_Split_IpDet_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+        </sql-update>
+        <sql-delete>
+            exec USP_Split_IpDet_Delete ?,?
+        </sql-delete>
+    </class>
+</hibernate-mapping>

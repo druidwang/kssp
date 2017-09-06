@@ -1,0 +1,90 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+
+        
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id)
+             .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>' onClick='showButtons()'  />")
+             .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />");
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.MinUnitCount);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription);
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.OrderedQty).Format("{0:0.########}");
+        })
+                .DataBinding(dataBinding =>
+                    dataBinding.Ajax().Select("_AjaxList", "ProcurementSQOrder")
+                )
+                        .ClientEvents(envent => envent.OnDataBinding("OrderDetailGrid_OnDataBinding"))
+                  .Pageable(settings =>
+                  {
+                      settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                      settings.PageSize(ViewBag.PageSize);
+                  })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(true)
+            )
+    <script type="text/javascript">
+        function OrderDetailGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Priority: $('#Priority').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                Checker: $('#Checker').val()
+
+            };
+        }
+
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+                var $checkRecords = $("input[name='checkedRecords']");
+                var showButton = false;
+                for (var i = 0; i < $checkRecords.length; i++) {
+                    if ($checkRecords[i].checked) {
+                        showButton = true;
+                        break;
+                    }
+                }
+
+                $("#btnPrint").attr("style", showButton ? "display:inline" : "display:none"); 
+                $("#btnDistributionLabel_Print").attr("style", showButton ? "display:inline" : "display:none");
+                $("#btnDistributionLabel_Export").attr("style", showButton ? "display:inline" : "display:none");
+            });
+        });
+
+
+
+        function showButtons() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            $("#btnPrint").attr("style", showButton ? "display:inline" : "display:none");
+            $("#btnDistributionLabel_Print").attr("style", showButton ? "display:inline" : "display:none");
+            $("#btnDistributionLabel_Export").attr("style", showButton ? "display:inline" : "display:none");
+        }
+
+       
+    </script>
+</fieldset>

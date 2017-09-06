@@ -1,0 +1,50 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISS.IssueLog>
+<fieldset>
+     @(Html.Telerik().Grid(Model)
+        .Name("IssueLogGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Issue);
+            columns.Bound(o => o.Level);
+			columns.Bound(o => o.User.Code);
+			columns.Bound(o => o.User.FullName);
+			columns.Bound(o => o.Content);
+            columns.Bound(o => o.Email);
+			columns.Bound(o => o.IsEmail)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsEmail' <#= IsEmail? checked='checked' : '' #> />");
+			
+			columns.Bound(o => o.EmailStatus);
+			columns.Bound(o => o.IsSMS)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsSMS' <#= IsSMS? checked='checked' : '' #> />");
+			columns.Bound(o => o.MPhone);
+			columns.Bound(o => o.SMSStatus);
+        })
+        
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "IssueLog"))
+        .ClientEvents(events => events.OnDataBinding("IssueLogGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total!=null?ViewBag.Total:0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function IssueLogGrid_OnDataBinding(e) {
+            e.data = {
+                IssueCode: $('#IssueCode').val(),
+                DateFrom: $('#DateFrom').val(),
+				DateTo: $('#DateTo').val(),
+                Content: $('#Content').val(),
+				CreateUser: $('#CreateUser').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.ORD.MrpShiftPlan, com.Sconit.Entity" table="MRP_MrpShiftPlan" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="PlanDate" column="PlanDate" type="DateTime"/>
+    <property name="Item" column="Item" type="String" length="50"/>
+    <property name="Flow" column="Flow" type="String" length="50"/>
+    <property name="Shift" column="Shift" type="String" length="50"/>
+    <property name="Uom" column="Uom" type="String" length="5"/>
+    <property name="Qty" column="Qty" type="Double"/>
+    <property name="PlanVersion" column="PlanVersion" type="Int32"/>
+  </class>
+</hibernate-mapping>

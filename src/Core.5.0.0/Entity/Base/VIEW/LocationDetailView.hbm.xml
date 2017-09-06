@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.VIEW.LocationDetailView, com.Sconit.Entity" table="VIEW_LocationDet" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Location" column="Location" type="String"  length="50" />
+    <property name="Item" column="Item" type="String"  length="50" />
+    <property name="ManufactureParty" column="ManufactureParty" type="String"  length="50" />
+    <property name="Qty" column="Qty" type="Decimal"/>
+    <property name="ConsignmentQty" column="CsQty" type="Decimal"/>
+    <property name="QualifyQty" column="QualifyQty" type="Decimal"/>
+    <property name="InspectQty" column="InspectQty" type="Decimal"/>
+    <property name="RejectQty" column="RejectQty" type="Decimal"/>
+    <property name="ATPQty" column="ATPQty" type="Decimal"/>
+    <property name="FreezeQty" column="FreezeQty" type="Decimal"/>
+  </class>
+</hibernate-mapping>

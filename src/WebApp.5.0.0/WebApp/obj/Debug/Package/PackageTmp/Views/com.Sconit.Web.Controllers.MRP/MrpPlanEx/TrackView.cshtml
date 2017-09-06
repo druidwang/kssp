@@ -1,0 +1,121 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlanEx_TrackView" });
+}
+<script type="text/javascript">
+    function MrpPlanMaster_Change() {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        } else {
+            var Data = {
+                planVersion: $('#planVersion').val()
+            };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/MrpPlanEx/_GetWeekIndex/",
+                data: Data,
+                cache: false,
+                success: function (data) {
+                    document.getElementById("DateIndex").value = data;
+                }
+            });
+        }
+    }
+    function onSearch() {
+        if ($('#prevVersion').val() == "") {
+            $message.error('前版本不能为空。');
+            return;
+        }
+
+        if ($('#nextVersion').val() == "") {
+            $message.error('当前版本不能为空。');
+            return;
+        }
+
+        if ($('#DateIndex').val() == "") {
+            $message.error('周不能为空。');
+            return;
+        }
+
+        var url = "/MrpPlanEx/_GetMrpPlanTrackView/";
+        var div = "#fdOrderDetail";
+
+        var data = {
+            planVersion: $('#planVersion').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: url,
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                $(div).html(data);
+                $(div).show();
+                $("tr.t-no-data").find("td").text("Loading...");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+<fieldset>
+@using (Html.BeginForm("ExportExTrack", "MrpPlanEx"))
+{
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_PlanVersion
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+           Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+           {
+               controlName = "planVersion",
+               resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+               isRelease = true,
+               isChange = true
+           });
+            }
+        </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_DateIndex
+                </label>
+            </div>
+            <div class="editor-field-2" id="UomFromDiv">
+                @Html.TextBox("DateIndex", string.Empty, new { disabled = "disabled" })
+            </div>
+    </div>
+    <div class="search-footer">
+        @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanEx_TrackView", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnSearch"},
+            {"needconfirm","false"},
+            {"onclick","onSearch()"},
+	    })
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+}
+</fieldset>
+<div id="fdOrderDetail" style="display: none;">
+</div>
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        $('form').submit();
+    });
+</script>

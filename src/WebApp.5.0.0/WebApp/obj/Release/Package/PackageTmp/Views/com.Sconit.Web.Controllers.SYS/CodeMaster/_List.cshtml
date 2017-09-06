@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "_Edit";
+}
+@model IEnumerable<com.Sconit.Entity.SYS.CodeDetail>
+<fieldset>   
+    @(Html.Telerik().Grid(Model)
+        .Name("CodeDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .DataBinding(dataBinding =>
+        {
+         dataBinding.Ajax()
+          .Update("Update", "CodeMaster")
+          .Select("Index", "CodeMaster");
+         })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Value);
+            columns.Bound(o => o.Description);
+            columns.Bound(p => p.IsDefault)
+                      .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDefault' <#= IsDefault? checked='checked' : '' #> />");
+            if(ViewBag.type == (int)com.Sconit.CodeMaster.CodeMasterType.Editable)
+            {
+
+                columns.Command(commands =>
+                {
+                    commands.Edit();
+                });
+            }
+        })
+       
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+         .Footer(false)
+       
+    )
+</fieldset>

@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="OrderDetail_BillAddress" xml:space="preserve">
+    <value>Bill Address</value>
+    <comment>开票地址</comment>
+  </data>
+  <data name="OrderDetail_BillAddressDescription" xml:space="preserve">
+    <value>Bil lAddress Desc</value>
+    <comment>开票地址描述</comment>
+  </data>
+  <data name="OrderDetail_BillTerm" xml:space="preserve">
+    <value>Bill Term</value>
+    <comment>结算方式</comment>
+  </data>
+  <data name="OrderDetail_Bom" xml:space="preserve">
+    <value>BOM</value>
+    <comment>物料清单</comment>
+  </data>
+  <data name="OrderDetail_BomDetail_Title_View" xml:space="preserve">
+    <value>BOM Detail</value>
+    <comment>物料清单</comment>
+  </data>
+  <data name="OrderDetail_Container" xml:space="preserve">
+    <value>Container</value>
+    <comment>容器代码</comment>
+  </data>
+  <data name="OrderDetail_ContainerDescription" xml:space="preserve">
+    <value>Container Desc</value>
+    <comment>容器描述</comment>
+  </data>
+  <data name="OrderDetail_CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+    <comment>创建日期</comment>
+  </data>
+  <data name="OrderDetail_CreateUserName" xml:space="preserve">
+    <value>Create User</value>
+    <comment>创建用户</comment>
+  </data>
+  <data name="OrderDetail_CurrentPickListQty" xml:space="preserve">
+    <value>Current To-pick Qty</value>
+    <comment>待拣数</comment>
+  </data>
+  <data name="OrderDetail_CurrentPickQty" xml:space="preserve">
+    <value>Current Picked Qty</value>
+    <comment>拣货数</comment>
+  </data>
+  <data name="OrderDetail_CurrentReceiveQty" xml:space="preserve">
+    <value>Current Rec Qty</value>
+    <comment>本次收货数</comment>
+  </data>
+  <data name="OrderDetail_CurrentScrapQty" xml:space="preserve">
+    <value>Current Scrap Qty</value>
+    <comment>本次废品数</comment>
+  </data>
+  <data name="OrderDetail_CurrentShipQty" xml:space="preserve">
+    <value>Current Iss Qty</value>
+    <comment>发货数</comment>
+  </data>
+  <data name="OrderDetail_Direction" xml:space="preserve">
+    <value>Direction</value>
+    <comment>方向</comment>
+  </data>
+  <data name="OrderDetail_ExternalOrderNo" xml:space="preserve">
+    <value>Ext Order No</value>
+    <comment>交货单号</comment>
+  </data>
+  <data name="OrderDetail_Flow" xml:space="preserve">
+    <value>Flow</value>
+    <comment>路线代码</comment>
+  </data>
+  <data name="OrderDetail_HuQty" xml:space="preserve">
+    <value>Qty</value>
+    <comment>数量</comment>
+  </data>
+  <data name="OrderDetail_InTransQty" xml:space="preserve">
+    <value>To-rec Qty</value>
+    <comment>待收</comment>
+  </data>
+  <data name="OrderDetail_InvQty" xml:space="preserve">
+    <value>Inv Qty</value>
+    <comment>目的库存</comment>
+  </data>
+  <data name="OrderDetail_IsIncludeTax" xml:space="preserve">
+    <value>Include Tax</value>
+    <comment>是否含税</comment>
+  </data>
+  <data name="OrderDetail_IsInspect" xml:space="preserve">
+    <value>Is Inspect</value>
+    <comment>是否检验</comment>
+  </data>
+  <data name="OrderDetail_IsProvisionalEstimate" xml:space="preserve">
+    <value>Is Temp-price</value>
+    <comment>是否暂估</comment>
+  </data>
+  <data name="OrderDetail_Item" xml:space="preserve">
+    <value>Item</value>
+    <comment>物料代码</comment>
+  </data>
+  <data name="OrderDetail_ItemDescription" xml:space="preserve">
+    <value>Item Desc</value>
+    <comment>物料描述</comment>
+  </data>
+  <data name="OrderDetail_LastModifyDate" xml:space="preserve">
+    <value>Last Modify Date</value>
+    <comment>最后更新日期</comment>
+  </data>
+  <data name="OrderDetail_LastModifyUserName" xml:space="preserve">
+    <value>Last Modify User</value>
+    <comment>最后更新用户</comment>
+  </data>
+  <data name="OrderDetail_LocationFrom" xml:space="preserve">
+    <value>Locfrom</value>
+    <comment>发货库位</comment>
+  </data>
+  <data name="OrderDetail_LocationFromName" xml:space="preserve">
+    <value>Locfrom Name</value>
+    <comment>发货库位</comment>
+  </data>
+  <data name="OrderDetail_LocationQty" xml:space="preserve">
+    <value>Inv Qty</value>
+    <comment>库存数</comment>
+  </data>
+  <data name="OrderDetail_LocationTo" xml:space="preserve">
+    <value>Locto</value>
+    <comment>收货库位</comment>
+  </data>
+  <data name="OrderDetail_LocationToName" xml:space="preserve">
+    <value>Locto Name</value>
+    <comment>收货库位</comment>
+  </data>
+  <data name="OrderDetail_LotNo" xml:space="preserve">
+    <value>Lot No</value>
+    <comment>批号</comment>
+  </data>
+  <data name="OrderDetail_ManufactureParty" xml:space="preserve">
+    <value>Manufactor</value>
+    <comment>制造商</comment>
+  </data>
+  <data name="OrderDetail_ManufactureParty1" xml:space="preserve">
+    <value>Manufactor</value>
+    <comment>制造商</comment>
+  </data>
+  <data name="OrderDetail_MaxStock" xml:space="preserve">
+    <value>Max Stock</value>
+    <comment>最大</comment>
+  </data>
+  <data name="OrderDetail_MinUnitCount" xml:space="preserve">
+    <value>Prod UC</value>
+    <comment>上线包装</comment>
+  </data>
+  <data name="OrderDetail_Operation_Title_View" xml:space="preserve">
+    <value>Routing</value>
+    <comment>工艺流程</comment>
+  </data>
+  <data name="OrderDetail_OrderDetail" xml:space="preserve">
+    <value>Order Detail</value>
+    <comment>订单明细</comment>
+  </data>
+  <data name="OrderDetail_OrderDetails" xml:space="preserve">
+    <value>Order Detail</value>
+    <comment>明细</comment>
+  </data>
+  <data name="OrderDetail_OrderedQty" xml:space="preserve">
+    <value>Order Qty</value>
+    <comment>订单数</comment>
+  </data>
+  <data name="OrderDetail_OrderedQtyReturn" xml:space="preserve">
+    <value>Return Qty</value>
+    <comment>退货数</comment>
+  </data>
+  <data name="OrderDetail_OrderNo" xml:space="preserve">
+    <value>Order No</value>
+    <comment>订单号</comment>
+  </data>
+  <data name="OrderDetail_PartyFrom" xml:space="preserve">
+    <value>Partyfrom</value>
+    <comment>制造商</comment>
+  </data>
+  <data name="OrderDetail_PickedQty" xml:space="preserve">
+    <value>Picked Qty</value>
+    <comment>已拣数</comment>
+  </data>
+  <data name="OrderDetail_PriceList" xml:space="preserve">
+    <value>Price List</value>
+    <comment>价格单</comment>
+  </data>
+  <data name="OrderDetail_ProductionScan" xml:space="preserve">
+    <value>Production Scan</value>
+    <comment>生产扫描</comment>
+  </data>
+  <data name="OrderDetail_ProductLineFacility" xml:space="preserve">
+    <value>Facility</value>
+    <comment>生产线设备</comment>
+  </data>
+  <data name="OrderDetail_QualityType" xml:space="preserve">
+    <value>Quality Status</value>
+    <comment>质量状态</comment>
+  </data>
+  <data name="OrderDetail_ReceivedQty" xml:space="preserve">
+    <value>Received Qty</value>
+    <comment>已收数</comment>
+  </data>
+  <data name="OrderDetail_ReceiveLotSize" xml:space="preserve">
+    <value>Received Lot Size</value>
+    <comment>收货批量</comment>
+  </data>
+  <data name="OrderDetail_ReferenceItemCode" xml:space="preserve">
+    <value>Ref Item Code</value>
+    <comment>参考物料号</comment>
+  </data>
+  <data name="OrderDetail_RejectedQty" xml:space="preserve">
+    <value>Rejected Qty</value>
+    <comment>次品数</comment>
+  </data>
+  <data name="OrderDetail_RequiredQty" xml:space="preserve">
+    <value>Demand Qty</value>
+    <comment>需求数</comment>
+  </data>
+  <data name="OrderDetail_Routing" xml:space="preserve">
+    <value>Routing</value>
+    <comment>工艺流程</comment>
+  </data>
+  <data name="OrderDetail_ScheduleLineNo" xml:space="preserve">
+    <value>Schedule Line No</value>
+    <comment>计划协议号</comment>
+  </data>
+  <data name="OrderDetail_ScheduleLineSeq" xml:space="preserve">
+    <value>Schedule Line Seq</value>
+    <comment>计划协议行号</comment>
+  </data>
+  <data name="OrderDetail_ScheduleType" xml:space="preserve">
+    <value>Schedule Type</value>
+    <comment>类型</comment>
+  </data>
+  <data name="OrderDetail_ScheduleType_All" xml:space="preserve">
+    <value>All</value>
+    <comment>全部</comment>
+  </data>
+  <data name="OrderDetail_ScrapQty" xml:space="preserve">
+    <value>Scrap Qty</value>
+    <comment>废品数</comment>
+  </data>
+  <data name="OrderDetail_Sequence" xml:space="preserve">
+    <value>Seq</value>
+    <comment>序号</comment>
+  </data>
+  <data name="OrderDetail_ShippedQty" xml:space="preserve">
+    <value>Issued Qty</value>
+    <comment>已发数</comment>
+  </data>
+  <data name="OrderDetail_SupplierLotNo" xml:space="preserve">
+    <value>Supplier Lot No</value>
+    <comment>供应商批号</comment>
+  </data>
+  <data name="OrderDetail_Tax" xml:space="preserve">
+    <value>Tax Rate</value>
+    <comment>税率</comment>
+  </data>
+  <data name="OrderDetail_Title" xml:space="preserve">
+    <value>Order Detail</value>
+    <comment>订单明细</comment>
+  </data>
+  <data name="OrderDetail_UCDesc" xml:space="preserve">
+    <value>UC Desc</value>
+    <comment>包装描述</comment>
+  </data>
+  <data name="OrderDetail_UnitCount" xml:space="preserve">
+    <value>UC</value>
+    <comment>单包装</comment>
+  </data>
+  <data name="OrderDetail_UnitCountDescription" xml:space="preserve">
+    <value>UC Desc</value>
+    <comment>包装描述</comment>
+  </data>
+  <data name="OrderDetail_UnitPrice" xml:space="preserve">
+    <value>Unit Price</value>
+    <comment>单价</comment>
+  </data>
+  <data name="OrderDetail_UnitQty" xml:space="preserve">
+    <value>Unit Qty</value>
+    <comment>单位数量</comment>
+  </data>
+  <data name="OrderDetail_Uom" xml:space="preserve">
+    <value>UOM</value>
+    <comment>单位</comment>
+  </data>
+  <data name="OrderDetail_Version" xml:space="preserve">
+    <value>Version</value>
+    <comment>版本</comment>
+  </data>
+  <data name="OrderDetail_WMSSeq" xml:space="preserve">
+    <value>WMSSeq</value>
+    <comment>SAP序号</comment>
+  </data>
+  <data name="OrderDetail_WindowTime" xml:space="preserve">
+    <value>WindowTime</value>
+  </data>
+</root>

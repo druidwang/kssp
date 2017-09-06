@@ -1,0 +1,97 @@
+﻿@using com.Sconit.Entity.ISS
+@model IEnumerable<com.Sconit.Entity.ISS.IssueMaster>
+<fieldset>
+      @(Html.Telerik().Grid<IssueMaster>()
+        .Name("IssueGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).Width(180).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "Issue", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.IssueSubject);
+			columns.Bound(o => o.IssueTypeCode);
+			columns.Bound(o => o.IssueTypeDescription);
+			columns.Bound(o => o.IssueNoCode);
+			columns.Bound(o => o.IssueNoDescription).Width(80);
+			columns.Bound(o => o.IssueAddress);
+            columns.Bound(o => o.BackYards);
+   			columns.Bound(o => o.StatusDescription);
+			columns.Bound(o => o.TypeDescription);
+			columns.Bound(o => o.PriorityDescription);
+			columns.Bound(o => o.UserName);
+			columns.Bound(o => o.Email);
+			columns.Bound(o => o.MobilePhone);
+			columns.Bound(o => o.Content);
+			columns.Bound(o => o.Solution);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .ClientEvents(events => events.OnDataBinding("IssueGrid_OnDataBinding"))
+		.DetailView(details => details.ClientTemplate(
+            Html.Telerik().Grid<IssueDetail>()
+                .Name("IssueDetails_<#= Code #>")
+                .Columns(columns =>
+                {
+					columns.Bound(o => o.IssueLevel);
+					columns.Bound(o => o.Sequence);
+					columns.Bound(o => o.UserName);
+					columns.Bound(o => o.IsDefault)
+						.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDefault' <#= IsDefault? checked='checked' : '' #> />");
+					columns.Bound(o => o.IsSubmit)
+						.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsSubmit' <#= IsSubmit? checked='checked' : '' #> />");
+					columns.Bound(o => o.IsInProcess)
+						.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsInProcess' <#= IsInProcess? checked='checked' : '' #> />");
+					columns.Bound(o => o.Email);
+					columns.Bound(o => o.EmailStatusDescription);
+					columns.Bound(o => o.MobilePhone);
+					columns.Bound(o => o.SMSStatusDescription);
+                })
+				.ClientEvents(events => events.OnDataBinding("IssueGrid_OnDataBinding"))
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_IssueDetailsHierarchyAjax", "Issue", new { issueCode = "<#= Code #>" }))
+                .Pageable()
+                .Sortable()
+                .Filterable()
+                .ToHtmlString()
+			))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total!=null?ViewBag.Total:0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .EnableCustomBinding(true)
+        .Resizable(resizing => resizing.Columns(true))
+		.DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Issue"))
+		//.Scrollable(scrolling => scrolling.Height(300))
+		.Sortable()
+    )
+    <script type="text/javascript">
+        function IssueGrid_OnDataBinding(e) {
+            
+            e.data = {
+                Code: $('#Code').val(),
+                IssueSubject: $('#IssueSubject').val(),
+				IssueTypeCode: $('#IssueTypeCode').val(),
+				IssueAddressCode: $('#IssueAddressCode').val(),
+				IssueNoCode: $('#IssueNoCode').val(),
+				Type: $('#Type').val(),
+				Status: $('#Status').val(),
+				Priority: $('#Priority').val(),
+				Status: $('#Status').val(),
+				BackYards: $('#BackYards').val(),
+				UserName: $('#UserName').val(),
+				Email: $('#Email').val(),
+				MobilePhone: $('#MobilePhone').val(),
+				Content: $('#Content').val(),
+				Solution: $('#Solution').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,117 @@
+﻿@model com.Sconit.Entity.WMS.PickUser  
+@Html.Partial("_AjaxMessage")
+
+    <fieldset>
+        <legend>@Resources.WMS.PickUser.PickUser_Edit_Title </legend>
+        <div class="editor">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.PickGroupCode)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+            <div class="editor-label-2">
+                 @Resources.WMS.ShipUser.ShipUser_ShipGroupCode
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PickGroupCode)
+            </div>
+            <div class="editor-label-2">
+                @Resources.WMS.ShipUser.ShipUser_ShipUserName
+            </div>
+            <div class="editor-field-2">
+              @{
+                  Html.RenderAction("_WmsUserComboBox", "Common", new
+                  {
+                      checkRegion = false,
+                      controlName = "PickUserId",
+                      selectedValue = Model.PickUserId
+                  });
+                }
+            </div>
+                  <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBoxFor(model => model.IsActive)
+            </div>
+        </div>
+        <div class="editor-footer">
+             @Html.Button(Resources.SYS.Global.Button_Save, "Url_PickGroup_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSave_PickUser"},
+                {"needconfirm","true"},
+                {"onclick","btnSave_PickUser_Click()"}
+	        })
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_PickGroup_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnDelete_PickUser"},
+                {"needconfirm","true"},
+                {"onclick","btnDelete_PickUser_Click()"}
+	        })
+            <button type="button" id="btnBack_PickUser" onclick="btnBack_PickUser_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+
+<script language="javascript" type="text/javascript">
+    function btnDelete_PickUser_Click() {
+        var data = {
+            "Id": $("#Id").val(),
+            "PickGroupCode": $("#PickGroupCode").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/ShipGroup/DeletePickUser/",
+            data: data,
+            cache:false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+    function btnSave_PickUser_Click() {
+        var data = {
+            "PickGroupCode": $("#PickGroupCode").val(),
+            "PickUserId": $("#PickUserId").val(),
+            "CreateDate": $("#CreateDate").val(),
+            "CreateUserId": $("#CreateUserId").val(),
+            "CreateUserName": $("#CreateUserName").val(),
+            "Id": $("#Id").val(),
+            "IsActive": $('#IsActive').is(':checked')
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/ShipGroup/_PickUserEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    function btnBack_PickUser_Click() {
+        var data = {
+            "PickGroupCode": $("#PickGroupCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ShipGroup/_PickUserList/",
+            data: "",
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>
+
+

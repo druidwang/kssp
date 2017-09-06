@@ -1,0 +1,66 @@
+﻿@using com.Sconit.Entity.SI
+@using com.Sconit.Web.Models.SearchModels.SI
+@using com.Sconit.Web.Models.SearchModels.SI.SAP
+<fieldset>
+    @using (Html.BeginForm("List", "SAPPostDO"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.SI.PostDO.SAPPostDO_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["PostDOSearchModel"] != null ? ((PostDOSearchModel)TempData["PostDOSearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.SI.PostDO.SAPPostDO_ReceiptNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ReceiptNo", TempData["PostDOSearchModel"] != null ? ((PostDOSearchModel)TempData["PostDOSearchModel"]).ReceiptNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.SI.PostDO.SAPPostDO_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("StartDate")
+.Value(TempData["PostDOSearchModel"] != null ? ((PostDOSearchModel)TempData["PostDOSearchModel"]).StartDate : System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.SI.PostDO.SAPPostDO_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("EndDate")
+.Value(TempData["PostDOSearchModel"] != null ? ((PostDOSearchModel)TempData["PostDOSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.SI.InvTrans.InvTrans_Status
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.RadioButton("Status", "", true)所有
+                @Html.RadioButton("Status", 0, TempData["PostDOSearchModel"] != null ? (((PostDOSearchModel)TempData["PostDOSearchModel"]).Status == "0" ? true : false) : false)执行中
+                @Html.RadioButton("Status", 1, TempData["PostDOSearchModel"] != null ? (((PostDOSearchModel)TempData["PostDOSearchModel"]).Status == "1" ? true : false) : false)成功
+                @Html.RadioButton("Status", 2, TempData["PostDOSearchModel"] != null ? (((PostDOSearchModel)TempData["PostDOSearchModel"]).Status == "2" ? true : false) : false)失败
+                @Html.RadioButton("Status", 3, TempData["PostDOSearchModel"] != null ? (((PostDOSearchModel)TempData["PostDOSearchModel"]).Status == "3" ? true : false) : false)异常
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.Global.Button_Search</button>
+            @* // <button type="button" id="btnEdit" onclick="editCheckedOrders()" style="display: none">@Resources.Global.Button_Confirm</button>*@
+        </div>
+    }
+</fieldset>

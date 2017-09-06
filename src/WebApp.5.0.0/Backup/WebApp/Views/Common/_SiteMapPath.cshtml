@@ -1,0 +1,38 @@
+﻿@*@model IEnumerable<com.Sconit.Web.Models.MenuModel>
+<div style="margin: 3px 0 7px 0">
+    @{List<MenuModel> menus = this.Model.Reverse().ToList();}
+
+    @Html.Hidden("menuUrl", menus.Last().PageUrl)
+    @Html.Hidden("menuCode", menus.Last().Code)
+    @Html.Hidden("menuName", menus.Last().Description.Split('-').Last().Trim() + "-" + menus.Last().Description.Split('-').Reverse().Skip(1).First().Trim())
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        if (top.location == self.location) {
+            top.location = "/Main/Default";
+        }
+        try {
+            //setTimeout(parent.Nav.ExpandNode($("#menuCode").val()), 500);
+        }
+        catch (r) {
+        }
+        //window.parent.document.title = window.parent.document.title.replace(/ - .*/, '');
+        //window.parent.parent.document.title = $("#menuName").val();
+    }
+
+    function HideTop() {
+        var winFrame = top.document.getElementsByName("WinFrame")[0];
+        if (winFrame.rows == '0,*') {
+            winFrame.rows = "51,*";
+            document.getElementById("hideImg").src = '/Content/Images/Main/ns-collapse.gif';
+            document.getElementById("hideImg").title = 'Collapse';
+            document.getElementById("hideImg").alt = 'Collapse';
+        }
+        else {
+            winFrame.rows = "0,*";
+            document.getElementById("hideImg").src = '/Content/Images/Main/ns-expand.gif';
+            document.getElementById("hideImg").title = 'Expand';
+            document.getElementById("hideImg").alt = 'Expand';
+        }
+    }
+</script>*@

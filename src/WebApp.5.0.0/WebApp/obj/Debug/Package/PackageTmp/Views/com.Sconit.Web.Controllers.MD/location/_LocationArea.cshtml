@@ -1,0 +1,97 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset> 
+        <div class="search">
+            <div class="search-label">
+            <label for="Location_Code">
+                @Resources.MD.Location.Location_Code
+                 </label>
+            </div>
+            <div class="search-field">
+                 @ViewBag.LocationCode
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+            <div class="search-label">
+                <label for="LocationArea_Code">
+                    @Resources.MD.LocationArea.LocationArea_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("AreaCode", TempData["LocationAreaSearchModel"] != null ? ((LocationAreaSearchModel)TempData["LocationAreaSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="LocationArea_Name">
+                    @Resources.MD.LocationArea.LocationArea_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("AreaName", TempData["LocationAreaSearchModel"] != null ? ((LocationAreaSearchModel)TempData["LocationAreaSearchModel"]).Name : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @*<button type="button" id="btnAreaSearch" onclick="btnSearchLocationArea_Click();">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnAreaNew" onclick="btnNewLocationArea_Click();">
+                @Resources.SYS.Global.Button_New</button>*@
+                @Html.Button(Resources.SYS.Global.Button_Search, "Url_Location_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnAreaSearch"},
+        {"onclick","btnSearchLocationArea_Click()"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_LocationAreaBin_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnAreaNew"},
+        {"onclick","btnNewLocationArea_Click()"}
+	})
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Location/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+</fieldset>
+
+<script language="javascript" type="text/javascript">
+    function btnNewLocationArea_Click() {
+        var data = {
+            "locationCode": $("#LocationCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/location/_LocationAreaNew/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnSearchLocationArea_Click() {
+        var data = {
+            "locationCode": $("#LocationCode").val(),
+            "Code": $("#AreaCode").val(),
+            "Name": $("#AreaName").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/location/_LocationAreaList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

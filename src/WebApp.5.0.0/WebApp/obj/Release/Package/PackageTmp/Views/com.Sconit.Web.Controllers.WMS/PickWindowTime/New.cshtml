@@ -1,0 +1,70 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.WMS.PickWindowTime
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PickWindowTime_View" });
+}
+<script type="text/javascript">
+      function Shift_DataBinding(e) {
+        e.data = {
+          
+        }
+    }
+    function PickSchedule_DataBinding(e) {
+        e.data = {
+
+        }
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.WMS.PickWindowTime.PickWindowTime_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.PickScheduleNo)
+            </div>
+            <div class="editor-field-2">
+               @{
+    Html.RenderAction("_PickScheduleComboBox", "Common", new
+    {
+        controlName = "PickScheduleNo",
+
+        selectedValue = Model != null ? Model.PickScheduleNo : string.Empty
+    });
+            }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShiftCode)
+            </div>
+            <div class="editor-field-2">
+                 @{
+    Html.RenderAction("_ShiftComboBox", "Common", new
+    {
+        controlName = "ShiftCode",
+  
+        selectedValue = Model != null ? Model.ShiftCode : string.Empty
+    });
+            }
+            </div>
+            <div class="editor-label-2">
+                <label>@Resources.WMS.PickWindowTime.PickWindowTime_WindowTime</label>
+            </div>
+            <div class="editor-field-1">
+                @Resources.WMS.PickWindowTime.PickWindowTime_WinTimeToolTip
+            </div>
+            <div class="editor-label-2">
+                <label>@Resources.WMS.PickWindowTime.PickWindowTime_WindowTime</label>
+            </div>
+            <div class="editor-field-1">
+                @Html.EditorFor(model => model.WindowTime)
+                @Html.ValidationMessageFor(model => model.WindowTime)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/PickWindowTime/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

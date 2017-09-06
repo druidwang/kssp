@@ -1,0 +1,87 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@using com.Sconit.Entity.SYS;
+@model IEnumerable<com.Sconit.Entity.INV.LocationLotDetail>
+<script type="text/javascript">
+    function OrderExistsHuGrid_OnDataBinding(e) {
+        e.data = {
+            StNo: $('#StNo').val()
+        }
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ExitsHuList")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+       .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+                commands.Custom().Text("清除已在库位中的条码").HtmlAttributes(new { onClick = "deleteStHuId()", href = "#" });
+        })
+
+        .DataBinding(dataBinding =>
+                                   dataBinding.Ajax().Select("_SelectExistLocHuIdDetail", "StockTake", new { StNo = @ViewBag.StNo }))
+            .ClientEvents(events => events.OnDataBinding("OrderExistsHuGrid_OnDataBinding"))
+        .Columns(columns =>
+        {
+
+            columns.Bound(o => o.HuId).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.Location).ReadOnly();
+            columns.Bound(o => o.Qty).ReadOnly();
+        })
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(10000);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+            )
+            <input type="hidden" name="StNo"  id="StNo" value="@ViewBag.StNo"/>
+</fieldset>
+<script type="text/javascript">
+    function deleteStHuId() {
+   //debugger
+        var stockTakemstr = {
+            "StNo": $("#StNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/StockTake/_DeleteStHuId/",
+            data: stockTakemstr,
+            success: function (data, stockTakemstr) {
+                if (data.SuccessMessage != "") {
+                    $("#popErrorsul").html('');
+                    $("#popSuccesssul").html(data.SuccessMessage);
+                    //debugger
+                    if (data != "") {
+                        var stockTakemstr = {
+                            "StNo": $("#StNo").val()
+                        };
+                        $.ajax({
+                            type: "get",
+                            dataType: "Html",
+                            url: "/StockTake/_ExistLocHuIdChkList/",
+                            data: stockTakemstr,
+                            cache: false,
+                            success: function (data, textStatus) {
+                                $("#divExistLocHuIdChkList").html(data);
+                            }
+                        });
+                    }
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $("#popSuccesssul").html('');
+                $("#popErrorsul").html(errorMessages);
+            }
+        });
+    }
+</script>
+ 

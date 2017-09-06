@@ -1,0 +1,17 @@
+﻿@Html.Partial("_CommonDropDownList")
+
+@*@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+}
+@(Html.Telerik().DropDownList()
+                    .Name(name)
+//                    .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingNewUom", "Common"))
+//                .ClientEvents(events => events.OnDataBinding("NewUom_DataBinding"))
+                    .HiddenInputHtmlAttributes(new { id = Id })
+        .BindTo(Model)
+        .Enable(enable)
+                    )*@
+            

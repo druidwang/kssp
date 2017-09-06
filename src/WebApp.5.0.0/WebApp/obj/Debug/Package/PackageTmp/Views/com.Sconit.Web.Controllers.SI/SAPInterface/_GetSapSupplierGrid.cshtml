@@ -1,0 +1,58 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPSupplier>
+<fieldset>
+    <legend>供应商</legend>
+    <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SAPInterface/SAPTransferLogList")'">
+        @Resources.SYS.Global.Button_Back</button>
+    <br />
+    <br />
+    @(Html.Telerik().Grid(Model)
+                .Name("SAPItem")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.LIFNR);
+            columns.Bound(o => o.NAME1);
+            columns.Bound(o => o.BUKRS);
+            columns.Bound(o => o.COUNTRY);
+            columns.Bound(o => o.CITY);
+            columns.Bound(o => o.REMARK);
+            columns.Bound(o => o.TELF1);
+            columns.Bound(o => o.TELFX);
+            columns.Bound(o => o.PARNR);
+            columns.Bound(o => o.PSTLZ);
+            columns.Bound(o => o.TELBX);
+            columns.Bound(o => o.TELF2);
+            columns.Bound(o => o.EKGRP);
+            columns.Bound(o => o.LOEVM);
+            columns.Bound(o => o.BatchNo);
+            columns.Bound(o => o.StatusDesc);
+            columns.Bound(o => o.CreateDate);
+        })
+        .NoRecordsTemplate("没有数据.")
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSupplierBatchNoList", "SAPInterface"))
+        .ClientEvents(events => events.OnDataBinding("SAPSupplier_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 10 : ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+                )
+</fieldset>
+<script type="text/javascript">
+//    $(document).ready(function () {
+//        $("tr.t-no-data").find("td").text("没有符合条件的记录...");
+//        $(".t-grid-content").removeAttr("style");
+    //    });
+    function SAPSupplier_OnDataBinding(e) {
+        e.data = {
+            BatchNo: $('#BatchNo').val()
+        };
+    }
+</script>

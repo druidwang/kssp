@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.ORD.OrderDetail, com.Sconit.Entity" table="VIEW_OrderDet" lazy="false">
+        <!--<class name="com.Sconit.Entity.ORD.OrderDetail, com.Sconit.Entity" table="ORD_OrderDet" lazy="false">-->
+        <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+            <generator class="identity" />
+        </id>
+        <version name="Version" column="Version" type="Int32"  />
+        <property name="OrderNo" column="OrderNo" type="String" length="50" />
+        <property name="OrderType" column="OrderType" />
+        <property name="OrderSubType" column="OrderSubType" />
+        <property name="Sequence" column="Seq" type="Int32"  />
+        <property name="ExternalOrderNo" column="ExtNo" type="String" length="50" />
+        <property name="ExternalSequence" column="ExtSeq" type="String" length="50" />
+        <property name="StartDate" column="StartDate" type="DateTime"  />
+        <property name="EndDate" column="EndDate" type="DateTime"  />
+        <property name="ScheduleType" column="ScheduleType" />
+        <property name="Item" column="Item" type="String" length="50" />
+        <property name="ItemDescription" column="ItemDesc" type="String" length="100" />
+        <property name="ReferenceItemCode" column="RefItemCode" type="String" length="50" />
+        <property name="Uom" column="Uom" type="String" length="5" />
+        <property name="BaseUom" column="BaseUom" type="String" length="5" />
+        <property name="UnitCount" column="UC" type="Decimal"  />
+        <property name="UnitCountDescription" column="UCDesc" type="String" length="50" />
+        <property name="MinUnitCount" column="MinUC" type="Decimal"  />
+        <property name="QualityType" column="QualityType"/>
+        <property name="ManufactureParty" column="ManufactureParty" type="String" length="50"/>
+        <property name="RequiredQty" column="ReqQty" type="Decimal"  />
+        <property name="OrderedQty" column="OrderQty" type="Decimal"  />
+        <property name="ShippedQty" column="ShipQty" type="Decimal"  />
+        <property name="ReceivedQty" column="RecQty" type="Decimal"  />
+        <property name="RejectedQty" column="RejQty" type="Decimal"  />
+        <property name="ScrapQty" column="ScrapQty" type="Decimal"  />
+        <property name="PickedQty" column="PickQty" type="Decimal"  />
+        <property name="UnitQty" column="UnitQty" type="Decimal"  />
+        <property name="ReceiveLotSize" column="RecLotSize" type="Decimal"  />
+        <property name="LocationFrom" column="LocFrom" type="String" length="50" />
+        <property name="LocationFromName" column="LocFromNm" type="String" length="100" />
+        <property name="LocationTo" column="LocTo" type="String" length="50" />
+        <property name="LocationToName" column="LocToNm" type="String" length="100" />
+        <property name="IsInspect" column="IsInspect" type="Boolean"  />
+        <!--<property name="InspectLocation" column="InspLoc" type="String" length="50" />
+        <property name="InspectLocationName" column="InspLocNm" type="String" length="100" />
+        <property name="RejectLocation" column="RejLoc" type="String" length="50" />
+        <property name="RejectLocationName" column="RejLocNm" type="String" length="100" />-->
+        <property name="BillAddress" column="BillAddr" type="String" length="50" />
+        <property name="BillAddressDescription" column="BillAddrDesc" type="String" length="256" />
+        <property name="PriceList" column="PriceList" type="String" length="50" />
+        <property name="UnitPrice" column="UnitPrice" type="Decimal"  />
+        <property name="IsProvisionalEstimate" column="IsProvEst" type="Boolean"  />
+        <property name="Tax" column="Tax" type="String" length="50" />
+        <property name="IsIncludeTax" column="IsIncludeTax" type="Boolean"  />
+        <property name="Currency" column="Currency" type="String" length="50" />
+        <property name="Bom" column="Bom" type="String" length="50" />
+        <property name="Routing" column="Routing" type="String" length="50" />
+        <!--<property name="ProductionScan" column="ProdScan" type="String" length="50" />-->
+        <!--<property name="HuLotSize" column="HuLotSize" type="Decimal"  />-->
+        <property name="BillTerm" column="BillTerm"  />
+        <property name="IsScanHu" column="IsScanHu" type="Boolean"  />
+        <property name="ReserveNo" column="ReserveNo" type="String" length="50" />
+        <property name="ReserveLine" column="ReserveLine" type="String" length="50" />
+        <property name="ZOPWZ" column="ZOPWZ" type="String" length="50" />
+        <property name="ZOPID" column="ZOPID" type="String" length="50" />
+        <property name="ZOPDS" column="ZOPDS" type="String" length="50" />
+        <property name="BinTo" column="BinTo" type="String" length="50" />
+        <property name="WMSSeq" column="WMSSeq" type="String" length="50" />
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+        <property name="Container" column="Container" type="String" length="50"/>
+        <property name="ContainerDescription" column="ContainerDesc" type="String" length="50" />
+        <property name="PickStrategy" column="PickStrategy" type="String" length="50" />
+        <property name="ExtraDemandSource" column="ExtraDmdSource" type="String" length="256" />
+        <property name="IsChangeUnitCount" column="IsChangeUC" type="Boolean" />
+        <property name="AUFNR" column="AUFNR" type="String" length="50" />
+        <property name="ICHARG" column="ICHARG" type="String" length="50" />
+        <property name="BWART" column="BWART" type="String" length="50" />
+        <property name="Direction" column="Direction" type="String" length="50" />
+        <property name="Remark" column="Remark" type="String" length="255" />
+        <property name="PalletCode" column="PalletCode" type="String" length="50" />
+        <property name="PalletLotSize" column="PalletLotSize" type="Decimal" />
+        <property name="PackageVolume" column="PackageVolume" type="Decimal" />
+        <property name="PackageWeight" column="PackageWeight" type="Decimal" />
+        <!--<bag name="OrderBomDetails" table="OrderDet" inverse="true" lazy="true" order-by="Op asc">
+            <key column="Id" />
+            <one-to-many class="com.Sconit.Entity.ORD.OrderBomDetail, com.Sconit.Entity" />
+        </bag>
+        <bag name="OrderOperations" table="OrderOp" inverse="true" lazy="true" order-by="Op asc">
+            <key column="OrderNo" />
+            <one-to-many class="com.Sconit.Entity.ORD.OrderOperation, com.Sconit.Entity" />
+        </bag>-->
+        <sql-insert>
+          exec USP_Split_OrderDet_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+        </sql-insert>
+        <sql-update>
+            exec USP_Split_OrderDet_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+        </sql-update>
+        <sql-delete>
+          exec USP_Split_OrderDet_Delete ?,?
+        </sql-delete>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BomImportDuplicate" xml:space="preserve">
+    <value>存在重复的明细:Bom{0}物料{1}Op{2}。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="BomNotHaveMatchedSection" xml:space="preserve">
+    <value>此物料Bom'{0}'没有对应的断面Bom。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="CouldMBNotEnd" xml:space="preserve">
+    <value>还未到财政月结束日期，不能进行月结。</value>
+    <comment>FinanceCalendar</comment>
+  </data>
+  <data name="CouldNotBurnIn" xml:space="preserve">
+    <value>此条码不能进行老化操作。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="CouldNotBurnInForFreeze" xml:space="preserve">
+    <value>此条码已经冻结,不能进行老化操作。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="CouldNotBurnInHasBurnIn" xml:space="preserve">
+    <value>此条码已经老化,不能进行老化操作。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="CouldNotBurnInNotInInventory" xml:space="preserve">
+    <value>此条码不在库存中,不能进行老化操作。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="CouldNotBurnInNotStart" xml:space="preserve">
+    <value>此条码做未老化上线,不能进行老化操作。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="CouldNotBurnInOther" xml:space="preserve">
+    <value>此条码不需要进行老化操作。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="CouldNotFilterNotInInventory" xml:space="preserve">
+    <value>此条码不在库存中,不能进行过滤操作。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="CouldNotFilterVoidHasNotFiltered" xml:space="preserve">
+    <value>不是过滤后的条码不能进行冲销操作。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="CouldNotVoidIsNotBurnIn" xml:space="preserve">
+    <value>不是老化后的条码不能进行冲销操作。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="CurrentFiscalMonthNotMatchNextStart" xml:space="preserve">
+    <value>当前有效财政月结束日期和下个有效财政月开始日期不匹配。</value>
+    <comment>FinanceCalendar</comment>
+  </data>
+  <data name="DuplicateFlowDetail" xml:space="preserve">
+    <value>存在重复的明细:路线{0}物料{1}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="FaildCreateBomDetail" xml:space="preserve">
+    <value>创建或更新BomDet{0}失败:{1}。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="FaildCreateBomMaster" xml:space="preserve">
+    <value>创建Bom{0}失败:{1}。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="FlowCodeShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行路线代码不能为空。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="FlowDescShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行路线描述不能为空。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="FlowTypeIsNotCorrect" xml:space="preserve">
+    <value>路线类型不对{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="HuHasVoided" xml:space="preserve">
+    <value>此条码已经冲销。</value>
+    <comment>Customization</comment>
+  </data>
+  <data name="HuIsInProcessCanNotInspect" xml:space="preserve">
+    <value>条码{0}为库位{1}至库位{2}的在途库存，不能报验。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="HuIsOccupiedCanNotInspect" xml:space="preserve">
+    <value>条码{0}已经被占用，不能报验。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="HuNotExist" xml:space="preserve">
+    <value>条码{0}不存在。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="HuNotInInvCanNotInspect" xml:space="preserve">
+    <value>条码{0}不在任何库位中，不能报验。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="HuQtyMustMoreThenZore" xml:space="preserve">
+    <value>条码数量须大于0。</value>
+    <comment>Hu</comment>
+  </data>
+  <data name="InspectDetailShouldNotEmpty" xml:space="preserve">
+    <value>报验单明细不能为空。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="JudgeResultShouldNotEmpty" xml:space="preserve">
+    <value>判定结果不能为空。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="LastMBNotMatchEffDate" xml:space="preserve">
+    <value>上次月结结束日期和当前有效财政月开始日期不匹配。</value>
+    <comment>FinanceCalendar</comment>
+  </data>
+  <data name="NotFoundEffectData" xml:space="preserve">
+    <value>没有找到有效的数据。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="NotFoundTheMatchHu" xml:space="preserve">
+    <value>没有找到对应的条码{0}。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="NotMaintainEffFiscalMonth" xml:space="preserve">
+    <value>没有维护有效的财政月。</value>
+    <comment>FinanceCalendar</comment>
+  </data>
+  <data name="RejectProcessNotEmpty" xml:space="preserve">
+    <value>不合格品处理结果不能为空。</value>
+  </data>
+  <data name="TheBillAddressNotSpecialSupplier" xml:space="preserve">
+    <value>指定供应商{0}没有维护开票地址。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheBillAddrNotFound" xml:space="preserve">
+    <value>没有找到开票地址{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheFiscalMonthNotMaintained" xml:space="preserve">
+    <value>没有维护有效的财政月。</value>
+    <comment>FinanceCalendar</comment>
+  </data>
+  <data name="TheHusNotInSameLoc" xml:space="preserve">
+    <value>条码的库位属于不同区域不能合并报验。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="TheImportIsNotEffect" xml:space="preserve">
+    <value>没有有效的路线信息，请确认导入数据或模板。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheJudgeFailCodeIsInvaild" xml:space="preserve">
+    <value>检验单{0}行号{1}的失效模式无效。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="TheJudgeQtyMoreThenInspectQty" xml:space="preserve">
+    <value>检验单{0}行号{1}的判定数超过了报验数。</value>
+    <comment>Inspect</comment>
+  </data>
+  <data name="TheLocFromNotFound" xml:space="preserve">
+    <value>没有找到来源库位{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheLocToNotFound" xml:space="preserve">
+    <value>没有找到目的库位{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheNextFiscalMonthNotMaintained" xml:space="preserve">
+    <value>"没有维护下个有效的财政月。"</value>
+    <comment>FinanceCalendar</comment>
+  </data>
+  <data name="ThePartyFromNotFound" xml:space="preserve">
+    <value>没有找到来源组织{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="ThePartyToNotFound" xml:space="preserve">
+    <value>没有找到目的组织{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="ThePriceListNotFound" xml:space="preserve">
+    <value>没有找到价格单{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheProdLineNotFound" xml:space="preserve">
+    <value>没有找到对应的生产线{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheShipAddrNotFound" xml:space="preserve">
+    <value>没有找到发货地址{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheShipToNotFound" xml:space="preserve">
+    <value>没有找到收货地址{0}。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheSpecialLineBomDescShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行BomDesc不能为空。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineBomQtyIsNotNum" xml:space="preserve">
+    <value>第{0}行BomQty不是数字。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineBomQtyShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行BomQty不能为空。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineBomShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行Bom不能为空。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineBomUomShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行BomUom不能为空。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineItemIsNotExists" xml:space="preserve">
+    <value>第{0}行物料{1}主数据不存在。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineItemNotFound" xml:space="preserve">
+    <value>第{0}行物料{1}没有找到。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheSpecialLineItemShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行Item不能为空。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineItemUomShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行ItemUom不能为空。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineLeantimeIsNotNum" xml:space="preserve">
+    <value>第{0}行提前期不是数字。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheSpecialLineMaxInvIsNotNum" xml:space="preserve">
+    <value>第{0}行最大库存不是数字。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheSpecialLineOPIsNotNum" xml:space="preserve">
+    <value>第{0}行Op不是数字。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineOPShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行Op不能为空。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineRateQtyIsNotNum" xml:space="preserve">
+    <value>第{0}行RateQty不是数字。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineRateQtyShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行RateQty不能为空。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineSafeInvIsNotNum" xml:space="preserve">
+    <value>第{0}行安全库存不是数字。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheSpecialLineScrapIsNotNum" xml:space="preserve">
+    <value>第{0}行Scrap不是数字。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineScrapShouldNotEmpty" xml:space="preserve">
+    <value>第{0}行Scrap不能为空。</value>
+    <comment>BomMgr</comment>
+  </data>
+  <data name="TheSpecialLineUCIsNotNum" xml:space="preserve">
+    <value>第{0}行单包装不是数字。</value>
+    <comment>Flow</comment>
+  </data>
+  <data name="TheSpecialLineUomNotFound" xml:space="preserve">
+    <value>第{0}行单位{1}没有找到。</value>
+    <comment>Flow</comment>
+  </data>
+</root>

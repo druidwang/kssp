@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.MD.MachineInstance, com.Sconit.Entity" table="MRP_MachineInstance" lazy="false" dynamic-update="true">
+    <composite-id>
+      <key-property name="Code" column="Code" type="String" length="50" />
+      <key-property name="DateIndex" column="DateIndex" type="String" length="50"/>
+      <key-property name="DateType" column="DateType"  />
+    </composite-id>
+    <property name="Region" column="Region" type="String"  />
+    <property name="Description" column="Desc1" type="String" length="50" />
+    <property name="ShiftQuota" column="ShiftQuota"  type="Double" />
+    <property name="Qty" column="Qty"  type="Double" />
+    <property name="Island" column="Island" type="String" length="50" />
+    <property name="MachineType" column="MachineType"  />
+    <property name="ShiftType" column="ShiftType" />
+    <property name="NormalWorkDayPerWeek" column="NormalWorkDayPerWeek" type="Double"/>
+    <property name="MaxWorkDayPerWeek" column="MaxWorkDayPerWeek" type="Double"/>
+    <property name="ShiftPerDay" column="ShiftPerDay" type="Int32"/>
+    <property name="IsRelease" column="IsRelease" type="Boolean"  />
+    <property name="IsManualCreate" column="IsManualCreate" type="Boolean"  />
+    <property name="IslandQty" column="IslandQty" type="Double"  />
+    <property name="IslandDescription" column="IslandDesc1" type="String"  />
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+
+    <property name="TrailTime" column="TrailTime" type="Double"/>
+    <property name="HaltTime" column="HaltTime" type="Double"/>
+    <property name="Holiday" column="Holiday" type="Double"/>
+    <property name="Flow" column="Flow" type="String" length="50" />
+  </class>
+</hibernate-mapping>

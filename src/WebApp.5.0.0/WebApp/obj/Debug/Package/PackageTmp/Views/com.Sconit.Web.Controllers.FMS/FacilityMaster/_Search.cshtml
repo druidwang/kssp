@@ -1,0 +1,149 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.SearchModels.FMS
+<script type="text/javascript">
+    function ExportClick() {
+
+        location.href = '/FacilityMaster/ExportXLS/?FCID=' + $('#FCID').val()
+            + '&Description=' + $('#Description').val()
+            + '&ReferenceCode=' + $('#ReferenceCode').val()
+            + '&FacilityMasterCategory=' + $('#FacilityMasterCategory').val()
+            + '&MaterialsGroup=' + $('#MaterialsGroup').val()
+            + '&IsActive=' + $("input[type=checkbox][name=IsActive]:checked").val()
+            + '&IsVirtual=' + $("input[type=checkbox][name=IsVirtual]:checked").val()
+    }
+</script>
+
+<fieldset>
+    @using (Html.BeginForm("List", "FacilityMaster"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="FacilityMaster_FCID">
+                    @Resources.FMS.FacilityMaster.FacilityMaster_FCID
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).FCID : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FacilityMaster_Name">
+                    @Resources.FMS.FacilityMaster.FacilityMaster_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Name", TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).Name : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FacilityMaster_Status">
+                    @Resources.FMS.FacilityMaster.FacilityMaster_Status
+                </label>
+            </div>
+            <div class="search-field">
+                 @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.FacilityStatus,
+            controlName = "Status",
+            includeBlankOption = true,
+            selectedValue = TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).Status : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="FacilityMaster_Category">
+                    @Resources.FMS.FacilityMaster.FacilityMaster_Category
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FacilityCategoryComboBox", "Common", new
+        {
+            controlName = "Category",
+            includeBlankOption = true,
+            selectedValue = TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).Category : string.Empty,
+            SubCategory = 0
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.FMS.FacilityMaster.FacilityMaster_AssetNo
+                </label>
+            </div>
+            <div class="search-field">
+               @Html.TextBox("AssetNo", TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).AssetNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FacilityMaster_ChargePerson">
+                    @Resources.FMS.FacilityMaster.FacilityMaster_ChargePerson
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("ChargePerson", TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).ChargePerson : string.Empty)
+            </div>
+           <div class="search-label">
+                <label for="FacilityMaster_ChargeOrganization">
+                    @Resources.FMS.FacilityMaster.FacilityMaster_ChargeOrganization
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("ChargeOrganization", TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).ChargeOrganization : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="FacilityMaster_ChargeSite">
+                    @Resources.FMS.FacilityMaster.FacilityMaster_ChargeSite
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("ChargeSite", TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).ChargeSite : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="FacilityMaster_RefenceCode">
+                    @Resources.FMS.FacilityMaster.FacilityMaster_RefenceCode
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("RefenceCode", TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).RefenceCode : string.Empty)
+            </div>
+              <div class="search-label">
+                <label for="FacilityMaster_MaintainGroup">
+                    @Resources.FMS.FacilityMaster.FacilityMaster_MaintainGroup
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("MaintainGroup", TempData["FacilityMasterSearchModel"] != null ? ((FacilityMasterSearchModel)TempData["FacilityMasterSearchModel"]).MaintainGroup : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+          
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_FacilityMaster_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+            <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_FacilityMaster_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/FacilityMaster/New")+"'"}
+	})
+
+     @Html.Button("定时保养", "Url_FacilityMaster_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnGenerateFacilityOrder"},
+        {"onclick","location.href='"+@Url.Content("~/FacilityMaster/GenerateFacilityOrder")+"'"}
+	})
+
+        @Html.Button("定量保养", "Url_FacilityMaster_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnGenerateOrderFromFacility"},
+        {"onclick","location.href='"+@Url.Content("~/FacilityMaster/GenerateOrderFromFacility")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>

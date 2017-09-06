@@ -1,0 +1,95 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlanMi_PlanTrace" });
+}
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onSearch() {
+        if ($('#formerVersion').val() == "") {
+            $message.error('前版本不能为空。');
+            return;
+        }
+
+        if ($('#latterVersion').val() == "") {
+            $message.error('当前版本不能为空。');
+            return;
+        }
+        
+        var div = "#fdOrderDetail";
+        if ($('#formerVersion').val() >= $('#latterVersion').val()) {
+            $message.error('当前版本和前版本不能相同。');
+            return;
+        }
+        var data = {
+            formerVersion: $('#formerVersion').val(),
+            latterVersion: $('#latterVersion').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpPlanMi/_GetTrackView/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#fdTrackViewDetail");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 2,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm())
+    {
+        <div class="search">
+            <div class="search-label">
+                <label>
+                   前计划版本
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+                    {
+                        controlName = "formerVersion",
+                        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.MI,
+                        isRelease = true
+                    });
+                }
+            </div>
+             <div class="search-label">
+                <label>
+                    当前计划版本
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+                    {
+                        controlName = "latterVersion",
+                        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.MI,
+                        isRelease = true
+                    });
+                }
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanMi_PlanTrace", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+        </div>
+    }
+</fieldset>
+<div id="fdTrackViewDetail">
+</div>
+

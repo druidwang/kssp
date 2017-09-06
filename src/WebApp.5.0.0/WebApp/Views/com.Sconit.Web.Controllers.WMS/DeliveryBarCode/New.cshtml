@@ -1,0 +1,128 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<script type="text/javascript">
+    function Flow_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            $("#fdShipPlanList").hide();
+            $("#btnNew").attr("style", "display:none");
+        } else {
+            $("#btnNew").attr("style", "display:inline");
+            $("#fdShipPlanList").html("Loading...");
+            $("#fdShipPlanList").show();
+            var data = { "flow": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/DeliveryBarCode/_ShipPlanList/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#fdShipPlanList").html(data);
+                    //$("#fdOrderDetail").show();
+                    $("tr.t-no-data").find("td").text("Loading...");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+
+    function CreateDeliveryBarCode() {
+        var grid = $("#ShipPlan").data("tGrid");
+        if (grid == null || grid == undefined) {
+            $message.error('打印明细不能为空。');
+            return;
+        }
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var idStr = "";
+        var qtyStr = "";
+
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var qty = row.find("#ToDeliveryBarCodeQty").val();
+            var id;
+            if (qty != "") {
+                id = row.find("#Id").val();
+                if (idStr == "") {
+                    idStr = id;
+                    qtyStr = qty;
+
+                } else {
+                    idStr += "," + id;
+                    qtyStr += "," + qty;
+                }
+            }
+        }
+
+        if (idStr == "") {
+            $message.error('明细不能为空.');
+            return;
+        }
+
+        var data = {
+            "idStr": idStr,
+            "qtyStr": qtyStr
+        }
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: data,
+            async: false,
+            url: "/DeliveryBarCode/CreateDeliveryBarCode/",
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                if (data.PrintUrl != "" && data.PrintUrl != undefined) {
+                    PrintOrder(data.PrintUrl);
+                }
+
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm("AssignList", "PickTask"))
+{  
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="PickTask_Item">
+                    @Resources.WMS.DeliveryBarCode.DeliveryBarCode_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new
+    {
+        controlName = "Flow",
+        isChange = true,
+        type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+        selectedValue = TempData["ShipPlanSearchModel"] != null ? ((ShipPlanSearchModel)TempData["ShipPlanSearchModel"]).Flow : string.Empty
+    });
+                }
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Button(Resources.SYS.Global.Button_Create, "Url_DeliveryBarCode_New", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","CreateDeliveryBarCode()"},
+        {"style","display:none"}
+	})
+        </div>
+    </fieldset>
+
+    <div id="fdShipPlanList" style="display: none;">
+    </div>
+}

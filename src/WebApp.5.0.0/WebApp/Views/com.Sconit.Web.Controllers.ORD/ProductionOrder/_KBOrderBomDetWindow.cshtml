@@ -1,0 +1,97 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.KBOrderBomDetail>
+<fieldset>
+    <script type="text/javascript">
+        function RequisitionDetailSearch() {
+            var data = {
+                Item: $('#Item').val(),
+                Flow: $('#Flow').val(),
+                StartTime: $('#StartTime').val(),
+                OrderNo: $("#OrderNo").val(),
+                EndTime: $("#EndTime").val(),
+                OrderDetailid: $("#OrderDetailid").val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/ProductionOrder/_KBOrderBomDetList/",
+                data: data,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#divKBOrderBomDetList");
+                    $(tabStrip).html(data);
+                }
+            });
+        }
+    </script>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.ORD.KBOrderBomDetail.KBOrderBomDetail_OrderNo
+            </label>
+        </div>
+        <div class="search-field">
+            @Html.TextBox("OrderNo", (string)ViewBag.MasterorderNo)
+             @Html.Hidden("OrderDetailid", (string)ViewBag.OrderDetailid)
+        </div>
+        <div class="search-label">
+            <label >
+                @Resources.ORD.KBOrderBomDetail.KBOrderBomDetail_Flow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                    selectedValue = ViewBag.Flow != null ? ViewBag.Flow : string.Empty
+
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label >
+                @Resources.ORD.KBOrderBomDetail.KBOrderBomDetail_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ItemComboBox", "Common", new
+                {
+                    controlName = "Item",
+                    selectedValue = ViewBag.Item != null ? ViewBag.Item : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+        </div>
+        <div class="search-field">
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.ORD.KBOrderBomDetail.KBOrderBomDetail_StartTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("StartTime")
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+         <label >
+            @Resources.ORD.KBOrderBomDetail.KBOrderBomDetail_EndTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("EndTime")
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+    </div>
+    <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="RequisitionDetailSearch()">
+            @Resources.SYS.Global.Button_Search</button>
+    </div>
+</fieldset>
+<div id="divKBOrderBomDetList">
+    @{
+        Html.RenderAction("_KBOrderBomDetList", "ProductionOrder", new { MasterorderNo = ViewBag.MasterorderNo });
+    }
+</div>

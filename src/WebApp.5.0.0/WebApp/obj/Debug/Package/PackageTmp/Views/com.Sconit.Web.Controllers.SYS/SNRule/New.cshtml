@@ -1,0 +1,53 @@
+﻿@{
+    List<bool> blockList = ViewBag.BlockList;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SNRule_View" });
+}
+
+
+<script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sortable").sortable();
+    });
+    function btn1_onclick(e) {
+
+        $("#sortable>li").each(function (i) {
+            //var obj = $(this).children("label").attr("id");
+            alert($(this).children("label").attr("id"));
+        });
+    }
+</script>
+
+<ul id="sortable" style="list-style-type:none;" >
+    @if (blockList[0] == true)
+    {
+        <li style="border-style: groove; width: 300px; height: 20px">
+            <label id="1" class="lbl">Item 0</label>
+            <input type="text" id="fixcode" value="" />
+        </li>
+    }
+    @if (blockList[1] == true)
+    {
+        <li style="border-style: groove; width: 300px; height: 20px"><label id="2" class="lbl">Item 1</label></li>
+    }
+    @if (blockList[2] == true)
+    {        
+        <li style="border-style: groove; width: 300px; height: 20px"><label id="3" class="lbl">Item 2</label></li>
+    }
+    @if (blockList[3] == true)
+    {        
+        <li style="border-style: groove; width: 300px; height: 20px"><label id="4" class="lbl">Item 3</label></li>
+    }
+    @if (blockList[4] == true)
+    {        
+        <li style="border-style: groove; width: 300px; height: 20px"><label id="5" class="lbl">Item 4</label></li>
+    }  
+    @if (blockList[5] == true)
+    {        
+        <li style="border-style: groove; width: 300px; height: 20px"><label id="6" class="lbl">Item 5</label></li>
+    }       
+</ul>
+<input type="checkbox" id="chk1" value="是否需要引用订单内容" /> <label id="lbl1" class="lbl">是否需要引用订单内容</label>
+<br />
+<input type="button" id="btn1" onclick="btn1_onclick()" value="click" />

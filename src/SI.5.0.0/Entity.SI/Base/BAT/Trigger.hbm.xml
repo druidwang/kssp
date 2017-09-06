@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.SI.BAT.Trigger, com.Sconit.Entity.SI" table="BAT_Trigger" lazy="false">
+    <id name="Name" column="Name" type="String" unsaved-value="null">
+      <generator class="assigned" />
+    </id>
+    <many-to-one name="JobDetail" column="JobCode" class="com.Sconit.Entity.SI.BAT.JobDetail, com.Sconit.Entity.SI" cascade="none" />
+    <property name="Description" column="Desc1" type="String" length="256"/>
+    <property name="PreviousFireTime" column="PrevFireTime" type="DateTime"/>
+    <property name="NextFireTime" column="NextFireTime" type="DateTime"/>
+    <property name="RepeatCount" column="RepeatCount" type="Int32"/>
+    <property name="Interval" column="Interval"/>
+    <property name="IntervalType" column="IntervalType" type="Int32"/>
+    <property name="TimesTriggered" column="TimesTriggered" type="Int32"/>
+    <property name="Status" column="Status"/>
+  </class>
+</hibernate-mapping>

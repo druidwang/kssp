@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Single_Return_Query" });
+}
+
+@Html.Partial("_ReturnSearch")
+
+@Html.Partial("_ReturnSearchResult")

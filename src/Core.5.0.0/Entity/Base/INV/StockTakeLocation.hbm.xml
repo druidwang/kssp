@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.INV.StockTakeLocation, com.Sconit.Entity" table="INV_StockTakeLoc" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="StNo" column="StNo" type="String" length="50"/>	
+		<property name="Location" column="Loc" type="String" length="50"/>	
+		<property name="LocationName" column="LocName" type="String" length="50"/>	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+
+    <property name="Bins" column="Bins" type="String" length="500"/>
+  </class>
+</hibernate-mapping>

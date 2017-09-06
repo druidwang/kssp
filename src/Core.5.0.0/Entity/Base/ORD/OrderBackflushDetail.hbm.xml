@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ORD.OrderBackflushDetail, com.Sconit.Entity" table="ORD_OrderBackflushDet" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="OrderNo" column="OrderNo" type="String" length="50"/>
+    <property name="OrderDetailId" column="OrderDetId" type="Int32"/>
+    <property name="OrderDetailSequence" column="OrderDetSeq" type="Int32"/>
+    <property name="OrderBomDetailId" column="OrderBomDetId" type="Int32"/>
+    <property name="OrderBomDetailSequence" column="OrderBomDetSeq" type="Int32"/>
+    <property name="ReceiptNo" column="RecNo" type="String" length="50"/>
+    <property name="ReceiptDetailId" column="RecDetId" type="Int32"/>
+    <property name="ReceiptDetailSequence" column="RecDetSeq" type="Int32"/>
+    <property name="Bom" column="Bom" type="String" length="50"/>
+    <property name="Item" column="Item" type="String" length="50"/>
+    <property name="ItemDescription" column="ItemDesc" type="String" length="100"/>
+    <property name="ReferenceItemCode" column="RefItemCode" type="String" length="50"/>
+    <property name="Uom" column="Uom" type="String" length="5"/>
+    <property name="BaseUom" column="BaseUom" type="String" length="5"/>
+    <property name="UnitQty" column="UnitQty" type="Decimal" precision="18" scale="8"/>
+    <property name="ManufactureParty" column="ManufactureParty" type="String" length="50"/>
+    <property name="TraceCode" column="TraceCode" type="String" length="50"/>
+    <property name="HuId" column="HuId" type="String" length="50"/>
+    <property name="LotNo" column="LotNo" type="String" length="50"/>
+    <property name="Operation" column="Op" type="Int32"/>
+    <property name="OpReference" column="OpRef" type="String" length="50"/>
+    <property name="BackflushedQty" column="BFQty" type="Decimal" precision="18" scale="8"/>
+    <property name="BackflushedRejectQty" column="BFRejQty" type="Decimal" precision="18" scale="8"/>
+    <property name="BackflushedScrapQty" column="BFScrapQty" type="Decimal" precision="18" scale="8"/>
+    <property name="LocationFrom" column="LocFrom" type="String" length="50"/>
+    <property name="ProductLine" column="ProdLine" type="String" length="50"/>
+    <property name="ProductLineFacility" column="ProdLineFact" type="String" length="50"/>
+    <property name="EffectiveDate" column="EffDate" type="DateTime"/>
+    <property name="ReserveNo" column="ReserveNo" type="String" length="50" />
+    <property name="ReserveLine" column="ReserveLine" type="String" length="50" />
+    <property name="AUFNR" column="AUFNR" type="String" length="50" />
+    <property name="PlanBill" column="PlanBill" type="Int32"/>
+    <property name="ICHARG" column="ICHARG" type="String" length="50" />
+    <property name="BWART" column="BWART" type="String" length="50" />
+    <property name="NotReport" column="NotReport" type="Boolean" />
+    <property name="FGItem" column="FGItem" type="String" length="50" />
+    <property name="IsVoid" column="IsVoid" type="Boolean" />
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="ReceivedQty" column="ReceivedQty" type="Decimal" precision="18" scale="8"/>
+  </class>
+</hibernate-mapping>

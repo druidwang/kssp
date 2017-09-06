@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.BIL.PriceListDetail>
+<fieldset>
+  <script type="text/javascript">
+      function PriceListDetailGrid_OnDataBinding(e) {
+          e.data = {
+              PriceListCode: $("#PriceListCode").val(),
+              Item: $('#Item').val(),
+              Uom: $('#Uom').val(),
+              IsProvisionalEstimate: $('#IsProvisionalEstimate').is(':checked'),
+              StartDate: $('#StartDate').val(),
+              EndDate: $('#EndDate').val(),
+              UnitPrice: $('#UnitPrice').val()
+          };
+      } 
+    </script>
+
+    @(Html.Telerik().Grid(Model)
+        .Name("PriceListDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+           // columns.Bound(o => o.PriceListCode).ClientTemplate(string.Format("<a href=\"javascript:onPriceListDetailclick('{0}')\">{1}</a>", "<#= Id #>", "<#= PriceListCode #>")); ;
+            columns.Bound(o => o.Item).ClientTemplate(string.Format("<a href=\"javascript:onPriceListDetailclick('{0}')\">{1}</a>", "<#= Id #>", "<#= Item #>")); 
+            columns.Bound(o => o.ItemDesc);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.StartDate).Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.EndDate).Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.UnitPrice);
+            columns.Bound(o => o.IsProvisionalEstimate)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsProvisionalEstimate' <#= IsProvisionalEstimate? checked='checked' : '' #> />");
+                 })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "PriceListCode")
+                {
+                    cell.Text = string.Format("<a href=\"javascript:onPriceListDetailclick('{0}')\">{1}</a>", cell.DataItem.Id, cell.DataItem.PriceListCode);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxPriceListDetailList", "ProcurementPriceList"))
+        .ClientEvents(events => events.OnDataBinding("PriceListDetailGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total!=null?ViewBag.Total:0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+  
+</fieldset>
+
+<script type="text/javascript">
+    function onPriceListDetailclick(id) {
+        var data = {
+            "Id": id
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/ProcurementPriceList/_PriceListDetailEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

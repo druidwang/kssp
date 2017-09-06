@@ -1,0 +1,3123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Application" xml:space="preserve">
+    <value>Application Mangt.</value>
+  </data>
+  <data name="Application_Access_Control" xml:space="preserve">
+    <value>Access Control</value>
+  </data>
+  <data name="Application_Address" xml:space="preserve">
+    <value>Address Mangt.</value>
+  </data>
+  <data name="Application_Bom" xml:space="preserve">
+    <value>Bom</value>
+  </data>
+  <data name="Application_Container" xml:space="preserve">
+    <value>Container</value>
+  </data>
+  <data name="Application_Currency" xml:space="preserve">
+    <value>Currency mangt.</value>
+  </data>
+  <data name="Application_EntityPreference" xml:space="preserve">
+    <value>EntityPreference</value>
+  </data>
+  <data name="Application_FinanceCalendar" xml:space="preserve">
+    <value>FinanceCalendar</value>
+  </data>
+  <data name="Application_FinanceCalendar_Close" xml:space="preserve">
+    <value>Finance Calendar </value>
+  </data>
+  <data name="Application_Item" xml:space="preserve">
+    <value>Item mangt.</value>
+  </data>
+  <data name="Application_ItemCategory" xml:space="preserve">
+    <value>ItemCategory mangt.</value>
+  </data>
+  <data name="Application_ItemDiscontinue" xml:space="preserve">
+    <value>ItemDiscontinue</value>
+  </data>
+  <data name="Application_Location" xml:space="preserve">
+    <value>Location Mangt.</value>
+  </data>
+  <data name="Application_Permission" xml:space="preserve">
+    <value>Permission  Mangt</value>
+  </data>
+  <data name="Application_PermissionGroup" xml:space="preserve">
+    <value>PermissionGroup   mangt</value>
+  </data>
+  <data name="Application_Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Application_Role" xml:space="preserve">
+    <value>Role Mangt.</value>
+  </data>
+  <data name="Application_Routing" xml:space="preserve">
+    <value>Routing Mangt.</value>
+  </data>
+  <data name="Application_StockTake" xml:space="preserve">
+    <value>StockTake</value>
+  </data>
+  <data name="Application_Uom" xml:space="preserve">
+    <value>Uom Mangt.</value>
+  </data>
+  <data name="Application_User" xml:space="preserve">
+    <value>User Mangt.</value>
+  </data>
+  <data name="Application_UserFav" xml:space="preserve">
+    <value>Userfavorite mangt.</value>
+  </data>
+  <data name="Application_WorkingCalendar" xml:space="preserve">
+    <value>WorkingCalendar mangt.</value>
+  </data>
+  <data name="Button_Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="CUST_HuTo" xml:space="preserve">
+    <value>HuTo</value>
+  </data>
+  <data name="CUST_ItemProperty_View" xml:space="preserve">
+    <value>ItemProperty</value>
+  </data>
+  <data name="CUST_ProdLinePr" xml:space="preserve">
+    <value>CUST_ProdLinePr</value>
+  </data>
+  <data name="CUST_ProdLinePrMachine" xml:space="preserve">
+    <value>ProdLinePrMachine</value>
+  </data>
+  <data name="CUST_ProdLinePrShift" xml:space="preserve">
+    <value>CUST_ProdLinePrShift</value>
+  </data>
+  <data name="Cust_ScheduleLineItem" xml:space="preserve">
+    <value>ScheduleLineItem</value>
+  </data>
+  <data name="DistributionShipTire_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Distribution_ASNGap" xml:space="preserve">
+    <value>ASNGap</value>
+  </data>
+  <data name="Distribution_ASNGap_View" xml:space="preserve">
+    <value>View ASNGap</value>
+  </data>
+  <data name="Distribution_DistributionFlow" xml:space="preserve">
+    <value>Distribution Flow</value>
+  </data>
+  <data name="Distribution_IpGap" xml:space="preserve">
+    <value>IpGap</value>
+  </data>
+  <data name="Distribution_IpGap_Adjust" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Distribution_IpGap_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Distribution_IpMaster" xml:space="preserve">
+    <value>IpMaster</value>
+  </data>
+  <data name="Distribution_IpMaster_Receive" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="Distribution_IpMaster_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Distribution_OrderMstr" xml:space="preserve">
+    <value>Distribution Order</value>
+  </data>
+  <data name="Distribution_OrderMstr_BatchProcess" xml:space="preserve">
+    <value>Batch Process</value>
+  </data>
+  <data name="Distribution_OrderMstr_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Distribution_OrderMstr_QuickNew" xml:space="preserve">
+    <value>QuickNew</value>
+  </data>
+  <data name="Distribution_OrderMstr_Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Distribution_OrderMstr_ReturnIndex" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Distribution_OrderMstr_ReturnNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Distribution_OrderMstr_Ship" xml:space="preserve">
+    <value>Ship</value>
+  </data>
+  <data name="Distribution_OrderMstr_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Distribution_PickList" xml:space="preserve">
+    <value>PickList</value>
+  </data>
+  <data name="Distribution_PickList_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Distribution_PickList_Ship" xml:space="preserve">
+    <value>Ship</value>
+  </data>
+  <data name="Distribution_PickList_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Distribution_PriceList" xml:space="preserve">
+    <value>Distribution PriceList</value>
+  </data>
+  <data name="Distribution_Receipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="Distribution_Receipt_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="DIstribution_ReturnReceipt" xml:space="preserve">
+    <value>ReturnReceipt</value>
+  </data>
+  <data name="DIstribution_ReturnReceipt_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Distribution_SequenceOrder" xml:space="preserve">
+    <value>SequenceOrder</value>
+  </data>
+  <data name="Distribution_Setup_Customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="DIstribution_ShipTire" xml:space="preserve">
+    <value>ShipTire</value>
+  </data>
+  <data name="Distribution_SubConctractingTransferFlow" xml:space="preserve">
+    <value>SubConctractingTransferFlow</value>
+  </data>
+  <data name="HuIdAudit_Inspection" xml:space="preserve">
+    <value>Audit_Inspection</value>
+  </data>
+  <data name="HuId_FreezeMenu" xml:space="preserve">
+    <value>FreezeMenu</value>
+  </data>
+  <data name="HuLocationLotDetailInventorys" xml:space="preserve">
+    <value>HuLocationLotDetail</value>
+  </data>
+  <data name="InspectionOrder_Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="InspectionOrder_Judge" xml:space="preserve">
+    <value>Judge</value>
+  </data>
+  <data name="InspectResultExt_View" xml:space="preserve">
+    <value>InspectResultExt</value>
+  </data>
+  <data name="Inventory_Hu" xml:space="preserve">
+    <value>Hu</value>
+  </data>
+  <data name="Inventory_Hu_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Inventory_Hu_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Inventory_InMiscOrder" xml:space="preserve">
+    <value>InMiscOrder</value>
+  </data>
+  <data name="Inventory_InMiscOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Inventory_InMiscOrder_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Inventory_InventoryFreeze" xml:space="preserve">
+    <value>InventoryFreeze</value>
+  </data>
+  <data name="Inventory_InventoryFreeze_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Inventory_ItemExchange" xml:space="preserve">
+    <value>ItemExchange</value>
+  </data>
+  <data name="Inventory_ItemExchange_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Inventory_KanBanCard_View" xml:space="preserve">
+    <value>KanBanCard</value>
+  </data>
+  <data name="Inventory_OutMiscOrder" xml:space="preserve">
+    <value>OutMiscOrder</value>
+  </data>
+  <data name="Inventory_OutMiscOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Inventory_OutMiscOrder_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Inventory_StockTake" xml:space="preserve">
+    <value>StockTake</value>
+  </data>
+  <data name="Inventory_StockTake_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Inventory_StockTake_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Inventory_TransferFlow" xml:space="preserve">
+    <value>Transfer Flow</value>
+  </data>
+  <data name="ItemExchange_Ageing" xml:space="preserve">
+    <value>Ageing</value>
+  </data>
+  <data name="ItemExchange_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="ItemKit_View" xml:space="preserve">
+    <value>ItemKit_View</value>
+  </data>
+  <data name="MenuProcurementInfo" xml:space="preserve">
+    <value>ProcurementInfo</value>
+  </data>
+  <data name="MPR_FlowClassify" xml:space="preserve">
+    <value>FlowClassify</value>
+  </data>
+  <data name="MrpExWeeklyPlan_View" xml:space="preserve">
+    <value>MrpExWeeklyPlan_View</value>
+  </data>
+  <data name="MRP_Container" xml:space="preserve">
+    <value>MRP_Container</value>
+  </data>
+  <data name="MRP_Island" xml:space="preserve">
+    <value>Island</value>
+  </data>
+  <data name="MRP_Machine" xml:space="preserve">
+    <value>Machine</value>
+  </data>
+  <data name="MRP_MachineInstance" xml:space="preserve">
+    <value>MachineInstance</value>
+  </data>
+  <data name="MRP_MachineInstanceView_View" xml:space="preserve">
+    <value>MRP_MachineInstance_Export</value>
+  </data>
+  <data name="MRP_MrpPlan_New" xml:space="preserve">
+    <value>MrpPlan New</value>
+  </data>
+  <data name="MRP_MrpPlan_View" xml:space="preserve">
+    <value>MrpPlan View</value>
+  </data>
+  <data name="MRP_ProdLineEx" xml:space="preserve">
+    <value>ProdLineEx</value>
+  </data>
+  <data name="MRP_ProdLineExInstance" xml:space="preserve">
+    <value>ProdLineExInstance</value>
+  </data>
+  <data name="MRP_ProdLineExInstanceView_View" xml:space="preserve">
+    <value>ProdLineExInstanceView_View</value>
+  </data>
+  <data name="Nondelivery_Procurement_View" xml:space="preserve">
+    <value>Nondelivery</value>
+  </data>
+  <data name="OrderDetail_UnitPrice_View" xml:space="preserve">
+    <value>UpdateUnitPrice</value>
+  </data>
+  <data name="OrderMstr_Distribution_Receipt" xml:space="preserve">
+    <value>Distribution_Receipt</value>
+  </data>
+  <data name="OrderMstr_Production_Receive_EX" xml:space="preserve">
+    <value>EXReceive</value>
+    <comment>Production</comment>
+  </data>
+  <data name="OrderMstr_Production_Receive_MI" xml:space="preserve">
+    <value>MIReceive</value>
+    <comment>Production</comment>
+  </data>
+  <data name="OrderMstr_Production_Receive_PR" xml:space="preserve">
+    <value>PRReceive</value>
+    <comment>Production</comment>
+  </data>
+  <data name="PickStrategy" xml:space="preserve">
+    <value>PickStrategy</value>
+  </data>
+  <data name="PlanTrack_View" xml:space="preserve">
+    <value>PlanTrack_View</value>
+  </data>
+  <data name="PRD_ProdLineLocationDet" xml:space="preserve">
+    <value>ProdLineLocationDet</value>
+  </data>
+  <data name="PRD_ProdLineLocationDetFeed" xml:space="preserve">
+    <value>Feeding</value>
+  </data>
+  <data name="Procduction_OrderMstr_BatchProcess" xml:space="preserve">
+    <value>Batch Process</value>
+  </data>
+  <data name="Procurement_CustomerGoodsFlow" xml:space="preserve">
+    <value>CustomerGoods Flow</value>
+  </data>
+  <data name="Procurement_IpGap" xml:space="preserve">
+    <value>IpGap</value>
+  </data>
+  <data name="Procurement_IpGap_Adjust" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Procurement_IpGap_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Procurement_IpMaster" xml:space="preserve">
+    <value>IpMaster</value>
+  </data>
+  <data name="Procurement_IpMaster_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Procurement_IpMaster_Receive" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="Procurement_IpMaster_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Procurement_OrderMstr" xml:space="preserve">
+    <value>Procurement OrderMstr</value>
+  </data>
+  <data name="Procurement_OrderMstr_BatchProcess" xml:space="preserve">
+    <value>Batch Process</value>
+  </data>
+  <data name="Procurement_OrderMstr_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Procurement_OrderMstr_QuickNew" xml:space="preserve">
+    <value>QuickNew</value>
+  </data>
+  <data name="Procurement_OrderMstr_Receive" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="Procurement_OrderMstr_Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Procurement_OrderMstr_ReturnIndex" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Procurement_OrderMstr_ReturnNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Procurement_OrderMstr_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Procurement_PriceList" xml:space="preserve">
+    <value>Procurement PriceList</value>
+  </data>
+  <data name="Procurement_ProcurementFlow" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="Procurement_Receipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="Procurement_Receipt_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Procurement_SequenceOrder" xml:space="preserve">
+    <value>Sequence Order</value>
+  </data>
+  <data name="Procurement_SequenceOrder_View" xml:space="preserve">
+    <value>search</value>
+  </data>
+  <data name="Procurement_SQOrderMstr" xml:space="preserve">
+    <value>SQOrderMstr</value>
+  </data>
+  <data name="Procurement_SQOrderMstr_Cancel" xml:space="preserve">
+    <value>SQOrderMstr_Cancel</value>
+  </data>
+  <data name="Procurement_SQOrderMstr_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Procurement_SubconctractingFlow" xml:space="preserve">
+    <value>Subconctracting Flow</value>
+  </data>
+  <data name="Procurement_TransportPolicy" xml:space="preserve">
+    <value>Procurement_TransportPolicy</value>
+  </data>
+  <data name="Procurement_VehicleInFactory" xml:space="preserve">
+    <value>VehicleInFactory</value>
+  </data>
+  <data name="Procurement_VehicleInFactory_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Procurement_VehicleInFactory_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ProdLineExWeeklyCapacity_View" xml:space="preserve">
+    <value>ProdLineExWeeklyCapacity_View</value>
+  </data>
+  <data name="ProdLineExWeeklyPlan_View" xml:space="preserve">
+    <value>ProdLineExWeeklyPlan_View</value>
+  </data>
+  <data name="ProdLineMiWeeklyPlan_Detail" xml:space="preserve">
+    <value>ProdLineMiWeeklyPlan_Detail</value>
+  </data>
+  <data name="ProdLineMiWeeklyPlan_View" xml:space="preserve">
+    <value>ProdLineMiWeeklyPlan_View</value>
+  </data>
+  <data name="ProdLinePrWeeklyCapacity_View" xml:space="preserve">
+    <value>ProdLinePrWeeklyCapacity_View</value>
+  </data>
+  <data name="ProdLinePrWeeklyPlan_View" xml:space="preserve">
+    <value>ProdLinePrWeeklyPlan_View</value>
+  </data>
+  <data name="ProductionReceipt_View" xml:space="preserve">
+    <value>ProductionReceipt_View</value>
+  </data>
+  <data name="Production_MaterialIn" xml:space="preserve">
+    <value>MaterialIn</value>
+  </data>
+  <data name="Production_MaterialIn_BackFlush" xml:space="preserve">
+    <value>BackFlush</value>
+  </data>
+  <data name="Production_MaterialIn_FeedOrderMaster" xml:space="preserve">
+    <value>Feed OrderMaster</value>
+  </data>
+  <data name="Production_MaterialIn_FeedProductLine" xml:space="preserve">
+    <value>Feed ProductLine</value>
+  </data>
+  <data name="Production_MaterialIn_ForceFeedOrderMaster" xml:space="preserve">
+    <value>Force Feed OrderMaster</value>
+  </data>
+  <data name="Production_MaterialIn_ForceFeedProductLine" xml:space="preserve">
+    <value>Force Feed ProductLine</value>
+  </data>
+  <data name="Production_MaterialIn_ReturnProductLine" xml:space="preserve">
+    <value>ReturnProductLine</value>
+  </data>
+  <data name="Production_MaterialIn_ReturnReturnOrderMaster" xml:space="preserve">
+    <value>ReturnReturnOrderMaster</value>
+  </data>
+  <data name="Production_MaterialIn_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Production_OrderMaster_Pause" xml:space="preserve">
+    <value>OrderMaster Pause</value>
+  </data>
+  <data name="Production_OrderMaster_Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="Production_OrderMstr" xml:space="preserve">
+    <value>Production Order</value>
+  </data>
+  <data name="Production_OrderMstr_FZComplete" xml:space="preserve">
+    <value>FZComplete</value>
+  </data>
+  <data name="Production_OrderMstr_Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Production_OrderMstr_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Production_OrderMstr_QuickNew" xml:space="preserve">
+    <value>Quick New</value>
+  </data>
+  <data name="Production_OrderMstr_Receive" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="Production_OrderMstr_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Production_ProductionFlow" xml:space="preserve">
+    <value>Production Flow</value>
+  </data>
+  <data name="Production_ProductLine_Pause" xml:space="preserve">
+    <value>ProductLine Pause</value>
+  </data>
+  <data name="Production_Receipt" xml:space="preserve">
+    <value>Production_Receipt</value>
+  </data>
+  <data name="Production_SeqImport" xml:space="preserve">
+    <value>SeqImport</value>
+  </data>
+  <data name="QualityDoor_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="QualityDoor_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Quality_ConcessionOrder" xml:space="preserve">
+    <value>ConcessionOrder</value>
+  </data>
+  <data name="Quality_ConcessionOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Quality_ConcessionOrder_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Quality_InspectionOrder" xml:space="preserve">
+    <value>Inspection Order</value>
+  </data>
+  <data name="Quality_InspectionOrder_Transfer" xml:space="preserve">
+    <value>InspectionOrder Transfer</value>
+  </data>
+  <data name="Quality_RejectOrder" xml:space="preserve">
+    <value>RejectOrder</value>
+  </data>
+  <data name="Quality_RejectOrder_Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Quality_RejectOrder_New" xml:space="preserve">
+    <value>New RejectOrder</value>
+  </data>
+  <data name="Quality_RejectOrder_Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Quality_RejectOrder_Transfer" xml:space="preserve">
+    <value>RejectOrder Transfer</value>
+  </data>
+  <data name="Quality_RejectOrder_View" xml:space="preserve">
+    <value>View RejectOrder</value>
+  </data>
+  <data name="Quality_RejectOrder_WorkersWaste" xml:space="preserve">
+    <value>WorkersWaste</value>
+  </data>
+  <data name="RccpPlan_Edit" xml:space="preserve">
+    <value>RccpPlan_Edit</value>
+  </data>
+  <data name="RccpPlan_New" xml:space="preserve">
+    <value>RccpPlan_New</value>
+  </data>
+  <data name="ScheduleLine_OrderMstr_View" xml:space="preserve">
+    <value>ScheduleLine</value>
+  </data>
+  <data name="ScheduleLine_View" xml:space="preserve">
+    <value>ScheduleLine</value>
+  </data>
+  <data name="SequenceOrder_Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="SequenceOrder_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ShipmentMaster_Release" xml:space="preserve">
+    <value>ShipmentMaster_Release</value>
+  </data>
+  <data name="SupplierActBill" xml:space="preserve">
+    <value>Act Bill</value>
+  </data>
+  <data name="SupplierBill" xml:space="preserve">
+    <value>Bill</value>
+  </data>
+  <data name="SupplierBill_View" xml:space="preserve">
+    <value>SupplierBill_View</value>
+  </data>
+  <data name="SupplierIpMaster" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="SupplierOrder" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="SupplierOrderIssue" xml:space="preserve">
+    <value>Issue</value>
+  </data>
+  <data name="SupplierPlanBill" xml:space="preserve">
+    <value>Plan Bill</value>
+  </data>
+  <data name="SupplierPrintHu" xml:space="preserve">
+    <value>Print Hu</value>
+  </data>
+  <data name="SupplierReceipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="SupplierSchedule" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="Supplier_Bill" xml:space="preserve">
+    <value>SupplierBill</value>
+  </data>
+  <data name="Supplier_PurchaseWeeklyPlan" xml:space="preserve">
+    <value>PurchaseWeeklyPlan</value>
+  </data>
+  <data name="Supplier_PurchaseWeeklyPlan_View" xml:space="preserve">
+    <value>PurchaseWeeklyPlan_View</value>
+  </data>
+  <data name="Supplier_SupplierPortal" xml:space="preserve">
+    <value>0085Supplier</value>
+  </data>
+  <data name="Url_Custodian" xml:space="preserve">
+    <value>Custodian</value>
+  </data>
+  <data name="Url_Customer_View" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="Url_DeferredFeedCounter_View" xml:space="preserve">
+    <value>DeferredFeedCounter</value>
+  </data>
+  <data name="Url_DistributionBill_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Url_DistributionBill_ToCalculateMaster" xml:space="preserve">
+    <value>ReCalculateMaster</value>
+  </data>
+  <data name="Url_DistributionBill_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Url_InspectionOrder_New" xml:space="preserve">
+    <value>New Inspection Order</value>
+  </data>
+  <data name="Url_InspectionOrder_View" xml:space="preserve">
+    <value>View Inspection Order</value>
+  </data>
+  <data name="URL_Inventory_ShelfLifeWarning" xml:space="preserve">
+    <value>ShelfLifeWarning</value>
+  </data>
+  <data name="Url_IOB_LocationDetailIOB" xml:space="preserve">
+    <value>LocationDetailIOB</value>
+  </data>
+  <data name="Url_IOB_PlanBillIOB" xml:space="preserve">
+    <value>BillIOB</value>
+  </data>
+  <data name="Url_IpMaster_UpdateDetailUnitPriceView" xml:space="preserve">
+    <value>IpMaster_UpdateDetailUnitPriceView</value>
+  </data>
+  <data name="Url_IssueLevel_View" xml:space="preserve">
+    <value>IssueLevel</value>
+  </data>
+  <data name="Url_IssueType_View" xml:space="preserve">
+    <value>IssueType</value>
+  </data>
+  <data name="Url_KanBanCardInfo_View" xml:space="preserve">
+    <value>KanBanCard</value>
+  </data>
+  <data name="Url_ProcurementActingBill" xml:space="preserve">
+    <value>ProcurementActingBill</value>
+  </data>
+  <data name="Url_ProcurementActingBill_View" xml:space="preserve">
+    <value>ProcurementActingBill_View</value>
+  </data>
+  <data name="Url_ProcurementBill_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Url_ProcurementBill_ToCalculateMaster" xml:space="preserve">
+    <value>ReCalculateMaster</value>
+  </data>
+  <data name="Url_ProcurementBill_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Url_QualityDoor" xml:space="preserve">
+    <value>QualityDoor</value>
+  </data>
+  <data name="Url_SaleActingBill" xml:space="preserve">
+    <value>SaleActingBill</value>
+  </data>
+  <data name="Url_SaleActingBill_View" xml:space="preserve">
+    <value>SaleActingBill_View</value>
+  </data>
+  <data name="Url_ShipmentMaster_Close" xml:space="preserve">
+    <value>Url_ShipmentMaster_Close</value>
+  </data>
+  <data name="Url_ShipmentMaster_New" xml:space="preserve">
+    <value>ShipmentMaster_New</value>
+  </data>
+  <data name="Url_ShipmentMaster_View" xml:space="preserve">
+    <value>ShipmentMaster_View</value>
+  </data>
+  <data name="Url_Supplier_View" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="Name_Application" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="Name_ApplicationDocumentCodeRule" xml:space="preserve">
+    <value>Document Nbr</value>
+  </data>
+  <data name="Name_ApplicationJobScheduling" xml:space="preserve">
+    <value>Batch Jobs</value>
+  </data>
+  <data name="Name_ApplicationPermission" xml:space="preserve">
+    <value>Access Control</value>
+  </data>
+  <data name="Name_ApplicationPrintSetup" xml:space="preserve">
+    <value>Printer Monitor</value>
+  </data>
+  <data name="Name_ApplicationShowLog" xml:space="preserve">
+    <value>View Log</value>
+  </data>
+  <data name="Name_CustReport" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="Name_CustReportInfo" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Name_CustReportSetup" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="Name_Distribution" xml:space="preserve">
+    <value>Delivery</value>
+  </data>
+  <data name="Name_DistributionInfo" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Name_DistributionManagementSettingCustomer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="Name_DistributionSetup" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="Name_DistributionTrans" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="Name_HuInventory" xml:space="preserve">
+    <value>Barcode Inv Detail</value>
+  </data>
+  <data name="Name_Inventory" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="Name_InventoryInfo" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Name_InventoryInventoryTrans" xml:space="preserve">
+    <value>Inventory Trans</value>
+  </data>
+  <data name="Name_InventorySetup" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="Name_InventoryTrans" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="Name_InventoryTransCostCenterMiscOrder" xml:space="preserve">
+    <value>Issue to Cost-center</value>
+  </data>
+  <data name="Name_InventoryTransItemExchange" xml:space="preserve">
+    <value>Inv Substitute</value>
+  </data>
+  <data name="Name_InventoryViewInventory" xml:space="preserve">
+    <value>Real-time Inv Detail</value>
+  </data>
+  <data name="Name_Inventory_ShelfLifeWarning" xml:space="preserve">
+    <value>Guarantee Warning</value>
+  </data>
+  <data name="Name_LibraryAgeStatements" xml:space="preserve">
+    <value>Inv Aging</value>
+  </data>
+  <data name="Name_MasterData" xml:space="preserve">
+    <value>Master Data</value>
+  </data>
+  <data name="Name_MRP" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="Name_MRPInfo" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Name_MRPSetup" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="Name_MRPSetupEx" xml:space="preserve">
+    <value>Extrusion</value>
+  </data>
+  <data name="Name_MRPSetupExWorkCalendar" xml:space="preserve">
+    <value>Work Calendar</value>
+  </data>
+  <data name="Name_MRPSetupFi" xml:space="preserve">
+    <value>Post Process</value>
+  </data>
+  <data name="Name_MRPSetupFiWorkCalendar" xml:space="preserve">
+    <value>Work Calendar</value>
+  </data>
+  <data name="Name_MRPSetupMi" xml:space="preserve">
+    <value>Rubber-refine</value>
+  </data>
+  <data name="Name_MRPSetupMiWorkCalendar" xml:space="preserve">
+    <value>Work Calendar</value>
+  </data>
+  <data name="Name_MRPTrans" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="Name_MRPTransMaterialPlan" xml:space="preserve">
+    <value>Material Planning</value>
+  </data>
+  <data name="Name_MRPTransMrp" xml:space="preserve">
+    <value>Operation Schedule</value>
+  </data>
+  <data name="Name_MRPTransMrpExShiftPlan" xml:space="preserve">
+    <value>Extrusion</value>
+  </data>
+  <data name="Name_MRPTransMrpFiShiftPlan" xml:space="preserve">
+    <value>Post Process</value>
+  </data>
+  <data name="Name_MRPTransMrpMaterialPlan" xml:space="preserve">
+    <value>Material Planning</value>
+  </data>
+  <data name="Name_MRPTransMrpMiShiftPlan" xml:space="preserve">
+    <value>Robber-refine</value>
+  </data>
+  <data name="Name_MRPTransMrpPlan" xml:space="preserve">
+    <value>Delivery Planning</value>
+  </data>
+  <data name="Name_MRPTransMrpSnap" xml:space="preserve">
+    <value>Data Preparation</value>
+  </data>
+  <data name="Name_MRPTransMrpSnapMachine" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Name_MRPTransMrpSnapProdLineEx" xml:space="preserve">
+    <value>Extrusion Resources</value>
+  </data>
+  <data name="Name_MRPTransMrpSnapView" xml:space="preserve">
+    <value>Data Snapshot</value>
+  </data>
+  <data name="Name_MRPTransRccp" xml:space="preserve">
+    <value>Forecasting</value>
+  </data>
+  <data name="Name_MRPTransRccpEx" xml:space="preserve">
+    <value>Extrusion Capacity</value>
+  </data>
+  <data name="Name_MRPTransRccpFi" xml:space="preserve">
+    <value>Post-process Capacity</value>
+  </data>
+  <data name="Name_MRPTransRccpMaterialPlan" xml:space="preserve">
+    <value>Material Planning</value>
+  </data>
+  <data name="Name_MRPTransRccpMi" xml:space="preserve">
+    <value>Rubber-refine Capability</value>
+  </data>
+  <data name="Name_MRPTransRccpPlan" xml:space="preserve">
+    <value>Vehicle Planning</value>
+  </data>
+  <data name="Name_MRP_MrpPlan_New" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Name_MRP_MrpPlan_View" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Name_MRP_RccpPlan_RccpTrans" xml:space="preserve">
+    <value>Demand Traceability</value>
+  </data>
+  <data name="Name_MRP_RccpPlan_Run" xml:space="preserve">
+    <value>Manual Running</value>
+  </data>
+  <data name="Name_Procurement" xml:space="preserve">
+    <value>Procurement</value>
+  </data>
+  <data name="Name_ProcurementInfo" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Name_ProcurementManagementSettingProcurementFlow" xml:space="preserve">
+    <value>Purchase Flow</value>
+  </data>
+  <data name="Name_ProcurementManagementSettingSupplier" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="Name_ProcurementSetup" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="Name_ProcurementTrans" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="Name_Production" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="Name_ProductionInfo" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Name_ProductionInfoIO" xml:space="preserve">
+    <value>O/I Report (new)</value>
+  </data>
+  <data name="Name_ProductionSetup" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="Name_ProductionTrans" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="Name_ProductionTransAdjust" xml:space="preserve">
+    <value>Prod-adjust Order (SY05)</value>
+  </data>
+  <data name="Name_ProductionTransAging" xml:space="preserve">
+    <value>Curing</value>
+  </data>
+  <data name="Name_ProductionTransEx" xml:space="preserve">
+    <value>Extrusion Order</value>
+  </data>
+  <data name="Name_ProductionTransFi" xml:space="preserve">
+    <value>Post-process Order</value>
+  </data>
+  <data name="Name_ProductionTransNormal" xml:space="preserve">
+    <value>Production Order</value>
+  </data>
+  <data name="Name_ProductionTransReceipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="Name_ProductionTransRework" xml:space="preserve">
+    <value>Rework Order (SY04)</value>
+  </data>
+  <data name="Name_ProductionTransTrail" xml:space="preserve">
+    <value>Trial-production Order (SY03)</value>
+  </data>
+  <data name="Name_Quality" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="Name_QualityInfo" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Name_QualitySetup" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="Name_QualityTrans" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="Name_SupplierMenu" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="Name_Url_Address_View" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Name_Url_BAT_Trigger_View" xml:space="preserve">
+    <value>Batch Jobs</value>
+  </data>
+  <data name="Name_Url_Bom_View" xml:space="preserve">
+    <value>BOM</value>
+  </data>
+  <data name="Name_Url_CodeMaster_View" xml:space="preserve">
+    <value>Data Dictionary</value>
+  </data>
+  <data name="Name_Url_ConcessionOrder" xml:space="preserve">
+    <value>Deviation Recycle</value>
+  </data>
+  <data name="Name_Url_ConcessionOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_ConcessionOrder_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Container_View" xml:space="preserve">
+    <value>Appliance</value>
+  </data>
+  <data name="Name_Url_CostCenterMiscOrderDet_ScrapView" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_CostCenterMiscOrderDet_View" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_CostCenterMiscOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_CostCenterMiscOrder_ScrapView" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_CostCenterMiscOrder_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_CostCenter_View" xml:space="preserve">
+    <value>Cost Center</value>
+  </data>
+  <data name="Name_Url_Currency_View" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Name_Url_CustomerGoodsFlow_View" xml:space="preserve">
+    <value>Customer-goods Flow</value>
+  </data>
+  <data name="Name_Url_Customer_Consignment_Inventory" xml:space="preserve">
+    <value>Customer Consignment</value>
+  </data>
+  <data name="Name_Url_Customer_View" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="Name_Url_CustReport_ReportMenu" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="Name_Url_CUST_HuIdEpDateChange_View" xml:space="preserve">
+    <value>Guarantee Lengthen</value>
+  </data>
+  <data name="Name_Url_CUST_HuIdFreeze_View" xml:space="preserve">
+    <value>Barcode Freeze</value>
+  </data>
+  <data name="Name_Url_CUST_HuTo" xml:space="preserve">
+    <value>Barcodeto</value>
+  </data>
+  <data name="Name_Url_CUST_HuToMapping" xml:space="preserve">
+    <value>Barcodeto Mapping</value>
+  </data>
+  <data name="Name_Url_CUST_SpecialBarCode_Index" xml:space="preserve">
+    <value>Special Barcode Print</value>
+  </data>
+  <data name="Name_Url_DistributionBill_ActingBillGroup" xml:space="preserve">
+    <value>Pending Sales Bill</value>
+  </data>
+  <data name="Name_Url_DistributionBill_New" xml:space="preserve">
+    <value>New Sales Bill</value>
+  </data>
+  <data name="Name_Url_DistributionBill_SettlePlanBill" xml:space="preserve">
+    <value>Customer Consignment</value>
+  </data>
+  <data name="Name_Url_DistributionBill_ToCalculateMaster" xml:space="preserve">
+    <value>Reprice</value>
+  </data>
+  <data name="Name_Url_DistributionBill_View" xml:space="preserve">
+    <value>View Sales Bill</value>
+  </data>
+  <data name="Name_Url_DistributionFlow_View" xml:space="preserve">
+    <value>Sales Flow</value>
+  </data>
+  <data name="Name_Url_DistributionIpGap" xml:space="preserve">
+    <value>Delivery Diff</value>
+  </data>
+  <data name="Name_Url_DistributionIpGap_Adjust" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Name_Url_DistributionIpGap_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_DistributionIpMaster" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="Name_Url_DistributionIpMaster_Receive" xml:space="preserve">
+    <value>Delivery Confirm</value>
+  </data>
+  <data name="Name_Url_DistributionIpMaster_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_DistributionPriceList_View" xml:space="preserve">
+    <value>Sales Price List</value>
+  </data>
+  <data name="Name_Url_DistributionReceipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="Name_Url_DistributionReceipt_Detail" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_DistributionReceipt_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Name_Url_Distribution_IpDetail" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_EntityPreference_View" xml:space="preserve">
+    <value>General Options</value>
+  </data>
+  <data name="Name_Url_ExPlanExecutionControl_View" xml:space="preserve">
+    <value>Extrusion Plan Monitor</value>
+  </data>
+  <data name="Name_Url_ExProductionOrder_Scrap" xml:space="preserve">
+    <value>Scrap</value>
+  </data>
+  <data name="Name_Url_ExProductionOrder_ScrapNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_FailCode_View" xml:space="preserve">
+    <value>Failure Code</value>
+  </data>
+  <data name="Name_Url_FinanceCalendar_Close" xml:space="preserve">
+    <value>Settle Accounts</value>
+  </data>
+  <data name="Name_Url_FinanceCalendar_View" xml:space="preserve">
+    <value>Account Peroid</value>
+  </data>
+  <data name="Name_Url_FiProductionOrder_Scrap" xml:space="preserve">
+    <value>Scrap</value>
+  </data>
+  <data name="Name_Url_HuTrans_View" xml:space="preserve">
+    <value>Barcode Trans</value>
+  </data>
+  <data name="Name_Url_InspectionOrder" xml:space="preserve">
+    <value>Inspect Order</value>
+  </data>
+  <data name="Name_Url_InspectionOrder_Detail" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_InspectionOrder_Judge" xml:space="preserve">
+    <value>Determine</value>
+  </data>
+  <data name="Name_Url_InspectionOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_InspectionOrder_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Inventory_Hu" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
+  <data name="Name_Url_Inventory_Hu_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_Inventory_Hu_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Inventory_InventoryIp" xml:space="preserve">
+    <value>View In-transit</value>
+  </data>
+  <data name="Name_Url_Inventory_InventoryLotNo" xml:space="preserve">
+    <value>Inv Lot Detail</value>
+  </data>
+  <data name="Name_Url_Inventory_InventoryMonitor" xml:space="preserve">
+    <value>Inv Monitor</value>
+  </data>
+  <data name="Name_Url_Inventory_ItemExchange" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_Inventory_ItemExchange_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Inventory_StockTake" xml:space="preserve">
+    <value>Physical Count</value>
+  </data>
+  <data name="Name_Url_Inventory_StockTake_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_Inventory_StockTake_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_IOB_CustomerPlanBillIOB" xml:space="preserve">
+    <value>Customer Consign I/O/B</value>
+  </data>
+  <data name="Name_Url_IOB_LocationDetailIOB" xml:space="preserve">
+    <value>Inventory I/O/B</value>
+  </data>
+  <data name="Name_Url_IOB_SupplierPlanBillIOB" xml:space="preserve">
+    <value>Supplier Consign I/O/B</value>
+  </data>
+  <data name="Name_Url_ItemCategory_View" xml:space="preserve">
+    <value>Material Categroy</value>
+  </data>
+  <data name="Name_Url_ItemDiscontinue_View" xml:space="preserve">
+    <value>Followed Material</value>
+  </data>
+  <data name="Name_Url_ItemExchange_Ageing" xml:space="preserve">
+    <value>Curing</value>
+  </data>
+  <data name="Name_Url_ItemExchange_Ageing_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_ItemExchange_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Name_Url_ItemFlow_View" xml:space="preserve">
+    <value>View Material Flow</value>
+  </data>
+  <data name="Name_Url_Item_View" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="Name_Url_Location_View" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Name_Url_Mi_MasterData_View" xml:space="preserve">
+    <value>Rubber-refine Capacity</value>
+  </data>
+  <data name="Name_Url_MrpExScrap_View" xml:space="preserve">
+    <value>Scrap Posting</value>
+  </data>
+  <data name="Name_Url_MrpSnap_Index" xml:space="preserve">
+    <value>Get Snapshot</value>
+  </data>
+  <data name="Name_Url_MrpSnap_MasterDataCheck" xml:space="preserve">
+    <value>Master-data Check</value>
+  </data>
+  <data name="Name_Url_Mrp_Container_View" xml:space="preserve">
+    <value>Appliance</value>
+  </data>
+  <data name="Name_Url_Mrp_FiPlanExecutionMonitor_View" xml:space="preserve">
+    <value>Post-process Plan Monitor</value>
+  </data>
+  <data name="Name_URl_MRP_FlowClassify_View" xml:space="preserve">
+    <value>Extrusion Line Group</value>
+  </data>
+  <data name="Name_Url_MRP_Island_View" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="Name_Url_MRP_Machine_View" xml:space="preserve">
+    <value>Mould</value>
+  </data>
+  <data name="Name_Url_Mrp_MaterialPlan_PurchasePlan" xml:space="preserve">
+    <value>Material Planning Search</value>
+  </data>
+  <data name="Name_Url_Mrp_MaterialPlan_PurchasePlanAdjust" xml:space="preserve">
+    <value>Material Planning Adjust</value>
+  </data>
+  <data name="Name_Url_Mrp_MaterialPlan_SupplierPlan" xml:space="preserve">
+    <value>Supplier Schedule</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpInvIn_Index" xml:space="preserve">
+    <value>Inbound Planning</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanEx_Demand" xml:space="preserve">
+    <value>Demand</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanEx_PlanView" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanEx_ReceiveOrder" xml:space="preserve">
+    <value>Goods Receipt</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanEx_ReceiveUrgentOrder" xml:space="preserve">
+    <value>Rush Receipt</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanEx_ReleasePlan" xml:space="preserve">
+    <value>Daily Planning</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanEx_ReSchedule" xml:space="preserve">
+    <value>Re-schedule</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanEx_Shift" xml:space="preserve">
+    <value>Shift Production Schedule</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanEx_Simulation" xml:space="preserve">
+    <value>Simulation</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanFi_Demand" xml:space="preserve">
+    <value>Demand</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanFi_Shift" xml:space="preserve">
+    <value>Shift Production Schedule</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanFi_ShiftView" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanMi_PlanTrace" xml:space="preserve">
+    <value>Tracking</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanMi_Shift" xml:space="preserve">
+    <value>Shift Production Schedule</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlanMi_ShiftView" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlan_Simulation" xml:space="preserve">
+    <value>Schedule Simulation</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpPlan_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSchedule_Ex" xml:space="preserve">
+    <value>Run MRP</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSchedule_Fi" xml:space="preserve">
+    <value>Run MRP</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSchedule_Mi" xml:space="preserve">
+    <value>Run MRP</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSchedule_Purchase" xml:space="preserve">
+    <value>Material Planning Release</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_ActiveOrder" xml:space="preserve">
+    <value>Activitie Orders</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_InventoryBalance" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_Machine" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_MachineAdjust" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_MachineInstance" xml:space="preserve">
+    <value>Material Mould</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_MrpFlowDetail" xml:space="preserve">
+    <value>Flow</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_MrpPlanView" xml:space="preserve">
+    <value>Delivery Planning</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_ProdLineEx" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_ProdLineExAdjust" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Name_Url_Mrp_MrpSnap_TransitOrder" xml:space="preserve">
+    <value>In-transit</value>
+  </data>
+  <data name="Name_Url_MRP_ProdLineEx_View" xml:space="preserve">
+    <value>Extrusion Resources</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_AllotSection" xml:space="preserve">
+    <value>Capacity Distribution</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ClassifyLoad" xml:space="preserve">
+    <value>Category Load</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ClassifyQty" xml:space="preserve">
+    <value>Category Meters</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ClassifyScrapPercentage" xml:space="preserve">
+    <value>Category Scrap-percent</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ClassifySpeed" xml:space="preserve">
+    <value>Category Speed</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ItemLoad" xml:space="preserve">
+    <value>Section Online Rate</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ItemQty" xml:space="preserve">
+    <value>Section Meters</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ItemTime" xml:space="preserve">
+    <value>Section Online Time</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ProdLineLoad" xml:space="preserve">
+    <value>Line Load-rate</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ProdLineQty" xml:space="preserve">
+    <value>Line Meters</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ProdLineScrapPercentage" xml:space="preserve">
+    <value>Line Scrap-rate</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanEx_ProdLineSpeed" xml:space="preserve">
+    <value>Line Speed</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanFi_IslandMonth" xml:space="preserve">
+    <value>Area (month)</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanFi_IslandWeek" xml:space="preserve">
+    <value>Area (week)</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanFi_MachineMonth" xml:space="preserve">
+    <value>Mould (month)</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanFi_MachineWeek" xml:space="preserve">
+    <value>Mould (weeks)</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanMi_FilterCapacity" xml:space="preserve">
+    <value>Filter Capacity</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanMi_Load" xml:space="preserve">
+    <value>Line Load-rate</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlanMi_LoadDetail" xml:space="preserve">
+    <value>Line Load-rate Datail</value>
+  </data>
+  <data name="Name_Url_Mrp_RccpPlan_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_MRP_WarningColor_View" xml:space="preserve">
+    <value>Warning Color</value>
+  </data>
+  <data name="Name_Url_Mrp_WorkCalendar_ExEdit" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Name_Url_Mrp_WorkCalendar_ExView" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Mrp_WorkCalendar_FiEdit" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Name_Url_Mrp_WorkCalendar_FiView" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Mrp_WorkCalendar_MiEdit" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Name_Url_Mrp_WorkCalendar_MiView" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_OrderDetail_Distribution" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_OrderDetail_Distribution_Return" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_OrderDetail_Procurement_Return" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_OrderDetail_Procurement_View" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_OrderDetail_Production" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_OrderDetail_UnitPrice_View" xml:space="preserve">
+    <value>Change Price</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Distribution" xml:space="preserve">
+    <value>Delivery Order</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Distribution_BatchProcess" xml:space="preserve">
+    <value>Batch</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Distribution_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Distribution_Return" xml:space="preserve">
+    <value>Return Order</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Distribution_ReturnIndex" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Distribution_ReturnNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Distribution_Ship" xml:space="preserve">
+    <value>Delivery</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Distribution_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Procurement" xml:space="preserve">
+    <value>Procure Order</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Procurement_BatchProcess" xml:space="preserve">
+    <value>Batch</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Procurement_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Procurement_Receive" xml:space="preserve">
+    <value>Goods Receipt</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Procurement_Return" xml:space="preserve">
+    <value>Return Order</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Procurement_ReturnIndex" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Procurement_ReturnNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Procurement_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Production_BatchProcess" xml:space="preserve">
+    <value>Batch</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Production_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Production_Receive_MI" xml:space="preserve">
+    <value>Rubber-refine Receipt</value>
+  </data>
+  <data name="Name_Url_OrderMstr_Production_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_PermissionGroup_View" xml:space="preserve">
+    <value>Permission Group</value>
+  </data>
+  <data name="Name_Url_PermissionReport_View" xml:space="preserve">
+    <value>Permission Detail</value>
+  </data>
+  <data name="Name_Url_PickList" xml:space="preserve">
+    <value>Pick List</value>
+  </data>
+  <data name="Name_Url_PickListDetail_View" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_PickList_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_PickList_Ship" xml:space="preserve">
+    <value>Delivery</value>
+  </data>
+  <data name="Name_Url_PickList_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_PickStrategy_View" xml:space="preserve">
+    <value>Pick Strategy</value>
+  </data>
+  <data name="Name_Url_PPM_ProcurementReturn" xml:space="preserve">
+    <value>Purchase Return Report</value>
+  </data>
+  <data name="Name_Url_ProcurementActingBill" xml:space="preserve">
+    <value>Purchase Bill</value>
+  </data>
+  <data name="Name_Url_ProcurementBill_ActingBillGroup" xml:space="preserve">
+    <value>Pending Purchase Bill</value>
+  </data>
+  <data name="Name_Url_ProcurementBill_MauallySettleCsBill" xml:space="preserve">
+    <value>Supplier ConsignMent</value>
+  </data>
+  <data name="Name_Url_ProcurementBill_New" xml:space="preserve">
+    <value>New Bill</value>
+  </data>
+  <data name="Name_Url_ProcurementBill_ToCalculateMaster" xml:space="preserve">
+    <value>Repricing</value>
+  </data>
+  <data name="Name_Url_ProcurementBill_View" xml:space="preserve">
+    <value>Search Bill</value>
+  </data>
+  <data name="Name_Url_ProcurementFlow_View" xml:space="preserve">
+    <value>Purchase Flow</value>
+  </data>
+  <data name="Name_Url_ProcurementIpGap" xml:space="preserve">
+    <value>Delivery Diff</value>
+  </data>
+  <data name="Name_Url_ProcurementIpGap_Adjust" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Name_Url_ProcurementIpGap_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_ProcurementIpMaster" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="Name_Url_ProcurementIpMaster_Detail" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_ProcurementIpMaster_Receive" xml:space="preserve">
+    <value>Goods Receipt</value>
+  </data>
+  <data name="Name_Url_ProcurementIpMaster_UpdateDetailUnitPrice" xml:space="preserve">
+    <value>Change Price</value>
+  </data>
+  <data name="Name_Url_ProcurementIpMaster_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_ProcurementOrder_RequisitionOrder" xml:space="preserve">
+    <value>Extrusion Material Issue</value>
+  </data>
+  <data name="Name_Url_ProcurementPriceList_View" xml:space="preserve">
+    <value>Purchase Price List</value>
+  </data>
+  <data name="Name_Url_ProcurementReceipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="Name_Url_ProcurementReceipt_Detail" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_ProcurementReceipt_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_ProductionAdjustMiscOrderDet_View" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_ProductionAdjustMiscOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_ProductionAdjustMiscOrder_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_ProductionFiScrapOrderDet_View" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_ProductionFiScrapOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_ProductionFiScrapOrder_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_ProductionFlow_View" xml:space="preserve">
+    <value>Production Line</value>
+  </data>
+  <data name="Name_Url_ProductionReceipt_Detail" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_ProductionReceipt_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_ProductionReworkMiscOrderDet_View" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_ProductionReworkMiscOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_ProductionReworkMiscOrder_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_ProductionTrailMiscOrderDet_New" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_ProductionTrailMiscOrder_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_ProductionTrailMiscOrder_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Production_ForceMaterial" xml:space="preserve">
+    <value>Force-materail</value>
+  </data>
+  <data name="Name_Url_Production_MaterialIn_ForceFeedOrderMaster" xml:space="preserve">
+    <value>Force-materail Feeding</value>
+  </data>
+  <data name="Name_Url_Production_ProdIO" xml:space="preserve">
+    <value>I/O/B Report</value>
+  </data>
+  <data name="Name_Url_Production_ProdIOEX" xml:space="preserve">
+    <value>Extrusion</value>
+  </data>
+  <data name="Name_Url_Production_ProdIOFI" xml:space="preserve">
+    <value>Post-process</value>
+  </data>
+  <data name="Name_Url_Production_ProdIOMI" xml:space="preserve">
+    <value>Rubber-refine</value>
+  </data>
+  <data name="Name_Url_ProductType_View" xml:space="preserve">
+    <value>ProductionType</value>
+  </data>
+  <data name="Name_Url_RccpPlan_Edit" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Name_Url_RccpPlan_New" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Name_Url_Region_View" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Name_Url_RejectOrder" xml:space="preserve">
+    <value>Non-qualified Goods</value>
+  </data>
+  <data name="Name_Url_RejectOrder_Return" xml:space="preserve">
+    <value>Non-qualified Goods Return</value>
+  </data>
+  <data name="Name_Url_ReturnAccept_Orders" xml:space="preserve">
+    <value>Return Receipt</value>
+  </data>
+  <data name="Name_Url_ReturnAccept_Orders_Detail_Query" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_ReturnAccept_Orders_Query" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Role_View" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Name_Url_SaleActingBill" xml:space="preserve">
+    <value>Sales Bill</value>
+  </data>
+  <data name="Name_Url_SAPBDRpt" xml:space="preserve">
+    <value>Transitive Biz-data Search</value>
+  </data>
+  <data name="Name_Url_SAPBDRpt_MM" xml:space="preserve">
+    <value>MM</value>
+  </data>
+  <data name="Name_Url_SAPBDRpt_PP" xml:space="preserve">
+    <value>PP</value>
+  </data>
+  <data name="Name_Url_SAPBDRpt_SD" xml:space="preserve">
+    <value>SD</value>
+  </data>
+  <data name="Name_Url_SAPBDRpt_ST" xml:space="preserve">
+    <value>ST</value>
+  </data>
+  <data name="Name_Url_SAPBom_View" xml:space="preserve">
+    <value>BOM</value>
+  </data>
+  <data name="Name_Url_SAPCustomer_View" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="Name_Url_SAPItem_View" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="Name_Url_SAPMDRpt" xml:space="preserve">
+    <value>Transitive Master-data Search</value>
+  </data>
+  <data name="Name_Url_SAPMMMES0001_View" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="Name_Url_SAPMMMES0002_View" xml:space="preserve">
+    <value>Purchase Cancel</value>
+  </data>
+  <data name="Name_Url_SAPPPMES0001_View" xml:space="preserve">
+    <value>Production Receipt</value>
+  </data>
+  <data name="Name_Url_SAPPPMES0002_View" xml:space="preserve">
+    <value>Production Receipt Cancel</value>
+  </data>
+  <data name="Name_Url_SAPPPMES0003_View" xml:space="preserve">
+    <value>Prod Scrap Posting</value>
+  </data>
+  <data name="Name_Url_SAPPPMES0004_View" xml:space="preserve">
+    <value>Rubber Filter</value>
+  </data>
+  <data name="Name_Url_SAPPPMES0005_View" xml:space="preserve">
+    <value>Production Adjust</value>
+  </data>
+  <data name="Name_Url_SAPPPMES0006_View" xml:space="preserve">
+    <value>Trial-production</value>
+  </data>
+  <data name="Name_Url_SAPPriceList_View" xml:space="preserve">
+    <value>Purchase Price List</value>
+  </data>
+  <data name="Name_Url_SAPReport" xml:space="preserve">
+    <value>SAP Interface Report</value>
+  </data>
+  <data name="Name_Url_SAPSDCancel_View" xml:space="preserve">
+    <value>Sales Cancel</value>
+  </data>
+  <data name="Name_Url_SAPSDNormal_View" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="Name_Url_SAPSTMES0001_View" xml:space="preserve">
+    <value>Stock Transfer</value>
+  </data>
+  <data name="Name_Url_SAPSupplier_View" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="Name_Url_SAPTransferLog_View" xml:space="preserve">
+    <value>Interface Log</value>
+  </data>
+  <data name="Name_Url_SAPUomConvertion_View" xml:space="preserve">
+    <value>UOM Conversion</value>
+  </data>
+  <data name="Name_Url_Single_Return" xml:space="preserve">
+    <value>Return Order</value>
+  </data>
+  <data name="Name_Url_Single_Return_Detail_Query" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_Single_Return_Query" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_SI_EDI" xml:space="preserve">
+    <value>EDI</value>
+  </data>
+  <data name="Name_Url_SI_EDI_Ford_PlanningSchedule" xml:space="preserve">
+    <value>Forecasting</value>
+  </data>
+  <data name="Name_Url_SI_EDI_Ford_ShippingSchedule" xml:space="preserve">
+    <value>Delivery Planning</value>
+  </data>
+  <data name="Name_Url_SI_SAPInterface" xml:space="preserve">
+    <value>Manual Call</value>
+  </data>
+  <data name="Name_Url_SI_SILogToUser" xml:space="preserve">
+    <value>Email Subscription</value>
+  </data>
+  <data name="Name_Url_SI_View" xml:space="preserve">
+    <value>SI</value>
+  </data>
+  <data name="Name_Url_SmallSparePartChk_View" xml:space="preserve">
+    <value>Material Anti-erro Report</value>
+  </data>
+  <data name="Name_Url_SNRule_View" xml:space="preserve">
+    <value>Document Nbr</value>
+  </data>
+  <data name="Name_Url_SubconctractingFlow_View" xml:space="preserve">
+    <value>Sourcing Flow</value>
+  </data>
+  <data name="Name_Url_SubConctractingTransferFlow_View" xml:space="preserve">
+    <value>Sourcing Transfer Flow</value>
+  </data>
+  <data name="Name_Url_SubPrintOrder_View" xml:space="preserve">
+    <value>Print Subscription</value>
+  </data>
+  <data name="Name_Url_SupplierBill_ActingBill" xml:space="preserve">
+    <value>Pending Purchase Bill</value>
+  </data>
+  <data name="Name_Url_SupplierBill_View" xml:space="preserve">
+    <value>Purchase Bill</value>
+  </data>
+  <data name="Name_Url_Supplier_Consignment" xml:space="preserve">
+    <value>Supplier Consignment</value>
+  </data>
+  <data name="Name_Url_Supplier_Consignment_Inventory" xml:space="preserve">
+    <value>Supplier Consignment</value>
+  </data>
+  <data name="Name_Url_Supplier_Deliveryorder" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="Name_Url_Supplier_Deliveryorder_Detail_Query" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_Supplier_Deliveryorder_Query" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Supplier_Invoice" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="Name_Url_Supplier_Invoice_Detail_Query" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_Supplier_Invoice_Query" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Supplier_Lading" xml:space="preserve">
+    <value>Purchase Order</value>
+  </data>
+  <data name="Name_Url_Supplier_Lading_Deliver" xml:space="preserve">
+    <value>Delivery</value>
+  </data>
+  <data name="Name_Url_Supplier_Lading_Detail_Query" xml:space="preserve">
+    <value>View Detail</value>
+  </data>
+  <data name="Name_Url_Supplier_Lading_Query" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Supplier_Print" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
+  <data name="Name_Url_Supplier_Print_ADD" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Name_Url_Supplier_Print_Query" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Name_Url_Supplier_View" xml:space="preserve">
+    <value>Suppliers</value>
+  </data>
+  <data name="Name_Url_SwitchTrading_View" xml:space="preserve">
+    <value>Special-flow Mapping</value>
+  </data>
+  <data name="Name_Url_TransferFlow_View" xml:space="preserve">
+    <value>Transfer Flow</value>
+  </data>
+  <data name="Name_Url_Uom_View" xml:space="preserve">
+    <value>UOM</value>
+  </data>
+  <data name="Name_Url_UserFav_View" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="Name_Url_User_View" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="Name_Url_WorkingCalendar_View" xml:space="preserve">
+    <value>Work Calendar</value>
+  </data>
+  <data name="Name_Visualization" xml:space="preserve">
+    <value>Visualization</value>
+  </data>
+  <data name="Description_Application" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="Description_ApplicationDocumentCodeRule" xml:space="preserve">
+    <value>Application-Document Nbr</value>
+  </data>
+  <data name="Description_ApplicationJobScheduling" xml:space="preserve">
+    <value>Application-Batch Jobs</value>
+  </data>
+  <data name="Description_ApplicationPermission" xml:space="preserve">
+    <value>Application-Access Control</value>
+  </data>
+  <data name="Description_ApplicationPrintSetup" xml:space="preserve">
+    <value>Application-Printer Monitor</value>
+  </data>
+  <data name="Description_ApplicationShowLog" xml:space="preserve">
+    <value>Application-View Log</value>
+  </data>
+  <data name="Description_CustReport" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="Description_CustReportInfo" xml:space="preserve">
+    <value>Reports-Information</value>
+  </data>
+  <data name="Description_CustReportSetup" xml:space="preserve">
+    <value>Reports-Setting</value>
+  </data>
+  <data name="Description_Distribution" xml:space="preserve">
+    <value>Delivery</value>
+  </data>
+  <data name="Description_DistributionInfo" xml:space="preserve">
+    <value>Delivery-Information</value>
+  </data>
+  <data name="Description_DistributionManagementSettingCustomer" xml:space="preserve">
+    <value>DistributionManagement-Setting-Customer</value>
+  </data>
+  <data name="Description_DistributionSetup" xml:space="preserve">
+    <value>Delivery-Setting</value>
+  </data>
+  <data name="Description_DistributionTrans" xml:space="preserve">
+    <value>Delivery-Transaction</value>
+  </data>
+  <data name="Description_HuInventory" xml:space="preserve">
+    <value>Inventory-Information-Barcode Inv Detail</value>
+  </data>
+  <data name="Description_Inventory" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="Description_InventoryInfo" xml:space="preserve">
+    <value>Inventory-Information</value>
+  </data>
+  <data name="Description_InventoryInventoryTrans" xml:space="preserve">
+    <value>Inventory-Information-Inventory Trans</value>
+  </data>
+  <data name="Description_InventorySetup" xml:space="preserve">
+    <value>Inventory-Setting</value>
+  </data>
+  <data name="Description_InventoryTrans" xml:space="preserve">
+    <value>Inventory-Transaction</value>
+  </data>
+  <data name="Description_InventoryTransCostCenterMiscOrder" xml:space="preserve">
+    <value>Inventory-Transaction-Issue to Cost-center</value>
+  </data>
+  <data name="Description_InventoryTransItemExchange" xml:space="preserve">
+    <value>Inventory-Transaction-Inv Substitute</value>
+  </data>
+  <data name="Description_InventoryViewInventory" xml:space="preserve">
+    <value>Inventory-Information-Real-time Inv Detail</value>
+  </data>
+  <data name="Description_Inventory_ShelfLifeWarning" xml:space="preserve">
+    <value>Inventory-Information-Guarantee Warning</value>
+  </data>
+  <data name="Description_LibraryAgeStatements" xml:space="preserve">
+    <value>Inventory-Information-Inv Aging</value>
+  </data>
+  <data name="Description_MasterData" xml:space="preserve">
+    <value>Master Data</value>
+  </data>
+  <data name="Description_MRP" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="Description_MRPInfo" xml:space="preserve">
+    <value>Planning-Information</value>
+  </data>
+  <data name="Description_MRPSetup" xml:space="preserve">
+    <value>Planning-Setting</value>
+  </data>
+  <data name="Description_MRPSetupEx" xml:space="preserve">
+    <value>Planning-Setting-Extrusion</value>
+  </data>
+  <data name="Description_MRPSetupExWorkCalendar" xml:space="preserve">
+    <value>Planning-Setting-Extrusion-Work Calendar</value>
+  </data>
+  <data name="Description_MRPSetupFi" xml:space="preserve">
+    <value>Planning-Setting-Post-Post Process</value>
+  </data>
+  <data name="Description_MRPSetupFiWorkCalendar" xml:space="preserve">
+    <value>Planning-Setting-Post-Processing-Work Calendar</value>
+  </data>
+  <data name="Description_MRPSetupMi" xml:space="preserve">
+    <value>Planning-Setting-Rubber refine</value>
+  </data>
+  <data name="Description_MRPSetupMiWorkCalendar" xml:space="preserve">
+    <value>Planning-Setting-Rubber Refine-Work Calendar</value>
+  </data>
+  <data name="Description_MRPTrans" xml:space="preserve">
+    <value>Planning-Transaction</value>
+  </data>
+  <data name="Description_MRPTransMaterialPlan" xml:space="preserve">
+    <value>Planning-Transaction-Material Planning</value>
+  </data>
+  <data name="Description_MRPTransMrp" xml:space="preserve">
+    <value>Planning-Transaction-Operation Schedule</value>
+  </data>
+  <data name="Description_MRPTransMrpExShiftPlan" xml:space="preserve">
+    <value>Planning-Transaction-Operation Schedule-Extrusion</value>
+  </data>
+  <data name="Description_MRPTransMrpFiShiftPlan" xml:space="preserve">
+    <value>Planning-Transaction-Operation Schedule-Post Process</value>
+  </data>
+  <data name="Description_MRPTransMrpMaterialPlan" xml:space="preserve">
+    <value>Planning-Transaction-Operation Schedule-Material Planning</value>
+  </data>
+  <data name="Description_MRPTransMrpMiShiftPlan" xml:space="preserve">
+    <value>Planning-Transaction-Operation Schedule-Robber Refine</value>
+  </data>
+  <data name="Description_MRPTransMrpPlan" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Delivery Planning</value>
+  </data>
+  <data name="Description_MRPTransMrpSnap" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation</value>
+  </data>
+  <data name="Description_MRPTransMrpSnapMachine" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Model</value>
+  </data>
+  <data name="Description_MRPTransMrpSnapProdLineEx" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Extrusion Resources</value>
+  </data>
+  <data name="Description_MRPTransMrpSnapView" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Data Snapshot</value>
+  </data>
+  <data name="Description_MRPTransRccp" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting</value>
+  </data>
+  <data name="Description_MRPTransRccpEx" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity</value>
+  </data>
+  <data name="Description_MRPTransRccpFi" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Post process Capacity</value>
+  </data>
+  <data name="Description_MRPTransRccpMaterialPlan" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Material Planning</value>
+  </data>
+  <data name="Description_MRPTransRccpMi" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Rubbe refine Capability</value>
+  </data>
+  <data name="Description_MRPTransRccpPlan" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Vehicle Planning</value>
+  </data>
+  <data name="Description_MRP_MrpPlan_New" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Delivery Planning-Import</value>
+  </data>
+  <data name="Description_MRP_MrpPlan_View" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Delivery Planning-Adjust</value>
+  </data>
+  <data name="Description_MRP_RccpPlan_RccpTrans" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Demand Traceability</value>
+  </data>
+  <data name="Description_MRP_RccpPlan_Run" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Manual Running</value>
+  </data>
+  <data name="Description_Procurement" xml:space="preserve">
+    <value>Procurement</value>
+  </data>
+  <data name="Description_ProcurementInfo" xml:space="preserve">
+    <value>Procurement-Information</value>
+  </data>
+  <data name="Description_ProcurementManagementSettingProcurementFlow" xml:space="preserve">
+    <value>Procurement-Setting-Purchase Flow</value>
+  </data>
+  <data name="Description_ProcurementManagementSettingSupplier" xml:space="preserve">
+    <value>Procurement-Setting-Supplier</value>
+  </data>
+  <data name="Description_ProcurementSetup" xml:space="preserve">
+    <value>Procurement-Setting</value>
+  </data>
+  <data name="Description_ProcurementTrans" xml:space="preserve">
+    <value>Procurement-Transaction</value>
+  </data>
+  <data name="Description_Production" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="Description_ProductionInfo" xml:space="preserve">
+    <value>Production-Information</value>
+  </data>
+  <data name="Description_ProductionInfoIO" xml:space="preserve">
+    <value>Production-Information-Newinput-O/I Report (new)</value>
+  </data>
+  <data name="Description_ProductionSetup" xml:space="preserve">
+    <value>Production-Setting</value>
+  </data>
+  <data name="Description_ProductionTrans" xml:space="preserve">
+    <value>Production-Transaction</value>
+  </data>
+  <data name="Description_ProductionTransAdjust" xml:space="preserve">
+    <value>Production-Transaction-Prod-adjust Order (SY05)</value>
+  </data>
+  <data name="Description_ProductionTransAging" xml:space="preserve">
+    <value>Production-Transaction-Extrusion Order-Curing</value>
+  </data>
+  <data name="Description_ProductionTransEx" xml:space="preserve">
+    <value>Production-Transaction-Extrusion Order</value>
+  </data>
+  <data name="Description_ProductionTransFi" xml:space="preserve">
+    <value>Production-Transaction-Post-process Order</value>
+  </data>
+  <data name="Description_ProductionTransNormal" xml:space="preserve">
+    <value>Production-Transaction-Production Order</value>
+  </data>
+  <data name="Description_ProductionTransReceipt" xml:space="preserve">
+    <value>Production-Transaction-Receipt</value>
+  </data>
+  <data name="Description_ProductionTransRework" xml:space="preserve">
+    <value>Production-Transaction-Rework Order (SY04)</value>
+  </data>
+  <data name="Description_ProductionTransTrail" xml:space="preserve">
+    <value>Production-Transaction-Trial production Order (SY03)</value>
+  </data>
+  <data name="Description_Quality" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="Description_QualityInfo" xml:space="preserve">
+    <value>Quality-Information</value>
+  </data>
+  <data name="Description_QualitySetup" xml:space="preserve">
+    <value>Quality-Setting</value>
+  </data>
+  <data name="Description_QualityTrans" xml:space="preserve">
+    <value>Quality-Transaction</value>
+  </data>
+  <data name="Description_SupplierMenu" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="Description_Url_Address_View" xml:space="preserve">
+    <value>Master Data-Address</value>
+  </data>
+  <data name="Description_Url_BAT_Trigger_View" xml:space="preserve">
+    <value>Application-Batch Jobs</value>
+  </data>
+  <data name="Description_Url_Bom_View" xml:space="preserve">
+    <value>Production-Setting-BOM</value>
+  </data>
+  <data name="Description_Url_CodeMaster_View" xml:space="preserve">
+    <value>Application-Data Dictionary</value>
+  </data>
+  <data name="Description_Url_ConcessionOrder" xml:space="preserve">
+    <value>Quality-Transaction-Nonqualified Goods-Deviation Recycle</value>
+  </data>
+  <data name="Description_Url_ConcessionOrder_New" xml:space="preserve">
+    <value>Quality-Transaction-InqualifiedProductProcessing-Deviation Recycle-New</value>
+  </data>
+  <data name="Description_Url_ConcessionOrder_View" xml:space="preserve">
+    <value>Quality-Transaction-InqualifiedProductProcessing-Deviation Recycle-Search</value>
+  </data>
+  <data name="Description_Url_Container_View" xml:space="preserve">
+    <value>Planning-Setting-Rubber Refine-Appliance</value>
+  </data>
+  <data name="Description_Url_CostCenterMiscOrderDet_ScrapView" xml:space="preserve">
+    <value>Production-Transaction-ExtrusionOrder-Scrap-View Detail</value>
+  </data>
+  <data name="Description_Url_CostCenterMiscOrderDet_View" xml:space="preserve">
+    <value>Inventory-Transaction-Issue to Cost-center-View Detail</value>
+  </data>
+  <data name="Description_Url_CostCenterMiscOrder_New" xml:space="preserve">
+    <value>Inventory-Transaction-Issue to Cost-center-New</value>
+  </data>
+  <data name="Description_Url_CostCenterMiscOrder_ScrapView" xml:space="preserve">
+    <value>Production-Transaction-ExtrusionOrder-Scrap-Search</value>
+  </data>
+  <data name="Description_Url_CostCenterMiscOrder_View" xml:space="preserve">
+    <value>Inventory-Transaction-Issue to Cost-center-Search</value>
+  </data>
+  <data name="Description_Url_CostCenter_View" xml:space="preserve">
+    <value>Inventory-Setting-Cost Center</value>
+  </data>
+  <data name="Description_Url_Currency_View" xml:space="preserve">
+    <value>Master Data-Currency</value>
+  </data>
+  <data name="Description_Url_CustomerGoodsFlow_View" xml:space="preserve">
+    <value>Procurement-Setting-Customer goods Flow</value>
+  </data>
+  <data name="Description_Url_Customer_Consignment_Inventory" xml:space="preserve">
+    <value>Inventory-Information-Customer Consignment</value>
+  </data>
+  <data name="Description_Url_Customer_View" xml:space="preserve">
+    <value>DistributionManagement-Setting-Customer</value>
+  </data>
+  <data name="Description_Url_CustReport_ReportMenu" xml:space="preserve">
+    <value>ReportManagement-Setting-Reports</value>
+  </data>
+  <data name="Description_Url_CUST_HuIdEpDateChange_View" xml:space="preserve">
+    <value>Quality-Transaction-Guarantee Lengthen</value>
+  </data>
+  <data name="Description_Url_CUST_HuIdFreeze_View" xml:space="preserve">
+    <value>Inventory-Transaction-Barcode-Barcode Freeze</value>
+  </data>
+  <data name="Description_Url_CUST_HuTo" xml:space="preserve">
+    <value>Planning-Setting-Rubber Refine-Barcodeto</value>
+  </data>
+  <data name="Description_Url_CUST_HuToMapping" xml:space="preserve">
+    <value>Planning-Setting-Rubber Refine-Barcodeto Mapping</value>
+  </data>
+  <data name="Description_Url_CUST_SpecialBarCode_Index" xml:space="preserve">
+    <value>Application-Special Barcode Print</value>
+  </data>
+  <data name="Description_Url_DistributionBill_ActingBillGroup" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Sales Bill-Pending Sales Bill</value>
+  </data>
+  <data name="Description_Url_DistributionBill_New" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Sales Bill-New Sales Bill</value>
+  </data>
+  <data name="Description_Url_DistributionBill_SettlePlanBill" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Sales Bill-Customer Consignment</value>
+  </data>
+  <data name="Description_Url_DistributionBill_ToCalculateMaster" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Sales Bill-Reprice</value>
+  </data>
+  <data name="Description_Url_DistributionBill_View" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Sales Bill-View Sales Bill</value>
+  </data>
+  <data name="Description_Url_DistributionFlow_View" xml:space="preserve">
+    <value>DistributionManagement-Setting-Sales Flow</value>
+  </data>
+  <data name="Description_Url_DistributionIpGap" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Delivery Diff</value>
+  </data>
+  <data name="Description_Url_DistributionIpGap_Adjust" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Delivery Diff-Adjust</value>
+  </data>
+  <data name="Description_Url_DistributionIpGap_View" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Delivery Diff-Search</value>
+  </data>
+  <data name="Description_Url_DistributionIpMaster" xml:space="preserve">
+    <value>DistributionManagement-Transaction-ASN</value>
+  </data>
+  <data name="Description_Url_DistributionIpMaster_Receive" xml:space="preserve">
+    <value>DistributionManagement-Transaction-ASN-Delivery Confirm</value>
+  </data>
+  <data name="Description_Url_DistributionIpMaster_View" xml:space="preserve">
+    <value>DistributionManagement-Transaction-ASN-Search</value>
+  </data>
+  <data name="Description_Url_DistributionPriceList_View" xml:space="preserve">
+    <value>DistributionManagement-Setting-Sales Price List</value>
+  </data>
+  <data name="Description_Url_DistributionReceipt" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Receipt</value>
+  </data>
+  <data name="Description_Url_DistributionReceipt_Detail" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Receipt-View Detail</value>
+  </data>
+  <data name="Description_Url_DistributionReceipt_View" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Receipt-View</value>
+  </data>
+  <data name="Description_Url_Distribution_IpDetail" xml:space="preserve">
+    <value>DistributionManagement-Transaction-ASN-View Detail</value>
+  </data>
+  <data name="Description_Url_EntityPreference_View" xml:space="preserve">
+    <value>Application-General Options</value>
+  </data>
+  <data name="Description_Url_ExPlanExecutionControl_View" xml:space="preserve">
+    <value>Production-Information-Extrusion Plan Monitor</value>
+  </data>
+  <data name="Description_Url_ExProductionOrder_Scrap" xml:space="preserve">
+    <value>Production-Transaction-Extrusion Order-Scrap</value>
+  </data>
+  <data name="Description_Url_ExProductionOrder_ScrapNew" xml:space="preserve">
+    <value>Production-Transaction-ExtrusionOrder-Scrap-New</value>
+  </data>
+  <data name="Description_Url_FailCode_View" xml:space="preserve">
+    <value>Quality-Setting-Failure Code</value>
+  </data>
+  <data name="Description_Url_FinanceCalendar_Close" xml:space="preserve">
+    <value>Application-Settle Accounts</value>
+  </data>
+  <data name="Description_Url_FinanceCalendar_View" xml:space="preserve">
+    <value>Master Data-Account Peroid</value>
+  </data>
+  <data name="Description_Url_FiProductionOrder_Scrap" xml:space="preserve">
+    <value>Production-Transaction-Post process Order-Scrap</value>
+  </data>
+  <data name="Description_Url_HuTrans_View" xml:space="preserve">
+    <value>Inventory-Information-Barcode Trans</value>
+  </data>
+  <data name="Description_Url_InspectionOrder" xml:space="preserve">
+    <value>Quality-Transaction-Post Inspect Order</value>
+  </data>
+  <data name="Description_Url_InspectionOrder_Detail" xml:space="preserve">
+    <value>Quality-Transaction-Post-Inspect Order-View Detail</value>
+  </data>
+  <data name="Description_Url_InspectionOrder_Judge" xml:space="preserve">
+    <value>Quality-Transaction-Post-Inspect Order-Determine</value>
+  </data>
+  <data name="Description_Url_InspectionOrder_New" xml:space="preserve">
+    <value>Quality-Transaction-Post-Inspect Order-New</value>
+  </data>
+  <data name="Description_Url_InspectionOrder_View" xml:space="preserve">
+    <value>Quality-Transaction-Post-Inspect Order-Search</value>
+  </data>
+  <data name="Description_Url_Inventory_Hu" xml:space="preserve">
+    <value>Inventory-Transaction-Barcode</value>
+  </data>
+  <data name="Description_Url_Inventory_Hu_New" xml:space="preserve">
+    <value>Inventory-Transaction-Barcode-New</value>
+  </data>
+  <data name="Description_Url_Inventory_Hu_View" xml:space="preserve">
+    <value>Inventory-Transaction-Barcode-Search</value>
+  </data>
+  <data name="Description_Url_Inventory_InventoryIp" xml:space="preserve">
+    <value>Inventory-Information-In-View In-transit</value>
+  </data>
+  <data name="Description_Url_Inventory_InventoryLotNo" xml:space="preserve">
+    <value>Inventory-Information-Inv Lot Detail</value>
+  </data>
+  <data name="Description_Url_Inventory_InventoryMonitor" xml:space="preserve">
+    <value>Inventory-Information-Inv Monitor</value>
+  </data>
+  <data name="Description_Url_Inventory_ItemExchange" xml:space="preserve">
+    <value>Inventory-Transaction-Inv Substitute-New</value>
+  </data>
+  <data name="Description_Url_Inventory_ItemExchange_View" xml:space="preserve">
+    <value>Inventory-Transaction-Inv Substitute-Search</value>
+  </data>
+  <data name="Description_Url_Inventory_StockTake" xml:space="preserve">
+    <value>Inventory-Transaction-Physical Count</value>
+  </data>
+  <data name="Description_Url_Inventory_StockTake_New" xml:space="preserve">
+    <value>Inventory-Transaction-Physical Count-New</value>
+  </data>
+  <data name="Description_Url_Inventory_StockTake_View" xml:space="preserve">
+    <value>Inventory-Transaction-Physical Count-Search</value>
+  </data>
+  <data name="Description_Url_IOB_CustomerPlanBillIOB" xml:space="preserve">
+    <value>Inventory-Information-Customer Consign I/O/B</value>
+  </data>
+  <data name="Description_Url_IOB_LocationDetailIOB" xml:space="preserve">
+    <value>Inventory-Information-Inventory I/O/B</value>
+  </data>
+  <data name="Description_Url_IOB_SupplierPlanBillIOB" xml:space="preserve">
+    <value>Inventory-Information-Supplier Consignment I/O/B</value>
+  </data>
+  <data name="Description_Url_ItemCategory_View" xml:space="preserve">
+    <value>Master Data-Material Categroy</value>
+  </data>
+  <data name="Description_Url_ItemDiscontinue_View" xml:space="preserve">
+    <value>Master Data-Thefollow-Followed Material</value>
+  </data>
+  <data name="Description_Url_ItemExchange_Ageing" xml:space="preserve">
+    <value>Production-Transaction-Extrusion Order-Curing-Curing</value>
+  </data>
+  <data name="Description_Url_ItemExchange_Ageing_Search" xml:space="preserve">
+    <value>Production-Transaction-Extrusion Order-Curing-Search</value>
+  </data>
+  <data name="Description_Url_ItemExchange_Filter" xml:space="preserve">
+    <value>Production-Transaction-Production Order-Filter</value>
+  </data>
+  <data name="Description_Url_ItemFlow_View" xml:space="preserve">
+    <value>Inventory-Information-View Material Flow</value>
+  </data>
+  <data name="Description_Url_Item_View" xml:space="preserve">
+    <value>Master Data-Material</value>
+  </data>
+  <data name="Description_Url_Location_View" xml:space="preserve">
+    <value>Master Data-Location</value>
+  </data>
+  <data name="Description_Url_Mi_MasterData_View" xml:space="preserve">
+    <value>Planning-Setting-Rubber Refine-Rubber refine-Refine Capacity</value>
+  </data>
+  <data name="Description_Url_MrpExScrap_View" xml:space="preserve">
+    <value>Production-Transaction-Extrusion Order-Scrap Posting</value>
+  </data>
+  <data name="Description_Url_MrpSnap_Index" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Get Snapshot</value>
+  </data>
+  <data name="Description_Url_MrpSnap_MasterDataCheck" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Master Data Check</value>
+  </data>
+  <data name="Description_Url_Mrp_Container_View" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Rubber Refine-Appliance</value>
+  </data>
+  <data name="Description_Url_Mrp_FiPlanExecutionMonitor_View" xml:space="preserve">
+    <value>Production-Information-Post-Post-process Plan Monitor</value>
+  </data>
+  <data name="Description_URl_MRP_FlowClassify_View" xml:space="preserve">
+    <value>Planning-Setting-Extrusion-Extrusion Line Group</value>
+  </data>
+  <data name="Description_Url_MRP_Island_View" xml:space="preserve">
+    <value>Planning-Setting-Post-Processing-Area</value>
+  </data>
+  <data name="Description_Url_MRP_Machine_View" xml:space="preserve">
+    <value>Planning-Setting-Post-Processing-Mould</value>
+  </data>
+  <data name="Description_Url_Mrp_MaterialPlan_PurchasePlan" xml:space="preserve">
+    <value>Planning-Transaction-MaterialPlanning-Material Planning Search</value>
+  </data>
+  <data name="Description_Url_Mrp_MaterialPlan_PurchasePlanAdjust" xml:space="preserve">
+    <value>Planning-Transaction-MaterialPlanning-Material Planning Adjust</value>
+  </data>
+  <data name="Description_Url_Mrp_MaterialPlan_SupplierPlan" xml:space="preserve">
+    <value>Suppliers-Supplier Schedule</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpInvIn_Index" xml:space="preserve">
+    <value>Planning-Transaction-Operation Schedule-Inbound Planning</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanEx_Demand" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Extrusion-Demand</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanEx_PlanView" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Extrusion-Search</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanEx_ReceiveOrder" xml:space="preserve">
+    <value>Production-Transaction-Extrusion Order-Goods Receipt</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanEx_ReceiveUrgentOrder" xml:space="preserve">
+    <value>Production-Transaction-Extrusion Order-Rush Receipt</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanEx_ReleasePlan" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Extrusion-Daily Planning</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanEx_ReSchedule" xml:space="preserve">
+    <value>Planning-Transaction-JobPlan-Extrusion-Reschedule</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanEx_Shift" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Extrusion-Shift Production Schedule</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanEx_Simulation" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Extrusion-Simulation</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanFi_Demand" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Post Process-Demand</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanFi_Shift" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Post Process-Shift Production Schedule</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanFi_ShiftView" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Post Process-Search</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanMi_PlanTrace" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Rubber Refine-Tracking</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanMi_Shift" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Rubber Refine-Shift Production Schedule</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlanMi_ShiftView" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Rubber Refine-Search</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlan_Simulation" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Post Process-Schedule Simulation</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpPlan_View" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Delivery Planning-Search</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSchedule_Ex" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Extrusion-Run MRP</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSchedule_Fi" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Post Process-Run MRP</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSchedule_Mi" xml:space="preserve">
+    <value>Planning-Transaction-JobScheduler-Rubber Refine-Run MRP</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSchedule_Purchase" xml:space="preserve">
+    <value>Planning-Transaction-MaterialPlanning-Material Planning Release</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_ActiveOrder" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Activitie Orders</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_InventoryBalance" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Inventory</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_Machine" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Model-Search</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_MachineAdjust" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Model-Adjust</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_MachineInstance" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Model-Material Mould</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_MrpFlowDetail" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Flow</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_MrpPlanView" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-Delivery Planning</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_ProdLineEx" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-ExtrusionResources-Search</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_ProdLineExAdjust" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-ExtrusionResources-Adjust</value>
+  </data>
+  <data name="Description_Url_Mrp_MrpSnap_TransitOrder" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-DataSnapshot-In transit</value>
+  </data>
+  <data name="Description_Url_MRP_ProdLineEx_View" xml:space="preserve">
+    <value>Planning-Setting-Extrusion-Extrusion Resources</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_AllotSection" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Capacity Distribution</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ClassifyLoad" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Category Load</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ClassifyQty" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Category Meters</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ClassifyScrapPercentage" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Category Scrap-percent</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ClassifySpeed" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Category Speed</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ItemLoad" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Section Online Rate</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ItemQty" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Section Meters</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ItemTime" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Section Online Time</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ProdLineLoad" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Line Load rate</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ProdLineQty" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Line Meters</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ProdLineScrapPercentage" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Line Scrap rate</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanEx_ProdLineSpeed" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Extrusion Capacity-Line Speed</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanFi_IslandMonth" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Post ProcessCapacity-Area (month)</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanFi_IslandWeek" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Post ProcessCapacity-Area (week)</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanFi_MachineMonth" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Post ProcessCapacity-Mould (month)</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanFi_MachineWeek" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Post ProcessCapacity-Mould (weeks)</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanMi_FilterCapacity" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Rubber refine Capability-Filter Capacity</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanMi_Load" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Rubber refine Capability-Line Load Rate</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlanMi_LoadDetail" xml:space="preserve">
+    <value>Planning-Transaction-Forecasting-Rubber refine Capability-Line Load Rate Datail</value>
+  </data>
+  <data name="Description_Url_Mrp_RccpPlan_View" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Vehicle Planning-Search</value>
+  </data>
+  <data name="Description_Url_MRP_WarningColor_View" xml:space="preserve">
+    <value>Planning-Setting-Extrusion-Warning Color</value>
+  </data>
+  <data name="Description_Url_Mrp_WorkCalendar_ExEdit" xml:space="preserve">
+    <value>Planning-Setting-Extrusion-Work Calendar-Adjust</value>
+  </data>
+  <data name="Description_Url_Mrp_WorkCalendar_ExView" xml:space="preserve">
+    <value>Planning-Setting-Extrusion-Work Calendar-Search</value>
+  </data>
+  <data name="Description_Url_Mrp_WorkCalendar_FiEdit" xml:space="preserve">
+    <value>Planning-Setting-Post-Processing-WorkingCalendar-Adjust</value>
+  </data>
+  <data name="Description_Url_Mrp_WorkCalendar_FiView" xml:space="preserve">
+    <value>Planning-Setting-Post-Processing-WorkingCalendar-Search</value>
+  </data>
+  <data name="Description_Url_Mrp_WorkCalendar_MiEdit" xml:space="preserve">
+    <value>Planning-Setting-Rubber Refine-Work Calendar-Adjust</value>
+  </data>
+  <data name="Description_Url_Mrp_WorkCalendar_MiView" xml:space="preserve">
+    <value>Planning-Setting-Rubber Refine-Work Calendar-Search</value>
+  </data>
+  <data name="Description_Url_OrderDetail_Distribution" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Delivery Order-View Detail</value>
+  </data>
+  <data name="Description_Url_OrderDetail_Distribution_Return" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Return Order-View Detail</value>
+  </data>
+  <data name="Description_Url_OrderDetail_Procurement_Return" xml:space="preserve">
+    <value>Procurement-Transaction-Return Order-View Detail</value>
+  </data>
+  <data name="Description_Url_OrderDetail_Procurement_View" xml:space="preserve">
+    <value>Procurement-Transaction-Procure Order-View Detail</value>
+  </data>
+  <data name="Description_Url_OrderDetail_Production" xml:space="preserve">
+    <value>Production-Transaction-Production Order-View Detail</value>
+  </data>
+  <data name="Description_Url_OrderDetail_UnitPrice_View" xml:space="preserve">
+    <value>Procurement-Transaction-Procure Order-Change Price</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Distribution" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Delivery Order</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Distribution_BatchProcess" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Delivery Order-Batch</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Distribution_New" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Delivery Order-New</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Distribution_Return" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Return Order</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Distribution_ReturnIndex" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Return Order-View</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Distribution_ReturnNew" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Return Order-New</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Distribution_Ship" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Delivery Order-Delivery</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Distribution_View" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Delivery Order-Search</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Procurement" xml:space="preserve">
+    <value>Procurement-Transaction-Procure Order</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Procurement_BatchProcess" xml:space="preserve">
+    <value>Procurement-Transaction-Procure Order-Batch</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Procurement_New" xml:space="preserve">
+    <value>Procurement-Transaction-Procure Order-New</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Procurement_Receive" xml:space="preserve">
+    <value>Procurement-Transaction-Procure Order-Goods Receipt</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Procurement_Return" xml:space="preserve">
+    <value>Procurement-Transaction-Return Order</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Procurement_ReturnIndex" xml:space="preserve">
+    <value>Procurement-Transaction-Return Order-Search</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Procurement_ReturnNew" xml:space="preserve">
+    <value>Procurement-Transaction-Return Order-New</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Procurement_View" xml:space="preserve">
+    <value>Procurement-Transaction-Procure Order-Search</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Production_BatchProcess" xml:space="preserve">
+    <value>Production-Transaction-Production Order-Batch</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Production_New" xml:space="preserve">
+    <value>Production-Transaction-Production Order-New</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Production_Receive_MI" xml:space="preserve">
+    <value>Production-Transaction-Production Order-Rubbe refine Receipt</value>
+  </data>
+  <data name="Description_Url_OrderMstr_Production_View" xml:space="preserve">
+    <value>Production-Transaction-Production Order-Search</value>
+  </data>
+  <data name="Description_Url_PermissionGroup_View" xml:space="preserve">
+    <value>Application-AccessControl-Permission Group</value>
+  </data>
+  <data name="Description_Url_PermissionReport_View" xml:space="preserve">
+    <value>Application-AccessControl-Permission Detail</value>
+  </data>
+  <data name="Description_Url_PickList" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Pick List</value>
+  </data>
+  <data name="Description_Url_PickListDetail_View" xml:space="preserve">
+    <value>DistributionManagement-Transaction-PickOrders-View Detail</value>
+  </data>
+  <data name="Description_Url_PickList_New" xml:space="preserve">
+    <value>DistributionManagement-Transaction-PickingList-New</value>
+  </data>
+  <data name="Description_Url_PickList_Ship" xml:space="preserve">
+    <value>DistributionManagement-Transaction-PickOrders-Delivery</value>
+  </data>
+  <data name="Description_Url_PickList_View" xml:space="preserve">
+    <value>DistributionManagement-Transaction-PickOrders-Search</value>
+  </data>
+  <data name="Description_Url_PickStrategy_View" xml:space="preserve">
+    <value>DistributionManagement-Setting-Pick Strategy</value>
+  </data>
+  <data name="Description_Url_PPM_ProcurementReturn" xml:space="preserve">
+    <value>Quality-Information-Purchase Return Report</value>
+  </data>
+  <data name="Description_Url_ProcurementActingBill" xml:space="preserve">
+    <value>Procurement-Transaction-Purchase Bill</value>
+  </data>
+  <data name="Description_Url_ProcurementBill_ActingBillGroup" xml:space="preserve">
+    <value>Procurement-Transaction-Purchase Bill-Pending Purchase Bill</value>
+  </data>
+  <data name="Description_Url_ProcurementBill_MauallySettleCsBill" xml:space="preserve">
+    <value>Procurement-Transaction-Purchase Bill-Supplier Consignment</value>
+  </data>
+  <data name="Description_Url_ProcurementBill_New" xml:space="preserve">
+    <value>Procurement-Transaction-Purchase Bill-New Bill</value>
+  </data>
+  <data name="Description_Url_ProcurementBill_ToCalculateMaster" xml:space="preserve">
+    <value>Procurement-Transaction-Purchase Bill-Repricing</value>
+  </data>
+  <data name="Description_Url_ProcurementBill_View" xml:space="preserve">
+    <value>Procurement-Transaction-Purchase Bill-Search Bill</value>
+  </data>
+  <data name="Description_Url_ProcurementFlow_View" xml:space="preserve">
+    <value>Procurement-Setting-Purchase Flow</value>
+  </data>
+  <data name="Description_Url_ProcurementIpGap" xml:space="preserve">
+    <value>Procurement-Transaction-Delivery Diff</value>
+  </data>
+  <data name="Description_Url_ProcurementIpGap_Adjust" xml:space="preserve">
+    <value>Procurement-Transaction-Delivery Diff-Adjust</value>
+  </data>
+  <data name="Description_Url_ProcurementIpGap_View" xml:space="preserve">
+    <value>Procurement-Transaction-Delivery Diff-Search</value>
+  </data>
+  <data name="Description_Url_ProcurementIpMaster" xml:space="preserve">
+    <value>Procurement-Transaction-ASN</value>
+  </data>
+  <data name="Description_Url_ProcurementIpMaster_Detail" xml:space="preserve">
+    <value>Procurement-Transaction-ASN-View Detail</value>
+  </data>
+  <data name="Description_Url_ProcurementIpMaster_Receive" xml:space="preserve">
+    <value>Procurement-Transaction-ASN-Goods Receipt</value>
+  </data>
+  <data name="Description_Url_ProcurementIpMaster_UpdateDetailUnitPrice" xml:space="preserve">
+    <value>Procurement-Transaction-ASN-Change Price</value>
+  </data>
+  <data name="Description_Url_ProcurementIpMaster_View" xml:space="preserve">
+    <value>Procurement-Transaction-ASN-Search</value>
+  </data>
+  <data name="Description_Url_ProcurementOrder_RequisitionOrder" xml:space="preserve">
+    <value>Procurement-Transaction-Procure Order-Extrusion Material Issue</value>
+  </data>
+  <data name="Description_Url_ProcurementPriceList_View" xml:space="preserve">
+    <value>Procurement-Setting-Purchase Price List</value>
+  </data>
+  <data name="Description_Url_ProcurementReceipt" xml:space="preserve">
+    <value>Procurement-Transaction-Receipt</value>
+  </data>
+  <data name="Description_Url_ProcurementReceipt_Detail" xml:space="preserve">
+    <value>Procurement-Transaction-Receipt-View Detail</value>
+  </data>
+  <data name="Description_Url_ProcurementReceipt_View" xml:space="preserve">
+    <value>Procurement-Transaction-Receipt-Search</value>
+  </data>
+  <data name="Description_Url_ProductionAdjustMiscOrderDet_View" xml:space="preserve">
+    <value>Production-Transaction-ProductionadjustmentOrder(SY05)-View Detail</value>
+  </data>
+  <data name="Description_Url_ProductionAdjustMiscOrder_New" xml:space="preserve">
+    <value>Production-Transaction-ProductionadjustmentOrder(SY05)-New</value>
+  </data>
+  <data name="Description_Url_ProductionAdjustMiscOrder_View" xml:space="preserve">
+    <value>Production-Transaction-ProductionadjustmentOrder(SY05)-Search</value>
+  </data>
+  <data name="Description_Url_ProductionFiScrapOrderDet_View" xml:space="preserve">
+    <value>Production-Transaction-FIProductionOrder-Scrap-View Detail</value>
+  </data>
+  <data name="Description_Url_ProductionFiScrapOrder_New" xml:space="preserve">
+    <value>Production-Transaction-FIProductionOrder-Scrap-New</value>
+  </data>
+  <data name="Description_Url_ProductionFiScrapOrder_View" xml:space="preserve">
+    <value>Production-Transaction-FIProductionOrder-Scrap-Search</value>
+  </data>
+  <data name="Description_Url_ProductionFlow_View" xml:space="preserve">
+    <value>Production-Setting-Production Line</value>
+  </data>
+  <data name="Description_Url_ProductionReceipt_Detail" xml:space="preserve">
+    <value>Production-Transaction-Receipt-View Detail</value>
+  </data>
+  <data name="Description_Url_ProductionReceipt_View" xml:space="preserve">
+    <value>Production-Transaction-Receipt-Search</value>
+  </data>
+  <data name="Description_Url_ProductionReworkMiscOrderDet_View" xml:space="preserve">
+    <value>Production-Transaction-Rework Order (SY04)-View Detail</value>
+  </data>
+  <data name="Description_Url_ProductionReworkMiscOrder_New" xml:space="preserve">
+    <value>Production-Transaction-Rework Order (SY04)-New</value>
+  </data>
+  <data name="Description_Url_ProductionReworkMiscOrder_View" xml:space="preserve">
+    <value>Production-Transaction-Rework Order (SY04)-Search</value>
+  </data>
+  <data name="Description_Url_ProductionTrailMiscOrderDet_New" xml:space="preserve">
+    <value>Production-Transaction-TrialProduction Order(SY03)-View Detail</value>
+  </data>
+  <data name="Description_Url_ProductionTrailMiscOrder_New" xml:space="preserve">
+    <value>Production-Transaction-TrialProduction Order(SY03)-New</value>
+  </data>
+  <data name="Description_Url_ProductionTrailMiscOrder_View" xml:space="preserve">
+    <value>Production-Transaction-TrialProduction Order(SY03)-Search</value>
+  </data>
+  <data name="Description_Url_Production_ForceMaterial" xml:space="preserve">
+    <value>Production-Information-O/I Report(New)-Force-materail</value>
+  </data>
+  <data name="Description_Url_Production_MaterialIn_ForceFeedOrderMaster" xml:space="preserve">
+    <value>Production-Transaction-Extrusion Order-Force materail Feeding</value>
+  </data>
+  <data name="Description_Url_Production_ProdIO" xml:space="preserve">
+    <value>Production-Information-Input-I/O/B Report</value>
+  </data>
+  <data name="Description_Url_Production_ProdIOEX" xml:space="preserve">
+    <value>Production-Information-O/I Report(New)-Extrusion</value>
+  </data>
+  <data name="Description_Url_Production_ProdIOFI" xml:space="preserve">
+    <value>Production-Information-O/I Report(New)-Post-process</value>
+  </data>
+  <data name="Description_Url_Production_ProdIOMI" xml:space="preserve">
+    <value>Production-Information-O/I Report(New)-Rubbe refine</value>
+  </data>
+  <data name="Description_Url_ProductType_View" xml:space="preserve">
+    <value>Planning-Setting-Extrusion-ProductionType</value>
+  </data>
+  <data name="Description_Url_RccpPlan_Edit" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Vehicle Planning-Adjust</value>
+  </data>
+  <data name="Description_Url_RccpPlan_New" xml:space="preserve">
+    <value>Planning-Transaction-Data Preparation-Vehicle Planning-Import</value>
+  </data>
+  <data name="Description_Url_Region_View" xml:space="preserve">
+    <value>Master Data-Region</value>
+  </data>
+  <data name="Description_Url_RejectOrder" xml:space="preserve">
+    <value>Quality-Transaction-Nonqualified Goods</value>
+  </data>
+  <data name="Description_Url_RejectOrder_Return" xml:space="preserve">
+    <value>Quality-Transaction-Nonqualified Goods-Nonqualified Goods Return</value>
+  </data>
+  <data name="Description_Url_ReturnAccept_Orders" xml:space="preserve">
+    <value>Suppliers-Return Receipt</value>
+  </data>
+  <data name="Description_Url_ReturnAccept_Orders_Detail_Query" xml:space="preserve">
+    <value>Suppliers-Return Receipt-View Detail</value>
+  </data>
+  <data name="Description_Url_ReturnAccept_Orders_Query" xml:space="preserve">
+    <value>Suppliers-Return Receipt-Search</value>
+  </data>
+  <data name="Description_Url_Role_View" xml:space="preserve">
+    <value>Application-AccessControl-Role</value>
+  </data>
+  <data name="Description_Url_SaleActingBill" xml:space="preserve">
+    <value>DistributionManagement-Transaction-Sales Bill</value>
+  </data>
+  <data name="Description_Url_SAPBDRpt" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search</value>
+  </data>
+  <data name="Description_Url_SAPBDRpt_MM" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-MM</value>
+  </data>
+  <data name="Description_Url_SAPBDRpt_PP" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-PP</value>
+  </data>
+  <data name="Description_Url_SAPBDRpt_SD" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-SD</value>
+  </data>
+  <data name="Description_Url_SAPBDRpt_ST" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-ST</value>
+  </data>
+  <data name="Description_Url_SAPBom_View" xml:space="preserve">
+    <value>SI-InterimTableSearchOfMaster Data-BOM</value>
+  </data>
+  <data name="Description_Url_SAPCustomer_View" xml:space="preserve">
+    <value>SI-InterimTableSearchOfMaster Data-Customer</value>
+  </data>
+  <data name="Description_Url_SAPItem_View" xml:space="preserve">
+    <value>SI-InterimTableSearchOfMaster Data-Material</value>
+  </data>
+  <data name="Description_Url_SAPMDRpt" xml:space="preserve">
+    <value>SI-Transitive Master-data Search</value>
+  </data>
+  <data name="Description_Url_SAPMMMES0001_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-MM-Purchase</value>
+  </data>
+  <data name="Description_Url_SAPMMMES0002_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-MM-Purchase Cancel</value>
+  </data>
+  <data name="Description_Url_SAPPPMES0001_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-PP-Production Receipt</value>
+  </data>
+  <data name="Description_Url_SAPPPMES0002_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-PP-Production Receipt Cancel</value>
+  </data>
+  <data name="Description_Url_SAPPPMES0003_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-PP-Prod Scrap Posting</value>
+  </data>
+  <data name="Description_Url_SAPPPMES0004_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-PP-Rubber Filter</value>
+  </data>
+  <data name="Description_Url_SAPPPMES0005_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-PP-Production Adjust</value>
+  </data>
+  <data name="Description_Url_SAPPPMES0006_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-PP-Trial-production</value>
+  </data>
+  <data name="Description_Url_SAPPriceList_View" xml:space="preserve">
+    <value>SI-InterimTableSearchOfMaster Data-Purchase Price List</value>
+  </data>
+  <data name="Description_Url_SAPReport" xml:space="preserve">
+    <value>SI-SAP Interface Report</value>
+  </data>
+  <data name="Description_Url_SAPSDCancel_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-SD-Sales Cancel</value>
+  </data>
+  <data name="Description_Url_SAPSDNormal_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-SD-Sales</value>
+  </data>
+  <data name="Description_Url_SAPSTMES0001_View" xml:space="preserve">
+    <value>SI-Transitive Biz-data Search-ST-Stock Transfer</value>
+  </data>
+  <data name="Description_Url_SAPSupplier_View" xml:space="preserve">
+    <value>SI-InterimTableSearchOfMaster Data-Supplier</value>
+  </data>
+  <data name="Description_Url_SAPTransferLog_View" xml:space="preserve">
+    <value>SI-Interface Log</value>
+  </data>
+  <data name="Description_Url_SAPUomConvertion_View" xml:space="preserve">
+    <value>SI-InterimTableSearchOfMaster Data-UOM Conversion</value>
+  </data>
+  <data name="Description_Url_Single_Return" xml:space="preserve">
+    <value>Suppliers-Return Order</value>
+  </data>
+  <data name="Description_Url_Single_Return_Detail_Query" xml:space="preserve">
+    <value>Suppliers-Return Order-View Detail</value>
+  </data>
+  <data name="Description_Url_Single_Return_Query" xml:space="preserve">
+    <value>Suppliers-Return Order-Search</value>
+  </data>
+  <data name="Description_Url_SI_EDI" xml:space="preserve">
+    <value>Planning-EDI</value>
+  </data>
+  <data name="Description_Url_SI_EDI_Ford_PlanningSchedule" xml:space="preserve">
+    <value>Planning-EDI-Forecasting</value>
+  </data>
+  <data name="Description_Url_SI_EDI_Ford_ShippingSchedule" xml:space="preserve">
+    <value>Planning-EDI-Delivery Planning</value>
+  </data>
+  <data name="Description_Url_SI_SAPInterface" xml:space="preserve">
+    <value>SI-Manual Call</value>
+  </data>
+  <data name="Description_Url_SI_SILogToUser" xml:space="preserve">
+    <value>SI-Email Subscription</value>
+  </data>
+  <data name="Description_Url_SI_View" xml:space="preserve">
+    <value>SI</value>
+  </data>
+  <data name="Description_Url_SmallSparePartChk_View" xml:space="preserve">
+    <value>Production-Information-Material Anti-erro Report</value>
+  </data>
+  <data name="Description_Url_SNRule_View" xml:space="preserve">
+    <value>Application-Document Nbr</value>
+  </data>
+  <data name="Description_Url_SubconctractingFlow_View" xml:space="preserve">
+    <value>Procurement-Setting-Sourcing Flow</value>
+  </data>
+  <data name="Description_Url_SubConctractingTransferFlow_View" xml:space="preserve">
+    <value>DistributionManagement-Setting-Sourcing Transfer Flow</value>
+  </data>
+  <data name="Description_Url_SubPrintOrder_View" xml:space="preserve">
+    <value>Application-Print Subscription</value>
+  </data>
+  <data name="Description_Url_SupplierBill_ActingBill" xml:space="preserve">
+    <value>Suppliers-Pending Purchase Bill</value>
+  </data>
+  <data name="Description_Url_SupplierBill_View" xml:space="preserve">
+    <value>Suppliers-Purchase Bill</value>
+  </data>
+  <data name="Description_Url_Supplier_Consignment" xml:space="preserve">
+    <value>Suppliers-Supplier Consignment</value>
+  </data>
+  <data name="Description_Url_Supplier_Consignment_Inventory" xml:space="preserve">
+    <value>Inventory-Information-Supplier Consignment</value>
+  </data>
+  <data name="Description_Url_Supplier_Deliveryorder" xml:space="preserve">
+    <value>Suppliers-ASN</value>
+  </data>
+  <data name="Description_Url_Supplier_Deliveryorder_Detail_Query" xml:space="preserve">
+    <value>Suppliers-ASN-View Detail</value>
+  </data>
+  <data name="Description_Url_Supplier_Deliveryorder_Query" xml:space="preserve">
+    <value>Suppliers-ASN-Search</value>
+  </data>
+  <data name="Description_Url_Supplier_Invoice" xml:space="preserve">
+    <value>Suppliers-Receipt</value>
+  </data>
+  <data name="Description_Url_Supplier_Invoice_Detail_Query" xml:space="preserve">
+    <value>Suppliers-Receipt-View Detail</value>
+  </data>
+  <data name="Description_Url_Supplier_Invoice_Query" xml:space="preserve">
+    <value>Suppliers-Receipt-Search</value>
+  </data>
+  <data name="Description_Url_Supplier_Lading" xml:space="preserve">
+    <value>Suppliers-Purchase Order</value>
+  </data>
+  <data name="Description_Url_Supplier_Lading_Deliver" xml:space="preserve">
+    <value>Suppliers-Purchase Order-Delivery</value>
+  </data>
+  <data name="Description_Url_Supplier_Lading_Detail_Query" xml:space="preserve">
+    <value>Suppliers-Purchase Order-View Detail</value>
+  </data>
+  <data name="Description_Url_Supplier_Lading_Query" xml:space="preserve">
+    <value>Suppliers-Purchase Order-Search</value>
+  </data>
+  <data name="Description_Url_Supplier_Print" xml:space="preserve">
+    <value>Suppliers-Barcode</value>
+  </data>
+  <data name="Description_Url_Supplier_Print_ADD" xml:space="preserve">
+    <value>Suppliers-Barcode-New</value>
+  </data>
+  <data name="Description_Url_Supplier_Print_Query" xml:space="preserve">
+    <value>Suppliers-Barcode-Search</value>
+  </data>
+  <data name="Description_Url_Supplier_View" xml:space="preserve">
+    <value>Procurement-Setting-Suppliers</value>
+  </data>
+  <data name="Description_Url_SwitchTrading_View" xml:space="preserve">
+    <value>Master Data-Special-flow Mapping</value>
+  </data>
+  <data name="Description_Url_TransferFlow_View" xml:space="preserve">
+    <value>Inventory-Setting-Transfer Flow</value>
+  </data>
+  <data name="Description_Url_Uom_View" xml:space="preserve">
+    <value>Master Data-UOM</value>
+  </data>
+  <data name="Description_Url_UserFav_View" xml:space="preserve">
+    <value>Application-Preferences</value>
+  </data>
+  <data name="Description_Url_User_View" xml:space="preserve">
+    <value>Application-AccessControl-User</value>
+  </data>
+  <data name="Description_Url_WorkingCalendar_View" xml:space="preserve">
+    <value>Master Data-Work Calendar</value>
+  </data>
+  <data name="Description_Visualization" xml:space="preserve">
+    <value>Visualization</value>
+  </data>
+  <data name="Procurement_IpMaster_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Inventory_Pallet_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Inventory_Pallet_View" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Inventory_InMiscOrder_InitInventory" xml:space="preserve">
+    <value>InitInventory</value>
+  </data>
+  <data name="Inventory_Hu_Devanning" xml:space="preserve">
+    <value>Devanning</value>
+  </data>
+</root>

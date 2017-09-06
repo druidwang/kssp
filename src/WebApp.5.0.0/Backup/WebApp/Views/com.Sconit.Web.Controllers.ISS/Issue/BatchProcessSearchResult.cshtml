@@ -1,0 +1,92 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISS.IssueMaster>
+<div id="DivResult">
+<fieldset>
+
+<script type="text/javascript">  
+        $(function() {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);   
+             });
+            var $checkedRecords = $("input[name='checkedRecords']");
+            $checkedRecords.click(function () {
+                $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);  
+             });  
+         });  
+
+     </script>  
+
+    
+   @(Html.Telerik().Grid(Model)
+        .Name("IssueGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.CreateDate)
+				.ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Code #>'  />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+			columns.Bound(o => o.Code).Width(180);
+            columns.Bound(o => o.IssueSubject);
+			columns.Bound(o => o.IssueTypeCode);
+			//columns.Bound(o => o.IssueTypeDescription);
+			columns.Bound(o => o.IssueNoCode);
+			//columns.Bound(o => o.IssueNoDescription).Width(80);
+			columns.Bound(o => o.IssueAddress);
+			//columns.Bound(o => o.IssueAddressDescription);
+			columns.Bound(o => o.BackYards);
+			columns.Bound(o => o.StatusDescription);
+			columns.Bound(o => o.TypeDescription);
+			columns.Bound(o => o.PriorityDescription);
+			columns.Bound(o => o.UserName);
+			columns.Bound(o => o.Email);
+			columns.Bound(o => o.MobilePhone);
+			//columns.Bound(o => o.Content);
+			//columns.Bound(o => o.Solution);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "CreateDate")
+                   {
+                       cell.Text = string.Format("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='{0}'  />", cell.DataItem.Code);
+                   }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxBatchProcessList", "Issue"))
+        .ClientEvents(events => events.OnDataBinding("IssueGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total!=null?ViewBag.Total:0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+	
+    <script type="text/javascript">
+        function IssueGrid_OnDataBinding(e) {
+            
+            e.data = {
+                Code: $('#Code').val(),
+                IssueSubject: $('#IssueSubject').val(),
+				IssueTypeCode: $('#IssueTypeCode').val(),
+				IssueAddressCode: $('#IssueAddressCode').val(),
+				IssueNoCode: $('#IssueNoCode').val(),
+				Type: $('#Type').val(),
+				Status: $('#Status').val(),
+				Priority: $('#Priority').val(),
+				Status: $('#Status').val(),
+				BackYards: $('#BackYards').val(),
+				UserName: $('#UserName').val(),
+				Email: $('#Email').val(),
+				MobilePhone: $('#MobilePhone').val(),
+				Content: $('#Content').val(),
+				Solution: $('#Solution').val()
+            };
+        } 
+    </script>
+</fieldset>
+</div>

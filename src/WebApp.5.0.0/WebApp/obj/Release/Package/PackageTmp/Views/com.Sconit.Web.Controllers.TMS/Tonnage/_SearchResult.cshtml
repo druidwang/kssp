@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.TMS.Tonnage>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("TonnageGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "Tonnage", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.LoadVolume);
+            columns.Bound(o => o.LoadWeight);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Driver"))
+        .ClientEvents(events => events.OnDataBinding("TonnageGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+        )
+    <script type="text/javascript">
+        function TonnageGrid_OnDataBinding(e) {
+
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val()
+            };
+        }
+    </script>
+</fieldset>

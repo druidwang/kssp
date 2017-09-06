@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SYS.CodeDetail, com.Sconit.Entity" table="SYS_CodeDet" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="Code" column="Code" type="String" length="50" />	
+		<property name="Value" column="Value" type="String" length="100" />	
+		<property name="Description" column="Desc1" type="String" length="100" />	
+		<property name="IsDefault" column="IsDefault" type="Boolean"  />	
+		<property name="Sequence" column="Seq" type="Int32"  />	
+  	</class>
+</hibernate-mapping>

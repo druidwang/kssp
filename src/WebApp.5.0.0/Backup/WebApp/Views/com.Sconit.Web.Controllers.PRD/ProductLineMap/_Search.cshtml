@@ -1,0 +1,49 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.CUST
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("List", "ProductLineMap"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.ProductLineMap.ProductLineMap_SAPProductLine
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("SAPProductLine", TempData["ProductLineMapSearchModel"] != null ? ((ProductLineMapSearchModel)TempData["ProductLineMapSearchModel"]).SAPProductLine : string.Empty)
+
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.CUST.ProductLineMap.ProductLineMap_ProductLine
+                </label>
+            </div>
+            <div class="search-field">
+                               @{
+                Html.RenderAction("_FlowComboBox", "Common",
+                new
+                {
+                    controlName = "ProductLine",
+                    type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                    selectedValue = TempData["ProductLineMapSearchModel"] != null ? ((ProductLineMapSearchModel)TempData["ProductLineMapSearchModel"]).ProductLine : string.Empty
+                });
+                }
+            </div>
+          
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_CUST_ProductLineMap_View", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnInsert"},
+                    {"onclick","location.href='"+@Url.Content("~/ProductLineMap/ProductLineMapSeachAdd")+"'"}
+	            })
+        </div>
+
+    }
+</fieldset>

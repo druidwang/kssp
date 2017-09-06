@@ -1,0 +1,68 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.INP.RejectDetail>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+        });
+        var $checkedRecords = $("input[name='checkedRecords']");
+        $checkedRecords.click(function () {
+            $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        });
+    });
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ConcessionDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Title("<input type='checkbox' id='checkAll' name='checkAll' />").Hidden(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Quantity);
+            columns.Bound(o => o.InspectNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.HuId).Hidden(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Quantity);
+            //columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.CurrentLocation);
+            columns.Bound(o => o.HandleQty).Title("总数");
+            columns.Bound(o => o.HandledQty).Title("已处理数");
+            columns.Bound(o => o.CurrentHandleQty).Title("本次数量");
+        })
+        .CellAction(cell =>
+        {
+            if (ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Quantity)
+            {
+                if (cell.Column.Member == "Id")
+                {
+                    cell.Text = string.Format("<input type='text' id='Id' name='Id' style='display:none' value='" + cell.DataItem.Id + "'/>");
+                }
+                if (cell.Column.Member == "CurrentHandleQty")
+                {
+                    cell.Text = string.Format("<input type='text' id='CurrentHandleQty' name='CurrentHandleQty' style='width:70px' value='" + (double)cell.DataItem.CurrentHandleQty + "'/>");
+                }
+            }
+            else
+            {
+                if (cell.Column.Member == "Id")
+                {
+                    cell.Text = string.Format("<input type='checkbox' id='Id' name='checkedRecords' value='" + cell.DataItem.Id + "' />");
+                }
+                if (cell.Column.Member == "CurrentHandleQty")
+                {
+                    cell.Text = string.Format("<input type='text' id='CurrentHandleQty' disabled='disabled' name='CurrentHandleQty' style='width:70px' value='" + (double)cell.DataItem.CurrentHandleQty + "'/>");
+                }
+            }
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+
+    @Html.Hidden("InspectType", ViewBag.InspectType == null ? 0 : (int)ViewBag.InspectType)
+</fieldset>

@@ -1,0 +1,43 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.SI.EDI
+<script type="text/javascript">
+    function Flow_Change(e) {
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+
+            }
+        }
+    }
+    function onScheduleRefresh(e) {
+        var data = {
+            "flow": $("#Flow").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/ScheduleLine/Refresh/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("List", "ScheduleLine"))
+    {   
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.Global.Button_Search</button>
+            <button type="button" id="btnRefresh" onclick="onScheduleRefresh()">
+                @Resources.Global.Button_Refresh</button>
+        </div>
+
+    }
+</fieldset>

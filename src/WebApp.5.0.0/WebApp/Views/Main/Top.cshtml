@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+
+<script type="text/javascript">
+    function refresh() {
+        parent.parent.Right.refresh();
+    }
+</script>
+<script src="@Url.Content("~/Scripts/jquery-1.4.4.js")" type="text/javascript"></script>
+
+<div style="float: left; position: absolute; top: 0px; left: 0px; z-index: -1; width: 100%; border-bottom-style: solid; border-bottom-color: #cccccc; border-bottom-width: 1px; background-color: White; height: 50px;">
+    <div style="float: left; position: absolute; top: 0px; left: 0px; z-index: 2; width: 215px;
+    height: 50px; background:url(@Url.Content("~/Content/Images/Shenya/Logo.png")); background-repeat: no-repeat;">
+    </div>
+    <div style="float: left; position: absolute; top: 0px; left: 215px; z-index: 1; width: 9px;
+    height: 45px; background:url(@Url.Content("~/Content/Images/Line.gif"))">
+    </div>
+    <div style="float: left; position: relative; left: 230px; z-index: 2; top: 16px; width: 500px; vertical-align: middle; height: 20px; color: #000000; font-size: 15px;">
+        <b>@ViewBag.Title</b>
+    </div>
+    @{
+        if (ViewBag.IsTest)
+        {
+        <div style="left: 500px; top: 0px; width: 200px; height: 50px; float: left; position: absolute; z-index: 2; background:url(@Url.Content("~/Content/Images/Test.png")); background-attachment: scroll; background-repeat: no-repeat; background-position-x: 0%; background-position-y: 0%; background-size: auto; background-origin: padding-box; background-clip: border-box; background-color: transparent;">
+        </div>
+        }
+    }
+    <div style="float: right; position: absolute; top: 0px; right: 0px; z-index: 2; width: 300px;
+        height: 30px; @*background: url(@Url.Content("~/Content/Images/Banner_bg.png")) no-repeat left;)*@">
+        <div style="padding-top: 5px; padding-left: 30px; text-align: center; word-spacing: 5px;">
+            <a id="Refresh" class="HyperLink" href="javascript:refresh();">@Resources.EXT.PageLan.Refresh</a> | 
+            <a href="/Resource/document/供应商门户操作手册.zip" class="HyperLink" target="_blank">@Resources.EXT.PageLan.Document</a> | 
+            <a target="right" href="/Resource/font/Code128.zip" class="HyperLink" id="Code128">@Resources.EXT.PageLan.Font</a> | 
+            @*<a href="/DownLoad.htm" class="HyperLink" target="_blank">终端</a> | *@
+            <a target="_parent" href="../Account/Logoff" class="HyperLink" id="logoffHL">@Resources.EXT.PageLan.Logoff</a>
+        </div>
+    </div>
+</div>

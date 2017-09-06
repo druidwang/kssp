@@ -1,0 +1,89 @@
+﻿@model com.Sconit.Entity.CUST.DefectCode
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Assembly_DefectCode" });
+}
+
+<fieldset>
+<legend>@Resources.CUST.DefectCode.DefectCode_BaseInfo</legend>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.DefectCode.DefectCode_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.Code)
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+                <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.DefectCode.DefectCode_Description
+                </label>
+            </div>
+            <div class="search-field">
+               @Html.EditorFor(model => model.Description)
+
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.CUST.DefectCode.DefectCode_ProductCode
+                </label>
+            </div>
+            <div class="search-field">
+                               @{
+               Html.RenderAction("_FlowComboBox", "Common",
+               new
+               {
+                   controlName = "ProductCode",
+                   type = (int)com.Sconit.CodeMaster.OrderType.Production,
+
+               });
+                }
+            </div>
+                <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.DefectCode.DefectCode_Assemblies
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.Assemblies)
+
+            </div>
+            <div  class="search-label">
+              <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.DefectCode.DefectCode_ComponentDefectCode
+              </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.ComponentDefectCode)
+
+            </div>
+            <div class="search-label">
+            
+            </div>
+            <div  class="search-field"></div>
+          
+      </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+             @Html.Button(Resources.SYS.Global.Button_Save, "Url_Assembly_DefectCode", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"}
+	        })
+                 <button type="button" id="btnExport" onclick="location.href='@Url.Content("~/DefectCode/List")'">
+                @Resources.SYS.Global.Button_Back </button>
+        </div>
+       
+        
+
+    }
+     
+
+</fieldset>

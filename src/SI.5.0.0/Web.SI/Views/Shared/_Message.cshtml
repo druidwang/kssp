@@ -1,0 +1,34 @@
+﻿@using com.Sconit.Web.Util
+@{
+    
+    <div class="validation-summary-errors">
+        <ul id="errorsul">
+            @if (TempData[WebConstants.ErrorMessages] != null) {
+                foreach (string errorMessage in (IList<string>)TempData["ErrorMessages"])
+                {
+                    <li>@errorMessage</li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="validation-summary-warnings">
+        <ul id="warningsul">
+            @if (TempData[WebConstants.WarningMessages] != null) {
+                foreach (string warningMessage in (IList<string>)TempData["WarningMessages"])
+                {
+                    <li>@warningMessage</li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="validation-summary-successes">
+        <ul id="successesul">
+            @if (TempData[WebConstants.SuccessMessages] != null) {
+                foreach (string successMessage in (IList<string>)TempData["SuccessMessages"])
+                {
+                    <li>@successMessage</li>
+                }
+            }
+        </ul>
+    </div>
+}

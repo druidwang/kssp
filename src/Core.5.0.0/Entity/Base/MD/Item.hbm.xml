@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.MD.Item, com.Sconit.Entity" table="MD_Item" lazy="false" dynamic-update="true">
+        <cache usage="read-write" />
+        <id name="Code" column="Code" type="String" unsaved-value="null" >
+            <generator class="assigned" />
+        </id>
+        <property name="ReferenceCode" column="RefCode" type="String" length="50" />
+        <property name="ShortCode" column="ShortCode" type="String" length="10" />
+        <property name="Uom" column="Uom" type="String" length="5" />
+        <property name="Description" column="Desc1" type="String" length="100" />
+        <property name="UnitCount" column="UC" type="Decimal"  />
+        <property name="ItemCategory" column="ItemCategory" type="String" length="50" />
+        <property name="IsActive" column="IsActive" type="Boolean"  />
+        <!--<property name="IsPurchase" column="IsPurchase" type="Boolean"  />
+    <property name="IsSales" column="IsSales" type="Boolean"  />
+    <property name="IsManufacture" column="IsManufacture" type="Boolean"  />
+    <property name="IsSubContract" column="IsSubContract" type="Boolean"  />
+    <property name="IsCustomerGoods" column="IsCustomerGoods" type="Boolean"  />-->
+        <property name="IsVirtual" column="IsVirtual" type="Boolean"  />
+        <property name="IsKit" column="IsKit" type="Boolean"  />
+        <property name="Bom" column="Bom" type="String" length="50" />
+        <property name="Location" column="Location" type="String" length="50" />
+        <property name="Routing" column="Routing" type="String" length="50" />
+        <property name="Container" column="Container" type="String" length="50" />
+        <property name="Warranty" column="Warranty" type="Int32"  />
+        <property name="WarnLeadTime" column="WarnLeadTime" type="Int32" />
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+        <property name="IsInventoryFreeze" column="IsInvFreeze" type="Boolean"  />
+        <!--<property name="IsSection" column="IsSection" type="Boolean"  />-->
+        <property name="ItemPriority" column="ItemPriority"  />
+        <property name="Weight" column="Weight" type="Double"  />
+        <property name="WorkHour" column="WorkHour" type="Double"  />
+        <property name="ItemOption" column="ItemOption"  />
+        <property name="MaterialsGroup" column="MaterialsGroup" type="String" length="50" />
+        <property name="SafeStock" column="SafeStock" type="Double"  />
+        <property name="ScrapPercent" column="ScrapPercent" type="Double"  />
+        <property name="ContainerSize" column="ContainerSize" type="Double"  />
+        <property name="Division" column="Division" type="String" length="50" />
+        <property name="PalletLotSize" column="PalletLotSize" type="Decimal" />
+        <property name="PackageVolume" column="PackageVolume" type="Decimal" />
+        <property name="PackageWeight" column="PackageWeight" type="Decimal" />
+    </class>
+</hibernate-mapping>

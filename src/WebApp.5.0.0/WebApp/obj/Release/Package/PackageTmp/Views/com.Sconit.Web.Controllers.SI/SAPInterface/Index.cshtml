@@ -1,0 +1,555 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.MRP
+<style>
+    .editor-field-1 input
+    {
+       width:auto;
+    }
+</style>
+<fieldset>
+    <legend>手动调用主数据接口</legend>
+    <div class="search">
+        <div class="editor-label-1">
+            <label>
+                选择接口
+            </label>
+        </div>
+        <div class="editor-field-1">
+            @Html.RadioButton("tabType", 0, true, new { onclick = "doClick(0)" })<span>物料</span>
+            @Html.RadioButton("tabType", 1, false, new { onclick = "doClick(1)" })<span>供应商</span>
+            @Html.RadioButton("tabType", 2, false, new { onclick = "doClick(2)" })<span>客户</span>
+            @Html.RadioButton("tabType", 3, false, new { onclick = "doClick(3)" })<span>采购价格单</span>
+            @Html.RadioButton("tabType", 4, false, new { onclick = "doClick(4)" })<span>Bom</span>
+            @Html.RadioButton("tabType", 5, false, new { onclick = "doClick(5)" })<span>单位转换</span>
+        </div>
+    </div>
+    <legend>手动调用业务数据接口</legend>
+    <div class="search">
+        <div class="editor-label-1">
+            <label>
+                选择接口
+            </label>
+        </div>
+
+        <div class="editor-field-1">
+             @Html.RadioButton("tabType", 6, false, new { onclick = "doClick(6)" })<span>所有业务(除成本中心和调整)</span>
+             @Html.RadioButton("tabType", 7, false, new { onclick = "doClick(7)" })<span>成本中心和调整</span>
+             @Html.RadioButton("tabType", 8, false, new { onclick = "doClick(8)" })<span>尾差</span>
+        </div>
+        @*<div class="editor-label-2">
+            
+        </div>
+        <div class="editor-field-2">
+                    
+            
+        </div>*@
+        <div class="editor-label-2">
+            <label>
+            </label>
+        </div>
+        <div class="editor-field-2">
+        </div>
+        <div class="editor-label-2">
+            <label>
+            </label>
+        </div>
+        <div class="editor-field-2">
+        </div>
+        <hr style="border: 100% dashed black;" />
+    </div>
+    <fieldset>
+        <legend><span id="showTitle">物料</span></legend>
+        <div class="search">
+            <div id="CallItem">
+                <div class="search-label">
+                    <label>
+                        物料代码
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+                        Html.RenderAction("_ItemComboBox", "Common", new
+                        {
+                            controlName = "ItemCode",
+                            coupled = true,
+                            selectedValue = string.Empty
+                        });
+                    }
+                </div>
+                @*<div class="search-label">
+                    <label>
+                        工厂
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("Plant")
+                </div>*@
+            </div>
+            <div id="CallSupplier" style="display: none">
+                <div class="search-label">
+                    <label>
+                        供应商
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+                        Html.RenderAction("_SupplierComboBox", "Common", new
+                        {
+                            controlName = "SupplierCode",
+                            isChange = true,
+                            selectedValue = string.Empty
+                        });
+                    }
+                </div>
+                 @*<div class="search-label">
+                    <label>
+                        公司
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("BUKRS")
+                </div>*@
+            </div>
+            <div id="CallCustomer" style="display: none">
+                <div class="search-label">
+                    <label>
+                        客户
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+                        Html.RenderAction("_CustomerComboBox", "Common", new
+                        {
+                            controlName = "CustomerCode",
+                            isChange = true,
+                            selectedValue = string.Empty
+                        });
+ }
+                </div>
+                @*<div class="search-label">
+                    <label>
+                        公司
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("CustomerBUKRS")
+                </div>*@
+            </div>
+            <div id="CallPriceList" style="display: none">
+                <div class="search-label">
+                    <label>
+                        物料代码
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+                        Html.RenderAction("_ItemComboBox", "Common", new
+                        {
+                            controlName = "PriceListItemCode",
+                            coupled = true,
+                            selectedValue = string.Empty
+                        });
+ }
+                </div>
+                <div class="search-label">
+                    <label>
+                        供应商
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+                        Html.RenderAction("_SupplierComboBox", "Common", new
+                        {
+                            controlName = "PriceListSupplierCode",
+                            IsChange = true,
+                            selectedValue = string.Empty
+                        });
+                    }
+                </div>
+                @*<div class="search-label">
+                    <label>
+                        工厂
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("PriceListPlant")
+                </div>*@
+                @*<div class="search-label">
+                    <label>
+                        采购组织
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("EKORG")
+                </div>*@
+            </div>
+            <div id="CallBom" style="display: none">
+                <div class="search-label">
+                    <label>
+                        Bom号
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+                        Html.RenderAction("_BomComboBox", "Common", new
+                        {
+                            controlName = "BomCode",
+                            isChange = true
+                        });
+ }
+                </div>
+                @*<div class="search-label">
+                    <label>
+                        工厂
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("BomPlant")
+                </div>*@
+            </div>
+            <div id="CallUomConv" style="display: none">
+                <div class="search-label">
+                    <label>
+                        物料代码
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+                        Html.RenderAction("_ItemComboBox", "Common", new
+                        {
+                            controlName = "UomConvItemCode",
+                            coupled = true,
+                            selectedValue = string.Empty
+                        });
+                      }
+                </div>
+            </div>
+            <div id="StartTime">
+                <div class="search-label" id="StartTimeLabel">
+                    <label>
+                        @Resources.EXT.PageLan.StartTime
+                    </label>
+                </div>
+                <div class="search-label" id="DataToTimeLabel" style="display: none">
+                    <label>
+                        本次输入时间
+                    </label>
+                </div>
+
+                <div class="search-field">
+                    @(Html.Telerik().DateTimePicker().Name("ReqBeginDate")
+                    .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+                <span id="DataToTimeText" style="display: none">faf</span>
+            </div>
+
+        @*<div id="CallSDOrder" style="display: none">
+            <div class="search-label">
+                <label>
+                    结束时间
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Name("ReqEndDate")
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+       </div>*@
+        </div>
+    </fieldset>
+    <div class="search-footer">
+        @*<input type="button" id="btnManualCall" onclick="ManualCallClick(this)" value="调用" />*@
+        @*<button type="button" id="btnManualCall" onclick="ManualCallClick(this)">
+            调用</button>*@
+        @Html.Button("调用", "Url_SI_SAPInterface", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew"},
+            {"needconfirm","true"},
+            {"onclick","ManualCallClick(this)"}
+	    })
+    </div>
+    <legend>手动传快照</legend>
+                <div class="search-label">
+                    <label>
+                        快照时间
+                    </label>
+                </div>
+                <div>
+                        @{
+                            Html.RenderAction("_SIMESSnapShotTimeDropDownList", "Common", new
+                            {
+                                controlName = "SIMESSnapShotTime",
+                                selectedValue = string.Empty
+                            });
+                          }
+                </div>
+            <div class="search-footer">
+                @Html.Button("传送", "Url_SI_SAPInterface", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnNew"},
+                    {"needconfirm","true"},
+                    {"onclick","ManualTransClick(this)"}
+	            })
+            </div>
+</fieldset>
+<script type="text/javascript">
+    function ManualTransClick(e) {
+        if ($('#SIMESSnapShotTime').val() == null || $('#SIMESSnapShotTime').val() == undefined || $('#SIMESSnapShotTime').val() == "") {
+            $message.error("请选择快照时间");
+            return;
+        }
+            var Data = {
+                selectedTime: $('#SIMESSnapShotTime').val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/SAPInterface/_ManualTransSnapShot/",
+                data: Data,
+                cache: false,
+                success: function (d, textStatus) {
+                    DisplayJsonMessages(d);
+                    e.disabled = false;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                    e.disabled = false;
+                }
+            });
+    }
+    function ManualCallClick(e) {
+        //debugger
+        e.disabled = true;
+        var reCallType = $("input[name='tabType']:checked").val();
+        var data = {};
+        var requestUrl = "";
+        if (reCallType == "0") {//物料
+            //            if ($('#Plant').val() == null || $('#Plant').val() == undefined || $('#Plant').val() == "") {
+            //                $message.error("工厂不能为空。");
+            //                return;
+            //            }
+            data = {
+                "itemCode": $('#ItemCode').val(),
+                "plant": $('#Plant').val(),
+                "reqBeginDate": $('#ReqBeginDate').val()
+            };
+            requestUrl = "/SAPInterface/_ManualCallItem/"
+        } else if (reCallType == 1) {//供应商
+            data = {
+                "bUKRS": $("#BUKRS").val(),
+                "supplierCode": $('#SupplierCode').val(),
+                "reqBeginDate": $('#ReqBeginDate').val()
+            };
+            requestUrl = "/SAPInterface/_ManualCallSupplier/"
+        } else if (reCallType == 2) {//客户
+            data = {
+                "customerCode": $('#CustomerCode').val(),
+                "bUKRS": $("#CustomerBUKRS").val(),
+                "reqBeginDate": $('#ReqBeginDate').val()
+            };
+            requestUrl = "/SAPInterface/_ManualCallCustomer/"
+        } else if (reCallType == 3) {//价格单
+            //            if ($('#PriceListPlant').val() == null || $('#PriceListPlant').val() == undefined || $('#PriceListPlant').val() == "") {
+            //                $message.error("工厂不能为空。");
+            //                return;
+            //            }
+            //            if ($('#EKORG').val() == null || $('#EKORG').val() == undefined || $('#EKORG').val() == "") {
+            //                $message.error("采购组织不能为空。");
+            //                return;
+            //            }
+            data = {
+                "itemCode": $('#PriceListItemCode').val(),
+                "supplierCode": $('#PriceListSupplierCode').val(),
+                "plant": $('#PriceListPlant').val(),
+                "eKORG": $('#EKORG').val(),
+                "reqBeginDate": $('#ReqBeginDate').val()
+            };
+            requestUrl = "/SAPInterface/_ManualCallPriceList/"
+        }
+        else if (reCallType == 4) {//bom
+            //            if ($('#BomPlant').val() == null || $('#BomPlant').val() == undefined || $('#BomPlant').val() == "") {
+            //                $message.error("工厂不能为空。");
+            //                return;
+            //            }
+            data = {
+                "bomCode": $('#BomCode').val(),
+                "plant": $('#BomPlant').val(),
+                "reqBeginDate": $('#ReqBeginDate').val()
+            };
+            requestUrl = "/SAPInterface/_ManualCallBom/"
+        }
+        else if (reCallType == 5) {//单位转换
+            data = {
+                "itemCode": $('#UomConvItemCode').val(),
+                "reqBeginDate": $('#ReqBeginDate').val()
+            };
+            requestUrl = "/SAPInterface/_ManualCallUomConv/"
+        }
+        else if (reCallType == 6) {//所有业务数据
+            data = {
+                "selectedTime": $('#ReqBeginDate').val(),
+                "callType": 6
+            };
+            requestUrl = "/SAPInterface/_ManualCallBusiDataNormal/"
+        }
+        else if (reCallType == 7) {//成本中心和调整
+            data = {
+                "selectedTime": $('#ReqBeginDate').val(),
+                "callType": 7
+            };
+            requestUrl = "/SAPInterface/_ManualCallBusiDataNormal/"
+        }
+        else if (reCallType == 8) {//尾差
+            data = {
+                "selectedTime": $('#ReqBeginDate').val(),
+                "callType": 8
+            };
+            requestUrl = "/SAPInterface/_ManualCallBusiDataNormal/"
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: requestUrl,
+            data: data,
+            cache: false,
+            success: function (d, textStatus) {
+                DisplayJsonMessages(d);
+                e.disabled = false;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+                e.disabled = false;
+            }
+        });
+        
+    }
+
+    function doClick(tabType) {
+        if (tabType == "0") {
+            $("#showTitle").text("物料");
+            $("#CallItem").show();
+            $("#CallSupplier").hide();
+            $("#CallCustomer").hide();
+            $("#CallPriceList").hide();
+            $("#CallBom").hide();
+            $("#CallUomConv").hide();
+            $("#StartTimeLabel").show();
+            $("#DataToTimeLabel").hide();
+            $("#DataToTimeText").hide();
+            //$("#CallSDOrder").hide();
+        }
+        else if (tabType == "1") {
+            $("#showTitle").text("供应商");
+            $("#CallItem").hide();
+            $("#CallSupplier").show();
+            $("#CallCustomer").hide();
+            $("#CallPriceList").hide();
+            $("#CallBom").hide();
+            $("#CallUomConv").hide();
+            $("#StartTimeLabel").show();
+            $("#DataToTimeLabel").hide();
+            $("#DataToTimeText").hide();
+            //$("#CallSDOrder").hide();
+        }
+        else if (tabType == "2") {
+            $("#showTitle").text("客户");
+            $("#CallItem").hide();
+            $("#CallSupplier").hide();
+            $("#CallCustomer").show();
+            $("#CallPriceList").hide();
+            $("#CallBom").hide();
+            $("#CallUomConv").hide();
+            $("#StartTimeLabel").show();
+            $("#DataToTimeLabel").hide();
+            $("#DataToTimeText").hide();
+            //$("#CallSDOrder").hide();
+        }
+        else if (tabType == "3") {
+            $("#showTitle").text("采购价格单");
+            $("#CallItem").hide();
+            $("#CallSupplier").hide();
+            $("#CallCustomer").hide();
+            $("#CallPriceList").show();
+            $("#CallBom").hide();
+            $("#CallUomConv").hide();
+            $("#StartTimeLabel").show();
+            $("#DataToTimeLabel").hide();
+            $("#DataToTimeText").hide();
+            //$("#CallSDOrder").hide();
+        }
+        else if (tabType == "4") {
+            $("#showTitle").text("Bom");
+            $("#CallItem").hide();
+            $("#CallSupplier").hide();
+            $("#CallCustomer").hide();
+            $("#CallPriceList").hide();
+            $("#CallBom").show();
+            $("#CallUomConv").hide();
+            $("#StartTimeLabel").show();
+            $("#DataToTimeLabel").hide();
+            $("#DataToTimeText").hide();
+            //$("#CallSDOrder").hide();
+        }
+        else if (tabType == "5") {
+            $("#showTitle").text("单位转换");
+            $("#CallItem").hide();
+            $("#CallSupplier").hide();
+            $("#CallCustomer").hide();
+            $("#CallPriceList").hide();
+            $("#CallBom").hide();
+            $("#CallUomConv").show();
+            $("#StartTimeLabel").show();
+            $("#DataToTimeLabel").hide();
+            $("#DataToTimeText").hide();
+            //$("#CallSDOrder").hide();
+        }
+        else if (tabType == "6" || tabType == "7" || tabType == "8") {
+            $("#showTitle").text("所有业务数据");
+            $("#CallItem").hide();
+            $("#CallSupplier").hide();
+            $("#CallCustomer").hide();
+            $("#CallPriceList").hide();
+            $("#CallBom").hide();
+            $("#CallUomConv").hide();
+            $("#StartTimeLabel").hide();
+            $("#DataToTimeLabel").show();
+            $("#DataToTimeText").show();
+            //$("#CallSDOrder").show();
+            var Data = {
+                calltype: tabType
+            };
+            $('#DataToTimeText').text("");
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/SAPInterface/_GetDataToTime",
+                data: Data,
+                cache: false,
+                success: function (data1) {
+                    $('#DataToTimeText').text(data1);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    }
+
+    function Item_Change(e) {
+
+    }
+
+
+    function Supplier_Change(e) {
+
+    }
+    function Customer_Change(e) {
+
+    }
+    
+    function Bom_Change(e) {
+
+    }
+</script>

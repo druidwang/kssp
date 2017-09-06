@@ -1,0 +1,62 @@
+﻿@using com.Sconit.Web.Models.SearchModels.FMS
+@using com.Sconit.Entity.SYS
+<fieldset>
+    @using (Html.BeginForm("List", "FacilityOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="InspectMaster_InspectNo">
+                    @Resources.FMS.FacilityOrderMaster.FacilityOrderMaster_FacilityOrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("FacilityOrderNo", TempData["FacilityOrderSearchModel"] != null ? ((FacilityOrderSearchModel)TempData["FacilityOrderSearchModel"]).FacilityOrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_StartDate">
+                    @Resources.FMS.FacilityOrderMaster.FacilityOrderMaster_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("StartDate")
+                 .Value(TempData["FacilityOrderSearchModel"] != null ? ((FacilityOrderSearchModel)TempData["FacilityOrderSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                 .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_EndDate">
+                    @Resources.FMS.FacilityOrderMaster.FacilityOrderMaster_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("EndDate")
+                 .Value(TempData["FacilityOrderSearchModel"] != null ? ((FacilityOrderSearchModel)TempData["FacilityOrderSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                 .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-footer">
+                @Html.Hidden("isFromList", true)
+                <button type="submit" id="btnSearch">
+                    @Resources.SYS.Global.Button_Search</button>
+            </div>
+        </div>
+    }
+</fieldset>
+<script type="text/javascript">
+    function Region_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        }
+        $('#Location').data('tComboBox').value('');
+        $('#Location').data('tComboBox').text('');
+        $("#Location").data("tComboBox").reload();
+    }
+
+</script>

@@ -1,0 +1,132 @@
+﻿@model IEnumerable<com.Sconit.Entity.WMS.DeliveryBarCode>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+            $("#btnPrint").attr("style", this.checked ? "display:inline" : "display:none");
+            $("#btnExport").attr("style", this.checked ? "display:inline" : "display:none");
+        });
+    });
+
+    function showButtons() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var showButton = false;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                showButton = true;
+                break;
+            }
+        }
+        $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        $("#btnPrint").attr("style", showButton ? "display:inline" : "display:none");
+        $("#btnExport").attr("style", showButton ? "display:inline" : "display:none");
+    }
+
+    function btnPrintClick() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedbarCodes = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedbarCodes == "") {
+                    checkedbarCodes = $checkRecords[i].value;
+                } else {
+                    checkedbarCodes += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (checkedbarCodes == "") {
+            alert('Must Check One');
+            return;
+        }
+
+        var data = {
+            "checkedbarCodes": checkedbarCodes
+        };
+
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: data,
+            async: false,
+            url: "/DeliveryBarCode/PrintDeliveryBarCodeList/",
+            cache: false,
+            success: function (data, textStatus) {
+                $message.success(data.SuccessMessage);
+                PrintOrder(data.PrintUrl);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+
+                $message.error(errorMessages);
+            }
+        });
+
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("DeliveryBarCodeGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.BarCode);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.BarCode)
+              .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' onClick='showButtons();' value='<#= BarCode #>'   />")
+              .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+              .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.HuId).ClientTemplate(Html.ActionLink("<#= BarCode #>", "EditDeliveryBarCode", "DeliveryBarCode", new { Id = "<#= BarCode #>" }, null).ToString());
+
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.IsPickHu)
+              .ClientTemplate("<input type='checkbox' disabled='disabled'  name='IsPickHu' <#= IsPickHu? checked='checked' : '' #> />");
+
+
+            columns.Bound(o => o.IsActive)
+              .ClientTemplate("<input type='checkbox' disabled='disabled'  name='IsActive' value='<#= IsActive? checked='checked' : ''  #>' />");
+
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "DeliveryBarCode"))
+                         .ClientEvents(events => events.OnDataBinding("DeliveryBarCodeGrid_OnDataBinding"))
+
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function DeliveryBarCodeGrid_OnDataBinding(e) {
+            e.data = {
+                BarCode: $('#BarCode').val(),
+                Flow: $('#Flow').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                Item: $('#Item').val()
+            };
+        } 
+
+    </script>
+</fieldset>
+<form id="hiddenForm" action="/DeliveryBarCode/PrintDeliveryBarCodeList" target="_blank"
+method="post">
+<input id="checkedbarCodes" name="checkedbarCodes" type="hidden" />
+</form>

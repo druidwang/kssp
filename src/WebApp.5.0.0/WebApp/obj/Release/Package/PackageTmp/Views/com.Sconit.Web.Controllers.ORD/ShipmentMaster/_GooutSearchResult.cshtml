@@ -1,0 +1,47 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.ShipmentMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ShipmentMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.ShipmentNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ShipmentNo).ClientTemplate(Html.ActionLink("<#= ShipmentNo #>", "_GooutEdit", "ShipmentMaster", new { ShipmentNo = "<#= ShipmentNo #>" }, null).ToString());
+            columns.Bound(o => o.Driver);
+            columns.Bound(o => o.VehicleNo);
+            columns.Bound(o => o.AddressTo);
+            columns.Bound(o => o.Shipper);
+            columns.Bound(o => o.CaseQty);
+            columns.Bound(o => o.StatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ShipmentMaster"))
+                .ClientEvents(events => events.OnDataBinding("ShipmentMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function ShipmentMasterGrid_OnDataBinding(e) {
+            e.data = {
+                ShipmentNo: $('#ShipmentNo').val(),
+                VehicleNo: $('#VehicleNo').val(),
+                Driver: $('#Driver').val(),
+                Shipper: $('#Shipper').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                IsGoout: $('#IsGoout').val()
+              
+            };
+        } 
+    </script>
+</fieldset>

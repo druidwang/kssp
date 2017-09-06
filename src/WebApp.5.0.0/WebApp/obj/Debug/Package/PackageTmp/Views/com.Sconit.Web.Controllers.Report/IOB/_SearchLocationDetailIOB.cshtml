@@ -1,0 +1,59 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+<script type="text/javascript">
+</script>
+    @using (Html.BeginForm("List", "InventoryFreeze"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+              </label>
+            </div>
+            <div class="search-field">
+                  @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = ViewBag.Item != null ? ViewBag.Item : string.Empty
+
+        });
+                }
+            </div>
+           
+             
+        </div>
+        <div class="search-footer">
+            <button type="button" id="btnSearch" onclick="SearchClick()">
+                @Resources.SYS.Global.Button_Search</button>
+
+        </div>
+
+    }
+    <script type="text/javascript">
+        function SearchClick() {
+           
+            if ($("#Item").val() == "") {
+                $message.error('请按物料进行查询。');
+                return;
+            }
+            var data = {
+                item:$("#Item").val()
+            }
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/ItemFlow/_SearchResult/",
+                cache: false,
+                data: data,
+                success: function (data) {
+                    $("#Result").html(data);
+                }
+            });
+        }
+    </script>
+</fieldset>
+<div id="Result">
+</div>
+
+

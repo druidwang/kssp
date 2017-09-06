@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="USP_Busi_MRP_GetActiveOrder">
+    <return alias="ActiveOrder" class="com.Sconit.Entity.MRP.ORD.ActiveOrder, com.Sconit.Entity"/>
+    exec USP_Busi_MRP_GetActiveOrder ?
+  </sql-query>
+
+  <sql-query name="USP_Busi_MRP_GetTransitOrder">
+    <return alias="TransitOrder" class="com.Sconit.Entity.MRP.ORD.TransitOrder, com.Sconit.Entity"/>
+    exec USP_Busi_MRP_GetTransitOrder ?
+  </sql-query>
+</hibernate-mapping>

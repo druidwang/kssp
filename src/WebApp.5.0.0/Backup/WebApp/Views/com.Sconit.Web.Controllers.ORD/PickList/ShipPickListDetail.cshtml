@@ -1,0 +1,52 @@
+﻿@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.ORD.PickListDetail>
+<fieldset>
+    <legend>@Resources.ORD.PickListDetail.PickListDetail_Edit_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickListDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.LocationFromName);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.IsOdd).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsOdd' <#= IsOdd? checked='checked' : '' #> />"); ;
+            columns.Bound(o => o.IsDevan).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDevan' <#= IsDevan? checked='checked' : '' #> />"); ;
+            columns.Bound(o => o.IsInventory).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsInventory' <#= IsInventory? checked='checked' : '' #> />"); ;
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.PickedQty); 
+            
+        })
+          .DetailView(details => details.ClientTemplate(
+            Html.Telerik().Grid<PickListResult>()
+                .Name("PickListResult_<#= Id #>")
+                .Columns(columns =>
+                {
+                    columns.Bound(o => o.Item);
+                    columns.Bound(o => o.ItemDescription);
+                    columns.Bound(o => o.Uom);
+                    columns.Bound(o => o.UnitCount);
+                    columns.Bound(o => o.LotNo);
+                    columns.Bound(o => o.HuId);
+                    columns.Bound(o => o.Qty);
+                })
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_PickListResultHierarchyAjax", "PickList", new { pickListDetailId = "<#= Id #>" }))
+                .Footer(false)
+                .Resizable(resizing => resizing.Columns(true))
+                .ToHtmlString()
+    ))
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_PickListDetailHierarchyAjax", "PickList", new { pickListNo = ViewBag.pickListNo }))
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

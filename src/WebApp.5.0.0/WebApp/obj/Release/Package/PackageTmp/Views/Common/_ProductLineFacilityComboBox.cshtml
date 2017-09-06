@@ -1,0 +1,28 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "ProductLineFacility_Change" : "EmptyChange";
+}
+@{
+    if (enable)
+    {
+        @(Html.Telerik().ComboBox()
+            .Name(name)
+            .HiddenInputHtmlAttributes(new { id = id })
+            .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingProductLineFacility", "Common", null))
+            .ClientEvents(events =>
+                    events.OnDataBinding("ProductLineFacility_DataBinding")
+                    .OnChange(onChangeName)
+            )
+            .BindTo(Model)
+            .Enable(enable))
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)     }
+    }
+}

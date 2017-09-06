@@ -1,0 +1,32 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    var selectedValue = ViewBag.SelectedValue;
+    AutoCompleteFilterMode issueAddressFilterMode = Enum.Parse(typeof(AutoCompleteFilterMode), ViewBag.IssueAddressFilterMode, true);
+    int issueAddressFilterMinimumChars = ViewBag.IssueAddressFilterMinimumChars;
+    bool enable = true;
+    if (ViewBag.Enable != null)
+    {
+        enable = ViewBag.Enable;
+    }
+}
+
+
+ @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax().Select("_IssueAddressAjaxLoading", "Common").Cache(true))
+                .Filterable(filtering =>
+                {
+                    filtering.FilterMode(issueAddressFilterMode);
+                    filtering.MinimumChars(issueAddressFilterMinimumChars);
+                })
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                //.ClientEvents(events => events.OnChange("IssueAddress_Change"))
+                .Value(selectedValue)
+                .Enable(enable)
+        )
+
+
+    

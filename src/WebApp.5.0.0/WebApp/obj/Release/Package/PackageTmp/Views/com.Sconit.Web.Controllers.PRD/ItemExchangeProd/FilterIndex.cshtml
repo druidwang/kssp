@@ -1,0 +1,138 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ItemExchange_Filter" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                   Id
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("Id", null)
+            </div>
+            <div class="editor-label-2">
+                <label>
+                   @Resources.INV.ItemExchange.ItemExchange_OldHu
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("OldHu", null)
+            </div>
+            <div class="editor-label-2">
+                <label>
+                   @Resources.INV.ItemExchange.ItemExchange_EffectiveDate
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DatePicker().Name("EffectiveDate")
+                .Value(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="editor-label-2">
+                <label>
+                   @Resources.INV.ItemExchange.ItemExchange_Qty
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("Qty", null) 
+                @Html.Button(@Resources.SYS.Menu.ItemExchange_Filter, "Url_ItemExchange_Filter", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "filter"},
+                   // {"needconfirm","true"},
+                    {"onclick","onFilterClick()"}
+	            })
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(@Resources.SYS.Global.Button_Search, "Url_ItemExchange_Filter", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "Search"},
+                    {"onclick","onSearchClick()"}
+	            })
+        </div>
+    </fieldset>
+}
+<div id="DivFilterList">
+</div>
+<script type="text/javascript">
+
+    $("#OldHu").keydown(function () {
+        if (event.keyCode == 13) {
+           // if (confirm("确认要过滤吗？")) {
+                onAgeingClick();
+//}
+        }
+
+    });
+
+        function onFilterClick() {
+            $message.error("");
+        if ($("#OldHu").val() == "") {
+            $message.error("请输入条码号。");
+            
+            return;
+        }
+        if ($("#Qty").val() == "") {
+            $message.error("请输入数量。");
+            
+            return;
+        }
+        var data = {
+            "OldHu": $("#OldHu").val(),
+            "Id": $("#Id").val(),
+            "Qty":$("#Qty").val(),
+            "EffectiveDate": $("#EffectiveDate").val()
+        }
+        $("#OldHu").val("");
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: "/ItemExchangeProd/Filter/",
+            cache: false,
+            success: function (data, textStatus) {
+                if (data != null && data != "") {
+                    PrintOrder(data.url);
+                }
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/ItemExchangeProd/_FilterList/",
+                    cache: false,
+                    success: function (dd, textStatus) {
+                        if (dd != "") {
+                            var $tGrid = $("#DivFilterList");
+                            $($tGrid).html(dd);
+                        }
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+                
+            }
+        });
+    }
+
+    function onSearchClick() {
+       
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ItemExchangeProd/_FilterList/",
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#DivFilterList");
+                $(tabStrip).html(data);
+            }
+        });
+    }
+</script>

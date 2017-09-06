@@ -1,0 +1,162 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.INP.InspectResultExt
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_InspectResultExt_View" });
+}
+@using (Html.BeginForm("Edit", "InspectResultExt"))
+{
+    <fieldset>
+        <legend></legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.QualityDiscription)
+               
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.QualityDiscription)
+                 @Html.HiddenFor(model => model.Id)
+                 @Html.HiddenFor(model => model.InspectResultId)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.QualityType)
+            </div>
+            <div class="editor-field-2">
+              @Html.Hidden("QualityTypeHidden", Model.QualityType)
+                <select name="QualityType" id="QualityType" style="width:200px">
+                     <option value=""></option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.ProductType)
+            </div>
+            <div class="editor-field-2">
+               @Html.Hidden("ProductTypeHidden", Model.ProductType)
+               <select name="ProductType" id="ProductType" style="width:200px">
+                    <option value=""></option>
+                    <option value="军">军</option>
+                    <option value="出">出</option>
+                    <option value="民">民</option>
+                </select>
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.PurDepartment)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.PurDepartment)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.UnitCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.UnitCode)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.RationalizeInspect)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.RationalizeInspect)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.Checker)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Checker)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.Supplier)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Supplier)
+            </div>
+             
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartLotNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.StartLotNo)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.EndLotNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.EndLotNo)
+            </div>
+            <div class="editor-label-2">
+               @* @Html.LabelFor(model => model.Picture)*@
+              <label>
+               选择图片</label>
+            </div>
+            <div class="editor-field-2">
+                <input type="file" id="File" name="File" />
+                
+              @* <img  id="productImage"  class="productImage" src="/InspectResultExt/ProductShow?id=@Model.Id"  alt="" style=" width:150px; height:100px;" />*@
+                
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Picture)
+            </div>
+            <div class="editor-field-2">
+            @{
+               
+               @Html.Image(Url.Action("ProductShow", "InspectResultExt", new { Model.Id }), new { width = 150, height = 100, id = "productImage" }) 
+            
+            }
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+              <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+        </div>
+        <div class="editor-footer">
+             @Html.Button(Resources.SYS.Global.Button_Save, "Url_OrderMstr_Distribution_Close", new Dictionary<string, string>()
+	            {
+	                {"type", "submit"},
+	                {"id", "btnSave"},
+                    {"needconfirm","true"}
+	            })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/InspectResultExt/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+
+        <script type="text/javascript">
+            $(function () {
+                $("#ProductType").val($("#ProductTypeHidden").val());
+                $("#QualityType").val($("#QualityTypeHidden").val());
+                $("#File").change(function () {
+                    var path = $(this).val();
+                    //                    $.ajax({
+                    //                        type: "post",
+                    //                        dataType: "text",
+                    //                        url: "/InspectResultExt/getStream/",
+                    //                        data: {"path":path},
+                    //                        success: function (data) {
+                    //                        },
+                    //                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //                            var errorMessages = XMLHttpRequest.responseText;
+                    //                            $message.error(errorMessages);
+                    //                        }
+                    //                    });
+                    $("#productImage").attr("src", path);
+                });
+            });
+            
+        </script>
+    </fieldset>
+}
+

@@ -1,0 +1,84 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<fieldset>
+    @using (Html.BeginForm("List", "RepackTask"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="RepackTask_Item">
+                    @Resources.WMS.RepackTask.RepackTask_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["RepackTaskSearchModel"] != null ? ((RepackTaskSearchModel)TempData["RepackTaskSearchModel"]).Item : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="RepackTask_OrderNo">
+                    @Resources.WMS.RepackTask.RepackTask_Location
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common",
+            new
+            {
+                controlName = "Location",
+                selectedValue = TempData["RepackTaskSearchModel"] != null ? ((RepackTaskSearchModel)TempData["RepackTaskSearchModel"]).Location : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="RepackTask_DateFrom">
+                    @Resources.WMS.RepackTask.RepackTask_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+.Value(TempData["RepackTaskSearchModel"] != null ? ((RepackTaskSearchModel)TempData["RepackTaskSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.WMS.RepackTask.RepackTask_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+.Value(TempData["RepackTaskSearchModel"] != null ? ((RepackTaskSearchModel)TempData["RepackTaskSearchModel"]).DateTo : System.DateTime.Today.AddDays(0))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="RepackTask_RepackUserName">
+                    @Resources.WMS.RepackTask.RepackTask_RepackUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("RepackUser", TempData["RepackTaskSearchModel"] != null ? ((RepackTaskSearchModel)TempData["RepackTaskSearchModel"]).RepackUser : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="Item_IsActive">
+                    @Resources.WMS.RepackTask.RepackTask_IsActive
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsActive", TempData["RepackTaskSearchModel"] != null ? ((RepackTaskSearchModel)TempData["RepackTaskSearchModel"]).IsActive : true)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_RepackTask_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+        </div>
+
+    }
+</fieldset>

@@ -1,0 +1,60 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@model IEnumerable<com.Sconit.Entity.FMS.CheckListOrderDetail>   
+
+<fieldset>
+    <legend>巡检单明细</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("CheckListOrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+      
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();
+            columns.Bound(o => o.CheckListDetailCode).ReadOnly().Title("编号工艺要求");
+            columns.Bound(o => o.Description).ReadOnly().Title("描述");
+            columns.Bound(o => o.MinValue).ReadOnly().Title("最小值");
+            columns.Bound(o => o.MaxValue).ReadOnly().Title("最大值");
+
+            columns.Bound(o => o.IsNormal).Title("正常");
+            columns.Bound(o => o.Remark).Title("结果");
+                  })   
+            .CellAction(cell =>
+                 {
+                     if (cell.Column.Member == "Id")
+                     {
+                         cell.Text = string.Format("<input type='text' id='Id' name='Id' style='display:none' value='" + cell.DataItem.Id + "'/>");
+                     }
+                     if (cell.Column.Member == "IsNormal")
+                     {
+                         if (ViewBag.IsEndable)
+                         {
+                             cell.Text = string.Format("<input type='checkbox' id='IsNormal' name='IsNormal' value='" + cell.DataItem.IsNormal + "'  checked='" + cell.DataItem.IsNormal + "'/>");
+                         }
+                         else
+                         {
+                             cell.Text = string.Format("<input type='checkbox' id='IsNormal' name='IsNormal' value='" + cell.DataItem.IsNormal + "' disabled checked='" + cell.DataItem.IsNormal + "'/>");
+                         }
+                    }
+
+                     if (cell.Column.Member == "Remark")
+                     {
+                      if (ViewBag.IsEndable)
+                         {
+                         cell.Text = string.Format("<input type='text' id='Remark' name='Remark'  value='" + cell.DataItem.Remark +  "'/>");
+                         }
+                      else
+                      {
+                           cell.Text = string.Format("<input type='text' id='Remark' name='Remark' disabled value='" + cell.DataItem.Remark +  "'/>");
+                      }
+                     }
+                 })
+            
+   
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+            )
+</fieldset>

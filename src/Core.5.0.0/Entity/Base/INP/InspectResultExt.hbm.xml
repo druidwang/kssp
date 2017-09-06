@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.INP.InspectResultExt, com.Sconit.Entity" table="INP_InspectResultExt" lazy="false">
+        <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+            <generator class="identity" />
+        </id>
+        <property name="InspectResultId" column="inpRetId" type="Int32" />
+        <property name="QualityDiscription" column="QuaDesc" type="string" length="50"/>
+        <property name="QualityType" column="QuaType" type="string" length="50" />
+        <property name="ProductType" column="ProType" type="String" length="50"/>
+        <property name="PurDepartment" column="PurDep" type="String" length="100"/>
+        <property name="UnitCode" column="UnitCode" type="String" length="50"/>
+        <property name="RationalizeInspect" column="RatInspect" type="String" length="50"/>
+		<property name="Checker" column="Checker" type="String" length="50"/>
+		<property name="Supplier" column="Supplier" type="String" length="50"/>
+		<property name="Picture" column="Picture" type="BinaryBlob" />
+		<property name="StartLotNo" column="StartLotNo" type="String" length="50"/>
+		<property name="EndLotNo" column="EndLotNo" type="String" length="50"/>
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,92 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.ORD
+<fieldset>
+    @using (Html.BeginForm("CancelList", "SupplierIpMaster"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="IpMaster_IpNo">
+                    @Resources.ORD.IpMaster.IpMaster_IpNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("IpNo", TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).IpNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="IpMaster_OrderType">
+                    @Resources.ORD.IpMaster.IpMaster_OrderType
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.OrderType,
+            controlName = "IpOrderType",
+            orderType = com.Sconit.CodeMaster.OrderType.Procurement,
+            isSupplier = true,
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).IpOrderType : 0
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="ReceiptMaster_PartyFrom">
+                    @Resources.ORD.IpMaster.IpMaster_PartyFrom
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+                controlName = "PartyFrom",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="ReceiptMaster_PartyFrom">
+                    @Resources.ORD.IpMaster.IpMaster_PartyTo
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+            new
+            {
+                controlName = "PartyTo",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).PartyTo : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="IpMaster_StartDate">
+                    @Resources.ORD.IpMaster.IpMaster_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartDate").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="IpMaster_EndDate">
+                    @Resources.ORD.IpMaster.IpMaster_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EndDate").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

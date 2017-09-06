@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ISI.TaskStatusView, com.Sconit.Entity" table="ISI_TaskStatusView" lazy="false">
+    <id name="TaskCode" column="TaskCode" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <property name="CreateDate" column="CreateDate" type="DateTime"  />
+    <property name="Color" column="Color" type="String" length="10" />
+    <property name="SubmitDate" column="SubmitDate" type="DateTime"  />
+    <property name="AssignUser" column="AssignUser" type="String" length="50" />
+    <property name="AssignUserNm" column="AssignUserNm" type="String" length="50" />
+    <property name="AssignStartUserNm" column="AssignStartUserNm" type="String" length="500" />
+    <property name="SchedulingStartUser" column="SchedulingStartUser" type="String" length="300" />
+    <property name="AssignStartUser" column="AssignStartUser" type="String" length="500" />
+    <property name="StartedUser" column="StartedUser" type="String" length="300" />
+    <property name="FocusUser" column="FocusUser" type="String" length="500" />
+    <property name="AssignDate" column="AssignDate" type="DateTime"  />
+    <property name="StartDate" column="StartDate" type="DateTime"  />
+    <property name="Id" column="Id" type="Int32"  />
+    <property name="StatusDesc" column="StatusDesc" type="String" length="1000" />
+    <property name="StatusStartDate" column="StatusStartDate" type="DateTime"  />
+    <property name="StatusEndDate" column="StatusEndDate" type="DateTime"  />
+    <property name="StatusUser" column="StatusUser" type="String" length="50" />
+    <property name="StatusUserNm" column="StatusUserNm" type="String" length="50" />
+    <property name="StatusDate" column="StatusDate" type="DateTime"  />
+    <property name="StatusCount" column="StatusCount" type="Int32"  />
+    <property name="CurrentStatusCount" column="CurrentStatusCount" type="Int32"  />
+    <property name="Comment" column="Comment" type="String" length="320" />
+    <property name="CommentCreateUserNm" column="CommentCreateUserNm" type="String" length="50" />
+    <property name="CommentCreateUser" column="CommentCreateUser" type="String" length="50" />
+    <property name="CommentCount" column="CommentCount" type="Int32"  />
+    <property name="CurrentCommentCount" column="CurrentCommentCount" type="Int32"  />
+    <property name="CommentCreateDate" column="CommentCreateDate" type="DateTime"  />
+    <property name="FileName" column="FileName" type="String" length="255" />
+    <property name="Path" column="Path" type="String" length="500" />
+    <property name="FileExtension" column="FileExtension" type="String" length="50" />
+    <property name="ContentType" column="ContentType" type="String" length="100" />
+    <property name="AttachmentCreateDate" column="AttachmentCreateDate" type="DateTime"  />
+    <property name="AttachmentCreateUserNm" column="AttachmentCreateUserNm" type="String" length="50" />
+    <property name="AttachmentCount" column="AttachmentCount" type="Int32"  />
+    <property name="CurrentAttachmentCount" column="CurrentAttachmentCount" type="Int32"  />
+    <property name="RefTaskCount" column="RefTaskCount" type="Int32"  />
+    <property name="TaskAddress" column="TaskAddress" type="String" length="100" />
+    <property name="Seq" column="Seq" type="String" length="10" />
+    <property name="Phase" column="Phase" type="String" length="10" />
+    <property name="Status" column="Status" type="String" length="10" />
+    <property name="Desc1" column="Desc1" type="String" length="1000" />
+    <property name="Desc2" column="Desc2" type="String" length="1000" />
+    <property name="TaskSubTypeCode" column="TaskSubTypeCode" type="String" length="50" />
+    <property name="TaskSubTypeDesc" column="TaskSubTypeDesc" type="String" length="50" />
+    <property name="Subject" column="Subject" type="String" length="100" />
+    <property name="Priority" column="Priority" type="String" length="50" />
+    <property name="Flag" column="Flag" type="String" length="10" />
+    <property name="CompleteDate" column="CompleteDate" type="DateTime"  />
+    <property name="CreateUser" column="CreateUser" type="String" length="50" />
+    <property name="SubmitUser" column="SubmitUser" type="String" length="50" />
+    <property name="CreateUserNm" column="CreateUserNm" type="String" length="50" />
+    <property name="SubmitUserNm" column="SubmitUserNm" type="String" length="50" />
+    <property name="TaskSubTypeAssignUser" column="TaskSubTypeAssignUser" type="String" length="300" />
+    <property name="CloseUpUser" column="CloseUpUser" type="String" length="300" />
+    <property name="StartUpUser" column="StartUpUser" type="String" length="300" />
+    <property name="AssignUpUser" column="AssignUpUser" type="String" length="300" />
+    <property name="IsAutoAssign" column="IsAutoAssign" type="Boolean"  />
+    <property name="ExpectedResults" column="ExpectedResults" type="String" length="1000" />
+    <property name="PlanStartDate" column="PlanStartDate" type="DateTime"  />
+    <property name="PlanCompleteDate" column="PlanCompleteDate" type="DateTime"  />
+    <property name="BackYards" column="BackYards" type="String" length="50" />
+    <property name="Type" column="Type" type="String" length="20" />
+    <property name="Org" column="Org" type="String" length="50" />
+    <property name="ECUser" column="ECUser" type="String" length="300" />
+    <property name="ViewUser" column="ViewUser" type="String" length="300" />
+    <property name="StartPercent" column="StartPercent" type="Decimal"  />
+    <property name="IsReport" column="IsReport" type="Boolean"  />
+    <property name="IsAutoComplete" column="IsAutoComplete" type="Boolean"  />
+  </class>
+</hibernate-mapping>

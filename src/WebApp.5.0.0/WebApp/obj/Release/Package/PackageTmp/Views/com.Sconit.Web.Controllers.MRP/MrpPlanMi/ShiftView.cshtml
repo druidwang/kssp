@@ -1,0 +1,182 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlanMi_ShiftView" });
+}
+<script type="text/javascript">
+    function onSearch() {
+        if ($('#Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanDate').val() == "") {
+            $message.error('日期不能为空。');
+            return;
+        }
+        var data, urldata, div, headerrowsize;
+        if ($("input[type=radio][name=tabType]:checked").val() == "0") {
+//            if ($('#PlanVersion').val() == "") {
+//                $message.error('计划版本不能为空。');
+//                return;
+//            }
+            data = {
+                flow: $('#Flow').val(),
+                planDate: $('#PlanDate').val(),
+                viewType:"Day"
+                //planVersion: $('#PlanVersion').val()
+            };
+            urldata = "/MrpPlanMi/_GetShiftPlanSearchView/";
+            div = "#fdOrderDetail0";
+            headerrowsize = 1;
+        }
+        else {
+            data = {
+                flow: $('#Flow').val(),
+                planDate: $('#PlanDate').val(),
+                viewType: "Shift"
+            };
+            urldata = "/MrpPlanMi/_GetShiftPlanSearchView/";
+            div = "#fdOrderDetail1";
+            headerrowsize = 2;
+        }
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: urldata,
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $(div);
+                $(tabStrip).html(data);
+                //if (headerrowsize = 1) {
+                //    $("#datatable").fixedtableheader({
+                //        headerrowsize: headerrowsize,
+                //        highlightrow: true
+                //    });
+                //}
+                //else {
+                //    $("#datatable2").fixedtableheader({
+                //        headerrowsize: headerrowsize,
+                //        highlightrow: true
+                //    });
+                //}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+    function doClick(bl) {
+        if (bl) {
+//            document.getElementById("PlanVersionlabel").style.display = 'inline';
+//            document.getElementById("PlanVersionfield").style.display = 'inline';
+//            document.getElementById("PlanDatelabel").style.display = 'none';
+//            document.getElementById("PlanDatefield").style.display = 'none';
+            $("#fdOrderDetail0").show();
+            $("#fdOrderDetail1").hide();
+        }
+        else {
+//            document.getElementById("PlanVersionlabel").style.display = 'none';
+//            document.getElementById("PlanVersionfield").style.display = 'none';
+//            document.getElementById("PlanDatelabel").style.display = 'inline';
+//            document.getElementById("PlanDatefield").style.display = 'inline';
+            $("#fdOrderDetail1").show();
+            $("#fdOrderDetail0").hide();
+        }
+    }
+
+</script>
+
+    <fieldset>
+    @using (Html.BeginForm("Export","MrpPlanMi"))
+        {
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    类型
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("tabType", 0, true, new { onclick = "doClick(true)" })<span>天计划</span><span
+                    style="margin: 4px"></span>
+                @Html.RadioButton("tabType", 1, false, new { onclick = "doClick(false)" })<span>班产计划</span>
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="search-label" id="PlanVersionlabel" style="display: none">
+                <label>
+                    @Resources.MRP.MrpMiShiftPlan.MrpMiShiftPlan_PlanVersion
+                </label>
+            </div>
+            <div class="search-field" id="PlanVersionfield" style="display: none">
+                @{
+                Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+                 {
+                     controlName = "PlanVersion",
+                     resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.MI,
+                     isRelease = true
+                 });
+                }
+
+            </div>
+            <div class="search-label" id="PlanDatelabel" >
+                <label>
+                    日期
+                </label>
+            </div>
+            <div class="search-field" id="PlanDatefield">
+                @(Html.Telerik().DatePicker().Name("PlanDate")
+                //.Value(System.DateTime.Today).Min(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpMiShiftPlan.MrpMiShiftPlan_ProductLine
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                    resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.MI,
+                    isMrp = true
+                });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanMi_ShiftView", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+            <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+        </div>
+        }
+    </fieldset>
+   
+    <div id="fdOrderDetail0">
+    </div>
+    
+    <div id="fdOrderDetail1">
+    </div>
+<script type="text/javascript">
+    //Export
+    $('#btnExport').click(function () {
+        if ($('#Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanDate').val() == "") {
+            $message.error('日期不能为空。');
+            return;
+        }
+        $('form').submit();
+    }); 
+</script>

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetailGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo).Width(100);
+            columns.Bound(o => o.Sequence);
+            //columns.Bound(o => o.WMSSeq);
+            columns.Bound(o => o.Item).Width(100);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription);
+            //columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.LocationTo).ClientTemplate("<div title=<#=LocationToName #>><#=LocationTo #></div>");
+            columns.Bound(o => o.OrderedQty).Width(100).Format("{0:0.########}");
+
+            columns.Bound(o => o.ShippedQty).Width(100).Format("{0:0.########}");
+
+            columns.Bound(o => o.ReceivedQty).Width(100).Format("{0:0.########}");
+            
+        }
+        )
+       // .Groupable(settings => settings.Groups(groups => groups.Add(o => o.Item)).Visible(false))
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+                            .Resizable(resizing => resizing.Columns(true))
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxOrderDetailList", "SupplierOrder"))
+                          .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+                           .Pageable(settings =>
+                           {
+                               settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                               settings.PageSize(ViewBag.PageSize);
+                           })
+)
+</fieldset>
+<script>
+    function OrderMasterGrid_OnDataBinding(e) {
+        e.data = {
+            OrderNo: $('#OrderNo').val(),
+            Flow: $('#Flow').val(),
+            PartyFrom: $('#PartyFrom').val(),
+            PartyTo: $('#PartyTo').val(),
+            Item: $('#Item').val(),
+            ReferenceOrderNo: $('#ReferenceOrderNo').val(),
+            ExternalOrderNo: $('#ExternalOrderNo').val(),
+            WMSNO: $('#WMSNO').val(),
+            WMSSeq: $('#WMSSeq').val(),
+            Status: $('#Status').val(),
+            DateFrom: $('#DateFrom').val(),
+            DateTo: $('#DateTo').val()
+        };
+    }
+
+
+
+
+</script>

@@ -1,0 +1,162 @@
+﻿@model com.Sconit.Web.Models.SearchModels.MRP.MrpPlanFiSearchModel
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlanFi_Shift" });
+}
+<script type="text/javascript">
+    function FiShift_DataBinding(e) {
+        if (e.value != "") {
+            e.data = {
+                flow: $('#Flow').val(),
+                planVersion: $('#PlanVersion').val(),
+                planDate: $('#PlanDate').val()
+            }
+        }
+    }
+
+    function MrpPlanMaster_Change(e) {
+        Flow_Change(e);
+    }
+
+    function PlanDate_Change(e) {
+        var data = { "planDate": $('#PlanDate').val() };
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpPlanFi/_planVersion/",
+            data: data,
+            success: function (data1, textStatus) {
+                $('#PlanVersion').val(data1);
+            }
+        });
+
+        Flow_Change(e);
+    }
+
+    function Flow_Change(e) {
+
+        $('#Shift').data('tComboBox').value('');
+        $('#Shift').data('tComboBox').text('');
+        $("#Shift").data("tComboBox").reload();
+        $("#fdOrderDetail").hide();
+    }
+    function FiShift_Change(e) {
+        $("#fdOrderDetail").hide();
+    }
+
+    function onSearch() {
+        if ($('#Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        if ($('#PlanDate').val() == "") {
+            $message.error('计划时间不能为空。');
+            return;
+        }
+        if ($('#Shift').val() == "") {
+            $message.error('班次不能为空。');
+            return;
+        }
+        var data = {
+            flow: $('#Flow').val(),
+            planVersion: $('#PlanVersion').val(),
+            planDate: $('#PlanDate').val(),
+            shift: $('#Shift').val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/MrpPlanFi/_MrpShiftPlanList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                $("#fdOrderDetail").html(data);
+                $("#fdOrderDetail").show();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="search">
+            @*<div class="search-label">
+                <label>
+                    @Resources.MRP.MrpFiShiftPlan.MrpFiShiftPlan_PlanVersion
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+                     {
+                         controlName = "PlanVersion",
+                         resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.FI,
+                         isRelease = true
+                     });
+                }
+            </div>*@
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpFiShiftPlan.MrpFiShiftPlan_PlanDate
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("PlanDate").Min(DateTime.Today)
+                    .ClientEvents(events => events.OnChange("PlanDate_Change")))
+                @Html.Hidden("PlanVersion", "")
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpFiShiftPlan.MrpFiShiftPlan_ProductLine
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+               Html.RenderAction("_FlowComboBox", "Common", new
+               {
+                   controlName = "Flow",
+                   type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                   isChange = true,
+                   isCreateOrder = false,
+                   resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.FI,
+                   isMrp = true
+               });
+                }
+                @Html.ValidationMessageFor(model => model.Flow)
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpFiShiftPlan.MrpFiShiftPlan_Shift
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+               Html.RenderAction("_FiShiftComboBox", "Common", new
+               {
+                   controlName = "Shift",
+                   isChange = true,
+               });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanFi_Shift", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+        </div>
+    </fieldset>
+   
+    <div id="fdOrderDetail" style="display: none;">
+    </div>
+}

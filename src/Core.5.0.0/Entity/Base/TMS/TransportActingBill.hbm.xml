@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.TMS.TransportActingBill, com.Sconit.Entity" table="TMS_ActBill" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+			<generator class="identity" />
+		</id>
+		<version name="Version" column="Version" type="Int32" />
+		<property name="Flow" column="Flow" type="String" length="50" />
+		<property name="OrderNo" column="OrderNo" type="String" length="50"/>
+		<property name="Type" column="Type"/>
+		<property name="CarrierDescription" column="CarrierDesc" type="String" length="255" />
+		<property name="Carrier" column="Carrier" type="String" length="50" />
+		<property name="BillAddress" column="BillAddr" type="String" length="50" />
+		<property name="BillAddressDescription" column="BillAddrDesc" type="String" length="255"/>
+		<property name="FreightNo" column="FreightNo" type="String" length="50" />
+		<property name="BillAmount" column="BillAmount" type="Decimal"  />
+		<property name="BillingAmount" column="BillingAmount" type="Decimal"  />
+		<property name="BilledAmount" column="BilledAmount" type="Decimal"  />
+		<property name="PriceList" column="PriceList" type="String" length="50" />
+		<property name="Currency" column="Currency" type="String" length="50" />
+		<property name="IsIncludeTax" column="IsIncludeTax" type="Boolean"  />
+		<property name="TaxCode" column="TaxCode" type="String" length="50" />
+		<property name="IsClose" column="IsClose" type="Boolean"  />
+		<property name="IsProvisionalEstimate" column="IsProvEst" type="Boolean"  />
+		<property name="EffectiveDate" column="EffDate" type="DateTime"  />
+		<property name="PricingMethod" column="PricingMethod" type="String" length="20" />
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+		<property name="BilledQty" column="BilledQty" type="Decimal" />
+		<property name="BillingQty" column="BillingQty" type="Decimal" />
+		<property name="BillQty" column="BillQty" type="Decimal" />
+		<property name="UnitPrice" column="UnitPrice" type="Decimal"  />
+		<property name="PriceListDetail" column="PriceListDetail" type="Int32" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,122 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpExShiftPlan>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+
+    function onItemComboBoxChange(e) {
+        if (e.value != null && e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                var $itemCell = $(e.target).parent().parent();
+                $itemCell.next().html("");
+                $itemCell.next().next().html("");
+                $itemCell.next().next().next().html("");
+                $itemCell.next().next().next().next().html("");
+                combobox.reload();
+            }
+            else {
+                var data = {
+                    "flow": $('#Flow').val(),
+                    "itemCode": e.value,
+                    "dateIndex": $('#DateIndex').val()
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/MrpPlanEx/_WebMrpExShiftPlan/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#MrpExShiftPlan").data("tGrid");
+                        var oldData = $tGrid.dataItem($(e.target).parent().parent().parent());
+                        var $itemCell = $(e.target).parent().parent();
+                        $itemCell.prev().prev().html(data.PlanNo);
+                        $itemCell.next().html(data.ItemDescription);
+                        $itemCell.next().next().html(data.UnitCount);
+                        $itemCell.next().next().next().html(data.Uom);
+                        $itemCell.next().next().next().next().next().next().next().next().next().next().html(data.Remark);
+                        if (oldData != undefined) {
+                            oldData.ItemDescription = data.ItemDescription;
+                            oldData.Uom = data.Uom;
+                            oldData.UnitCount = data.UnitCount;
+                            oldData.Remark = data.Remark;
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            }
+        }
+    }
+
+    function ItemComboBox_DataBinding(e) {
+        if (e.value != "") {
+            e.data = {
+                "flow": $("#Flow").val()
+            }
+        }
+    }
+
+    function onRowDataBound(e) {
+        var row = $(e.row.childNodes);
+        if (e.dataItem.Item != "299999") {
+            //row.last().text("");
+            $(e.row).find("td")[2].onclick = function (e) {
+                e.stopPropagation();
+            };
+
+            //$(e.row).find("td")[3].onclick = function (e) {
+            //    e.stopPropagation();
+            //};
+        }
+    }
+
+</script>
+<fieldset>
+
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpExShiftPlan")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+            //.ToolBar(commands =>
+            //{
+            //    commands.Insert();
+            //})
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_SelectShifts", "MrpPlanEx", new { releaseVersion = ViewBag.ReleaseVersion, flow = ViewBag.Flow, planDate = ViewBag.PlanDate })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();//0
+            columns.Bound(o => o.Sequence).Width(60);//1
+            columns.Bound(o => o.Item).Width(60);//2
+            columns.Bound(o => o.ItemDescription);//3
+            columns.Bound(o => o.UnitCount).Format("{0:0.##}");
+            columns.Bound(o => o.Uom).ReadOnly();
+            columns.Bound(o => o.Shift).ReadOnly();
+            columns.Bound(o => o.StartTime).Format("{0:MM-dd HH:mm}").ReadOnly();
+            columns.Bound(o => o.WindowTime).Format("{0:MM-dd HH:mm}").ReadOnly();
+            columns.Bound(o => o.IsNew).ReadOnly()
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsNew' name='IsNew' value='<#= IsNew #>' <#=IsNew? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsCorrection).ReadOnly()
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsCorrection' name='IsCorrection' value='<#= IsCorrection #>' <#=IsCorrection? checked='checked' : '' #> />");
+            columns.Bound(o => o.CalShiftQty).ReadOnly().Title("需求班数");
+            columns.Bound(o => o.ShiftQty).Width(60);
+            columns.Bound(o => o.Qty).Format("{0:0.##}").Width(80);
+            columns.Bound(o => o.ProductType).EditorTemplateName("ProductTypeGridForeignKey").Width(100);
+        })
+        .ClientEvents(c => c.OnRowDataBound("onRowDataBound"))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

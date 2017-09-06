@@ -1,0 +1,67 @@
+﻿@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("CancelList", "ProcurementSQOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.INV.HuMapping.HuMapping_HuId
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("HuId", ViewBag.HuId != null ? (string)ViewBag.HuId : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_DistributionLabel_Cancel, "Url_SQOrderMstr_Procurement_Cancel", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnCancel"},
+            {"needconfirm","true"},
+            {"onclick","DisLabelCancelClick()"}
+	    })
+        </div>
+    }
+    <script type="text/javascript">
+        function DisLabelCancelClick() {
+            var $grid = $("#HuMappingGrid").data("tGrid").$tbody;
+            if ($grid == undefined || $grid == null) {
+                
+                $message.error('请先查询出条码信息。');
+                return;
+            }
+            var HuId = $grid.children().children().eq(0).text();
+            if (HuId == "没有符合条件的记录。" || HuId == "") {
+                
+                $message.error('请先查询出条码信息。');
+                return;
+            }
+
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                url: "/ProcurementSQOrder/DistributionLabelCancel/",
+                data: { "HuId": HuId },
+                success: function (data, textStatus) {
+                    if (data != "") {
+                        $message.success(data.successesulMessages);
+                       
+                        $("#HuId").val('');
+                        $("#HuMappingGrid").data("tGrid").$tbody.replaceWith("<tr><td>没有符合条件的记录。</td></tr>");
+                    }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $message.error( XMLHttpRequest.responseText );
+                }
+            });
+
+        }
+
+      
+    </script>
+</fieldset>

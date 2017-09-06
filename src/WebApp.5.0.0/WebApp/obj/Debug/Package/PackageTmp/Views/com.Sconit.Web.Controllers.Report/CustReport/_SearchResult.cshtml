@@ -1,0 +1,37 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.Report.CustReportMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("CustReportGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            
+            columns.Bound(o => o.Name).ClientTemplate(Html.ActionLink("<#= Name #>", "Edit", "CustReport", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Code);
+            columns.Bound(o => o.Seq);//.ClientTemplate(Html.ActionLink("<#= Name #>", "ListIndex", "CustReport", new { Code = "<#= Code #>"}, new { target = "_blank" }).ToString());
+                 })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "CustReport"))
+                .ClientEvents(events => events.OnDataBinding("CustReportGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function CustReportGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Name: $('#Name').val()
+            };
+        } 
+    </script>
+</fieldset>

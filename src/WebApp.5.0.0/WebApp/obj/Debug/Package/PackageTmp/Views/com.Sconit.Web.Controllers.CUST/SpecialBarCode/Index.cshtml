@@ -1,0 +1,166 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_CUST_SpecialBarCode_Index" });
+}
+
+<script type="text/javascript">
+    function Export(e) {
+        
+        setPrintValue();
+        if ($("#code").val() == "") {
+            $message.error('请输入要打印的条码');
+            return;
+        }
+        else {
+            $("#hiddenForm").submit();
+        }
+    }
+
+    function Print(e) {
+        
+        setPrintValue();
+        if ($("#code").val() == "") {
+            $message.error('请输入要打印的条码');
+            return;
+        }
+
+        var data = {
+            "code": $("#code").val(),
+            "type": $("#type").val(),
+            "isPrintBin": $("#isPrintBin").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/SpecialBarCode/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function doClick(bl) {
+        if (bl == 4) {
+            $("#divFlow").show();
+            $("#divLocation").hide();
+            $("#divBin").hide();
+
+        }
+        else if (bl == 5) {
+            $("#divFlow").hide();
+            $("#divLocation").show();
+            $("#divBin").hide();
+        }
+        else if (bl == 6) {
+            $("#divFlow").hide();
+            $("#divLocation").hide();
+            $("#divBin").show();
+        }
+    }
+
+    function setPrintValue() {
+        var code = "";
+        var importType = $("input[type=radio][name=ImportType]:checked").val();
+        if (importType == 4) {
+            code = $("#Flow").val();
+        }
+        else if (importType == 5) {
+            code = $("#Location").val();
+        }
+        else if (importType == 6) {
+            code = $("#Bin").val();
+        }
+        $("#code").val(code);
+        $("#type").val(importType);
+        $("#isPrintBin").val($("input[type=checkbox][name=IsPrintBin]:checked").val() != undefined);
+    }
+</script>
+
+<fieldset>
+    <div class="search">
+        <div class="editor-label-2">
+            <label>
+                类型
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @Html.RadioButton("ImportType", 4, true, new { onclick = "doClick(4)" })<span>移库路线</span>
+            <span style="margin: 4px"></span>
+            @Html.RadioButton("ImportType", 5, false, new { onclick = "doClick(5)" })<span>库位</span>
+            <span style="margin: 4px"></span>
+            @Html.RadioButton("ImportType", 6, false, new { onclick = "doClick(6)" })<span>库格</span>
+        </div>
+        <div class="editor-label-2">
+            <label>
+            </label>
+        </div>
+        <div class="editor-field-2">
+        </div>
+        <hr style="border: 100% dashed black;" />
+
+        <div id="divFlow">
+            <div class="search-label">
+                <label>
+                    移库路线
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_FlowComboBox", "Common", new
+                    {
+                        controlName = "Flow",
+                        type = (int)com.Sconit.CodeMaster.OrderType.Transfer
+                    });
+                }
+            </div>
+        </div>
+        <div id="divLocation" style="display: none">
+            <div class="search-label">
+                <label>
+                    库位
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_LocationComboBox", "Common", new
+                    {
+                        controlName = "Location"
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    打印库格
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsPrintBin")
+            </div>
+        </div>
+        <div id="divBin" style="display: none">
+            <div class="search-label">
+                <label>
+                    库格
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Bin")
+            </div>
+        </div>
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="btnPrint" onclick="Print()">@Resources.SYS.Global.Button_Print</button>
+        <button type="button" id="btnExport" onclick="Export(this)">@Resources.SYS.Global.Button_Export</button>
+    </div>
+</fieldset>
+<form id="hiddenForm" action="/SpecialBarCode/Export" target="_blank" method="post">
+    <input id="code" name="code" type="hidden" />
+    <input id="type" name="type" type="hidden" />
+    <input id="isPrintBin" name="isPrintBin" type="hidden" />
+</form>

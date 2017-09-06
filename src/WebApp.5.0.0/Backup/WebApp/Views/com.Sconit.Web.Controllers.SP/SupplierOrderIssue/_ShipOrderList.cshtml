@@ -1,0 +1,114 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+   <script type="text/javascript">
+       $(function () {
+           $("#checkAll").click(function () {
+               $('input[name="checkedRecords"]').attr("checked", this.checked);
+               $("#btnEdit").attr("style", this.checked ? "display:inline" : "display:none");
+           });
+       });
+       function showButtons() {
+           var $checkRecords = $("input[name='checkedRecords']");
+           var showButton = false;
+           for (var i = 0; i < $checkRecords.length; i++) {
+               if ($checkRecords[i].checked) {
+                   showButton = true;
+                   break;
+               }
+           }
+           $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+           $("#btnEdit").attr("style", showButton ? "display:inline" : "display:none");
+       }
+</script>
+<fieldset>
+    <legend>@Resources.ORD.OrderMaster.OrderMaster_Ship_Title</legend>
+    @(
+        Html.Telerik().Grid(Model)
+          .Name("OrderMasterGrid")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.OrderNo);
+          })
+          .Columns(columns =>
+          {
+              columns.Bound(o=> o.CheckOrderNo)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= OrderNo #>'   onClick='showButtons()' />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+
+              columns.Bound(o => o.OrderNo);
+              columns.Bound(o => o.Flow).ClientTemplate("<div title=<#=FlowDescription #>><#=Flow #></div>");
+             
+              //columns.Bound(o => o.OrderTypeDescription).Width(50);
+              columns.Bound(o => o.OrderPriorityDescription).Width(50);
+              columns.Bound(o => o.OrderStatusDescription).Width(60);
+              //columns.Bound(o => o.PartyFromName).ClientTemplate("<div title=<#=PartyFromName #>><#=PartyFrom #></div>");
+             
+              //columns.Bound(o => o.ShipFromAddress);
+              columns.Bound(o => o.ShipToAddress);
+              columns.Bound(o => o.CreateDate);
+
+              columns.Bound(o => o.CreateUserName);
+            
+          })
+            .CellAction(cell =>
+            {
+                if (cell.Column.Member == "CheckOrderNo")
+                {
+                    cell.Text = string.Format("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='{0}'  />", cell.DataItem.OrderNo);
+                }
+            })
+          .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxShipOrderList", "SupplierOrderIssue"))
+                 .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+<script type="text/javascript">
+
+    function editCheckedOrders() {
+                var $checkRecords = $("input[name='checkedRecords']");
+                var checkedOrders = "";
+                for (var i = 0; i < $checkRecords.length; i++) {
+                    if ($checkRecords[i].checked) {
+                        if (checkedOrders == "") {
+                            checkedOrders = $checkRecords[i].value;
+                        } else {
+                            checkedOrders += "," + $checkRecords[i].value;
+                        }
+                    }
+                }
+                if (checkedOrders == "") {
+                    alert('Must Check One');
+                    return;
+                }
+  
+                var data = {
+                    "checkedOrders": checkedOrders
+                };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/SupplierOrderIssue/ShipEdit/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            }
+        });
+    }
+
+     function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val()
+            };
+        } 
+</script>

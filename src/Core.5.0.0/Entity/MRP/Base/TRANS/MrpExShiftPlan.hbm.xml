@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.MrpExShiftPlan, com.Sconit.Entity" table="MRP_MrpExShiftPlan" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="ItemId" column="ItemId" type="Int32"/>
+    <property name="ReleaseVersion" column="ReleaseVersion" type="DateTime"/>
+    <property name="PlanVersion" column="PlanVersion" type="DateTime"/>
+    <property name="PlanNo" column="PlanNo" type="String" length="50"/>
+    <property name="Sequence" column="Sequence" type="Int32"/>
+    <property name="ProductLine" column="ProductLine" type="String" length="50"/>
+    <property name="DateIndex" column="DateIndex" type="String" length="50"/>
+    <property name="Item" column="Item" type="String" length="50"/>
+    <property name="Qty" column="Qty" type="Double"/>
+    <property name="UnitCount" column="UnitCount" type="Double"/>
+    <property name="Uom" column="Uom" type="String" length="5"/>
+    <property name="RateQty" column="RateQty" type="Double"/>
+    <property name="StartTime" column="StartTime" type="DateTime2"/>
+    <property name="WindowTime" column="WindowTime" type="DateTime2"/>
+    <property name="Section" column="Section" type="String" length="50"/>
+    <property name="IsCorrection" column="IsCorrection" type="Boolean"/>
+    <property name="IsNew" column="IsNew" type="Boolean"/>
+    <property name="Remark" column="Remark" type="String" length="50"/>
+    <property name="Bom" column="Bom" type="String" length="50"/>
+    <property name="LocationFrom" column="LocationFrom" type="String" length="50"/>
+    <property name="LocationTo" column="LocationTo" type="String" length="50"/>
+    <property name="ReceivedQty" column="ReceivedQty" type="Double"/>
+    <property name="Shift" column="Shift" type="String" length="50"/>
+    <property name="PlanStartTime" column="PlanStartTime" type="DateTime2"/>
+    <property name="PlanWindowTime" column="PlanWindowTime" type="DateTime2"/>
+    <property name="Speed" column="Speed" type="Double"/>
+    <property name="SwitchTime" column="SwitchTime" type="Double"/>
+    <property name="ItemDescription" column="ItemDescription" type="String" length="100"/>
+    <property name="ShiftQty" column="ShiftQty" type="Double"/>
+    <property name="ShiftType" column="ShiftType" type="Int32" />
+    <property name="PlanDate" column="PlanDate" type="DateTime"/>
+    <property name="OrderNo" column="OrderNo" type="String" length="50"/>
+    <property name="TurnQty" column="TurnQty" type="Int32" />
+    <property name="IsFreeze" column="IsFreeze" type="Boolean"/>
+    <property name="ProductType" column="ProductType"  type="String"  length="5" />
+  </class>
+</hibernate-mapping>

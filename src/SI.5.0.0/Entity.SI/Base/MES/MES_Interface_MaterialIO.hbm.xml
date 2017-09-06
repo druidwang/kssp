@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.MES.MES_Interface_MaterialIO, com.Sconit.Entity.SI" table="MES_Interface_MaterialIO" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+    <property name="io_bound_id" column="io_bound_id" type="Int32"/>
+    <property name="io_bound_no" column="io_bound_no" type="String" length="50"/>
+    <property name="material_code" column="material_code" type="String" length="100"/>
+    <property name="bar_code" column="bar_code" type="String" length="50"/>
+    <property name="batch_no" column="batch_no" type="String" length="50"/>
+    <property name="quantity" column="quantity" type="Decimal"/>	
+		<property name="warehouse_code" column="warehouse_code" type="String" length="50"/>
+    <property name="warehouse_name" column="warehouse_name" type="String" length="200"/>
+    <property name="reservoir" column="reservoir" type="String" length="50"/>	
+		<property name="person_code" column="person_code" type="String" length="50"/>
+    <property name="person_name" column="person_name" type="String" length="200"/>
+        <property name="operate_time" column="operate_time" type="DateTime"/>
+		<property name="io_bound_type_code" column="io_bound_type_code" type="String" length="50"/>
+    <property name="io_bound_type_name" column="io_bound_type_name" type="String" length="200"/>
+    <property name="io_bound_direction" column="io_bound_direction" type="Int32"/>
+    <property name="purchase_order_no" column="purchase_order_no" type="String" length="50"/>	
+		<property name="sale_order_no" column="sale_order_no" type="String" length="50"/>	
+		<property name="sale_line_no" column="sale_line_no" type="String" length="50"/>	
+		<property name="supplier_code" column="supplier_code" type="String" length="50"/>
+    <property name="supplier_name" column="supplier_name" type="String" length="200"/>
+    <property name="customer_code" column="customer_code" type="String" length="50"/>
+    <property name="customer_name" column="customer_name" type="String" length="200"/>
+    <property name="is_sale" column="is_sale" type="Int32"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime"/>
+		<property name="Status" column="Status" type="Int32"/>	
+		<property name="BatchNo" column="BatchNo" type="String" length="50"/>	
+		<property name="UniqueCode" column="UniqueCode" type="String" length="50"/>	
+  	</class>
+</hibernate-mapping>

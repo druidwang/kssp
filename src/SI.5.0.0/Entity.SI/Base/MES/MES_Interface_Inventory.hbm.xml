@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.MES.MES_Interface_Inventory, com.Sconit.Entity.SI" table="MES_Interface_Inventory" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+    <property name="RequestId" column="RequestId" type="String" length="50"/>
+    <property name="MaterialCode" column="MaterialCode" type="String" length="50"/>
+    <property name="WarehouseCode" column="WarehouseCode" type="String" length="50"/>
+    <property name="FactoryCode" column="FactoryCode" type="String" length="50"/>
+    <property name="Uom" column="Uom" type="String" length="50"/>
+    <property name="Quantity" column="Quantity" type="Decimal"/>	
+		<property name="BarCode" column="BarCode" type="String" length="100"/>	
+		<property name="BatchNo" column="BatchNo" type="String" length="50"/>
+    <property name="Reservoir" column="Reservoir" type="String" length="50"/>
+    <property name="Type" column="Type" type="Int32"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime"/>
+		<property name="Status" column="Status" type="Int32"/>	
+  	</class>
+</hibernate-mapping>

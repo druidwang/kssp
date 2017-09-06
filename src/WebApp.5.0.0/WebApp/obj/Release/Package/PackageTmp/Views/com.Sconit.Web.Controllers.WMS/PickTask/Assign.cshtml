@@ -1,0 +1,116 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<script type="text/javascript">
+    function PickGroup_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            $("#fdTaskList").hide();
+        } else {
+            $("#fdTaskList").html("Loading...");
+            $("#fdTaskList").show();
+            var data = { "pickGroupCode": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/PickTask/_PickTaskList/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#fdTaskList").html(data);
+                    //$("#fdOrderDetail").show();
+                    $("tr.t-no-data").find("td").text("Loading...");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+
+    function assignCheckedPickTasks() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedPickTasks = "";
+        var assignUser = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedPickTasks == "") {
+                    checkedPickTasks = $checkRecords[i].value;
+                } else {
+                    checkedPickTasks += "," + $checkRecords[i].value;
+                }
+            }
+        }
+
+        assignUser = $("#PickUser").val();
+        if (checkedPickTasks == "") {
+            alert('请选择一条记录');
+            return;
+        }
+
+        if (assignUser == "") {
+            alert('分派用户不能为空');
+            return;
+        }
+        var data = {
+            "checkedPickTasks": checkedPickTasks,
+            "assignUser": assignUser
+        };
+        $.ajax({
+            type: "Post",
+            dataType: "html",
+            url: "/PickTask/AssignPickTask/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    DisplayTextMessages(data);
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "@Url.Content("~/PickTask/Assign/")",
+                        data: "",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm("AssignList", "PickTask"))
+{  
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="PickTask_Item">
+                    @Resources.WMS.PickTask.PickTask_PickGroupCode
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_PickGroupComboBox", "Common",
+        new
+        {
+            controlName = "PickGroup",
+            type = (int)com.Sconit.CodeMaster.PickGroupType.Pick,
+            isChange = true
+        });
+                }
+            </div>
+        </div>
+    </fieldset>
+
+    <div id="fdTaskList" style="display: none;">
+    </div>
+}

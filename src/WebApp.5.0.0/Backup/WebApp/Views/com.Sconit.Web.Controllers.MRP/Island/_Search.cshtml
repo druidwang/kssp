@@ -1,0 +1,62 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.MRP
+<fieldset>
+    @using (Html.BeginForm("List", "Island"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Machine_Code">
+                    @Resources.MRP.Island.Island_Code
+                </label>
+            </div>
+            <div class="search-field">
+               @Html.TextBox("Code", TempData["IslandSearchModel"] != null ? ((IslandSearchModel)TempData["IslandSearchModel"]).Code : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="Machine_Description">
+                    @Resources.MRP.Island.Island_Description
+                </label>
+            </div>
+            <div class="search-field">
+                  @Html.TextBox("Description", TempData["IslandSearchModel"] != null ? ((IslandSearchModel)TempData["IslandSearchModel"]).Description : string.Empty)
+            </div>
+                 <div class="search-label">
+                <label for="Machine_Description">
+                    @Resources.MRP.Island.Island_Region
+                </label>
+            </div>
+            <div class="search-field">
+                  @{
+                   Html.RenderAction("_RegionComboBox", "Common",
+                       new
+                       {
+                           controlName = "Region",
+                           selectedValue = TempData["IslandSearchModel"] != null ? ((IslandSearchModel)TempData["IslandSearchModel"]).Region : string.Empty
+                       });
+                    }
+            </div>
+              <div class="search-label">
+                <label for="Machine_Description">
+                    @Resources.MRP.Island.Island_IsActive
+                </label>
+            </div>
+            <div class="search-field">
+                  @Html.CheckBox("IsActive", TempData["IslandSearchModel"] != null ? ((IslandSearchModel)TempData["IslandSearchModel"]).IsActive :true)
+            </div>
+
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+           <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+           
+          @Html.Button(Resources.SYS.Global.Button_New, "Url_MRP_Island_View", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew"},
+            {"onclick","location.href='"+@Url.Content("~/Island/New")+"'"}
+	    })
+        </div>
+
+    }
+</fieldset>

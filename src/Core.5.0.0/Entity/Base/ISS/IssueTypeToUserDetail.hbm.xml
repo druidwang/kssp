@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.ISS.IssueTypeToUserDetail, com.Sconit.Entity" table="ISS_IssueTypeToUserDet" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+        <many-to-one name="IssueTypeTo" column="IssueTypeTo" class="com.Sconit.Entity.ISS.IssueTypeToMaster, com.Sconit.Entity" cascade="none" />
+        <many-to-one name="User" column="UserId" class="com.Sconit.Entity.ACC.User, com.Sconit.Entity" cascade="none" />
+		<property name="IsEmail" column="IsEmail" type="Boolean"/>	
+		<property name="IsSMS" column="IsSMS" type="Boolean"/>	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+  	</class>
+</hibernate-mapping>

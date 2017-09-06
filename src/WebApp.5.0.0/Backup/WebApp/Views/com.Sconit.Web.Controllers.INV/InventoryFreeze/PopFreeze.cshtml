@@ -1,0 +1,128 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+@model com.Sconit.Entity.INV.LocationLotDetail
+<fieldset> 
+@using (Html.BeginForm())
+{  
+ <div class="validation-summary-errors">
+    
+            <ul id="popResumeErrorsul">
+            </ul>
+        </div>
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+              </label>
+            </div>
+             <div class="editor-field-2">
+                  @{
+    Html.RenderAction("_ItemComboBox", "Common", new
+    {
+        controlName = "Item_Freeze",
+        selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Item : string.Empty
+
+    });
+                }
+                @Html.ValidationMessageFor(model => model.Item)
+            </div>
+            <div class="search-label">
+             <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Location
+           </label>
+            </div>
+            <div class="search-field">
+                   @{
+    Html.RenderAction("_LocationComboBox", "Common", new
+                           {
+                               controlName = "Location_Freeze",
+                               selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Location : null
+                           });
+                }   
+            </div>
+            <div class="search-label">
+                <label for="LocationLotDetail_LotNo">
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_LotNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LotNo_Freeze", TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).LotNo.ToString() : string.Empty)
+            </div>
+         
+             
+        </div>
+        <div class="search-footer">
+        @if (ViewBag.IsFreeze)
+        {
+            @Html.Button(Resources.SYS.Global.Button_Freeze, "Url_Inventory_InventoryFreeze_Freeze", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "Freeze"},
+        {"needconfirm","true"},
+        {"onclick","FreezeClick()"}
+	})
+        }
+        else
+        {
+            @Html.Button(Resources.SYS.Global.Button_UnFreeze, "Url_Inventory_InventoryFreeze_UnFreeze", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "UnFreeze"},
+        {"needconfirm","true"},
+        {"onclick","UnFreezeClick()"}
+	})
+        }
+        </div>
+}
+
+</fieldset>
+<script type="text/javascript">
+
+
+    function UnFreezeClick() {
+        OnFreezeClick("/InventoryFreeze/_UnFreeze/");
+    }
+
+    function FreezeClick() {
+        OnFreezeClick("/InventoryFreeze/_Freeze/");
+    }
+
+    function OnFreezeClick(url) {
+        var data = {
+            "Item": $('#Item_Freeze').val(),
+            "Location": $('#Location_Freeze').val(),
+            "LotNo": $('#LotNo_Freeze').val()
+            
+        };
+        $.ajax({
+            type: "Json",
+            dataType: "Json",
+            url: url,
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $('#PopFreezeWindow').data('tWindow').close();
+                $message.success(data.SuccessMessage);
+                $("#popResumeErrorsul").html('');
+//                $.ajax({
+//                    type: "Post",
+//                    dataType: "html",
+//                    url: "/InventoryFreeze/List/",
+//                    data: data,
+//                    cache: false,
+//                    success: function (data, textStatus) {
+//                        var $tGrid = $("#content");
+//                        $($tGrid).html(data);
+//                    }
+//                });
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $("#popResumeErrorsul").html(errorMessages);
+            }
+
+        });
+    }
+</script>
+     

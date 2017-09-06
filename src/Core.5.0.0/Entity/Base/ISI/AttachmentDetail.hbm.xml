@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ISI.AttachmentDetail, com.Sconit.Entity" table="ISI_AttachmentDet" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="FileName" column="FileName" type="String" length="255" />
+    <property name="Desc" column="Desc_" type="String" length="255" />
+    <property name="Type" column="Type" type="String" length="50" />
+    <property name="Path" column="Path" type="String" length="500" />
+    <property name="FileExtension" column="FileExtension" type="String" length="50" />
+    <property name="ContentType" column="ContentType" type="String" length="100" />
+    <property name="Size" column="Size" type="Decimal"  />
+    <property name="TaskCode" column="TaskCode" type="String" length="50" />
+    <property name="ModuleType" column="ModuleType" type="String" length="50" />
+    <property name="CreateDate" column="CreateDate" type="DateTime"  />
+    <property name="CreateUser" column="CreateUser" type="String" length="50" />
+    <property name="CreateUserNm" column="CreateUserNm" type="String" length="50" />
+  </class>
+</hibernate-mapping>

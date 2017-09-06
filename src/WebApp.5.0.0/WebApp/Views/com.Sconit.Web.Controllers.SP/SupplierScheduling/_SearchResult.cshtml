@@ -1,0 +1,151 @@
+﻿@model IEnumerable<com.Sconit.Web.Models.ORD.ScheduleBody>
+<script type="text/javascript">
+    function showButton() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var showButton = false ;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                showButton = true;
+                break;
+            }
+        }
+        $("#btnShip").attr("style", showButton ? "display:inline" : "display:none");
+    }
+
+    function onScheduleShip() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var dateStr = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                var date = $checkRecords[i].value;
+                if (dateStr == "") {
+                    dateStr = date;
+                } else {
+                    dateStr += "," + date;
+                }
+            }
+        }
+        var data = {
+            "dateStr": dateStr,
+            "flow": $("#Flow").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/SupplierScheduling/ShipEdit/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            }
+        });
+    }
+    $(function () {
+        j = 1;
+        if (j > 1) { return; }
+        j++;
+        var rows = $("tbody").children("tr:not(.t-no-data)");
+        for (var i = 0; i < rows.length; i++) {
+            var cells = $(rows[i]).children();
+            cells.eq(8).html("<td><input style='width:40px;' type='text' name='CurrentShipQty' id='CurrentShipQty'   /></td>");
+        } 
+    });
+
+    var j = 1;
+//    function ScheduleDetailGrid_OnRowDataBound(e) {
+//    //debugger
+//        if (j > 1) { return; }
+//        j++;
+//        var rows = $("tbody").children("tr:not(.t-no-data)");
+//        for (var i = 0; i < rows.length; i++) {
+//            var cells = $(rows[i]).children();
+//            cells.eq(8).replaceAll("<td><input type='text' name='CurrentShipQty' id='CurrentShipQty'  /></td>");
+//        } 
+//    }
+
+//    function onBtnShipByQty() {
+//        
+//       
+//        var dateStr = "";
+//        var errorStr = "";
+//        var bb = false;
+//        var OrderNoStr = "";
+//        var SequenceStr = "";
+//        var CurrentShipQtyStr = "";
+//        var rows = $("tbody").children("tr:not(.t-no-data)");
+//        for (var i = 0; i < rows.length; i++) {
+//            var cells = $(rows[i]).children();
+//            var CurrentShipQty = cells.find("#CurrentShipQty").val();
+//            if (CurrentShipQty != "" && CurrentShipQty != undefined) {
+//                if (isNaN(CurrentShipQty) || !(parseFloat(CurrentShipQty) > 0)) {
+//                    errorStr += "第" + (i + 1) + "行发货数填写不正确。";
+//                    bb = true;
+//                }
+//                else {
+//                    if (OrderNoStr == "") {
+//                        OrderNoStr = cells.eq(0).text();
+//                        SequenceStr = cells.eq(1).text();
+//                        CurrentShipQtyStr = CurrentShipQty;
+//                    } else {
+//                        OrderNoStr += "," + cells.eq(0).text();
+//                        SequenceStr += "," + cells.eq(1).text();
+//                        CurrentShipQtyStr += "," + CurrentShipQty;
+//                    }
+//                }
+//            }
+//        }
+//        if (bb) {
+//            $message.error(errorStr);
+//            return;
+//        }
+//        if (OrderNoStr == "") {
+//            $message.error('发货明细不能为空，请填写发货数量。');
+//            return;
+//        }
+
+//        var data = {
+//            "OrderNoStr": OrderNoStr,
+//            "SequenceStr": SequenceStr,
+//            "CurrentShipQtyStr": CurrentShipQtyStr
+//        }
+//        $.ajax({
+//            type: "post",
+//            // dataType: "html",
+//            url: "/SupplierScheduling/ShipOrderByQty/",
+//            data: data,
+//            cache: false,
+//            success: function (data, textStatus) {
+//                var successesul = data.SuccessMessage;
+//                $.ajax({
+//                    type: "post",
+//                    dataType: "html",
+//                    data: { IpNo: data.IpNo },
+//                    url: "/SupplierIpMaster/_Edit/",
+//                    cache: false,
+//                    success: function (data, textStatus) {
+//                        var $tGrid = $("#content");
+//                        $($tGrid).html(data);
+//                        $message.success(successesul);
+//                       
+//                    }
+//                });
+
+//            },
+//            error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                var errorMessages = XMLHttpRequest.responseText;
+//                
+//                $message.error(errorMessages);
+//            }
+//        });
+//    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ScheduleDetail")
+                .Columns(columns => columns.LoadSettings((IEnumerable<GridColumnSettings>)ViewData["Columns"]))
+                .Scrollable(c => c.Enabled(false))
+                               // .ClientEvents(events => events.OnComplete("ScheduleDetailGrid_OnRowDataBound"))
+                .Footer(false)
+            )
+</fieldset>

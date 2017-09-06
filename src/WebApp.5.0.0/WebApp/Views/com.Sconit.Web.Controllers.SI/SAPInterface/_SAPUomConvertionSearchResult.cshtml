@@ -1,0 +1,47 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPUomConvertion>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("SAPUomConvertionGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.MATNR);
+            columns.Bound(o => o.MEINS);
+            columns.Bound(o => o.MEINH);
+            columns.Bound(o => o.UMREZ);
+            columns.Bound(o => o.UMREN);
+            columns.Bound(o => o.BatchNo);
+            columns.Bound(o => o.StatusDesc);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSAPUomConvertionList", "SAPInterface"))
+                        .ClientEvents(events => events.OnDataBinding("SAPUomConvertion_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAPUomConvertion_OnDataBinding(e) {
+            e.data = {
+                BatchNo: $('#BatchNo').val(),
+                ItemCode: $('#ItemCode').val(),
+                TransStartDate: $('#TransStartDate').val(),
+                TransEndDate: $("#TransEndDate").val(),
+                Status: $("input[name='Status']:checked").val()
+            }; 
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "View WorkingCalendar";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_WorkingCalendar_View" });
+}
+@Html.Partial("_AjaxMessage")
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.MD.WorkingCalendar.WorkingCalendarView_Tab_Title)
+                .LoadContentFrom("_ViewSearch", "WorkingCalendar")
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.WorkingCalendar.Shift_tab_Title)
+                .LoadContentFrom("ShiftMstr", "WorkingCalendar")
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.WorkingCalendar.WorkingCalendar_Tab_Title)
+                .LoadContentFrom("_Search", "WorkingCalendar")
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.WorkingCalendar.SpecialTime_Tab_Title)
+                .LoadContentFrom("SpecialTime", "WorkingCalendar")
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}
+
+
+

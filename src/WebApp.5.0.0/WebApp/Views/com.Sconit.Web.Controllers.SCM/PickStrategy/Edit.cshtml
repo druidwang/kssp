@@ -1,0 +1,119 @@
+﻿@model com.Sconit.Entity.SCM.PickStrategy
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PickStrategy_View" });
+}
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="search-label">
+                <label>
+                    @Html.LabelFor(model => model.Code)
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.DisplayFor(model => model.Code)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.OddOption)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.PickOddOption,
+        controlName = "OddOption",
+        controlId = "OddOption",
+        selectedValue = Model != null ? (int)Model.OddOption : 0
+
+    });
+                }
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipStrategy)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.ShipStrategy,
+        controlName = "ShipStrategy",
+        controlId = "ShipStrategy",
+        selectedValue = Model != null ? (int)Model.ShipStrategy : 0
+
+    });
+                }
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.UcDeviation)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.UcDeviation).DecimalDigits(2).MinValue(-1)%
+                @Html.ValidationMessageFor(model => model.UcDeviation)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsFulfillUC)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsFulfillUC)
+            </div>
+
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsPickFromBin)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsPickFromBin)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsOddOccupy)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsOddOccupy)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsDevan)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsDevan)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsSimple)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsSimple)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsMatchDirection)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsMatchDirection)
+            </div>
+
+            @Html.Hidden("Code", Model.Code)
+            @Html.Hidden("CreateDate", Model.CreateDate)
+            @Html.Hidden("CreateUserId", Model.CreateUserId)
+            @Html.Hidden("CreateUserName", Model.CreateUserName)
+
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_PickStrategy_View", new Dictionary<string, string>()
+	    {
+	        {"type", "submit"},
+	        {"id", "btnSave"},
+            {"needconfirm","true"}
+	    })
+
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/PickStrategy/Index")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+
+}

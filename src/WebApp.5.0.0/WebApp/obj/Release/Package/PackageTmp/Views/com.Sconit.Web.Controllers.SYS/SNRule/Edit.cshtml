@@ -1,0 +1,195 @@
+﻿@model com.Sconit.Entity.SYS.SNRule
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var blockSeq = "";
+    var currBlock = "";
+    var removedItems = (string)ViewBag.RemovedItems;
+    var addedItems = (string)ViewBag.AddedItems;
+    blockSeq = Model.BlockSeq.Substring(1, Model.BlockSeq.Length - 1);
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SNRule_View" });
+}
+
+<script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sortable").sortable();
+    });
+
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            var BlockSeq = "1";
+            $("#sortable>Div").each(function (i) {
+                //var obj = $(this).children("label").attr("id");
+
+                BlockSeq = BlockSeq + $(this).children("label").attr("id");
+                //alert($(this).children("label").attr("id"));
+                //alert($(this).children("input").val());
+            });
+            $("#BlockSeq").attr("value", BlockSeq);
+        });
+    });
+
+    function div_Close(o) {
+        var parentElement = o.parentNode;
+        if (parentElement) {
+            parentElement.removeChild(o);
+        }
+    };
+</script>
+
+<fieldset>
+<legend>@Resources.SYS.SNRule.SNRule_ExtRuleEdit</legend>
+<form method="post">
+        @Html.HiddenFor(model => model.Code)
+        <input type="hidden" name="Code" id="Code" value="@Model.Code" />
+        <div id="d1" style="border-style: groove; width: 500px; height: 40px">
+            <label id="1" class="lbl" style="width: 100px; height: 20px;">
+                Fixed Code
+            </label>
+            <input id="PreFixed" value="@Model.PreFixed" disabled="disabled" />
+        </div>
+        <div id="sortable" >
+        @while (true)
+        {
+            if (blockSeq.Length > 0 || addedItems.Length > 0)
+            {
+                if (blockSeq.Length > 0)
+                {
+                    currBlock = blockSeq.Substring(0, 1);
+                    blockSeq = blockSeq.Substring(1, blockSeq.Length - 1);
+
+
+                    if (currBlock == "2" && !removedItems.Contains(currBlock))
+                    {
+                    <div id="d2" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="2" class="lbl" style="width: 100px; height: 20px;">
+                            YearCode
+                        </label>
+                        <input id="YearCode" name="YearCode" value="@Model.YearCode" />
+                    </div>
+                    }
+                    if (currBlock == "3" && !removedItems.Contains(currBlock))
+                    {        
+                    <div id="d3" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="3" class="lbl" style="width: 100px; height: 20px;">
+                            MonthCode
+                        </label>
+                        <input id="MonthCode" name="MonthCode" value="@Model.MonthCode" />
+                    </div>
+                    }
+                    if (currBlock == "4" && !removedItems.Contains(currBlock))
+                    {        
+                    <div id="d4" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="4" class="lbl" style="width: 100px; height: 20px;">
+                            DayCode
+                        </label>
+                        <input id="DayCode" name="DayCode" value="@Model.DayCode" />
+                    </div>
+                    }
+                    if (currBlock == "5" && !removedItems.Contains(currBlock))
+                    {        
+                    <div id="d5" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="5" class="lbl" style="width: 100px; height: 20px;">
+                            SeqLength
+                        </label>
+                        <input id="SeqLength" name="SeqLength" value="@Model.SeqLength" />
+                    </div>
+                    }
+                    if (currBlock == "6" && !removedItems.Contains(currBlock))
+                    {        
+                    <div id="d6" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="6" class="lbl" style="width: 100px; height: 20px;">
+                            ExtData
+                        </label>
+                        <button type="button" id="btnEditMore" onclick="location.href='@Url.Content("~/SNRule/ExtRuleEdit/" + @Model.Code)'">
+                            编辑规则拓展</button>
+                        @*<input id="ExtData" type="button" value="编辑规则拓展" onclick="location.href='@Url.Content("~/SNRule/ExtRuleEdit/" + @Model.Code)'" />*@
+                    </div>
+                    }
+                }
+                else
+                {
+                    currBlock = addedItems.Substring(0, 1);
+                    addedItems = addedItems.Substring(1, addedItems.Length - 1);
+                    if (currBlock == "2" && !removedItems.Contains(currBlock))
+                    {
+                    <div id="d2" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="2" class="lbl" style="width: 100px; height: 20px;">
+                            YearCode
+                        </label>
+                        <input id="YearCode" name="YearCode" value="@Model.YearCode" />
+                    </div>
+                    }
+                    if (currBlock == "3" && !removedItems.Contains(currBlock))
+                    {        
+                    <div id="d3" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="3" class="lbl" style="width: 100px; height: 20px;">
+                            MonthCode
+                        </label>
+                        <input id="MonthCode" name="MonthCode" value="@Model.MonthCode" />
+                    </div>
+                    }
+                    if (currBlock == "4" && !removedItems.Contains(currBlock))
+                    {        
+                    <div id="d4" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="4" class="lbl" style="width: 100px; height: 20px;">
+                            DayCode
+                        </label>
+                        <input id="DayCode" name="DayCode" value="@Model.DayCode" />
+                    </div>
+                    }
+                    if (currBlock == "5" && !removedItems.Contains(currBlock))
+                    {        
+                    <div id="d5" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="5" class="lbl" style="width: 100px; height: 20px;">
+                            SeqLength
+                        </label>
+                        <input id="SeqLength" name="SeqLength" value="@Model.SeqLength" />
+                    </div>
+                    }
+                    if (currBlock == "6" && !removedItems.Contains(currBlock))
+                    {        
+                    <div id="d6" style="border-style: groove; width:500px; height: 40px">
+                        <div onclick="div_Close(this.parentNode)" style="float:right; width:10px; height:10px; cursor:hand;  color:Black;font-size:10px;">X </div>  
+                        <label id="6" class="lbl" style="width: 100px; height: 20px;">
+                            ExtData
+                        </label>
+                        <button type="button" id="btnEditMore" onclick="location.href='@Url.Content("~/SNRule/ExtRuleEdit/" + @Model.Code)'">
+                            编辑规则拓展</button>
+                        @*<input id="ExtData" type="button" value="编辑规则拓展" onclick="location.href='@Url.Content("~/SNRule/ExtRuleEdit/" + @Model.Code)'" />*@
+                    </div>
+                    }
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        </div>
+        
+        <div class="editor-footer">
+            <button type="submit" id="btnSubmit">
+                @Resources.SYS.Global.Button_Save</button>
+            @*<input type="button" id="btnSubmit" onclick="btnSubmit_onclick()" value="@Resources.SYS.Global.Button_Submit" />*@
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SNRule/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+
+    <input type="hidden" name="BlockSeq" id="BlockSeq" value=""/>
+ </form>
+ </fieldset>
+ 
+
+
+
+

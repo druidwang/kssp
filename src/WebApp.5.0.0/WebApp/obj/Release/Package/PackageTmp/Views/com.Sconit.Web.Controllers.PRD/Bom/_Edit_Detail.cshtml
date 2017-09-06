@@ -1,0 +1,228 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.PRD.BomDetail
+@Html.Partial("_AjaxMessage")
+<form action="../Bom/_Edit_Detail" method="post">
+    <fieldset>
+        <legend>@Resources.PRD.Bom.BomDetail_Edit_Title</legend>
+        <div class="editor">
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Bom)
+            @Html.HiddenFor(model => model.Item)
+            @Html.HiddenFor(model => model.Operation)
+            @Html.HiddenFor(model => model.OpReference)
+            @Html.HiddenFor(model => model.BackFlushMethod)
+            @Html.HiddenFor(model => model.FeedMethod)
+            @Html.HiddenFor(model => model.IsAutoFeed)
+            @Html.HiddenFor(model => model.StartDate)
+            @Html.HiddenFor(model => model.CreateUserName)
+            @Html.HiddenFor(model => model.CreateDate)
+            @Html.HiddenFor(model => model.LastModifyUserName)
+            @Html.HiddenFor(model => model.LastModifyDate)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Bom)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CurrentBom.CodeDescription)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Item)
+                [@Html.DisplayFor(model => model.ItemDescription)]
+            </div>
+            @*   <div class="editor-label-2">
+            @Html.LabelFor(model => model.Operation)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.Operation)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.OpReference)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.OpReference)
+        </div>*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.StartDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DateTimePickerFor(model => model.EndDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.RateQty)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.RateQty).DecimalDigits(4).MinValue(0.0001M)
+                @Html.ValidationMessageFor(model => model.RateQty)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Uom)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_NewUomDropDownList", "Common", new
+                    {
+                        controlName = "Uom",
+                        item = Model.Item,
+                        includeBlankOption = false,
+                        controlId = "DetailUom",
+                        selectedValue = Model.Uom
+                    });
+                }
+                @Html.ValidationMessageFor(model => model.Uom)
+            </div>
+            @*   <div class="editor-label-2">
+            @Html.LabelFor(model => model.BackFlushMethod)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.BackFlushMethod,
+                    controlName = "BackFlushMethod",
+                    selectedValue = (int)Model.BackFlushMethod
+
+                });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.FeedMethod)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.FeedMethod,
+                    controlName = "FeedMethod",
+                    selectedValue = (int)Model.FeedMethod
+                });
+            }
+        </div>*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StructureType)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.BomStructureType,
+                        controlName = "StructureType",
+                        selectedValue = (int)Model.StructureType
+
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ScrapPercentage)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.ScrapPercentage).DecimalDigits(4).MinValue(0M)
+                @Html.ValidationMessageFor(model => model.ScrapPercentage)
+
+            </div>
+            @*<div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_LocationComboBox", "Common", new { controlName = "Location", selectedValue = Model.Location });
+                }
+            </div>*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BomMrpOption)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.BomMrpOption,
+                        controlName = "BomMrpOption",
+                        selectedValue = (int)Model.BomMrpOption
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsPrint)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsPrint)
+            </div>
+            @*<div class="editor-label-2">
+                @Html.LabelFor(model => model.IsAutoFeed)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsAutoFeed)
+            </div>*@
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_Bom_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnSave"},
+                {"needconfirm","true"}
+	        })
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_Bom_Delete", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btndelete"},
+                {"needconfirm","true"},
+                {"onclick","btnDelete_Click()"}
+	        })
+            <button type="button" id="btnBack_BomDetail" onclick="btnBack_BomDetail_Click();">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+</form>
+<script type="text/javascript">
+    function btnDelete_Click() {
+        var data = {
+            "Id": $("#Id").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Bom/Delete_Detail/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("form[action$='_Edit_Detail']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(response);
+            });
+            return false;
+        });
+    });
+
+    function btnBack_BomDetail_Click() {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Bom/List_Detail/",
+            data: "",
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                //alert(data);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

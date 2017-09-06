@@ -1,0 +1,87 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.INP.InspectMaster
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.INP.InspectMaster.InspectMaster_Title_View</legend>
+            <div class="editor">
+                @Html.HiddenFor(model => model.InspectNo)
+                @Html.HiddenFor(model => model.Type)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.LastModifyUserName)
+                @Html.HiddenFor(model => model.LastModifyDate)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.InspectNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.InspectNo)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.InspectStatus,
+               controlName = "Status",
+               selectedValue = (int)Model.Status,
+               enable = false
+           });
+                }
+                @Html.ValidationMessageFor(model => model.Status)
+            </div>
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.CreateUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CreateUserName)
+            </div>
+
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.CreateDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CreateDate)
+            </div>
+
+             <div class="editor-label-2">
+               @Html.LabelFor(model => model.IsPrint)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.IsPrint)
+            </div>
+           
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.IsATP)
+            </div>
+            <div class="editor-field-2">
+               @Html.DisplayFor(model => model.IsATP)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="btnPrintInspect">
+                @Resources.INP.InspectDetail.btn_PrintInspect</button>
+                <button type="button" id="btnPrintReject">
+                @Resources.INP.InspectDetail.btn_PrintReject</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/InspectionOrder/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+
+      
+    </fieldset>
+}
+        @{
+            //if(Model.Type==com.Sconit.Entity.INP.com.Sconit.CodeMaster.InspectType.Quantity)
+            //{
+            //    Html.RenderAction("InspectionOrderDetailEdit", "InspectionOrder",new {inspectNo= Model.InspectNo});
+            //}
+            //else if (Model.Type == com.Sconit.Entity.INP.com.Sconit.CodeMaster.InspectType.Barcode)
+            //{
+            //    Html.RenderAction("InspectionOrderDetailEditWithBarcode", "InspectionOrder", new { inspectNo = Model.InspectNo });
+            //}
+}
+
+

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISS.SMSStatus>
+<fieldset>
+     @(Html.Telerik().Grid(Model)
+        .Name("SMSRecGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Issue).Title(Resources.ISS.SMSRec.Issue);
+			columns.Bound(o => o.MsgID).Title(Resources.ISS.SMSRec.MsgID);
+			columns.Bound(o => o.SeqID).Title(Resources.ISS.SMSRec.SeqID);
+			columns.Bound(o => o.SrcID).Title(Resources.ISS.SMSRec.SrcID);
+			columns.Bound(o => o.DestID).Title(Resources.ISS.SMSRec.DestID);
+			columns.Bound(o => o.SubmitDatetime).Title(Resources.ISS.SMSRec.SubmitDatetime);
+			columns.Bound(o => o.DoneDatetime).Title(Resources.ISS.SMSRec.DoneDatetime);
+			columns.Bound(o => o.Content).Title(Resources.ISS.SMSRec.Content);
+			columns.Bound(o => o.CreateDate).Title(Resources.ISS.SMSRec.CreateDate);
+        })
+        
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SMSRec"))
+        .ClientEvents(events => events.OnDataBinding("SMSRecGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total!=null?ViewBag.Total:0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SMSRecGrid_OnDataBinding(e) {
+            e.data = {
+                Issue: $('#Issue').val(),
+                MsgID: $('#MsgID').val(),
+				SrcID: $('#SrcID').val(),
+				Content: $('#Content').val(),
+                DateFrom: $('#DateFrom').val(),
+				DateTo: $('#DateTo').val()
+            };
+        } 
+    </script>
+</fieldset>

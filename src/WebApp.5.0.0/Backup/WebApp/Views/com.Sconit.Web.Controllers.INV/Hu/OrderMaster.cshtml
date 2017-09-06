@@ -1,0 +1,184 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@Html.Partial("_AjaxMessage") 
+<script type="text/javascript">
+    function OrderQuery(e) {
+
+        if ($("#orderNo").val() == "" || $("#orderNo").val() == undefined) {
+            $message.error('请根据生产单号进行查询。');
+        }
+        else if ($("#orderNo").val().toString().toUpperCase().indexOf("A") != -1) {
+            $message.error('不能打印配件生产单号。');
+        }
+        else {
+            var data = { "orderNo": $("#orderNo").val() };
+            $.ajax({
+                type: "Post",
+                dataType: "html",
+                data: data,
+                url: "/Hu/OrderDetailList/",
+                cache: false,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#TabStrip");
+                    var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                    $(tabStripContent2).html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+    }
+
+    function onCreateByOrderDetail(isExport) {
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null || grid == undefined) {
+            $message.error('打印明细不能为空。');
+            return;
+        }
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var idStr = "";
+        var ucStr = "";
+        var qtyStr = "";
+        var supplierLotNoStr = "";
+        var manufactureDateStr = "";
+
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var huQty = row.find("#HuQty").val();
+            if (huQty != "" && huQty != 0) {
+                var id = row.find("#Id").val();
+                var uc = row.find("#UnitCount").val();
+                var manufactureDate = row.find("#ManufactureDate").val();
+                if (uc == "" || uc == undefined) {
+                    uc = $(row.find("#UnitCount")).attr("key")
+                }
+                if (uc == "" || uc == undefined) {
+                    $message.error('第' + (rowIndex + 1) + '行单包装不能为空。');
+                    return;
+                }
+                if (manufactureDate == "" || manufactureDate == undefined) {
+                    $message.error('第' + (rowIndex + 1) + '行制造时间不能为空.');
+                    return;
+                }
+
+                var z = /^(\d{4})(\-)(\d{1,2})(\-)(\d{1,2})$/;
+                if (!z.test(manufactureDate)) {
+                    $message.error('第' + (rowIndex + 1) + '行制造时间输入错误.');
+                    return;
+                }
+                
+                var isChangeUC = row.find("#IsChangeUnitCount").val();
+
+                if (isChangeUC == "false" && (parseFloat(huQty) * 1e10) % (parseFloat(uc) * 1e10) > 0) {
+                    //$message.error('行' + (rowIndex + 1).toString() + '的数量' + huQty.toString("0.##") + '不是单包装' + uc.toString("0.##") + '的整数倍.');
+                    //return;
+                }
+                var supplierLotNo = row.find("#SupplierLotNo").val();
+                if (idStr == "") {
+                    idStr = id;
+                    ucStr = uc;
+                    supplierLotNoStr = "";
+                    qtyStr = huQty;
+                    manufactureDateStr = manufactureDate;
+                } else {
+                    idStr += "," + id;
+                    ucStr += "," + uc;
+                    supplierLotNoStr += "," + "";
+                    qtyStr += "," + huQty;
+                    manufactureDateStr += "," + manufactureDate;
+                }
+
+            }
+        }
+        if (idStr == "") {
+            $message.error('明细不能为空.');
+            return;
+        }
+
+        if (isExport) {
+            $("#OrderDetailidStr").val(idStr);
+            $("#OrderDetailucStr").val(ucStr);
+            $("#OrderDetailsupplierLotNoStr").val(supplierLotNoStr);
+            $("#OrderDetailimanufactureDateStr").val(manufactureDateStr);
+            $("#OrderDetailqtyStr").val(qtyStr);
+            $("#OrderDetailisExport").val(isExport);
+            $("#hiddenOrderDetailForm").submit();
+        } else {
+            var data = {
+                "OrderDetailidStr": idStr,
+                "OrderDetailucStr": ucStr,
+                "OrderDetailsupplierLotNoStr": supplierLotNoStr,
+                "OrderDetailqtyStr": qtyStr,
+                "OrderDetailisExport": isExport,
+                "OrderDetailimanufactureDateStr": manufactureDateStr
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                async: false,
+                url: "/Hu/CreateHuByOrderDetail/",
+                cache: false,
+                success: function (data, textStatus) {
+                    DisplayJsonMessages(data);
+                    if (data.PrintUrl != "") {
+                        PrintOrder(data.PrintUrl);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    DisplayJsonMessages(errorMessages);
+                }
+            });
+        }
+
+    }
+
+  
+</script>
+
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="Hu_OrderNo">
+                   生产单号
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("orderNo", ViewBag.OrderNo != null ? (string)ViewBag.OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+        </div>
+        <div class="editor-footer">
+         <button type="button" id="Search" onclick="OrderQuery()">
+                @Resources.SYS.Global.Button_Search</button>
+           @Html.Button(Resources.SYS.Global.Button_Print, "Url_Inventory_Hu_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnPrint"},
+                    {"needconfirm","true"},
+                    {"onclick","onCreateByOrderDetail(false)"}
+	            })
+                 @Html.Button(Resources.SYS.Global.Button_Export, "Url_Inventory_Hu_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnExport"},
+                    {"needconfirm","true"},
+                    {"onclick","onCreateByOrderDetail(true)"}
+	            })
+        </div>
+    </fieldset>
+    <form id="hiddenOrderDetailForm" action="/Hu/CreateHuByOrderDetail" target="_blank"  method="post">
+        <input id="OrderDetailqtyStr" name="OrderDetailqtyStr" type="hidden" />
+        <input id="OrderDetailucStr"  name="OrderDetailucStr" type="hidden" />
+        <input id="OrderDetailidStr" name="OrderDetailidStr" type="hidden" />
+        <input id="OrderDetailsupplierLotNoStr" name="OrderDetailsupplierLotNoStr" type="hidden" />
+        <input id="OrderDetailisExport" name="OrderDetailisExport" type="hidden" />
+        <input id="OrderDetailimanufactureDateStr" name="OrderDetailimanufactureDateStr" type="hidden" />
+    </form>
+    <div id="divOrderDeatil">
+    </div>

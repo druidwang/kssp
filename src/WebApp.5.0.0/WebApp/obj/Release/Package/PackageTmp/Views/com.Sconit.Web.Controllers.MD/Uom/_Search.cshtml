@@ -1,0 +1,76 @@
+﻿@using com.Sconit.Entity.MD
+@using Telerik.Web.Mvc
+@using com.Sconit.Web.Models.SearchModels.MD
+@Html.Partial("_AjaxMessage") 
+<fieldset>  
+        <div class="search">
+            <div class="search-label">
+                <label for="Uom_Code">
+                    @Resources.MD.Uom.Uom_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["UomSearchModel"] != null ? ((UomSearchModel)TempData["UomSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Uom_Desc">
+                    @Resources.MD.Uom.Uom_Desc
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["UomSearchModel"] != null ? ((UomSearchModel)TempData["UomSearchModel"]).Description : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch" onclick="btnSearch_Click();">
+                @Resources.SYS.Global.Button_Search</button>
+
+    @Html.Button(Resources.SYS.Global.Button_New, "Url_Uom_Edit", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew"},
+            {"needconfirm","false"},
+            {"onclick","btnNew_Click()"}
+	    })
+            @*<button type="button" id="btnNew" onclick="btnNew_Click();">
+                @Resources.SYS.Global.Button_New</button>*@
+        </div>
+</fieldset>
+
+<script language="javascript" type="text/javascript">
+    function btnNew_Click() {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Uom/New/",
+            cache: false,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+            }
+        });
+    }
+
+    function btnSearch_Click() {
+        var data = {
+            "Code": $("#Code").val(),
+            "Description": $("#Description").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Uom/List/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+            }
+        });
+    }
+</script>

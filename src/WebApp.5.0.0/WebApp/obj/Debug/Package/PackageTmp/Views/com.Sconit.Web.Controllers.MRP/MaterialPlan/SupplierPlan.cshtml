@@ -1,0 +1,302 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MaterialPlan_SupplierPlan" });
+}
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.EXT.PageLan.LogisticFlow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    isChange = true,
+                    type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                    isSupplier = true,
+                    selectedValue = TempData["MaterailPlanSearchModel"] != null ? ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).Flow : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.EXT.PageLan.PlanType
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                <span id="divDaily">
+                    @Html.RadioButton("DateType", 4, TempData["MaterailPlanSearchModel"] != null ? (((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).DateType == 0 ? true : false) : false, new { onclick = "DateType_Click(4)" })
+                    @Resources.EXT.PageLan.DailyPlan
+                </span>
+                <span id="divWeekly">
+                    @Html.RadioButton("DateType", 5, TempData["MaterailPlanSearchModel"] != null ? (((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).DateType == 1 ? true : false) : false, new { onclick = "DateType_Click(5)" })
+                    @Resources.EXT.PageLan.WeekPlan
+                </span>
+                <span id="divMonthly">
+                    @Html.RadioButton("DateType", 6, TempData["MaterailPlanSearchModel"] != null ? (((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).DateType == 2 ? true : false) : false, new { onclick = "DateType_Click(6)" })
+                    @Resources.EXT.PageLan.MothPlan
+                </span>
+            }
+        </div>
+        @if (((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"] != null && ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).DateType == 4) || ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"] == null))
+        {
+            <div class="empty" id="EmptyDivId">
+                <div class="search-label">
+                    <label>
+                    </label>
+                </div>
+                <div class="search-field">
+                </div>
+            </div>
+            <div class="search" id="PlanVersionDivId" style="display: none">
+                <div class="search-label">
+                    <label>
+                        版本号
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+            Html.RenderAction("_PurchasePlanMasterComboBox", "Common", new
+            {
+                isRelease = true,
+                controlName = "PlanVersion",
+                selectedValue = TempData["MaterailPlanSearchModel"] != null ? ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).PlanVersion : null
+            });           
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="empty" id="EmptyDivId"  style="display: none">
+                <div class="search-label">
+                    <label>
+                    </label>
+                </div>
+                <div class="search-field">
+                </div>
+            </div>
+            <div class="search" id="PlanVersionDivId">
+                <div class="search-label">
+                    <label>
+                        版本号
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+            Html.RenderAction("_PurchasePlanMasterComboBox", "Common", new
+            {
+                isRelease = true,
+                controlName = "PlanVersion",
+                selectedValue = TempData["MaterailPlanSearchModel"] != null ? ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).PlanVersion : null
+            });           
+                    }
+                </div>
+            </div> 
+        }
+
+        <div class="search-label">
+            <label>
+                物料
+            </label>
+        </div>
+        <div class="search-field">
+            @*@{
+                Html.RenderAction("_FlowItemComboBox", "Common", new
+                {
+                    controlName = "Item",
+                    selectedValue = TempData["MaterailPlanSearchModel"] != null ? ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).Item : string.Empty
+                });
+            }*@
+            @Html.TextBox("Item", TempData["MaterailPlanSearchModel"] != null ? ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).Item : string.Empty)
+        </div>
+        <div class="search-label">
+            <label>
+            </label>
+        </div>
+        <div class="search-field">
+        </div>
+    </div>
+    <div class="editor-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="Search" onclick="QueryPlanView()">
+            @Resources.SYS.Global.Button_Search</button>
+    </div>
+</fieldset>
+<div id="divView">
+</div>
+<script type="text/javascript">
+    var dateType = 4;
+    function Item_DataBinding(e) {
+        e.data = {
+            flow: $("#Flow").val()
+        }
+    }
+    $(document).ready(function () {
+        if ($("#Flow").val() != "") {
+            var data = {
+                "flow": $("#Flow").val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/MaterialPlan/GetPlanTypes/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    if (data.IsCheckMrpDailyPlan) {
+                        $('#divDaily').show();
+                    }
+                    else {
+                        $('#divDaily').hide();
+                    }
+                    if (data.IsCheckMrpWeeklyPlan) {
+                        $('#divWeekly').show();
+                    }
+                    else {
+                        $('#divWeekly').hide();
+                    }
+                    if (data.IsCheckMrpMonthlyPlan) {
+                        $('#divMonthly').show();
+                    }
+                    else {
+                        $('#divMonthly').hide();
+                    }
+                    if ($("#DateType:checked").val() == undefined) {
+                        $("#DateType:first").attr("checked", true);
+                    }
+                }
+            });
+        }
+        if ($("#DateType:checked").val() == undefined) {
+            $("#DateType:first").attr("checked", true);
+        }
+    }
+    );
+
+    function PurchasePlanMaster_DataBinding(e) {
+        e.data = {
+            flow: $("#Flow").val(),
+            dateType: $("input[type=radio][name=DateType]:checked").val(),
+            isRelease: true
+        }
+    }
+
+    function Flow_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.text("");
+        } else {
+            if (e.value != "") {
+                $('#PlanVersion').data('tComboBox').value('');
+                $('#PlanVersion').data('tComboBox').text('');
+                $("#PlanVersion").data("tComboBox").reload();
+
+                var data = {
+                    "flow": e.value
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/MaterialPlan/GetPlanTypes/",
+                    cache: false,
+                    data: data,
+                    success: function (data, textStatus) {
+                        if (data.IsCheckMrpDailyPlan) {
+                            $('#divDaily').show();
+                        }
+                        else {
+                            $('#divDaily').hide();
+                        }
+                        if (data.IsCheckMrpWeeklyPlan) {
+                            $('#divWeekly').show();
+                        }
+                        else {
+                            $('#divWeekly').hide();
+                        }
+                        if (data.IsCheckMrpMonthlyPlan) {
+                            $('#divMonthly').show();
+                        }
+                        else {
+                            $('#divMonthly').hide();
+                        }
+                        if ($("#DateType:checked").val() == undefined) {
+                            $("#DateType:first").attr("checked", true);
+                        }
+                    }
+                });
+            }
+            else {
+                combobox.text("");
+            }
+        }
+    }
+
+    function DateType_Click(e) {
+        if (e == 4) {
+            $('#EmptyDivId').show();
+            $('#PlanVersionDivId').hide();
+        }
+        else {
+            $('#EmptyDivId').hide();
+            $('#PlanVersionDivId').show();
+        }
+        $('#PlanVersion').data('tComboBox').value('');
+        $('#PlanVersion').data('tComboBox').text('');
+        $("#PlanVersion").data("tComboBox").reload();
+    }
+
+    function QueryPlanView() {
+        //$message.error('计划版本不能为空。');
+        if ($('#Flow').val() == '') {
+            $message.error('路线不能为空。');
+            return;
+        }
+        var dateType = $("#DateType:checked").val();
+
+        if ($('#PlanVersion').val() == '' && dateType != 4) {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+
+        var url = "/MaterialPlan/GetPurchasePlan/";
+        if (dateType == "") {
+            $message.error('计划时间类型没有选择。');
+            return;
+        }
+        if (dateType == 4) {
+            url = "/MaterialPlan/GetPurchasePlanDaily/"
+        }
+        var data = {
+            "flow": $('#Flow').val(),
+            "item": $('#Item').val(),
+            "planVersion": $('#PlanVersion').val(),
+            "isStartTime": false,
+            "isSupplier":true,
+            "dateType": $("input[type=radio][name=DateType]:checked").val(),
+            "backUrl": "~/MaterialPlan/SupplierPlan"
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: url,
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divView");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            }
+        });
+    }
+</script>

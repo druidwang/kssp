@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Sort_List_Query" });
+}
+
+@Html.Partial("_Search")
+
+@Html.Partial("_SearchResult")

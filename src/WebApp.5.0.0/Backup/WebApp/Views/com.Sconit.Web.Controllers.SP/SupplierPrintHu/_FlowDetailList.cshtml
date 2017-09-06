@@ -1,0 +1,141 @@
+﻿@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.SCM.FlowDetail>
+<script type="text/javascript">
+
+    function OnHuQtyFocus(e) {
+        $(e).next().html("");
+    }
+
+    function FlowDetailGrid_OnDataBinding(e) {
+        e.data = {
+            Flow: $("#Flow").val(),
+            Item: $("#Item").val()
+        };
+    }
+    
+    function FlowDetailGrid_OnDataBound(e) {
+        $('input[name="UnitCount"]').unbind("blur");
+        $('input[name="UnitCount"]').each(function (a, b) {
+            var uc = $(b).val();
+            var qty = $(b).parent().next().next().next().next().children("input").val();
+            var ucDesc = $(b).parent().next().next().children("input").val();
+            if (ucDesc == "") {
+                ucDesc = "包";
+            }
+            $(b).parent().next().next().children("span").html(Math.ceil(qty / uc) + ucDesc);
+
+            if ($(b).attr("IsChangeUnitCount") == "false") {
+                $(b).parent().replaceWith("<td><lable>" + $(b).val() + "</lable> <input id='UnitCount' key=" + $(b).val() + " name='UnitCount'  type='hidden' /></td>");
+            }
+            else {
+                //$(b).val("");
+                $(b).blur(function () {
+                    if (parseInt($(b).val()) <= 0 || isNaN($(b).val())) {
+                        //$(b).val("");
+                        $(b).next().html("<span class='field-validation-error' ><span>单包装只能为大于0数字</span></span>");
+                    }
+                    else {
+                        $(b).next().html("");
+                    }
+                    var uc = $(b).val();
+                    var qty = $(b).parent().next().next().next().next().children("input").val();
+                    var ucDesc = $(b).parent().next().next().children("input").val();
+                    if (ucDesc == "") {
+                        ucDesc = "包";
+                    }
+                    if (!isNaN(qty)) {
+                        $(b).parent().next().next().children("span").html(Math.ceil(qty / uc) + ucDesc);
+                    }
+                    else {
+                        $(b).parent().next().next().children("span").html($(b).val().split(" ").length + ucDesc);
+                    }
+                });
+
+                $(b).focus(function () {
+                    $(b).next().html("");
+                });
+            }
+        });
+    }
+
+    function OnHuQtyBlur(e) {
+        var ischage = e.parentElement.parentElement.cells[1].childNodes[0].value;
+        var uc = $(e).parent().prev().prev().prev().prev().children("input").val();
+        if (uc == "" || uc == undefined) {
+            uc = $(e).parent().prev().prev().prev().prev().children("input").attr("key");
+        }
+        if (ischage == "false") {
+            if (e.value != "") {
+                if (parseInt(e.value) < 0 || isNaN(e.value)) {
+                    //$(e).val('');
+                    //debugger
+                    $(e).next().html("<span class='field-validation-error'><span>本条不能修改数量,数量只能为大于0数字</span></span>");
+                }
+                else {
+                    if ((parseFloat(e.value) * 1e10) % (parseFloat(uc) * 1e10) > 0) {
+                        //$(e).val('');
+                        $(e).next().html("<span class='field-validation-error'><span>数量必须是单包装的整数倍.</span></span>");
+                    }
+                }
+            }
+        }
+        else {
+            var z = /^\d+\.?\d+( \d+\.?\d+)*$/;
+            if (!z.test(e.value)) {
+                $(e).next().html("<span class='field-validation-error'><span>必须是数字,或者多个数字用一个空格分割.</span></span>");
+            }
+        }
+        var qty = $(e).val();
+        var ucDesc = $(e).parent().prev().prev().children("input").val();
+        if (ucDesc == "") {
+            ucDesc = "包";
+        }
+        if (!isNaN(qty)) {
+            $(e).parent().prev().prev().children("span").html(Math.ceil(qty / uc) + ucDesc);
+        }
+        else {
+            $(e).parent().prev().prev().children("span").html($(e).val().split(" ").length + ucDesc);
+        }
+    }
+</script>
+<fieldset>
+    <legend>@Resources.INV.Hu.Hu_FlowDetail</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("FlowDetail")
+
+       .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden().ClientTemplate("<input type='text' id='Id'  name='Id' value='<#= Id #>' />").Hidden();
+            columns.Bound(o => o.IsChangeUnitCount).ClientTemplate("<input type='text' id='IsChangeUnitCount'  name='IsChangeUnitCount' value='<#= IsChangeUnitCount #>' />").Hidden();
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.UnitCount).ClientTemplate("<input type='text' style='width:40px;' id='UnitCount' IsChangeUnitCount='<#= IsChangeUnitCount #>' name='UnitCount' value='<#= UnitCount #>' /><span ></span>").Width(40);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription).ClientTemplate("<input type='hidden' id='UnitCountDescription' name='UnitCountDescription' value='<#= UnitCountDescription #>' /><span><#= UnitCountDescription #><span>");
+            columns.Bound(o => o.ManufactureDate).ClientTemplate("<input class='t-input' id='ManufactureDate'  style='width:90px;' name='ManufactureDate' type='text' value='" + DateTime.Now.ToString("yyyy-MM-dd") + "' />").Width(90);
+            columns.Bound(o => o.HuQty).ClientTemplate("<input type='text' style='width:100px;' id='HuQty' onblur='OnHuQtyBlur(this)' onfocus='OnHuQtyFocus(this)' name='HuQty' value='<#= HuQty #>' /><span ></span>")
+                .Width(100);
+            columns.Bound(o => o.SupplierLotNo).ClientTemplate("<input type='text' style='width:80px;' id='SupplierLotNo'  name='SupplierLotNo' value='<#= SupplierLotNo #>' />").Width(100);
+            columns.Bound(o => o.UnitCount).ClientTemplate("<input type='text' id='UnitCount' name='UnitCount' value='<#= UnitCount #>' />").Hidden();
+            columns.Bound(o => o.Remark).ClientTemplate("<input type='text' style='width:80px;' id='Remark'  name='Remark' value='<#= Remark #>' />").Width(100);
+        })
+         .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxFlowDetailList", "SupplierPrintHu"))
+        .ClientEvents(events => events.OnDataBinding("FlowDetailGrid_OnDataBinding")
+            .OnDataBound("FlowDetailGrid_OnDataBound")
+        )
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(200);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+)
+</fieldset>

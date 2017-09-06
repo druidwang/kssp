@@ -1,0 +1,93 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.TMS.Vehicle
+@{
+    ViewBag.Title = Resources.TMS.Vehicle.Vehicle_New_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Vehicle_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.TMS.Vehicle.Vehicle_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.Carrier)
+            </div>
+            <div class="editor-field-2">
+                  @{
+    Html.RenderAction("_CarrierComboBox", "Common",
+                    new
+                    {
+                        controlName = "Carrier",
+                        checkPermission = false
+                    });
+                }
+            </div>
+               <div class="editor-label-2">
+                @Html.LabelFor(model => model.DrivingNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.DrivingNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Driver)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Driver)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Tonnage)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Tonnage)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.VIN)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.VIN)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MobilePhone)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.MobilePhone)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Phone)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Phone)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Address)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Fax)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Fax)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Vehicle/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

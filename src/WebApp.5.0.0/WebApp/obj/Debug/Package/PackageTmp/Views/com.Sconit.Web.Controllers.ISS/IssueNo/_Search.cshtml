@@ -1,0 +1,51 @@
+﻿@using com.Sconit.Entity.ISS
+@using com.Sconit.Web.Models.SearchModels.ISS
+<fieldset>
+    @using (Html.BeginForm("List", "IssueNo"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Code">
+                    @Resources.ISS.IssueNo.Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["IssueNoSearchModel"] != null ? ((IssueNoSearchModel)TempData["IssueNoSearchModel"]).Code : string.Empty)
+            </div>
+
+			<div class="search-label">
+                <label for="Description">
+                    @Resources.ISS.IssueNo.Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["IssueNoSearchModel"] != null ? ((IssueNoSearchModel)TempData["IssueNoSearchModel"]).Description : string.Empty)
+            </div>
+
+			<div class="editor-label-2">
+                <label for="IssueType">
+                    @Resources.ISS.IssueNo.IssueType
+                </label>
+            </div>
+            <div class="editor-field-2">
+				@{
+                    Html.RenderAction("_IssueTypeDropDownList", "Common",
+                        new { controlName = "IssueType", includeBlankOption = true,
+                              selectedValue = TempData["IssueTypeSearchModel"] != null ? ((IssueNoSearchModel)TempData["IssueNoSearchModel"]).IssueTypeCode:string.Empty
+                        });
+                }
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+        </div>    
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+			<button type="button" id="btnNew" onclick="location.href='@Url.Content("~/IssueNo/New")'">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+    }
+</fieldset>

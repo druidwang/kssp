@@ -1,0 +1,12 @@
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Release\com.Sconit.Persistence.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Release\com.Sconit.Persistence.pdb
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Release\Castle.Core.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Release\Castle.Facilities.NHibernateIntegration.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Release\Castle.Windsor.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Release\NHibernate.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Release\Castle.Services.Transaction.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Release\log4net.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Release\Iesi.Collections.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\obj\Release\Persistence.csprojResolveAssemblyReference.cache
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\obj\Release\com.Sconit.Persistence.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\obj\Release\com.Sconit.Persistence.pdb

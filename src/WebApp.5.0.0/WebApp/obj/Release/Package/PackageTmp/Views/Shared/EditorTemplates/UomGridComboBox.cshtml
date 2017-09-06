@@ -1,0 +1,8 @@
+﻿@(Html.Telerik().ComboBox()
+      .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(""))
+          .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingUom", "Common").Cache(true))
+      .AutoFill(true)
+      .HighlightFirstMatch(true)
+      .ClientEvents(events => events.OnDataBinding("onUomDataBinding")
+      )
+)

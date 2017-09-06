@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.WMS.UnpickShipPlan, com.Sconit.Entity" table="WMS_UnpickShipPlan" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<version name="Version" column="Version" type="Int32" />	
+		<property name="ShipPlanId" column="ShipPlanId" type="Int32"/>	
+		<property name="Flow" column="Flow" type="String" length="50"/>	
+		<property name="OrderNo" column="OrderNo" type="String" length="50"/>	
+		<property name="OrderSeq" column="OrderSeq" type="Int32"/>	
+		<property name="OrderDetId" column="OrderDetId" type="Int32"/>	
+		<property name="StartTime" column="StartTime" type="DateTime"/>	
+		<property name="WindowTime" column="WindowTime" type="DateTime"/>	
+		<property name="Item" column="Item" type="String" length="50"/>	
+		<property name="ItemDesc" column="ItemDesc" type="String" length="100"/>	
+		<property name="RefItemCode" column="RefItemCode" type="String" length="50"/>	
+		<property name="Uom" column="Uom" type="String" length="5"/>	
+		<property name="BaseUom" column="BaseUom" type="String" length="5"/>	
+		<property name="UnitQty" column="UnitQty" type="Decimal"/>	
+		<property name="UnitCount" column="UC" type="Decimal"/>	
+		<property name="UCDesc" column="UCDesc" type="String" length="50"/>	
+		<property name="UnpickQty" column="UnpickQty" type="Decimal"/>	
+		<property name="Priority" column="Priority" type="Int16"/>	
+		<property name="LocFrom" column="LocFrom" type="String" length="50"/>	
+		<property name="LocFromName" column="LocFromNm" type="String" length="100"/>	
+		<property name="LocTo" column="LocTo" type="String" length="50"/>	
+		<property name="LocToName" column="LocToNm" type="String" length="100"/>	
+		<property name="Station" column="Station" type="String" length="50"/>	
+		<property name="Dock" column="Dock" type="String" length="50"/>	
+		<property name="IsActive" column="IsActive" type="Boolean"/>	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+		<property name="CloseUser" column="CloseUser" type="Int32"/>	
+		<property name="CloseUserName" column="CloseUserNm" type="String" length="100"/>	
+		<property name="CloseDate" column="CloseDate" type="DateTime"/>	
+		<property name="OrderType" column="OrderType" type="Int16"/>	
+  	</class>
+</hibernate-mapping>

@@ -1,0 +1,43 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_FacilityMaster_View" });
+}
+<input type="hidden" name="FCID" id="FCID" value="@Model" />
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.FMS.FacilityMaster.FacilityMaster_Tab_Title)
+               .LoadContentFrom("_Edit", "FacilityMaster", new { id = Model })
+               .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+               
+            tabstrip.Add()
+                .Text(Resources.FMS.FacilityMaster.FacilityMaintain_Tab_Title)
+                .LoadContentFrom("_FacilityMaintainPlan", "FacilityMaster", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.FMS.FacilityMaster.FacilityTrans_Tab_Title)
+                .LoadContentFrom("_FacilityTrans", "FacilityMaster", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+            
+            tabstrip.Add()
+               .Text(Resources.FMS.FacilityMaster.FacilityAttachment_Tab_Title)
+               .LoadContentFrom("FacilityAttachment", "FacilityMaster", new { id = Model })
+               .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+            
+            
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}

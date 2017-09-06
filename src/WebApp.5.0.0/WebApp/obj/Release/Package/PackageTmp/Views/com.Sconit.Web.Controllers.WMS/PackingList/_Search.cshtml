@@ -1,0 +1,56 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<fieldset>
+    @using (Html.BeginForm("List", "PackingList"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="PackingList_PackingListCode">
+                    @Resources.WMS.PackingList.PackingList_PackingListCode
+                </label>
+            </div>
+            <div class="search-field">
+               @Html.TextBox("PackingListCode", TempData["PackingListSearchModel"] != null ? ((PackingListSearchModel)TempData["PackingListSearchModel"]).PackingListCode : string.Empty)
+            </div>
+           <div class="search-label">
+                <label for="PackingList_PackUserName">
+                    @Resources.WMS.PackingList.PackingList_PackUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PickUserName", TempData["PackingListSearchModel"] != null ? ((PackingListSearchModel)TempData["PackingListSearchModel"]).PackUser : string.Empty)
+            </div>
+            
+        </div>
+            <div class="search-label">
+                <label for="PackingList_DateFrom">
+                    @Resources.WMS.PackingList.PackingList_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+.Value(TempData["PackingListSearchModel"] != null ? ((PackingListSearchModel)TempData["PackingListSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="PackingList_DateTo">
+                    @Resources.WMS.PackingList.PackingList_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+.Value(TempData["PackingListSearchModel"] != null ? ((PackingListSearchModel)TempData["PackingListSearchModel"]).DateTo : System.DateTime.Today.AddDays(0))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_PackingList_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+        </div>
+
+    }
+</fieldset>

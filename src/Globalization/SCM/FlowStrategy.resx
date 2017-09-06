@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FlowStrategy_Desc1" xml:space="preserve">
+    <value>Description</value>
+    <comment>描述</comment>
+  </data>
+  <data name="FlowStrategy_DistributionStrategy" xml:space="preserve">
+    <value>Strategy</value>
+  </data>
+  <data name="FlowStrategy_EmLeadTime" xml:space="preserve">
+    <value>EmLeadTime</value>
+    <comment>紧急提前期</comment>
+  </data>
+  <data name="FlowStrategy_Flow" xml:space="preserve">
+    <value>Flow</value>
+    <comment>路线</comment>
+  </data>
+  <data name="FlowStrategy_LeadTime" xml:space="preserve">
+    <value>LeadTime</value>
+    <comment>提前期</comment>
+  </data>
+  <data name="FlowStrategy_NextOderTime" xml:space="preserve">
+    <value>NextOderTime</value>
+  </data>
+  <data name="FlowStrategy_NextWindowTime" xml:space="preserve">
+    <value>NextWindowTime</value>
+  </data>
+  <data name="FlowStrategy_ProductionStrategy" xml:space="preserve">
+    <value>Production Strategy</value>
+  </data>
+  <data name="FlowStrategy_Strategy" xml:space="preserve">
+    <value>Strategy</value>
+    <comment>策略</comment>
+  </data>
+  <data name="FlowStrategy_SubconctractingStrategy" xml:space="preserve">
+    <value>Strategy</value>
+    <comment>策略</comment>
+  </data>
+  <data name="FlowStrategy_TimeUnit" xml:space="preserve">
+    <value>TimeUnit</value>
+    <comment>时间单位</comment>
+  </data>
+  <data name="FlowStrategy_TransferStrategy" xml:space="preserve">
+    <value>Strategy</value>
+    <comment>策略</comment>
+  </data>
+  <data name="FlowStrategy_Updated" xml:space="preserve">
+    <value>FlowStrategy has been Updated succssfully.</value>
+    <comment>策略更新成功</comment>
+  </data>
+  <data name="FlowStrategy_WaitBatch" xml:space="preserve">
+    <value>WaitBatch</value>
+  </data>
+  <data name="FlowStrategy_WaitTime" xml:space="preserve">
+    <value>WaitTime</value>
+  </data>
+  <data name="FlowStrategy_WaitTimeWithHour" xml:space="preserve">
+    <value>Hour</value>
+  </data>
+  <data name="FlowStrategy_WeekInterval" xml:space="preserve">
+    <value>WeekInterval</value>
+    <comment>间隔周期</comment>
+  </data>
+  <data name="FlowStrategy_WindowTimeType" xml:space="preserve">
+    <value>WindowTimeType</value>
+  </data>
+  <data name="FlowStrategy_WinTime" xml:space="preserve">
+    <value>WinTime</value>
+    <comment>窗口时间</comment>
+  </data>
+  <data name="FlowStrategy_WinTime1" xml:space="preserve">
+    <value>Monday</value>
+    <comment>星期一</comment>
+  </data>
+  <data name="FlowStrategy_WinTime2" xml:space="preserve">
+    <value>Tuesday</value>
+    <comment>星期二</comment>
+  </data>
+  <data name="FlowStrategy_WinTime3" xml:space="preserve">
+    <value>Wednesday</value>
+    <comment>星期三</comment>
+  </data>
+  <data name="FlowStrategy_WinTime4" xml:space="preserve">
+    <value>Wednesday</value>
+    <comment>星期四</comment>
+  </data>
+  <data name="FlowStrategy_WinTime5" xml:space="preserve">
+    <value>Friday</value>
+    <comment>星期五</comment>
+  </data>
+  <data name="FlowStrategy_WinTime6" xml:space="preserve">
+    <value>Saturday</value>
+    <comment>星期六</comment>
+  </data>
+  <data name="FlowStrategy_WinTime7" xml:space="preserve">
+    <value>Sunday</value>
+    <comment>星期日</comment>
+  </data>
+  <data name="FlowStrategy_WinTimeToolTip" xml:space="preserve">
+    <value>format:08:00|10:30|15:30</value>
+    <comment>格式: 窗口时间1|窗口时间2，如：08:00|10:30|15:30</comment>
+  </data>
+  <data name="FlowStrategy_WinTimeDiff" xml:space="preserve">
+    <value>WinTimeDiff</value>
+  </data>
+  <data name="FlowStrategy_MrpLeadTime" xml:space="preserve">
+    <value>MrpLeadTime</value>
+  </data>
+  <data name="FlowStrategy_HaltTime" xml:space="preserve">
+    <value>HaltTime</value>
+  </data>
+  <data name="FlowStrategy_TrialProduceTime" xml:space="preserve">
+    <value>TrialProduceTime</value>
+  </data>
+  <data name="FlowStrategy_IsCheckMrpDailyPlan" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="FlowStrategy_IsCheckMrpMonthlyPlan" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="FlowStrategy_IsCheckMrpWeeklyPlan" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="FlowStrategy_PlanType" xml:space="preserve">
+    <value>Plan Type</value>
+  </data>
+  <data name="FlowStrategy_RccpLeadTime" xml:space="preserve">
+    <value>RccpLeadTime</value>
+  </data>
+  <data name="FlowStrategy_SafeTime" xml:space="preserve">
+    <value>SafeTime</value>
+  </data>
+  <data name="FlowStrategy_LeadTimeOption" xml:space="preserve">
+    <value>LeadTimeOption</value>
+  </data>
+  <data name="FlowStrategy_SeqGroup" xml:space="preserve">
+    <value>SeqGroup</value>
+  </data>
+</root>

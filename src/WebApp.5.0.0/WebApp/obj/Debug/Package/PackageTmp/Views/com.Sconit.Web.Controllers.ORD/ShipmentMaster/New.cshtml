@@ -1,0 +1,466 @@
+﻿@model com.Sconit.Entity.CUST.VehicleInFactoryMaster
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ShipmentMaster_New" });
+}
+<script type="text/javascript">
+
+    $(function () {
+       
+        $("#IpNo").keydown(function () {
+            if (event.keyCode == 13) {
+               
+                
+                var data = {
+                    "IpNo": $(this).val()
+                }
+                $(this).val("");
+                $.ajax({
+                    type: "post",
+                    dataType: "text",
+                    data: data,
+                    url: "/ShipmentMaster/IpMastrScan/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $.ajax({
+                            type: "get",
+                            dataType: "html",
+                            url: "/ShipmentMaster/_IpMasterList/",
+                            cache: false,
+                            success: function (data, textStatus) {
+                                var $tGrid = $("#divIpMasterList");
+                                $($tGrid).html(data);
+                                $($tGrid).show();
+                            }
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        $message.error(errorMessages);
+                    }
+                });
+            }
+        });
+
+    });
+
+
+
+    function onCreate() {
+       
+        
+        if ($("#VehicleNo").val() == "") {
+            $message.error('车牌号必填');
+            return;
+        }
+        if ($("#Driver").val() == "") {
+            $message.error('驾驶员必填');
+            return;
+        }
+        if ($("input[type=radio][name=CreateType]:checked").val() == 0) {
+            var data = {
+                "VehicleNo": $("#VehicleNo").val(),
+                "Driver": $("#Driver").val(),
+                "Shipper": $("#Shipper").val(),
+                "CaseQty": $("#CaseQty").val(),
+                "AddressTo": $("#AddressTo").val()
+            }
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/ShipmentMaster/CreateShipmentMaster/",
+                data: data,
+                success: function (data, textStatus) {
+                    var Messages = data.status;
+                    if (data != "") {
+                        var data = {
+                            "ShipmentNo": data.ShipmentNo
+                        }
+                       
+                        $.ajax({
+                            type: "get",
+                            data: data,
+                            dataType: "html",
+                            url: "/ShipmentMaster/_Edit/",
+                            cache: false,
+                            success: function (data, textStatus) {
+                                var $tGrid = $("#content");
+                                $($tGrid).html(data);
+                                $($tGrid).show();
+                                $message.success(Messages);
+                            }
+                        });
+                    }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                    
+                }
+            });
+        }
+        else {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var checkedIpNos = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    if (checkedIpNos == "") {
+                        checkedIpNos = $checkRecords[i].value;
+                    } else {
+                        checkedIpNos += "," + $checkRecords[i].value;
+                    }
+                }
+            }
+            if (checkedIpNos == "") {
+                alert('Must Check One');
+                return;
+            }
+
+            var data = {
+                "checkedIpNos": checkedIpNos,
+                "VehicleNo": $("#VehicleNo").val(),
+                "Driver": $("#Driver").val(),
+                "Shipper": $("#Shipper").val(),
+                "CaseQty": $("#CaseQty").val(),
+                "AddressTo": $("#AddressTo").val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/ShipmentMaster/checkdCreateShipmentMaster/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    var Messages = data.status;
+                    if (data != "") {
+                        var data = {
+                            "ShipmentNo": data.ShipmentNo
+                        }
+
+                        $.ajax({
+                            type: "get",
+                            data: data,
+                            dataType: "html",
+                            url: "/ShipmentMaster/_Edit/",
+                            cache: false,
+                            success: function (data, textStatus) {
+                                var $tGrid = $("#content");
+                                $($tGrid).html(data);
+                                $($tGrid).show();
+                                $message.success(Messages);
+                            }
+                        });
+                    }
+                }
+            });
+            
+        }
+    }
+
+    function Typeclick(ths) {
+        if (ths.value == "0") {
+            document.getElementById("lableIpNo").style.display = 'inline';
+            document.getElementById("fieldIpNo").style.display = 'inline';
+            document.getElementById("labelFlow").style.display = "none";
+            document.getElementById("fieldFlow").style.display = "none";
+            document.getElementById("labelPartyFrom").style.display = "none";
+            document.getElementById("fieldPartyFrom").style.display = "none";
+            document.getElementById("labelPartyTo").style.display = "none";
+            document.getElementById("fieldPartyTo").style.display = "none";
+            document.getElementById("btnNew").style.display = "inline";
+            document.getElementById("btnSearch").style.display = "none";
+
+
+            document.getElementById("labelLicenseplateNo").style.display = "inline";
+            document.getElementById("fieldLicenseplateNo").style.display = "inline";
+            document.getElementById("labelDeliveryPeople").style.display = "inline";
+            document.getElementById("fieldDeliveryPeople").style.display = "inline";
+            document.getElementById("fieldTransportCompany").style.display = "inline";
+            document.getElementById("labelTransportCompany").style.display = "inline";
+            document.getElementById("fieldBoxNumber").style.display = "inline";
+            document.getElementById("labelBoxNumber").style.display = "inline";
+            document.getElementById("labelAddressTo").style.display = "inline";
+            document.getElementById("fieldAddressTo").style.display = "inline";
+        }
+        else {
+            document.getElementById("lableIpNo").style.display = 'none';
+            document.getElementById("fieldIpNo").style.display = 'none';
+            document.getElementById("labelFlow").style.display = "inline";
+            document.getElementById("fieldFlow").style.display = "inline";
+            document.getElementById("labelPartyFrom").style.display = "inline";
+            document.getElementById("fieldPartyFrom").style.display = "inline";
+            document.getElementById("labelPartyTo").style.display = "inline";
+            document.getElementById("fieldPartyTo").style.display = "inline";
+            document.getElementById("btnNew").style.display = "none";
+            document.getElementById("btnSearch").style.display = "inline";
+
+            document.getElementById("labelLicenseplateNo").style.display = "none";
+            document.getElementById("fieldLicenseplateNo").style.display = "none";
+            document.getElementById("labelDeliveryPeople").style.display = "none";
+            document.getElementById("fieldDeliveryPeople").style.display = "none";
+            document.getElementById("fieldTransportCompany").style.display = "none";
+            document.getElementById("labelTransportCompany").style.display = "none";
+            document.getElementById("fieldBoxNumber").style.display = "none";
+            document.getElementById("labelBoxNumber").style.display = "none";
+            document.getElementById("labelAddressTo").style.display = "none";
+            document.getElementById("fieldAddressTo").style.display = "none";
+            
+        }
+
+    }
+    function Flow_Change() {
+
+    }
+    function txtBlur(tis) {
+       
+        var value = tis.value;
+        if (isNaN(value) || value<0) {
+            $message.error("箱数必须为正整数。");
+            tis.focus();
+            tis.value = "";
+            return;
+        }
+    }
+
+
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.ShipmentMaster.ShipmentMaster_CreateType
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.RadioButton("CreateType", 0, ViewBag.CreateType == "0" ? true : false, new { onclick = "Typeclick(this)" })扫描创建
+                @Html.RadioButton("CreateType", 1, ViewBag.CreateType == "1" ? true : false, new { onclick = "Typeclick(this)" })手动创建
+            </div>
+            @{
+    if (ViewBag.CreateType == "0")
+    {
+                <div class="search-label" id="lableIpNo">
+                    <label>
+                        @Resources.ORD.ShipmentMaster.ShipmentMaster_IpNo
+                    </label>
+                </div>
+                <div class="search-field" id="fieldIpNo">
+                    @Html.TextBox("IpNo")
+                </div>
+    }
+    else
+    {
+                <div class="search-label" style="display: none" id="lableIpNo">
+                    <label>
+                        @Resources.ORD.ShipmentMaster.ShipmentMaster_IpNo
+                    </label>
+                </div>
+                <div class="search-field" style="display: none" id="fieldIpNo">
+                    @Html.TextBox("IpNo")
+                </div>
+    }
+
+    if (ViewBag.CreateType == "1")
+    {
+                <div class="search-label" id="labelFlow">
+                    <label>
+                        @Resources.ORD.ShipmentMaster.ShipmentMaster_Flow
+                    </label>
+                </div>
+                <div class="search-field" id="fieldFlow">
+                    @{
+        Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "Flow",
+            type = (int)com.Sconit.CodeMaster.OrderType.Procurement
+        });
+                    }
+                </div>
+    }
+    else
+    {
+                <div class="search-label" style="display: none" id="labelFlow">
+                    <label>
+                        @Resources.ORD.ShipmentMaster.ShipmentMaster_Flow
+                    </label>
+                </div>
+                <div class="search-field" style="display: none" id="fieldFlow">
+                    @{
+        Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "Flow",
+            type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+            isChange=true
+        });
+                    }
+                </div>
+    }
+
+    if (ViewBag.CreateType == "1")
+    {
+                <div class="search-label" id="labelPartyFrom">
+                    <label>
+                        @Resources.ORD.ShipmentMaster.ShipmentMaster_PartyFrom
+                    </label>
+                </div>
+                <div class="search-field" id="fieldPartyFrom">
+                    @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+
+                controlName = "PartyFrom",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement
+
+            });
+                    }
+                </div>
+    }
+    else
+    {
+                <div class="search-label" style="display: none" id="labelPartyFrom">
+                    <label>
+                        @Resources.ORD.ShipmentMaster.ShipmentMaster_PartyFrom
+                    </label>
+                </div>
+                <div class="search-field" style="display: none" id="fieldPartyFrom">
+                    @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+
+                controlName = "PartyFrom",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement
+
+            });
+                    }
+                </div>
+    }
+
+    if (ViewBag.CreateType == "1")
+    {
+                <div class="search-label" id="labelPartyTo">
+                    <label>
+                        @Resources.ORD.ShipmentMaster.ShipmentMaster_PartyTo
+                    </label>
+                </div>
+                <div class="search-field" id="fieldPartyTo">
+                    @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+                        new
+                        {
+                            controlName = "PartyTo",
+                            orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement
+
+                        });
+                    }
+                </div>
+    }
+    else
+    {
+                <div class="search-label" style="display: none" id="labelPartyTo">
+                    <label>
+                        @Resources.ORD.ShipmentMaster.ShipmentMaster_PartyTo
+                    </label>
+                </div>
+                <div class="search-field" style="display: none" id="fieldPartyTo">
+                    @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+                        new
+                        {
+                            controlName = "PartyTo",
+                            orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement
+
+                        });
+                    }
+                </div>
+    }
+            }
+     
+            <div class="search-label" id="labelLicenseplateNo">
+                <label>
+                    @Resources.ORD.ShipmentMaster.ShipmentMaster_VehicleNo
+                </label>
+            </div>
+            <div class="search-field" id="fieldLicenseplateNo">
+                @Html.TextBox("VehicleNo")
+            </div>
+            <div class="search-label" id="labelDeliveryPeople">
+                <label>
+                    @Resources.ORD.ShipmentMaster.ShipmentMaster_Driver
+                </label>
+            </div>
+            <div class="search-field" id="fieldDeliveryPeople">
+                @Html.TextBox("Driver")
+            </div>
+             <div class="search-label" id="labelTransportCompany">
+                <label>
+                    @Resources.ORD.ShipmentMaster.ShipmentMaster_Shipper
+                </label>
+            </div>
+            <div class="search-field" id="fieldTransportCompany">
+                @Html.TextBox("Shipper")
+            </div>
+            <div class="search-label" id="labelBoxNumber">
+                <label>
+                    @Resources.ORD.ShipmentMaster.ShipmentMaster_CaseQty
+                </label>
+            </div>
+            <div class="search-field" id="fieldBoxNumber">
+               <input id="CaseQty" name="CaseQty" type="text" onblur="txtBlur(this)" />
+            </div>
+                 <div class="search-label" id="labelAddressTo">
+                <label>
+                    @Resources.ORD.ShipmentMaster.ShipmentMaster_AddressTo
+                </label>
+            </div>
+            <div class="search-field" id="fieldAddressTo">
+                @Html.TextBox("AddressTo")
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="btnNew" onclick="onCreate()">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnSearch" onclick="BillofLadingMasterSerch()" style="display: none">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+    </fieldset>
+   
+    <div id="divIpMasterList" style="display: none;">
+    </div>
+   
+}
+<script type="text/javascript">
+    function BillofLadingMasterSerch() {
+        var data = {
+            "Flow": $("#Flow").val(),
+            "PartyFrom": $("#PartyFrom").val(),
+            "PartyTo": $("#PartyTo").val()
+        }
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            data: data,
+            url: "/ShipmentMaster/_SearchIpMasterList/",
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#divIpMasterList");
+                $($tGrid).html(data);
+                $($tGrid).show();
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+
+
+    }
+
+
+</script>

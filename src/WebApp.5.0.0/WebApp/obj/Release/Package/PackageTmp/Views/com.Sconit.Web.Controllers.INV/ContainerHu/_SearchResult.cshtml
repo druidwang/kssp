@@ -1,0 +1,46 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.INV.ContainerHu>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ContainerGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.ContainerId);
+        })
+        .Columns(columns =>
+        {
+          //  columns.Bound(o => o.ContainerId).ClientTemplate(Html.ActionLink("<#= ContainerId #>", "Edit", "ContainerHu", new { ID = "<#= ContainerId #>" }, null).ToString());
+            columns.Bound(o => o.ContainerId).Title("容器编号");
+            columns.Bound(o => o.HuId).Title("条码");
+            columns.Bound(o => o.Container).Title("容器");
+
+            columns.Bound(o => o.Item).Title("零件号");
+            columns.Bound(o => o.ItemDesc).Title("零件描述");
+            columns.Bound(o => o.Qty).Title("数量"); 
+                 })
+      
+                .Scrollable(c => c.Enabled(false))
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ContainerHu"))
+                .ClientEvents(events => events.OnDataBinding("ContainerHuGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ContainerHuGrid_OnDataBinding(e) {
+            e.data = {
+                ContainerId: $('#ContainerId').val(),
+                ContainerDescription: $('#ContainerDescription').val()
+            };
+        }
+    </script>
+</fieldset>

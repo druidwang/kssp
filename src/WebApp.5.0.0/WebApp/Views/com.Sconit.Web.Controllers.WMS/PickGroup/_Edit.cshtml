@@ -1,0 +1,90 @@
+﻿@model com.Sconit.Entity.WMS.PickGroup  
+@Html.Partial("_AjaxMessage")
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+                <input type="hidden" name="PickGroupCode" id="PickGroupCode" value="@Model.PickGroupCode" />
+                @Html.HiddenFor(model => model.CreateUserId)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.Version)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PickGroupCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PickGroupCode)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsActive)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsAutoAssign)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBoxFor(model => model.IsAutoAssign)
+            </div>
+        </div>
+        <div class="editor-footer">
+        @Html.Button(Resources.SYS.Global.Button_Save, "Url_PickGroup_Edit", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnSave_PickGroup"},
+            {"needconfirm","true"},
+            {"onclick","btnSave_PickGroup_Click()"}
+	    })
+        @Html.Button(Resources.SYS.Global.Button_Delete, "Url_PickGroup_Edit", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnDelete_PickGroup"},
+            {"needconfirm","true"},
+            {"onclick","location.href='"+Url.Content("~/PickGroup/Delete/" + Model.PickGroupCode) +"'"}
+	    })
+
+
+            <button type="button" id="btnBack_PickGroup" onclick="location.href='@Url.Content("~/PickGroup/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+
+<script type="text/javascript">
+    function btnSave_PickGroup_Click() {
+        var data = {
+            "PickGroupCode": $("#PickGroupCode").val(),
+            "Description": $("#Description").val(),
+            "IsActive": $("#IsActive").is(':checked'),
+            "IsAutoAssign": $("#IsAutoAssign").is(':checked'),
+            "CreateUserId": $("#CreateUserId").val(),
+            "CreateUserName": $("#CreateUserName").val(),
+            "CreateDate": $("#CreateDate").val(),
+            "Version": $("#Version").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/PickGroup/_Edit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<com.Sconit.Web.Models.ORD.ScheduleBody>
+
+<script type="text/javascript">
+    var j = 1;
+    $(function () {
+        j = 1;
+        if (j > 1) { return; }
+        j++;
+        var rows = $("tbody").children("tr:not(.t-no-data)");
+        for (var i = 0; i < rows.length; i++) {
+            var cells = $(rows[i]).children();
+            cells.eq(8).html("<td><input style='width:40px;' type='text' name='CurrentShipQty' id='CurrentShipQty'   /></td>");
+        }
+    });
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ScheduleDetail")
+                .Columns(columns => columns.LoadSettings((IEnumerable<GridColumnSettings>)ViewData["Columns"]))
+                .Scrollable(c => c.Enabled(false))
+                .Footer(false)
+            )
+</fieldset>

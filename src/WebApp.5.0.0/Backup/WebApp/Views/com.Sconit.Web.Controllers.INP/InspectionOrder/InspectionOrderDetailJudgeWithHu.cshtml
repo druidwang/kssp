@@ -1,0 +1,83 @@
+﻿@model IEnumerable<com.Sconit.Entity.INP.InspectDetail>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+            showButtons();
+        });
+    });
+
+    function showButtons() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var count = 0;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                count++;
+            }
+        }
+        //$("#btnJudgeQualify").attr("style", count > 0 ? "display:inline" : "display:none");
+        $("#btnJudgeHu").attr("style", count > 0 ? "display:inline" : "display:none");
+        $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+    }
+</script>
+<fieldset>
+    <legend>@Resources.INP.InspectDetail.InspectDetail_Title_View</legend>
+    <table style="width: 500px;">
+        <tr>
+            <td>失效模式</td>
+            <td>
+                @{
+                    Html.RenderAction("_FailCodeComboBox", "Common", new
+                    {
+                        controlName = "HandleResult",
+                        isIncludeQualify = true
+                    });
+                }
+            </td>
+        </tr>
+    </table>
+
+    @(
+ Html.Telerik().Grid(Model).Name("InspectionOrderDetailGrid")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.Id);
+          })
+                  .Editable(editing => editing.Mode(GridEditMode.InCell))
+          .Columns(columns =>
+          {
+              columns.Bound(o => o.Id)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>' onClick='showButtons()'  />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll'  />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" }).ReadOnly(true);
+              columns.Bound(o => o.Item).ReadOnly(true);
+              columns.Bound(o => o.ItemDescription).ReadOnly(true);
+              columns.Bound(o => o.ReferenceItemCode).ReadOnly(true);
+              columns.Bound(o => o.Uom).ReadOnly(true);
+              columns.Bound(o => o.UnitCount).Format("{0:0.########}").ReadOnly(true);
+              columns.Bound(o => o.HuId).ReadOnly(true);
+              columns.Bound(o => o.LotNo).ReadOnly(true).Title(Resources.INV.Hu.Hu_manufacture_date);
+              columns.Bound(o => o.SupplierLotNo).ReadOnly(true);
+              columns.Bound(o => o.ExpireDate).ReadOnly(true).Format("{0:yyyy-MM-dd}");
+              columns.Bound(o => o.CurrentLocation);
+              columns.Bound(o => o.CurrentInspectQty).Format("{0:0.########}");
+              columns.Bound(o => o.QualifyQty).Format("{0:0.########}");
+              columns.Bound(o => o.RejectQty).Format("{0:0.########}");
+              columns.Bound(o => o.FailCode);
+              columns.Bound(o => o.InspectQty).Format("{0:0.########}").ReadOnly(true);
+              columns.Bound(o => o.JudgeFailCode).EditorTemplateName("FailCodeIncludeQualifyGridComboBox").Width(100);
+              columns.Bound(o => o.CurrentInspectResultNote);
+          })
+          .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_SelectJudgeBatchEditing", "InspectionOrder",
+                    new { inspectNo = ViewBag.inspectNo, inspectType = 1 }))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 50 : ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

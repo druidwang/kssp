@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="USP_Busi_GetActiveFlowDet">
+    exec USP_Busi_GetActiveFlowDet ?
+    <!--
+      0	 det.Id, 
+      1	 mstr.Code AS Flow, 
+      2	 mstr.PartyFrom, 
+      3	 mstr.PartyTo, 
+      4	 str.Strategy, 
+      5	 str.LeadTime, 
+      6	 str.EmLeadTime, 
+      7	 str.TimeUnit, 
+      8	 str.WeekInterval, 
+      9	 str.WinTime1, 
+      10	 str.WinTime2,
+      11	 str.WinTime3, 
+      12	 str.WinTime4, 
+      13	 str.WinTime5, 
+      14	 str.WinTime6, 
+      15	 str.WinTime7, 
+      16	 str.NextOrderTime, 
+      17	 str.NextWinTime, 
+      18	 mstr.Type, 
+      19	 det.Item, 
+      20	 det.Uom, 
+      21	 det.BaseUom, 
+      22	 det.UC,
+      23	 CASE WHEN isnull(det.LocFrom, '') = '' THEN mstr.LocFrom ELSE det.LocFrom END AS LocFrom, 
+      24	 CASE WHEN isnull(det.LocTo, '') = '' THEN mstr.LocTo ELSE det.LocTo END AS LocTo, 
+      25	 det.SafeStock, 
+      26	 det.MaxStock, 
+      27	 det.MinLotSize, 
+      28	 det.OrderLotSize, 
+      29	 det.RoundUpOpt, 
+      30	 det.MrpWeight, 
+      31	 det.MrpTotal,
+      32	 det.MrpTotalAdj, 
+      33	 det.ExtraDmdSource,
+      34   mstr.ExtraDmdSource
+  -->
+  </sql-query>
+
+  <sql-query name="USP_Busi_GetDeferredFeedOrderBomDet">
+    <return alias="bfOrderBomDet" class="com.Sconit.Entity.ORD.OrderBomDetail, com.Sconit.Entity"/>
+    exec USP_Busi_GetDeferredFeedOrderBomDet ?,?,?
+  </sql-query>
+
+  <sql-query name="USP_Busi_GetOrderPlan4LeanEngine">
+    exec USP_Busi_GetOrderPlan4LeanEngine
+    <!--
+      0	LocTo as Loc, 	
+      1	Item as ItemCode, 	
+      2	BaseUom as Uom, 	
+      3   ManufactureParty,
+      4	WindowTime as ReqTime, 	
+      5	OrderNo, 
+      6   Flow as FlowCode, 	
+      7	'RCT' as IRType,	
+      8	'Orders' as PlanType,	
+	      Case 	
+	        when Type = 1 then 'Procurement'   采购	
+	        when Type = 2 then 'Transfer'      移库	
+	        when Type = 3 then 'Distribution'  销售	
+	        when Type = 4 then 'Production'    生产	
+	        when Type = 5 then 'Production'    委外加工	
+	        when Type = 6 then 'Procurement'   客供品	
+	        when Type = 7 then 'Transfer'      委外领料	
+	        when Type = 8 then 'Procurement'   计划协议	
+      9	end as FlowType,	
+      10	OrderQty * UnitQty as OrderedQty,    
+      11  RecQty * UnitQty as FinishedQty     
+      -->
+  </sql-query>
+
+  <!-- 整车生产单暂停 -->
+  <sql-query name="USP_Busi_PauseVanOrder">
+    exec USP_Busi_PauseVanOrder
+  </sql-query>
+
+  <!-- 整车生产单恢复后，调整顺序 -->
+  <sql-query name="USP_Busi_UpdateSeq4RestoreVanOrder">
+    exec USP_Busi_UpdateSeq4RestoreVanOrder ?,?,?,?,?
+  </sql-query>
+
+  <!-- 生产线暂停 -->
+  <sql-query name="USP_Busi_PauseProductLine">
+    exec USP_Busi_PauseProductLine ?,?,?
+  </sql-query>
+
+  <!-- 生产线恢复 -->
+  <sql-query name="USP_Busi_RestartProductLine">
+    exec USP_Busi_RestartProductLine ?,?,?
+  </sql-query>
+
+  <!-- 整车生产单顺序调整，目的生产单没有导入，相当于把原生产单调整至没有导入LES的生产单队列中 -->
+  <sql-query name="USP_Busi_UpdateSeq4AdjVanOrderSeq_TargetVanOrderNotExist">
+    exec USP_Busi_UpdateSeq4AdjVanOrderSeq_TargetVanOrderNotExist ?,?,?,?,?,?,?,?
+  </sql-query>
+
+  <!-- 整车生产单顺序调整，目的生产单有导入 -->
+  <sql-query name="USP_Busi_UpdateSeq4AdjVanOrderSeq_TargetVanOrderExist">
+    exec USP_Busi_UpdateSeq4AdjVanOrderSeq_TargetVanOrderExist ?,?,?,?,?,?,?,?,?
+  </sql-query>
+
+  <!-- 自动学习没有拉动路线的生产单Bom -->
+  <sql-query name="USP_Busi_AutoAddFlowDet">
+    exec USP_Busi_AutoAddFlowDet ?,?,?
+  </sql-query>
+
+  <!-- 将LocationLotDet的数据查询全部改到存储过程里面-->
+  <!-- 获取负库存数据 -->
+  <sql-query name="USP_Busi_GetMinusInventory">
+    <return alias="LocationLotDetail" class="com.Sconit.Entity.INV.LocationLotDetail, com.Sconit.Entity"/>
+    exec USP_Busi_GetMinusInventory ?,?,?,?,?
+  </sql-query>
+
+  <!-- 获取供应商寄售库存-->
+  <sql-query name="USP_Busi_GetManufacturePartyConsignmentInventory">
+    <return alias="LocationLotDetail" class="com.Sconit.Entity.INV.LocationLotDetail, com.Sconit.Entity"/>
+    exec USP_Busi_GetManufacturePartyConsignmentInventory ?,?,?,?,?,?
+  </sql-query>
+
+  <!-- 获取被占用库存-->
+  <sql-query name="USP_Busi_GetOccupyInventory">
+    <return alias="LocationLotDetail" class="com.Sconit.Entity.INV.LocationLotDetail, com.Sconit.Entity"/>
+    exec USP_Busi_GetOccupyInventory ?,?,?,?,?,?
+  </sql-query>
+
+  <sql-query name="USP_Busi_GetVoidOccupyInventory">
+    <return alias="LocationLotDetail" class="com.Sconit.Entity.INV.LocationLotDetail, com.Sconit.Entity"/>
+    exec USP_Busi_GetVoidOccupyInventory ?,?,?,?,?,?
+  </sql-query>
+
+  <sql-query name="USP_Busi_GetPlusInventory">
+    <return alias="LocationLotDetail" class="com.Sconit.Entity.INV.LocationLotDetail, com.Sconit.Entity"/>
+    exec USP_Busi_GetPlusInventory ?,?,?,?,?
+  </sql-query>
+
+  <sql-query name="USP_Busi_GetVoidInventory">
+    <return alias="LocationLotDetail" class="com.Sconit.Entity.INV.LocationLotDetail, com.Sconit.Entity"/>
+    exec USP_Busi_GetVoidInventory ?,?,?,?,?
+  </sql-query>
+
+  <sql-query name="USP_Busi_GetAotuPickInventory">
+    <return alias="LocationLotDetail" class="com.Sconit.Entity.INV.LocationLotDetail, com.Sconit.Entity"/>
+    exec USP_Busi_GetAotuPickInventory ?,?,?,?,?,?
+  </sql-query>
+  <!-- 获取待生成排序装箱单明细 -->
+  <sql-query name="USP_Busi_GetWaitSeqDet">
+    exec USP_Busi_GetWaitSeqDet
+  </sql-query>
+
+  <!-- 获取实时库存报表 -->
+  <sql-query name="USP_Report_RealTimeLocationDet">
+    exec USP_Report_RealTimeLocationDet ?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+
+  <!-- 产生月结数据 -->
+  <sql-query name="USP_Busi_SetMonthInv_All">
+    exec USP_Busi_SetMonthInv_All ?,?,?,?
+  </sql-query>
+
+  <!-- 查询 -->
+	<sql-query name="USP_Search_OrderMstrCount">
+    exec USP_Search_OrderMstrCount ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+	<sql-query name="USP_Search_OrderMstr">
+		<return alias="OrderMaster" class="com.Sconit.Entity.ORD.OrderMaster, com.Sconit.Entity"/>
+    exec USP_Search_OrderMstr ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+	<sql-query name="USP_Search_OrderDetCount">
+    exec USP_Search_OrderDetCount ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+	<sql-query name="USP_Search_OrderDet">
+		<return alias="OrderMaster" class="com.Sconit.Entity.ORD.OrderDetail, com.Sconit.Entity"/>
+    exec USP_Search_OrderDet ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+
+  <sql-query name="USP_Search_IpMstrCount">
+	  exec USP_Search_IpMstrCount ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+  <sql-query name="USP_Search_IpMstr">
+    <return alias="IpMaster" class="com.Sconit.Entity.ORD.IpMaster, com.Sconit.Entity"/>
+	  exec USP_Search_IpMstr ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+
+  <sql-query name="USP_Search_IpDetCount">
+	  exec USP_Search_IpDetCount ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+  <sql-query name="USP_Search_IpDet">
+    <return alias="IpDetail" class="com.Sconit.Entity.ORD.IpDetail, com.Sconit.Entity"/>
+	  exec USP_Search_IpDet ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+
+  <sql-query name="USP_Search_RecMstrCount">
+    exec USP_Search_RecMstrCount ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+  <sql-query name="USP_Search_RecMstr">
+    <return alias="ReceiptMaster" class="com.Sconit.Entity.ORD.ReceiptMaster, com.Sconit.Entity"/>
+    exec USP_Search_RecMstr ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+
+  <sql-query name="USP_Search_RecDetCount">
+    exec USP_Search_RecDetCount ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+  <sql-query name="USP_Search_RecDet">
+    <return alias="ReceiptDetail" class="com.Sconit.Entity.ORD.ReceiptDetail, com.Sconit.Entity"/>
+    exec USP_Search_RecDet ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+  </sql-query>
+
+
+  <sql-query name="USP_SAP_ProcessBom">
+    exec USP_SAP_ProcessBom ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_ProcessCustomer">
+    exec USP_SAP_ProcessCustomer ?,?
+  </sql-query>
+  <sql-query name="USP_SAP_ProcessItem">
+    exec USP_SAP_ProcessItem ?,?
+  </sql-query>
+  <sql-query name="USP_SAP_ProcessPriceList">
+    exec USP_SAP_ProcessPriceList ?,?
+  </sql-query>
+  <sql-query name="USP_SAP_ProcessSupplier">
+    exec USP_SAP_ProcessSupplier ?,?
+  </sql-query>
+  <sql-query name="USP_SAP_ProcessUomConv">
+    exec USP_SAP_ProcessUomConv ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_ExportSalesOrder">
+    exec USP_SAP_ExportSalesOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_UpdateEXScraptMES26">
+    exec USP_SAP_PP_UpdateEXScraptMES26 ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_UpdateFIScrapt">
+    exec USP_SAP_PP_UpdateFIScrapt ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_MM_ExportPurOrder">
+    exec USP_SAP_MM_ExportPurOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_MM_ExportTransOrder">
+    exec USP_SAP_MM_ExportTransOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportAllOfOrders">
+    exec USP_SAP_PP_ExportAllOfOrders ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_MM_ExportAllOfMMOrders">
+    exec USP_SAP_MM_ExportAllOfMMOrders ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportMIOrder">
+    exec USP_SAP_PP_ExportMIOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_SaveInvForSIExecution">
+    exec USP_SAP_SaveInvForSIExecution ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_GenEXSAPOrder">
+    exec USP_SAP_PP_GenEXSAPOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_SD_ExportSalesOrder">
+    exec USP_SAP_SD_ExportSalesOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportEXOrder">
+    exec USP_SAP_PP_ExportEXOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportFIOrder">
+    exec USP_SAP_PP_ExportFIOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportReworkOrder">
+    exec USP_SAP_PP_ExportReworkOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportEXScraptOrder">
+    exec USP_SAP_PP_ExportEXScraptOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportMIFilterOrder">
+    exec USP_SAP_PP_ExportMIFilterOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_UpdateEXScraptInterim">
+    exec USP_SAP_PP_UpdateEXScraptInterim ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportAdjustOrder">
+    exec USP_SAP_PP_ExportAdjustOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportAdjustOrder_TailQty">
+    exec USP_SAP_PP_ExportAdjustOrder_TailQty ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_PP_ExportTrailMiscOrder">
+    exec USP_SAP_PP_ExportTrailMiscOrder ?,?,?
+  </sql-query>
+  <sql-query name="USP_SAP_SaveInvForSIExecution_New">
+    exec USP_SAP_SaveInvForSIExecution_New ?,?,?,?
+  </sql-query>
+	<sql-query name="USP_MES_MaterialIO">
+		exec USP_MES_MaterialIO ?,?,?
+	</sql-query>
+
+  <sql-query name="USP_MES_GetInventory">
+    exec USP_MES_GetInventory ?,?,?,?,?
+  </sql-query>
+</hibernate-mapping>

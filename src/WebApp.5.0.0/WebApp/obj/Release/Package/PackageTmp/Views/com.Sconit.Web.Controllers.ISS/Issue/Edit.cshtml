@@ -1,0 +1,317 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.ISS.IssueMaster
+@{
+    ViewBag.Title = Resources.ISS.IssueMaster.Edit_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Issue_View" });
+}
+<script type="text/javascript">
+    $(function () {
+        var issueAddress = ("#IssueAddress-input");
+
+        if (issueAddress.length > 0) {
+            $("#IssueAddress-input").change(function () {
+
+                $("#IssueAddress").val($("#IssueAddress-input").val());
+            });
+        }
+    });
+
+    function start() {
+
+        var data = {
+            "id": $("#Code").val(),
+            "finishedUserCode": $("#FinishedUserCode").val(),
+            "finishedDate": $("#FinishedDate").val(),
+            "solution": $("#Solution").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Issue/Start/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var DivIssue = $("#DivIssue");
+                $(DivIssue).html(data);
+            }
+        });
+    }
+
+    function IssueType_Change(e) {
+    }
+
+    function IssueNo_Change(e) {
+    }
+
+    function IssueNo_DataBinding(e) { 
+    
+    }
+</script>
+<div id="DivIssue">
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+            <legend>@Resources.ISS.IssueMaster.Edit_Title</legend>
+            <div class="editor">
+                @Html.Hidden("Code", (String)ViewBag.Code)
+                @Html.HiddenFor(model => model.Code)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.LastModifyUserName)
+                @Html.HiddenFor(model => model.LastModifyDate)
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Code)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.Code)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Status)
+                </div>
+                <div class="editor-field-2">
+                    @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common",
+            new
+            {
+                code = com.Sconit.CodeMaster.CodeMaster.IssueStatus,
+                controlName = "Status",
+                selectedValue = Model != null ? (int)Model.Status : 0,
+                enable = false
+            });
+                    }
+                    @Html.HiddenFor(model => model.Status)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IssueSubject)
+                </div>
+                <div class="editor-field-2">
+                    @{
+        if ((bool)ViewBag.isEditable)
+        {
+                        @Html.TextBoxFor(model => model.IssueSubject, new { style = "width:80%" });
+        }
+        else
+        {
+                        @Html.TextBoxFor(model => model.IssueSubject, new { style = "width:80%", @readonly = "readonly" });
+        }
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.BackYards)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.BackYards, (String)ViewBag.editorTemplate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Priority)
+                </div>
+                <div class="search-field">
+                    @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.IssuePriority,
+            controlName = "Priority",
+            includeBlankOption = false,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = Model != null ? (int)Model.Priority : 0,
+            enable = ViewBag.isEditable
+        });
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Type)
+                </div>
+                <div class="search-field">
+                    @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.IssueType,
+            controlName = "Type",
+            includeBlankOption = false,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = Model != null ? (int)Model.Type : 0,
+            enable = ViewBag.isEditable
+        });
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IssueTypeCode)
+                </div>
+                <div class="editor-field-2">
+                    @{
+        Html.RenderAction("_IssueTypeDropDownList", "Common", new
+        {
+            controlName = "IssueTypeCode",
+            includeBlankOption = false,
+            coupled = true,
+            selectedValue = Model != null ? Model.IssueTypeCode : string.Empty,
+            enable = ViewBag.isEditable
+        });
+                    }
+                    @Html.ValidationMessageFor(model => model.IssueTypeCode)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IssueAddress)
+                </div>
+                <div class="editor-field-2">
+                    @{
+        if (ViewBag.isEditable)
+        {
+            Html.RenderAction("_IssueAddressComboBox", "Common", new
+            {
+                controlName = "IssueAddress",
+                includeBlankOption = false,
+                selectedValue = Model != null ? Model.IssueAddress : string.Empty,
+                enable = ViewBag.isEditable
+            });
+        }
+        else
+        {
+            Html.DisplayFor(model => model.IssueAddress);
+        }
+                    }
+                    @Html.ValidationMessageFor(model => model.IssueAddress)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IssueNoCode)
+                </div>
+                <div class="editor-field-2">
+                    @{
+        Html.RenderAction("_IssueNoDropDownList", "Common", new
+        {
+            controlName = "IssueNoCode",
+            includeBlankOption = true,
+            isChange = true,
+            selectedValue = Model != null ? Model.IssueNoCode : "0",
+            enable = ViewBag.isEditable
+        });
+                    }
+                    @Html.ValidationMessageFor(model => model.IssueNoCode)
+                </div>
+                <div class="editor-label-2">
+                </div>
+                <div class="editor-field-2">
+                </div>
+                <div class="multilinetext-label-1">
+                    @Html.LabelFor(model => model.Content)
+                </div>
+                <div class="multilinetext-field-1">
+                    @Html.TextAreaFor(model => model.Content, new { enable = false, rows = 3, style = "min-height:0;width:80%;" })
+                    @Html.ValidationMessageFor(model => model.Content)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.UserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.UserName, (String)ViewBag.editorTemplate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Email)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.Email, (String)ViewBag.editorTemplate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.MobilePhone)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.MobilePhone, (String)ViewBag.editorTemplate)
+                </div>
+                <div class="editor-label-2">
+                </div>
+                <div class="editor-field-2">
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.FinishedUser)
+                </div>
+                <div class="editor-field-2">
+                    @{
+        if (!ViewBag.isEditable2)
+        {
+            Html.DisplayFor(model => model.FinishedUserCode);
+
+        }
+        else
+        {
+            Html.RenderAction("_UserComboBox", "Common",
+                    new { controlName = "FinishedUserCode", selectedValue = Model.FinishedUserCode, enable = true });
+        }
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.FinishedDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.FinishedDate)
+                </div>
+                <div class="multilinetext-label-1">
+                    @Html.LabelFor(model => model.Solution)
+                </div>
+                <div class="multilinetext-field-1">
+                    @Html.TextAreaFor(model => model.Solution, new { rows = 3, style = "min-height:0;width:80%" })
+                    @Html.ValidationMessageFor(model => model.Solution)
+                </div>
+            </div>
+            <div class="editor-footer">
+                @{
+        if (ViewBag.isEditable)
+        {
+                    <button type="submit" id="btnEdit">@Resources.SYS.Global.Button_Save</button>
+        }
+                }
+                @{
+        if (ViewBag.showRelease)
+        {
+                    <button type="button" id="btnRelease" onclick="location.href='@Url.Content("~/Issue/Submit/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Submit</button>
+        }
+                }
+                @{
+        if (ViewBag.showStart)
+        {
+                    <button type="button" id="btnStart" onclick="start()">
+                        @Resources.ISS.IssueMaster.Button_Start</button>
+        }
+                }
+                @{
+        if (ViewBag.showComplete)
+        {
+                    <button type="button" id="btnComplete" onclick="location.href='@Url.Content("~/Issue/Complete/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Complete</button>
+        }
+                }
+                @{
+        if (ViewBag.showClose)
+        {
+                    <button type="button" id="btnClose" onclick="location.href='@Url.Content("~/Issue/Close/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Close</button>
+        }
+                }
+                @{
+        if (ViewBag.showCancel)
+        {
+                    <button type="button" id="btnCancel" onclick="location.href='@Url.Content("~/Issue/Cancel/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Cancel</button>
+        }
+                }
+                @{
+        if (ViewBag.isEditable)
+        {
+                    <button type="button" id="btnDelete" onclick="location.href='@Url.Content("~/Issue/Delete/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Delete</button>
+        }
+                }
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Issue/List")'">
+                    @Resources.SYS.Global.Button_Back</button>
+            </div>
+        </fieldset>
+    }
+    @{
+        if (!ViewBag.isEditable)
+        {
+            Html.RenderAction("_IssueDetailList", "Issue", new { Code = ViewBag.Code });
+        }
+    }
+</div>

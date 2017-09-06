@@ -1,0 +1,60 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@using com.Sconit.Entity.SYS;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderBomDetail>
+<script type="text/javascript">
+    function OrderBomDetailGrid_OnDataBinding(e) {
+        e.data = {
+            Item: $('#Item').val(),
+            Flow: $('#Flow').val(),
+            StartTime: $('#StartTime').val(),
+            OrderNo: $("#OrderNo").val(),
+            EndTime: $("#EndTime").val(),
+            OrderDetailid: $("#OrderDetailid").val()
+        }
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+              .Name("KBOrderBomDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.AUFNR);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.BomUnitQty);
+            columns.Bound(o => o.OrderedQty);
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.Uom);
+           
+            columns.Bound(o => o.Operation);
+            columns.Bound(o => o.ZOPWZ);
+            columns.Bound(o => o.ZOPID);
+            columns.Bound(o => o.ZOPDS);
+            columns.Bound(o => o.OpReference);
+            columns.Bound(o => o.BackFlushMethodDescription);
+            columns.Bound(o => o.FeedMethodDescription);
+            columns.Bound(o => o.IsAutoFeed).ClientTemplate("<input type='checkbox'  name='IsAutoFeed'  disabled='disabled' <#= IsAutoFeed? checked='checked' : '' #> />");
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.ReserveNo);
+            columns.Bound(o => o.ReserveLine);
+
+        })
+                .DataBinding(dataBinding =>
+                    dataBinding.Ajax().Select("_SelectKBOrderBomDetail", "ProductionOrder"))
+                           .ClientEvents(events => events.OnDataBinding("OrderBomDetailGrid_OnDataBinding"))
+                         .Pageable(settings =>
+                         {
+                             settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                             settings.PageSize(20);
+                         })
+        .Scrollable(c => c.Enabled(true))
+        .Resizable(resizing => resizing.Columns(true))
+                .Sortable()
+            )
+</fieldset>

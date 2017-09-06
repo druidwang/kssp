@@ -1,0 +1,51 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INP
+@using com.Sconit.Entity.SYS
+<fieldset>
+    @using (Html.BeginForm("List", "RejectOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="InspectMaster_InspectNo">
+                    @Resources.INP.RejectMaster.RejectMaster_RejectNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("RejectNo", TempData["RejectMasterSearchModel"] != null ? ((RejectMasterSearchModel)TempData["RejectMasterSearchModel"]).RejectNo : string.Empty)
+
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_Status">
+                    @Resources.INP.RejectMaster.RejectMaster_Status
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.RejectStatus,
+                        controlName = "Status",
+                        includeBlankOption = true,
+                        blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+                        blankOptionValue = "",
+                        selectedValue = TempData["RejectMasterSearchModel"] != null ? ((RejectMasterSearchModel)TempData["RejectMasterSearchModel"]).Status : null
+                    });
+                }
+            </div>
+             <div class="search-label">
+                <label for="InspectMaster_InspectNo">
+                    @Resources.INP.RejectMaster.RejectMaster_InspectNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("InspectNo", TempData["RejectMasterSearchModel"] != null ? ((RejectMasterSearchModel)TempData["RejectMasterSearchModel"]).InspectNo : string.Empty)
+
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

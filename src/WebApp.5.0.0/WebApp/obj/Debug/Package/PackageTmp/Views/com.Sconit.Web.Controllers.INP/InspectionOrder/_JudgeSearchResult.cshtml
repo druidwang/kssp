@@ -1,0 +1,56 @@
+﻿@model IEnumerable<com.Sconit.Entity.INP.InspectMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("InspectMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.InspectNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.InspectNo).ClientTemplate(Html.ActionLink("<#= InspectNo #>", "JudgeEdit", "InspectionOrder", new { id = "<#= InspectNo #>" }, null).ToString());
+            columns.Bound(o => o.PartyFrom);
+            columns.Bound(o => o.PartyFromName);
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.InspectTypeDescription);
+            columns.Bound(o => o.InspectStatusDescription);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.ReceiptNo);
+            //columns.Bound(o => o.IsATP)
+            //     .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsATP' <#= IsATP? checked='checked' : '' #> />");
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+            //columns.Bound(o => o.IsPrint)
+            //     .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsPrint' <#= IsPrint? checked='checked' : '' #> />");
+
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxJudgeList", "InspectionOrder"))
+        .ClientEvents(events => events.OnDataBinding("grid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function grid_OnDataBinding(e) {
+            e.data = {
+                InspectNo: $('#InspectNo').val(),
+                Region: $('#Region').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                Type: $('#Type').val()
+
+            };
+        } 
+    </script>
+</fieldset>

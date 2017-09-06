@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.ORD.ReceiptMaster, com.Sconit.Entity" table="VIEW_RecMstr" lazy="false">
+        <id name="ReceiptNo" column="RecNo" type="String" unsaved-value="null" >
+            <generator class="assigned" />
+        </id>
+        <version name="Version" column="Version" type="Int32" />
+        <property name="ExternalReceiptNo" column="ExtRecNo" type="String" length="50" />
+        <property name="IpNo" column="IpNo" type="String" length="50" />
+        <property name="SequenceNo" column="SeqNo" type="String" length="50" />
+        <property name="Flow" column="Flow" type="String" length="50" />
+        <property name="Status" column="Status"/>
+        <property name="Type" column="Type"  />
+        <property name="OrderType" column="OrderType"  />
+        <property name="OrderSubType" column="OrderSubType"  />
+        <property name="QualityType" column="QualityType"/>
+        <property name="PartyFrom" column="PartyFrom" type="String" length="50" />
+        <property name="PartyFromName" column="PartyFromNm" type="String" length="100" />
+        <property name="PartyTo" column="PartyTo" type="String" length="50" />
+        <property name="PartyToName" column="PartyToNm" type="String" length="100" />
+        <property name="ShipFrom" column="ShipFrom" type="String" length="50" />
+        <property name="ShipFromAddress" column="ShipFromAddr" type="String" length="256" />
+        <property name="ShipFromTel" column="ShipFromTel" type="String" length="50" />
+        <property name="ShipFromCell" column="ShipFromCell" type="String" length="50" />
+        <property name="ShipFromFax" column="ShipFromFax" type="String" length="50" />
+        <property name="ShipFromContact" column="ShipFromContact" type="String" length="50" />
+        <property name="ShipTo" column="ShipTo" type="String" length="50" />
+        <property name="ShipToAddress" column="ShipToAddr" type="String" length="256" />
+        <property name="ShipToTel" column="ShipToTel" type="String" length="50" />
+        <property name="ShipToCell" column="ShipToCell" type="String" length="50" />
+        <property name="ShipToFax" column="ShipToFax" type="String" length="50" />
+        <property name="ShipToContact" column="ShipToContact" type="String" length="50" />
+        <property name="Dock" column="Dock" type="String" length="100" />
+        <property name="EffectiveDate" column="EffDate" type="DateTime"  />
+        <property name="IsPrintReceipt" column="IsPrintRec" type="Boolean"  />
+        <property name="IsReceiptPrinted" column="IsRecPrinted" type="Boolean"  />
+        <property name="CreateHuOption" column="CreateHuOpt"  />
+        <property name="IsReceiveScanHu" column="IsRecScanHu" type="Boolean"  />
+        <property name="ReceiptTemplate" column="RecTemplate" type="String" length="100" />
+        <property name="WMSNo" column="WMSNo" type="String" length="50"/>
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+        <property name="IsCheckPartyFromAuthority" column="IsCheckPartyFromAuth" type="Boolean"  />
+        <property name="IsCheckPartyToAuthority" column="IsCheckPartyToAuth" type="Boolean"  />
+		<property name="CancelReason" column="CancelReason" type="String" length="256" />
+        <sql-insert>
+            exec USP_Split_RecMstr_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+        </sql-insert>
+        <sql-update>
+            exec USP_Split_RecMstr_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+        </sql-update>
+        <sql-delete>
+            exec USP_Split_RecMstr_Delete ?,?
+        </sql-delete>
+    </class>
+</hibernate-mapping>

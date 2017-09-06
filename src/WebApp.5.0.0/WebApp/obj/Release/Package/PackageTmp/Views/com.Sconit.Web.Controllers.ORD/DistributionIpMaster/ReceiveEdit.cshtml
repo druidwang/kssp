@@ -1,0 +1,319 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.ORD.IpMaster
+           @{
+    ViewBag.Title = Resources.SYS.Menu.Distribution_IpMaster;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_DistributionIpMaster_Receive" });
+}
+<script type="text/javascript">
+    function onReceive() {
+        var grid = $("#IpDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var idStr = "";
+        var qtyStr = "";
+        if(len($("#ExternalIpNo").val())>36)
+        {
+            $message.error('回单号字符字节数不能超过36.');
+            return;
+        }
+        if ($("#ExternalIpNo").val() == "") {
+            $message.error('回单号必填.');
+            return;
+        }
+        debugger;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if (row.find("#checkedRecords").is(':checked')) {
+                var id = row.find("#checkedRecords").val();
+                var qty = row.find("#CurrentReceiveQty").val();
+                if (qty != "" && !isNaN(qty) && parseFloat(qty) > 0) {
+                    if (idStr == "") {
+                        idStr = id;
+                        qtyStr = qty;
+                    } else {
+                        idStr += "," + id;
+                        qtyStr += "," + qty;
+                    }
+                }
+            }
+        }
+
+        if (idStr === "") {
+            $message.error("请选择要收货的明细");
+            return;
+        }
+
+        var data = {
+            "idStr": idStr,
+            "qtyStr": qtyStr,
+            "externalIpNo": $("#ExternalIpNo").val(),
+            "ipNo": $("#IpNo").val()
+        }
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: data,
+            url: "/DistributionIpMaster/ReceiveIpMaster/",
+            cache: false,
+            success: function (data, textStatus) {
+                $message.success(data.SuccessMessage);
+               
+                if (data != "") {
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        data: { ipNo: data.SuccessData },
+                        url: "/DistributionIpMaster/_ReceiveIpDetailList/",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tDiv = $("#divRecIpDetail");
+                            $($tDiv).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function onHuReceive() {
+        if ($("#ExternalIpNo").val() == "") {
+            $message.error('回单号必填.');
+            return;
+        }
+        var $checkRecords = $("input[name='checkedRecords']");
+        var idStr = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                var id = $checkRecords[i].value;
+                if (idStr == "") {
+                    idStr = id;
+                } else {
+                    idStr += "," + id;
+                }
+            }
+        }
+        var data = {
+            "idStr": idStr,
+            "externalIpNo": $("#ExternalIpNo").val(),
+            "ipNo": $("#IpNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/DistributionIpMaster/ReceiveHuIpMaster/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $message.success(data.SuccessMessage);
+               
+                if (data != "") {
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        data: { ipNo: data.SuccessData },
+                        url: "/DistributionIpMaster/_ReceiveHuIpDetailList/",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tDiv = $("#divRecIpDetail");
+                            $($tDiv).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+    }
+    function len(s) {
+        var l = 0;
+        var a = s.split("");
+        for (var i = 0; i < a.length; i++) {
+            if (a[i].charCodeAt(0) < 299) {
+                l++;
+            } else {
+                l += 2;
+            }
+        }
+        return l;
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.ORD.IpMaster.IpMaster_BaseInfo</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IpNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.IpNo)
+                @Html.HiddenFor(model => model.IpNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.OrderType)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.OrderType,
+        controlName = "IpOrderType",
+        orderType = com.Sconit.CodeMaster.OrderType.Distribution,
+        includeBlankOption = true,
+        blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+        blankOptionValue = "",
+        selectedValue = Model != null ? (int)Model.OrderType : 0,
+        enable = false
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.IpMaster.IpMaster_PartyFromName
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyFromName)
+                @Html.HiddenFor(model => model.PartyFrom)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyToName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyToName)
+                @Html.HiddenFor(model => model.PartyTo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromAddress)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_AddressComboBox", "Common",
+        new
+        {
+            controlName = "ShipFrom",
+            type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+            selectedValue = Model.ShipFrom,
+            enable = false
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToAddress)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_AddressComboBox", "Common",
+        new
+        {
+            controlName = "ShipTo",
+            type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+            selectedValue = Model.ShipTo,
+            enable = false
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromContact)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromContact)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToContact)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipToContact)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromTel)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromTel)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToTel)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipToTel)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Dock)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Dock, (String)ViewBag.editorTemplate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common",
+        new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.OrderStatus,
+            controlName = "Status",
+            selectedValue = Model != null ? (int)Model.Status : 0,
+            enable = false
+        });
+                }
+                @Html.HiddenFor(model => model.Status)
+            </div>
+
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.ExternalIpNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ExternalIpNo)
+            </div>
+        </div>
+    </fieldset>
+   
+      
+    <div class="editor-footer">
+        @{
+    if (Model.IsReceiveScanHu)
+    {
+           @Html.Button(Resources.SYS.Global.Button_Receive, "Url_DistributionIpMaster_Receive", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnHuReceive"},
+                {"needconfirm","true"},
+                {"style","display: none"},
+                {"onclick","onHuReceive()"}
+	        })
+    }
+    else
+    {
+            @Html.Button(Resources.SYS.Global.Button_Receive, "Url_DistributionIpMaster_Receive", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnReceive"},
+                {"needconfirm","true"},
+                {"onclick","onReceive()"}
+	        })
+    }
+        }
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/DistributionIpMaster/ReceiveList")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+}
+<div id="divRecIpDetail">
+    @{
+        if (Model.IsReceiveScanHu)
+        {
+            Html.RenderAction("_ReceiveHuIpDetailList", "DistributionIpMaster", new { ipNo = Model.IpNo });
+        }
+        else
+        {
+            Html.RenderAction("_ReceiveIpDetailList", "DistributionIpMaster", new { ipNo = Model.IpNo });
+        }
+    }
+</div>

@@ -1,0 +1,111 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.ISI.TaskMaster
+<script type="text/javascript">
+
+
+    function TaskSubType_DataBinding(e) {
+        e.data = {
+            Code: $("#Code").val()
+        }
+    }
+
+    function TaskAddress_DataBinding(e) {
+        e.data = {
+            Code: $("#Code").val()
+        }
+    }
+
+
+</script>
+@{
+    ViewBag.Title = Resources.ISI.TaskMaster.TaskMaster_New_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_TaskMaster_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.ISI.TaskMaster.TaskMaster_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.TaskSubType)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_TaskSubTypeComboBox", "Common", new { controlName = "TaskSubType" });
+                }
+                @Html.ValidationMessageFor(model => model.TaskSubType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Priority)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.TaskPriority,
+        controlName = "Priority",
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Subject)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Subject)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.TaskAddress)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_TaskAddressComboBox", "Common", new { controlName = "TaskAddress" });
+                }
+                @Html.ValidationMessageFor(model => model.TaskAddress)
+            </div>
+            <div class="multilinetext-label-1">
+                @Html.LabelFor(model => model.Description1)
+            </div>
+            <div class="multilinetext-field-1">
+                @Html.TextAreaFor(model => model.Description1, new { rows = 3, style = "min-height:0;width:80%" })
+            </div>
+        </div>
+    </fieldset>
+   
+    <fieldset>
+        <legend>@Resources.ISI.TaskMaster.TaskMaster_TaskAssign</legend>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.PlanStartDate)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.PlanStartDate)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.PlanCompleteDate)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.PlanCompleteDate)
+        </div>
+        <div class="editor-label-1">
+            @Html.LabelFor(model => model.ExpectedResults)
+        </div>
+        <div class="editor-field-1">
+            @Html.EditorFor(model => model.ExpectedResults)
+        </div>
+        <div class="editor-label-1">
+            @Html.LabelFor(model => model.Description2)
+        </div>
+        <div class="editor-field-1">
+            @Html.TextAreaFor(model => model.Description2, new { rows = 3, style = "min-height:0;width:80%" })
+        </div>
+    </fieldset>
+  
+    <div class="editor-footer">
+        <button type="submit" id="btnNew">
+            @Resources.SYS.Global.Button_New
+        </button>
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/TaskMaster/List")'">
+            @Resources.SYS.Global.Button_Back
+        </button>
+    </div>
+ 
+}

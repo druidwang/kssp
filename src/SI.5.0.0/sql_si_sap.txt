@@ -1,0 +1,98 @@
+-------20120419
+ALTER TABLE SI_SAP_InvTrans DROP COLUMN IsOutbound;
+ALTER TABLE SI_SAP_InvTrans DROP COLUMN OutBoundDate;
+ALTER TABLE SI_SAP_InvTrans ADD LastModifyDate datetime;
+ALTER TABLE SI_SAP_InvTrans ADD [Status] tinyint;
+ALTER TABLE SI_SAP_InvTrans ADD ErrorCount int;
+GO
+update SI_SAP_InvTrans set LastModifyDate = GETDATE();
+update SI_SAP_InvTrans set [Status] = 0;
+update SI_SAP_InvTrans set ErrorCount = 0;
+GO
+ALTER TABLE SI_SAP_InvTrans ALTER column LastModifyDate datetime not null;
+ALTER TABLE SI_SAP_InvTrans ALTER column [Status] tinyint not null;
+ALTER TABLE SI_SAP_InvTrans ALTER column ErrorCount int not null;
+
+
+
+
+
+insert into ACC_PermissionCategory values('SI','SI',1)
+insert into ACC_Permission values ('Url_SI_SAP_Item_View','SAP物料','SI')
+insert into sys_menu values('Url_SI_SAP','SAP',null,'30','SAP',null,'~/Content/Images/Nav/Quality.png','1')
+insert into sys_menu values('Url_SI_SAP_Item_View','SAP物料','Url_SI_SAP','331','SAP物料','~/SAPItem/Index','~/Content/Images/Nav/Default.png','1')
+
+
+
+
+/****** Object:  Table [dbo].[SYS_NumCtrl]    Script Date: 04/12/2012 13:28:55 ******/				
+SET ANSI_NULLS ON				
+GO				
+				
+SET QUOTED_IDENTIFIER ON				
+GO				
+				
+SET ANSI_PADDING ON				
+GO				
+				
+CREATE TABLE [dbo].[SYS_NumCtrl](				
+	[Code] [varchar](50) NOT NULL,			
+	[IntValue] [int] NULL,			
+	[StrValue] [varchar](50) NULL,			
+ CONSTRAINT [PK_SYS_NumCtrl] PRIMARY KEY CLUSTERED 				
+(				
+	[Code] ASC			
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]				
+) ON [PRIMARY]				
+				
+GO				
+				
+SET ANSI_PADDING OFF				
+GO			
+		
+
+
+/****** Object:  StoredProcedure [dbo].[USP_GetNextSequence]    Script Date: 04/12/2012 13:30:21 ******/				
+SET ANSI_NULLS ON				
+GO				
+				
+SET QUOTED_IDENTIFIER ON				
+GO				
+				
+CREATE PROCEDURE [dbo].[USP_GetNextSequence]				
+	@CodePrefix varchar(50),			
+	@NextSequence int OUTPUT			
+AS				
+Begin Tran				
+	Declare @invValue int;			
+	select  @invValue = IntValue FROM SYS_NumCtrl WITH (UPDLOCK, ROWLOCK) where Code = @CodePrefix;			
+	if @invValue is null			
+	begin			
+		if @NextSequence is not null		
+		begin 		
+			insert into SYS_NumCtrl(Code, IntValue) values (@CodePrefix, @NextSequence + 1);	
+		end		
+		else		
+		begin		
+			set @NextSequence = 1;	
+			insert into SYS_NumCtrl(Code, IntValue) values (@CodePrefix, 2);	
+		end		
+	end 			
+	else			
+	begin			
+		if @NextSequence is not null		
+		begin 		
+			if @invValue <= @NextSequence	
+			begin	
+				update SYS_NumCtrl set IntValue = @NextSequence + 1 where Code = @CodePrefix;
+			end	
+		end		
+		else		
+		begin		
+			set @NextSequence = @invValue;	
+			update SYS_NumCtrl set IntValue = @NextSequence + 1 where Code = @CodePrefix;	
+		end		
+	end			
+Commit tran				
+GO				
+

@@ -1,0 +1,52 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.Region 
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Region_View" });
+}
+@using (Html.BeginForm("New", "Region"))
+{
+    <fieldset>
+        <legend>@Resources.MD.Region.Region_New_Title  </legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Code)
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.Plant)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Plant)
+                @Html.ValidationMessageFor(model => model.Plant)
+            </div>
+            @*<div class="editor-label-2">
+                @Html.LabelFor(model => model.Workshop)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Workshop)
+            </div>*@
+            <div class="editor-label-2">
+                  @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsActive", true)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Region/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

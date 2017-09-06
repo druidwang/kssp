@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.SAP.SAPSDMES0001, com.Sconit.Entity.SI" table="SAP_Interface_SDMES0001" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="ZMESGUID" column="ZMESGUID" type="String" length="18"/>	
+		<property name="ZMESSO" column="ZMESSO" type="String" length="20"/>	
+		<property name="ZMESSOSEQ" column="ZMESSOSEQ" type="String" length="10"/>	
+		<property name="DOCTYPE" column="DOCTYPE" type="String" length="4"/>	
+		<property name="SALESORG" column="SALESORG" type="String" length="4"/>	
+		<property name="DISTRCHAN" column="DISTRCHAN" type="String" length="2"/>	
+		<property name="DIVISION" column="DIVISION" type="String" length="2"/>	
+		<property name="ORDREASON" column="ORDREASON" type="String" length="3"/>	
+		<property name="PRICEDATE" column="PRICEDATE" type="DateTime"/>	
+		<property name="DOCDATE" column="DOCDATE" type="DateTime"/>	
+		<property name="PARTNNUMB" column="PARTNNUMB" type="String" length="10"/>	
+		<property name="WADATIST" column="WADATIST" type="DateTime" />	
+		<property name="LIFEX" column="LIFEX" type="String" length="35"/>
+    <property name="ITMNUMBER" column="ITMNUMBER" type="String" length="6"/>
+    <property name="MATERIAL" column="MATERIAL" type="String" length="18"/>	
+		<property name="TARGETQTY" column="TARGETQTY" type="String" length="13"/>	
+		<property name="VRKME" column="VRKME" type="String" length="3"/>	
+		<property name="LGORT" column="LGORT" type="String" length="4"/>	
+		<property name="ZCSRQSJ" column="ZCSRQSJ" type="DateTime"/>	
+		<property name="Status" column="Status" type="Int32"/>	
+		<property name="BatchNo" column="BatchNo" type="String" length="50"/>	
+		<property name="UniqueCode" column="UniqueCode" type="String" length="50"/>
+    <property name="SALEORDNO" column="SALEORDNO" type="String" length="18"/>
+  </class>
+</hibernate-mapping>

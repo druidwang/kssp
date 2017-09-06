@@ -1,0 +1,61 @@
+﻿@model IEnumerable<com.Sconit.Entity.WMS.PickUser>
+<fieldset>
+    <script type="text/javascript">
+        function PickUser_OnDataBinding(e) {
+            e.data = {
+                "PickGroupCode": $("#PickGroupCode").val(),
+                "Location": $("#Location").val(),
+                "isFromList": "true"
+            };
+        } 
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickUserGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PickUserName).ClientTemplate(string.Format("<a href=\"javascript:onPickUserclick('{0}')\">{1}</a>", "<#=Id #>", "<#=PickUserName #>"));
+            columns.Bound(o => o.IsActive)
+              .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.LastModifyDate);
+            columns.Bound(o => o.LastModifyUserName);
+        })
+       
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxPickUserList", "PickGroup"))
+        .ClientEvents(events => events.OnDataBinding("PickUser_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+
+<script type="text/javascript">
+    function onPickUserclick(code) {
+        var data = {
+            "Id": code
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/PickGroup/_PickUserEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>

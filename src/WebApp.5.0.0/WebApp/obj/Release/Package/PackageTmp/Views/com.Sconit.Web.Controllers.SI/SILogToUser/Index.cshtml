@@ -1,0 +1,20 @@
+﻿@using System.Data;
+@model com.Sconit.Web.Controllers.ViewModel
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SI_SILogToUser" });
+}
+
+<fieldset>
+    @(Html.Telerik().Grid<System.Data.DataRow>(Model.Data.Rows.Cast<System.Data.DataRow>())
+.Name("Grid")
+.Columns(columns =>
+{
+    columns.LoadSettings(Model.Columns as IEnumerable<GridColumnSettings>);
+})
+.Reorderable(resizing => resizing.Columns(true))
+.Resizable(resizing => resizing.Columns(true))
+.EnableCustomBinding(true)
+.Sortable()
+)
+</fieldset>

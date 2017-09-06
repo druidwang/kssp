@@ -1,0 +1,235 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    <script type="text/javascript">
+        function CodeMaster_Change(e) {
+            e.date = {
+                "text": $("#TransactionType").val()
+            }
+        }
+        function OrderMasterPartyFrom(e) {
+            if (e.value != "") {
+                var combobox = $(this).data("tComboBox");
+                if (combobox == undefined) {
+                    return;
+                }
+                if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                    combobox.value("");
+                    combobox.reload();
+                }
+            }
+            $('#LocationFrom').data('tComboBox').value('');
+            $('#LocationFrom').data('tComboBox').text('');
+            $("#LocationFrom").data("tComboBox").reload();
+        }
+
+        function LocationFrom_DataBinding(e) {
+            e.data = {
+                region: $('#PartyFrom').val()
+            };
+        }
+
+        function OrderMasterPartyTo(e) {
+            if (e.value != "") {
+                var combobox = $(this).data("tComboBox");
+                if (combobox == undefined) {
+                    return;
+                }
+                if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                    combobox.value("");
+                    combobox.reload();
+                }
+            }
+            $('#LocationTo').data('tComboBox').value('');
+            $('#LocationTo').data('tComboBox').text('');
+            $("#LocationTo").data("tComboBox").reload();
+        }
+
+        function LocationTo_DataBinding(e) {
+            e.data = {
+                region: $('#PartyTo').val()
+            };
+        }
+
+        function ExportClick() {
+            
+            data = {
+                TransactionType: $('#TransactionType').val(),
+                Item: $('#Item').val(),
+                LocationFrom: $('#LocationFrom').val(),
+                LocationTo: $('#LocationTo').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                TimeType: $("input[type=radio][name=timeType]:checked").val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                url: "/LocationTransaction/CheckExportQty/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    
+                    if (data.Message != "OK") {
+                        $message.error(data.Message)
+                    }
+                    else {
+                        location.href = '/LocationTransaction/ExportXLS/?TransactionType=' + $('#TransactionType').val()
+                            + '&Item=' + $('#Item').val() + '&LocationFrom=' + $('#LocationFrom').val()
+                            + '&LocationTo=' + $('#LocationTo').val() + '&PartyFrom=' + $('#PartyFrom').val()
+                            + '&PartyTo=' + $('#PartyTo').val() + '&StartDate=' + $('#StartDate').val()
+                            + '&EndDate=' + $('#EndDate').val() + '&TimeType=' + $("input[type=radio][name=timeType]:checked").val()
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages)
+                }
+            })
+        }
+    </script>
+    @using (Html.BeginForm("List", "LocationTransaction"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationTransaction.LocationTransaction_TransactionType
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterComboBox", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.TransactionType,
+            controlName = "TransactionType",
+            checkRegion = true,
+            selectedValue = TempData["LocationTransactionSearchModel"] != null ? ((LocationTransactionSearchModel)TempData["LocationTransactionSearchModel"]).TransactionType : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationTransaction.LocationTransaction_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = TempData["LocationTransactionSearchModel"] != null ? ((LocationTransactionSearchModel)TempData["LocationTransactionSearchModel"]).Item : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyFrom">
+                    @Resources.INV.LocationTransaction.LocationTransaction_PartyFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+                controlName = "PartyFrom",
+                //isChange=true,
+                selectedValue = TempData["LocationTransactionSearchModel"] != null ? ((LocationTransactionSearchModel)TempData["LocationTransactionSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                    @Resources.INV.LocationTransaction.LocationTransaction_PartyTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+                        new
+                        {
+                            controlName = "PartyTo",
+                            //isChange=true,
+                            selectedValue = TempData["LocationTransactionSearchModel"] != null ? ((LocationTransactionSearchModel)TempData["LocationTransactionSearchModel"]).PartyTo : string.Empty
+                        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationTransaction.LocationTransaction_LocationFrom
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "LocationFrom",
+            // checkRegion=true,
+            selectedValue = TempData["LocationTransactionSearchModel"] != null ? ((LocationTransactionSearchModel)TempData["LocationTransactionSearchModel"]).LocationFrom : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationTransaction.LocationTransaction_LocationTo
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "LocationTo",
+            //checkRegion=true,
+            selectedValue = TempData["LocationTransactionSearchModel"] != null ? ((LocationTransactionSearchModel)TempData["LocationTransactionSearchModel"]).LocationTo : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationTransaction.LocationTransaction_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartDate")
+        .Value(TempData["LocationTransactionSearchModel"] != null ? ((LocationTransactionSearchModel)TempData["LocationTransactionSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationTransaction.LocationTransaction_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EndDate")
+.Value(TempData["LocationTransactionSearchModel"] != null ? ((LocationTransactionSearchModel)TempData["LocationTransactionSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label>
+                </label>
+            </div>
+            <div class="search-field">
+            </div>
+            <div class="search-label">
+                <label>
+                </label>
+            </div>
+            <div class="editor-label-1">
+                    @Html.RadioButton("timeType", 1, true)<span>@Resources.INV.LocationTransaction.LocationTransaction_CreateDate</span>
+                    @Html.RadioButton("timeType", 2, false)<span>@Resources.INV.LocationTransaction.LocationTransaction_EffectiveDate</span>
+                    <span style="margin: 8px"></span>
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>

@@ -1,0 +1,216 @@
+﻿@model com.Sconit.Entity.SCM.FlowMaster
+@using com.Sconit.Web.Models.SearchModels.SCM
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function FlowQuery() {
+        if ($('#Flow').val() == "") {
+            $message.error('请选择线路查询。');
+            return;
+        }
+        var data = {
+            "Flow": $('#Flow').val(),
+            "Item": $('#Item').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Hu/_FlowDetailList/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divFlowDetail");
+                $(tabStrip).html(data);
+            }
+        });
+    }
+
+    function onCreateByFlow(isExport) {
+        var grid = $("#FlowDetail").data("tGrid");
+        if (grid == null || grid == undefined) {
+            $message.error('打印明细不能为空。');
+            return;
+        }
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var idStr = "";
+        var ucStr = "";
+        var qtyStr = "";
+        var supplierLotNoStr = "";
+        var manufactureDateStr = "";
+        var remarkStr;
+        var hasError = false;
+
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var huQty = row.find("#HuQty").val();
+            var id;
+            var uc;
+            var manufactureDate;
+            var supplierLotNo;
+            var remark;
+            var isChangeUC = row.find("#IsChangeUnitCount").val();
+            if (huQty != "" && huQty != 0) {
+                id = row.find("#Id").val();
+                uc = row.find("#UnitCount").val();
+                remark = row.find("#Remark").val();
+                manufactureDate = row.find("#ManufactureDate").val();
+
+                if (uc == "" || uc == undefined) {
+                    uc = $(row.find("#UnitCount")).attr("key")
+                }
+                if (uc == "" || uc == undefined) {
+                    $message.error('第' + (rowIndex + 1) + '行单包装不能为空.');
+                }
+                if (manufactureDate == "" || manufactureDate == undefined) {
+                    $message.error('第' + (rowIndex + 1) + '行制造时间不能为空.');
+                }
+
+                var z = /^(\d{4})(\-)(\d{1,2})(\-)(\d{1,2})$/;
+                if (!z.test(manufactureDate)) {
+                    $message.error('第' + (rowIndex + 1) + '行制造时间输入错误.');
+                }
+                
+                if (isChangeUC == "false" && (parseFloat(huQty) * 1e10) % (parseFloat(uc) * 1e10) > 0) {
+                    $message.error('行' + (rowIndex + 1).toString() + '的数量' + huQty.toString("0.##") + '不是单包装' + uc.toString("0.##") + '的整数倍,该条不能修改单包装.');
+                    return;
+                }
+                supplierLotNo = row.find("#SupplierLotNo").val();
+                 if (idStr == "") {
+                    idStr = id;
+                    ucStr = uc;
+                    supplierLotNoStr = supplierLotNo;
+                    qtyStr = huQty;
+                    manufactureDateStr = manufactureDate;
+                    remarkStr = remark;
+                } else {
+                    idStr += "," + id;
+                    ucStr += "," + uc;
+                    supplierLotNoStr += "," + supplierLotNo;
+                    qtyStr += "," + huQty;
+                    manufactureDateStr += "," + manufactureDate;
+                    remarkStr += "," + remark;
+                }
+            }
+        }
+        if (hasError) {
+            return;
+        }
+        if (idStr == "") {
+            $message.error('明细不能为空.');
+            return;
+        }
+
+        var data = {
+            "FlowidStr": idStr,
+            "FlowucStr": ucStr,
+            "FlowsupplierLotNoStr": supplierLotNoStr,
+            "FlowqtyStr": qtyStr,
+            "FlowisExport": isExport,
+            "FlowmanufactureDateStr": manufactureDateStr,
+            "FlowCheckExport": isExport,
+            "FlowremarkStr": remarkStr
+        }
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: data,
+            async: false,
+            url: "/Hu/CreateHuByFlow/",
+            cache: false,
+            success: function (data, textStatus) {
+                
+                DisplayJsonMessages(data);
+                if (isExport && data.FlowCheckExport == "OK") {
+                    $("#FlowidStr").val(idStr);
+                    $("#FlowucStr").val(ucStr);
+                    $("#FlowsupplierLotNoStr").val(supplierLotNoStr);
+                    $("#FlowmanufactureDateStr").val(manufactureDateStr);
+                    $("#FlowqtyStr").val(qtyStr);
+                    $("#FlowremarkStr").val(remarkStr);
+                    $("#FlowisExport").val(isExport);
+                    $("#FlowCheckExport").val(false);
+                    $("#hiddenFlowForm").submit();
+                }
+                else {
+                    if (data.PrintUrl != "" && data.PrintUrl != undefined) {
+                        
+                        PrintOrder(data.PrintUrl);
+                    }
+                }
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label for="Hu_Flow">
+                @Resources.SCM.FlowDetail.FlowDetail_Flow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    isCreateHu = true,
+                    //type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                    selectedValue = TempData["FlowDetailSearchModel"] != null ? ((FlowDetailSearchModel)TempData["FlowDetailSearchModel"]).Flow : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label for="Hu_Flow">
+                @Resources.SCM.FlowDetail.FlowDetail_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ItemComboBox", "Common",
+                    new
+                    {
+                        controlName = "Item",
+                        selectedValue = TempData["FlowDetailSearchModel"] != null ? ((FlowDetailSearchModel)TempData["FlowDetailSearchModel"]).Item : string.Empty
+                    });
+                    
+            }
+        </div>
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="Search" onclick="FlowQuery()">@Resources.SYS.Global.Button_Search</button>
+        @Html.Button(Resources.SYS.Global.Button_Print, "Url_Inventory_Hu_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnPrint"},
+                    {"needconfirm","true"},
+                    {"onclick","onCreateByFlow(false)"}
+	            })
+        @Html.Button(Resources.SYS.Global.Button_Export, "Url_Inventory_Hu_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnExport"},
+                    {"needconfirm","true"},
+                    {"onclick","onCreateByFlow(true)"}
+	            })
+    </div>
+</fieldset>
+<form id="hiddenFlowForm" action="/Hu/CreateHuByFlow" target="_blank"
+    method="post">
+    <input id="FlowqtyStr" name="FlowqtyStr" type="hidden" />
+    <input id="FlowucStr" name="FlowucStr" type="hidden" />
+    <input id="FlowidStr" name="FlowidStr" type="hidden" />
+    <input id="FlowremarkStr" name="FlowremarkStr" type="hidden" />
+    <input id="FlowsupplierLotNoStr" name="FlowsupplierLotNoStr" type="hidden" />
+    <input id="FlowisExport" name="FlowisExport" type="hidden" />
+    <input id="FlowCheckExport" name="FlowCheckExport" type="hidden" />
+    <input id="FlowmanufactureDateStr" name="FlowmanufactureDateStr" type="hidden" />
+</form>
+<div id="divFlowDetail">
+</div>
+
+

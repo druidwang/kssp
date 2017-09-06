@@ -1,0 +1,49 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.MD.ProdLineEx>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("ProdLineExGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ProductLine).ClientTemplate(Html.ActionLink("<#= ProductLine #>", "Edit", "ProdLineEx", new { Id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDesc);
+            columns.Bound(o => o.MrpSpeed);
+            columns.Bound(o => o.ApsPriorityDescription);
+            columns.Bound(o => o.RccpSpeed);
+            columns.Bound(o => o.SwitchTime);
+            columns.Bound(o => o.ShiftTypeDescription);
+            columns.Bound(o => o.SpeedTimes);
+            columns.Bound(o => o.TurnQty);
+            columns.Bound(o => o.Correction);
+            columns.Bound(o => o.MaxLotSize);
+            columns.Bound(o => o.EconomicLotSize);
+            columns.Bound(o => o.ProductTypeDescription);
+            columns.Bound(o => o.Quota);
+            columns.Bound(o => o.StartDate);
+            columns.Bound(o => o.EndDate);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ProdLineEx"))
+                .ClientEvents(events => events.OnDataBinding("ProdLineExGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ProdLineExGrid_OnDataBinding(e) {
+            e.data = {
+                ProductLine: $('#ProductLine').val(),
+                Item: $('#Item').val()
+            };
+        }
+    </script>
+</fieldset>

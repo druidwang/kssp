@@ -1,0 +1,63 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.SCM;
+@model IEnumerable<com.Sconit.Entity.SCM.ProductLineFacility>
+           
+@Html.Partial("_AjaxMessage") 
+<script type="text/javascript">
+    function ProductLineFacilityGrid_OnRowDataBound(e) {
+    if ($(e.row.cells[0]).text() != null && $(e.row.cells[0]).text() != "") {
+            $(e.row.cells[0]).attr("disabled",true);
+        } 
+
+    }
+
+    function onEdit(e) {
+        if (e.mode == "edit") {
+            $(e.form).find("#Code").attr("disabled", true);
+        } 
+    }
+
+</script>
+<fieldset>
+    <legend>@Resources.SCM.FlowBinding.Culture</legend>
+    @(Html.Telerik().Grid(Model)
+                .Name("ProductLineFacility")
+         .ToolBar(commands =>
+         {
+             commands.Insert();
+         })
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax()
+                                                .Select("_SelectFacility", "ProductionFlow", new { code = ViewBag.code, ProductLine = ViewBag.ProductLine })
+                                        .Insert("_InsertFacility", "ProductionFlow", new { ProductLine = ViewBag.ProductLine })
+                                        .Update("_UpdateFacility", "ProductionFlow", new { ProductLine = ViewBag.ProductLine })
+                                .Delete("_DeleteFacility", "ProductionFlow", new { ProductLine = ViewBag.ProductLine }))
+
+
+        .Columns(columns =>
+        {
+
+            // columns.ForeignKey(o => o.Code, (IEnumerable<ProductLineFacility>)ViewData["ProductLineFacility"], "Code", "Code");
+            columns.Bound(o => o.Code);
+            columns.Bound(o => o.ProductLine).Hidden();
+            columns.Bound(o => o.IsActive)
+                 .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+
+            columns.Command(commands =>
+            {
+                commands.Edit();
+                commands.Delete();
+            });
+
+        })
+                 .ClientEvents(events => events
+                             .OnEdit("onEdit")
+                                    .OnRowDataBound("ProductLineFacilityGrid_OnRowDataBound"))
+        .Scrollable()
+        .Sortable()
+        .Footer(false)
+            )
+</fieldset>

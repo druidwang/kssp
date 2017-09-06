@@ -1,0 +1,66 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISI.TaskStatus>
+<fieldset>
+    <script type="text/javascript">
+        function TaskStatusGrid_OnDataBinding(e) {
+            e.data = {
+                TaskCode: $('#TaskCode').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                Description: $('#Description').val()
+            };
+        } 
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("TaskStatusGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.CreateUserName).ClientTemplate(string.Format("<a href=\"javascript:onTaskStatusClick('{0}')\">{1}</a>", "<#=Id #>", "<#=CreateUserName #>"));
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.StartDate);
+            columns.Bound(o => o.EndDate);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Sequence")
+                {
+                    cell.Text = string.Format("<a href=\"javascript:onTaskStatusClick('{0}')\">{1}</a>", cell.DataItem.Id, cell.DataItem.CreateUserName);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxTaskStatusList", "TaskMaster"))
+                  .ClientEvents(events => events.OnDataBinding("TaskStatusGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    @Html.Hidden("TaskCode", (string)ViewBag.TaskCode)
+</fieldset>
+<script type="text/javascript">
+    function onTaskStatusClick(id) {
+        var data = {
+            "Id": id
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "@Url.Content("~/TaskMaster/_TaskStatusEdit/")",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

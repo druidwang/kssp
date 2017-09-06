@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISS.IssueNo>
+<fieldset>
+     @(Html.Telerik().Grid(Model)
+        .Name("IssueNoGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "IssueNo", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+			columns.Bound(o => o.Sequence);
+			columns.Bound(o => o.IssueTypeCode);
+			columns.Bound(o => o.IssueTypeDescription);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "IssueNo"))
+        .ClientEvents(events => events.OnDataBinding("IssueNoGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function IssueNoGrid_OnDataBinding(e) {
+            
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val(),
+				IssueTypeCode: $('#IssueTypeCode').val()
+            };
+        } 
+    </script>
+</fieldset>

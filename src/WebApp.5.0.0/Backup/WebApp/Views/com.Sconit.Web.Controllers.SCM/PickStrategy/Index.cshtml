@@ -1,0 +1,62 @@
+﻿@model IEnumerable<com.Sconit.Entity.SCM.PickStrategy>
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PickStrategy_View" });
+}
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickStrategyGrid")
+  .DataKeys(keys =>
+  {
+      keys.Add(p => p.Code);
+  })
+
+  .Columns(columns =>
+  {
+      columns.Bound(o => o.Code);
+      columns.Bound(o => o.PickOddOptionDescription);
+      columns.Bound(o => o.IsPickFromBin);
+      columns.Bound(o => o.ShipStrategyDescription);
+      columns.Bound(o => o.IsOddOccupy);
+      columns.Bound(o => o.IsDevan);
+      columns.Bound(o => o.IsFulfillUC);
+      columns.Bound(o => o.UcDeviation);
+      columns.Bound(o => o.IsSimple);
+      columns.Bound(o => o.IsMatchDirection);
+  })
+    .CellAction(cell =>
+    {
+        if (cell.Column.Member == "Code")
+        {
+            cell.Text = string.Format("<a href='/PickStrategy/Edit/" + cell.DataItem.Code + "'>" + cell.DataItem.Code + "</a>");
+
+        }
+    })
+  .Resizable(resizing => resizing.Columns(true))
+  .Footer(false)
+          )
+
+    <script type="text/javascript">
+        function onDetailclick(Id) {
+            var data = {
+                "Id": Id
+            };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                cache: false,
+                url: "/PickStrategy/Edit/",
+                data: data,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#TabStrip");
+                    var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                    $(tabStripContent2).html(data);
+                }
+            });
+        }
+    </script>
+</fieldset>
+<div class="editor-footer">
+    <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/PickStrategy/New")'">
+        @Resources.SYS.Global.Button_Add</button>
+</div>

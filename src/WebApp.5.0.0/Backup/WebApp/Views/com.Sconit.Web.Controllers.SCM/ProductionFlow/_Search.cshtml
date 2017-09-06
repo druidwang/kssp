@@ -1,0 +1,160 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SCM
+@{
+    Layout = null;
+}
+<script type="text/javascript">
+    function PartyFrom_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        }
+        $('#LocationFrom').data('tComboBox').value('');
+        $('#LocationFrom').data('tComboBox').text('');
+        $("#LocationFrom").data("tComboBox").reload();
+
+        $('#LocationTo').data('tComboBox').value('');
+        $('#LocationTo').data('tComboBox').text('');
+        $("#LocationTo").data("tComboBox").reload();
+    }
+
+    function LocationTo_DataBinding(e) {
+        e.data = {
+            region: $("#PartyFrom").val()
+        };
+    }
+
+    function LocationFrom_DataBinding(e) {
+        e.data = {
+            region: $("#PartyFrom").val()
+        };
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("List", "ProductionFlow", new { isFromList = false }))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="FlowMaster_Code">
+                    @Resources.SCM.FlowMaster.FlowMaster_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["FlowSearchModel"] != null ? ((FlowSearchModel)TempData["FlowSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FlowMaster_Code">
+                    @Resources.SCM.FlowMaster.FlowMaster_Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["FlowSearchModel"] != null ? ((FlowSearchModel)TempData["FlowSearchModel"]).Description : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FlowMaster_ProductionPartyFrom">
+                    @Resources.SCM.FlowMaster.FlowMaster_ProductionPartyFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_RegionComboBox", "Common", new
+        {
+            controlName = "PartyFrom",
+            coupled = true,
+            isChange = true,
+            selectedValue = TempData["FlowSearchModel"] != null ? ((FlowSearchModel)TempData["FlowSearchModel"]).PartyFrom : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="FlowMaster_ProductionLocationFrom">
+                    @Resources.SCM.FlowMaster.FlowMaster_ProductionLocationFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common",
+            new
+            {
+                controlName = "LocationFrom",
+                checkRegion = true,
+                selectedValue = TempData["FlowSearchModel"] != null ? ((FlowSearchModel)TempData["FlowSearchModel"]).LocationFrom : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="FlowMaster_ProductionLocationTo">
+                    @Resources.SCM.FlowMaster.FlowMaster_ProductionLocationTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common",
+            new
+            {
+                controlName = "LocationTo",
+                checkRegion = true,
+                selectedValue = TempData["FlowSearchModel"] != null ? ((FlowSearchModel)TempData["FlowSearchModel"]).LocationTo : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="FlowMaster_IsActive">
+                    @Resources.SCM.FlowMaster.FlowMaster_IsActive
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsActive", TempData["FlowMaster"] != null ? ((FlowSearchModel)TempData["FlowMaster"]).IsActive : true)
+            </div>
+            <div class="search-label">
+                <label>
+                    <a href='/Resource/Templates/UploadTemplate/Flow.xls'>@Resources.EXT.PageLan.TemplateDownload</a>
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().Upload()
+                    .Name("flowattachments")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("Import", "ProductionFlow")
+                    .AutoUpload(true))
+                    .ClientEvents(e => e.OnSuccess("TelerikonUpload_OnSuccess")))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_ProductionFlow_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/ProductionFlow/New")+"'"}
+	})
+        <button type="button" id="btnExport">
+        @Resources.SYS.Global.Button_ExportDetail</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+
+        if (t == "") {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/ProductionFlow/Export/");
+        $('form').submit();
+    });
+</script>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.ORD.TransitOrder, com.Sconit.Entity" table="MRP_TransitOrder" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="OrderNo" column="OrderNo" type="String" length="50" />
+    <property name="OrderDetailId" column="OrderDetId" type="Int32" />
+    <property name="IpNo" column="IpNo" type="String" length="50" />
+    <property name="Flow" column="Flow" type="String" length="50" />
+    <property name="OrderType" column="OrderType"   />
+    <property name="Location" column="Location" type="String" length="50" />
+    <property name="Item" column="Item" type="String" length="50" />
+    <property name="ShippedQty" column="ShipQty" type="Double"  />
+    <property name="ReceivedQty" column="RecQty" type="Double"  />
+    <property name="StartTime" column="StartTime" type="DateTime"  />
+    <property name="WindowTime" column="WindowTime" type="DateTime"  />
+    <property name="SnapTime" column="SnapTime" type="DateTime"  />
+    <!--<property name="PartyTo" column="PartyTo" type="String" length="50" />-->
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,187 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_RccpPlanEx_ProdLineSpeed" });
+}
+<script type="text/javascript">
+    function CodeMaster_Change(e) {
+        if (e.value == 5) {
+            document.getElementById("Dateindexlabel").innerHTML = "<label>起始周</label>";
+            document.getElementById("DateindexTolabel").innerHTML = "<label>结束周</label>";
+            $.ajax({
+                type: "get",
+                dataType: "text",
+                url: "/Common/DateWeek/",
+                cache: false,
+                success: function (data, textStatus) {
+                    var strArray = data.split(',');
+                    $('#DateIndex').val(strArray[0])
+                    $('#DateIndexTo').val(strArray[1])
+                }
+            });
+
+        }
+        else {
+            document.getElementById("Dateindexlabel").innerHTML = "<label>起始月</label>";
+            document.getElementById("DateindexTolabel").innerHTML = "<label>结束月</label>";
+            $.ajax({
+                type: "get",
+                dataType: "text",
+                url: "/Common/DateMonth/",
+                cache: false,
+                success: function (data, textStatus) {
+                    var strArray = data.split(',');
+                    $('#DateIndex').val(strArray[0])
+                    $('#DateIndexTo').val(strArray[1])
+                }
+            });
+        }
+        $('#PlanVersion').data('tComboBox').value('');
+        $('#PlanVersion').data('tComboBox').text('');
+        $("#PlanVersion").data("tComboBox").reload();
+
+
+        $('#DateIndex').data('tComboBox').value('');
+        $('#DateIndex').data('tComboBox').text('');
+        $("#DateIndex").data("tComboBox").reload();
+
+        $('#DateIndexTo').data('tComboBox').value('');
+        $('#DateIndexTo').data('tComboBox').text('');
+        $("#DateIndexTo").data("tComboBox").reload();
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("ExportProdLineSpeed", "RccpPlanEx"))
+    { 
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpTrans.RccpTrans_DateType
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_CodeMasterComboBox", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+            includeBlankOption = true,
+            isRccpPlan = true,
+            isChange = true,
+            controlName = "DateType"
+        });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpTrans.RccpTrans_PlanVersion
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_RccpPlanMasterComboBox", "Common", new
+        {
+            controlName = "PlanVersion",
+            IsRelease = true
+        });
+            }
+        </div>
+        <div class="search-label" id="Dateindexlabel">
+            <label>
+                @Resources.MRP.RccpTrans.RccpTrans_StartWeek
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "DateIndex",
+            selectedValue = (string)ViewBag.DateIndex
+        });
+            }
+        </div>
+        <div class="search-label" id="DateindexTolabel">
+            <label>
+                @Resources.MRP.RccpTrans.RccpTrans_EndWeek
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "DateIndexTo",
+            selectedValue = (string)ViewBag.DateIndexTo
+        });
+            }
+        </div>
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="Search" onclick="QueryRccpTransView()">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    }
+</fieldset>
+<div id="divProdLineSpeedView">
+</div>
+<script type="text/javascript">
+    function QueryRccpTransView() {
+        if ($('#PlanVersion').val() == "") {
+            $message.error('版本时间为必填项');
+            return;
+        }
+
+        if ($('#DateType').val() == "") {
+            $message.error('计划类型为必填项');
+            return;
+        }
+
+        var data = {
+            "planVersion": $('#PlanVersion').val(),
+            "dateIndex": $('#DateIndex').val(),
+            "dateIndexTo": $('#DateIndexTo').val(),
+            "item": $('#Item').val(),
+            "dateType": $('#DateType').val()
+        };
+
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/RccpPlanEx/_GetExRccpViewGroupByProdLineSpeed/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divProdLineSpeedView");
+                $(tabStrip).html(data);
+
+            }
+        });
+    }
+    function PlanVersion_DataBinding(e) {
+        if (e.value != "") {
+            e.data = {
+                timeUnit: $('#DateType').val()
+            }
+        }
+
+    }
+    function DateIndex_DataBinding(e) {
+        e.data = {
+            dateType: $('#DateType').val()
+        }
+    }
+    $('#btnExport').click(function () {
+        if ($('#PlanVersion').val() == "") {
+            $message.error('版本时间为必填项');
+            return;
+        }
+
+        if ($('#DateType').val() == "") {
+            $message.error('计划类型为必填项');
+            return;
+        }
+        $('form').submit();
+    });  
+</script>

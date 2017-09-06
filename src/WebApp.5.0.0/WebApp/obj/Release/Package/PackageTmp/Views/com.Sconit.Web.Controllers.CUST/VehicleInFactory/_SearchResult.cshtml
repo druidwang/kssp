@@ -1,0 +1,45 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.VehicleInFactoryMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("VehicleInFactoryGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo).ClientTemplate(Html.ActionLink("<#= OrderNo #>", "Edit", "VehicleInFactory", new { OrderNo = "<#= OrderNo #>" }, null).ToString());
+            columns.Bound(o => o.VehicleNo);
+            columns.Bound(o => o.Plant);
+            columns.Bound(o => o.VehicleInFactoryStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CloseDate);
+            columns.Bound(o => o.CloseUserName);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "VehicleInFactory"))
+                        .ClientEvents(events => events.OnDataBinding("VehicleInFactoryMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function VehicleInFactoryMasterGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                VehicleNo: $('#VehicleNo').val(),
+                Plant: $('#Plant').val(),
+                IsInFactory: $('#IsInFactory').is(':checked'),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val()
+            };
+        } 
+    </script>
+</fieldset>

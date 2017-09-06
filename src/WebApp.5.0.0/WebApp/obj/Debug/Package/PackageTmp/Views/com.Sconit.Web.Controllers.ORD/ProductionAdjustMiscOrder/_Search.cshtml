@@ -1,0 +1,145 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    @using (Html.BeginForm("List", "ProductionAdjustMiscOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="MiscOrderMstr_MiscOrderNo">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_MiscOrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MiscOrderNo", TempData["MiscOrderSearchModel"] != null ? ((MiscOrderSearchModel)TempData["MiscOrderSearchModel"]).MiscOrderNo : null)
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_Status">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_Status
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.MiscOrderStatus,
+            controlName = "Status",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["MiscOrderSearchModel"] != null ? ((MiscOrderSearchModel)TempData["MiscOrderSearchModel"]).Status.ToString() : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_MoveType">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_MoveType
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_MoveTypeDropDownList", "Common", new
+        {
+            SubType = (int)com.Sconit.CodeMaster.MiscOrderSubType.SY05,
+            isChange = false,
+            controlName = "MoveType",
+            includeBlankOption = true,
+            blankOptionValue = "",
+            selectedValue = TempData["MiscOrderSearchModel"] != null ? ((MiscOrderSearchModel)TempData["MiscOrderSearchModel"]).MoveType : string.Empty
+
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_Location
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_ProductionAdjustLocationComboBox", "Common", new
+        {
+            controlName = "Location",
+            selectedValue = TempData["MiscOrderSearchModel"] != null ? ((MiscOrderSearchModel)TempData["MiscOrderSearchModel"]).Location : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_Note
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Note", TempData["MiscOrderSearchModel"] != null ? ((MiscOrderSearchModel)TempData["MiscOrderSearchModel"]).Note : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", TempData["MiscOrderSearchModel"] != null ? ((MiscOrderSearchModel)TempData["MiscOrderSearchModel"]).CreateUserName : null)
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_StartDate">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("StartDate")
+.Value(TempData["MiscOrderSearchModel"] != null ? ((MiscOrderSearchModel)TempData["MiscOrderSearchModel"]).StartDate : System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_EndDate">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("EndDate")
+        .Value(TempData["MiscOrderSearchModel"] != null ? ((MiscOrderSearchModel)TempData["MiscOrderSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                    @Resources.ORD.MiscOrderMstr.MiscOrderMstr_QualityType
+        </div>
+        <div class="editor-field-2">
+            @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.QualityType,
+            controlName = "QualityType",
+            selectedValue = TempData["MiscOrderSearchModel"] != null ? ((MiscOrderSearchModel)TempData["MiscOrderSearchModel"]).QualityType.ToString():null,
+            blankOptionValue = "",
+            includeBlankOption = true
+        });
+            }
+        </div>
+            <div class="search-footer">
+                @Html.Hidden("isFromList", true)
+                <button type="submit" id="btnSearch">
+                    @Resources.SYS.Global.Button_Search</button>
+                <button type="button" id="btnExport">
+                    @Resources.SYS.Global.Button_Export</button>
+            </div>
+        </div>
+    }
+</fieldset>
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+
+        if (t == "") {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/ProductionAdjustMiscOrder/ExportMstr/");
+        $('form').submit();
+    });
+
+</script>

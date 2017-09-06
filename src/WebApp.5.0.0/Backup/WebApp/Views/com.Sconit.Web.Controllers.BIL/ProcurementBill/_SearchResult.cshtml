@@ -1,0 +1,56 @@
+﻿@model IEnumerable<com.Sconit.Entity.BIL.BillMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("BillMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.BillNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.BillNo).ClientTemplate(Html.ActionLink("<#= BillNo #>", "Edit", "ProcurementBill", new { BillNo = "<#= BillNo #>", groupOrDetail = "0" }, null).ToString());
+          
+            columns.Bound(o => o.PartyName);
+            columns.Bound(o => o.ExternalBillNo);
+            columns.Bound(o => o.InvoiceNo);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.StatusDescription);
+           // columns.Bound(o => o.EffectiveDate);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "BillNo")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.BillNo, cell.DataItem.BillNo);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ProcurementBill"))
+                        .ClientEvents(events => events.OnDataBinding("BillMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function BillMasterGrid_OnDataBinding(e) {
+            e.data = {
+                BillNo: $('#BillNo').val(),
+                ExternalBillNo: $('#ExternalBillNo').val(),
+                Status: $('#Status').val(),
+                Party: $('#Party').val(),
+                EndTime: $('#EndTime').val(),
+                StartTime: $('#StartTime').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://localhost:2015/WebService/SD/SmartDeviceService.asmx?wsdl" docRef="http://localhost:2015/WebService/SD/SmartDeviceService.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://localhost:2015/WebService/SD/SmartDeviceService.asmx" xmlns:q1="http://com.Sconit.WebService.SD.SmartDeviceService/" binding="q1:SD_SmartDeviceServiceSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://localhost:2015/WebService/SD/SmartDeviceService.asmx" xmlns:q2="http://com.Sconit.WebService.SD.SmartDeviceService/" binding="q2:SD_SmartDeviceServiceSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

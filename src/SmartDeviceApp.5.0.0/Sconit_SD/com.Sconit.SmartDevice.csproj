@@ -1,0 +1,622 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{939563B8-BEA3-4692-A8A8-43F974123CBC}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.Sconit.SmartDevice</RootNamespace>
+    <AssemblyName>SmartDevice</AssemblyName>
+    <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PlatformFamilyName>WindowsCE</PlatformFamilyName>
+    <PlatformID>E2BECB1F-8C8C-41ba-B736-9BE7D946A398</PlatformID>
+    <OSVersion>5.0</OSVersion>
+    <DeployDirSuffix>Sconit_SD</DeployDirSuffix>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <NativePlatformName>Windows CE</NativePlatformName>
+    <FormFactorID>
+    </FormFactorID>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppExecutionManager.cs" />
+    <Compile Include="CodeMaster.cs" />
+    <Compile Include="BusinessException.cs" />
+    <Compile Include="UCWMSRepack.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCWMSRepack.Designer.cs">
+      <DependentUpon>UCWMSRepack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCWMSShip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCWMSShip.Designer.cs">
+      <DependentUpon>UCWMSShip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCWMSTransfer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCWMSTransfer.Designer.cs">
+      <DependentUpon>UCWMSTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCWMSDeliveryBarCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCWMSDeliveryBarCode.Designer.cs">
+      <DependentUpon>UCWMSDeliveryBarCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCWMSDeliveryBarCode111.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCWMSDeliveryBarCode111.Designer.cs">
+      <DependentUpon>UCWMSDeliveryBarCode111.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCWMSPickGoods.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCWMSPickGoods.Designer.cs">
+      <DependentUpon>UCWMSPickGoods.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCQuickReturn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCQuickReturn.Designer.cs">
+      <DependentUpon>UCQuickReturn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCWorkerWaste.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCWorkerWaste.Designer.cs">
+      <DependentUpon>UCWorkerWaste.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCForceMaterialIn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCForceMaterialIn.Designer.cs">
+      <DependentUpon>UCForceMaterialIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCPickListShip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCPickListShip.Designer.cs">
+      <DependentUpon>UCPickListShip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCAnDon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCAnDon.Designer.cs">
+      <DependentUpon>UCAnDon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCUnFreeze.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCUnFreeze.Designer.cs">
+      <DependentUpon>UCUnFreeze.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCFreeze.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFreeze.Designer.cs">
+      <DependentUpon>UCFreeze.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCHuClone.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCHuClone.Designer.cs">
+      <DependentUpon>UCHuClone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCMaterialReturn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCMaterialReturn.Designer.cs">
+      <DependentUpon>UCMaterialReturn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="UCWMSRepack.resx">
+      <DependentUpon>UCWMSRepack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCWMSShip.resx">
+      <DependentUpon>UCWMSShip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCWMSTransfer.resx">
+      <DependentUpon>UCWMSTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCWMSDeliveryBarCode.resx">
+      <DependentUpon>UCWMSDeliveryBarCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCWMSDeliveryBarCode111.resx">
+      <DependentUpon>UCWMSDeliveryBarCode111.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCWMSPickGoods.resx">
+      <DependentUpon>UCWMSPickGoods.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCQuickReturn.resx">
+      <DependentUpon>UCQuickReturn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCWorkerWaste.resx">
+      <DependentUpon>UCWorkerWaste.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCForceMaterialIn.resx">
+      <DependentUpon>UCForceMaterialIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCPickListShip.resx">
+      <DependentUpon>UCPickListShip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCAnDon.resx">
+      <DependentUpon>UCAnDon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCUnFreeze.resx">
+      <DependentUpon>UCUnFreeze.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFreeze.resx">
+      <DependentUpon>UCFreeze.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCHuClone.resx">
+      <DependentUpon>UCHuClone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCMaterialReturn.resx">
+      <DependentUpon>UCMaterialReturn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCHuStatus.resx">
+      <DependentUpon>UCHuStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCLogin.resx">
+      <DependentUpon>UCLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCMisOut.resx">
+      <DependentUpon>UCMisOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCModuleSelect.resx">
+      <DependentUpon>UCModuleSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCPickList.resx">
+      <DependentUpon>UCPickList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCPickListOnline.resx">
+      <DependentUpon>UCPickListOnline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCPickUp.resx">
+      <DependentUpon>UCPickUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCShip.resx">
+      <DependentUpon>UCShip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCReceive.resx">
+      <DependentUpon>UCReceive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCStockTaking.resx">
+      <DependentUpon>UCStockTaking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCTransfer.resx">
+      <DependentUpon>UCTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCPutAway.resx">
+      <DependentUpon>UCPutAway.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCProductOrderOnline.resx">
+      <DependentUpon>UCProductOrderOnline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCMaterialIn.resx">
+      <DependentUpon>UCMaterialIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCBase.resx">
+      <DependentUpon>UCBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCPack.resx">
+      <DependentUpon>UCPack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCUnPack.resx">
+      <DependentUpon>UCUnPack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCInspect.resx">
+      <DependentUpon>UCInspect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCRePack.resx">
+      <DependentUpon>UCRePack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCJudgeInspect.resx">
+      <DependentUpon>UCJudgeInspect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCReceiveProdOrder.resx">
+      <DependentUpon>UCReceiveProdOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFiReceipt.resx">
+      <DependentUpon>UCFiReceipt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCHuFilter.resx">
+      <DependentUpon>UCHuFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCHuAging.resx">
+      <DependentUpon>UCHuAging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCReturn.resx">
+      <DependentUpon>UCReturn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCSpChk.resx">
+      <DependentUpon>UCSpChk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCBindContainer.resx">
+      <DependentUpon>UCBindContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCBinOn.resx">
+      <DependentUpon>UCBinOn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCPurchaseReturn.resx">
+      <DependentUpon>UCPurchaseReturn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCProductionReceive.resx">
+      <DependentUpon>UCProductionReceive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCQuickTransfer.resx">
+      <DependentUpon>UCQuickTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCProductionReturn.resx">
+      <DependentUpon>UCProductionReturn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCDistributionReturn.resx">
+      <DependentUpon>UCDistributionReturn.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="UCHuStatus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCHuStatus.Designer.cs">
+      <DependentUpon>UCHuStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCLogin.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCLogin.Designer.cs">
+      <DependentUpon>UCLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCMisInOut.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCMisInOut.Designer.cs">
+      <DependentUpon>UCMisInOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCMisOut.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCMisOut.Designer.cs">
+      <DependentUpon>UCMisOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCModuleSelect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCModuleSelect.Designer.cs">
+      <DependentUpon>UCModuleSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCPickList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCPickList.Designer.cs">
+      <DependentUpon>UCPickList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCPickListOnline.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCPickListOnline.Designer.cs">
+      <DependentUpon>UCPickListOnline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCPickUp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCPickUp.Designer.cs">
+      <DependentUpon>UCPickUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCShip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCShip.Designer.cs">
+      <DependentUpon>UCShip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCStockTaking.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCStockTaking.Designer.cs">
+      <DependentUpon>UCStockTaking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utility.cs" />
+    <Compile Include="Web References\SmartDeviceRef\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="UCReceive.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCReceive.Designer.cs">
+      <DependentUpon>UCReceive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCTransfer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCTransfer.Designer.cs">
+      <DependentUpon>UCTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCPutAway.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCPutAway.Designer.cs">
+      <DependentUpon>UCPutAway.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCProductOrderOnline.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCProductOrderOnline.Designer.cs">
+      <DependentUpon>UCProductOrderOnline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCMaterialIn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCMaterialIn.Designer.cs">
+      <DependentUpon>UCMaterialIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCBase.Designer.cs">
+      <DependentUpon>UCBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCPack.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCPack.Designer.cs">
+      <DependentUpon>UCPack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCUnPack.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCUnPack.Designer.cs">
+      <DependentUpon>UCUnPack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCInspect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCInspect.Designer.cs">
+      <DependentUpon>UCInspect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCRePack.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCRePack.Designer.cs">
+      <DependentUpon>UCRePack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCJudgeInspect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCJudgeInspect.Designer.cs">
+      <DependentUpon>UCJudgeInspect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCReceiveProdOrder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCReceiveProdOrder.Designer.cs">
+      <DependentUpon>UCReceiveProdOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCFiReceipt.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFiReceipt.Designer.cs">
+      <DependentUpon>UCFiReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCHuFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCHuFilter.Designer.cs">
+      <DependentUpon>UCHuFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCHuAging.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCHuAging.Designer.cs">
+      <DependentUpon>UCHuAging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCReturn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCReturn.Designer.cs">
+      <DependentUpon>UCReturn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCSpChk.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCSpChk.Designer.cs">
+      <DependentUpon>UCSpChk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCBindContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCBindContainer.Designer.cs">
+      <DependentUpon>UCBindContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCBinOn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCBinOn.Designer.cs">
+      <DependentUpon>UCBinOn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCPurchaseReturn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCPurchaseReturn.Designer.cs">
+      <DependentUpon>UCPurchaseReturn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCProductionReceive.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCProductionReceive.Designer.cs">
+      <DependentUpon>UCProductionReceive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCQuickTransfer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCQuickTransfer.Designer.cs">
+      <DependentUpon>UCQuickTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCProductionReturn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCProductionReturn.Designer.cs">
+      <DependentUpon>UCProductionReturn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCDistributionReturn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCDistributionReturn.Designer.cs">
+      <DependentUpon>UCDistributionReturn.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Web References\SmartDeviceRef\Bin.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\ContainerDetail.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\DeliverBarCode.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\FlowMaster.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\Hu.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\InspectMaster.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\IpMaster.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\Item.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\Location.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\MiscOrderMaster.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\OrderMaster.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\Pallet.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\PickListMaster.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\PickTask.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\SmartDeviceRef\SmartDeviceService.disco" />
+    <None Include="Web References\SmartDeviceRef\SmartDeviceService.wsdl" />
+    <None Include="Web References\SmartDeviceRef\StockTakeMaster.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\TransportOrderMaster.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SmartDeviceRef\User.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://localhost:2015/WebService/SD/SmartDeviceService.asmx">
+      <UrlBehavior>Static</UrlBehavior>
+      <RelPath>Web References\SmartDeviceRef\</RelPath>
+      <UpdateFromURL>http://localhost:2015/WebService/SD/SmartDeviceService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>
+      </CachedAppSettingsObjectName>
+      <CachedSettingsPropName>
+      </CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}">
+        <HostingProcess disable="1" />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

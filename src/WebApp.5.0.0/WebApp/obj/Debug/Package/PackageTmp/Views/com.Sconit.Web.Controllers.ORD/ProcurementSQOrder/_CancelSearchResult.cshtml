@@ -1,0 +1,79 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.HuMapping>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("HuMappingGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+
+        
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.OldHus);
+            columns.Bound(o =>o.OrderNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.Qty).Format("{0:0.########}");
+            columns.Bound(o => o.IsEffective).ClientTemplate("<input type='checkbox' name='IsEffective' disabled=true <#=IsEffective?'checked':'' #>  />");
+           
+
+        })
+                .DataBinding(dataBinding =>
+                    dataBinding.Ajax().Select("_AjaxCancelList", "ProcurementSQOrder")
+                )
+                                .ClientEvents(envent => envent.OnDataBinding("HuMappingGrid_OnDataBinding"))
+                  .Pageable(settings =>
+                  {
+                      settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                      settings.PageSize(ViewBag.PageSize);
+                  })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(true)
+            )
+    <script type="text/javascript">
+        function HuMappingGrid_OnDataBinding(e) {
+            e.data = {
+                HuId: $('#HuId').val(),
+                IsEffective: $("#IsEffective").is(":checked")
+
+            };
+        }
+
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+                var $checkRecords = $("input[name='checkedRecords']");
+                var showButton = false;
+                for (var i = 0; i < $checkRecords.length; i++) {
+                    if ($checkRecords[i].checked) {
+                        showButton = true;
+                        break;
+                    }
+                }
+
+                $("#btnPrint").attr("style", showButton ? "display:inline" : "display:none");
+                $("#btnDistributionLabel_Print").attr("style", showButton ? "display:inline" : "display:none");
+            });
+        });
+
+
+
+        function showButtons() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            $("#btnPrint").attr("style", showButton ? "display:inline" : "display:none");
+            $("#btnDistributionLabel_Print").attr("style", showButton ? "display:inline" : "display:none");
+        }
+
+       
+    </script>
+</fieldset>

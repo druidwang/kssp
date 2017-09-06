@@ -1,0 +1,177 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.Hu>
+ <script type="text/javascript">
+     $(function () {
+         $("#checkAll").click(function () {
+             $('input[name="checkedRecords"]').attr("checked", this.checked);
+             $("#btnPrint").attr("style", this.checked ? "display:inline" : "display:none");
+             $("#btnExport").attr("style", this.checked ? "display:inline" : "display:none");
+         });
+     });
+
+
+
+     function showButtons() {
+         var $checkRecords = $("input[name='checkedRecords']");
+         var showButton = false;
+         for (var i = 0; i < $checkRecords.length; i++) {
+             if ($checkRecords[i].checked) {
+                 showButton = true;
+                 break;
+             }
+         }
+         $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+         $("#btnPrint").attr("style", showButton ? "display:inline" : "display:none");
+         $("#btnExport").attr("style", showButton ? "display:inline" : "display:none");
+     }
+
+
+    function HuMasterGrid_OnDataBinding(e) {
+        e.data = {
+            HuId: $('#HuId').val(),
+            Item: $('#Item').val(),
+            lotNo: $('#LotNo').val(),
+            lotNoTo: $('#LotNoTo').val(),
+            
+            StartDate: $('#StartDate').val(),
+            EndDate: $('#EndDate').val()
+        }
+    }
+
+
+    function CheckedExport(isExport) {
+            var $checkRecords = $("input[name='checkedRecords']");
+
+            var checkedOrders = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    if (checkedOrders == "") {
+                        checkedOrders = $checkRecords[i].value;
+                    } else {
+                        checkedOrders += "," + $checkRecords[i].value;
+                    }
+                }
+            }
+            if (checkedOrders == "") {
+                alert('Must Check One');
+                return;
+            }
+
+            var data = {
+                "checkedOrders": checkedOrders
+            };
+
+            if (isExport) {
+//                $.ajax({
+//                    type: "post",
+//                    dataType: "Json",
+//                    data: data,
+//                    async: false,
+//                    url: "/SupplierPrintHu/SaveToClient/",
+//                    cache: false,
+//                    success: function (data, textStatus) {
+
+
+//                    }
+                //                });
+                $.ajax({
+                    type: "post",
+                    dataType: "Json",
+                    url: "/SupplierPrintHu/CheckExportTemplate/",
+                    data: data,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        //debugger
+                        if (data.Message != "OK") {
+                            $message.error(data.Message)
+                        }
+                        else {
+                            $("#checkedOrders").val(checkedOrders);
+                            $("#hiddenForm").submit();
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: "post",
+                    dataType: "Json",
+                    data: data,
+                    async: false,
+                    url: "/SupplierPrintHu/_PrintHus/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $message.success(data.SuccessMessage);
+                       
+                        for (var i = 0; i < data.PrintUrl.length; i++) {
+                            PrintOrder(data.PrintUrl[i]);
+                        }
+                        //if (data.PrintUrl != "") {
+                        //    PrintOrder(data.PrintUrl);
+                        //}
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        
+                        $message.error(errorMessages);
+                    }
+                });
+            }
+        }
+   
+
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("HuGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.CheckHuId)
+               .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' onClick='showButtons();' value='<#= HuId #>'   />")
+               .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+               .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            //columns.Bound(o => o.MaterialsGroup);
+            //columns.Bound(o => o.IpNo);
+            //columns.Bound(o => o.ItemVersion);
+            //columns.Bound(o => o.RefHu);
+            //columns.Bound(o => o.AgingStartTime);
+            //columns.Bound(o => o.AgingEndTime);
+            columns.Bound(o => o.ReferenceItemCode);
+            //columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+            columns.Bound(o=>o.SupplierLotNo);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            //columns.Bound(o => o.IsOdd)
+            //                   .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsOdd' <#= IsOdd? checked='checked' : '' #> />");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SupplierPrintHu"))
+        .ClientEvents(events => events.OnDataBinding("HuMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize); ;
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+  
+</fieldset>
+ <form id="hiddenForm" action="/SupplierPrintHu/_ExportHus" target="_blank"  method="post">
+        <input id="checkedOrders" name="checkedOrders" type="hidden" />
+    </form>
+
+
+
+

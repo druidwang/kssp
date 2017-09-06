@@ -1,0 +1,44 @@
+﻿@model IEnumerable<com.Sconit.Entity.FMS.FacilityOrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                        .Name("FacilityOrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.FacilityOrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.FacilityOrderNo).ClientTemplate(Html.ActionLink("<#= FacilityOrderNo #>", "Edit", "FacilityOrder", new { id = "<#= FacilityOrderNo #>" }, null).ToString());
+            columns.Bound(o => o.ReferenceNo);
+            columns.Bound(o => o.FacilityOrderStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+         
+            
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "FacilityOrder"))
+                .ClientEvents(events => events.OnDataBinding("FacilityOrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function FacilityOrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                FacilityOrderNo: $('#FacilityOrderNo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+            };
+        } 
+    </script>
+</fieldset>

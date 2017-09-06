@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LocationDetailIOB_Ccs" xml:space="preserve">
+    <value>Ccs</value>
+  </data>
+  <data name="LocationDetailIOB_CycCnt" xml:space="preserve">
+    <value>CycCnt</value>
+  </data>
+  <data name="LocationDetailIOB_End" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="LocationDetailIOB_EndCs" xml:space="preserve">
+    <value>EndCs</value>
+  </data>
+  <data name="LocationDetailIOB_EndInp" xml:space="preserve">
+    <value>EndInp</value>
+  </data>
+  <data name="LocationDetailIOB_EndNml" xml:space="preserve">
+    <value>EndNml</value>
+  </data>
+  <data name="LocationDetailIOB_EndRej" xml:space="preserve">
+    <value>EndRej</value>
+  </data>
+  <data name="LocationDetailIOB_Inp" xml:space="preserve">
+    <value>Inp</value>
+  </data>
+  <data name="LocationDetailIOB_IssIic" xml:space="preserve">
+    <value>IssIic</value>
+  </data>
+  <data name="LocationDetailIOB_IssPo" xml:space="preserve">
+    <value>IssPo</value>
+  </data>
+  <data name="LocationDetailIOB_IssSo" xml:space="preserve">
+    <value>IssSo</value>
+  </data>
+  <data name="LocationDetailIOB_IssStr" xml:space="preserve">
+    <value>IssStr</value>
+  </data>
+  <data name="LocationDetailIOB_IssSwo" xml:space="preserve">
+    <value>IssSwo</value>
+  </data>
+  <data name="LocationDetailIOB_IssTr" xml:space="preserve">
+    <value>IssTr</value>
+  </data>
+  <data name="LocationDetailIOB_IssUnp" xml:space="preserve">
+    <value>IssUnp</value>
+  </data>
+  <data name="LocationDetailIOB_IssWo" xml:space="preserve">
+    <value>IssWo</value>
+  </data>
+  <data name="LocationDetailIOB_Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="LocationDetailIOB_ItemDescription" xml:space="preserve">
+    <value>ItemDescription</value>
+  </data>
+  <data name="LocationDetailIOB_Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="LocationDetailIOB_LocationName" xml:space="preserve">
+    <value>LocationName</value>
+  </data>
+  <data name="LocationDetailIOB_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="LocationDetailIOB_Qdii" xml:space="preserve">
+    <value>Qdii</value>
+  </data>
+  <data name="LocationDetailIOB_RctIic" xml:space="preserve">
+    <value>RctIic</value>
+  </data>
+  <data name="LocationDetailIOB_RctPo" xml:space="preserve">
+    <value>RctPo</value>
+  </data>
+  <data name="LocationDetailIOB_RctSo" xml:space="preserve">
+    <value>RctSo</value>
+  </data>
+  <data name="LocationDetailIOB_RctStr" xml:space="preserve">
+    <value>RctStr</value>
+  </data>
+  <data name="LocationDetailIOB_RctSwo" xml:space="preserve">
+    <value>RctSwo</value>
+  </data>
+  <data name="LocationDetailIOB_RctTr" xml:space="preserve">
+    <value>RctTr</value>
+  </data>
+  <data name="LocationDetailIOB_RctUnp" xml:space="preserve">
+    <value>RctUnp</value>
+  </data>
+  <data name="LocationDetailIOB_RctWo" xml:space="preserve">
+    <value>RctWo</value>
+  </data>
+  <data name="LocationDetailIOB_Rej" xml:space="preserve">
+    <value>Rej</value>
+  </data>
+  <data name="LocationDetailIOB_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="LocationDetailIOB_StartCs" xml:space="preserve">
+    <value>StartCs</value>
+  </data>
+  <data name="LocationDetailIOB_StartInp" xml:space="preserve">
+    <value>StartInp</value>
+  </data>
+  <data name="LocationDetailIOB_StartNml" xml:space="preserve">
+    <value>StartNml</value>
+  </data>
+  <data name="LocationDetailIOB_StartRej" xml:space="preserve">
+    <value>StartRej</value>
+  </data>
+  <data name="LocationDetailIOB_Uom" xml:space="preserve">
+    <value>Uom</value>
+  </data>
+</root>

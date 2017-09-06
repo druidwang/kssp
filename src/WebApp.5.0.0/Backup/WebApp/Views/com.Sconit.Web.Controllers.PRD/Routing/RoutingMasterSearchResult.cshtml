@@ -1,0 +1,55 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.PRD.RoutingMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("RoutingMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "RoutingList", "Routing", new { ID = "<#= Code #>" }, null).ToString()); 
+            columns.Bound(o => o.Name);
+            columns.Bound(o => o.TaktTime);
+            columns.Bound(o => o.RoutingTimeUnitDescription);
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+                 })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"RoutingList/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Routing"))
+        .ClientEvents(events => events.OnDataBinding("RoutingMasterGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function RoutingMasterGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Name: $('#Name').val(),
+                TaktTime: $('#TaktTime').val(),
+                RoutingTimeUnitDescription: $('#RoutingTimeUnitDescription').val(),
+                Region: $('#Region').val(),
+                IsActive: $('#IsActive').is(':checked')
+            };
+        } 
+    </script>
+</fieldset>

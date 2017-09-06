@@ -1,0 +1,67 @@
+﻿@using com.Sconit.Entity.PRD
+@using com.Sconit.Entity.SYS
+@Html.Partial("_AjaxMessage")
+<fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="ShiftMstr_Code">
+                    @Resources.MD.WorkingCalendar.ShiftMaster_Code
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("Code", TempData["ShiftMaster"] != null ? ((ShiftMaster)TempData["ShiftMaster"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="ShiftMstr_Name">
+                    @Resources.MD.WorkingCalendar.ShiftMaster_Name
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("Name", TempData["ShiftMaster"] != null ? ((ShiftMaster)TempData["ShiftMaster"]).Name : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="button" id="btnShiftMasterSearch" onclick="btnSearchShiftMaster_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnShiftMasterNew" onclick="btnNewShiftMaster_Click()">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+</fieldset>
+
+<script language="javascript" type="text/javascript">
+    function btnNewShiftMaster_Click() {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/WorkingCalendar/ShiftMstrNew/",
+            data: "",
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnSearchShiftMaster_Click() {
+        var data = {
+            "Code": $("#Code").val(),
+            "Name": $("#Name").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/WorkingCalendar/ShiftMstrList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

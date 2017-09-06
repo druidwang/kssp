@@ -1,0 +1,124 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.MiscOrderDetail>
+<fieldset>
+    <script type="text/javascript">
+        function onItemComboBoxChange(e) {
+            if (e.value != null && e.value != "") {
+                var combobox = $(this).data("tComboBox");
+                if (combobox == undefined) {
+                    return;
+                }
+                if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                    combobox.value("");
+                    var $itemCell = $(e.target).parent().parent();
+                    $itemCell.next().html("");
+                    $itemCell.next().next().html("");
+                    $itemCell.next().next().next().html("");
+                    $itemCell.next().next().next().next().html("");
+                    combobox.reload();
+                }
+                else {
+                    var data = {
+                        "Code": e.value
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "json",
+                        url: "/CostCenterMiscOrder/_WebOrderDetail/",
+                        data: data,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#MiscOrderDetailGrid").data("tGrid");
+                            var oldData = $tGrid.dataItem($(e.target).parent().parent().parent());
+                            var $itemCell = $(e.target).parent().parent();
+                            if (data.Sequence > 0) {
+                                $itemCell.prev().html('<span class="t-dirty"></span>' + data.Sequence);
+                            }
+                            $itemCell.next().html(data.ItemDescription);
+                            $itemCell.next().next().html(data.ReferenceItemCode);
+                            $itemCell.next().next().next().html('<span class="t-dirty"></span>' + data.Uom);
+                            if (oldData != undefined) {
+                                oldData.Sequence = data.Sequence;
+                                oldData.ItemDescription = data.ItemDescription;
+                                oldData.Uom = data.Uom;
+                                oldData.UnitCount = data.UnitCount;
+                                oldData.ReferenceItemCode = data.ReferenceItemCode;
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            DisplayTextMessages(XMLHttpRequest.responseText);
+                        }
+                    });
+                }
+            }
+        }
+
+        function onLocationComboBoxChange(e) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+        }
+        function onLocationDataBinding(e) {
+            e.data = {
+                "checkRegion": false
+            };
+        }
+    </script>
+    <legend>明细</legend>
+    @(Html.Telerik().Grid(Model)
+       .Name("MiscOrderDetailGrid")
+       .Editable(editing => editing.Mode(GridEditMode.InCell))
+         .ToolBar(commands =>
+         {
+             if (ViewBag.IsCreate && ViewBag.ReferenceDocumentsType == 0 && !ViewBag.IsScanHu)
+             {
+                 commands.Insert();
+             }
+         })
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax()
+        .Select("_SelectMiscOrderDetail", "CostCenterMiscOrder", new { miscOrderNo = ViewBag.MiscOrderNo, location = ViewBag.Location, referenceNo = ViewBag.ReferenceNo })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence).Width(30);
+            if (ViewBag.IsCreate && ViewBag.ReferenceDocumentsType == 0)
+            {
+                columns.Bound(o => o.Item).EditorTemplateName("ItemGridForeignKey").Width(100);
+            }
+            else
+            {
+                columns.Bound(o => o.Item).ReadOnly(true).Width(100);
+            }
+            columns.Bound(o => o.ItemDescription).ReadOnly(true).Width(150);
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly(true).Width(100);
+            columns.Bound(o => o.Uom).Width(50).ReadOnly(true);
+            columns.Bound(o => o.Location).Width(80).ReadOnly(true);
+            if (ViewBag.IsCreate && ViewBag.ReferenceDocumentsType == 0)
+            {
+                columns.Bound(o => o.Qty).Width(100);
+                //columns.Bound(o => o.Remark);
+                // Hide delete button if order type is "Scanning HuId"
+                if (!ViewBag.IsScanHu)
+                {
+                    columns.Command(commands => commands.Delete()).Width(100);
+                }
+            }
+            else
+            {
+                columns.Bound(o => o.Qty).Width(50).ReadOnly();
+                //columns.Bound(o => o.Remark).ReadOnly();
+            }
+        })
+        .Scrollable()
+        .Resizable(resizing => resizing.Columns(true))
+        //.Editable(ViewBag.Editable)
+        .Footer(false)
+     )
+</fieldset>

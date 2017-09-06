@@ -1,0 +1,89 @@
+﻿@model IEnumerable<com.Sconit.Entity.PRD.BomDetail>
+<fieldset>
+ <script type="text/javascript">
+     function BomDetailGrid_OnDataBinding(e) {
+         e.data = {
+             Id: $('#Id').val(),
+             BomDetail_Bom: $('#BomDetail_Bom').val(),
+             BomDetail_Item: $('#BomDetail_Item').val()
+          //   BomMrpOption: $("#BomMrpOption").val()
+
+         };
+     }
+    </script>
+
+    @(Html.Telerik().Grid(Model)
+        .Name("BomDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).ClientTemplate(string.Format("<a href=\"javascript:onBomDetailLinkclick('{0}')\">{1}</a>", "<#= Id #>", "<#= Id #>"));
+            //columns.Bound(o => o.Operation);
+            //columns.Bound(o => o.OpReference);
+            columns.Bound(o => o.Bom);
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.MstrUom);
+            columns.Bound(o => o.IsActive).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= CurrentBom.IsActive? checked='checked' : '' #> />");
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.StartDate).Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.EndDate).Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.RateQty);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.ScrapPercentage);
+            //columns.Bound(o => o.StructureTypeDescription);
+            //columns.Bound(o => o.BackFlushMethodDescription);
+            //columns.Bound(o => o.FeedMethodDescription);
+            //columns.Bound(o => o.Location);
+            //columns.Bound(o => o.BomMrpOptionDescription);
+            //columns.Bound(o => o.IsAutoFeed).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsAutoFeed' <#= IsAutoFeed? checked='checked' : '' #> />");
+            //columns.Bound(o => o.IsPrint).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsPrint' <#= IsPrint? checked='checked' : '' #> />");
+        })
+        .CellAction(cell =>
+        {
+            if (cell.Column.Member == "Id")
+            {
+                cell.Text = string.Format("<a href=\"javascript:onBomDetailLinkclick('{0}')\">{1}</a>", cell.DataItem.Id, cell.DataItem.Id);
+            }
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList_Detail", "Bom"))
+        .ClientEvents(events => events.OnDataBinding("BomDetailGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>
+
+<script type="text/javascript">
+    function onBomDetailLinkclick(Id) {
+        var data = {
+            "Id": Id
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Bom/_Edit_Detail/",
+            data: data,
+            cache:false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

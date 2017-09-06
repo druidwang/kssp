@@ -1,0 +1,101 @@
+﻿@model com.Sconit.Entity.PRD.RoutingMaster
+@using com.Sconit.Entity.SYS
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Routing_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.PRD.Routing.RoutingMaster_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Code)
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.TaktTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.TaktTime).DecimalDigits(2).MinValue(0)
+                @Html.ValidationMessageFor(model => model.TaktTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.TaktTimeUnit)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.RoutingTimeUnit,
+               controlName = "TaktTimeUnit",
+               selectedValue = Model != null ? (int)Model.TaktTimeUnit : 0
+           });
+                }
+                @Html.ValidationMessageFor(model => model.TaktTimeUnit)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Region)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_RegionComboBox", "Common", new
+           {
+               controlName = "Region",
+               selectedValue = Model != null ? Model.Region : string.Empty
+           });
+                }
+                @Html.ValidationMessageFor(model => model.Region)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsActive", true)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.WaitTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.WaitTime)
+              
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.WaitTimeUnit)
+                @Html.ValidationMessageFor(model => model.WaitTimeUnit)
+            </div>
+            <div class="editor-field-2">
+                        @{
+           Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.RoutingTimeUnit,
+               controlName = "WaitTimeUnit",
+               selectedValue = Model != null ? (int)Model.WaitTimeUnit : 0
+           });
+            }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @*<button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>*@
+       @Html.Button(Resources.SYS.Global.Button_New, "Url_Routing_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnNew"},
+        {"needconfirm","true"}
+	})
+
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Routing/RoutingMasterList")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

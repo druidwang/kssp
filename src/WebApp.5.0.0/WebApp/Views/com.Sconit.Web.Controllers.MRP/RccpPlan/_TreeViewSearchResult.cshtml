@@ -1,0 +1,28 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.RccpTransGroup>
+<fieldset>
+    @(Html.Telerik().TreeView()
+      .Name("TransTreeView")
+              .BindTo(Model, (item, trans) =>
+              {
+                  //物料:{0}[{1}]; 需求数量:{2};                  
+                  item.Text = string.Format("物料:{0}[{1}]; 需求数量:{2} ", trans.Item, trans.ItemDescription, trans.Qty);
+                  //isDown + "," + planVersion + "," + currentItemCode + "," + dateIndex + "," + (int)dateType;
+                  item.Value = trans.IsDown + "," + trans.PlanVersion + "," + trans.Item + "," + trans.DateIndex + "," + (int)trans.DateType;
+                  item.LoadOnDemand = true;
+              })
+      .DataBinding(dataBinding => dataBinding
+      .Ajax().Select("_AjaxLoadingTree", "RccpPlan"))
+     )
+
+    <script type="text/javascript">
+        function TransTreeViewGrid_OnDataBinding(e) {
+            e.data = {
+                IsDown: $('#IsDown').is(':checked'),
+                PlanVersion: $('#PlanVersion').val(),
+                Item: $('#Item').val(),
+                DateIndex: $('#DateIndex').val(),
+                DateType: $('#DateType').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,135 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@model com.Sconit.Entity.MRP.MD.Machine
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_MRP_Machine_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MRP.Machine.Machine_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Code)
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+                 <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.StartDate)
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </div>
+                 <div class="editor-label-2">
+                @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DateTimePicker().Name("EndDate").Value("2100-01-01 00:00"))
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShiftQuota)
+            </div>
+            <div class="editor-field-2">
+               @Html.Telerik().NumericTextBoxFor(model => model.ShiftQuota).DecimalDigits(2).MinValue(0)
+               @Html.ValidationMessageFor(model => model.ShiftQuota)
+            </div>
+            @*<div class="editor-label-2">
+                @Html.LabelFor(model => model.Capacity)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.Capacity).DecimalDigits(2).MinValue(0)
+            </div>*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Qty)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.Qty).DecimalDigits(2).MinValue(0)
+                 @Html.ValidationMessageFor(model => model.Qty)
+            </div>
+                <div class="editor-label-2">
+                @Html.LabelFor(model => model.MachineType)
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.MachineType,
+            includeBlankOption = true,
+            controlName = "MachineType",
+            selectedValue = Model != null ? (int)Model.MachineType : 0
+        });
+                }
+           @Html.ValidationMessageFor(model => model.MachineType)
+            </div>
+
+           <div class="editor-label-2">
+              @Html.LabelFor(model => model.ShiftType)
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.ShiftType,
+            includeBlankOption = true,
+            controlName = "ShiftType",
+            selectedValue = Model != null ? (int)Model.ShiftType : 1
+        });
+                }
+           @Html.ValidationMessageFor(model => model.ShiftType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Island)
+            </div>
+            <div class="editor-field-2">
+                @{
+                Html.RenderAction("_IslandComboBox", "Common", new
+                {
+                    controlName = "Island",
+                    selectedValue = Model != null ? Model.Island : string.Empty
+
+                });
+                 @Html.ValidationMessageFor(model => model.Island)
+                }
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.NormalWorkDayPerWeek)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.NormalWorkDayPerWeek).DecimalDigits(2).MinValue(0) 
+                @Html.ValidationMessageFor(model => model.NormalWorkDayPerWeek)
+            </div>
+
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.MaxWorkDayPerWeek)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.MaxWorkDayPerWeek).DecimalDigits(2).MinValue(0).MaxValue(7) 
+                @Html.ValidationMessageFor(model => model.MaxWorkDayPerWeek)
+            </div>
+
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShiftPerDay)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.ShiftPerDay).DecimalDigits(0).MinValue(0) 
+                @Html.ValidationMessageFor(model => model.ShiftPerDay)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Machine/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

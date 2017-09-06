@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Production_OrderMaster_Resume" });
+}
+
+@Html.Partial("_ResumeSearch")
+
+@Html.Partial("_ResumeSearchResult")

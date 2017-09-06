@@ -1,0 +1,89 @@
+﻿@using com.Sconit.Entity.PRD;
+@using com.Sconit.Entity.VIEW;
+@using com.Sconit.Web.Controllers.PRD;
+@model IEnumerable<ExReport>
+@{
+    ViewBag.Title = "KBIndex";
+    IList<string> ProductLineList = (from p in Model orderby p.ProductLine select p.ProductLine).Distinct().ToList();
+    string[] PDLine = ProductLineList.ToArray();
+    IList<string> ColorLists = Model.GroupBy(p => new { p.BatchNo, p.Color }, (k, g) => new
+    {
+        Code = k,
+        List = g.ToList().OrderBy(p => p.ProductLine)
+    }).OrderBy(d => d.Code.BatchNo).Select(d => d.Code.Color).ToList();
+    for (int j = 1; j < 100; j++)
+    {
+        ////增加一批默认的颜色，防止下面的索引溢出
+        ColorLists.Add("#FBFBFF");//white
+    }
+  
+ }
+
+@(Html.Telerik().Chart(Model)
+    .Name("chart")
+    .Theme(Html.GetCurrentTheme())
+    .Title("ProductLine Capacity")
+    .Legend(legend => legend
+        .Position(ChartLegendPosition.Left)
+    )
+    .Series(series =>
+    {
+        series.Bar(Model.Where(p => p.BatchNo == 1).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[0]).Name("1").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 2).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[1]).Name("2").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 3).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[2]).Name("3").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 4).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[3]).Name("4").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 5).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[4]).Name("5").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 6).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[5]).Name("6").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 7).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[6]).Name("7").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 8).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[7]).Name("8").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 9).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[8]).Name("9").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 10).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[9]).Name("10").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 11).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[10]).Name("11").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 12).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[11]).Name("12").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 13).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[12]).Name("13").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 14).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[13]).Name("14").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 15).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[14]).Name("15").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 16).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[15]).Name("16").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 17).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[16]).Name("17").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 18).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[17]).Name("18").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 19).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[18]).Name("19").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 20).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[19]).Name("20").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 21).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[20]).Name("21").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+        series.Bar(Model.Where(p => p.BatchNo == 22).OrderBy(p => p.ProductLine).Select(p => p.PlanNoNeedTime)).Stack(true).Color(ColorLists[21]).Name("22").Labels(labels => labels.Position(ChartBarLabelsPosition.Center).Visible(true)).Tooltip(true);
+         
+        //series
+        //         .Column(new int[] { 20, 30, 35, 35, 40 })
+        //         .Stack(true)
+        //         .Color("#E81219")
+        //         .Name("Thero(Current) capacity");
+
+    })
+    .CategoryAxis(axis => axis
+        .Categories(PDLine)
+        // Align the first two value axes to the left
+        // and the last two to the right.
+        //
+        // Right alignment is done by specifying a
+        // crossing value greater than or equal to
+        // the number of categories.
+        .AxisCrossingValue(0,0,100,100)
+    )
+    .ValueAxis(axis => axis
+        .Numeric()
+            .Title("Hours")
+            .Min(0).Max(100)
+    )
+
+    //.ValueAxis(axis => axis
+    //            .Numeric().Labels(labels => labels.Format("${0:#,##0}"))
+    //            .MajorGridLines(majorGridLines => majorGridLines.Visible(false))
+    //            .PlotBands(plotBands =>
+    //            {
+    //                plotBands.Add().Color("#cccccc").From(0).To(theocapacity).Opacity(0.3);
+    //            })
+    //        )
+
+        //.(axis => axis.Numeric("30").Title("理论值").Color("#097589"))
+    .HtmlAttributes(new { style = "width: 1000px; height: 700px; margin: auto;" })
+        ) 
+ 

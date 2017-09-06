@@ -1,0 +1,241 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+@model com.Sconit.Entity.INV.KanBanCard
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_KanBanCard_View" });
+}
+<fieldset>
+    @using (Html.BeginForm("Edit", "KanBanCard"))
+    {   
+        <div class="search">
+            @Html.HiddenFor(model => model.CreateUserName)
+            @Html.HiddenFor(model => model.CreateDate)
+            @Html.HiddenFor(model => model.CreateUserId)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="search-field">
+                @Html.DisplayFor(model => model.Code)
+                @Html.Hidden("Code",Model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="search-field">
+               @{
+    Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "Flow",
+            type = (int)com.Sconit.CodeMaster.OrderType.Transfer,
+            selectedValue=Model!=null?Model.Flow:string.Empty,
+            enable=false
+        });
+                }
+                @Html.HiddenFor(model => model.Flow)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Routing)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Routing)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.LocationTo)
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+             {
+                 controlName = "LocationTo",
+                 includeBlankOption = true,
+                 selectedValue = Model.LocationTo,
+                 enable = false
+             });
+                }
+                @Html.HiddenFor(model => model.LocationTo)
+            </div>
+           
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = Model.Item,
+                enable = false
+            });
+                }
+                @Html.HiddenFor(model => model.Item)
+            </div>
+           
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ItemCategory)
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+        {
+            controlName = "ItemCategory",
+            includeBlankOption = true,
+            selectedValue = Model.ItemCategory
+        });
+                }
+                @Html.HiddenFor(model => model.ItemCategory)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReferenceItemCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ReferenceItemCode)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Uom)
+            </div>
+            <div class="search-field">
+                 @{
+        Html.RenderAction("_UomDropDownList", "Common",
+            new { controlName = "Uom" ,selectedValue = Model.Uom});
+                }
+                 
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.UnitCount)
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.UnitCount)
+                @Html.ValidationMessageFor(model => model.UnitCount)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PackType)
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.PackType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MultiStation)
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.MultiStation)
+            </div>
+@*            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StationUseQty)
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.StationUseQty)
+                 @Html.ValidationMessageFor(model => model.StationUseQty)
+            </div>*@
+            
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Note)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Note)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ThumbNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ThumbNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Qty)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("Qty", Model!=null?Model.Qty:0, new { onblur = "Onblur(this)", onfocus = "OnFocus(this)" })
+             <span id="span" style="display:none" ><font color="red">序号输入错误，请重新输入。</font></span>
+            </div>
+               
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsEleKanBan)
+            </div>
+            <div class="editor-field-2">
+              @*  @Html.CheckBoxFor(model => model.IsEleKanBan, new {disabled=true })
+                @Html.HiddenFor(model=>model.IsEleKanBan)*@
+                @Html.CheckBox("EleKanBan", Model.IsEleKanBan, new { disabled = true })
+                @Html.Hidden("IsEleKanBan", Model.IsEleKanBan)
+            </div>
+
+        </div>
+        <div class="search-footer">
+        @Html.Hidden("KBICode",Model.Code)
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_KanBanCard_New", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSave"},
+        {"needconfirm","true"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_KanBanCard_New", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDelete"},
+        {"needconfirm","true"},
+        {"onclick","OnDeleteclick()"}
+	})
+           
+            <button type="button" id="btnPrint" onclick="editCheckedOrders()" style="display: none">
+                @Resources.SYS.Global.Button_Print</button>
+             <button type="button" id="btnExport" onclick="CheckedbtnExport()" style="display: none">
+             @Resources.SYS.Global.Button_Export</button>
+              <button type="button" id="btnReturn" onclick="location.href='@Url.Content("~/KanBanCard/List")'">
+                @Resources.SYS.Global.Button_Back
+            </button>
+        </div>
+       
+    }
+    <script type="text/javascript">
+
+        $(function () {
+            if ($("#Qty").val() == 0) {
+                $("#Qty").val("");
+            }
+        });
+        function Onblur(e) {
+            if (e.value != null && e.value != "") {
+                if (isNaN(e.value) || e.value == 0) {
+                    $("#span").attr("style", "display:inline");
+                    $("#Qty").val("");
+                }
+            }
+        }
+        function OnFocus(e) {
+
+            $("#span").attr("style", "display:none");
+        }
+        function OnDeleteclick() {
+            var data = {
+               Code:$("#Code").val(),
+               Qty:$("#Qty").val()
+           }
+           $.ajax({
+               type: "Post",
+               dataType: "html",
+               url: "/KanBanCard/DeleteKanBanCard/",
+               data: data,
+               cache: false,
+               success: function (data, textStatus) {
+                   var $tGrid = $("#content");
+                   $($tGrid).html(data);
+
+               },
+               error: function (XMLHttpRequest, textStatus, errorThrown) {
+                   var errorMessages = XMLHttpRequest.responseText;
+                   
+                   $message.error(errorMessages);
+               }
+           });
+        
+        }
+    </script>
+</fieldset>
+    <fieldset>
+     <legend>@Resources.INV.KanBanCard.KanBanCardInfo_Title</legend>
+    @{
+        Html.RenderAction("_KanBanCardInfo", "KanBanCard", new { KBICode = Model.Code});
+                }
+    </fieldset>

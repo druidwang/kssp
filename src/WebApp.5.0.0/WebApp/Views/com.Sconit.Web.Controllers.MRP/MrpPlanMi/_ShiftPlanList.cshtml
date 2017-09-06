@@ -1,0 +1,283 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpMiShiftPlan>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onSave() {
+        var details = getShiftDetails();
+
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/MrpPlanMi/_SaveShift/",
+            data: $.extend(details, null),
+            traditional: true,
+            success: function (data) {
+                DisplayJsonMessages(data);
+                var data1 = {
+                    flow: $('#Flow').val(),
+                    planVersion: $('#PlanVersion').val(),
+                    planDate: $('#PlanDate').val(),
+                    shift: $('#Shift').val()
+                };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/MrpPlanMi/_ShiftPlanList/",
+                    data: data1,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $("#fdOrderDetail").html(data);
+                        $("#fdOrderDetail").show();
+                        $("tr.t-no-data").find("td").text("Loading...");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function onCreate() {
+        if ($('#Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        if ($('#PlanDate').val() == "") {
+            $message.error('计划时间不能为空。');
+            return;
+        }
+        if ($('#Shift').val() == "") {
+            $message.error('班次不能为空。');
+            return;
+        }
+
+        var details = getShiftDetails();
+
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/MrpPlanMi/_CreateOrder/",
+            data: $.extend(details, null),
+            traditional: true,
+            success: function (data) {
+                if (data != null && data.Data != null) {
+                    window.location.href = "/ProductionOrder/Edit/?orderNo=" + data.Data;
+                }
+                DisplayJsonMessages(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function getShiftDetails() {
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            return;
+        }
+
+        var Ids = new Array();
+        var Sequences = new Array();
+        var Items = new Array();
+        var HuTos = new Array();
+        var CurrentQtys = new Array();
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var gridLength = grid.columns.length;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            Ids[rowIndex] = $.trim(row[0].childNodes[0].innerText);
+            Sequences[rowIndex] = $.trim(row[0].childNodes[1].innerText);
+            Items[rowIndex] = $.trim(row[0].childNodes[2].innerText);
+            HuTos[rowIndex] = $.trim(row[0].childNodes[gridLength - 3].innerText);
+            CurrentQtys[rowIndex] = $.trim(row[0].childNodes[gridLength - 2].innerText);
+        }
+
+        var details = {
+            "Ids": Ids,
+            "Sequences": Sequences,
+            "Items": Items,
+            "HuTos": HuTos,
+            "CurrentQtys": CurrentQtys
+        }
+        return details;
+    }
+
+    function onItemComboBoxChange(e) {
+        
+        if (e.value != null && e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                var $itemCell = $(e.target).parent().parent();
+                $itemCell.next().html("");
+                $itemCell.next().next().html("");
+                $itemCell.next().next().next().html("");
+                combobox.reload();
+            }
+            else {
+                var data = {
+                    "itemCode": e.value,
+                    "flow": $("#Flow").val()
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/MrpPlanMi/_WebMrpMiPlan/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#OrderDetail").data("tGrid");
+                        var oldData = $tGrid.dataItem($(e.target).parent().parent().parent());
+                        var $itemCell = $(e.target).parent().parent();
+                        $itemCell.next().html(data.ItemDescription);
+                        $itemCell.next().next().html(data.Uom);
+                        $itemCell.next().next().next().html(data.UnitCount);;
+                        if (oldData != undefined) {
+                            oldData.ItemDescription = data.ItemDescription;
+                            oldData.Uom = data.Uom;
+                            oldData.UnitCount = data.UnitCount;
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            }
+        }
+    }
+
+    function ItemComboBox_DataBinding(e) {
+        if (e.value != "") {
+            e.data = {
+                "flow": $("#Flow").val()
+            }
+        }
+    }
+
+    function onRowDataBound(e) {
+        var row = $(e.row.childNodes);
+        if (e.dataItem.Id != "0") {
+            row.last().text("");
+            $(e.row).find("td")[2].onclick = function (e) {
+                e.stopPropagation();
+            };
+        }
+    }
+
+
+    function onDataBound(e) {
+        calcTotal(null);
+    }
+
+    function calcTotal(e) {
+        var cheQty = 0;
+        var workHours = 0;
+        var grid = $("#OrderDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var gridLength = grid.columns.length;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if ($.trim(row[0].childNodes[0].innerText) > 0) {
+                if (e != null && $.trim(row[0].childNodes[0].innerText) == e.dataItem.Id) {
+                    cheQty += parseFloat(e.values.CurrentCheQty);
+                    workHours += parseFloat(e.values.CurrentCheQty * e.dataItem.WorkHour);
+                }
+                else {
+                    cheQty += parseFloat($.trim(row[0].childNodes[gridLength - 2].innerText));
+                    workHours += (parseFloat($.trim(row[0].childNodes[gridLength - 2].innerText))
+                        * parseFloat($.trim(row[0].childNodes[gridLength - 4].innerText)));
+                }
+            }
+        }
+        $("#TotalWorkHours").val(parseInt((workHours / 60) * 100) / 100.00);
+        $("#TotalCheQty").val(parseInt(cheQty * 10000000) / 10000000.00);
+    }
+</script>
+<fieldset>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            commands.Insert();
+            //commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSaveDetail()", href = "#" });
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_SelectShiftList", "MrpPlanMi", new {  flow = ViewBag.Flow, planDate = ViewBag.PlanDate, shift = ViewBag.Shift })
+        )
+        .Columns(columns =>
+        {
+            //Ln	物料号	物料描述	净需求	毛需求	需求来源区域	需求来源产品	去向	需求数量
+            columns.Bound(o => o.Id).Hidden();//0
+            columns.Bound(o => o.Sequence).Width(50);
+            columns.Bound(o => o.Item).EditorTemplateName("ItemFilterByFlow").Width(90); //2
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            columns.Bound(o => o.Uom).ReadOnly();
+            columns.Bound(o => o.UnitCount).ReadOnly();
+            columns.Bound(o => o.Qty).ReadOnly().Format("{0:0.##}");//9
+            columns.Bound(o => o.CheQty).ReadOnly().Format("{0:0.##}");
+            columns.Bound(o => o.HuToDescription).ReadOnly();
+            columns.Bound(o => o.WorkHour).Hidden().ReadOnly();
+            columns.Bound(o => o.HuTo).EditorTemplateName("HuToGridComboBox").Width(120);
+            columns.Bound(o => o.CurrentCheQty).Width(60);
+            columns.Command(commands => commands.Delete()).HtmlAttributes(new { id = "btnDelete" }).Title("操作");
+        })
+        .ClientEvents(c => c.OnRowDataBound("onRowDataBound").OnSave("calcTotal").OnDataBound("onDataBound"))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+
+    <table width="100%" border="0">
+        <tr>
+            <td style="width: 20%" align="right">车数合计:</td>
+            <td style="width: 30%">
+                <input name="TotalCheQty" type="text" id="TotalCheQty"
+                    onfocus="this.blur();" style="width: 80px;" />车
+            </td>
+            <td style="width: 20%" align="right">工时合计:
+            </td>
+            <td style="width: 30%" align="left">
+                <input name="TotalWorkHours" type="text" id="TotalWorkHours"
+                    onfocus="this.blur();" style="width: 80px;" />小时
+            </td>
+        </tr>
+    </table>
+
+    <div class="editor-footer">
+        @Html.Button(Resources.SYS.Global.Button_Save, "Url_Mrp_MrpPlanMi_Shift", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSave"},
+                {"needconfirm","false"},
+                {"onclick","onSave()"},
+	        })
+        @Html.Button(Resources.SYS.Global.Button_Create, "Url_Mrp_MrpPlanMi_Shift", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","true"},
+                {"onclick","onCreate()"},
+	        })
+    </div>
+</fieldset>

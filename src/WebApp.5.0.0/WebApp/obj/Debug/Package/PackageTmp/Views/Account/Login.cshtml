@@ -1,0 +1,265 @@
+﻿@model LogOnModel
+@{
+    Layout = "~/Views/Shared/_Main.cshtml";
+    <style type="text/css">
+        body {
+            font-size: 13px;
+            font-family: Arial,宋体, Tahoma;
+            margin: 0px;
+            background-color: #B2BDC4;
+        }
+
+        table {
+            border: 0px;
+            padding: 0px;
+        }
+
+            table td {
+                border: 0px;
+            }
+
+        a {
+            color: White;
+        }
+
+        input[type="text"] {
+            width: 160px;
+            height: 20px;
+        }
+
+        input[type="password"] {
+            width: 160px;
+            height: 20px;
+            border-color: #828282;
+        }
+
+        .login_top_stripe {
+            width: auto;
+            height: 36px;
+            background-color: #98a5ac;
+            background: url( '../Content/Images/Login/Login_top_stripe.png' ) repeat-x;
+            text-align: right;
+            padding-top: 5px;
+            padding-right: 10px;
+            color: White;
+            word-spacing: 10px;
+            z-index: 10;
+        }
+
+        .login_main_area {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            height: 340px;
+            overflow: hidden;
+            margin-top: -100px;
+            z-index: 2;
+        }
+
+        .login_internalFormArea {
+            width: 400px;
+        }
+
+        .login_fields_captions {
+            font-size: 13px;
+            color: #333331;
+            text-align: right;
+            height: 20px;
+            width: 80px;
+            padding-right: 5px;
+        }
+
+        .login_text_input {
+            border: 1px solid #FFFFFE;
+            width: 175px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .login_button {
+            margin-top: 2px;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-right: 40px;
+            width: 60px;
+        }
+
+        .login_copyrightText {
+            font-size: 12px;
+            text-align: center;
+            height: 30px;
+        }
+
+            .login_copyrightText a {
+                color: #333333;
+                text-decoration: underline;
+            }
+
+        .login_bg {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            z-index: 0;
+            height: 514px;
+            margin-top: -257px; /* negative half of the height */
+        }
+
+        .login_box_top {
+            background-image: url(../Content/Images/Login/Login_box_top.png);
+            background-repeat: no-repeat;
+            height: 60px;
+            width: 400px;
+            text-align: center;
+            vertical-align: bottom;
+            padding: 0px;
+        }
+
+        .login_box_bottom {
+            background-image: url(../Content/Images/Login/Login_box_bottom.png);
+            background-repeat: no-repeat;
+            background-position: bottom;
+            padding: 0px 0px 15px 0px;
+            z-index: 2;
+        }
+
+        .login_title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            color: #333336;
+            padding: 18px 0px 0px 18px;
+        }
+
+        .login_content {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: .85em;
+            color: #000000;
+            text-align: center;
+            vertical-align: bottom;
+            padding: 10px 0px 0px 0px;
+        }
+
+        .login_bg_td {
+            border: 3px solid #AAB9C1;
+            width: 950px;
+            height: 512px;
+            background-repeat: no-repeat;
+            background-color: #909CA3;
+        }
+
+        .login_bg_div {
+            width: 950px;
+            height: 512px;
+            background-repeat: no-repeat;
+            background: url(../Content/Images/Kssp/Kssp.jpg);
+        }
+
+        .divThemeSelect {
+            float: left;
+            margin: 5px;
+            z-index: 2;
+            color: Silver;
+            font-size: 12px;
+            cursor: pointer;
+            display: none;
+            text-decoration: underline;
+            white-space: nowrap;
+        }
+    </style>
+    <script type="text/javascript" src="../Scripts/2012.2.607/jquery-1.7.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#UserName").focus();
+            if (top.location !== self.location) {
+                top.location = self.location;
+            }
+        });
+    </script>
+    
+}
+<div class="login_top_stripe">
+     <a href="/Resource/font/code128.zip" style="color: #F5DEB3" target="_blank">字体</a>
+</div>
+<div class="login_bg">
+    <table cellspacing="0" cellpadding="0" border="0" align="center">
+        <tr>
+            <td class="login_bg_td">
+                <div class="login_bg_div" id="login_bg_div" runat="server">
+                    <div class="divThemeSelect" style="display: block; width: 130px; height: 25px; visibility: hidden">
+                        <div id="divAddTheme" class="divThemeSelect" runat="server">
+                        </div>
+                        <div id="divRandomTheme" class="divThemeSelect">
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="login_copyrightText">Copyright &copy; 2017 Sconit 浏览器:IE 8+ 分辨率:1280*800+ 当前版本:@ViewBag.SconitVersion
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="position: absolute; left: 45%; top: 170px; width: 484px; height: 26px; z-index: 1">
+</div>
+
+@using (Html.BeginForm())
+{
+    //if (ViewBag.Title != null && ((string)ViewBag.Title).Contains("TEST"))
+    if (ViewBag.IsTest)
+    {
+    <div style="left: 75%; top: 100px; width: 204px; height: 155px; position: absolute; z-index: 1;">
+        <img alt="" src="../Content/Images/Test_big.png" />
+    </div>
+    }
+    <div class="login_main_area">
+        <table cellspacing="0" cellpadding="0" border="0" align="center">
+            <tr>
+                <td class="login_box_top">
+                    @*<img alt="" src="../Content/Images/Shenya/SAP-MES.png" />*@
+                </td>
+            </tr>
+            <tr>
+                <td class="login_box_bottom">
+                    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                            <td class="login_content">
+                                <table class="login_internalFormArea" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="login_fields_captions">
+                                            @Html.LabelFor(m => m.UserName)
+                                        </td>
+                                        <td width="150px" style="padding: 0px;">
+                                            @Html.TextBoxFor(m => m.UserName, new { TabIndex = 1 })
+                                        </td>
+                                        <td width="90px" style="text-align: left;">
+                                            @* @Html.CheckBoxFor(m => m.RememberMe, new {TabIndex =3 })
+                                            @Html.LabelFor(m => m.RememberMe)*@
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="login_fields_captions">
+                                            @Html.LabelFor(m => m.Password)
+                                        </td>
+                                        <td>
+                                            @Html.PasswordFor(m => m.Password, new { TabIndex = 2 })
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <input type="submit" value="@Resources.EXT.PageLan.Login" id="btnLogOn" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" width="100%" style="text-align: center">
+                                            @Html.ValidationSummary()
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+

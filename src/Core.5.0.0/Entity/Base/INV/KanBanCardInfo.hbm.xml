@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.INV.KanBanCardInfo, com.Sconit.Entity" table="INV_KanBanCardInfo" lazy="false">
+		<id name="CardNo" column="CardNo" type="String" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<property name="KBICode" column="KBICode" type="String" length="50"/>	
+    <property name="Sequence" column="Seq" type="Int32"/>
+  	</class>
+</hibernate-mapping>

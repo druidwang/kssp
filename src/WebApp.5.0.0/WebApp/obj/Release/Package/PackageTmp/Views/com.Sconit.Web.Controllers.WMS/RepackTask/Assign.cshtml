@@ -1,0 +1,116 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<script type="text/javascript">
+    function PickGroup_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            $("#fdTaskList").hide();
+        } else {
+            $("#fdTaskList").html("Loading...");
+            $("#fdTaskList").show();
+            var data = { "pickGroupCode": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/RepackTask/_RepackTaskList/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#fdTaskList").html(data);
+                    //$("#fdOrderDetail").show();
+                    $("tr.t-no-data").find("td").text("Loading...");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+
+    function assignCheckedRepackTasks() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedRepackTasks = "";
+        var assignUser = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedRepackTasks == "") {
+                    checkedRepackTasks = $checkRecords[i].value;
+                } else {
+                    checkedRepackTasks += "," + $checkRecords[i].value;
+                }
+            }
+        }
+
+        assignUser = $("#RepackUser").val();
+        if (checkedRepackTasks == "") {
+            alert('请选择一条记录');
+            return;
+        }
+
+        if (assignUser == "") {
+            alert('分派用户不能为空');
+            return;
+        }
+        var data = {
+            "checkedRepackTasks": checkedRepackTasks,
+            "assignUser": assignUser
+        };
+        $.ajax({
+            type: "Post",
+            dataType: "html",
+            url: "/RepackTask/AssignRepackTask/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    DisplayTextMessages(data);
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "@Url.Content("~/RepackTask/Assign/")",
+                        data: "",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm("AssignList", "RepackTask"))
+{  
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="RepackTask_Item">
+                    @Resources.WMS.RepackTask.RepackTask_RepackGroupCode
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_PickGroupComboBox", "Common",
+        new
+        {
+            controlName = "RepackGroup",
+            type = (int)com.Sconit.CodeMaster.PickGroupType.Repack,
+            isChange = true
+        });
+                }
+            </div>
+        </div>
+    </fieldset>
+
+    <div id="fdTaskList" style="display: none;">
+    </div>
+}

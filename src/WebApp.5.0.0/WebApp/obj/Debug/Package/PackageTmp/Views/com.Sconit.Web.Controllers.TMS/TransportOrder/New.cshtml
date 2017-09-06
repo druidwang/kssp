@@ -1,0 +1,350 @@
+﻿@model com.Sconit.Entity.TMS.TransportOrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Distribution_New" });
+}
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function Carrier_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+    }
+
+    function Flow_Change(e) {
+        $('#Detail').show();
+        var tabstrip = $("#TabStrip").data("tTabStrip");
+        var items = $("li", tabstrip.element);
+        tabstrip.select(items[0]);
+        var grid1 = $("#OrderDetailGrid").data("tGrid");
+        if (grid1 !== undefined) {
+            grid1.ajaxRequest();
+        }
+        var grid2 = $("#OrderRouteGrid").data("tGrid");
+        if (grid2 !== undefined) {
+            grid2.ajaxRequest();
+        }
+    }
+
+    function Vehicle_Change(e) {
+        //debugger;
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        }
+        var driverComboBox = $('#Driver').data('tComboBox');
+        driverComboBox.value('');
+        driverComboBox.text('');
+        driverComboBox.reload();
+
+        var tonnageComboBox = $('#Tonnage').data('tComboBox');
+        tonnageComboBox.value('');
+        tonnageComboBox.text('');
+        tonnageComboBox.reload();
+    }
+
+    function Driver_Change(e) {
+
+    }
+
+    function Driver_DataBinding(e) {
+        e.data = {
+            vehicle: $('#Vehicle').val()
+        }
+    }
+
+    function Tonnage_DataBinding(e) {
+        e.data = {
+            vehicle: $('#Vehicle').val()
+        }
+    }
+
+    $(document).ready(function () {
+        var tabstrip = $("#TabStrip").data("tTabStrip");
+        //$($("li", tabstrip.element)[0]).find('a')[0].href += "?flow=qazwsx";
+    });
+    function OrderDetailGridDateBinding(e) {
+        e.data = {
+            flow: $("#Flow").val()
+        }
+    }
+
+    function OrderRouteGridDateBinding(e) {
+        e.data = {
+            flow: $("#Flow").val(),
+            guid: $("#Guid").val()
+        }
+    }
+
+
+    function onCreate() {
+        //debugger;
+        var grid = $("#OrderDetailGrid").data("tGrid");
+        if (grid === undefined) {
+            alert("明细不能为空");
+            return;
+        }
+
+        if (grid.data.length === 0) {
+            $message.error("请填写要建立运单的送货单号");
+            return;
+        }
+
+        var ipNos=[];
+        for (var i = 0; i < grid.data.length; i++) {
+            ipNos.push(grid.data[i]["IpNo"]);
+        }
+        var gridroute = $("#OrderRouteGrid").data("tGrid");
+        var routeSeqs=[];
+        var routeAddrs=[];
+        if (gridroute !== undefined) {
+            for (var i = 0; i < gridroute.data.length; i++) {
+                routeSeqs.push(gridroute.data[i]["Sequence"]);
+                routeAddrs.push(gridroute.data[i]["ShipAddress"]);
+            }
+        }
+        
+        var ordermstr = {
+            Flow:$("#Flow").val(),
+            ExternalOrderNo:$("#ExternalOrderNo").val(),
+            Carrier:$("#Carrier").val(),
+            TransportMode:$("#TransportMode").val(),
+            Tonnage:$("#Tonnage").val(),
+            Driver: $("#Driver").val(),
+            Vehicle: $("#Vehicle").val(),
+            LicenseNo: $("#LicenseNo").val(),
+            PriceList: $("#PriceList").val(),
+            DriverMobilePhone: $("#DriverMobilePhone").val(),
+            LoadVolume: $("#LoadVolume").val(),
+            LoadWeight: $("#LoadWeight").val(),
+            MultiSitePick: $("#MultiSitePick").is(':checked'),
+            IsAutoRelease: $("#IsAutoRelease").is(':checked'),
+            ipNos: ipNos,
+            routeSeqs: routeSeqs,
+            routeAddrs: routeAddrs,
+            guid: $("#Guid").val()
+        }
+
+
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: ordermstr,
+            url: "/TransportOrder/CreateOrder/",
+            cache: false,
+            traditional: true,
+            success: function (data, textStatus) {
+                $message.success(data.SuccessMessage);
+
+                if (data != "") {
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        data: { ipNo: data.SuccessData },
+                        url: "/DistributionIpMaster/_ReceiveIpDetailList/",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tDiv = $("#divRecIpDetail");
+                            $($tDiv).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                debugger;
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+</script>
+
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_TransportFlowComboBox", "Common", new
+                    {
+                        controlName = "Flow",
+                        isChange = true
+                    });
+                }
+                @Html.ValidationMessageFor(model => model.Flow)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ExternalOrderNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model=>model.ExternalOrderNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Carrier)
+            </div>
+            <div class="editor-field-2">
+                <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CarrierComboBox", "Common", new
+                    {
+                        controlName = "Carrier",
+                        checkPermission = false,
+                        isChange = true
+                    });
+                }
+                @Html.ValidationMessageFor(model => model.Carrier)
+                </div>
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.TransportMode)
+            </div>
+            <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.TransportMode,
+                    controlName = "TransportMode"
+                });
+            }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Vehicle)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_VehicleComboBox", "Common", new
+                    {
+                        controlName = "Vehicle",
+                        isChange = true
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PriceList)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_TransportPriceListComboBox", "Common", new
+                    {
+                        controlName = "PriceList"
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model=>model.Tonnage)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_TonnageComboBox", "Common", new
+                    {
+                        controlName = "Tonnage",
+                        checkVehicle = true
+                    });
+                }
+            </div>
+
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.PricingMethod)
+            </div>
+            <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.TransportPricingMethod,
+                    controlName = "PricingMethod"
+                });
+            }
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Driver)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_DriverComboBox", "Common", new
+                    {
+                        controlName = "Driver",
+                        checkVehicle = true
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.LicenseNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model => model.LicenseNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.DriverMobilePhone)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model => model.DriverMobilePhone)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.LoadVolume)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.LoadVolume).DecimalDigits(2).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.LoadWeight)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.LoadWeight).DecimalDigits(2).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MinLoadRate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.MinLoadRate).DecimalDigits(2).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MultiSitePick)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBoxFor(model => model.MultiSitePick)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsAutoRelease)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBoxFor(model => model.IsAutoRelease)
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_New, "", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"onclick","onCreate()"}
+	        })
+        </div>
+    </fieldset>
+   
+    <fieldset id="Detail" style="display:none;">
+    @{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text("订单明细")
+               .LoadContentFrom("_ASNBinding", "TransportOrder")
+               .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text("站点")
+                .LoadContentFrom("_RouteBinding", "TransportOrder")
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+        })
+        .Render();
+    }
+    </fieldset>
+

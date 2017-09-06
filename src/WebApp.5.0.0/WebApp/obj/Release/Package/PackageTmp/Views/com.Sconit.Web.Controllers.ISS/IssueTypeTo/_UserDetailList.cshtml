@@ -1,0 +1,126 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISS.IssueTypeToUserDetail>
+<script type="text/javascript">
+    $(function () {
+        $("#ckAll").click(function () {
+            $('input[name="ckId"]').attr("checked", this.checked);
+        });
+        var $ckId = $("input[name='ckId']");
+        $ckId.click(function () {
+            $("#ckAll").attr("checked", $ckId.length == $("input[name='ckId']:checked").length ? true : false);
+        });
+
+        $("#chkEmailAll").click(function () {
+            $('input[name="ckIsEmail"]').attr("checked", this.checked);
+        });
+        var $ckIsEmail = $("input[name='ckIsEmail']");
+        $ckIsEmail.click(function () {
+            $("#chkEmailAll").attr("checked", $ckIsEmail.length == $("input[name='ckIsEmail']:checked").length ? true : false);
+        });
+
+        $("#chkSMSAll").click(function () {
+            $('input[name="ckIsSMS"]').attr("checked", this.checked);
+        });
+        var $cbIsSMS = $("input[name='cbIsSMS']");
+        $cbIsSMS.click(function () {
+            $("#chkSMSAll").attr("checked", $cbIsSMS.length == $("input[name='cbIsSMS']:checked").length ? true : false);
+        });
+    });
+
+    function removeUser() {
+        var $checkedckId = $("input[name='ckId']:checked");
+        var $ckId = $("input[name='ckId']");
+        if ($checkedckId.length < 1) {
+            alert('@Resources.ISS.IssueTypeToUserDetail.Must_Choose_One');
+            return;
+        }
+        var idStr = '';
+
+        for (var i = 0; i < $checkedckId.length; i++) {
+            idStr += $checkedckId[i].value + ",";
+        }
+        idStr = idStr.substring(0, idStr.length - 1);
+
+        var data = {
+            "code": $("#code").val(),
+            "idStr": idStr
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/IssueTypeTo/RemoveUser/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var DivUserDetail = $("#DivUserDetail");
+                $(DivUserDetail).html(data);
+            }
+        });
+    }
+
+</script>
+<div id="DivUserDetail">
+    <fieldset>
+        <legend>@Resources.ISS.IssueTypeToUserDetail.User</legend>
+        @Html.Hidden("code", (string)ViewBag.Code)
+        @(Html.Telerik().Grid(Model)
+        .Name("IssueTypeToUserDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id)
+                .ClientTemplate("<input type='checkbox' id='ckId' name='ckId' value='<#= Id #>'  />")
+                .HeaderTemplate("<input type='checkbox' id='ckAll' name='ckAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.UserCode);
+            columns.Bound(o => o.UserName);
+            columns.Bound(o => o.IsEmail).ClientTemplate("<input type='checkbox' id='ckIsEmail<#=Id#>' name='ckIsEmail' <#= IsEmail? checked='checked' : '' #> <#= HasEmail ? '' :style='DISPLAY: none' #>  /><label for='ckIsEmail<#=Id#>' ><#= Email #></label/>")
+                .HeaderTemplate("<input type='checkbox' id='chkEmailAll' name='chkEmailAll' /><label for='chkEmailAll' >" + Resources.ISS.IssueTypeToUserDetail.Email + "</label>");
+            columns.Bound(o => o.IsSMS).ClientTemplate("<input type='checkbox' id='ckIsSMS<#=Id#>' name='ckIsSMS' <#= IsSMS? checked='checked' : '' #> <#= HasMobilePhone ?  '' : style='DISPLAY: none' #>  /><label for='ckIsSMS<#=Id#>' ><#=MobilePhone #></label/>")
+                .HeaderTemplate("<input type='checkbox' id='chkSMSAll' name='chkSMSAll' /><label for='chkSMSAll' >" + Resources.ISS.IssueTypeToUserDetail.MobilePhone + "</label>");
+        })
+               .CellAction(cell =>
+               {
+                   if (cell.Column.Member == "Id")
+                   {
+                       cell.Text = string.Format("<input type='checkbox' id='ckId' name='ckId' value='{0}'  />", cell.DataItem.Id);
+                   }
+                   if (cell.Column.Member == "IsEmail")
+                   {
+                       if (string.IsNullOrEmpty(cell.DataItem.Email))
+                       {
+                           cell.Text = string.Format("<input type='checkbox' id='ckIsEmail{0}' name='ckIsEmail' style=\"DISPLAY: none\"  />", cell.DataItem.Id);
+                       }
+                       else
+                       {
+                           cell.Text = string.Format("<input type='checkbox' id='ckIsEmai{0}' name='ckIsEmail' {1}  /><label for='ckIsEmail{0}' >{2}</label/>", cell.DataItem.Id, cell.DataItem.IsEmail ? "checked" : "", cell.DataItem.Email);
+                       }
+                   }
+
+                   if (cell.Column.Member == "IsSMS")
+                   {
+                       if (string.IsNullOrEmpty(cell.DataItem.MobilePhone))
+                       {
+                           cell.Text = string.Format("<input type='checkbox' id='ckIsSMS{0}' name='ckIsSMS' style=\"DISPLAY: none\"  />", cell.DataItem.Id);
+                       }
+                       else
+                       {
+                           cell.Text = string.Format("<input type='checkbox' id='ckIsSMS{0}' name='ckIsSMS' {1} /><label for='ckIsSMS{0}' >{2}</label/>", cell.DataItem.Id, cell.DataItem.IsSMS ? "checked" : "", cell.DataItem.MobilePhone);
+                       }
+                   }
+               })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+        <div class="editor-footer">
+            <button type="button" id="undo" onclick="location.href='@Url.Content("~/IssueTypeTo/ChooseUser/" + @ViewBag.Code)'">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="BtnDelete" onclick="removeUser()">
+                @Resources.SYS.Global.Button_Delete</button>
+        </div>
+    </fieldset>
+</div>

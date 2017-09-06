@@ -1,0 +1,37 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpExSectionPlan>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("Order")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax().Select("_SelectRequisitionSectionPlanList", "ProcurementOrder"))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).ReadOnly()
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>' />")
+                .HeaderTemplate("选择")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.Sequence).Width(40).ReadOnly();
+            columns.Bound(o => o.Section).Width(50).ReadOnly();
+            columns.Bound(o => o.SectionDescription).Width(120).ReadOnly();
+            columns.Bound(o => o.PlanNo).Width(80).ReadOnly();
+            columns.Bound(o => o.ProductLine).Width(40).ReadOnly();
+            columns.Bound(o => o.StartTime).Format("{0:yyyy-MM-dd HH:mm}").Width(80).ReadOnly();
+            columns.Bound(o => o.WindowTime).Format("{0:yyyy-MM-dd HH:mm}").Width(80).ReadOnly();
+            columns.Bound(o => o.CurrentQty).Format("{0:0.##}").Width(50);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetailGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Flow).Title(Resources.ORD.IpMaster.IpMaster_Flow);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            //columns.Bound(o => o.UnitCountDescription);
+            columns.Bound(o => o.LocationTo).ClientTemplate("<div title=<#=LocationToName #>><#=LocationTo #></div>");
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.ReceivedQty);
+            columns.Bound(o => o.IpMasterTypeDescription);
+            columns.Bound(o => o.SubTypeDescription);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+        }).DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxIpDetLists", "DistributionIpMaster"))
+            .ClientEvents(events => events.OnDataBinding("IpMasterGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                settings.PageSize(ViewBag.PageSize);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Scrollable(c => c.Enabled(false))
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+
+    <script type="text/javascript">
+        function IpMasterGrid_OnDataBinding(e) {
+            e.data = {
+                IpNo: $('#IpNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                OrderSubType: $('#OrderSubType').val(),
+                Item: $('#Item').val(),
+                Status: $('#Status').val(),
+                IpOrderType: $('#IpOrderType').val(),
+                OrderNo: $("#OrderNo").val(),
+                CreateUserName: $("#CreateUserName").val(),
+                ExternalIpNo: $('#ExternalIpNo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                IpOrderType: $('#IpOrderType').val(),
+                Status: $('#Status').val()
+            };
+        }
+
+    </script>
+</fieldset>

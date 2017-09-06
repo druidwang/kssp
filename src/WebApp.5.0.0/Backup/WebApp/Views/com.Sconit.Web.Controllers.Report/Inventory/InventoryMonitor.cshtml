@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Inventory_InventoryMonitor" });
+}
+<fieldset>
+    @using (Html.BeginForm("ExportInventoryMonitor", "Inventory"))
+    {   
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.MD.Item.Item_Location
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_LocationComboBox", "Common", new
+                {
+                    controlName = "Location",
+                    includeBlankOption = true,
+                    selectedValue = string.Empty
+                });
+            }
+        </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+            @{
+            Html.RenderAction("_ItemComboBox", "Common", new
+            {
+                controlName = "Item"
+            });
+            }
+            </div>
+        <div class="search-label">
+            <label>
+                @Resources.MD.Item.Item_ItemCategory
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+                {
+                    controlName = "ItemCategory",
+                    includeBlankOption = true,
+                    SubCategory = 0
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MD.Item.Item_MaterialsGroup
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+                {
+                    controlName = "MaterialsGroup",
+                    includeBlankOption = true,
+                    SubCategory = 5
+                });
+            }
+        </div>
+    </div>
+    <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="doSearch(this)">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="submit" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    }
+</fieldset>
+<div id="fdMonitorInventoryReport">
+</div>
+<script type="text/javascript">
+    function doSearch() {
+        $("#fdMonitorInventoryReport").html("Loading...");
+        var data = {
+            Location: $('#Location').val(),
+            Item : $('#Item').val(),
+            ItemCategory : $('#ItemCategory').val(),
+            MaterialsGroup : $('#MaterialsGroup').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/Inventory/_GetInventoryMonitor/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#fdMonitorInventoryReport");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,83 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    @using (Html.BeginForm("List", "MauallySettleCsBill"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Location
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_LocationComboBox", "Common", new
+                    {
+                        checkRegion = false,
+                        controlName = "Location",
+                        selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Location : string.Empty
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_ItemComboBox", "Common", new
+                    {
+                        controlName = "Item",
+                        selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Item : string.Empty
+
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label >
+                 @Resources.BIL.BillMstr.BillMstr_PartyNm
+                </label>
+            </div>
+            <div class="search-field">
+               @{
+                     Html.RenderAction("_SupplierComboBox", "Common",
+                        new
+                        {
+                            controlName = "Party",
+                            selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Party : string.Empty
+                        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="Hu_HuId">
+                    @Resources.INV.Hu.Hu_HuId
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("HuId", TempData["HuSearchModel"] != null ? ((HuSearchModel)TempData["HuSearchModel"]).HuId : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+
+            @Html.Button(@Resources.EXT.PageLan.ManuallySettle, "Url_ProcurementBill_MauallySettleCsBill", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnSettleBill"},
+                    {"needconfirm","true"},
+                    {"onclick","SettleBill(true)"}
+	            })
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+
+    function LocationBin_DataBinding(e) {
+        e.data = {
+            Location: $('#Location').val()
+        }
+    }
+</script>

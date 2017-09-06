@@ -1,0 +1,54 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.PickListMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("ShipListGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PickListNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PickListNo).ClientTemplate(Html.ActionLink("<#= PickListNo #>", "ShipEdit", "PickList", new { ID = "<#= PickListNo #>" }, null).ToString());
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.OrderTypeDescription);
+            columns.Bound(o => o.PartyFromName);
+            columns.Bound(o => o.PartyToName);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.OrderStatusDescription);
+        })
+
+        //.CellAction(cell =>
+        //    {
+        //        if (cell.Column.Member == "PickListNo")
+        //        {
+        //            cell.Text = string.Format("<a href=\"ShipEdit/{0}\">{1}</a>", cell.DataItem.PickListNo, cell.DataItem.PickListNo);
+        //        }
+        //    })
+                .Scrollable(c => c.Enabled(false))
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxShipList", "PickList"))
+                                        .ClientEvents(events => events.OnDataBinding("ShipListGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ShipListGrid_OnDataBinding(e) {
+            e.data = {
+                PickListNo: $('#PickListNo').val(),
+                StartTime: $('#StartTime').val(),
+                EndTime: $('#EndTime').val(),
+                Flow:$("#Flow").val()
+            }
+        }
+    </script>
+</fieldset>

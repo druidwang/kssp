@@ -1,0 +1,47 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.SYS
+@*<script type="text/javascript" language="javascript">
+    function btnNewSNRule_Click() {
+        var windowElement = $("#Window");
+        windowElement.data("tWindow").center();
+        windowElement.data("tWindow").open();
+        //windowElement.data("tWindow").redirectUrl("/SNRule/_ChooseSNRuleBlock");
+    };
+</script>*@
+<fieldset>
+    @using (Html.BeginForm("List", "SNRule"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Address_Code">
+                    代码：
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["SNRuleSearchModel"] != null ? ((SNRuleSearchModel)TempData["SNRuleSearchModel"]).Code : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+@*            <button type="button" id="btnNew" onclick="btnNewSNRule_Click()">
+                @Resources.SYS.Global.Button_New</button>*@
+        </div>
+
+    }
+</fieldset>
+@*@{ Html.Telerik().Window()
+        .Name("Window")
+        .Title("选择单据条码规则")
+        .LoadContentFrom("/SNRule/_ChooseSNRuleBlock")
+        .Draggable(true)
+        .Scrollable(false)
+        .Resizable()
+        .Width(600)
+        .Height(200)
+        .Modal(true)
+        .Visible(false)
+        .Render();
+}*@

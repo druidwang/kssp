@@ -1,0 +1,99 @@
+﻿@using com.Sconit.Web.Models.SearchModels.ORD
+<fieldset>
+    @using (Html.BeginForm("List", "ProdIO"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_PartyFrom_Production
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_RegionComboBox", "Common", new
+        {
+            controlName = "PartyTo",
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).PartyTo : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common", new
+        {
+            controlName = "Flow",
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Flow : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_OrderNo
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("OrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            controlId = "SearchItem",
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Item : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("DateFrom")
+        .Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("DateTo")
+            .Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateTo : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.SYS.Global.Grid_DispalyType
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.RadioButton("DisplayType", (int)com.Sconit.CodeMaster.GridDisplayType.Summary)
+                @Resources.SYS.Global.Grid_DispalyType_Summary
+                @Html.RadioButton("DisplayType", (int)com.Sconit.CodeMaster.GridDisplayType.Detail, true)
+                @Resources.SYS.Global.Grid_DispalyType_Detail
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

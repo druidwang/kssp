@@ -1,0 +1,214 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+<fieldset>
+    <script type="text/javascript">
+        function OrderMasterPartyTo(e) {
+            if (e.value != "") {
+                var combobox = $(this).data("tComboBox");
+                if (combobox == undefined) {
+                    return;
+                }
+                if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                    combobox.value("");
+                    combobox.reload();
+                }
+            }
+            $('#LocationTo').data('tComboBox').value('');
+            $('#LocationTo').data('tComboBox').text('');
+            $("#LocationTo").data("tComboBox").reload();
+        }
+
+        function LocationTo_DataBinding(e) {
+            e.data = {
+                region: $("#PartyTo").val()
+            };
+        }
+    </script>
+    @using (Html.BeginForm("DetailList", "PickList"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.PickListMaster.PickListMaster_PickListNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PickListNo", TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).PickListNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.PickListMaster.PickListMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+
+            <div class="editor-label-2">
+                <label for="PickListMaster_PickListNo">
+                    @Resources.ORD.PickListMaster.PickListMaster_Status
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.PickListStatus,
+            controlName = "Status",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).Status : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Type">
+                    @Resources.ORD.OrderMaster.OrderMaster_Type
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.OrderType,
+            controlName = "Type",
+            orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).Type : 0
+        });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_PartyFrom">
+                    @Resources.ORD.PickListMaster.PickListMaster_PartyFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+
+                controlName = "PartyFrom",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                selectedValue = TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                    @Resources.ORD.PickListMaster.PickListMaster_PartyTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+            new
+            {
+                controlName = "PartyTo",
+                isChange = true,
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                selectedValue = TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).PartyTo : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.PickListMaster.PickListMaster_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).Item : string.Empty
+            });
+                    
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                    @Resources.ORD.PickListDetail.PickListDetail_LocationToName
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common",
+         new
+         {
+             controlName = "LocationTo",
+             selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).LocationTo : string.Empty,
+             checkRegion = true
+         });
+                }
+            </div>
+
+
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartTime")
+         .Value(TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).StartTime : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EndTime")
+             .Value(TempData["PickListSearchModel"] != null ? ((PickListSearchModel)TempData["PickListSearchModel"]).EndTime : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+              <button type="submit" id="btnExport" >
+                @Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+        //debugger
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+        //debugger
+        if (t == "") {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/PickList/Export/");
+        $('form').submit();
+        //$('form').attr('action', t);
+    });
+
+</script>

@@ -1,0 +1,76 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SCM
+<fieldset>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Item_Code">
+                    @Resources.SCM.FlowDetail.FlowDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+              @{
+                Html.RenderAction("_ItemComboBox", "Common", new
+                {
+                    controlName = "Item",
+                    selectedValue = TempData["FlowDetailSearchModel"] != null ? ((FlowDetailSearchModel)TempData["FlowDetailSearchModel"]).Item : null
+                });
+               }
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+                @Html.Hidden("isFromList", true)
+                <button type="button" id="btnSearch" onclick="btnSearchDetail_Click();">@Resources.SYS.Global.Button_Search</button>
+               @* <button type="button" id="btnNewDetail" onclick="btnNewDetail_Click();">@Resources.SYS.Global.Button_New</button>*@
+              @Html.Button(Resources.SYS.Global.Button_New, "Url_SubconctractingFlow_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNewDetail"},
+        {"onclick","btnNewDetail_Click()"}
+	})
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SubconctractingFlow/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+            </div>
+        </div>
+    }
+</fieldset>
+<script language="javascript" type="text/javascript">
+    function btnNewDetail_Click() {
+        var data = {
+            "id": $("#flow").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/SubconctractingFlow/_DetailNew/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    function btnSearchDetail_Click() {
+        var data = {
+            "Item": $("#Item").val(),
+            "flowCode": $("#flow").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/SubconctractingFlow/_Detail/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>

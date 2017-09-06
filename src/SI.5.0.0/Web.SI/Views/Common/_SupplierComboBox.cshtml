@@ -1,0 +1,19 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    //string onChangeName = isChange ? "Supplier_Change" : "EmptyChange";
+    bool checkPermission = ViewBag.CheckPermission != null ? ViewBag.CheckPermission : true;
+}
+@(Html.Telerik().ComboBox()
+                        .Name(name)
+                        .AutoFill(true)
+                              .HiddenInputHtmlAttributes(new { id = id })
+                            .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingSupplier", "Common", new { checkPermission = checkPermission }).Cache(true))
+                           // .ClientEvents(events => events.OnChange(onChangeName))
+                        .HighlightFirstMatch(true)
+                        .Enable(enable)
+                        .BindTo(Model)
+                )

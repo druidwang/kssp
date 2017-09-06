@@ -1,0 +1,370 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.ISI.TaskMaster
+<script type="text/javascript">
+
+
+    function TaskSubType_DataBinding(e) {
+        e.data = {
+            Code: $("#Code").val()
+        }
+    }
+
+    function TaskAddress_DataBinding(e) {
+        e.data = {
+            Code: $("#Code").val()
+        }
+    }
+
+    function Export(e) {
+        $("#orderNo").val($("#OrderNo").val());
+        $("#hiddenForm").submit();
+    }
+
+    function Assign(e) {
+        var data = {
+            "code":$("#Code").val(),
+            "assignStartUser": $("#AssignStartUser").val(),
+            "planStartDate": $("#PlanStartDate").val(),
+            "planCompleteDate": $("#PlanCompleteDate").val(),
+            "expectedResults": $("#ExpectedResults").val(),
+            "description2": $("#Description2").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "@Url.Content("~/TaskMaster/Assign/")",
+            data: data,
+            success: function (data, textStatus) {
+               DisplayJsonMessages(data);
+                if (data != "") {
+                    var taskData = {
+                        "code": data.Data.Code
+                    };
+                    $.ajax({
+                        type: "get",
+                        dataType: "html",
+                        url: "@Url.Content("~/TaskMaster/Edit/")",
+                        data: taskData,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                    }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = "<li>" + XMLHttpRequest.responseText + "</li>";
+                $("#errorsul").html(errorMessages);
+            }
+        });
+    }
+
+
+</script>
+@{
+    ViewBag.Title = Resources.ISI.TaskMaster.TaskMaster_Edit_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_TaskMaster_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <fieldset>
+            <legend>@Resources.ISI.TaskMaster.TaskMaster_BasicInfo</legend>
+            <div class="editor">
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Code)
+                    @Html.HiddenFor(model => model.Code)
+                    @Html.HiddenFor(model => model.CreateDate)
+                    @Html.HiddenFor(model => model.CreateUserId)
+                    @Html.HiddenFor(model => model.CreateUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.Code)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.TaskSubType)
+                </div>
+                <div class="editor-field-2">
+                    @{
+    Html.RenderAction("_TaskSubTypeComboBox", "Common", new
+    {
+        controlName = "TaskSubType",
+        enable = Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign,
+        selectedValue = Model.TaskSubType,
+    });
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Priority)
+                </div>
+                <div class="editor-field-2">
+                    @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.TaskPriority,
+        controlName = "Priority",
+        enable = Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign,
+        selectedValue = Model.Priority,
+    });
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.StatusDescription)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.StatusDescription)
+                </div>
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Subject)
+            </div>
+            <div class="editor-field-2">
+                @if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign)
+                {
+                    @Html.EditorFor(model => model.Subject)
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.Subject)
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.TaskAddress)
+            </div>
+            <div class="editor-field-2">
+                @{
+                Html.RenderAction("_TaskAddressComboBox", "Common", new
+                {
+                    controlName = "TaskAddress",
+                    enable = Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign,
+                    selectedValue = Model.TaskAddress,
+                });
+                }
+            </div>
+            <div class="editor-label-1">
+                @Html.LabelFor(model => model.Description1)
+            </div>
+            <div class="editor-field-1">
+                @if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign)
+                {
+                    @Html.TextAreaFor(model => model.Description1, new { rows = 1, style = "min-height:0;width:80%" })
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.Description1)
+                }
+            </div>
+            <div id="divMore" style="display: none">
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CreateDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CreateDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CreateUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CreateUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.SubmitDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.SubmitDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.SubmitUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.SubmitUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.AssignDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.AssignDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.AssignUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.AssignUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.StartDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.StartDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.StartUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.StartUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CompleteDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CompleteDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CompleteUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CompleteUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CancelDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CancelDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CancelUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CancelUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.LastModifyDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.LastModifyDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.LastModifyUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.LastModifyUserName)
+                </div>
+            </div>
+            <div>
+                <a type="text/html" onclick="More(this)" href="#" id="more">More...</a>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>@Resources.ISI.TaskMaster.TaskMaster_TaskAsign</legend>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PlanStartDate)
+            </div>
+            <div class="editor-field-2">
+                @if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign)
+                {
+                    @Html.EditorFor(model => model.PlanStartDate)
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.PlanStartDate)
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PlanCompleteDate)
+            </div>
+            <div class="editor-field-2">
+                @if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign)
+                {
+                    @Html.EditorFor(model => model.PlanCompleteDate)
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.PlanCompleteDate)
+                }
+            </div>
+            <div class="editor-label-1">
+                @Html.LabelFor(model => model.AssignStartUser)
+            </div>
+            <div class="editor-field-1">
+                @if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign)
+                {
+                    @Html.EditorFor(model => model.AssignStartUser)
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.AssignStartUser)
+                }
+            </div>
+            <div class="editor-label-1">
+                @Html.LabelFor(model => model.ExpectedResults)
+            </div>
+            <div class="editor-field-1">
+                @if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign)
+                {
+                    @Html.EditorFor(model => model.ExpectedResults)
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.ExpectedResults)
+                }
+            </div>
+            <div class="editor-label-1">
+                @Html.LabelFor(model => model.Description2)
+            </div>
+            <div class="editor-field-1">
+                @if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Create || Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit || Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign)
+                {
+                    @Html.TextAreaFor(model => model.Description2, new { rows = 3, style = "min-height:0;width:80%" })
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.Description2)
+                }
+            </div>
+        </fieldset>
+        <div class="editor-footer">
+            @{
+                if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Create)
+                {
+                @Html.Button(Resources.SYS.Global.Button_Save, "Url_OrderMstr_Distribution_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "submit"},
+	                {"id", "btnEdit"}
+	            })
+
+                @Html.Button(Resources.SYS.Global.Button_Submit, "Url_OrderMstr_Distribution_Submit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnSubmit"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+@Url.Content("~/TaskMaster/Submit/" + Model.Code) +"'"}
+	            })
+                }
+                if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Submit)
+                {
+                @Html.Button(Resources.SYS.Global.Button_Assign, "Url_OrderMstr_Distribution_Submit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnAssign"},
+                    {"needconfirm","true"},
+                     {"onclick","Assign()"}
+	            })
+                <button type="button" id="btnCancel" onclick="location.href='@Url.Content("~/TaskMaster/Cancel/" + @Model.Code)'">
+                    @Resources.SYS.Global.Button_Cancel
+                </button>
+                }
+                if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Assign)
+                {
+                <button type="button" id="btnStart" onclick="location.href='@Url.Content("~/TaskMaster/Start/" + @Model.Code)'">
+                    @Resources.SYS.Global.Button_Start
+                </button>
+                }
+                if (Model.Status == com.Sconit.CodeMaster.TaskStatus.InProcess)
+                {
+                <button type="button" id="btnComplete" onclick="location.href='@Url.Content("~/TaskMaster/Complete/" + @Model.Code)'">
+                    @Resources.SYS.Global.Button_Complete
+                </button>
+                } if (Model.Status == com.Sconit.CodeMaster.TaskStatus.Complete)
+                {
+                <button type="button" id="btnClose" onclick="location.href='@Url.Content("~/TaskMaster/Close/" + @Model.Code)'">
+                    @Resources.SYS.Global.Button_Close
+                </button>
+                }
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/TaskMaster/List")'">
+                    @Resources.SYS.Global.Button_Back
+                </button>
+            }
+        </div>
+    </fieldset>
+}

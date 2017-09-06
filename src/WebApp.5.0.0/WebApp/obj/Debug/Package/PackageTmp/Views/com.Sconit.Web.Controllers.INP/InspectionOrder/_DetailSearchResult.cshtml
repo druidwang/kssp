@@ -1,0 +1,65 @@
+﻿@model IEnumerable<com.Sconit.Entity.INP.InspectDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("InspectDetailGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.InspectNo).Title(Resources.INP.InspectMaster.InspectMaster_InspectNo).Width(80);
+            columns.Bound(o => o.Item).Width(60)
+             .Aggregate(aggregates => aggregates.Count())
+                .GroupFooterTemplate(@<text>Count: @item.Count</text>)
+                .GroupHeaderTemplate(@<text>@item.Title: @item.Key (Count: @item.Count)</text>);
+            //columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemFullDescription);
+            columns.Bound(o => o.Uom).Width(40);
+            //columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.SupplierLotNo);
+            //columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.InspectQty).Width(80)
+           .Aggregate(aggreages => aggreages.Sum())
+               .GroupFooterTemplate(@<text>Sum: @item.Sum.Format("{0:0.####}")</text>);
+            //columns.Bound(o => o.CurrentInspectQty)
+            //.Aggregate(aggreages => aggreages.Sum())
+            //.GroupFooterTemplate(@<text>Sum: @item.Sum.Format("{0:0.########}")</text>);
+            columns.Bound(o => o.QualifyQty).Width(80)
+            .Aggregate(aggreages => aggreages.Sum())
+                .GroupFooterTemplate(@<text>Sum: @item.Sum.Format("{0:0.###}")</text>);
+            columns.Bound(o => o.RejectQty).Width(80)
+                .Aggregate(aggreages => aggreages.Sum())
+                .GroupFooterTemplate(@<text>Sum: @item.Sum.Format("{0:0.###}")</text>);
+            //columns.Bound(o => o.HandledQty)
+            //.Aggregate(aggreages => aggreages.Sum())
+            //.GroupFooterTemplate(@<text>Sum: @item.Sum.Format("{0:0.########}")</text>);
+            columns.Bound(o => o.FailCodeDescription).Width(60);
+            columns.Bound(o => o.CreateUserName).Width(70);
+            columns.Bound(o => o.CreateDate).Format("{0:yyyy-MM-dd HH:mm:ss}").Width(90);
+            //columns.Bound(o => o.Note);
+        })
+        .Scrollable()
+            // .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxInspectDetailList", "InspectionOrder"))
+            // .ClientEvents(events => events.OnDataBinding("InspectDetailGrid_OnDataBinding"))
+            //.Pageable(settings =>
+            //{
+            //    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            //    settings.PageSize(ViewBag.PageSize);
+            //})
+        .Resizable(resizing => resizing.Columns(true))
+                            .Groupable(settings => settings.Groups(groups => groups.Add(o => o.Item)).Visible(true))
+        .Footer(false)
+    )
+    @*    <script type="text/javascript">
+        function InspectDetailGrid_OnDataBinding(e) {
+            e.data = {
+                InspectNo: $('#InspectNo').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                CreateDate: $('#CreateDate').val(),
+                Item: $('#Item').val(),
+                IpNo: $('#IpNo').val(),
+                WMSNo: $('#WMSNo').val(),
+                ReceiptNo: $('#ReceiptNo').val()
+            };
+        } 
+    </script>*@
+</fieldset>

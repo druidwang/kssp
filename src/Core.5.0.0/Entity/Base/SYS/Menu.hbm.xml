@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.SYS.Menu, com.Sconit.Entity" table="SYS_Menu" lazy="false">
+    <id name="Code" column="Code" type="String" unsaved-value="null" >
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="Name" type="String" length="256" />
+    <property name="ParentMenuCode" column="Parent" type="String" length="50" />
+    <property name="Sequence" column="Seq" type="Int32"  />
+    <property name="Description" column="Desc1" type="String" length="256" />
+    <property name="PageUrl" column="PageUrl" type="String" length="256" />
+    <property name="ImageUrl" column="ImageUrl" type="String" length="256" />
+    <property name="IsActive" column="IsActive" type="Boolean"  />
+  </class>
+</hibernate-mapping>

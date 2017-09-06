@@ -1,0 +1,36 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.GeneralLedger>
+<fieldset>
+    @(Html.Telerik().Grid(Model).Name("MachineGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "GeneralLedger", new { Code = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "GeneralLedger"))
+        .ClientEvents(events => events.OnDataBinding("GeneralLedgerGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+  )
+    <script type="text/javascript">
+        function GeneralLedgerGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,264 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlanEx_Shift" });
+}
+<script type="text/javascript">
+    function onSearch() {
+        $("#fdShiftDetail").hide();
+        $("#fldsearch").show();
+        if ($('#Flow').val() == "") {
+            $message.error('生产线不能为空。');
+            return;
+        }
+
+        if ($('#PlanDate').val() == "") {
+            $message.error('计划时间不能为空。');
+            return;
+        }
+
+        var data = {
+            flow: $('#Flow').val(),
+            planDate: $('#PlanDate').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/MrpPlanEx/_MrpShiftList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                $("#btnAdjustCalendar").show();
+                $("#btnNew").show();
+                $("#btnSave").show();
+                $("#fdShiftDetail").html(data);
+                $("#fdShiftDetail").show();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function onSaveDetail(e) {
+        var hasEmptyProductType = false;
+        var grid = $("#MrpExShiftPlan").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            return;
+        }
+
+        var Ids = new Array();
+        var Sequences = new Array();
+        var Items = new Array();
+        var ItemDescs = new Array();
+        var ShiftQtys = new Array();
+        var Qtys = new Array();
+        var ProductTypes = new Array();
+        var UnitCounts = new Array();
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var gridLength = grid.columns.length;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            Ids[rowIndex] = $.trim(row[0].childNodes[0].innerText);
+            Sequences[rowIndex] = $.trim(row[0].childNodes[1].innerText);
+            Items[rowIndex] = $.trim(row[0].childNodes[2].innerText);
+            ItemDescs[rowIndex] = $.trim(row[0].childNodes[3].innerText);
+            UnitCounts[rowIndex] = $.trim(row[0].childNodes[4].innerText);
+            ShiftQtys[rowIndex] = $.trim(row[0].childNodes[gridLength - 3].innerText);
+            Qtys[rowIndex] = $.trim(row[0].childNodes[gridLength - 2].innerText);
+            ProductTypes[rowIndex] = $.trim(row[0].childNodes[gridLength - 1].innerText);
+            if (ProductTypes[rowIndex] == null || ProductTypes[rowIndex]=="") {
+                hasEmptyProductType = true;
+                break;
+            }
+        }
+        if (hasEmptyProductType) {
+            $message.error('有生产类型未选.');
+            return;
+        }
+        var details = {
+            "Ids": Ids,
+            "Sequences": Sequences,
+            "Items": Items,
+            "ItemDescs": ItemDescs,
+            "ShiftQtys": ShiftQtys,
+            "Qtys":Qtys,
+            "ProductTypes": ProductTypes,
+            "UnitCounts": UnitCounts
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/MrpPlanEx/_SaveShifts/",
+            data: $.extend(details, null),
+            traditional: true,
+            success: function (data) {
+                
+                DisplayJsonMessages(data);
+                onSearch();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function onAdjustCalendar() {
+        if ($('#Flow').val() == "") {
+            $message.error('生产线不能为空。');
+            return;
+        }
+
+        if ($('#PlanDate').val() == "") {
+            $message.error('计划时间不能为空。');
+            return;
+        }
+
+        var param = {
+            flow: $('#Flow').val(),
+            planDate: $('#PlanDate').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/MrpPlanEx/AdjustCalendar/",
+            data: param,
+            success: function (data) {
+                DisplayJsonMessages(data);
+                onSearch();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function Flow_Change(e) {
+        $("#fdShiftDetail").hide();
+        $("#btnAdjustCalendar").hide();
+        $("#btnSave").hide();
+        $("#btnNew").hide();
+    }
+
+    function onNew() {
+        $("#fdShiftDetail").html("Loading...");
+        $("#fdShiftDetail").load("/MrpPlanEx/_NewShift/");
+        $("#fdShiftDetail").show();
+
+        $("#fldsearch").hide();
+    }
+
+
+    function Shift_Change()
+    { }
+
+    function onBack() {
+        $("#fldsearch").hide();
+        onSearch();
+    }
+
+    function Item_Change(e) {
+        
+        if (e.value != null && e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            else {
+                var data = {
+                    "itemCode": e.value
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/MrpPlanEx/_WebLoadItem/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        $('#ItemDescription').val(data.Description);
+                        //$('#UnitCount').val(data.UnitCount);
+                        //$('#Uom').val(data.Uom);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            }
+        }
+    }
+
+
+</script>
+
+<fieldset id="fldsearch">
+    @using (Html.BeginForm())
+    {
+        <div class="search">
+            <div class="editor-label-2">
+                <label>计划时间</label>
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("PlanDate").Min(DateTime.Now.Date.AddDays(-1))
+                .ClientEvents(events => events.OnChange("Flow_Change")))
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpExShiftPlan.MrpExShiftPlan_ProductLine
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common", new
+        {
+            controlName = "Flow",
+            type = (int)com.Sconit.CodeMaster.OrderType.Production,
+            isChange = true,
+            isCreateOrder = false,
+            resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+            isMrp = true
+        });
+                }
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanEx_Shift", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_Mrp_MrpPlanEx_Shift", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","false"},
+                {"onclick","onNew()"},
+                {"style","display:none"},
+	        })
+
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_Mrp_MrpPlanEx_Shift", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSave"},
+                {"needconfirm","true"},
+                {"onclick","onSaveDetail()"},
+                {"style","display:none"},
+	        })
+
+            @Html.Button("重新计算", "Url_Mrp_MrpPlanEx_Shift", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnAdjustCalendar"},
+                {"needconfirm","true"},
+                {"onclick","onAdjustCalendar()"},
+                {"style","display:none"},
+	        })
+        </div>
+    }
+</fieldset>
+<div id="fdShiftDetail" style="display: none;">
+</div>

@@ -1,0 +1,100 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.MD
+@model com.Sconit.Entity.MD.Region  
+@Html.Partial("_AjaxMessage")
+
+<fieldset>
+    <legend>@Resources.MD.Party.Party_CurrentParty:@ViewBag.PartyCode </legend>
+    <div class="editor">
+        <div class="editor-label-2">
+        </div>
+        <div class="editor-field-2">
+        </div>
+        <div class="editor-label-2">
+        </div>
+        <div class="editor-field-2">
+            <input type="hidden" name="Region_Code" id="Region_Code" value="@Model.Code" />
+            @*@Html.HiddenFor(model => model.Code)*@
+
+            @Html.HiddenFor(model => model.CreateUserName)
+            @Html.HiddenFor(model => model.CreateDate)
+            @Html.HiddenFor(model => model.LastModifyUserName)
+            @Html.HiddenFor(model => model.LastModifyDate)
+        </div>
+
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Code)
+            @*@Resources.MD.Region.Region_Code:*@
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.Code)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Name)
+            @*@Resources.MD.Region.Region_Name:*@
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Plant)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.Plant)
+        </div>
+        @*<div class="editor-label-2">
+             @Html.LabelFor(model => model.Workshop)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Workshop)
+            </div>*@
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsActive)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsActive)
+        </div>
+
+    </div>
+    <div class="editor-footer">
+        @Html.Button(Resources.SYS.Global.Button_Save, "Url_Region_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSave_Party"},
+        {"onclick","btnSave_Party_Click()"}
+	})
+        @Html.Button(Resources.SYS.Global.Button_Delete, "Url_Region_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDelete_Party"},
+        {"needconfirm","true"},
+        {"onclick","location.href='"+@Url.Content("~/Region/Delete/"+@Model.Code)+"'"}
+    })
+        <button type="button" id="btnBack_Party" onclick="location.href='@Url.Content("~/Region/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    function btnSave_Party_Click() {
+        var data = {
+            "Code": $("#Region_Code").val(),
+            "Name": $("#Name").val(),
+            "IsActive": $("#IsActive").is(':checked'),
+            "Plant": $("#Plant").val(),
+            "Workshop": $("#Workshop").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Region/_Edit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+            }
+        });
+    }
+</script>

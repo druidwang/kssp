@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ISS.IssueMaster, com.Sconit.Entity" table="ISS_IssueMstr" lazy="false">
+    <id name="Code" column="Code" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <!-- <many-to-one name="IssueAddress" column="IssueAddr" class="com.Sconit.Entity.ISS.IssueAddress, com.Sconit.Entity" cascade="none" />-->
+    <property name="IssueAddress" column="IssueAddr" type="String" length="50"/>
+    <many-to-one name="IssueType" column="IssueType" class="com.Sconit.Entity.ISS.IssueType, com.Sconit.Entity" cascade="none" />
+    <many-to-one name="IssueNo" column="IssueNo" class="com.Sconit.Entity.ISS.IssueNo, com.Sconit.Entity" cascade="none" />
+    <property name="IssueSubject" column="IssueSubject" type="String" length="50"/>
+    <property name="BackYards" column="BackYards" type="String" length="50"/>
+    <property name="Content" column="Content" type="String" length="100"/>
+    <property name="Solution" column="Solution" type="String" length="256"/>
+    <property name="Status" column="Status"/>
+    <property name="Priority" column="Priority"/>
+    <property name="Type" column="Type"/>
+    <property name="UserName" column="UserName" type="String" length="100"/>
+    <property name="Email" column="Email" type="String" length="50"/>
+    <many-to-one name="FinishedUser" column="FinishedUser" class="com.Sconit.Entity.ACC.User, com.Sconit.Entity" cascade="none" />
+    <property name="FinishedDate" column="FinishedDate" type="DateTime" />
+    <property name="MobilePhone" column="MPhone" type="String" length="50"/>
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+    <property name="ReleaseDate" column="ReleaseDate" type="DateTime"/>
+    <!--submit-->
+    <property name="ReleaseUser" column="ReleaseUser" type="Int32"/>
+    <property name="ReleaseUserName" column="ReleaseUserNm" type="String" length="100"/>
+    <property name="StartDate" column="StartDate" type="DateTime"/>
+    <!--inprocess-->
+    <property name="StartUser" column="StartUser" type="Int32"/>
+    <property name="StartUserName" column="StartUserNm" type="String" length="100"/>
+    <property name="CloseDate" column="CloseDate" type="DateTime"/>
+    <property name="CloseUser" column="CloseUser" type="Int32"/>
+    <property name="CloseUserName" column="CloseUserNm" type="String" length="100"/>
+    <property name="CancelDate" column="CancelDate" type="DateTime"/>
+    <property name="CancelUser" column="CancelUser" type="Int32"/>
+    <property name="CancelUserName" column="CancelUserNm" type="String" length="100"/>
+    <property name="CompleteDate" column="CompleteDate" type="DateTime"/>
+    <!--Complete-->
+    <property name="CompleteUser" column="CompleteUser" type="Int32"/>
+    <property name="CompleteUserName" column="CompleteUserNm" type="String" length="100"/>
+
+    <property name="FailCode" column="FailCode" type="String" length="100" />
+    <property name="DefectCode" column="DefectCode" type="String" length="100"/>
+  </class>
+</hibernate-mapping>

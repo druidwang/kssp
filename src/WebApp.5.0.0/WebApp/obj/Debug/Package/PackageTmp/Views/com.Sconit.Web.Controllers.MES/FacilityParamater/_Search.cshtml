@@ -1,0 +1,38 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.MES
+<fieldset>
+    @using (Html.BeginForm("List", "FacilityParamater"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label >
+                   设备号：
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ControlPoint", TempData["MesScanControlPointSearchModel"] != null ? ((MesScanControlPointSearchModel)TempData["MesScanControlPointSearchModel"]).ControlPoint : string.Empty)
+            </div>
+             <div class="search-label">
+                <label >
+                   追溯码：
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("TraceCode", TempData["MesScanControlPointSearchModel"] != null ? ((MesScanControlPointSearchModel)TempData["MesScanControlPointSearchModel"]).TraceCode : string.Empty)
+            </div>
+          
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+         
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_FacilityMaster_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+          
+        </div>
+
+    }
+</fieldset>

@@ -1,0 +1,44 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.WMS.PickSchedule>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickScheduleGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PickScheduleNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PickScheduleNo).ClientTemplate(Html.ActionLink("<#= PickScheduleNo #>", "Edit", "PickSchedule", new { id = "<#= PickScheduleNo #>" }, null).ToString());
+            columns.Bound(o => o.PickLeadTime);
+            columns.Bound(o => o.RepackLeadTime);
+            columns.Bound(o => o.SpreadLeadTime);
+            columns.Bound(o => o.EmergentPickLeadTime);
+            columns.Bound(o => o.EmergentRepackLeadTime);
+            columns.Bound(o => o.EmergentSpreadLeadTime);
+                })
+      
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "PickSchedule"))
+            .ClientEvents(events => events.OnDataBinding("PickScheduleGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function PickScheduleGrid_OnDataBinding(e) {
+            e.data = {
+                PickScheduleNo: $('#PickScheduleNo').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,56 @@
+﻿@using com.Sconit.Entity.WMS;
+@model IEnumerable<com.Sconit.Entity.WMS.PackingList>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+            $("#btnShip").attr("style", this.checked ? "display:inline" : "display:none");
+        });
+    });
+
+    function showButtons() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var showButton = false;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                showButton = true;
+                break;
+            }
+        }
+        $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        $("#btnShip").attr("style", showButton ? "display:inline" : "display:none");
+    }
+
+    function onDataBound() {
+        $("tr.t-no-data td").html("@Resources.GridLocalization.NoRecords");
+    }
+</script>
+<fieldset>
+    <legend>@Resources.WMS.PackingList.PackingList_Ship_Title</legend>
+   
+    @(Html.Telerik().Grid(Model)
+        .Name("PackingList")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PackingListCode);
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+                                    .Select("_SelectBatchEditing", "PackingList", new { flow = ViewBag.flow })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PackingListCode)
+              .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= PackingListCode #>' onClick='showButtons()'  />")
+              .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+              .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.PackingListCode);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .ClientEvents(c => c.OnDataBound("onDataBound"))
+        .NoRecordsTemplate("Loading...")
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+</fieldset>

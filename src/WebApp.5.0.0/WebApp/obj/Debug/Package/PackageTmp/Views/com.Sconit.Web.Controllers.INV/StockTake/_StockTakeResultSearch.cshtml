@@ -1,0 +1,284 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    <legend>@Resources.INV.StockTake.StockTakeDetail_StNo:@ViewBag.StNo</legend>
+    @using (Html.BeginForm("StockTakeResult", "StockTake"))
+    {   
+        <div class="search">
+            <div class="editor-label-2">
+                <label for="StockTakeResult_Bin">
+                    @Resources.INV.StockTake.StockTakeDetail_Location
+                </label>
+
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "Location",
+            checkRegion = true,
+            isChange = true,
+            selectedValue = TempData["StockTakeResultSearchModel"] != null ? ((StockTakeResultSearchModel)TempData["StockTakeResultSearchModel"]).Location : null
+
+        });
+                }
+                @Html.Hidden("StNo", (string)ViewBag.StNo)
+                @Html.Hidden("Status", (string)ViewBag.Status)
+                @Html.Hidden("IsScanHu", (bool)ViewBag.IsScanHu)
+            </div>
+            <div class="search-label">
+                <label for="StockTakeResult_Item">
+                    @Resources.INV.StockTake.StockTakeResult_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        if (ViewBag.Item == null)
+        {
+            Html.RenderAction("_ItemComboBox", "Common", new { controlName = "Item" });
+        }
+        else
+        {
+            Html.RenderAction("_ItemComboBox", "Common", new { controlName = "Item", selectedValue = ViewBag.Item });
+        }
+                }
+            </div>
+
+            @{
+        if (ViewBag.IsScanHu == true && false)
+        {
+                <div class="editor-label-2">
+                    <label for="StockTakeDetail_Bin">
+                        @Resources.INV.StockTake.StockTakeDetail_Bin
+                    </label>
+                </div>
+           
+                <div class="editor-field-2">
+                    @{
+            Html.RenderAction("_LocationBinComboBox", "Common", new
+            {
+                controlName = "LocationBin",
+                selectedValue = TempData["StockTakeResultSearchModel"] != null ? ((StockTakeResultSearchModel)TempData["StockTakeResultSearchModel"]).LocationBin : null
+
+            });
+                    }
+                </div>
+        }
+            }
+            <div class="editor-label-2">
+                <label for="StockTakeResult_Option">
+                    @Resources.INV.StockTake.StockTakeResult_Option
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    @Html.CheckBox("IsLoss", true)
+                    @Resources.INV.StockTake.StockTakeResult_IsLoss
+                    @Html.CheckBox("IsProfit", true)
+                    @Resources.INV.StockTake.StockTakeResult_IsProfit
+                    @Html.CheckBox("IsBreakEven", true)
+                    @Resources.INV.StockTake.StockTakeResult_IsBreakEven
+                }
+            </div>
+            @*              <div class="editor-label-2">
+                <label for="StockTakeResult_Option">
+                    @Resources.INV.StockTake.StockTakeResult_IsShowAdjust
+                </label>
+            </div>
+            <div class="editor-field-2">
+            @{
+                    @Html.CheckBox("IsAdjust", TempData["StockTakeResultSearchModel"] != null ? ((StockTakeResultSearchModel)TempData["StockTakeResultSearchModel"]).IsAdjust : false)
+    }
+    </div>*@
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @Html.Hidden("status", (String)ViewBag.Status)
+            <button type="button" id="btnSearch" onclick="btnSearchStockTakeResult_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+            @{
+        if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.Complete.ToString())
+        {
+            if ((bool)ViewBag.IsScanHu)
+            {
+                @Html.Button(Resources.SYS.Global.Button_Check, "Url_Inventory_StockTake_View", new Dictionary<string, string>()
+	                {
+	                    {"type", "button"},
+	                    {"id", "btnCheck"},
+                        {"needconfirm","true"},
+                        {"onclick","ExistLocHuIdChkClick()"}
+	                })
+           }    
+            @Html.Button(Resources.SYS.Global.Button_Adjust, "Url_Inventory_StockTake_Adjust", new Dictionary<string, string>()
+	                {
+	                    {"type", "button"},
+	                    {"id", "btnAdjust"},
+                        {"needconfirm","true"},
+                        {"style","display: none"},
+                        {"onclick","btnAdjusts()"}
+	                })
+                @Html.Button(Resources.SYS.Global.Button_AllAdjust, "Url_Inventory_StockTake_Adjust", new Dictionary<string, string>()
+	                {
+	                    {"type", "button"},
+	                    {"id", "btnAllAdjust"},
+                        {"needconfirm","true"},
+                        {"onclick","btnAllAdjusts()"}
+	                })
+
+                @*<button type="button" id="btnAdjust" style="display: none" onclick="btnAdjusts()">
+                    @Resources.SYS.Global.Button_Adjust</button>
+                <button type="button" id="btnAllAdjust" onclick="btnAllAdjusts()">
+                    @Resources.SYS.Global.Button_AllAdjust</button>*@        
+        }  }
+            <button type="button" id="btnClose">
+                @Resources.SYS.Global.Button_Close</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/StockTake/StockTakeMasterList")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    }
+    @{Html.Telerik().Window()
+        .Name("HuIdChk")
+        .Title("检查盘点单的条码是否已经存在于库位中")
+        .Draggable(true)
+        .Scrollable(true)
+        .Resizable()
+        .Width(900)
+       .Height(520)
+        .Visible(false)
+           .Modal(true)
+
+       .Render();
+    }
+</fieldset>
+
+<script language="javascript" type="text/javascript">
+
+    function btnSearchStockTakeResult_Click() {
+
+        var data = {
+            "StNo": $("#StNo").val(),
+            "Item": $("#Item").val(),
+            "Location": $("#Location").val(),
+            "LocationBin": $("#LocationBin").val(),
+            "IsLoss": $("#IsLoss").is(':checked'),
+            "IsProfit": $("#IsProfit").is(':checked'),
+            "IsBreakEven": $("#IsBreakEven").is(':checked'),
+            "isFromList": "true",
+            "Status": $("#Status").val(),
+            "IsAdjust": $("#IsAdjust").is(':checked'),
+            "IsScanHu": $("#IsScanHu").val()
+        };
+
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/StockTake/_StockTakeResult/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+
+            }
+        });
+    }
+
+    function btnAdjusts() {
+
+        var $checkRecords = $("input[name='checkedRecords']");
+        var Ids = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (Ids == "") {
+                    Ids = $checkRecords[i].value;
+                } else {
+                    Ids += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (Ids == "") {
+            alert('请选择一个盘点结果');
+            return;
+        }
+        var data = {
+            "Ids": Ids,
+            "StNo": $("#StNo").val()
+        };
+        $.ajax({
+            type: "Json",
+            dataType: "Json",
+            url: "/StockTake/_btnAdjust/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $message.success(data.SuccessMessage);
+                btnSearchStockTakeResult_Click();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function btnAllAdjusts() {
+
+        var data = {
+            "StNo": $("#StNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/StockTake/_AllAdjust/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $message.success(data.SuccessMessage);
+                btnSearchStockTakeResult_Click();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        if ($("#status").val() == "Close" || $("#status").val() == "Complete") {
+            $("#btnExportDetail").hide();
+            $("#div_LocationBinDropDownList").hide();
+            $("#div_LocationBinDropDownListTitle").hide();
+        }
+        if ($("#status").val() == "Close" || $("#status").val() == "InProcess") {
+            $("#btnAdjust").hide();
+            $("#btnAllAdjust").hide();
+            $("#btnClose").hide();
+        }
+    });
+
+    function LocationBin_DataBinding(e) {
+        e.data = {
+            Location: $('#Location').val()
+        }
+    }
+    function ExportClick() {
+
+        location.href = '/StockTake/ExportSTResultXLS/?Item=' + $('#Item').val()
+            + '&StNo=' + $('#StNo').val() + '&Location=' + $('#Location').val()
+            + '&IsLoss=' + $("#IsLoss").is(':checked') + '&IsProfit=' + $("#IsProfit").is(':checked')
+            + '&IsBreakEven=' + $("#IsBreakEven").is(':checked')
+            + '&isFromList=' + "true" + '&IsAdjust=' + $("#IsAdjust").is(':checked')
+            + '&IsScanHu=' + $('#IsScanHu').val()
+    }
+   //debugger
+    function ExistLocHuIdChkClick() {
+        var detailWindow = $("#HuIdChk").data("tWindow");
+        detailWindow.ajaxRequest("/StockTake/_ExistLocHuIdChk/", { "StNo": $("#StNo").val() })
+        detailWindow.center().open();
+    }
+
+</script>

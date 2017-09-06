@@ -1,0 +1,35 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string Id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable == null ? true : ViewBag.Enable;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    bool isWidth = ViewBag.isWidth != null ? ViewBag.isWidth : false;
+
+}
+@{
+    if (enable)
+    {
+        if (isWidth)
+        {
+    @(Html.Telerik().DropDownList().HtmlAttributes(new { style = "width: 100px" })
+            .Name(name)
+            .HiddenInputHtmlAttributes(new { id = Id })
+            .BindTo(Model)
+            .Enable(enable))
+        }
+        else
+        {
+    @(Html.Telerik().DropDownList()
+            .Name(name)
+            .HiddenInputHtmlAttributes(new { id = Id })
+            .BindTo(Model)
+            .Enable(enable))
+        }
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Value)    <text>[</text>@Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)<text>]</text>        }
+    }
+}

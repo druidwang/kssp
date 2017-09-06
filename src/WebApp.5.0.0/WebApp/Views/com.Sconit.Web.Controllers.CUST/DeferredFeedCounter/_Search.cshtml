@@ -1,0 +1,22 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INP
+@using com.Sconit.Entity.CUST
+<fieldset>
+    @using (Html.BeginForm("List", "DeferredFeedCounter"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="FailCode_Code">
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow_Production
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Flow", ViewBag.Flow!=null?(string)ViewBag.Flow:string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>  
+        </div>
+
+    }
+</fieldset>

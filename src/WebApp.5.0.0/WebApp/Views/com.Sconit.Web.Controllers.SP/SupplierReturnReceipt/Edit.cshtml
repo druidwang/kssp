@@ -1,0 +1,239 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+@model com.Sconit.Entity.ORD.ReceiptMaster
+@using com.Sconit.Web.Models.SearchModels.ORD
+@{
+    ViewBag.Title = "Edit";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ReturnReceipt_View" });
+}
+<fieldset>
+    @using (Html.BeginForm("List", "ProcurementReceipt"))
+    {   
+        
+        <fieldset>
+            <legend>@Resources.ORD.OrderMaster.OrderMaster_BaseInfo</legend>
+            <div class="search">
+                <div class="search-label">
+                    <label for="ReceiptMaster_ReceiptNo">
+                        @Resources.ORD.ReceiptMaster.ReceiptMaster_ReceiptNo
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.DisplayFor(model => model.ReceiptNo)
+                    @Html.HiddenFor(model => model.ReceiptNo)
+                </div>
+                <div class="search-label">
+                    <label for="ReceiptMaster_IpNo">
+                        @Resources.ORD.ReceiptMaster.ReceiptMaster_IpNo
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.DisplayFor(model => model.IpNo)
+                </div>
+                <div class="editor-label-2">
+                    <label for="ReceiptMaster_PartyFrom">
+                        @Resources.ORD.ReceiptMaster.ReceiptMaster_PartyFrom
+                    </label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.PartyFrom)
+                </div>
+                <div class="editor-label-2">
+                    <label for="ReceiptMaster_PartyFrom">
+                        @Resources.ORD.ReceiptMaster.ReceiptMaster_PartyTo
+                    </label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.PartyTo)
+                </div>
+                <div class="search-label">
+                    <label for="ReceiptMaster_StartDate">
+                        @Resources.ORD.ReceiptMaster.ReceiptMaster_ShipFromAddress
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.DisplayFor(model => model.ShipFrom)
+                </div>
+                <div class="search-label">
+                    <label for="ReceiptMaster_EndDate">
+                        @Resources.ORD.ReceiptMaster.ReceiptMaster_ShipToAddress
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.DisplayFor(model => model.ShipTo)
+                </div>
+                <div class="search-label">
+                    @Html.LabelFor(model => model.ShipFromContact)
+                </div>
+                <div class="search-field">
+                    @Html.DisplayFor(model => model.ShipFromContact)
+                </div>
+                <div class="search-label">
+                    @Html.LabelFor(model => model.ShipToContact)
+                </div>
+                <div class="search-field">
+                    @Html.DisplayFor(model => model.ShipToContact)
+                </div>
+                <div class="search-label">
+                    @Html.LabelFor(model => model.ShipFromTel)
+                </div>
+                <div class="search-field">
+                    @Html.DisplayFor(model => model.ShipFromTel)
+                </div>
+                <div class="search-label">
+                    @Html.LabelFor(model => model.ShipToTel)
+                </div>
+                <div class="search-field">
+                    @Html.DisplayFor(model => model.ShipToTel)
+                </div>
+            </div>
+        </fieldset>
+        
+        <div id="divMore" style="display: none">
+            <fieldset>
+                <legend>@Resources.ORD.OrderMaster.OrderMaster_Audit</legend>
+                <div class="editor">
+                    <div class="editor-label-2">
+                        @Html.LabelFor(model => model.CreateUserName)
+                    </div>
+                    <div class="editor-field-2">
+                        @Html.DisplayFor(model => model.CreateUserName)
+                    </div>
+                    <div class="editor-label-2">
+                        @Html.LabelFor(model => model.CreateDate)
+                    </div>
+                    <div class="editor-field-2">
+                        @Html.DisplayFor(model => model.CreateDate)
+                    </div>
+                    <div class="editor-label-2">
+                        @Html.LabelFor(model => model.LastModifyUserName)
+                    </div>
+                    <div class="editor-field-2">
+                        @Html.DisplayFor(model => model.LastModifyUserName)
+                    </div>
+                    <div class="editor-label-2">
+                        @Html.LabelFor(model => model.LastModifyDate)
+                    </div>
+                    <div class="editor-field-2">
+                        @Html.DisplayFor(model => model.LastModifyDate)
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>@Resources.ORD.OrderMaster.OrderMaster_BarCodeOption</legend>
+                <div class="editor">
+                    <div class="editor-label-2">
+                        @Html.LabelFor(model => model.IsReceiveScanHu)
+                    </div>
+                    <div class="editor-field-2">
+                        @{
+  
+                            @Html.CheckBoxFor(model => model.IsReceiveScanHu, new { disabled = true })
+ 
+                        }
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>@Resources.ORD.OrderMaster.OrderMaster_PrintOption</legend>
+                <div class="editor">
+                    <div class="editor-label-2">
+                        @Html.LabelFor(model => model.IsPrintReceipt)
+                    </div>
+                    <div class="editor-field-2">
+                        @{
+   
+                            @Html.CheckBoxFor(model => model.IsPrintReceipt, new { disabled = true })
+
+                        }
+                    </div>
+                    <div class="editor-label-2">
+                        @Html.LabelFor(model => model.ReceiptTemplate)
+                    </div>
+                    <div class="editor-field-2">
+                        @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common",
+            new { code = com.Sconit.CodeMaster.CodeMaster.ReceiptTemplate, controlName = "ReceiptTemplate", selectedValue = Model.ReceiptTemplate, enable = false });
+                        }
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>@Resources.ORD.OrderMaster.OrderMaster_OrderControl</legend>
+                <div class="editor">
+                    <div class="editor-label-3">
+                        <label>
+                            @Resources.ORD.ReceiptMaster.ReceiptMaster_IsCheckPartyToAuthority
+                        </label>
+                    </div>
+                    <div class="editor-field-3">
+                        @{
+                            @Html.CheckBoxFor(model => model.IsCheckPartyFromAuthority, new { disabled = true })
+                        }
+                    </div>
+                    <div class="editor-label-3">
+                       <label>
+                            @Resources.ORD.ReceiptMaster.ReceiptMaster_IsCheckPartyFromAuthority
+                        </label>
+                    </div>
+                    <div class="editor-field-3">
+                        @{
+                            @Html.CheckBoxFor(model => model.IsCheckPartyToAuthority, new { disabled = true })
+                        }
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div>
+            <a type="text/html" onclick="More(this)" href="#" id="more">More...</a>
+        </div>
+        
+        <div class="search-footer">
+ @*           @{
+        if (Model.Status == com.Sconit.CodeMaster.ReceiptStatus.Close)
+        {
+                @Html.HiddenFor(model => model.ReceiptNo)
+                <button type="button" id="btnCancel" onclick="location.href='@Url.Content("~/ReturnReceipt/Cancel/" + Model.ReceiptNo)'">
+                    @Resources.SYS.Global.Button_Cancel</button>
+        }
+            }*@
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SupplierReturnReceipt/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+            <button type="button" id="btnPrint" onclick="Print()">
+                @Resources.SYS.Global.Button_Print</button>
+            <button type="button" id="btnExport" onclick="Export()">
+                @Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+@{
+    Html.RenderAction("_ReceiptDetail", "ReturnReceipt", new { receiptNo = Model.ReceiptNo });
+}
+<script type="text/javascript" language="javascript">
+    function Export(e) {
+    //debugger
+        window.open("/ProcurementReceipt/SaveToClient/?receiptNo=" + $("#ReceiptNo").val());
+    }
+
+    function Print(e) {
+        var data = {
+            "receiptNo": $("#ReceiptNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProcurementReceipt/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>

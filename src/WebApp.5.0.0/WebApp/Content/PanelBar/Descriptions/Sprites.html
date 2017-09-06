@@ -1,0 +1,26 @@
+﻿<p>
+    This example shows how to configure the Telerik PanelBar for ASP.NET MVC to use sprites.
+</p>
+<p>
+    Use <strong>SpriteCssClasses</strong> method to set the css class name. The panelbar will render a &lt;span&gt; tag with the provided css classes
+    before the item's text:
+</p>
+<button>Open all matched files</button>
+<pre class="prettyprint">
+&lt;%= Html.Telerik().PanelBar()
+        .Name("PanelBar")
+        .Items(panelbar => 
+        {
+            panelbar.Add()
+                    .Text("Telerik Extensions for ASP.NET MVC")
+                    .<strong>SpriteCssClasses("icon-mvc")</strong>
+                    .Items(parent =>
+                    {
+                        parent.Add().Text("Grid")
+                              .<strong>SpriteCssClasses("icon-mvc-grid")</strong>;
+                        ...
+                    }
+        ...
+        });
+%&gt;
+</pre>

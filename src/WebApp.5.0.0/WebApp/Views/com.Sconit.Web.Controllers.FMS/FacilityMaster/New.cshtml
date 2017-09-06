@@ -1,0 +1,178 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.FMS.FacilityMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_FacilityMaster_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.FMS.FacilityMaster.FacilityMaster_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Name)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Category)
+            </div>
+            <div class="editor-field-2">
+                  @{
+                Html.RenderAction("_FacilityCategoryComboBox", "Common",
+                    new
+                    {
+                        controlName = "Category"
+                    });
+                }
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.Specification)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Specification)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Capacity)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Capacity)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ManufactureDate)
+            </div>
+            <div class="editor-field-2">
+                 @Html.EditorFor(model => model.ManufactureDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Manufacturer)
+            </div>
+            <div class="editor-field-2">
+                 @Html.EditorFor(model => model.Manufacturer)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.SerialNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.SerialNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.AssetNo)
+            </div>
+            <div class="editor-field-2">
+                   @Html.EditorFor(model => model.AssetNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.WarrantyInfo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.WarrantyInfo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.TechInfo)
+            </div>
+            <div class="editor-field-2">
+               @Html.EditorFor(model => model.TechInfo)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Supplier)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Supplier)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.SupplierInfo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.SupplierInfo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PONo)
+            </div>
+            <div class="editor-field-2">
+                  @Html.EditorFor(model => model.PONo)
+            </div>
+           <div class="editor-label-2">
+                @Html.LabelFor(model => model.EffDate)
+            </div>
+            <div class="editor-field-2">
+                  @Html.EditorFor(model => model.EffDate)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Owner)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Owner)
+            </div>
+
+            <div class="editor-label-2">
+                 @Html.LabelFor(model => model.OwnerDescription)
+            </div>
+            <div class="editor-field-2">
+                 @Html.EditorFor(model => model.OwnerDescription)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Price)
+            </div>
+            <div class="editor-field-2">
+                  @Html.EditorFor(model => model.Price)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.RefenceCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model => model.RefenceCode)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsOffBalance)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsOffBalance", false)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsAsset)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsAsset", true)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CurrChargePersonName)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_WmsUserComboBox", "Common",
+                    new
+                    {
+                        controlName = "CurrChargePersonId"
+                    });
+                }
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.ChargeSite)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model => model.ChargeSite)
+            </div>
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.ChargeOrganization)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model => model.ChargeOrganization)
+            </div>
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.MaintainGroup)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model => model.MaintainGroup)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/FacilityMaster/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

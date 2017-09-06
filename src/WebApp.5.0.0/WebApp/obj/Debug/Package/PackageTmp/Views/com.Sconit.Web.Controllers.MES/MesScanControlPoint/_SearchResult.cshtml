@@ -1,0 +1,44 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MES.MesScanControlPoint>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("MesScanControlPointGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id
+                );
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ControlPoint).Title("设备代码");
+            columns.Bound(o => o.Op).Title("工序");
+            columns.Bound(o => o.OpReference).Title("工位");
+            columns.Bound(o => o.TraceCode).Title("追溯码");
+            columns.Bound(o => o.ScanDate).Title("运行日期");
+            columns.Bound(o => o.ScanTime).Title("运行时间");
+                 })   
+                .Scrollable(c => c.Enabled(false))
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "MesScanControlPoint"))
+                        .ClientEvents(events => events.OnDataBinding("MesScanControlPointGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function MesScanControlPointGrid_OnDataBinding(e) {
+            e.data = {
+                ControlPoint: $('#ControlPoint').val(),
+                TraceCode: $('#TraceCode').val()
+            };
+        }
+    </script>
+</fieldset>

@@ -1,0 +1,35 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string Id = ViewBag.ControlId;
+    if (string.IsNullOrWhiteSpace(Id))
+    {
+        Id = name;
+    }
+    string ajaxActionName = ViewBag.AjaxActionName;
+  
+}
+@{    
+    if (Id == "BillAddressCode")
+    {
+        @(Html.Telerik().DropDownList()
+        .Name(name)
+            .HiddenInputHtmlAttributes(new { id = Id })
+        .ClientEvents(events =>
+        events.OnChange("BillAddress_Change")
+        )
+        .BindTo(Model)
+        )
+    }
+    else if (Id == "ShipAddressCode")
+    {
+        @(Html.Telerik().DropDownList()
+        .Name(name)
+            .HiddenInputHtmlAttributes(new { id = Id })
+        .ClientEvents(events =>
+        events.OnChange("ShipAddress_Change")
+        )
+        .BindTo(Model)
+        )
+    }
+}

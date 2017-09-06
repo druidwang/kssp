@@ -1,0 +1,21 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+   // string onChangeName = isChange ? "UnitCount_Change" : "EmptyChange";
+}
+
+ @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax().Select("_ItemPackageAjaxLoading", "Common"))
+                .ClientEvents(events => events
+                    //.OnChange(onChangeName)
+                    .OnDataBinding("UnitCount_DataBinding"))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+)
+
+
+    

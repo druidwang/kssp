@@ -1,0 +1,60 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.LocationTransaction>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                        .Name("LocationTransactionGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .Columns(columns =>
+        {
+            //columns.Bound(o => o.SequenceNo).ClientTemplate(Html.ActionLink("<#= HuId #>", "HuDetail", "LocationTransaction", new { Id = "<#= HuId #>" }, null).ToString());
+
+            columns.Bound(o => o.TransactionTypeFullDescription); 
+            columns.Bound(o => o.EffectiveDate);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.ReceiptNo);
+            columns.Bound(o => o.PartyFrom);
+            columns.Bound(o => o.PartyTo); 
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            //columns.Bound(o => o.MaterialsGroup);
+            //columns.Bound(o => o.MaterialsGroupDesc);
+            columns.Bound(o => o.QualityTypeDescription).Title("状态"); 
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.Uom);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "LocationTransaction"))
+                        .ClientEvents(events => events.OnDataBinding("LocationTransactionGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+     <script type="text/javascript">
+         function LocationTransactionGrid_OnDataBinding(e) {
+             e.data = {
+                 TransactionType: $('#TransactionType').val(),
+                 Item: $('#Item').val(),
+                 LocationFrom: $('#LocationFrom').val(),
+                 LocationTo: $('#LocationTo').val(),
+                 PartyFrom: $('#PartyFrom').val(),
+                 PartyTo: $('#PartyTo').val(),
+                 StartDate: $('#StartDate').val(),
+                 EndDate: $('#EndDate').val(),
+                 TimeType: $("input[type=radio][name=timeType]:checked").val()
+             };
+         } 
+    </script>
+</fieldset>

@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_Container_View" });
+}
+<script type="text/javascript">
+
+    function onSearch() {
+        if ($('#PlanDate').val() == "") {
+            $message.error('计划时间不能为空。');
+            return;
+        }
+        var data = {
+            planDate: $('#PlanDate').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Container/_GetContainerView/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                $("#fdOrderDetail").html(data);
+                $("#fdOrderDetail").show();
+                $("tr.t-no-data").find("td").text("Loading...");
+
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                时间
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("PlanDate").Value(DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+    </div>
+    <div class="search-footer">
+        @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanEx_PlanView", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+    </div>
+</fieldset>
+<div id="fdOrderDetail" style="display: none;">
+</div>

@@ -1,0 +1,99 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlanEx_Order" });
+}
+<script type="text/javascript">
+
+    function onSearch() {
+        if ($('#Flow').val() == "") {
+            $message.error('生产线不能为空。');
+            return;
+        }
+
+        if ($('#DateIndex').val() == "") {
+            $message.error('周不能为空。');
+            return;
+        }
+
+        var data = {
+            flow: $('#Flow').val(),
+            dateIndex: $('#DateIndex').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/MrpPlanEx/_MrpOrderList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                $("#fdOrderDetail").html(data);
+                $("#fdOrderDetail").show();
+                $("tr.t-no-data").find("td").text("Loading...");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function DateIndex_DataBinding(e) {
+        if ($('#DateType').val() != 4) {
+            e.data = {
+                dateType: 5
+            }
+        }
+    }
+
+</script>
+<fieldset>
+    @using (Html.BeginForm())
+    {
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpExOrder.MrpExOrder_DateIndex
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "DateIndex",
+            dateType = (int)com.Sconit.CodeMaster.TimeUnit.Week
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpExOrder.MrpExOrder_ProductLine
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common", new
+        {
+            controlName = "Flow",
+            type = (int)com.Sconit.CodeMaster.OrderType.Production,
+            isChange = false,
+            isCreateOrder = false,
+            resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+            isMrp = true
+        });
+                }
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanEx_Order", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+        </div>
+    }
+</fieldset>
+<div id="fdOrderDetail" style="display: none;">
+</div>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<com.Sconit.Entity.FMS.FacilityMaintainPlan>
+<fieldset>
+<script type="text/javascript">
+    function FacilityMaintainPlanGrid_OnDataBinding(e) {
+        e.data = {
+            FCID: $('#FCID').val()
+        };
+    } 
+    </script>
+
+    @(Html.Telerik().Grid(Model)
+        .Name("FacilityMaintainPlanGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.MaintainPlan.Code).ClientTemplate(string.Format("<a href=\"javascript:onFacilityMaintainPlanclick('{0}')\">{1}</a>", "<#= Id #>", "<#= MaintainPlan.Code #>"));
+            columns.Bound(o => o.MaintainPlan.Description);
+            columns.Bound(o => o.MaintainPlan.TypeDescription);
+            columns.Bound(o => o.MaintainPlan.TypePeriod);
+            columns.Bound(o => o.MaintainPlan.Period);
+            columns.Bound(o => o.MaintainPlan.LeadTime);
+            columns.Bound(o => o.StartDate);
+
+            columns.Bound(o => o.NextMaintainDate);
+
+            columns.Bound(o => o.NextMaintainQty);
+                 })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxFacilityMaintainPlanList", "FacilityMaster"))
+                .ClientEvents(events => events.OnDataBinding("FacilityMaintainPlanGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>
+
+<script type="text/javascript">
+    function onFacilityMaintainPlanclick(id) {
+        var data = {
+            "Id": id
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/FacilityMaster/_FacilityMaintainPlanEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

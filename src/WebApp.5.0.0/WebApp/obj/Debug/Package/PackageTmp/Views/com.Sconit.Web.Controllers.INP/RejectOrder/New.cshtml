@@ -1,0 +1,383 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INP
+@using com.Sconit.Entity.SYS;
+@using com.Sconit.Entity.CUST;
+@model IEnumerable<com.Sconit.Entity.INP.InspectResult>
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_RejectOrder_New" });
+}
+<div id="DivInspectResult">
+    <fieldset>
+        @using (Html.BeginForm("New", "RejectOrder"))
+        {   
+            <div class="search">
+                <div class="search-label">
+                    <label for="InspectResult_RejectHandleResult">
+                        处理方式
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+            Html.RenderAction("_CodeMasterDropDownList", "Common", new
+            {
+                code = com.Sconit.CodeMaster.CodeMaster.HandleResult,
+                controlName = "HandleResult",
+                includeBlankOption = false,
+                selectedValue = TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).HandleResult : null
+            });
+                    }
+                </div>
+                <div class="search-label">
+                    <label for="InspectResult_InpNo">
+                        @Resources.INP.InspectResult.InspectResult_InpNo
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("InspectNo", TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).InspectNo : string.Empty)
+                </div>
+                <div class="search-label">
+                    <label for="InspectResult_IpNo">
+                        @Resources.INP.InspectResult.InspectResult_IpNo
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("IpNo", TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).IpNo : string.Empty)
+                </div>
+                <div class="search-label">
+                    <label for="InspectResult_IpNo">
+                        @Resources.INP.InspectResult.InspectResult_ReceiptNo
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("ReceiptNo", TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).ReceiptNo : string.Empty)
+                </div>
+                @*<div class="search-label">
+                    <label for="InspectResult_IpNo">
+                        @Resources.INP.InspectResult.InspectResult_WMSNo
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("WMSNo", TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).WMSNo : string.Empty)
+                </div>*@
+                <div class="search-label">
+                    <label for="InspectResult_IpNo">
+                        @Resources.INP.InspectResult.InspectResult_CreateUserName
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("CreateUserName", TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).CreateUserName : string.Empty)
+                </div>
+                <div class="search-label">
+                    <label for="InspectResult_Item">
+                        @Resources.INP.InspectResult.InspectResult_Item
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+            Html.RenderAction("_ItemComboBox", "Common", new
+            {
+                controlName = "Item",
+                selectedValue = TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).Item : string.Empty
+            });
+                    }
+                </div>
+                <div class="search-label">
+                    <label for="InspectResult_IpNo">
+                        @Resources.INP.InspectResult.InspectResult_CurrentLocation
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+            Html.RenderAction("_LocationComboBox", "Common", new
+           {
+               controlName = "CurrentLocation",
+               selectedValue = TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).CurrentLocation : string.Empty
+
+           });
+                    }
+                </div>
+
+
+                <div class="search-label">
+                    <label for="InspectResult_IpNo">
+                        @Resources.INP.InspectResult.InspectResult_InspectType
+                    </label>
+                </div>
+                <div class="search-field">
+
+                    @{ 
+            var aa = ViewBag.InspectType != null ? (ViewBag.InspectType == 1 ? true : false) : true;
+                        
+                        @Html.RadioButton("InspectType", (int)com.Sconit.CodeMaster.InspectType.Quantity, aa)@Resources.SYS.CodeDetail.CodeDetail_InspectType_Quantity<span style="margin: 4px"></span> 
+                        @Html.RadioButton("InspectType", (int)com.Sconit.CodeMaster.InspectType.Barcode, !aa)@Resources.SYS.CodeDetail.CodeDetail_InspectType_Barcode 
+
+                    }
+                </div>
+                <div class="search-label">
+                    <label for="InspectMaster_StartDate">
+                        @Resources.INP.InspectMaster.InspectMaster_StartDate
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("StartDate")
+ .Value(TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                    .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+                <div class="search-label">
+                    <label for="InspectMaster_EndDate">
+                        @Resources.INP.InspectMaster.InspectMaster_EndDate
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("EndDate")
+             .Value(TempData["InspectResultSearchModel"] != null ? ((InspectResultSearchModel)TempData["InspectResultSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                    .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+            </div>
+            <div class="search-footer">
+                @Html.Hidden("isFromList", true)
+                <button type="submit" id="btnSearch" onclick="ShowGridList()">
+                    @Resources.SYS.Global.Button_Search</button>
+                @if (ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Barcode)
+                {
+                    @Html.Button(Resources.SYS.Global.Button_New, "Url_RejectOrder_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnHuCreate"},
+                    {"needconfirm","true"},
+                    {"onclick","onHuCreate();"}
+	            })
+                }
+                else
+                {
+                    
+                    @Html.Button(Resources.SYS.Global.Button_New, "Url_RejectOrder_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnCreate"},
+                    {"needconfirm","true"},
+                    {"onclick","onCreate();"}
+	            })
+                }
+            </div>
+        }
+    </fieldset>
+    <fieldset id ="GridList">
+        @(Html.Telerik().Grid(Model)
+        .Name("InspectResult")
+        .DataKeys(keys => { keys.Add(p => p.InspectNo); })
+        .Columns(columns =>
+         {
+             columns.Bound(o => o.Id).Visible(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Barcode)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>'  />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+             columns.Bound(o => o.Id).HtmlAttributes(new { id = "Id" }).Hidden().Visible(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Quantity);
+             columns.Bound(o => o.InspectNo);
+             columns.Bound(o => o.Item);
+             //columns.Bound(o => o.ReferenceItemCode);
+             columns.Bound(o => o.ItemFullDescription);
+             columns.Bound(o => o.Uom);
+             //columns.Bound(o => o.UnitCount);
+             columns.Bound(o => o.HuId).Hidden(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Quantity);
+             //columns.Bound(o => o.LotNo).Hidden(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Quantity);
+             //columns.Bound(o => o.IpNo);
+             columns.Bound(o => o.ReceiptNo);
+             //columns.Bound(o => o.WMSNo);
+             columns.Bound(o => o.CurrentLocation);
+             columns.Bound(o => o.CreateUserName);
+             columns.Bound(o => o.CreateDate);
+             columns.Bound(o => o.FailCodeDescription);
+             columns.Bound(o => o.JudgeQty);
+             columns.Bound(o => o.HandleQty);
+             columns.Bound(o => o.CurrentHandleQty).ClientTemplate("<input type='text' id='CurrentHandleQty' name='CurrentHandleQty' style='width:70px' value='<#= CurrentHandleQty #>'/>").Hidden(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Barcode);
+             columns.Bound(o => o.CurrentHandleQty).Hidden(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Quantity);
+             //columns.ForeignKey(o => o.CurrentFailCode, (IEnumerable<FailCode>)ViewData["failCodes"], "Code", "CHNDescription");
+         })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax()
+        .Select("_AjaxInspectResultNewList", "RejectOrder"))
+        .ClientEvents(events => events.OnDataBinding("InspectResultGrid_OnDataBinding"))
+                // .Editable(editing=> editing.Mode(GridEditMode.InCell))
+        .Sortable()
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+            .Resizable(resizing => resizing.Columns(true)))
+        <script type="text/javascript">
+            //            function doClick(e) {
+            //            alert(e.checked);
+            //            alert($("input[type=radio]").legth);
+            //            }
+            //            function onSearch() {
+            //            alert($("input[type=radio][checked]").val());
+            //                return;
+            //                var data = {
+            //                    InspectNo: $('#InspectNo').val(),
+            //                    Item: $('#Item').val(),
+            //                    IpNo: $('#IpNo').val(),
+            //                    ReceiptNo: $("#ReceiptNo").val(),
+            //                    WMSNo: $("#WMSNo").val(),
+            //                    CreateUserName: $("#CreateUserName").val(),
+            //                    CurrentLocation: $("#CurrentLocation").val(),
+            //                    StartDate: $("#StartDate").val(),
+            //                    EndDate: $("#EndDate").val(),
+            //                    InspectType:$("input[type=radio][:checked]").val()
+            //                 };
+            //                 alert(data["InspectType"]);
+            //                $.ajax({
+            //                    type: "post",
+            //                    dataType: "html",
+            //                    url: "/RejectOrder/New/",
+            //                    data: data,
+            //                    cache: false,
+            //                    success: function (data, textStatus) {
+            //                        var $tGrid = $("#content");
+            //                        $($tGrid).html(data);
+            //                    }
+            //                });
+            //            }
+
+            function ShowGridList()
+            {
+                $("#GridList").show();
+            }
+
+            function onCreate() {
+                var grid = $("#InspectResult").data("tGrid");
+                var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+                var idStr = "";
+                var qtyStr = "";
+
+                for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                    var row = $(rows[rowIndex]);
+                    var id = row.find("#Id")[0].innerHTML;
+
+                    var qty = row.find("#CurrentHandleQty").val();
+                    if (qty != "" && !isNaN(qty) && parseFloat(qty) > 0) {
+                        if (idStr == "") {
+                            idStr = id;
+                            qtyStr = qty;
+                        } else {
+                            idStr += "," + id;
+                            qtyStr += "," + qty;
+                        }
+                    }
+                }
+                var data = {
+                    "handleResult": $("#HandleResult").val(),
+                    "idStr": idStr,
+                    "qtyStr": qtyStr
+                }
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/RejectOrder/Create/",
+                    data: data,
+                    cache: false,
+                    success: function (data) {
+                        if (data != "") {
+                            var rejectData = {
+                                "id": data
+                            };
+                            $.ajax({
+                                type: "get",
+                                dataType: "html",
+                                url: "/RejectOrder/Edit/",
+                                data: rejectData,
+                                cache: false,
+                                success: function (data, textStatus) {
+                                    var $tGrid = $("#content");
+                                    $($tGrid).html(data);
+                                }
+                            });
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        $message.error(errorMessages);
+                    }
+                });
+            }
+
+            function onHuCreate() {
+
+                var $checkRecords = $("input[name='checkedRecords']");
+                var idStr = "";
+                for (var i = 0; i < $checkRecords.length; i++) {
+                    if ($checkRecords[i].checked) {
+                        var id = $checkRecords[i].value;
+                        if (idStr == "") {
+                            idStr = id;
+                        } else {
+                            idStr += "," + id;
+                        }
+                    }
+                }
+                var data = {
+                    "handleResult": $("#HandleResult").val(),
+                    "idStr": idStr
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/RejectOrder/CreateByHu/",
+                    data: data,
+                    cache: false,
+                    success: function (data) {
+                        if (data != "") {
+                            var rejectData = {
+                                "id": data
+                            };
+                            $.ajax({
+                                type: "get",
+                                dataType: "html",
+                                url: "/RejectOrder/Edit/",
+                                data: rejectData,
+                                cache: false,
+                                success: function (data, textStatus) {
+                                    var $tGrid = $("#content");
+                                    $($tGrid).html(data);
+                                }
+                            });
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        $message.error(errorMessages);
+                    }
+                });
+            }
+
+            function InspectResultGrid_OnDataBinding(e) {
+                e.data = {
+                    InspectNo: $('#InspectNo').val(),
+                    Item: $('#Item').val(),
+                    IpNo: $('#IpNo').val(),
+                    ReceiptNo: $("#ReceiptNo").val(),
+                    WMSNo: $("#WMSNo").val(),
+                    HandleResult: $("#HandleResult").val(),
+                    CreateUserName: $("#CreateUserName").val(),
+                    CurrentLocation: $("#CurrentLocation").val(),
+                    StartDate: $("#StartDate").val(),
+                    EndDate: $("#EndDate").val(),
+                    isFromList: $("#isFromList").val(),
+                    InspectType: $("input[type=radio][checked]").val()
+                };
+            }
+
+            $(function () {
+                $("#checkAll").click(function () {
+                    $('input[name="checkedRecords"]').attr("checked", this.checked);
+
+                });
+                var $checkedRecords = $("input[name='checkedRecords']");
+                $checkedRecords.click(function () {
+                    $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+                });
+            });
+        </script>
+    </fieldset>
+</div>

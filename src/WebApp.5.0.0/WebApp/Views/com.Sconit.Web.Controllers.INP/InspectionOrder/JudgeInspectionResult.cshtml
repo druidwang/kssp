@@ -1,0 +1,61 @@
+﻿@model IEnumerable<com.Sconit.Entity.INP.InspectResult>
+<script language="javascript" type="text/javascript">
+
+    function InspectResultGrid_OnDataBinding(e) {
+        e.data = {
+            id: $('#InspectNo').val()
+        };
+    }
+
+    $(document).ready(function () {
+        $("#TabStrip .t-item:eq(1)").click(function () {
+            var data = {
+                "id": $("#InspectNo").val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/InspectionOrder/InspectionResult/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#TabStrip");
+                    var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                    $(tabStripContent1).html(data);
+                }
+            });
+        });
+    });
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("InspectResultGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.InspectNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemFullDescription);
+            columns.Bound(o => o.Uom);
+            //columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.HuId);
+            //columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.CurrentLocation);
+            columns.Bound(o => o.JudgeQty);
+            columns.Bound(o => o.JudgeResultDescription);
+            columns.Bound(o => o.DefectDescription);
+            columns.Bound(o => o.IsHandle);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxInspectionResultList", "InspectionOrder"))
+        .ClientEvents(events => events.OnDataBinding("InspectResultGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize != 0 ? ViewBag.PageSize : 50);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

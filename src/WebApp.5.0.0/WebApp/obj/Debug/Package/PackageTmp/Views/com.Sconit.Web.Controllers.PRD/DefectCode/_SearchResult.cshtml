@@ -1,0 +1,44 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.DefectCode>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "DefectCode", new { Code = "<#= Code #>" }, null).ToString()); ;
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.ProductCode);
+            columns.Bound(o => o.Assemblies);
+            columns.Bound(o => o.ComponentDefectCode);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "DefectCode"))
+                .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                ProductCode: $('#ProductCode').val(),
+                CreateDateStart: $('#CreateDateStart').val(),
+                CreateDateEnd: $('#CreateDateEnd').val()
+            };
+        } 
+    </script>
+</fieldset>

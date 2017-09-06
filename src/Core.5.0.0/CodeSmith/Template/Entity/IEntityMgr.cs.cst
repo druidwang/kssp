@@ -1,0 +1,31 @@
+<%@ CodeTemplate Language="C#" TargetLanguage="C#" Description="Generate the service interface." %>
+<%@ Property Name="NameSpace" Type="String" Default="com.Sconit" Category="EntityClass" Description="The assembly that contains the entity class." %>
+<%@ Property Name="ClassName" Type="String" Category="EntityClass" Description="The entity class name." %>
+<%@ Property Name="ModuleName" Type="String" Category="ModuleGroup" Description="The module group which contains the entity, for example, Security." %>
+using System;
+
+//TODO: Add other using statements here.
+
+namespace <%=this.NameSpace%>.Service.<%=this.ModuleName%>
+{
+    public interface I<%=ClassName%>Mgr : I<%=ClassName%>BaseMgr
+    {
+        #region Customized Methods
+
+        //TODO: Add other methods here.
+
+        #endregion Customized Methods
+    }
+}
+
+
+#region Extend Interface
+
+namespace <%=this.NameSpace%>.Service.Ext.<%=this.ModuleName%>
+{
+    public partial interface I<%=ClassName%>MgrE : <%=this.NameSpace%>.Service.<%=this.ModuleName%>.I<%=ClassName%>Mgr
+    {
+    }
+}
+
+#endregion Extend Interface

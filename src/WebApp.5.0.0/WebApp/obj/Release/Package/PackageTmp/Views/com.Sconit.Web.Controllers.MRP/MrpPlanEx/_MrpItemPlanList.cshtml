@@ -1,0 +1,103 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpExItemPlan>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onSaveItem(e) {
+        ;
+        var grid = $("#MrpExItemPlan").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            return;
+        }
+
+        var Ids = new Array();
+        var Sequences = new Array();
+        var CurrentQtys = new Array();
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var gridLength = grid.columns.length;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            Ids[rowIndex] = $.trim(row[0].childNodes[0].innerText);
+            Sequences[rowIndex] = $.trim(row[0].childNodes[1].innerText);
+            CurrentQtys[rowIndex] = $.trim(row[0].childNodes[gridLength - 1].innerText);
+        }
+
+        var details = {
+            "Ids": Ids,
+            "Sequences": Sequences,
+            "CurrentQtys": CurrentQtys
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/MrpPlanEx/_SaveItems/",
+            data: $.extend(details, null),
+            traditional: true,
+            success: function (data) {
+                DisplayJsonMessages(data);
+                var data1 = {
+                    flow: $('#Item_Flow').val(),
+                    planVersion: $('#Item_PlanVersion').val(),
+                    dateIndex: $('#Item_DateIndex').val(),
+                    section: $('#Item_Section').val()
+                };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/MrpPlanEx/_MrpItemPlanList/",
+                    data: data1,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $("#fdItem").html(data);
+                        $("#fdItem").show();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpExItemPlan")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            //commands.Insert();
+            //commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSaveDetail()", href = "#" });
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_SelectItems", "MrpPlanEx", new { planVersion = ViewBag.PlanVersion, flow = ViewBag.Flow, dateIndex = ViewBag.DateIndex, section = ViewBag.Section })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();//0
+            columns.Bound(o => o.Sequence).Width(40);//1
+            columns.Bound(o => o.Section).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly();
+            //columns.Bound(o => o.ItemDescritpion).ReadOnly();
+            columns.Bound(o => o.Qty).Format("{0:0.##}").ReadOnly();
+            columns.Bound(o => o.CorrectionQty).Format("{0:0.##}").ReadOnly();
+            columns.Bound(o => o.AdjustQty).Format("{0:0.##}").ReadOnly();
+            columns.Bound(o => o.TotalQty).Format("{0:0.##}").ReadOnly();
+            columns.Bound(o => o.CurrentQty).Format("{0:0.##}").Width(60).Title("当前数量");//9
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

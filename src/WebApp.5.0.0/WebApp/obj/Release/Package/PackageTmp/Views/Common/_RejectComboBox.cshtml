@@ -1,0 +1,18 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    int? status = ViewBag.Status;
+    int? handleResult = ViewBag.HandleResult;
+    bool isChange = ViewBag.IsChange == null ? false : ViewBag.IsChange;
+    string onChangeName = isChange ? "Reject_Change" : "EmptyChange";
+    
+}
+@(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                        .Select("_RejectAjaxLoading", "Common", new { status = status,handleResult = handleResult}).Cache(true))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                    .ClientEvents(events => events.OnChange(onChangeName))
+             )

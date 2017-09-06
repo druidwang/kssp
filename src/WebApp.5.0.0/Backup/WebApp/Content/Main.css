@@ -1,0 +1,124 @@
+.toptable
+{
+    width: 100%;
+    height: 50px;
+}
+
+.toptdlogo
+{
+    width: 150px;
+    height: 45px;
+}
+
+body
+{
+    font-size: 12px;
+    margin: 0px;
+}
+
+a
+{
+    color: Blue;
+}
+
+img
+{
+    border: 0px;
+}
+
+.topbody
+{
+    margin: 0px;
+    font-size: 13px;
+    color: #ffffff;
+    background: right fixed no-repeat;
+}
+
+a.HyperLink
+{
+    word-spacing: normal;
+    font-size: 12px;
+    padding: 4px;
+    filter: Dropshadow(offx=1,offy=0,color=grey) Dropshadow(offx=0,offy=1,color=grey) Dropshadow(offx=0,offy=-1,color=grey) Dropshadow(offx=-1,offy=0,color=grey);
+}
+
+.toptable
+{
+    width: 100%;
+    height: 50px;
+}
+
+.toptdlogo
+{
+    width: 150px;
+    height: 45px;
+}
+
+.toptdmid
+{
+}
+
+.lefttop
+{
+    margin-top: 2px;
+}
+.switch
+{
+    height: 100%;
+    background-color: #879294;
+}
+
+/*Nav style*/
+
+.leftbody
+{
+    margin-left: 0px;
+}
+
+.leftbody a
+{
+    color: Black;
+    text-decoration: none;
+}
+
+.listfav
+{
+    width: 220px;
+    margin-left: 0px;
+}
+.listfav ul
+{
+    list-style-position: outside;
+    list-style-type: none;
+}
+.listfav li
+{
+    list-style-position: outside;
+    line-height: 22px;
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+    border-bottom-color: #CCCCCC;
+    text-align: left;
+    margin-left: 5px;
+    list-style-type: none;
+}
+.div-favorite span
+{
+    line-height: 22px;
+    float: right;
+    color: White;
+    filter: alpha(opacity=10);
+    -moz-opacity: 0.1;
+    opacity: 0.1;
+}
+.div-favorite img
+{
+    padding-right: 5px;
+    margin-bottom: -5px;
+}
+.div-favorite:hover
+{
+    background: transparent url(../Images/Frame/remove.png) no-repeat scroll right;
+    cursor: pointer;
+}
+/* CSS Document */

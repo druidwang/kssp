@@ -1,0 +1,203 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpSnap_ProdLineEx" });
+}
+<script type="text/javascript">
+    function DateIndex_DataBinding(e) {
+        if ($('#DateType').val() != 4) {
+            e.data = {
+                dateType: $('#DateType').val()
+            }
+        }
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("ExportProdLineEx", "MrpSnap"))
+    { 
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateType
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterComboBox", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+            includeBlankOption = true,
+            isRccpPlan = true,
+            isChange = false,
+            controlName = "DateType"
+        });
+                }
+            </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpPlanMaster.RccpPlanMaster_SnapTime
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_MrpSnapMasterComboBox", "Common", new
+                    {
+                        controlName = "SnapTime",
+                        includeBlankOption = true,
+                        isRelease = true,
+                        SnapType = com.Sconit.CodeMaster.SnapType.Rccp,
+                        selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).SnapTime : null
+
+                    });
+            }
+        </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_ProductLine
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "ProductLine",
+                type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                resourceGroup = 20
+            });
+                }
+            </div>
+
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_ItemComboBox", "Common", new
+                    {
+                        controlName = "Item",
+
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DisplayColumn
+                </label>
+            </div>
+            <div>
+                @Html.CheckBox("IsMrpSpeed", true)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_MrpSpeed
+                &nbsp;
+            @Html.CheckBox("IsRccpSpeed", true)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_RccpSpeed
+                &nbsp;
+            @Html.CheckBox("IsApsPriority", true)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_ApsPriority
+                &nbsp; @*@Html.CheckBox("IsScrapPercent", true)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_ScrapPercent &nbsp;*@
+                @Html.CheckBox("IsQuota", true)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_Quota
+                &nbsp;
+            @Html.CheckBox("IsSwichTime", true)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_SwichTime
+                &nbsp;
+            @Html.CheckBox("IsSpeedTimes", true)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_SpeedTimes
+                &nbsp;
+            @Html.CheckBox("IsMinLotSize", true)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_MinLotSize
+                &nbsp;
+            @Html.CheckBox("IsEconomicLotSize", false)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_EconomicLotSize
+                &nbsp;
+            @Html.CheckBox("IsMaxLotSize", false)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_MaxLotSize
+                &nbsp;
+            @Html.CheckBox("IsTurnQty", false)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_TurnQty
+                &nbsp;
+            @Html.CheckBox("IsCorrection", false)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_Correction
+                &nbsp;
+            @Html.CheckBox("IsShiftType", false)@Resources.MRP.ProdLineExInstance.ProdLineExInstance_ShiftType
+                &nbsp;
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="Search" onclick="QueryProdLineExInstanceView()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+        </div>
+    }
+</fieldset>
+<div id="divData">
+</div>
+<script type="text/javascript">
+
+    function QueryProdLineExInstanceView() {
+        var data = getData();
+        if (data != null) {
+            $("#divData").html("Loading...");
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/MrpSnap/_GetProdLineExInstanceView/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#divData");
+                    $(tabStrip).html(data);
+                }
+            });
+        }
+    }
+
+    function getData() {
+        if (parseInt($(':checkbox:checked').length) == 0) {
+            $message.error('显示字段必须大于等于1.');
+            return;
+        }
+        //if ($('#ProductLine').val() == "") {
+        //    $message.error('生产线为必填项。');
+        //    return;
+        //}
+        if ($('#DateType').val() == "") {
+            $message.error('计划类型为必填项。');
+            return;
+        }
+        if ($('#SnapTime').val() == "") {
+            $message.error('快照时间为必填项。');
+            return;
+        }
+        var data = {
+            "snapTime": $('#SnapTime').val(),
+            "dateType": $('#DateType').val(),
+            "item": $('#Item').val(),
+            "productLine": $('#ProductLine').val(),
+            "isMrpSpeed": $("#IsMrpSpeed").is(':checked'),
+            "isRccpSpeed": $("#IsRccpSpeed").is(':checked'),
+            "isApsPriority": $("#IsApsPriority").is(':checked'),
+            //"isScrapPercent": $("#IsScrapPercent").is(':checked'),
+            "isQuota": $("#IsQuota").is(':checked'),
+            "isSwichTime": $("#IsSwichTime").is(':checked'),
+            "isSpeedTimes": $("#IsSpeedTimes").is(':checked'),
+            "isMinLotSize": $("#IsMinLotSize").is(':checked'),
+            "isEconomicLotSize": $("#IsEconomicLotSize").is(':checked'),
+            "isMaxLotSize": $("#IsMaxLotSize").is(':checked'),
+            "isTurnQty": $("#IsTurnQty").is(':checked'),
+            "isCorrection": $("#IsCorrection").is(':checked'),
+            "isShiftType": $("#IsShiftType").is(':checked'),
+            "checkboxcheckedCount": $(':checkbox:checked').length
+
+        };
+        return data;
+    }
+
+    $('#btnExport').click(function () {
+        if (parseInt($(':checkbox:checked').length) == 0) {
+            $message.error('显示字段必须大于等于1.');
+            return;
+        }
+ 
+        if ($('#DateType').val() == "") {
+            $message.error('计划类型为必填项。');
+            return;
+        }
+        if ($('#SnapTime').val() == "") {
+            $message.error('快照时间为必填项。');
+            return;
+        }
+        $('form').submit();
+    });
+</script>

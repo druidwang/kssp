@@ -1,0 +1,30 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.ReceiptDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                        .Name("SequenceDetailGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ReceiptNo);
+
+            columns.Bound(o => o.Item).Width(100)
+               .Aggregate(aggregates => aggregates.Count())
+                .GroupFooterTemplate(@<text>Count: @item.Count</text>)
+                .GroupHeaderTemplate(@<text>@item.Title: @item.Key (Count: @item.Count)</text>);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.ReceivedQty).Width(100)
+              .Aggregate(aggreages => aggreages.Sum())
+              .GroupFooterTemplate(@<text>Sum: @item.Sum.Format("{0:0.########}")</text>);
+        })
+        .Scrollable()
+         .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+         .Groupable(settings => settings.Groups(groups => groups.Add(o => o.Item)).Visible(true))
+         .Footer(false)
+    )
+</fieldset>

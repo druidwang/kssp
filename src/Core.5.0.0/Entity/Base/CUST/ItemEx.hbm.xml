@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.CUST.ItemEx, com.Sconit.Entity" table="CUST_ItemEx" lazy="false">
+    <id name="Code" column="Code" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <property name="Customer" column="Customer"  type="String" length="100"/>
+    <property name="ItemType1" column="ItemType1" type="String" length="50" />
+    <property name="ItemType2" column="ItemType2"  type="String" length="50"/>
+	  <property name="ItemType3" column="ItemType3" type="String" length="50" />
+	  <property name="ItemType4" column="ItemType4"  type="String" length="50"/>
+    <property name="Package" column="Package" type="String" length="100" />
+    <property name="AgeingTime" column="AgeingTime"  type="Double" />
+    <property name="AgeingMethod" column="AgeingMethod" type="String" length="100" />
+    <property name="Section" column="Section" type="String" length="100" />
+    <property name="PartLength" column="PartLength" type="Double"  />
+    <property name="PartLengthUom" column="PartLengthUom" type="String" length="5" />
+
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+  </class>
+</hibernate-mapping>

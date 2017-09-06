@@ -1,0 +1,62 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MRP.MD.ProdLineExInstance>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ProdLineExInstanceExGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.ProductLine);
+            keys.Add(p => p.Item);
+            keys.Add(p => p.DateIndex);
+            keys.Add(p => p.DateType);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.ProductLine).ClientTemplate(Html.ActionLink("<#= ProductLine #>", "InstanceEdit", "ProdLineEx",
+                new { productLine = "<#= ProductLine #>", item = "<#= Item #>", dateIndex = "<#= DateIndex #>", dateType = "<#= DateType #>" }, null).ToString());
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDesc);
+            columns.Bound(o => o.DateIndex);
+            columns.Bound(o => o.DateTypeDescription);
+            columns.Bound(o => o.ShiftTypeDescription);
+            columns.Bound(o => o.MrpSpeed);
+            columns.Bound(o => o.RccpSpeed);
+            columns.Bound(o => o.ApsPriorityDescription);
+            columns.Bound(o => o.SpeedTimes);
+            columns.Bound(o => o.Quota);
+            columns.Bound(o => o.MinLotSize);
+            columns.Bound(o => o.ProductTypeDescription);
+            //columns.Bound(o => o.IsManualCreate).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsManualCreate' <#= IsManualCreate? checked='checked' : '' #> />");
+            //columns.Bound(o => o.IsRelease).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsRelease' <#= IsRelease? checked='checked' : '' #> />");
+        })
+       
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxInstanceList", "ProdLineEx"))
+                .ClientEvents(events => events.OnDataBinding("ProdLineExInstanceGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ProdLineExInstanceGrid_OnDataBinding(e) {
+            e.data = {
+                ProductLine: $('#ProductLine').val(),
+                Item: $('#Item').val(),
+                DateType: $('#DateType').val(),
+                ShiftType: $('#ShiftType').val(),
+                DateIndex: $('#DateIndex').val(),
+                DateIndexTo: $('#DateIndexTo').val(),
+                DateIndexDate: $('#DateIndexDate').val(),
+                DateIndexToDate: $('#DateIndexToDate').val(),
+                ApsPriority: $('#ApsPriority').val()
+
+            };
+        } 
+    </script>
+</fieldset>

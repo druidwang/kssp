@@ -1,0 +1,23 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.VehicleInFactoryDetail>
+<fieldset>
+    <legend>@Resources.CUST.VehicleInFactoryDetail.VehicleInFactoryDetail_Title_View</legend>
+    @(Html.Telerik().Grid(Model)
+                .Name("VehicleInFactoryDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.IsClose);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CloseDate);
+            columns.Bound(o => o.CloseUserName);
+        })
+        .Scrollable(c => c.Enabled(false))
+                .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

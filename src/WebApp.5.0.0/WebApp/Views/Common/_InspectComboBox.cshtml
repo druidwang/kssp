@@ -1,0 +1,17 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    int? status = ViewBag.Status;
+    bool isChange = ViewBag.IsChange == null ? false : ViewBag.IsChange;
+    string onChangeName = isChange ? "Inspect_Change" : "EmptyChange";
+    
+}
+@(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                        .Select("_InspectAjaxLoading", "Common", new { status = status }).Cache(true))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                    .ClientEvents(events => events.OnChange(onChangeName))
+             )

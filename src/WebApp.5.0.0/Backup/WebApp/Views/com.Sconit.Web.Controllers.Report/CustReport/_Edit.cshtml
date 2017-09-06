@@ -1,0 +1,73 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.Report.CustReportMaster
+@Html.Partial("_AjaxMessage")
+<form action="/CustReport/_Edit" method="post">
+    <fieldset>
+        <legend>@Resources.Report.CustReport.CustReport_Edit_Title</legend>
+        @Html.HiddenFor(model => model.CreateUserName)
+        @Html.HiddenFor(model => model.CreateDate)
+        @Html.HiddenFor(model => model.LastModifyUserName)
+        @Html.HiddenFor(model => model.LastModifyDate)
+        <div class="editor">
+            @Html.HiddenFor(model => model.Code)
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.Name)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Seq)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.Seq)
+        </div>
+        <div class="editor-label-2">
+            <label>
+            有效
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsActive)
+        </div>
+        <div id="importHuid">
+                <table>
+                    <tr>
+                        <td>
+                            <textarea id="Sql" name="Sql" class="normal" rows="20" cols="110">@Model.Sql</textarea>
+                        </td>
+                    </tr>
+                </table>
+        </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_CustReport_ReportMenu", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnSave"}
+	        })
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_CustReport_ReportMenu", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnDelete"},
+                {"needconfirm","true"},
+                {"onclick","location.href='"+@Url.Content("~/CustReport/Delete/"+@Model.Code)+"'"}
+            })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/CustReport/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+</form>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("form[action$='_Edit']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                debugger
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(response);
+            });
+            return false;
+        });
+    });
+</script>

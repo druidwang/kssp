@@ -1,0 +1,470 @@
+﻿@using com.Sconit.Web.Models.ReportModels
+@model com.Sconit.Web.Models.ReportModels.InventoryAgeSearchModel
+<script>
+    function txtBlur(tis) {
+       
+        var value = tis.value;
+        if (value == 0 || isNaN(value)) {
+            alert("输入错误");
+            tis.focus();
+            tis.value = "";
+            return;
+        }
+        var id = tis.id.substring(0, 5);
+        var iddigit = tis.id.substring(5, tis.id.length);
+        if (iddigit == 1) {
+            return;
+        }
+        var Idvalue = document.getElementById(id + (parseInt(iddigit) - 1)).value;
+        var IdvalueTo = "";
+        if (iddigit != 11) {
+             IdvalueTo = document.getElementById(id + (parseInt(iddigit) + 1)).value;
+        }
+        if (IdvalueTo != "") {
+            if (parseInt(IdvalueTo) < parseInt(value)) {
+                alert("输入数字不能大于后面数字");
+                tis.focus();
+                tis.value = "";
+                return;
+            }
+        }
+        if (parseInt(Idvalue) > parseInt(value)) {
+            alert("输入天数不能小于前面输入天数");
+            tis.focus();
+            tis.value = "";
+            return;
+        }
+
+
+    }
+
+    function CodeMaster_Change() {
+        var level = $('#Level').val();
+        if (level == 0) {
+
+         
+            document.getElementById("regionFromlabel").style.display = 'inline';
+            document.getElementById("regionFromfield").style.display = 'inline';
+            document.getElementById("regionTolabel").style.display = 'inline';
+            document.getElementById("regionTofield").style.display = 'inline';
+
+            document.getElementById("locationFromlabel").style.display = 'inline'
+            document.getElementById("locationFromfield").style.display = 'inline'
+
+            document.getElementById("locationTolabel").style.display = 'inline'
+            document.getElementById("locationTofield").style.display = 'inline'
+
+            //document.getElementById("divMore").style.display = 'none'
+        }
+        else if (level == 1) {
+
+
+          
+            document.getElementById("regionFromlabel").style.display = 'inline';
+            document.getElementById("regionFromfield").style.display = 'inline';
+            document.getElementById("regionTolabel").style.display = 'inline';
+            document.getElementById("regionTofield").style.display = 'inline';
+
+            document.getElementById("locationFromlabel").style.display = 'none';
+            document.getElementById("locationFromfield").style.display = 'none';
+
+            document.getElementById("locationTolabel").style.display = 'none';
+            document.getElementById("locationTofield").style.display = 'none';
+        }
+        else if (level == 2) {
+
+        
+            document.getElementById("regionFromlabel").style.display = 'none';
+            document.getElementById("regionFromfield").style.display = 'none';
+            document.getElementById("regionTolabel").style.display = 'none';
+            document.getElementById("regionTofield").style.display = 'none';
+            document.getElementById("locationFromlabel").style.display = 'none';
+            document.getElementById("locationFromfield").style.display = 'none';
+            document.getElementById("locationTolabel").style.display = 'none';
+            document.getElementById("locationTofield").style.display = 'none';
+        }
+        else if (level == 3) {
+
+
+       
+            document.getElementById("regionFromlabel").style.display = 'none';
+            document.getElementById("regionFromfield").style.display = 'none';
+            document.getElementById("regionTolabel").style.display = 'none';
+            document.getElementById("regionTofield").style.display = 'none';
+            document.getElementById("locationFromlabel").style.display = 'none';
+            document.getElementById("locationFromfield").style.display = 'none';
+            document.getElementById("locationTolabel").style.display = 'none';
+            document.getElementById("locationTofield").style.display = 'none';
+        }
+
+
+    }
+    function TypeLocationclick(ths) {
+        if (ths.value == "0") {
+            document.getElementById("Levellabel").style.display = 'inline';
+            document.getElementById("Levelfield").style.display = 'inline';
+     
+            document.getElementById("regionFromlabel").style.display = 'inline';
+            document.getElementById("regionFromfield").style.display = 'inline';
+            document.getElementById("regionTolabel").style.display = 'inline';
+            document.getElementById("regionTofield").style.display = 'inline';
+            document.getElementById("locationFromlabel").style.display = 'inline';
+            document.getElementById("locationFromfield").style.display = 'inline';
+            document.getElementById("locationTolabel").style.display = 'inline';
+            document.getElementById("locationTofield").style.display = 'inline';
+
+            document.getElementById("SAPLocationlabel").style.display = "none";
+            document.getElementById("SAPLocationfield").style.display = "none";
+        }
+        else {
+            document.getElementById("Levellabel").style.display = 'none';
+            document.getElementById("Levelfield").style.display = 'none';
+      
+            document.getElementById("regionFromlabel").style.display = 'none';
+            document.getElementById("regionFromfield").style.display = 'none';
+            document.getElementById("regionTolabel").style.display = 'none';
+            document.getElementById("regionTofield").style.display = 'none';
+            document.getElementById("locationFromlabel").style.display = 'none';
+            document.getElementById("locationFromfield").style.display = 'none';
+            document.getElementById("locationTolabel").style.display = 'none';
+            document.getElementById("locationTofield").style.display = 'none';
+
+
+            document.getElementById("SAPLocationlabel").style.display = "inline";
+            document.getElementById("SAPLocationfield").style.display = "inline";
+        }
+    }
+
+
+</script>
+<fieldset>
+    @using (Html.BeginForm("List", "LibraryAgeStatements"))
+    {   
+         <div class="search">
+          <div class="search-label">
+                <label>
+                    
+                    @Resources.Report.InventoryAge.InventoryAge_TypeLocation
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.RadioButton("TypeLocation", 0, TempData["InventoryAgeSearchModel"] != null ? (((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).TypeLocation == "0" ? true : false) : false, new { onclick = "TypeLocationclick(this)" })@Resources.EXT.PageLan.MesLocation
+                @Html.RadioButton("TypeLocation", 1, TempData["InventoryAgeSearchModel"] != null ? (((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).TypeLocation == "1" ? true : false) : false, new { onclick = "TypeLocationclick(this)" })@Resources.EXT.PageLan.SAPLocation
+            </div>
+              @{
+           if (((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).TypeLocation == "1")
+           {  
+                <div class="search-label" id="SAPLocationlabel">
+                    <label>
+                     @Resources.Report.InventoryAge.InventoryAge_SAPLocation
+                       
+                    </label>
+                </div>
+                <div class="search-field" id="SAPLocationfield">
+                    @{
+                Html.RenderAction("_SAPLocationComboBox", "Common", new
+                {
+
+                    controlName = "SAPLocation",
+                    isChange = false,
+                    selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).SAPLocation : string.Empty
+                });
+                    
+                    }
+                </div>
+           }
+           else
+           {
+                <div class="search-label" style="display:none" id="SAPLocationlabel">
+                    <label>
+                       @Resources.Report.InventoryAge.InventoryAge_SAPLocation
+                    </label>
+                </div>
+                <div class="search-field"  style="display:none"  id="SAPLocationfield">
+                    @{
+                  Html.RenderAction("_SAPLocationComboBox", "Common", new
+                  {
+
+                      controlName = "SAPLocation",
+                      isChange = false,
+                      selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).SAPLocation : string.Empty
+                  });
+                    
+                    }
+                </div>
+        
+           }
+          
+            }
+            @{
+           if (((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).TypeLocation == "1")
+           {  
+                <div class="search-label" id="Levellabel" style="display:none">
+                 
+                </div>
+                <div class="search-field" id="Levelfield"  style="display:none">
+
+                </div>
+           }
+           else
+           {
+                <div class="search-label" id="Levellabel">
+                 
+                </div>
+                <div class="search-field" id="Levelfield">
+
+                </div>
+           }
+          }
+
+          
+            
+              @{
+           if (((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).TypeLocation == "0" && (TempData["Display"] == null || (string)TempData["Display"] == "1" || (string)TempData["Display"] == "0"))
+           {      
+        <div class="search-label" id="regionFromlabel" >
+            <label>
+                @Resources.Report.InventoryAge.InventoryAge_regionFrom
+            </label>
+        </div>
+        <div  class="search-field" id="regionFromfield">
+             @{
+           Html.RenderAction("_RegionComboBox", "Common",
+               new
+               {
+                   controlName = "regionFrom",
+                   selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).regionFrom : string.Empty
+               });
+                }
+        </div>
+        
+        <div class="search-label" id="regionTolabel">
+            <label>
+               @Resources.Report.InventoryAge.InventoryAge_regionTo
+            </label>
+        </div>
+        <div  class="search-field" id="regionTofield">
+            @{
+          Html.RenderAction("_RegionComboBox", "Common",
+                        new
+                        {
+                            controlName = "regionTo",
+                            selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).regionTo : string.Empty
+                        });
+            }
+        </div>
+           }
+           else
+           {
+            <div class="search-label" id="regionFromlabel" style="display:none" >
+            <label>
+                 @Resources.Report.InventoryAge.InventoryAge_regionFrom
+            </label>
+        </div>
+        <div  class="search-field" id="regionFromfield" style="display:none">
+             @{
+            Html.RenderAction("_RegionComboBox", "Common",
+                new
+                {
+                    controlName = "regionFrom",
+                    selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).regionFrom : string.Empty
+                });
+                }
+        </div>
+        
+        <div class="search-label" id="regionTolabel" style="display:none">
+            <label>
+                  @Resources.Report.InventoryAge.InventoryAge_regionTo
+            </label>
+        </div>
+        <div  class="search-field" id="regionTofield" style="display:none">
+            @{
+             Html.RenderAction("_RegionComboBox", "Common",
+                           new
+                           {
+                               controlName = "regionTo",
+                               selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).regionTo : string.Empty
+                           });
+            }
+        </div>
+            
+            
+           }
+    }
+     @{
+           if (((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).TypeLocation == "0" && (TempData["Display"] == null || (string)TempData["Display"] == "0"))
+           {  
+       
+            <div class="search-label" id="locationFromlabel">
+                <label>
+                    @Resources.Report.InventoryAge.InventoryAge_locationFrom
+                </label>
+            </div>
+            <div class="search-field" id="locationFromfield">
+                @{
+               Html.RenderAction("_LocationComboBox", "Common", new
+               {
+                   controlName = "locationFrom",
+                   selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).locationFrom : string.Empty
+
+               });
+                }
+            </div>
+            <div class="search-label" id="locationTolabel">
+                <label for="Hu_HuId">
+                    @Resources.Report.InventoryAge.InventoryAge_locationTo
+                </label>
+            </div>
+            <div class="search-field" id="locationTofield">
+                @{
+               Html.RenderAction("_LocationComboBox", "Common", new
+               {
+                   controlName = "locationTo",
+
+                   selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).locationTo : string.Empty
+
+               });
+                }
+            </div>
+           }
+           else
+           {
+             <div class="search-label" id="locationFromlabel" style="display:none">
+                <label>
+                   @Resources.Report.InventoryAge.InventoryAge_locationFrom
+                </label>
+            </div>
+            <div class="search-field" id="locationFromfield" style="display:none">
+                @{
+              Html.RenderAction("_LocationComboBox", "Common", new
+              {
+                  controlName = "locationFrom",
+                  selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).locationFrom : string.Empty
+
+              });
+                }
+            </div>
+            <div class="search-label" id="locationTolabel" style="display:none">
+                <label >
+                    @Resources.Report.InventoryAge.InventoryAge_locationTo
+                </label>
+            </div>
+            <div class="search-field" id="locationTofield" style="display:none">
+                @{
+               Html.RenderAction("_LocationComboBox", "Common", new
+               {
+                   controlName = "locationTo",
+
+                   selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).locationTo : string.Empty
+
+               });
+                }
+            </div>
+           }
+    }
+            <div class="search-label">
+                <label for="Hu_HuId">
+                     @Resources.Report.InventoryAge.InventoryAge_itemFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                Html.RenderAction("_ItemComboBox", "Common",
+                    new
+                    {
+                        controlName = "itemFrom",
+                        selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).itemFrom : string.Empty
+                    });
+                    
+                }
+            </div>
+            <div class="search-label">
+                <label for="Hu_HuId">
+                    @Resources.Report.InventoryAge.InventoryAge_ItemTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+               Html.RenderAction("_ItemComboBox", "Common",
+                   new
+                   {
+                       controlName = "itemTo",
+                       selectedValue = TempData["InventoryAgeSearchModel"] != null ? ((InventoryAgeSearchModel)TempData["InventoryAgeSearchModel"]).itemTo : string.Empty
+                   });
+                    
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                     @Resources.Report.InventoryAge.InventoryAge_Day
+                </label>
+            </div>
+            <div >
+                <table>
+                    <tr>
+                        <td>
+                            <input id="Range1" name="Range1" type="text" onblur="txtBlur(this)" style="width: 50px"  value='@ViewBag.Range1'/>
+                        </td>
+                        <td>
+                            <input id="Range2" name="Range2" type="text" onblur="txtBlur(this)" style="width: 50px" value="@ViewBag.Range2" />
+                        </td>
+                        <td>
+                            <input id="Range3" name="Range3" type="text" onblur="txtBlur(this)" style="width: 50px" value="@ViewBag.Range3" />
+                        </td>
+                        <td>
+                            <input id="Range4" name="Range4" type="text" onblur="txtBlur(this)" style="width: 50px"  value="@ViewBag.Range4"/>
+                        </td>
+                        <td>
+                            <input id="Range5" name="Range5" type="text" onblur="txtBlur(this)" style="width: 50px" value="@ViewBag.Range5" />
+                        </td>
+                        <td>
+                            <input id="Range6" name="Range6" type="text" onblur="txtBlur(this)" style="width: 50px" value="@ViewBag.Range6" />
+                        </td>
+                        <td>
+                            <input id="Range7" name="Range7" type="text" onblur="txtBlur(this)" style="width: 50px" value="@ViewBag.Range7" />
+                        </td>
+                        <td>
+                            <input id="Range8" name="Range8" type="text" onblur="txtBlur(this)" style="width: 50px" value="@ViewBag.Range8" />
+                        </td>
+                        <td>
+                            <input id="Range9" name="Range9" type="text" onblur="txtBlur(this)" style="width: 50px"  value="@ViewBag.Range9" />
+                        </td>
+                        <td>
+                            <input id="Range10" name="Range10" type="text" onblur="txtBlur(this)" style="width: 50px" value="@ViewBag.Range10" />
+                        </td>
+                        <td>
+                            <input id="Range11" name="Range11" type="text" onblur="txtBlur(this)" style="width: 50px" value="@ViewBag.Range11" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        <button type="submit" id="btnExport">
+                @Resources.SYS.Global.Button_Export</button>
+
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+        
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+        
+        if (t == "") {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/LibraryAgeStatements/Export/");
+        $('form').submit();
+    });
+</script>

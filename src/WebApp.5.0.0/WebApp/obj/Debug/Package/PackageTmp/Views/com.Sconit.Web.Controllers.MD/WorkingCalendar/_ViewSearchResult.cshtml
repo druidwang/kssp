@@ -1,0 +1,41 @@
+﻿@model IList<com.Sconit.Entity.VIEW.WorkingCalendarView>
+<fieldset>
+
+    <script type="text/javascript">
+        function WorkingCalendarGridView_OnDataBinding(e) {
+            e.data = {
+                Region: $('#Region').val(),
+                shiftDetail_StartTime: $('#shiftDetail_StartTime').val(),
+                shiftDetail_EndTime: $('#shiftDetail_EndTime').val()
+
+            };
+        }
+        function onDataBound(e) {
+            $("#GridPlan").tuiTableRowSpan("0,1");
+        }
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("WorkingCalendarViewGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Date);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Date).Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.DayOfWeek);
+            columns.Bound(o => o.DateFrom);
+            columns.Bound(o => o.DateTo);
+            columns.Bound(o => o.ShiftCode);
+            columns.Bound(o => o.ShiftName);
+            columns.Bound(o => o.Type);
+        })
+              .Footer(false)
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .ClientEvents(events => events.OnDataBinding("WorkingCalendarGridView_OnDataBinding").OnDataBound("onDataBound"))
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>
+

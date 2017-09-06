@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.TMS.TransportOrderMaster, com.Sconit.Entity" table="TMS_OrderMstr" lazy="false">
+		<id name="OrderNo" column="OrderNo" type="String" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<version name="Version" column="Version" type="Int32" />	
+		<property name="ExternalOrderNo" column="ExtOrderNo" type="String" length="50"/>	
+		<property name="ReferenceOrderNo" column="RefOrderNo" type="String" length="50"/>	
+		<property name="Flow" column="Flow" type="String" length="50"/>	
+		<property name="FlowDescription" column="FlowDesc" type="String" length="255"/>	
+		<property name="Status" column="Status" />	
+		<property name="Carrier" column="Carrier" type="String" length="50"/>	
+		<property name="CarrierName" column="CarrierNm" type="String" length="255"/>	
+		<property name="Vehicle" column="Vehicle" type="String" length="50"/>	
+		<property name="Tonnage" column="Tonnage" type="String" length="50"/>	
+		<property name="DrivingNo" column="DrivingNo" type="String" length="50"/>	
+		<property name="Driver" column="Driver" type="String" length="50"/>
+        <property name="DriverMobilePhone" column="DriverMobilePhone" type="String" length="50"/>
+        <property name="LoadVolume" column="LoadVolume" type="Decimal"/>	
+		<property name="LoadWeight" column="LoadWeight" type="Decimal"/>	
+		<property name="MinLoadRate" column="MinLoadRate" type="Decimal"/>	
+		<property name="IsAutoRelease" column="IsAutoRelease" type="Boolean"/>
+        <property name="IsAutoStart" column="IsAutoStart" type="Boolean"/>
+        <property name="MultiSitePick" column="MultiSitePick" type="Boolean"/>	
+		<property name="ShipFrom" column="ShipFrom" type="String" length="50"/>	
+		<property name="ShipFromAddress" column="ShipFromAddr" type="String" length="255"/>	
+		<property name="ShipTo" column="ShipTo" type="String" length="50"/>	
+		<property name="ShipToAddress" column="ShipToAddr" type="String" length="255"/>	
+		<property name="TransportMode" column="TransMode" />	
+		<property name="PriceList" column="PriceList" type="String" length="50"/>	
+		<property name="BillAddress" column="BillAddr" type="String" length="50"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="SubmitDate" column="SubmitDate" type="DateTime"/>	
+		<property name="SubmitUserId" column="SubmitUser" type="Int32"/>	
+		<property name="SubmitUserName" column="SubmitUserNm" type="String" length="100"/>	
+		<property name="StartDate" column="StartDate" type="DateTime"/>	
+		<property name="StartUserId" column="StartUser" type="Int32"/>	
+		<property name="StartUserName" column="StartUserNm" type="String" length="100"/>	
+		<property name="CloseDate" column="CloseDate" type="DateTime"/>	
+		<property name="CloseUserName" column="CloseUserNm" type="String" length="100"/>	
+		<property name="CloseUserId" column="CloseUser" type="Int32"/>	
+		<property name="CancelDate" column="CancelDate" type="DateTime"/>	
+		<property name="CancelUserId" column="CancelUser" type="Int32"/>	
+		<property name="CancelUserName" column="CancelUserNm" type="String" length="100"/>
+        <property name="LicenseNo" column="LicenseNo" type="String" length="50"/>
+        <property name="CurrentArriveSiteId" column="CurrArriveSiteId" type="Int32"/>
+        <property name="CurrentArriveShipAddress" column="CurrArriveShipAddr" type="String" length="50"/>
+        <property name="CurrentArriveShipAddressDescription" column="CurrArriveShipAddrDesc" type="String" length="255"/>
+		<property name="IsValuated" column="IsValuated" type="Boolean"/>
+		<property name="Expense" column="Expense" type="String" length="50"/>
+		<property name="PricingMethod" column="PricingMethod" />
+    </class>
+</hibernate-mapping>

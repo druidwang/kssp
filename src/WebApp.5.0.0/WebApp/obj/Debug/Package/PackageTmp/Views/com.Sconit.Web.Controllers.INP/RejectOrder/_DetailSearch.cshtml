@@ -1,0 +1,158 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INP
+@using com.Sconit.Entity.SYS
+<fieldset>
+    @using (Html.BeginForm("DetailList", "RejectOrder"))
+    {   
+        <div class="editor">
+          <div class="search-label">
+                <label for="InspectMaster_InspectNo">
+                    @Resources.INP.RejectMaster.RejectMaster_RejectNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("RejectNo", TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).RejectNo : string.Empty)
+
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_Status">
+                    @Resources.INP.RejectMaster.RejectMaster_Status
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.RejectStatus,
+                        controlName = "Status",
+                        includeBlankOption = true,
+                        blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+                        blankOptionValue = "",
+                        selectedValue = TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).Status : null
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_InspectNo">
+                    @Resources.INP.RejectMaster.RejectMaster_HandleResult
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.HandleResult,
+            controlName = "HandleResult",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).HandleResult : null
+        });
+                }
+            </div>
+            
+            <div class="search-label">
+                    <label for="InspectResult_IpNo">
+                        @Resources.INP.RejectDetail.RejectDetail_CurrentLocation
+                    </label>
+                </div>
+                <div class="search-field">
+                   @{
+                        Html.RenderAction("_LocationComboBox", "Common", new
+                       {
+                           controlName = "CurrentLocation",
+                           selectedValue = TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).CurrentLocation : string.Empty
+
+                       });
+                }
+                </div>
+
+            <div class="search-label">
+                    <label for="InspectResult_InpNo">
+                        @Resources.INP.RejectDetail.RejectDetail_InpNo
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("InspectNo", TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).InspectNo : string.Empty)
+                </div>
+                <div class="search-label">
+                    <label for="InspectResult_IpNo">
+                        @Resources.INP.RejectDetail.RejectDetail_IpNo
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("IpNo", TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).IpNo : string.Empty)
+                </div>
+                <div class="search-label">
+                    <label for="InspectResult_IpNo">
+                        @Resources.INP.RejectDetail.RejectDetail_ReceiptNo
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.TextBox("ReceiptNo", TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).ReceiptNo : string.Empty)
+                </div>
+           <div class="search-label">
+                    <label for="InspectResult_Item">
+                        @Resources.INP.RejectDetail.RejectDetail_Item
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+            Html.RenderAction("_ItemComboBox", "Common", new
+            {
+                controlName = "Item",
+                selectedValue = TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).Item : string.Empty
+            });
+                    }
+                </div>
+                
+                 <div class="search-label">
+                    <label for="RejectDetail_JudgeUserName">
+                        @Resources.INP.RejectDetail.RejectDetail_JudgeUserName
+                    </label>
+                </div>
+                <div class="search-field">
+                     @Html.TextBox("JudgeUserName", TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).JudgeUserName : string.Empty)
+                </div>
+
+               <div class="search-label">
+                <label for="InspectMaster_InspectNo">
+                    @Resources.INP.RejectDetail.RejectDetail_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).CreateUserName : string.Empty)
+            </div>
+               
+                
+                 <div class="search-label">
+                <label for="InspectMaster_StartDate">
+                    @Resources.INP.InspectMaster.InspectMaster_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                   @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("StartDate")
+.Value(TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                  .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_EndDate">
+                    @Resources.INP.InspectMaster.InspectMaster_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                  @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("EndDate")
+.Value(TempData["RejectDetailSearchModel"] != null ? ((RejectDetailSearchModel)TempData["RejectDetailSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                 .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            
+
+                
+            </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

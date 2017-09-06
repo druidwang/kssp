@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.MD.Uom, com.Sconit.Entity" table="MD_Uom" lazy="false">
+		<id name="Code" column="Code" type="String" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<property name="Description" column="Desc1" type="String" length="20" />	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />	
+		<property name="Sequence" column="Sequence" type="Int32"  />	
+  	</class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.INP.ConcessionDetail>
+<fieldset>
+    <legend>@Resources.INP.ConcessionDetail.ConcessionDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+                .Name("ConcessionDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.Qty);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+</fieldset>

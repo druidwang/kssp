@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.INV.LocationTransactionDetail, com.Sconit.Entity" table="VIEW_LocTransDet" lazy="false">
+        <id name="Id" column="Id" type="Int64" unsaved-value="0" >
+            <generator class="identity" />
+        </id>
+        <property name="LocationTransactionId" column="LocTransId" type="Int64"/>
+        <property name="OrderNo" column="OrderNo" type="String" length="50"/>
+        <property name="OrderType" column="OrderType"/>
+        <property name="OrderSubType" column="OrderSubType"/>
+        <property name="OrderDetailSequence" column="OrderDetSeq" type="Int32"/>
+        <property name="OrderDetailId" column="OrderDetId" type="Int32"/>
+        <property name="OrderBomDetailId" column="OrderBomDetId" type="Int32"/>
+        <property name="OrderBomDetailSequence" column="OrderBomDetSeq" type="Int32"/>
+        <property name="IpNo" column="IpNo" type="String" length="50"/>
+        <property name="IpDetailId" column="IpDetId" type="Int32"/>
+        <property name="IpDetailSequence" column="IpDetSeq" type="Int32"/>
+        <property name="ReceiptNo" column="RecNo" type="String" length="50"/>
+        <property name="ReceiptDetailId" column="RecDetId" type="Int32"/>
+        <property name="ReceiptDetailSequence" column="RecDetSeq" type="Int32"/>
+        <property name="SequenceNo" column="SeqNo" type="String" length="50"/>
+        <property name="BillTransactionId" column="BillTransId" type="Int32"/>
+        <property name="LocationLotDetailId" column="LocLotDetId" type="Int32"/>
+        <property name="TraceCode" column="TraceCode" type="String" length="50"/>
+        <property name="Item" column="Item" type="String" length="50"/>
+        <!--<property name="Uom" column="Uom" type="String" length="5"/>-->
+        <property name="Qty" column="Qty" type="Decimal"/>
+        <property name="IsConsignment" column="IsCS" type="Boolean"/>
+        <property name="PlanBill" column="PlanBill" type="Int32"/>
+        <property name="PlanBillQty" column="PlanBillQty" type="Decimal"/>
+        <property name="ActingBill" column="ActBill" type="Int32"/>
+        <property name="ActingBillQty" column="ActBillQty" type="Decimal"/>
+        <property name="QualityType" column="QualityType"/>
+        <property name="HuId" column="HuId" type="String" length="50"/>
+        <property name="LotNo" column="LotNo" type="String" length="50"/>
+        <property name="TransactionType" column="TransType"/>
+        <property name="IOType" column="IOType"/>
+        <property name="PartyFrom" column="PartyFrom" type="String" length="50"/>
+        <property name="PartyTo" column="PartyTo" type="String" length="50"/>
+        <property name="LocationFrom" column="LocFrom" type="String" length="50"/>
+        <property name="LocationTo" column="LocTo" type="String" length="50"/>
+        <property name="Bin" column="Bin" type="String" length="50"/>
+        <property name="PlanBackflushId" column="PlanBackflushId" type="Int32"/>
+        <property name="LocationIOReason" column="LocIOReason" type="String" length="50"/>
+        <property name="EffectiveDate" column="EffDate" type="DateTime"/>
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+        <sql-insert>
+          exec USP_Split_LocTransDet_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+        </sql-insert>
+        <sql-update>
+          exec USP_Split_LocTransDet_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+        </sql-update>
+        <sql-delete>
+          exec USP_Split_LocTransDet_Delete ?,?
+        </sql-delete>
+    </class>
+</hibernate-mapping>

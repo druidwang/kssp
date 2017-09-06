@@ -1,0 +1,165 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.ORD.IpMaster
+<script type="text/javascript">
+    function onSubmit(e) {
+        var grid = $("#OrderDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var idStr = "";
+        var qtyStr = "";
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var id = row.find("#Id").val();
+            var qty = row.find("#CurrentPickQty").val();
+            if (id != undefined && id != null && id != "") {
+                if (qty > 0) {
+                    if (idStr == "") {
+                        idStr = id;
+                        qtyStr = qty;
+                    } else {
+                        idStr += "," + id;
+                        qtyStr += "," + qty;
+                    }
+                }
+            }
+        }
+        var data = {
+            "idStr": idStr,
+            "qtyStr": qtyStr
+        }
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            data: data,
+            url: "/PickList/CreatePickList/",
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>
+@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PickList_New" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.ORD.OrderMaster.OrderMaster_BaseInfo</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.IpMaster.IpMaster_PartyFrom
+                </label>
+                @Html.Hidden("CheckedOrders", (string)ViewBag.CheckOrders)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyFrom)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyTo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyTo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyFromName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyFromName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyToName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyToName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFrom)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_AddressComboBox", "Common",
+        new
+        {
+            controlName = "ShipFrom",
+            type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+            selectedValue = Model.ShipFrom,
+
+            enable = false
+
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipTo)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_AddressComboBox", "Common",
+        new
+        {
+            controlName = "ShipTo",
+            type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+            selectedValue = Model.ShipTo,
+
+            enable = false
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromContact)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromContact)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToContact)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipToContact)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromTel)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromTel)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToTel)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipToTel)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Dock)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Dock)
+            </div>
+        </div>
+    </fieldset>
+    <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Create, "Url_PickList_New", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnCreatePickList"},
+                {"needconfirm","true"},
+                {"onclick","onSubmit()"}
+	        })
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/PickList/New")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+
+    <div id="divOrderDetailList">
+        @{
+    Html.RenderAction("_NewOrderDetailList", "PickList");
+        }
+    </div>
+}

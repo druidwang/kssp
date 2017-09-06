@@ -1,0 +1,60 @@
+﻿@model IEnumerable<com.Sconit.Entity.FMS.FacilityMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("FacilityMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.FCID);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.FCID).ClientTemplate(Html.ActionLink("<#= FCID #>", "Edit", "FacilityMaster", new { ID = "<#= FCID #>" }, null).ToString());
+            columns.Bound(o => o.Name);
+            columns.Bound(o => o.Category);
+            columns.Bound(o => o.AssetNo);
+            columns.Bound(o => o.MaintainGroup);
+          
+            columns.Bound(o => o.CurrChargePersonName);
+            columns.Bound(o => o.ChargeSite);
+            columns.Bound(o => o.ChargeOrganization);
+            columns.Bound(o => o.EffDate);
+            columns.Bound(o => o.FacilityStatusDescription);
+            columns.Bound(o => o.RefenceCode);
+            columns.Bound(o => o.Supplier);
+            columns.Bound(o => o.OwnerDescription);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+        })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "FacilityMaster"))
+                .ClientEvents(events => events.OnDataBinding("FacilityMasterGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function FacilityMasterGrid_OnDataBinding(e) {
+            e.data = {
+                FCID: $('#Code').val(),
+                Name: $('#Name').val(),
+                Status: $('#Status').val(),
+                Category: $('#Category').val(),
+                AssetNo: $('#AssetNo').val(),
+                ChargePerson: $('#ChargePerson').val(),
+                ChargeSite: $('#ChargeSite').val(),
+                ChargeOrganization: $('#ChargeOrganization').val(),
+                RefenceCode: $('#RefenceCode').val(),
+                MaintainGroup: $('#MaintainGroup').val()
+            };
+        } 
+    </script>
+</fieldset>

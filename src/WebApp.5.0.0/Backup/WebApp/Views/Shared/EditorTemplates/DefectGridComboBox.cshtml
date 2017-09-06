@@ -1,0 +1,6 @@
+﻿@(Html.Telerik().ComboBox()
+      .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(""))
+              .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingDefect", "Common").Cache(true))
+      .AutoFill(true)
+      .HighlightFirstMatch(true)
+      )

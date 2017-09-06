@@ -1,0 +1,283 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.ORD.SequenceMaster
+ @{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SequenceOrder_View" });
+}
+
+<script type="text/javascript">
+    function ShipFrom_DataBinding(e) {
+        e.data = {
+            party: $("#PartyFrom").val()
+        };
+    }
+   
+
+    function ShipTo_DataBinding(e) {
+        e.data = {
+            party: $("#PartyTo").val()
+        };
+    }
+
+    function LocationTo_DataBinding(e) {
+        e.data = {
+            region: $("#PartyTo").val()
+        };
+    }
+
+    function LocationFrom_DataBinding(e) {
+        e.data = {
+            region: $("#PartyFrom").val()
+        };
+    }
+
+    function BillAddress_DataBinding(e) {
+        e.data = {
+            party: $("#PartyFrom").val()
+        };
+    }
+
+    function PriceList_DataBinding(e) {
+        e.data = {
+            party: $("#PartyFrom").val()
+        };
+    }
+</script>
+@using (Html.BeginForm())
+{
+    
+    <div id="divMore" style="display: none">
+        <fieldset>
+            <legend>@Resources.ORD.SequenceMaster.SequenceMaster_Title_Audit</legend>
+            <div class="editor">
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CreateUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CreateUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CreateDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CreateDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.LastModifyUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.LastModifyUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.LastModifyDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.LastModifyDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.PackUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.PackUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.PackDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.PackDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.ShipUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.ShipUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.ShipDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.ShipDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CancelUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CancelUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CancelDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CancelDate)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CloseUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CloseUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CloseDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CloseDate)
+                </div>
+            </div>
+        </fieldset>
+      
+        <fieldset>
+            <legend>@Resources.ORD.SequenceMaster.SequenceMaster_PrintOption</legend>
+            <div class="editor">
+              
+             
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IsPrintAsn)
+                </div>
+                <div class="editor-field-2">
+          
+                        @Html.CheckBoxFor(model => model.IsPrintAsn, new { disabled = true })
+              
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.AsnTemplate)
+                </div>
+                <div class="editor-field-2">
+                    @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common",
+        new { code = com.Sconit.CodeMaster.CodeMaster.AsnTemplate, controlName = "AsnTemplate", selectedValue = Model.AsnTemplate, enable = false });
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IsPrintReceipt)
+                </div>
+                <div class="editor-field-2">
+                    @{
+           
+                        @Html.CheckBoxFor(model => model.IsPrintReceipt, new { disabled = true })
+             
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.ReceiptTemplate)
+                </div>
+                <div class="editor-field-2">
+                    @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common",
+        new { code = com.Sconit.CodeMaster.CodeMaster.ReceiptTemplate, controlName = "ReceiptTemplate", selectedValue = Model.ReceiptTemplate, enable = false });
+                    }
+                </div>
+            </div>
+        </fieldset>
+       
+        <fieldset>
+            <legend>@Resources.ORD.SequenceMaster.SequenceMaster_AutomaticControl</legend>
+            <div class="editor">
+   
+                <div class="editor-label-3">
+                    @Html.LabelFor(model => model.IsAutoReceive)
+                </div>
+                <div class="editor-field-3">
+                    @{
+         
+                        @Html.CheckBoxFor(model => model.IsAutoReceive, new { disabled = true })
+          
+                    }
+                </div>
+            
+            </div>
+        </fieldset>
+    </div>
+    <div>
+        <a type="text/html" onclick="More()" href="#" id="more">More...</a>
+    </div>
+    
+    <div class="editor-footer">
+         @Html.Button(Resources.SYS.Global.Button_Print, "Url_SequenceOrder_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnPrint"},
+        {"needconfirm","true"},
+        {"onclick","Print()"}
+	})
+        @{if (Model.Status == com.Sconit.CodeMaster.SequenceStatus.Submit || Model.Status == com.Sconit.CodeMaster.SequenceStatus.Submit)
+          {
+       
+        @Html.Button(Resources.SYS.Global.Button_Ship, "Url_SequenceOrder_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnShip"},
+        {"needconfirm","true"},
+        {"onclick","ShipSequenceOrderBySupplier()"}
+	})
+          }
+}
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SequenceMaster/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>  
+}
+@{
+    Html.RenderAction("_SequenceDetailList", "SequenceMaster", new { SequenceNo = ViewBag.SequenceNo });
+}
+<script type="text/javascript" language="javascript">
+    function Export(e) {
+        window.open("/SequenceMaster/SaveToClient/?SequenceNo=" + $("#SequenceNo").val());
+    }
+
+    function Print(e) {
+        var data = {
+            "SequenceNo": $("#SequenceNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/SequenceMaster/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function ShipSequenceOrderBySupplier() {
+        data = {
+            SequenceNo: $('#SequenceNo').val()
+        }
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/SequenceMaster/ShipSequenceOrderBySupplier/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    var successesul = data.SuccessMessage;
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        data: { IpNo: data.IpNo },
+                        url: "/SupplierIpMaster/_Edit/",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+
+                    });
+                    $message.success(successesul);
+                   
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>

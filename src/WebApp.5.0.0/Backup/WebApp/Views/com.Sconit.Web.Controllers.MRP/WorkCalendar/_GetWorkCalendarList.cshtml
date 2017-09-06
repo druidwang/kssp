@@ -1,0 +1,76 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.MD.WorkCalendar>
+<script type="text/javascript">
+    function WorkCalendarGrid_OnDataBinding(e) {
+        e.data = {
+            "DateIndexTo": $('#DateIndexTo').val(),
+            "DateType": $('#DateType').val(),
+            "DateIndex": $('#DateIndex').val(),
+            "DateIndexDate": $('#DateIndexDate').val(),
+            "DateIndexToDate": $('#DateIndexToDate').val(),
+            "ProductLine": $('#ProductLine').val(),
+
+        }
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("WorkCalendarGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.DateIndex);
+            keys.Add(p => p.Flow);
+            keys.Add(p => p.DateType);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InLine))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ResourceGroup).Hidden();
+            columns.Bound(o => o.DateIndex).Hidden();
+            columns.Bound(o => o.Flow).Hidden();
+            columns.Bound(o => o.DateType).Hidden();
+            columns.Bound(o => o.Flow).ReadOnly(true);
+            columns.Bound(o => o.DateIndex).ReadOnly(true);
+            columns.Bound(o => o.DateTypeDescription).ReadOnly(true);
+            columns.Bound(o => o.UpTime).ReadOnly(true);
+            columns.Bound(o => o.TrialTime).Width(150);
+            columns.Bound(o => o.HaltTime).Width(150);
+            columns.Bound(o => o.Holiday).Width(150);
+
+            columns.Command(commands =>
+            {
+                commands.Edit();
+            }).Width(150);
+        })
+        .DataBinding(dataBinding =>
+        {
+            dataBinding.Ajax()
+                .Update("_Update", "WorkCalendar", new
+                {
+                    NDateIndexTo = ViewBag.DateIndexTo,
+                    NDateType = ViewBag.DateType,
+                    NDateIndex = ViewBag.DateIndex,
+                    NDateIndexDate = ViewBag.DateIndexDate,
+                    NDateIndexToDate = ViewBag.DateIndexToDate,
+                    NProductLine = ViewBag.ProductLine,
+                })
+                .Select("_AjaxList", "WorkCalendar", new
+                {
+                    DateIndexTo = ViewBag.DateIndexTo,
+                    DateType = ViewBag.DateType,
+                    DateIndex = ViewBag.DateIndex,
+                    DateIndexDate = ViewBag.DateIndexDate,
+                    DateIndexToDate = ViewBag.DateIndexToDate,
+                    ProductLine = ViewBag.ProductLine,
+                    ResourceGroup = ViewBag.ResourceGroup
+                });
+        })
+            //.ClientEvents(events => events.OnDataBinding("WorkCalendarGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+    )
+</fieldset>

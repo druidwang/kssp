@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ShipmentMaster_Release" });
+}
+<script type="text/javascript">
+
+    $(function () {
+        $("#ShipmentNo").keydown(function () {
+
+            if (event.keyCode == 13) {
+               
+                
+                var dataw = {
+                    "ShipmentNo": $(this).val()
+                }
+                var ShipmentNoTo = $(this).val();
+                var successesul;
+                if ($("#ShipmentNoId").html() == "工号") {
+                    if (confirm("确定放行吗？")) {
+                        if ($(this).val() == "") {
+                            $message.error("保安工号必填！");
+                            return;
+                        }
+
+                        var data = {
+                            "ShipmentNo": $("#ShipmentNoTo").val(),
+                            "PassPerson": $(this).val()
+                        }
+                        $.ajax({
+                            type: "post",
+                            dataType: "json",
+                            data: data,
+                            url: "/ShipmentMaster/ShipmentMasterClose/",
+                            cache: false,
+                            success: function (data, textStatus) {
+                                successesul =  data.Alter;
+                                $.ajax({
+                                    type: "post",
+                                    dataType: "html",
+                                    url: "/ShipmentMaster/ShipmentIndex/",
+                                    cache: false,
+                                    success: function (data, textStatus) {
+                                        var $tGrid = $("#content");
+                                        $($tGrid).html(data);
+                                        $($tGrid).show();
+                                        $message.success(successesul);
+                                    }
+                                });
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                var errorMessages = XMLHttpRequest.responseText;
+                                $message.error(errorMessages);
+                            }
+                        });
+
+
+                    }
+                    else {
+
+                        $.ajax({
+                            type: "post",
+                            dataType: "html",
+                            url: "/ShipmentMaster/ShipmentIndex/",
+                            cache: false,
+                            success: function (data, textStatus) {
+                                var $tGrid = $("#content");
+                                $($tGrid).html(data);
+                                $($tGrid).show();
+                            }
+                        });
+
+
+                    }
+
+
+                }
+                else {
+
+                    $.ajax({
+                        type: "post",
+                        dataType: "text",
+                        url: "/ShipmentMaster/Checkouttext/",
+                        data: dataw,
+                        success: function (data, textStatus) {
+                            if (data != "") {
+                                var errorMessages =  data ;
+                                $message.error(errorMessages);
+                                return;
+                            }
+                            $.ajax({
+                                type: "post",
+                                dataType: "html",
+                                url: "/ShipmentMaster/_ShipmentEdit/",
+                                data: dataw,
+                                cache: false,
+                                success: function (data, textStatus) {
+                                    var tabStrip = $("#divEdit");
+                                    $(tabStrip).html(data);
+                                    $("#labeltext").html("请扫描工号");
+                                    $("#ShipmentNoId").html("工号");
+                                    $("#ShipmentNoTo").val(ShipmentNoTo);
+                                }
+                            });
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            var errorMessages = XMLHttpRequest.responseText;
+                            $message.error(errorMessages);
+                            
+                        }
+                    });
+                    $(this).val("");
+                }
+
+            }
+
+        });
+
+    });
+
+</script>
+
+    <fieldset>
+        <div class="editor">
+            <div class="search-label" >
+                <label id="ShipmentNoId">
+                   @Resources.ORD.ShipmentMaster.ShipmentMaster_ShipmentNo
+                </label>
+            </div>
+            <div class="search-field" >
+                @Html.TextBox("ShipmentNo")
+               <label style="color:Red" id="labeltext"">请扫描运单号</label>
+               <input type="hidden"  id="ShipmentNoTo" name="ShipmentNoTo" value=""/> 
+            </div>
+         
+    </fieldset>
+    <div  id="divEdit">
+    
+    </div>
+
+<script type="text/javascript">
+    function onUpdateOrderBillofLadingMasterClose() {
+
+        if ($("#BillOfNoTo").val() == "") {
+            $message.error("运单号不能为空！");
+            return;
+        }
+      
+        var data = {
+            "BillOfNoTo": $("#BillOfNoTo").val()
+        }
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: "/OrderBillofLadingMaster/OrderBillofLadingMasterClose/",
+            cache: false,
+            success: function (data, textStatus) {
+                $("#BillOfNoTo").val('');
+                $("#WorkShop").val('');
+                $("#LicenseplateNo").val('');
+                $("#DeliveryPeople").val('');
+                $("#TransportCompany").val('');
+                $("#BoxNumber").val('');
+                $message.success(data.Alter);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+
+
+    }
+
+    function btnOrderBillofLadingMaster_BillOfNo() {
+
+        var data = {
+            "BillOfNo": $("#BillOfNo").val()
+        }
+     
+        $("#BillOfNo").val("");
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: "/OrderBillofLadingMaster/BillofLadingMasterFindId/",
+            cache: false,
+            success: function (data, textStatus) {
+                $("#BillOfNoTo").val(data.BillOfNo);
+                $("#WorkShop").val(data.WorkShop);
+                $("#LicenseplateNo").val(data.LicenseplateNo);
+                $("#DeliveryPeople").val(data.DeliveryPeople);
+                $("#TransportCompany").val(data.TransportCompany);
+                $("#BoxNumber").val(data.BoxNumber);
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+
+
+    }
+</script>

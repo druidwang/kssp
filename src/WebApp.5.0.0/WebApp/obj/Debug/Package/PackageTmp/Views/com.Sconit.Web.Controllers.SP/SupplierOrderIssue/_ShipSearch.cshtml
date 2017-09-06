@@ -1,0 +1,43 @@
+﻿@using com.Sconit.Entity.ORD
+@using com.Sconit.Web.Models.SearchModels.ORD
+<fieldset>
+    @using (Html.BeginForm("Ship", "SupplierOrderIssue"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Hu_Flow">
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common", new
+        {
+            controlName = "Flow",
+            isChange = false,
+            isSupplier = true,
+            type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Flow : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="">
+                    @Resources.ORD.OrderMaster.OrderMaster_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).OrderNo : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnEdit" onclick="editCheckedOrders()" style="display: none">@Resources.SYS.Global.Button_Ship</button>
+        </div>
+        
+      
+   
+    }
+</fieldset>

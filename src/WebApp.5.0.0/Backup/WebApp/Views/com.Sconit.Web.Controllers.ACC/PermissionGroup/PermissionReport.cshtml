@@ -1,0 +1,130 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PermissionReport_View" });
+}
+<script type="text/javascript">
+    function onSearch() {
+        var code = $('#RoleCode').val();
+        var div = "#fdOrderDetail";
+        if ($("input[type=radio][name=searchType]:checked").val() == 1) {
+            //if ($("#UserCode").val() == "") {
+              //  $message.error('请输入用户名!');
+                //return;
+            //}
+            var code = $('#UserCode').val();
+        }
+        var data = {
+            Code: code,
+            Depart: $('#Depart').val(),
+            Position: $('#Position').val(),
+            searchType: $("input[type=radio][name=searchType]:checked").val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/PermissionGroup/_GetPermissionReportView/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#fdPermissionReportOutPut");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+    function doClick(bl) {
+        if (bl) {
+            $("#CodeUser").show();
+            $("#CodeRole").hide();
+            $("#hideForRole").hide();
+        }
+        else {
+            $("#CodeUser").hide();
+            $("#CodeRole").show();
+            $("#hideForRole").hide();
+        }
+        $("#fdPermissionReportOutPut")
+    }
+</script>
+@using (Html.BeginForm("ExportPermissionReport", "PermissionGroup"))
+{
+    <fieldset>
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    @Html.RadioButton("searchType", 1, true, new { onclick = "doClick(true)" })<span>@Resources.ACC.User.User_User</span>
+                    @Html.RadioButton("searchType", 2, false, new { onclick = "doClick(false)" })<span>@Resources.ACC.User.User_Role</span>
+                    <span style="margin: 8px"></span>
+                </label>
+            </div>
+            <div id="CodeUser">
+                <div class="editor-field-2">
+                    @Html.TextBox("UserCode", "")
+                </div>
+            </div>
+            <div id="CodeRole" style="display: none;">
+                <div class="editor-field-2">
+                    @Html.TextBox("RoleCode", "")
+                </div>
+            </div>
+            <div id="hideForRole" style="display: none;">
+                <div class="editor-label-2">
+                    <label>
+                        @Resources.ACC.User.User_Depart
+                    </label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.TextBox("Depart", "")
+                </div>
+                <div class="editor-label-2">
+                    <label>
+                        @Resources.ACC.User.User_Position
+                    </label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.TextBox("Position", "")
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Html.Hidden("Code")
+                    </label>
+                </div>
+            </div>
+            <div class="editor-field-2">
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanMi_PlanTrace", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+            <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+        </div>
+    </fieldset>
+}
+<div id="fdPermissionReportOutPut">
+</div>
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+        var code = $('#RoleCode').val();
+        if ($("input[type=radio][name=searchType]:checked").val() == 1) {
+//            if ($("#UserCode").val() == "") {
+//                $message.error('请输入用户名!');
+//                return;
+//            }
+            code = $("#UserCode").val();
+        }
+        $("#Code").val(code);
+        $('form').submit();
+    });
+</script>
+

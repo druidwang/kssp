@@ -1,0 +1,11 @@
+﻿
+@Html.Partial("_StockTakeDetailSearch")
+@{
+    if (ViewBag.IsScanHu==true)
+    {
+@Html.Partial("_StockTakeDetailIsScanHuSearchResult")
+    }
+    else{
+    @Html.Partial("_StockTakeDetailSearchResult")
+    }
+    }

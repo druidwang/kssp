@@ -1,0 +1,39 @@
+﻿@using com.Sconit.Entity.ISI
+@using com.Sconit.Web.Models.SearchModels.TMS
+<fieldset>
+    @using (Html.BeginForm("List", "Vehicle"))
+    {
+        <div class="search">
+            <div class="search-label">
+                <label for="Code">
+                    @Resources.TMS.Vehicle.Vehicle_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["VehicleSearchModel"] != null ? ((VehicleSearchModel)TempData["VehicleSearchModel"]).Code : string.Empty)
+            </div>
+
+            <div class="search-label">
+                <label for="Description">
+                    @Resources.TMS.Vehicle.Vehicle_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["VehicleSearchModel"] != null ? ((VehicleSearchModel)TempData["VehicleSearchModel"]).Description : string.Empty)
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search
+            </button>
+            <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/Vehicle/New")'">
+                @Resources.SYS.Global.Button_New
+            </button>
+        </div>
+    }
+</fieldset>

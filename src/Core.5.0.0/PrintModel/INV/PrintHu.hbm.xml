@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.PrintModel.INV.PrintHu, com.Sconit.PrintModel" table="INV_Hu" lazy="false">
+        <id name="HuId" column="HuId" type="String" unsaved-value="null" >
+            <generator class="assigned" />
+        </id>
+        <!--<version name="Version" column="Version" type="Int32" />-->
+        <!--<property name="Type" column="Type"/>-->
+        <property name="LotNo" column="LotNo" type="String" length="50"/>
+        <property name="Item" column="Item" type="String" length="50"/>
+        <property name="ReferenceItemCode" column="RefItemCode" type="String" length="50"/>
+        <property name="Uom" column="Uom" type="String" length="5"/>
+        <property name="BaseUom" column="BaseUom" type="String" length="5"/>
+        <property name="UnitCount" column="UC" type="Decimal"/>
+        <property name="Qty" column="Qty" type="Decimal"/>
+        <property name="UnitQty" column="UnitQty" type="Decimal"/>
+        <property name="ManufactureDate" column="ManufactureDate" type="DateTime"/>
+        <property name="ManufactureParty" column="ManufactureParty" type="String" length="50"/>
+        <property name="ExpireDate" column="ExpireDate" type="DateTime"/>
+        <property name="RemindExpireDate" column="RemindExpireDate" type="DateTime"/>
+        <property name="HuTemplate" column="HuTemplate" type="String" length="50"/>
+        <property name="PrintCount" column="PrintCount" type="Int16"/>
+        <property name="ContainerDesc" column="ContainerDesc" type="String"/>
+        <property name="LocationTo" column="Locto" type="String"/>
+        <!--<property name="Bin" column="Bin" type="String" length="50"/>-->
+        <!--<property name="Status" column="Status"/>-->
+        <property name="FirstInventoryDate" column="FirstInvDate" type="DateTime" />
+        <property name="IsOdd" column="IsOdd" type="Boolean"/>
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+		<property name="Model" column="Model" type="String" length="50"/>
+		<property name="Length" column="Length" type="Double"/>
+		<property name="OldOption" column="OldOption" type="Int32"/>
+		<property name="Remark" column="Remark" type="String" length="200"/>
+		<property name="Flow" column="Flow" type="String" length="50"/>
+		<property name="Shift" column="Shift" type="String" length="50"/>
+		<property name="ItemVersion" column="ItemVersion" type="String" length="50"/>
+    </class>
+</hibernate-mapping>

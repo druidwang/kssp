@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.MD.ProdLineExInstance, com.Sconit.Entity" table="MRP_ProdLineExInstance" lazy="false" dynamic-update="true">
+    <composite-id>
+      <key-property name="ProductLine" column="ProductLine" type="String"  length="50"  />
+      <key-property name="Item" column="Item" type="String"  length="50" />
+      <key-property name="DateIndex" column="DateIndex" type="String" length="50"/>
+      <key-property name="DateType" column="DateType" />
+    </composite-id>
+    <property name="Region" column="Region" type="String"   />
+    <property name="MrpSpeed" column="MrpSpeed" type="Double"  />
+    <property name="RccpSpeed" column="RccpSpeed" type="Double"  />
+    <property name="ApsPriority" column="ApsPriority"  />
+    <!--<property name="ScrapPercent" column="ScrapPercent"  type="Double" />-->
+    <property name="Quota" column="Quota"  type="Double" />
+    <property name="SwitchTime" column="SwitchTime"  type="Double" />
+    <property name="SpeedTimes" column="SpeedTimes"  type="Int32" />
+    <property name="MinLotSize" column="MinLotSize"  type="Double" />
+    <property name="EconomicLotSize" column="EconomicLotSize"  type="Double" />
+    <property name="MaxLotSize" column="MaxLotSize"  type="Double" />
+    <property name="TurnQty" column="TurnQty"  type="Int32" />
+    <property name="Correction" column="Correction"  type="Double" />
+    
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+
+    <property name="IsRelease" column="IsRelease" type="Boolean"  />
+    <property name="IsManualCreate" column="IsManualCreate" type="Boolean"  />
+    <property name="ShiftType" column="ShiftType" />
+    <property name="ProductType" column="ProductType" type="String" length="5" />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISS.SMSStatus>
+<fieldset>
+     @(Html.Telerik().Grid(Model)
+        .Name("SMSStatusGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Issue);
+			columns.Bound(o => o.IssueLevel);
+			columns.Bound(o => o.MsgID);
+			columns.Bound(o => o.SeqID);
+			columns.Bound(o => o.DestID);
+			columns.Bound(o => o.SrcTerminalId);
+			columns.Bound(o => o.SrcTerminalType);
+			columns.Bound(o => o.Status);
+			columns.Bound(o => o.Content);
+			columns.Bound(o => o.CreateDate);
+			columns.Bound(o => o.SrcID);
+			columns.Bound(o => o.ServiceID);
+			columns.Bound(o => o.MsgFmt);
+			columns.Bound(o => o.MsgLength);
+			columns.Bound(o => o.DoneDatetime);
+			columns.Bound(o => o.SubmitDatetime);
+        })
+        
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SMSStatus"))
+        .ClientEvents(events => events.OnDataBinding("SMSStatusGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SMSStatusGrid_OnDataBinding(e) {
+            e.data = {
+                Issue: $('#Issue').val(),
+                MsgID: $('#MsgID').val(),
+				DestID: $('#DestID').val(),
+				Content: $('#Content').val(),
+                DateFrom: $('#DateFrom').val(),
+				DateTo: $('#DateTo').val()
+            };
+        } 
+    </script>
+</fieldset>

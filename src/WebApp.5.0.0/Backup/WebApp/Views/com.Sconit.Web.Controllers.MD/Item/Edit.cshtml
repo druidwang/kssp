@@ -1,0 +1,305 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.Item
+@Html.Partial("_AjaxMessage")
+<form action="/Item/Edit" method="post">
+    <fieldset>
+        <legend>@Resources.MD.Item.Item_Edit_Title</legend>
+        <div class="editor">
+            @Html.HiddenFor(model => model.Code)
+            @Html.HiddenFor(model => model.Uom)
+            @Html.HiddenFor(model => model.CreateUserName)
+            @Html.HiddenFor(model => model.CreateDate)
+            @Html.HiddenFor(model => model.LastModifyUserName)
+            @Html.HiddenFor(model => model.LastModifyDate)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReferenceCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ReferenceCode)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Uom)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_UomDropDownList", "Common", new
+                    {
+                        controlName = "DDLUom",
+                        selectedValue = Model.Uom,
+                        enable = false
+                    });
+ }
+                @Html.ValidationMessageFor(model => model.Uom)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.UnitCount)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.UnitCount).DecimalDigits(3).MinValue(0.0001M)
+                @Html.ValidationMessageFor(model => model.UnitCount)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ItemCategory)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+                    {
+                        controlName = "ItemCategory",
+                        selectedValue = Model.ItemCategory,
+                        SubCategory = 0
+                        //,
+                        //enable = true
+                    });
+ }
+                @* @Html.HiddenFor(model => model.ItemCategory)*@
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MaterialsGroup)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+                    {
+                        controlName = "MaterialsGroup",
+                        selectedValue = Model.MaterialsGroup,
+                        SubCategory = 5
+                    });
+ }
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_LocationComboBox", "Common", new
+                    {
+                        controlName = "Location",
+                        selectedValue = Model.Location
+                    });
+ }
+                @Html.ValidationMessageFor(model => model.Location)
+            </div>
+            @*<div class="editor-label-2">
+            @Html.LabelFor(model => model.Bom)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_BomComboBox", "Common", new
+                {
+                    controlName = "Bom",
+                    selectedValue = Model.Bom
+                });
+            }
+            @Html.ValidationMessageFor(model => model.Bom)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Routing)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_RoutingComboBox", "Common", new
+                {
+                    controlName = "Routing",
+                    selectedValue = Model.Routing
+                });
+            }
+            @Html.ValidationMessageFor(model => model.Routing)
+        </div>*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Warranty)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.Warranty).DecimalDigits(0).MinValue(0)
+                @Resources.MD.Item.Item_Day
+                @Html.ValidationMessageFor(model => model.Warranty)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.WarnLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.WarnLeadTime).DecimalDigits(0).MinValue(0)
+                @Resources.MD.Item.Item_Day
+                @Html.ValidationMessageFor(model => model.WarnLeadTime)
+            </div>
+            @*<div class="editor-label-2">
+            @Html.LabelFor(model => model.ItemPriority)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common",
+                    new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.ItemPriority,
+                        controlName = "ItemPriority",
+                        selectedValue = Model != null ? (int)Model.ItemPriority : 0
+                    });
+            }
+        </div>*@
+            @*<div class="editor-label-2">
+            @Html.LabelFor(model => model.Weight)
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.Weight).MinValue(0)
+            千克(KG)
+        </div>*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.WorkHour)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.WorkHour).MinValue(0)
+                分钟(MIN)
+       
+            </div>
+            @* <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsPurchase)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsPurchase)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsSales)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsSales)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsManufacture)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsManufacture)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsSubContract)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsSubContract)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsCustomerGoods)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsCustomerGoods)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.SafeStock)
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.SafeStock).MinValue(0)
+        </div>*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ScrapPercent)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.ScrapPercent).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                <label>
+                工位器具
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Container)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ContainerSize)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.ContainerSize).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ItemOption)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common",
+                        new
+                        {
+                            code = com.Sconit.CodeMaster.CodeMaster.ItemOption,
+                            controlName = "ItemOption",
+                            selectedValue = Model != null ? (int)Model.ItemOption : 0
+                        });
+ }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Division)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Division)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsVirtual)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsVirtual)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsActive)
+            </div>
+            @*<div class="editor-label-2">
+            @Html.LabelFor(model => model.IsKit)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsKit)
+        </div>*@
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_Item_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSave"},
+        {"needconfirm","true"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_Item_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDelete"},
+        {"needconfirm","true"},
+        {"onclick","location.href='"+@Url.Content("~/Item/Delete/"+@Model.Code)+"'"}
+    })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Item/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+</form>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#TabStrip .t-item:eq(0)").click(function () {
+            //window.location.reload(true);
+        });
+    });
+
+    $(document).ready(function () {
+        $("form[action$='Edit']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(response);
+            });
+            return false;
+        });
+    });
+</script>

@@ -1,0 +1,16 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+<script type="text/javascript">
+    function onLoad() { $("#Window").data("tWindow").maximize(); }
+             
+</script>
+@{ Html.Telerik().Window()
+        .Name("Window")
+         .ClientEvents(events => events.OnLoad("onLoad"))
+        .Title("打印ASN")
+        .Icon(Url.Content("~/Content/Common/Icons/favicon.png"), "favicon")
+        .LoadContentFrom("http://www.sih.cq.cn/portal/les/Delivery/ASN_print.aspx?userName=" + ViewBag.SupplierCode)
+        .Scrollable(false)
+        .Width(800)
+        .Height(600)
+        .Render();
+}

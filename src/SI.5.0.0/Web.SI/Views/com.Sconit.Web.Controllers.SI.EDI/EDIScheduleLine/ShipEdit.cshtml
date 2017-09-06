@@ -1,0 +1,140 @@
+﻿@model com.Sconit.Entity.ORD.IpMaster
+<script type="text/javascript">
+    function onShip() {
+        var flow = $("#Flow").val();
+        var startDate = $("#StartDate").val();
+        var grid = $("#OrderDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)");
+        var idStr = "";
+        var qtyStr = "";
+
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var id = row.find("#Id").val();
+
+            var qty = row.find("#CurrentShipQty").val();
+            if (qty != "" && !isNaN(qty) && parseFloat(qty) > 0) {
+                if (idStr == "") {
+                    idStr = id;
+                    qtyStr = qty;
+                } else {
+                    idStr += "," + id;
+                    qtyStr += "," + qty;
+                }
+            }
+        }
+        var data = {
+            "idStr": idStr,
+            "qtyStr": qtyStr,
+            "flow": flow,
+            "startDate": startDate
+        }
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: data,
+            url: "/ScheduleLine/ShipOrder/",
+            cache: false,
+            success: function (data, textStatus) {
+                $("#successesul").html('<li>' + data.SuccessMessage + '</li>');
+                $("#errorsul").html('');
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    data: {
+                        "flow": flow,
+                        "startDate": startDate
+                    },
+                    url: "/ScheduleLine/_ShipOrderDetailList/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tDiv = $("#divShpOrderDetail");
+                        $($tDiv).html(data);
+                    }
+                });
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = "<li>" + XMLHttpRequest.responseText + "</li>";
+                $("#successesul").html('');
+                $("#errorsul").html(errorMessages);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.ORD.OrderMaster.OrderMaster_BaseInfo</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyFromName)
+                @Html.Hidden("Flow", (string)ViewBag.Flow)
+                @Html.Hidden("StartDate", (DateTime)ViewBag.StartDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyFromName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyToName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyToName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromAddress)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromAddress)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToAddress)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipToAddress)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromContact)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromContact)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToContact)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipToContact)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromTel)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromTel)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToTel)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromTel)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Dock)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Dock)
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="editor-footer">
+        <button type="button" id="btnShip" onclick="onShip()">
+            @Resources.Global.Button_Confirm</button>
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ScheduleLine/Index")'">
+            @Resources.Global.Button_Back</button>
+    </div>
+}
+<div id="divShpOrderDetail">
+@{
+    Html.RenderAction("_ShipOrderDetailList", "ScheduleLine");
+}
+</div>

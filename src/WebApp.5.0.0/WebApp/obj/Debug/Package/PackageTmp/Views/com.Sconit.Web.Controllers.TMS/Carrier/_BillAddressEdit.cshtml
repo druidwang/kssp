@@ -1,0 +1,179 @@
+﻿@model com.Sconit.Entity.MD.PartyAddress  
+@Html.Partial("_AjaxMessage")
+
+    <fieldset>
+        <legend>@Resources.MD.Region.Region_Edit_Title </legend>
+        <div class="editor">
+
+             @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Address.Code)
+                @Html.HiddenFor(model => model.Address.AddressContent)
+                @Html.HiddenFor(model => model.Address.ContactPersonName)
+                @Html.HiddenFor(model => model.Address.Email)
+                @Html.HiddenFor(model => model.Address.MobilePhone)
+                @Html.HiddenFor(model => model.Address.TelPhone)
+                @Html.HiddenFor(model => model.Address.Fax)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.LastModifyUserName)
+                @Html.HiddenFor(model => model.LastModifyDate)
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Address.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Address.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Address.AddressContent)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Address.AddressContent)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Address.ContactPersonName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Address.ContactPersonName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Address.PostCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Address.PostCode)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Address.Email)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Address.Email)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Address.MobilePhone)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Address.MobilePhone)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Address.TelPhone)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Address.TelPhone)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Address.Fax)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Address.Fax)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Sequence)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.Sequence).DecimalDigits(0).MinValue(0)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsPrimary)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsPrimary)
+            </div>
+
+@*            <div class="editor-field-2">
+                @Resources.MD.Region.Region_IsPrimary
+                @Html.CheckBox("IsPrimary", TempData["PartyAddress"] != null ? ((PartyAddress)TempData["PartyAddress"]).IsPrimary : true)
+            </div>*@
+        </div>
+        <div class="editor-footer">
+             @Html.Button(Resources.SYS.Global.Button_Save, "Url_Carrier_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSave_BillAddress"},
+                {"needconfirm","true"},
+                {"onclick","btnSave_BillAddress_Click()"}
+	        })
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_Carrier_Delete", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnDelete_BillAddress"},
+                {"needconfirm","true"},
+                {"onclick","btnDelete_BillAddress_Click()"}
+	        })
+            <button type="button" id="btnBack_BillAddress" onclick="btnBack_BillAddress_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+
+<script language="javascript" type="text/javascript">
+    function btnDelete_BillAddress_Click() {
+        var data = {
+            "Id": $("#Id").val(),
+             "PartyCode": $("#PartyCode").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Carrier/DeleteBillAddress/",
+            data: data,
+            cache:false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+    function btnSave_BillAddress_Click() {
+        var data = {
+            "PartyCode": $("#PartyCode").val(),
+            "Id": $("#Id").val(),
+            "Address.Code": $("#Address_Code").val(),
+            "Address.AddressContent": $("#Address_AddressContent").val(),
+            "Address.PostCode": $("#Address_PostCode").val(),
+            "Address.MobilePhone": $("#Address_MobilePhone").val(),
+            "Address.TelPhone": $("#Address_TelPhone").val(),
+            "Address.ContactPersonName": $("#Address_MobilePhone").val(),
+            "Address.Email": $("#Address_Email").val(),
+            "Address.Fax": $("#Address_Fax").val(),
+            "Sequence": $("#Sequence").val(),
+            "IsPrimary": $("#IsPrimary").is(':checked')
+
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Carrier/_BillAddressEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnBack_BillAddress_Click() {
+        var data = {
+            "PartyCode": $("#PartyCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Carrier/_BillAddressList/",
+            data: "",
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>
+
+

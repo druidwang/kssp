@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.SAP.SAPPurchaseOrder, com.Sconit.Entity" table="SAP_PO" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+		<property name="PONo" column="PONo" type="String" length="50"/>	
+		<property name="Type" column="Type" type="String" length="10"/>	
+		<property name="POLineNo" column="POLineNo" type="String" length="50"/>	
+		<property name="Item" column="Item" type="String" length="50"/>	
+		<property name="ItemVersion" column="ItemVersion" type="String" length="5"/>	
+		<property name="Qty" column="Qty" type="String" length="13"/>	
+		<property name="ConsumeQty" column="ConsumeQty" type="String" length="13"/>
+    <property name="EffectiveDate" column="EffDate" type="String" length="8"/>
+		<property name="Supplier" column="Supplier" type="String" length="50"/>	
+		<property name="SAPLocTo" column="SAPLocTo" type="String" length="50"/>	
+		<property name="CKDNo" column="CKDNo" type="String" length="50"/>	
+		<property name="CKDLineNo" column="CKDLineNo" type="String" length="10"/>	
+		<property name="IsActive" column="IsActive" type="String" length="1"/>	
+		<property name="IsCompleted" column="IsCompleted" type="String" length="1"/>
+    <property name="IsGenLesOrder" column="IsGenLesOrder" type="String" length="5"/>
+    <property name="LotNo" column="LotNo" type="String" length="50"/>
+    <property name="SapCreateUser" column="SapCreateUser" type="String" length="50"/>
+    <property name="PhoneNo" column="PhoneNo" type="String" length="50"/>
+    <property name="Status" column="Status" />
+    <property name="BatchNo" column="BatchNo" type="String" length="50"/>
+    <property name="PRNo" column="PRNo" type="String" length="50"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    @(Html.Telerik().ComboBox()
+    .DropDownHtmlAttributes(new { style = "width: 200px; " })
+    .Name(name)
+    .AutoFill(true)
+    .HighlightFirstMatch(true)
+    .HiddenInputHtmlAttributes(new { id = id })
+    .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingProductionAdjustLocation", "Common"))
+    .BindTo(Model))
+  
+}

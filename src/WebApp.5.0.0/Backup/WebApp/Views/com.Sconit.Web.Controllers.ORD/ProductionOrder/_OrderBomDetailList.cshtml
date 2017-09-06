@@ -1,0 +1,266 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@using com.Sconit.Entity.SYS;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderBomDetail>
+<script type="text/javascript">
+    function OrderBomDetailGrid_OnDataBinding(e) {
+        e.data = {
+            Item: $('#ItemMaster').val(),
+            Location: $('#Location').val(),
+            Operation: $('#Operation').val(),
+            OpReference: $('#OpReference').val(),
+            OrderDetailId: $('#OrderDetailId').val()
+        }
+    }
+
+    function onLocationDataBinding(e) {
+        e.data = {
+            "Region": $("#Region").val(),
+            "checkRegion": true
+        };
+    }
+
+    function onItemComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            } else {
+                var data = {
+                    "itemCode": e.value
+                };
+                //debugger
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/ProductionOrder/_WebOrderDetail/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#OrderBomDetail").data("tGrid");
+                        var $itemCell = $(e.target).parent().parent();
+                        $itemCell.next().html(data.ItemDescription);
+                        $itemCell.next().next().html(data.ReferenceItemCode);
+                        $itemCell.next().next().next().html(data.Uom);
+
+                        var oldData = $tGrid.dataItem($itemCell.parent());
+                        if (oldData != undefined) {
+                            oldData.ItemDescription = data.ItemDescription;
+                            oldData.ReferenceItemCode = data.ReferenceItemCode;
+                            oldData.Uom = data.Uom;
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+
+    function onSubmit(e) {
+        var grid = $("#OrderBomDetail").data("tGrid");
+        if (grid == null) {
+            alert("明细不能为空");
+            return;
+        }
+        //debugger
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+        var oderDetails = grid.changeLog.serialize(inserted, updated, deleted);
+        var ordermstr = {
+            "OrderDetailId": $("#OrderDetailId").val()
+        };
+        grid._convert(oderDetails);
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/ProductionOrder/_SaveBomDetailBatchEditing/",
+            data: $.extend(oderDetails, ordermstr),
+            success: function (data, ordermstr) {
+                if (data.SuccessMessage != "") {
+                    $("#popErrorsul").html('');
+                    $("#popSuccesssul").html(data.SuccessMessage);
+                    if (data != "") {
+                        var orderData = {
+                            "OrderDetailId": $("#OrderDetailId").val(),
+                            "OrderStatus": $("#OrderStatus").val()
+                        };
+                        $.ajax({
+                            type: "get",
+                            dataType: "Html",
+                            url: "/ProductionOrder/_OrderBomDetailList/",
+                            data: orderData,
+                            cache: false,
+                            success: function (data, textStatus) {
+                                $("#divOrderBomDetailList").html(data);
+                            }
+                        });
+                    }
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                var errorMessages = XMLHttpRequest.responseText;
+                errorMessages = errorMessages.substring(errorMessages.indexOf("\[\"") + 2, errorMessages.indexOf("\"\]"));
+                $("#popSuccesssul").html('');
+                $("#popErrorsul").html(errorMessages);
+            }
+        });
+    }
+
+    function BomUnitQtyValue(e) {
+        if (isNaN(e.value)) {
+            $message.error("数字格式错误。");
+            return;
+        }
+        var BomUnitQty = parseFloat(e.value) / parseFloat($("#OrderedQty1").val());
+        $(e).parent().prev().text(BomUnitQty);
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderBomDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+       .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            if (ViewBag.ReadOnly)
+            {
+                commands.Insert();
+                commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSubmit()", href = "#" });
+                commands.Custom().Text(@Resources.SYS.Global.Button_Filter).HtmlAttributes(new { onClick = "deleteBom()", href = "#" });
+            }
+        })
+
+        .DataBinding(dataBinding =>
+           dataBinding.Ajax().Select("_SelectBomDetailBatchEditing", "ProductionOrder", TempData["OrderBomDetailSearchModel"]))
+            .ClientEvents(events => events.OnDataBinding("OrderBomDetailGrid_OnDataBinding"))
+        .Columns(columns =>
+        {
+           
+            //columns.Bound(o => o.AUFNR).ReadOnly(ViewBag.ReadOnly);
+            columns.Bound(o => o.Item).EditorTemplateName("ItemGridForeignKey").ReadOnly(!ViewBag.ReadOnly).Width(80);
+            columns.Bound(o => o.ItemDescription).ReadOnly(true).Width(200);
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly(true).Width(100);
+            if (!ViewBag.ReadOnly)
+            {
+                columns.Bound(o => o.Uom).ReadOnly(true).Width(30);
+                //columns.Bound(o => o.Location).ReadOnly().Width(60);
+            }
+            else
+            {
+                columns.ForeignKey(o => o.Uom, (IList<Uom>)ViewData["uoms"], "Code", "Code").Width(100);
+                //columns.Bound(o => o.Location).EditorTemplateName("LocationGridComboBox").Width(120);
+            }
+            columns.Bound(o => o.BomUnitQty).ReadOnly(!ViewBag.ReadOnly).Width(40);
+            columns.Bound(o => o.OrderedQty).ReadOnly(!ViewBag.ReadOnly).Width(50);//.ClientTemplate("<input type='text'  style='width:60px;' id='OrderedQty' onblur='BomUnitQtyValue(this)' name='OrderedQty' value='<#= OrderedQty #>' />").Width(50);
+
+
+            if (ViewBag.ReadOnly)
+            {
+                columns.Bound(o => o.Id).ReadOnly().Width(50)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords'  ;' value='<#= Id #>'   />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" }).Title("删除");
+                columns.Command(commands => commands.Delete()).Width(100).Title("删除");
+            }
+        })
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(13);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+            )
+            <input type="hidden" name="OrderDetailId"  id="OrderDetailId" value="@ViewBag.OrderDetailId"/>
+            <input type="hidden" name="OrderStatus"  id="OrderStatus" value="@ViewBag.OrderStatus"/>
+            <input type="hidden" name="OrderedQty1"  id="OrderedQty1" value="@ViewBag.OrderedQty1"/>
+</fieldset>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+            //$("#btnFilter").attr("style", this.checked ? "display:inline" : "display:none");
+        });
+    });
+    function showButtons() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var showButton = false;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                showButton = true;
+                break;
+            }
+        }
+    }
+
+    function deleteBom() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedItems = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedItems == "") {
+                    checkedItems = $checkRecords[i].value;
+                } else {
+                    checkedItems += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (checkedItems == "") {
+            alert('Should select at least one item');
+            return;
+        }
+        //debugger
+        var ordermstr = {
+            "checkedItems": checkedItems,
+            "orderDetailId": $("#OrderDetailId").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/ProductionOrder/_deleteBomDetailBatchById/",
+            data: ordermstr,
+            success: function (data, ordermstr) {
+                if (data.SuccessMessage != "") {
+                    $("#popErrorsul").html('');
+                    $("#popSuccesssul").html(data.SuccessMessage);
+                    //debugger
+                    if (data != "") {
+                        var orderData = {
+                            "OrderDetailId": $("#OrderDetailId").val(),
+                            "OrderStatus": $("#OrderStatus").val()
+                        };
+                        $.ajax({
+                            type: "get",
+                            dataType: "Html",
+                            url: "/ProductionOrder/_OrderBomDetailList/",
+                            data: orderData,
+                            cache: false,
+                            success: function (data, textStatus) {
+                                $("#divOrderBomDetailList").html(data);
+                            }
+                        });
+                    }
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                errorMessages = errorMessages.substring(errorMessages.indexOf("\[\"") + 2, errorMessages.indexOf("\"\]"));
+                $("#popSuccesssul").html('');
+                $("#popErrorsul").html(errorMessages);
+            }
+        });
+    }
+</script>
+ 

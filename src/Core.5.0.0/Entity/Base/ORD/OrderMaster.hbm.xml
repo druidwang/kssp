@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ORD.OrderMaster, com.Sconit.Entity" table="View_OrderMstr" lazy="false">
+    <!--<class name="com.Sconit.Entity.ORD.OrderMaster, com.Sconit.Entity" table="ORD_OrderMstr" lazy="false">-->
+    <id name="OrderNo" column="OrderNo" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <version name="Version" column="Version" type="Int32"  />
+    <property name="Flow" column="Flow" type="String" length="50" />
+    <property name="FlowDescription" column="FlowDesc" type="String" length="50" />
+    <property name="TraceCode" column="TraceCode" type="String" length="50" />
+    <property name="ReferenceOrderNo" column="RefOrderNo" type="String" length="50" />
+    <property name="ExternalOrderNo" column="ExtOrderNo" type="String" length="50" />
+    <property name="Type" column="Type"  />
+    <property name="SubType" column="SubType"  />
+    <property name="QualityType" column="QualityType"/>
+    <property name="StartTime" column="StartTime" type="DateTime"  />
+    <property name="WindowTime" column="WindowTime" type="DateTime"  />
+    <property name="IsPlanPause" column="IsPlanPause" type="Boolean"  />
+    <property name="PauseSequence" column="PauseSeq" type="Int32"  />
+    <property name="IsPause" column="IsPause" type="Boolean"  />
+    <property name="PauseTime" column="PauseTime" type="DateTime"  />
+    <property name="IsProductLinePause" column="IsPLPause" type="Boolean"  />
+    <property name="EffectiveDate" column="EffDate" type="DateTime"  />
+    <property name="Priority" column="Priority"  />
+    <property name="Status" column="Status"  />
+    <property name="Sequence" column="Seq" type="Int64"  />
+    <property name="SapSequence" column="SapSeq" type="Int64"  />
+    <property name="PartyFrom" column="PartyFrom" type="String" length="50" />
+    <property name="PartyFromName" column="PartyFromNm" type="String" length="100" />
+    <property name="PartyTo" column="PartyTo" type="String" length="50" />
+    <property name="PartyToName" column="PartyToNm" type="String" length="100" />
+    <property name="ShipFrom" column="ShipFrom" type="String" length="50" />
+    <property name="ShipFromAddress" column="ShipFromAddr" type="String" length="256" />
+    <property name="ShipFromTel" column="ShipFromTel" type="String" length="50" />
+    <property name="ShipFromCell" column="ShipFromCell" type="String" length="50" />
+    <property name="ShipFromFax" column="ShipFromFax" type="String" length="50" />
+    <property name="ShipFromContact" column="ShipFromContact" type="String" length="50" />
+    <property name="ShipToAddress" column="ShipToAddr" type="String" length="256" />
+    <property name="ShipTo" column="ShipTo" type="String" length="50" />
+    <property name="ShipToTel" column="ShipToTel" type="String" length="50" />
+    <property name="ShipToCell" column="ShipToCell" type="String" length="50" />
+    <property name="ShipToFax" column="ShipToFax" type="String" length="50" />
+    <property name="ShipToContact" column="ShipToContact" type="String" length="50" />
+    <property name="Shift" column="Shift" type="String" length="50" />
+    <property name="LocationFrom" column="LocFrom" type="String" length="50" />
+    <property name="LocationFromName" column="LocFromNm" type="String" length="100" />
+    <property name="LocationTo" column="LocTo" type="String" length="50" />
+    <property name="LocationToName" column="LocToNm" type="String" length="100" />
+    <property name="IsInspect" column="IsInspect" type="Boolean"  />
+    <!--<property name="InspectLocation" column="InspLoc" type="String" length="50" />
+        <property name="InspectLocationName" column="InspLocNm" type="String" length="100" />
+        <property name="RejectLocation" column="RejLoc" type="String" length="50" />
+        <property name="RejectLocationName" column="RejLocNm" type="String" length="100" />-->
+    <property name="BillAddress" column="BillAddr" type="String" length="50" />
+    <property name="BillAddressDescription" column="BillAddrDesc" type="String" length="256" />
+    <property name="PriceList" column="PriceList" type="String" length="50" />
+    <property name="Currency" column="Currency" type="String" length="50" />
+    <property name="Dock" column="Dock" type="String" length="100" />
+    <property name="Routing" column="Routing" type="String" length="50" />
+    <property name="CurrentOperation" column="CurtOp" type="Int32" />
+    <property name="IsAutoRelease" column="IsAutoRelease" type="Boolean"  />
+    <property name="IsAutoStart" column="IsAutoStart" type="Boolean"  />
+    <property name="IsAutoShip" column="IsAutoShip" type="Boolean"  />
+    <property name="IsAutoReceive" column="IsAutoReceive" type="Boolean"  />
+    <property name="IsAutoBill" column="IsAutoBill" type="Boolean"  />
+    <property name="IsManualCreateDetail" column="IsManualCreateDet" type="Boolean"  />
+    <property name="IsListPrice" column="IsListPrice" type="Boolean"  />
+    <property name="IsPrintOrder" column="IsPrintOrder" type="Boolean"  />
+    <property name="IsOrderPrinted" column="IsOrderPrinted" type="Boolean"  />
+    <property name="IsPrintAsn" column="IsPrintAsn" type="Boolean"  />
+    <property name="IsPrintReceipt" column="IsPrintRec" type="Boolean"  />
+    <property name="IsShipExceed" column="IsShipExceed" type="Boolean"  />
+    <property name="IsReceiveExceed" column="IsRecExceed" type="Boolean"  />
+    <property name="IsOrderFulfillUC" column="IsOrderFulfillUC" type="Boolean"  />
+    <property name="IsShipFulfillUC" column="IsShipFulfillUC" type="Boolean"  />
+    <property name="IsReceiveFulfillUC" column="IsRecFulfillUC" type="Boolean"  />
+    <property name="IsShipScanHu" column="IsShipScanHu" type="Boolean"  />
+    <property name="IsReceiveScanHu" column="IsRecScanHu" type="Boolean"  />
+    <property name="IsCreatePickList" column="IsCreatePL" type="Boolean"  />
+    <!--<property name="IsPickFromBin" column="IsPickFromBin" type="Boolean"  />-->
+    <property name="IsPickListCreated" column="IsPLCreate" type="Boolean"  />
+    <property name="IsShipFifo" column="IsShipFifo" type="Boolean"  />
+    <property name="IsReceiveFifo" column="IsRecFifo" type="Boolean"  />
+    <property name="IsShipByOrder" column="IsShipByOrder" type="Boolean"  />
+    <property name="IsOpenOrder" column="IsOpenOrder" type="Boolean"  />
+    <property name="IsAsnUniqueReceive" column="IsAsnUniqueRec" type="Boolean"  />
+    <property name="ReceiveGapTo" column="RecGapTo"  />
+    <property name="ReceiptTemplate" column="RecTemplate" type="String" length="100" />
+    <property name="OrderTemplate" column="OrderTemplate" type="String" length="100" />
+    <property name="AsnTemplate" column="AsnTemplate" type="String" length="100" />
+    <property name="HuTemplate" column="HuTemplate" type="String" length="100" />
+    <property name="BillTerm" column="BillTerm"  />
+    <property name="CreateHuOption" column="CreateHuOpt"  />
+    <property name="ReCalculatePriceOption" column="ReCalculatePriceOpt"  />
+    <property name="WMSNo" column="WMSNo" type="String" length="50"/>
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+    <property name="ReleaseDate" column="ReleaseDate" type="DateTime"  />
+    <property name="ReleaseUserId" column="ReleaseUser" type="Int32"  />
+    <property name="ReleaseUserName" column="ReleaseUserNm" type="String" length="100" />
+    <property name="StartDate" column="StartDate" type="DateTime"  />
+    <property name="StartUserId" column="StartUser" type="Int32"  />
+    <property name="StartUserName" column="StartUserNm" type="String" length="100" />
+    <property name="CompleteDate" column="CompleteDate" type="DateTime"  />
+    <property name="CompleteUserId" column="CompleteUser" type="Int32"  />
+    <property name="CompleteUserName" column="CompleteUserNm" type="String" length="100" />
+    <property name="CloseDate" column="CloseDate" type="DateTime"  />
+    <property name="CloseUserId" column="CloseUser" type="Int32"  />
+    <property name="CloseUserName" column="CloseUserNm" type="String" length="100" />
+    <property name="CancelDate" column="CancelDate" type="DateTime"  />
+    <property name="CancelUserId" column="CancelUser" type="Int32"  />
+    <property name="CancelUserName" column="CancelUserNm" type="String" length="100" />
+    <property name="CancelReason" column="CancelReason" type="String" length="256" />
+    <property name="IsCheckPartyFromAuthority" column="IsCheckPartyFromAuth" type="Boolean"  />
+    <property name="IsCheckPartyToAuthority" column="IsCheckPartyToAuth" type="Boolean"  />
+    <property name="OrderStrategy" column="OrderStrategy"  />
+    <property name="ProductLineFacility" column="ProdLineFact" type="String" length="50" />
+    <property name="IsQuick" column="IsQuick" type="Boolean"  />
+    <property name="PickStrategy" column="PickStrategy" type="String" length="50" />
+    <property name="ExtraDemandSource" column="ExtraDmdSource" type="String" length="256" />
+    <property name="IsIndepentDemand" column="IsIndepentDemand" type="Boolean"  />
+    <property name="ResourceGroup" column="ResourceGroup" type="Int16"  />
+    <!--<bag name="OrderDetails" table="ORD_OrderDet" inverse="true" lazy="true" order-by="Seq asc">
+            <key column="OrderNo" />
+            <one-to-many class="com.Sconit.Entity.ORD.OrderDetail, com.Sconit.Entity" />
+        </bag>
+        <bag name="OrderBindings" table="ORD_OrderBinding" inverse="true" lazy="true" order-by="Id asc">
+            <key column="OrderNo" />
+            <one-to-many class="com.Sconit.Entity.ORD.OrderBinding, com.Sconit.Entity" />
+        </bag>-->
+
+    <sql-insert>
+      exec USP_Split_OrderMstr_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+    </sql-insert>
+    <sql-update>
+      exec USP_Split_OrderMstr_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+    </sql-update>
+    <sql-delete>
+      exec USP_Split_OrderMstr_Delete ?,?
+    </sql-delete>
+    <!--<sql-query name="USP_GetSubmitSeqOrder">
+            <return alias="SequenceOrder" class="com.Sconit.Entity.ORD.OrderMaster, com.Sconit.Entity"/>
+            exec USP_GetSubmitSeqOrder
+        </sql-query>-->
+  </class>
+</hibernate-mapping>

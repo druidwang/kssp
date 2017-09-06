@@ -1,0 +1,142 @@
+﻿@model com.Sconit.Entity.CUST.ProductLineMap
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_CUST_ProductLineMap_View" });
+}
+<fieldset>
+    <legend>@Resources.CUST.DefectCode.DefectCode_BaseInfo</legend>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.ProductLineMap.ProductLineMap_SAPProductLine
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.SAPProductLine)
+                @Html.ValidationMessageFor(model => model.SAPProductLine)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.ProductLineMap.ProductLineMap_ProductLine
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+               Html.RenderAction("_FlowComboBox", "Common",
+               new
+               {
+                   controlName = "ProductLine",
+                   type = (int)com.Sconit.CodeMaster.OrderType.Production,
+
+               });
+                    @Html.ValidationMessageFor(model => model.ProductLine)
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.CUST.ProductLineMap.ProductLineMap_CabFlow
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.CabFlow)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.ProductLineMap.ProductLineMap_CabLocation
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.CabLocation)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.ProductLineMap.ProductLineMap_ChassisFlow
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.ChassisFlow)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.ProductLineMap.ProductLineMap_ChassisLocation
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.ChassisLocation)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.ProductLineMap.ProductLineMap_ChassisSapLocation
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.ChassisSapLocation)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.ProductLineMap.ProductLineMap_VanLocation
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.VanLocation)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.ProductLineMap.ProductLineMap_VanSapLocation
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.VanSapLocation)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.ProductLineMap.ProductLineMap_PowerFlow
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.PowerFlow)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.ProductLineMap.ProductLineMap_TransmissionFlow
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.TransmissionFlow)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.ProductLineMap.ProductLineMap_TireFlow
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.TireFlow)
+            </div>
+             <div class="search-label">
+                <label>
+                    @Resources.CUST.ProductLineMap.ProductLineMap_SaddleFlow
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.SaddleFlow)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_CUST_ProductLineMap_View", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"}
+	        })
+            <button type="button" id="btnExport" onclick="location.href='@Url.Content("~/ProductLineMap/List")'">
+                @Resources.SYS.Global.Button_Back
+            </button>
+        </div>
+       
+        
+
+    }
+</fieldset>

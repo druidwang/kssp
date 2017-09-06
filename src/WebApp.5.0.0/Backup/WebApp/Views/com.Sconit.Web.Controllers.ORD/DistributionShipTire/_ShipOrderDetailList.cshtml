@@ -1,0 +1,65 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    <script type="text/javascript">
+    
+
+     
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                "OrderNo": $("#OrderNo").val()
+            }
+        }
+
+        function OrderMasterGrid_OnRowDataBound(e) {
+            var data = {
+                "item": e.dataItem.Item
+            }
+         
+        }
+    </script>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @using (Html.BeginForm())
+    { 
+        @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+      .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();
+            columns.Bound(o => o.OrderNo).ReadOnly();
+            columns.Bound(o => o.Sequence).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly();
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            columns.Bound(o => o.Uom).ReadOnly();
+            columns.Bound(o => o.UnitCount).Format("{0:0.########}").ReadOnly();
+          
+
+            columns.Bound(o => o.LocationToName).ReadOnly();
+       
+          columns.Bound(o => o.OrderedQty).Format("{0:0.########}").ReadOnly(true);
+     
+
+            
+        })
+              .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxShipOrderDetailList", "DistributionShipTire"))
+                     .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding")
+                     .OnRowDataBound("OrderMasterGrid_OnRowDataBound")
+                     )
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                settings.PageSize(ViewBag.PageSize);
+            })
+
+                .Resizable(resizing => resizing.Columns(true))
+    )
+    }
+
+</fieldset>

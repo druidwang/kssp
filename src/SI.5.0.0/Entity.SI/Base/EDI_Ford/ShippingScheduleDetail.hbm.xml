@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.EDI_Ford.ShippingScheduleDetail, com.Sconit.Entity.SI" table="SI_EDI_Ford_ShippingScheduleDetail" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="ShippingId" column="ShippingId" type="Int32"/>	
+		<property name="ControlNum" column="ControlNum" type="String" length="50"/>	
+		<property name="ReleaseNum" column="ReleaseNum" type="String" length="50"/>	
+		<property name="ReleaseDate" column="ReleaseDate" type="String" length="50"/>	
+		<property name="Purpose" column="Purpose" type="String" length="50"/>	
+		<property name="ForecastType" column="ForecastType" type="String" length="50"/>	
+		<property name="StartDate" column="StartDate" type="String" length="50"/>	
+		<property name="EndDate" column="EndDate" type="String" length="50"/>	
+		<property name="ReferenceNum" column="ReferenceNum" type="String" length="50"/>	
+		<property name="ShipTo" column="ShipTo" type="String" length="50"/>	
+		<property name="ShipFrom" column="ShipFrom" type="String" length="50"/>	
+		<property name="DeliverPattern" column="DeliverPattern" type="String" length="50"/>	
+		<property name="Item" column="Item" type="String" length="50"/>	
+		<property name="Po" column="Po" type="String" length="50"/>	
+		<property name="Dock" column="Dock" type="String" length="50"/>	
+		<property name="LineFeed" column="LineFeed" type="String" length="50"/>	
+		<property name="ReserveLineFeed" column="ReserveLineFeed" type="String" length="50"/>	
+		<property name="ContactName" column="ContactName" type="String" length="50"/>	
+		<property name="ContactTelephone" column="ContactTelephone" type="String" length="50"/>	
+		<property name="LastIpNo" column="LastIpNo" type="String" length="50"/>	
+		<property name="LastIpQty" column="LastIpQty" type="String" length="50"/>	
+		<property name="LastIpDate" column="LastIpDate" type="String" length="50"/>	
+		<property name="CumIpQty" column="CumIpQty" type="String" length="50"/>	
+		<property name="CumStartDate" column="CumStartDate" type="String" length="50"/>	
+		<property name="CumEndDate" column="CumEndDate" type="String" length="50"/>	
+		<property name="CumQty" column="CumQty" type="String" length="50"/>	
+		<property name="Qty" column="Qty" type="String" length="50"/>	
+		<property name="Uom" column="Uom" type="String" length="50"/>	
+		<property name="ForecastStatus" column="ForecastStatus" type="String" length="50"/>	
+		<property name="ForecastDate" column="ForecastDate" type="String" length="50"/>	
+		<property name="ForecastTime" column="ForecastTime" type="String" length="50"/>	
+  	</class>
+</hibernate-mapping>

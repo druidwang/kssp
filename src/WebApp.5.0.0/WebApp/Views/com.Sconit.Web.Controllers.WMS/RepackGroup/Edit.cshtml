@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = Resources.WMS.PickGroup.PickGroup_Edit_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PickGroup_View" });
+}
+<input type="hidden" name="PickGroupCode" id="PickGroupCode" value="@Model" />
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.WMS.RepackGroup.RepackGroup_TabTitle_RepackGroup)
+                .LoadContentFrom("_Edit", "RepackGroup", new { Id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.WMS.RepackGroup.RepackGroup_TabTitle_RepackRule)
+                .LoadContentFrom("_PickRule", "RepackGroup", new { Id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.WMS.RepackGroup.RepackGroup_TabTitle_RepackUser)
+                .LoadContentFrom("_PickUser", "RepackGroup", new { Id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}
+
+

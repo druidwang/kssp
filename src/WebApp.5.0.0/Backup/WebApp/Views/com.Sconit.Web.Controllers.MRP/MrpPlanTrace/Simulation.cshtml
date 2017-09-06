@@ -1,0 +1,208 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlan_Simulation" });
+}
+<script type="text/javascript">
+    function onSearch() {
+        //if ($('#ResourceGroup').val() == "") {
+            //$message.error('资源组不能为空。');
+            //return;
+        //}
+        if ($('#Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        var data = {
+            flow: $('#Flow').val(),
+            planVersion: $('#PlanVersion').val()
+        };
+        $("#fdOrderDetail").html("Loading...");
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpPlanTrace/_GetSimulationList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#fdOrderDetail");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 2,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function MrpPlanMaster_Change() {
+        //var data = {
+        //    planVersion: $('#PlanVersion').val()
+        //};
+        //$.ajax({
+        //    type: "get",
+        //    dataType: "text",
+        //    url: "/MrpPlanTrace/_GetResourceGroup/",
+        //    data: data,
+        //    cache: false,
+        //    success: function (data, textStatus) {
+        //        resourceGroup = data;
+        //        $('#Flow').data('tComboBox').value('');
+        //        $('#Flow').data('tComboBox').text('');
+        //        $("#Flow").data("tComboBox").reload();
+        //    }
+        //});
+    }
+
+    function Flow_DataBinding(e) {
+        e.data = {
+            resourceGroup: $("#ResourceGroup").val()
+        }
+    }
+
+//    function PlanVersion_DataBinding(e) {
+//        e.data = {
+//            resourceGroup: $("#ResourceGroup").val()
+//        }
+//    }
+
+    function CodeMaster_Change(e) {
+        if (e.value != "") {
+            $('#Flow').data('tComboBox').value('');
+            $('#Flow').data('tComboBox').text('');
+            $("#Flow").data("tComboBox").reload();
+
+            $('#PlanVersion').data('tComboBox').value('');
+            $('#PlanVersion').data('tComboBox').text('');
+            $("#PlanVersion").data("tComboBox").reload();
+        }
+    }
+</script>
+@using (Html.BeginForm("ExportSimulation", "MrpPlanTrace"))
+{
+    <fieldset>
+        <div class="search">
+             @*<div class="search-label">
+                <label>
+                    资源组
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterComboBox", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.ResourceGroup,
+                        controlName = "ResourceGroup",
+                        isChange = true,
+                    });
+                }
+            </div>*@
+            <div class="search-label">
+                <label>
+                    周
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("WeekRange","",new { disabled = "disabled" })
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.MrpFiShiftPlan.MrpFiShiftPlan_PlanVersion
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+                     {
+                         controlName = "PlanVersion",
+                         isRelease = true,
+                         resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.FI,
+                         isChange = true
+                     });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpFiShiftPlan.MrpFiShiftPlan_ProductLine
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_FlowComboBox", "Common", new
+                    {
+                        controlName = "Flow",
+                        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                        isMrp = true,
+                        coupled = true,
+                        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.FI
+                    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlan_Simulation", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    </fieldset>
+   
+    <div id="fdOrderDetail">
+    </div>
+}
+<script type="text/javascript">
+    function MrpPlanMaster_Change() {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        } else {
+            var Data = {
+                planVersion: $('#PlanVersion').val()
+            };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/MrpPlanEx/_GetWeekIndex/",
+                data: Data,
+                cache: false,
+                success: function (data1) {
+                    $('#WeekRange').val(data1);
+                }
+            });
+        }
+    }
+    $('#btnExport').click(function () {
+        //if ($('#ResourceGroup').val() == "") {
+        //$message.error('资源组不能为空。');
+        //    return;
+        //}
+        if ($('#Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        $('form').submit();
+    });  
+</script>
+ 

@@ -1,0 +1,94 @@
+﻿@using com.Sconit.Web.Models.SearchModels.TMS
+@Html.Partial("_AjaxMessage")
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_DistributionBill_New" });
+}
+
+<script type="text/javascript">
+    function BillMasterQuery() {
+        if ($('#Party').val() == "") {
+            $message.error('承运商不能为空。');
+            return;
+        }
+        var data = {
+            "Carrier": $('#Carrier').val(),
+            "Flow": $('#Flow').val(),
+            "StartTime": $('#StartTime').val(),
+            "EndTime": $('#EndTime').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/TransportBill/_TransportActingBillList/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                $("#divActingBilllList").html(data);
+            }
+        });
+    }
+
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.TMS.TransportActingBill.ActingBill_Carrier
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CarrierComboBox", "Common",
+                new
+                {
+                    controlName = "Carrier",
+                    selectedValue = TempData["TransportActingBillSearchModel"] != null ? ((TransportActingBillSearchModel)TempData["TransportActingBillSearchModel"]).Carrier : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.TMS.TransportActingBill.ActingBill_Flow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_TransportFlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    selectedValue = TempData["TransportActingBillSearchModel"] != null ? ((TransportActingBillSearchModel)TempData["TransportActingBillSearchModel"]).Flow : string.Empty
+                });
+            }
+        </div>
+      
+      
+    
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_StartTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("StartTime")
+                                                        .Value(TempData["TransportActingBillSearchModel"] != null ? ((TransportActingBillSearchModel)TempData["TransportActingBillSearchModel"]).StartTime : System.DateTime.Today.AddMonths(-1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_EndTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("EndTime")
+                                                .Value(TempData["TransportActingBillSearchModel"] != null ? ((TransportActingBillSearchModel)TempData["TransportActingBillSearchModel"]).EndTime : System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="btnSearch" onclick="BillMasterQuery()">@Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnCreateActingBill" onclick="CreateActingBill()" style="display: none">@Resources.SYS.Global.Button_Create</button>
+    </div>
+</fieldset>
+<div id="divActingBilllList">
+</div>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.ISI.CheckupRemind, com.Sconit.Entity" table="ISI_CheckupRemind" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="User" column="User_" type="String" length="50" />	
+		<property name="IsCheckup" column="IsCheckup" type="Boolean"  />	
+		<property name="IsApproval" column="IsApproval" type="Boolean"  />	
+		<property name="LastModifyUser" column="LastModifyUser" type="String" length="50" />	
+		<property name="LastModifyUserNm" column="LastModifyUserNm" type="String" length="50" />	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />	
+  	</class>
+</hibernate-mapping>

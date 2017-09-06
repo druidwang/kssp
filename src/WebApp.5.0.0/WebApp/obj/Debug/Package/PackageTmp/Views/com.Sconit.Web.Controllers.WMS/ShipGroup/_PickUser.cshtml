@@ -1,0 +1,69 @@
+﻿@using com.Sconit.Web.Models.SearchModels.WMS
+
+<fieldset>
+<legend>@Resources.WMS.PickGroup.PickGroup_CurrentPickGroup:@ViewBag.PickGroupCode</legend>
+
+        <div class="search">
+            <div class="search-label">
+                <label for="Address_Code">
+                    @Resources.WMS.ShipUser.ShipUser_ShipUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PickUserName", TempData["PickGroupSearchModel"] != null ? ((PickUserSearchModel)TempData["PickUserSearchModel"]).PickUserName : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch_PickUser" onclick="btnSearch_PickUser_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_Customer_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew_PickUser"},
+                {"onclick","btnNew_PickUser_Click()"}
+	        })
+            <button type="button" id="btnBack_PickUser" onclick="location.href='@Url.Content("~/PickGroup/List")'">
+                @Resources.SYS.Global.Button_Back
+            </button>
+        </div>
+</fieldset>
+
+<script type="text/javascript">
+
+    function btnSearch_PickUser_Click() {
+        var data = {
+            "PickGroupCode": $("#PickGroupCode").val(),
+            "PickUserName": $("#PickUserName").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/ShipGroup/_PickUserList/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    function btnNew_PickUser_Click() {
+        var data = {
+            "PickGroupCode": $("#PickGroupCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ShipGroup/_PickUserNew/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>

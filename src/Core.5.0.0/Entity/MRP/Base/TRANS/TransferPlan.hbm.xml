@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.TransferPlan, com.Sconit.Entity" table="MRP_TransferPlan" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="PlanVersion" column="PlanVersion" type="DateTime"  />
+    <property name="Flow" column="Flow" type="String" length="50" />
+    <property name="Item" column="Item" type="String" length="50" />
+    <property name="Qty" column="Qty" type="Double"  />
+    <property name="StartTime" column="StartTime" type="DateTime"  />
+    <property name="WindowTime" column="WindowTime" type="DateTime"  />
+    <!--
+    <property name="LocationTo" column="LocationTo" type="String" length="50" />
+    <property name="PlanQty" column="PlanQty" type="Double"  />
+    <property name="OrderType" column="OrderType"  />
+    <property name="DateType" column="DateType"  />-->
+  </class>
+</hibernate-mapping>

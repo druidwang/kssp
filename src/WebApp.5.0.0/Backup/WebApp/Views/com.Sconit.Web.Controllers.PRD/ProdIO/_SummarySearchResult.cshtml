@@ -1,0 +1,64 @@
+﻿@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderSummaryGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.ReceivedQty);
+        })
+          .DetailView(details => details.ClientTemplate(
+            Html.Telerik().Grid<OrderBackflushDetail>()
+                        .Name("OrderBackflushDetail_<#= Item #>")
+                .Columns(columns =>
+                {
+                    columns.Bound(o => o.Item);
+                    columns.Bound(o => o.ReferenceItemCode);
+                    columns.Bound(o => o.ItemDescription);
+                    columns.Bound(o => o.Uom);
+                    columns.Bound(o => o.BackflushedQty);
+                })
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                        .Select("_OrderBackflushSummaryHierarchyAjax", "ProdIO", new { item = "<#= Item #>" }))
+                                          .ClientEvents(events => events.OnDataBinding("OrderBackflushSummaryGrid_OnDataBinding"))
+                .Footer(false)
+                .Resizable(resizing => resizing.Columns(true))
+                .ToHtmlString()
+    ))
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_OrderSummaryHierarchyAjax", "ProdIO"))
+                          .ClientEvents(events => events.OnDataBinding("OrderSummaryGrid_OnDataBinding"))
+                          .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+<script type="text/javascript">
+    function OrderSummaryGrid_OnDataBinding(e) {
+        e.data = {
+            OrderNo: $('#OrderNo').val(),
+            Flow: $('#Flow').val(),
+            PartyTo: $('#PartyTo').val(),
+            DateFrom: $('#DateFrom').val(),
+            DateTo: $('#DateTo').val(),
+            Item: $('#SearchItem').val()
+        };
+    }
+
+    function OrderBackflushSummaryGrid_OnDataBinding(e) {
+        e.data = {
+            OrderNo: $('#OrderNo').val(),
+            Flow: $('#Flow').val(),
+            PartyTo: $('#PartyTo').val(),
+            DateFrom: $('#DateFrom').val(),
+            DateTo: $('#DateTo').val(),
+          
+        };
+    } 
+</script>

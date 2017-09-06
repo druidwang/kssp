@@ -1,0 +1,58 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MRP.MD.MrpFlowDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpFlowDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            //columns.Bound(o => o.DetailId).Title("Id");
+            columns.Bound(o => o.TypeDescription);
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.Item);
+            //columns.Bound(o => o.PartyFrom);
+            //columns.Bound(o => o.PartyTo);
+            columns.Bound(o => o.LocationFrom);
+            //columns.Bound(o => o.ExtraLocationFrom).Title("其他");
+            columns.Bound(o => o.LocationTo);
+            //columns.Bound(o => o.ExtraLocationTo).Title("其他");
+            columns.Bound(o => o.Machine);
+            //columns.Bound(o => o.UnitCount);
+            //columns.Bound(o => o.Uom);
+            columns.Bound(o => o.LeadTime).Title("提前期");
+            columns.Bound(o => o.SafeStock).Title("安全");
+            columns.Bound(o => o.MaxStock).Title("最大");
+            columns.Bound(o => o.BatchSize).Title("批量");
+            columns.Bound(o => o.StartDate).Title(@Resources.EXT.PageLan.StartTime);
+            columns.Bound(o => o.EndDate).Title("结束时间");
+          
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxMrpFlowDetailList", "MrpSnap"))
+                .ClientEvents(events => events.OnDataBinding("MrpFlowDetailGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function MrpFlowDetailGrid_OnDataBinding(e) {
+            e.data = {
+                Flow: $('#Flow').val(),
+                Item: $('#Item').val(),
+                PartyTo: $('#PartyTo').val(),
+                LocationFrom: $('#LocationFrom').val(),
+                LocationTo: $('#LocationTo').val(),
+                SnapTime: $('#SnapTime').val(),
+                PartyFrom: $('#PartyFrom').val()
+            };
+        } 
+    </script>
+</fieldset>

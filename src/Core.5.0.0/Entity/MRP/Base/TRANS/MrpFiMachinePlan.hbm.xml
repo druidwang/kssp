@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.MrpFiMachinePlan, com.Sconit.Entity" table="MRP_MrpFiMachinePlan" lazy="false" dynamic-update="true">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="PlanVersion" column="PlanVersion" type="DateTime"/>
+    <property name="PlanDate" column="PlanDate" type="DateTime"  />
+    <property name="ProductLine" column="ProductLine" type="String"  length="50" />
+    <property name="Island" column="Island" type="String" length="50"/>
+    <property name="IslandDescription" column="IslandDescription" type="String" length="50"/>
+    <property name="Machine" column="Machine" type="String" length="50"/>
+    <property name="MachineDescription" column="MachineDescription" type="String" length="50"/>
+    <property name="MachineQty" column="MachineQty" type="Double"/>
+    <property name="MachineType" column="MachineType"  />
+    <property name="ShiftQuota" column="ShiftQuota" type="Double"/>
+    <property name="ShiftType" column="ShiftType"  />
+    <property name="WorkDayPerWeek" column="WorkDayPerWeek" type="Double"/>
+    <property name="ShiftPerDay" column="ShiftPerDay" type="Int32"/>
+    <property name="UnitCount" column="UnitCount" type="Double"/>
+    <property name="ShiftQty" column="ShiftQty" type="Double"/>
+    <property name="ShiftSplit" column="ShiftSplit" type="String"  length="50" />
+  </class>
+</hibernate-mapping>

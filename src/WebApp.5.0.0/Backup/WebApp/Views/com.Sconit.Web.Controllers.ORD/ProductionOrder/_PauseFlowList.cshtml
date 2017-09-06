@@ -1,0 +1,63 @@
+﻿@model IEnumerable<com.Sconit.Entity.SCM.FlowMaster>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+            $("#btnPause").attr("style", this.checked ? "display:inline" : "display:none");
+
+        });
+        var $checkedRecords = $("input[name='checkedRecords']");
+        $checkedRecords.click(function () {
+            $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        });
+    });
+
+    function showButtons() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+
+        var statusArr = new Array();
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                var isPause = $checkRecords[i].attributes["isPause"].value;
+                if ($.inArray(isPause, statusArr) == -1) {
+                    statusArr.push(isPause);
+                }
+            }
+        }
+        $("#btnPause").attr("style", statusArr.length > 0 && statusArr.toString() == "false" ? "display:inline" : "display:none");
+        $("#btnResume").attr("style", statusArr.length > 0 && statusArr.toString() == "true" ? "display:inline" : "display:none");
+
+    }
+</script>
+<fieldset>
+    <legend>@Resources.SCM.FlowMaster.FlowMaster_List_Title</legend>
+    @(
+ Html.Telerik().Grid(Model)
+          .Name("FlowMasterGrid")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.Code);
+          })
+          .Columns(columns =>
+          {
+              columns.Bound(o => o.CheckFlowCode)
+               .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Code #>' onClick='showButtons()' isPause='<#= IsPause #>'  />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+              columns.Bound(o => o.Code);
+              columns.Bound(o => o.LocationFrom).Title(@Resources.ORD.OrderMaster.OrderMaster_LocationFromName_Production);
+              columns.Bound(o => o.LocationTo).Title(@Resources.ORD.OrderMaster.OrderMaster_LocationToName_Production);
+              columns.Bound(o => o.PartyFrom);//.Title(@Resources.ORD.OrderMaster.OrderMaster_PartyTo_Procurement);
+             
+              columns.Bound(o => o.IsPause).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsPause' <#= IsPause? checked='checked' : '' #> />"); 
+          })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxPauseFlowList", "ProductionOrder", new { flow = ViewBag.flow }))
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

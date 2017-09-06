@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.INP.ConcessionMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                        .Name("ConcessionMaster")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.ConcessionNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ConcessionNo).ClientTemplate(Html.ActionLink("<#= ConcessionNo #>", "Edit", "ConcessionOrder", new { id = "<#= ConcessionNo #>" }, null).ToString());
+            columns.Bound(o => o.RejectNo);
+            columns.Bound(o => o.ReferenceNo);
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.ConcessionStatusDescription);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ConcessionOrder"))
+        .ClientEvents(events => events.OnDataBinding("ConcessionMaster_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize );
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function ConcessionMaster_OnDataBinding(e) {
+            e.data = {
+                ConcessionNo: $('#ConcessionNo').val(),
+                Status: $('#Status').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                SatrtDate: $('#SatrtDate').val(),
+                EndDate: $('#EndDate').val()
+            };
+        } 
+    </script>
+</fieldset>

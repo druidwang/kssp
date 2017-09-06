@@ -1,0 +1,54 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.SubPrintOrder>
+<fieldset>
+    @(Html.Telerik().Grid(Model).Name("MachineGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).ClientTemplate(Html.ActionLink("<#= Id #>", "Edit", "SubPrintOrder", new { Id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.UserCode);
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.ExcelTemplateDescription);
+            columns.Bound(o => o.Printer);
+            columns.Bound(o => o.Client);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SubPrintOrder"))
+        .ClientEvents(events => events.OnDataBinding("SubPrintOrderGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .NoRecordsTemplate(@<text>@Resources.GridLocalization.Loading</text>)
+        .ClientEvents(e => e.OnDataBound("onDataBound"))
+        .Resizable(resizing => resizing.Columns(true))
+  )
+</fieldset>
+<script type="text/javascript">
+    function SubPrintOrderGrid_OnDataBinding(e) {
+        e.data = {
+            UserCode: $('#UserCode').val(),
+            Region: $('#Region').val(),
+            Flow: $('#Flow').val(),
+            Location: $('#Location').val(),
+            ExcelTemplate: $('#ExcelTemplate').val(),
+            Printer: $('#Printer').val(),
+            Client: $('#Client').val()
+        };
+    }
+    function onDataBound() {
+        $("tr.t-no-data td").html("@Resources.GridLocalization.NoRecords");
+    }
+
+</script>

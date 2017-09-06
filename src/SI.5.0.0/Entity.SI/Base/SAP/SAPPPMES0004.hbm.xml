@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.SI.SAP.SAPPPMES0004, com.Sconit.Entity.SI" table="SAP_Interface_PPMES0004" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="ZMESSC" column="ZMESSC" type="String" length="20"/>
+    <property name="ZMESLN" column="ZMESLN" type="String" length="4"/>
+    <property name="ZPTYPE" column="ZPTYPE" type="String" length="8"/>
+    <property name="BWART_H" column="BWART_H" type="String" length="3"/>
+    <property name="LGORT_H" column="LGORT_H" type="String" length="5"/>
+    <property name="ERFMG_H" column="ERFMG_H" type="String" length="13"/>
+    <property name="BLDAT" column="BLDAT" type="DateTime"/>
+    <property name="BUDAT" column="BUDAT" type="DateTime"/>
+    <property name="XMNGA" column="XMNGA" type="String" length="13"/>
+    <property name="GRUND" column="GRUND" type="String" length="5"/>
+    <property name="ZComnum" column="ZComnum" type="String" length="12"/>
+    <property name="LMNGA_H" column="LMNGA_H" type="String" length="13"/>
+    <property name="ZMESGUID" column="ZMESGUID" type="String" length="40"/>
+    <property name="ZCSRQSJ" column="ZCSRQSJ" type="DateTime"/>
+    <property name="BatchNo" column="BatchNo" type="String" length="50"/>
+    <property name="UniqueCode" column="UniqueCode" type="String" length="40"/>
+    <property name="Status" column="Status" type="Int32"/>
+    <property name="LFSNR" column="LFSNR" type="String" length="16"/>
+    <property name="Item" column="Item" type="String" length="20"/>
+  </class>
+</hibernate-mapping>

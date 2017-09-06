@@ -1,0 +1,137 @@
+﻿@model com.Sconit.Web.Models.SearchModels.MRP.MrpPlanExSearchModel
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlanEx_Plan" });
+}
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .ClientEvents(events => events.OnContentLoad("SetItemPlanSearchValues"))
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+                .Text("断面")
+                .LoadContentFrom("_SectionPlan", "MrpPlanEx")
+                .HtmlAttributes(new { onclick = "SetSectionPlanSearchValues()" });
+
+            tabstrip.Add()
+                .Text("物料")
+                .LoadContentFrom("_ItemPlan", "MrpPlanEx")
+                .HtmlAttributes(new { onclick = "SetItemPlanSearchValues()" });
+        })
+        .Render();
+}
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+    @<text> var tabIndex = "@TempData["TabIndex"]"; var tabstrip = $("#TabStrip").data("tTabStrip");
+    var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0]; tabstrip.select(item);
+    </text>
+        );
+}
+<script type="text/javascript">
+    function SetItemPlanSearchValues() {
+        var flowData = {
+            selectedValue: $('#Flow').val(),
+            controlName: "Item_Flow",
+            type: 4,
+            isChange: true,
+            isCreateOrder: false,
+            resourceGroup: 20
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Common/_FlowComboBox/",
+            data: flowData,
+            cache: false,
+            success: function (data) {
+                $("#Item_FlowDiv").html(data);
+            }
+        });
+
+        var planVersionData = {
+            selectedValue: $('#PlanVersion').val(),
+            includeBlankOption: true,
+            controlName: "Item_PlanVersion"
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Common/_MrpPlanMasterComboBox/",
+            data: planVersionData,
+            cache: false,
+            success: function (data) {
+                $("#Item_PlanVersionDiv").html(data);
+            }
+        });
+
+        var planVersionData = {
+            selectedValue: $('#DateIndex').val(),
+            includeBlankOption: true,
+            controlName: "Item_DateIndex"
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Common/_DateIndexComboBox/",
+            data: planVersionData,
+            cache: false,
+            success: function (data) {
+                $("#Item_DateIndexDiv").html(data);
+            }
+        });
+        ClearMessage();
+    }
+
+    function SetSectionPlanSearchValues() {
+        var flowData = {
+            selectedValue: $('#Item_Flow').val(),
+            controlName: "Flow",
+            type: 4,
+            isChange: false,
+            isCreateOrder: false,
+            resourceGroup: 20
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Common/_FlowComboBox/",
+            data: flowData,
+            cache: false,
+            success: function (data) {
+                $("#FlowDiv").html(data);
+            }
+        });
+
+        var planVersionData = {
+            selectedValue: $('#Item_PlanVersion').val(),
+            includeBlankOption: true,
+            controlName: "PlanVersion"
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Common/_MrpPlanMasterComboBox/",
+            data: planVersionData,
+            cache: false,
+            success: function (data) {
+                $("#PlanVersionDiv").html(data);
+            }
+        });
+
+        var planVersionData = {
+            selectedValue: $('#Item_DateIndex').val(),
+            includeBlankOption: true,
+            controlName: "DateIndex"
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Common/_DateIndexComboBox/",
+            data: planVersionData,
+            cache: false,
+            success: function (data) {
+                $("#DateIndexDiv").html(data);
+            }
+        });
+        ClearMessage();
+    }
+</script>

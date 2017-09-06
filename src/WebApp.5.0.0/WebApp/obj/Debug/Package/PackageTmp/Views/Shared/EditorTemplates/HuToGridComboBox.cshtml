@@ -1,0 +1,12 @@
+﻿@{
+    //bool coupled = ViewBag.Coupled != null ? ViewBag.Coupled : false;
+    //string onChangeName = coupled ? "onItemComboBoxChange" : "EmptyChange";
+}
+
+@(Html.Telerik().ComboBox().HtmlAttributes(new { style = "width: 110px" })
+      .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(""))
+      .DataBinding(binding => binding.Ajax().Select("_HuToAjaxLoading", "Common").Cache(true))
+      .AutoFill(true)
+      .HighlightFirstMatch(true)
+      //.ClientEvents(events => events.OnChange(onChangeName).OnDataBinding("ItemComboBox_DataBinding"))
+)

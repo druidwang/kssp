@@ -1,0 +1,556 @@
+﻿@model com.Sconit.Entity.ORD.MiscOrderMaster
+@using com.Sconit.Entity.CUST
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProductionFiScraptOrder_View" });
+}
+<script type="text/javascript">
+    function onSuccess(e) {
+        TelerikonUpload_OnSuccess(e);
+        var data = {
+            "MiscOrderNo": $("#MiscOrderNo").val(),
+            "MoveType": $("#MoveType").val(),
+            "Status": $("#Status").val()
+        }
+        var url = "";
+        if ($("#IsScanHu").val() == "True") {
+            url = "/ProductionFiScraptOrder/_MiscOrderDetailIsScanHu/";
+        }
+        else {
+            url = "/ProductionFiScraptOrder/_MiscOrderDetail/";
+        }
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: url,
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var $tGrid = $("#divOutMiscOrderDetailList");
+                $($tGrid).html(data);
+            }
+        });
+    }
+    function onUpload(e) {
+        e.data = { MiscOrderNo: $("#MiscOrderNo").val()
+        };
+
+    }
+    function onEdit() {
+        var grid = $("#MiscOrderDetailGrid").data("tGrid");
+        if (grid == null && !$('#IsScanHu').is(":checked")) {
+            $message.error('明细不能为空。');
+            return;
+        }
+        //if ($("#GeneralLedger").val() == "") {
+        //    $message.error('总账科目为必填项。');
+        //    return;
+        //}
+
+        if ($("#CostCenter").val() == "") {
+            $message.error('成本中心为必填项。');
+            return;
+        }
+        var miscmstr = {
+            "MiscOrderNo": $("#MiscOrderNo").val(),
+            "Note": $("#Note").val(),
+            //"GeneralLedger": $("#GeneralLedger").val(),
+            "CostCenter": $("#CostCenter").val(),
+            "EffectiveDate": $("#EffectiveDate").val(),
+            "ReferenceNo": $("#ReferenceNo").val()
+        }
+
+        if (!$('#IsScanHu').is(":checked")) {
+            var sequences = "";
+            var items = "";
+            var qtys = "";
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var row = $(rows[rowIndex]);
+                if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim(row[0].childNodes[6].innerText)) != 0) {
+                    if (items != "") {
+                        sequences += ",";
+                        items += ",";
+                        qtys += ",";
+                    }
+                    sequences += $.trim(row[0].childNodes[0].innerText);
+                    items += $.trim(row[0].childNodes[1].innerText);
+                    qtys += $.trim(row[0].childNodes[6].innerText);
+                }
+            }
+
+            var made = {
+                "sequences": sequences,
+                "items": items,
+                "qtys": qtys
+            }
+        }
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProductionFiScraptOrder/EditMiscOrder/",
+            data: $.extend(miscmstr, made),
+            success: function (data) {
+                $("#content").html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function Flow_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        } else {
+            var data = { "flow": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "text",
+                url: "/ProductionFiScraptOrder/_GetMiscOrderLocation/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    document.getElementById("miscOrderLocation").innerHTML = "<label>" + data + "</label>";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+
+    function Print(e) {
+        var data = {
+            "miscOrderNo": $("#MiscOrderNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProductionFiScraptOrder/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function Export(e) {
+        $("#miscOrderNo").val($("#MiscOrderNo").val());
+        $("#hiddenForm").submit();
+    }
+
+    function Import(e) {
+        var data = {
+            "miscOrderNo": $("#MiscOrderNo").val(),
+            "huIds": $("#huIds").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProductionFiScraptOrder/Import/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "导入成功") {
+                    $message.error(data);
+                }
+                else {
+                    $message.success("导入成功");
+                }
+                var data = {
+                    "miscOrderNo": $("#MiscOrderNo").val(),
+                    "MoveType": $("#MoveType").val(),
+                    "Status": $("#Status").val()
+                }
+                $("#divOutMiscOrderDetailList").html("Loading...");
+                $.ajax({
+                    type: "get",
+                    dataType: "text",
+                    url: "/ProductionFiScraptOrder/_MiscOrderDetailIsScanHu/",
+                    cache: false,
+                    data: data,
+                    success: function (data, textStatus) {
+                        $("#divOutMiscOrderDetailList").html(data);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function doClick(bl) {
+        if (bl) {
+            $('#importHuid').hide();
+            var data = {
+                "miscOrderNo": $("#MiscOrderNo").val(),
+                "location": $("#Location").val()
+            }
+            $("#divOutMiscOrderDetailList").html("Loading...");
+            $.ajax({
+                type: "get",
+                dataType: "text",
+                url: "/ProductionFiScraptOrder/_MiscOrderDetail/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    $("#divOutMiscOrderDetailList").html(data);
+                }
+            });
+        }
+        else {
+            $('#importHuid').show();
+           //debugger
+            var data = {
+                "miscOrderNo": $("#MiscOrderNo").val(),
+                "location": $("#Location").val(),
+                "moveType": $("#MoveType").val(),
+                "status": $("#Status").val()
+            }
+            $("#divOutMiscOrderDetailList").html("Loading...");
+            $.ajax({
+                type: "get",
+                dataType: "text",
+                url: "/ProductionFiScraptOrder/_MiscOrderDetailIsScanHu/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    $("#divOutMiscOrderDetailList").html(data);
+                }
+            });
+        }
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MiscOrderNo)
+            </div>
+            <div class="search-field">
+                @Html.DisplayFor(model => model.MiscOrderNo)
+            </div>
+            <div class="search-label">
+                @Html.LabelFor(model => model.MoveType)
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_MoveTypeDropDownList", "Common", new
+        {
+            SubType = (int)com.Sconit.CodeMaster.MiscOrderSubType.COST,
+            controlName = "MoveType1",
+            enable = false,
+            selectedValue = Model != null && Model.MoveType != null ? Model.MoveType : string.Empty
+        });
+                }
+                @Html.HiddenFor(model => model.MoveType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EffectiveDate)
+            </div>
+            @if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+            {   
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.EffectiveDate)
+                </div>
+            }
+            else
+            {
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.EffectiveDate)
+                </div>
+            }
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.MiscOrderStatus,
+               controlName = "Status",
+               selectedValue = (int)Model.Status,
+               enable = false
+
+           });
+                }
+                @Html.HiddenFor(model => model.Status)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsCs)
+            </div>
+            <div class="search-field">
+                @Html.DisplayFor(model => model.IsCs)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsScanHu)
+            </div>
+            <div class="search-field">
+                @Html.DisplayFor(model => model.IsScanHu)
+                @Html.HiddenFor(model => model.IsScanHu)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="search-field" id="miscOrderLocation">
+                @Html.DisplayFor(model => model.Location)
+                @Html.HiddenFor(model => model.Location)
+            </div>
+            <div class="editor-label-2">
+                <label>
+                最后修改日期
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.LastModifyDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.GeneralLedger)
+            </div>
+            <div class="editor-field-2">
+                @{
+           if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+           {   
+                    <text> @{
+               Html.RenderAction("_GeneralLedgerComboBox", "Common", new
+               {
+                   controlName = "GeneralLedger",
+                   selectedValue = Model != null ? Model.GeneralLedger : null,
+                   enable = false
+               });}
+                    </text>
+           }
+           else
+           {
+                    @Html.DisplayFor(model => model.GeneralLedger)
+                    @Html.HiddenFor(model => model.GeneralLedger)
+           }
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CostCenter)
+            </div>
+            <div class="editor-field-2">
+                @{
+           if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+           {   
+                    <text>
+                    @{
+               Html.RenderAction("_CostCenterComboBox", "Common", new
+               {
+                   controlName = "CostCenter",
+                   selectedValue = Model != null ? Model.CostCenter : null
+               });
+                    }
+                    </text>
+           }
+           else
+           {
+                    @Html.DisplayFor(model => model.CostCenter)
+                    @Html.HiddenFor(model => model.CostCenter)
+           }
+                }
+
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReferenceNo)
+            </div>
+            <div class="editor-field-2">
+                @{
+           if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+           {   
+                    @Html.EditorFor(model => model.ReferenceNo)
+           }
+           else
+           {
+                    @Html.DisplayFor(model => model.ReferenceNo)
+                    @Html.HiddenFor(model => model.ReferenceNo)
+           }
+                }
+                @Html.Hidden("MiscOrderNo", Model.MiscOrderNo)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Note)
+            </div>
+            <div class="editor-field-2">
+                @{
+           if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+           {   
+                    @Html.EditorFor(model => model.Note)
+           }
+           else
+           {
+                    @Html.DisplayFor(model => model.Note)
+                    @Html.HiddenFor(model => model.Note)
+           }
+                }
+                @Html.Hidden("MiscOrderNo", Model.MiscOrderNo)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.QualityType)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.QualityType,
+               controlName = "QualityType",
+               selectedValue = Model != null ? ((int)Model.QualityType).ToString() : null,
+               enable = Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create
+           });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @if (Model.IsScanHu)
+                {
+                    @Html.RadioButton("searchType", 1, true, new { onclick = "doClick(false)" })<span>条码明细</span><span
+                        style="margin: 4px"></span>
+                    @Html.RadioButton("searchType", 0, false, new { onclick = "doClick(true)" })<span>物料明细</span>
+                }
+            </div>
+        </div>
+            @{
+                if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create && false)
+                {
+                <div class="search-label">
+                    <label>
+                        <a href='/Resource/Templates/UploadTemplate/MiscOrder.xls'>@Resources.EXT.PageLan.TemplateDownload</a>
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().Upload()
+                    .Name("attachments")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("ImportMiscOrderDetail", "ProductionFiScraptOrder")
+                    .AutoUpload(true))
+                    .ClientEvents(e => e.OnSuccess("onSuccess").OnUpload("onUpload")))
+                </div>
+                }
+            }
+        <div class="editor-footer">
+            @{
+                if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+                {   
+                @Html.Button(Resources.SYS.Global.Button_Save, "Url_ProductionFiScraptOrder_Edit", new Dictionary<string, string>
+
+()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"onclick","onEdit()"}
+	        })
+
+                @Html.Button(Resources.SYS.Global.Button_Delete, "Url_ProductionFiScraptOrder_Edit", new Dictionary<string,
+
+string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnDelete"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/ProductionFiScraptOrder/btnDelete/" + Model.MiscOrderNo) +"'"}
+	            })
+                @Html.Button(Resources.SYS.Global.Button_Confirm, "Url_ProductionFiScraptOrder_Confirm", new Dictionary<string,
+
+string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnClose"},
+                    {"needconfirm","true"},
+                     {"onclick","location.href='"+Url.Content("~/ProductionFiScraptOrder/btnClose/" + Model.MiscOrderNo) +"'"}
+	            })
+               
+                }
+                else if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Close)
+                {
+                @Html.Button(Resources.SYS.Global.Button_Cancel, "Url_ProductionFiScraptOrder_Confirm", new Dictionary<string,
+
+string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnCancel"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/ProductionFiScraptOrder/btnCancel/" + Model.MiscOrderNo) +"'"}
+	            })
+                }
+            }
+
+            <button type="button" id="btnPrint" onclick="Print()">
+                @Resources.SYS.Global.Button_Print</button>
+
+            <button type="button" id="btnExport" onclick="Export()">
+                @Resources.SYS.Global.Button_Export</button>
+
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ProductionFiScraptOrder/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+
+        </div>
+        <div id="importHuid">
+            @if (Model.IsScanHu && Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+            {
+                <table>
+                    <tr>
+                        <td>
+                            <textarea id="huIds" name="huIds" class="normal" rows="20" cols="110"></textarea>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" id="btnImport" onclick="Import()">
+                                @Resources.SYS.Global.Button_Import</button>
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+    </fieldset>
+    <div id="divOutMiscOrderDetailList">
+        @{
+            if (!Model.IsScanHu)
+            {
+                Html.RenderAction("_MiscOrderDetail", "ProductionFiScraptOrder", new
+                {
+                    miscOrderNo = Model.MiscOrderNo,
+                    location = Model.Location
+                });
+            }
+            else
+            {
+                Html.RenderAction("_MiscOrderDetailIsScanHu", "ProductionFiScraptOrder", new
+                {
+                    miscOrderNo = Model.MiscOrderNo,
+                    MoveType = Model.MoveType,
+                    location = Model.Location,
+                    Status = Model.Status
+                });
+            }
+        }
+    </div>
+}
+
+<form id="hiddenForm" action="/ProductionFiScraptOrder/SaveToClient" target="_blank"
+    method="post">
+    <input id="miscOrderNo" name="miscOrderNo" type="hidden" />
+</form>

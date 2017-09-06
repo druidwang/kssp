@@ -1,0 +1,243 @@
+﻿@using com.Sconit.Web.Models.SearchModels.ORD
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProcurementOrder_RequisitionOrder" });
+}
+<script type="text/javascript">
+    function onSearch() {
+        if ($('#TransferFlow').val() == "") {
+            $message.error('路线为必填项。');
+            return;
+        }
+
+        //if ($('#ProductLine').val() == "") {
+        //    $message.error('生产线为必填项。');
+        //    return;
+        //}
+
+        if ($('#DateFrom').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+
+        if ($('#DateTo').val() == "") {
+            $message.error('结束时间为必填项。');
+            return;
+        }
+
+        var requisitionUrl = "/ProcurementOrder/_RequisitionOrderDetailList/";
+        var searchModel = {
+            "TransferFlow": $('#TransferFlow').val(),
+            "ProductLine": $('#ProductLine').val(),
+            "DateFrom": $('#DateFrom').val(),
+            "DateTo": $('#DateTo').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: requisitionUrl,
+            cache: false,
+            data: searchModel,
+            success: function (data, textStatus) {
+                var content = $("#divOrders");
+                $(content).html(data);
+            }
+        });
+    }
+
+    function onCreate() {
+        //debugger
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error('订单明细不能为空。');
+            return;
+        }
+
+        var Sequences = new Array();
+        var Items = new Array();
+        var ReferenceItemCodes = new Array();
+        var ItemDescriptions = new Array();
+        var UnitCounts = new Array();
+        var UnitCountDescriptions = new Array();
+        var Uoms = new Array();
+        var LocationFroms = new Array();
+        var LocationTos = new Array();
+        var OrderedQtys = new Array();
+        var HuTos = new Array();
+        var Remarks = new Array();
+        var RequiredQtys = new Array();
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var i = 0;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim($(row[0].childNodes[9]).find("input").val())) > 0) {
+                Sequences[i] = $.trim(row[0].childNodes[0].innerText);
+                Items[i] = $.trim(row[0].childNodes[1].innerText);
+                UnitCounts[i] = $.trim(row[0].childNodes[3].innerText);
+                Uoms[i] = $.trim(row[0].childNodes[4].innerText);
+                HuTos[i] = $.trim(row[0].childNodes[5].innerText);
+                Remarks[i] = $.trim(row[0].childNodes[6].innerText);
+                RequiredQtys[i] = $.trim(row[0].childNodes[8].innerText);
+                OrderedQtys[i] = $.trim($(row[0].childNodes[9]).find("input").val());
+                i++;
+            }
+        }
+        var ordermstr = {
+            "Flow": $("#TransferFlow").val(),
+            "StartTime": $("#DateFrom").val(),
+            "WindowTime": $("#DateFrom").val(),
+        }
+        var made = {
+            "Sequences": Sequences,
+            "Items": Items,
+            "UnitCounts": UnitCounts,
+            "Uoms": Uoms,
+            "LocationFroms": LocationFroms,
+            "LocationTos": LocationTos,
+            "OrderedQtys": OrderedQtys,
+            "HuTos": HuTos,
+            "Remarks": Remarks,
+            "RequiredQtys": RequiredQtys
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/ProcurementOrder/NewOrder/",
+            data: $.extend(made, ordermstr),
+            traditional: true,
+            success: function (data, ordermstr) {
+                if (data != null && data.Data != null && data.Data.OrderNo != undefined) {
+                    window.location.href = "/ProcurementOrder/Edit/?orderNo=" + data.Data.OrderNo;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function onConfirm() {
+        //debugger
+        var searchModel = new Object();
+        searchModel.TransferFlow = $('#TransferFlow').val();
+        searchModel.WindowTime = $('#DateFrom').val();
+        searchModel.IsPlan = $('#ProductLine').val().substring(0, 2) == "EX";
+        searchModel.Details = new Array();
+
+        var grid = $("#Order").data("tGrid");
+        if (grid == null) {
+            $message.error("明细不能为空");
+            return;
+        }
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var i = 0;
+        var orderedIndex = grid.columns.length - 2;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if (row.find("#checkedRecords")[0].checked) {
+                searchModel.Details[i] = new Object();
+                searchModel.Details[i][0] = $.trim(row[0].childNodes[2].innerText);
+                if (searchModel.IsPlan) {
+                    searchModel.Details[i][1] = $.trim(row[0].childNodes[5].innerText);
+                    searchModel.Details[i][2] = $.trim(row[0].childNodes[9].innerText);
+                }
+                i++;
+            }
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProcurementOrder/RequisitionTransferOrder/",
+            data: searchModel,
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.EXT.PageLan.TransferFlow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common",
+                    new
+                    {
+                        controlName = "TransferFlow",
+                        type = (int)com.Sconit.CodeMaster.OrderType.Transfer,
+                        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+                        selectedValue = TempData["RequisitionOrderSearchModel"] != null ? ((RequisitionOrderSearchModel)TempData["RequisitionOrderSearchModel"]).TransferFlow : null
+                    });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.EXT.PageLan.ProductionLine
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common",
+                    new
+                    {
+                        controlName = "ProductLine",
+                        includeBlankOption = true,
+                        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+                        selectedValue = TempData["RequisitionOrderSearchModel"] != null ? ((RequisitionOrderSearchModel)TempData["RequisitionOrderSearchModel"]).ProductLine : null
+                    });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.EXT.PageLan.DateFrom
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik()
+            .DateTimePicker().Name("DateFrom")
+            .Format("yyyy-MM-dd HH:mm")
+            .Value(TempData["RequisitionOrderSearchModel"] != null ? ((RequisitionOrderSearchModel)TempData["RequisitionOrderSearchModel"]).DateFrom : DateTime.Now)
+            .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.EXT.PageLan.To
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DateTimePicker().Name("DateTo")
+            .Format("yyyy-MM-dd HH:mm")
+            .Value(TempData["RequisitionOrderSearchModel"] != null ? ((RequisitionOrderSearchModel)TempData["RequisitionOrderSearchModel"]).DateTo : DateTime.Now)
+            .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+    </div>
+    <div class="editor-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="Search" onclick="onSearch()">
+            @Resources.SYS.Global.Button_Search</button>
+        @Html.Button(Resources.SYS.Global.Button_Create, "Url_ProcurementOrder_RequisitionOrder", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnConfirm"},
+                {"needconfirm","true"},
+                {"onclick","onCreate()"},
+	        })
+    </div>
+</fieldset>
+<div id="divOrders">
+</div>

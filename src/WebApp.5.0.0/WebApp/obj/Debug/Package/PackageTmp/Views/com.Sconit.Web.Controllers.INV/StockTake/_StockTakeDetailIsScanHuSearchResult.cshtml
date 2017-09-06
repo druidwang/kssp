@@ -1,0 +1,125 @@
+﻿@model IList<com.Sconit.Entity.INV.StockTakeDetail>
+<script type="text/javascript">
+    function StockTakeDetailIsScanHuGridView_OnDataBinding(e) {
+        e.data = {
+            "stNo": $("#StNo").val(),
+            "ItemCode": $("#ItemCode").val(),
+            "Location": $("#LocationId").val(),
+            "LocationBin": $("#LocationBin").val()
+        };
+    }
+
+    function onDeleteDetail(e) {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var Ids = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (Ids == "") {
+                    Ids = $checkRecords[i].value;
+                } else {
+                    Ids += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (Ids == "") {
+            alert('请选择一个盘点结果');
+            return;
+        }
+        var indata = {
+            "Ids": Ids,
+            "stNo": $("#StNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/StockTake/_DeleteStockTakeDetail/",
+            data: indata,
+            success: function (data, indata) {
+                $message.success(data.SuccessMessage);
+               
+                if (data != "") {
+                    var orderData = {
+                        "stNo": $("#StNo").val(),
+                        "Status": $("#Status").val(),
+                        "IsScanHu": $("#IsScanHu").val()
+                    };
+                    $.ajax({
+                        type: "get",
+                        dataType: "Html",
+                        url: "/StockTake/_StockTakeDetail/",
+                        data: orderData,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var tabStrip = $("#TabStrip");
+                            var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                            $(tabStripContent1).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+    }
+    $(function () { 
+        
+        $("#checkAll").click(function () {
+
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+
+        });
+    });
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("StockTakeDetailIsScanHuGridView")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+
+        .ToolBar(commands =>
+        {
+            if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.InProcess.ToString())
+            {
+                commands.Custom().Text(@Resources.SYS.Global.Button_Delete).HtmlAttributes(new { onClick = "onDeleteDetail()", href = "#" });
+            }
+        })
+        .Columns(columns =>
+        {
+            if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.InProcess.ToString())
+            {
+                columns.Bound(o => o.Id)
+            .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>'   />")
+            .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+            .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            }
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.QualityTypeDescription);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.IsCS).Title("寄售")
+               .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsCS' name='IsCS' value='<#= IsCS #>' <#=IsCS? checked='checked' : '' #> />");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxStockTakeDetail", "StockTake")
+            // .Update("_SaveStockTakeDetailBatchEditing", "StockTake", new { id = ViewBag.StNo })
+        )
+                .ClientEvents(events => events.OnDataBinding("StockTakeDetailIsScanHuGridView_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 50);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>

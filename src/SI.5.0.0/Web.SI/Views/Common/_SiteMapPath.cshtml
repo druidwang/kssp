@@ -1,0 +1,20 @@
+﻿@model IEnumerable<com.Sconit.Web.Models.MenuModel>
+<div style="margin: -8px 0 7px 0">
+    @{
+        List<MenuModel> menus = this.Model.Reverse().ToList();
+        int i = 0;
+        <span>Home -> </span>        
+        foreach (var menu in menus)
+        {
+            i++;
+        <span>
+            @Html.Label(menu.Description)
+        </span>
+            if (i < menus.Count())
+            {
+        <span>-></span>   
+            }
+        }  
+    
+    }
+</div>

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<com.Sconit.Entity.MD.SpecialTime>
+<fieldset>
+    <script type="text/javascript">
+        function SpecialTimeGrid_OnDataBinding(e) {
+            if (e.sortedColumns.length > 0) {
+                if (e.sortedColumns[0].member == "TypeDescription") {
+                    e.sortedColumns[0].member = "Type";
+                }
+            }
+            e.data = {
+                // Id: $('#Id').val(),
+                Region: $('#SpecialTimeRegion').val(),
+                StartTime: $('#StartTime').val(),
+                EndTime: $('#EndTime').val(),
+                Flow:$("#SpecialTimeFlow").val()
+                //             Description: $('#Description').val(),
+                //             TypeDescription: $('#TypeDescription').val()
+            };
+        } 
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("SpecialTimeGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            // columns.Bound(o => o.Id).ClientTemplate(string.Format("<a href=\"javascript:onSpeTimeclick('{0}')\">{1}</a>", "<#= Id #>", "<#= Id #>"));
+            columns.Bound(o => o.TypeDescription).ClientTemplate(string.Format("<a href=\"javascript:onSpeTimeclick('{0}')\">{1}</a>", "<#= Id #>", "<#= TypeDescription #>"));
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.EndTime);
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.Remarks);
+
+        })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSpecialTimeList", "WorkingCalendar"))
+                .ClientEvents(events => events.OnDataBinding("SpecialTimeGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>
+<script type="text/javascript">
+    function onSpeTimeclick(code) {
+        var data = {
+            "Id": code
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/WorkingCalendar/SpecialTimeEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(data);
+            }
+        });
+    }
+</script>

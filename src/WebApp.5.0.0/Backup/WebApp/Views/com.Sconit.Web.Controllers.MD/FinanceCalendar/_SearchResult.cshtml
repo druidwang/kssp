@@ -1,0 +1,43 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MD.FinanceCalendar>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("FinanceCalendarGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.FinanceYear).ClientTemplate(Html.ActionLink("<#= FinanceYear #>", "Edit", "FinanceCalendar", new { ID = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.FinanceMonth);
+            columns.Bound(o => o.StartDate);
+            columns.Bound(o => o.EndDate);
+            columns.Bound(o => o.IsClose)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsClose' <#= IsClose? checked='checked' : '' #> />"); 
+                 })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "FinanceCalendar"))
+                .ClientEvents(events => events.OnDataBinding("FinanceCalendarGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function FinanceCalendarGrid_OnDataBinding(e) {
+            e.data = {
+                FinanceYear: $('#FinanceYear').val(),
+                StartDate: $('#StartDate').val()
+            };
+        } 
+    </script>
+</fieldset>

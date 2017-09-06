@@ -1,0 +1,76 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MD
+
+<fieldset>
+<legend>@Resources.MD.Party.Party_CurrentParty:@ViewBag.PartyCode</legend>
+
+        <div class="search">
+            <div class="search-label">
+                <label for="Address_Code">
+                    @Resources.MD.Region.Region_AddressCode
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ShipAddress_Code", TempData["PartyAddressSearchModel"] != null ? ((PartyAddressSearchModel)TempData["PartyAddressSearchModel"]).AddressCode : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Address_Name">
+                    @Resources.MD.Region.Region_AddressName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ShipAddress_AddressContent", TempData["PartyAddressSearchModel"] != null ? ((PartyAddressSearchModel)TempData["PartyAddressSearchModel"]).AddressContent : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch_ShipAddress" onclick="btnSearch_ShipAddress_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew_ShipAddress" onclick="btnNew_ShipAddress_Click()">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack_ShipAddress" onclick="location.href='@Url.Content("~/Region/List")'">
+                @Resources.SYS.Global.Button_Back
+            </button>
+        </div>
+</fieldset>
+
+<script type="text/javascript">
+
+    function btnSearch_ShipAddress_Click() {
+        var data = {
+            "PartyCode": $("#PartyCode").val(),
+            "AddressCode": $("#ShipAddress_Code").val(),
+            "AddressContent": $("#ShipAddress_AddressContent").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Region/_ShipAddressList/",
+            data: data,
+            cache:false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    function btnNew_ShipAddress_Click() {
+        var data = {
+            "PartCode": $("#PartCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Region/_ShipAddressNew/",
+            data: "",
+            cache:false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>

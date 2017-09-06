@@ -1,0 +1,207 @@
+﻿@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.BIL.ActingBill>
+<fieldset>
+    <script type="text/javascript">
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+                $("#btnEdit").attr("style", this.checked ? "display:inline" : "display:none");
+                $("#btnCreateActingBill").attr("style", this.checked ? "display:inline" : "display:none");
+                $("#btnExport").attr("style", this.checked ? "display:inline" : "display:none");
+            });
+        });
+
+        function showButtons() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            $("#btnEdit").attr("style", showButton ? "display:inline" : "display:none");
+            $("#btnCreateActingBill").attr("style", showButton ? "display:inline" : "display:none");
+            $("#btnExport").attr("style", showButton ? "display:inline" : "display:none");
+        }
+
+        function CreateActingBill() {
+            var SuccessMessage;
+            var grid = $("#ActingBill").data("tGrid");
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            var idStr = "";
+            var amountStr = "";
+            var qtyStr = "";
+            var discontStr = "";
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var row = $(rows[rowIndex]);
+                if (row.find("#checkedRecords")[0].checked) {
+                    var acQty = row.find("#CurrentBillQty").val();
+                    if (acQty != "" && acQty != 0) {
+                        var id = row.find("#checkedRecords").val();
+                        var amount = row.find("#CurrentBillAmount").val();
+                        var discont = row.find("#CurrentDiscount").val();
+                        if (idStr == "") {
+                            idStr = id;
+                            amountStr = amount;
+                            qtyStr = acQty;
+                            discontStr = discont;
+                        } else {
+                            idStr += "," + id;
+                            amountStr += "," + amount;
+                            qtyStr += "," + acQty;
+                            discontStr +=","+ discont;
+                        }
+                    }
+                }
+            }
+            if (idStr == "") {
+                $message.error('至少选择一行.');
+                return;
+            }
+
+            var data = {
+                "idStr": idStr,
+                "amountStr": amountStr,
+                "qtyStr": qtyStr,
+                "discontStr": discontStr
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                async: false,
+                url: "/DistributionBill/CreateActBill/",
+                cache: false,
+                success: function (data, textStatus) {
+                if (data.BillNo != "" && data.BillNo != null) {
+                    SuccessMessage =  data.SuccessMessage ;
+                        var dd={
+                        "BillNo": data.BillNo,
+                         "groupOrDetail":"0"
+                        }
+                        $.ajax({
+                            type: "get",
+                            dataType: "html",
+                            data: dd,
+                            async: false,
+                            url: "/DistributionBill/Edit/",
+                            cache: false,
+                            success: function (data, textStatus) {
+                                var $tGrid = $("#content");
+                                $($tGrid).html(data);
+                                $message.success(SuccessMessage);
+                               
+                            }
+                        });
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    
+                    $message.error(errorMessages);
+                }
+            });
+        }
+
+        function CurrentBillAmountValue(e, UnitPrice) {
+            var maxBillAmount = parseFloat($(e).parent().prev().prev().prev().prev().text()) - parseFloat($(e).parent().prev().prev().text());
+            if (isNaN(e.value) || parseInt(e.value) < 0) {
+                
+                $message.error("开票数必须为大于0的数字。");
+                $(e).val(maxBillAmount);
+
+                $(e).parent().next().next().children().val(parseInt((maxBillAmount * UnitPrice - parseFloat($(e).parent().next().children().val())).toFixed(2)));
+                return;
+            }
+            if (parseFloat(e.value) > maxBillAmount) {
+                
+                $message.error("本次最大可开票数为" + maxBillAmount + "。");
+                $(e).val(maxBillAmount);
+                $(e).parent().next().next().children().val(parseInt((maxBillAmount * UnitPrice - parseFloat($(e).parent().next().children().val())).toFixed(2)));
+                return;
+            }
+            $message.error("");
+            var amount = (parseFloat(e.value) * UnitPrice - parseFloat($(e).parent().next().children().val())).toFixed(2);
+            if (!isNaN(amount) && amount > 0) {
+                $(e).parent().next().next().children().val(parseFloat(amount));
+            }
+            else {
+                $(e).parent().next().next().children().val(parseInt((e.value) * UnitPrice).toFixed(2));
+                $(e).parent().next().children().val(0);
+            }
+
+        }
+
+        function onCurrentDiscountBlur(e, UnitPrice) {
+            $message.error("");
+            //本次最大开票数
+            // var maxBillAmount = parseFloat($(e).parent().prev().children().val()) - parseFloat($(e).parent().prev().text());
+            var currentBillQty = $(e).parent().prev().children().val();
+            if (parseFloat(currentBillQty) == 0 || currentBillQty == "") {
+                $message.error("请先填写本次开票数,在填写折扣。");
+                $(e).val(0);
+                $(e).parent().next().children().val(parseFloat(currentBillQty * UnitPrice).toFixed(2));
+                return;
+            }
+            if (isNaN(e.value) || parseFloat(e.value) < 0) {
+                
+                $message.error("折扣必须为大于0的数字。");
+                $(e).val(0);
+                $(e).parent().next().children().val(parseFloat(currentBillQty * UnitPrice).toFixed(2));
+                return;
+            }
+            if (parseFloat(e.value) > parseFloat(currentBillQty) * UnitPrice) {
+                $message.error("折扣不能大于本次开票金额。");
+                $(e).val(0);
+                $(e).parent().next().children().val(parseFloat((currentBillQty) * UnitPrice).toFixed(2));
+                return;
+            }
+            $(e).parent().next().children().val(parseFloat((parseFloat(currentBillQty) * UnitPrice - parseFloat(e.value)).toFixed(2)));
+        }
+      
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("ActingBill")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.CheckOrderNo)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>'   onClick='showButtons()' />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            //columns.Bound(o => o.Flow);
+            //columns.Bound(o => o.PartyName);
+            columns.Bound(o => o.ReceiptNo);
+            columns.Bound(o => o.ExternalReceiptNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.EffectiveDate).Format("{0:d}");
+            columns.Bound(o => o.UnitPrice);
+            columns.Bound(o => o.Currency);
+            columns.Bound(o => o.BillQty);
+            columns.Bound(o => o.BillAmount);
+            columns.Bound(o => o.BillingQty);
+            columns.Bound(o => o.BillingAmount);
+            columns.Bound(o => o.CurrentBillQty).ClientTemplate("<input type='text'  style='width:60px;' id='CurrentBillQty' onblur='CurrentBillAmountValue(this,<#= UnitPrice #>)' name='BilledcountQty' value='<#= BillQty-BillingQty #>' />").Width(80);
+            columns.Bound(o => o.CurrentDiscount).ClientTemplate("<input type='text'  style='width:60px;'  id='CurrentDiscount'  name='CurrentDiscount' value='0' onblur='onCurrentDiscountBlur(this,<#= UnitPrice #>)' />").Width(80);
+            columns.Bound(o => o.CurrentBillAmount).ClientTemplate("<input type='text'  style='width:80px;' disabled='true'  id='CurrentBillAmount'  name='Amount' value='<#= CurrentBillAmount #>' />").Width(80);
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxActBillList", "DistributionBill", new
+        {
+            Party = ViewBag.Party,
+            ReceiptNo = ViewBag.ReceiptNo,
+            ExtReceiptNo = ViewBag.ExternalReceiptNo,
+            Flow = ViewBag.Flow,
+            Item = ViewBag.Item,
+            StartTime = ViewBag.StartTime,
+            EndTime = ViewBag.EndTime,
+            Currency = ViewBag.Currency
+        }))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+          )
+</fieldset>

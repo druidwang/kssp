@@ -1,0 +1,77 @@
+﻿@using com.Sconit.Entity.ORD
+@using com.Sconit.Web.Models.SearchModels.INV
+<script type="text/javascript">
+    function ProductBarCodeGrid_OnDataBinding(e) {
+        e.data = {
+            HuId: $('#HuId').val()
+        };
+    }
+
+    function editCheckedProductBarCodes() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedProductBarCodes = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedProductBarCodes == "") {
+                    checkedProductBarCodes = $checkRecords[i].value;
+                } else {
+                    checkedProductBarCodes += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (checkedProductBarCodes == "") {
+            alert('Must Check One');
+            return;
+        }
+        var data = {
+            "checkedProductBarCodes": checkedProductBarCodes,
+            "huId": $('#HuId').val()
+        };
+        $.ajax({
+            type: "Post",
+            dataType: "Json",
+            url: "/Hu/RepackProductBarCode/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                if (data.PrintUrl != "" && data.PrintUrl != undefined) {
+                    PrintOrder(data.PrintUrl);
+                }
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("Repack", "Hu"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Hu_HuId">
+                    @Resources.INV.Hu.Hu_HuId
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("HuId", TempData["HuSearchModel"] != null ? ((HuSearchModel)TempData["HuSearchModel"]).HuId : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_Repack, "Url_Inventory_Hu_Repack", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnRepack"},
+        {"onclick","editCheckedProductBarCodes()"},
+        {"style","display:none"}
+	})
+        </div>
+    }
+</fieldset>

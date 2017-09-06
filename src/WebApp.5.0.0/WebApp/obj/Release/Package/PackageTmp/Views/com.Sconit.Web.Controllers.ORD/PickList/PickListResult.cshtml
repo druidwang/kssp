@@ -1,0 +1,40 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.PickListResult>
+           
+<fieldset>
+<legend>@Resources.ORD.PickListResult.PickListResult_Edit_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickListResultGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PickListNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PickListNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.Qty);
+        })
+        .Scrollable()
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxPickListResultList", "PickList"))
+                .ClientEvents(events => events.OnDataBinding("PickListResultGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function PickListResultGrid_OnDataBinding(e) {
+            e.data = {
+        };
+    } 
+    </script>
+</fieldset>

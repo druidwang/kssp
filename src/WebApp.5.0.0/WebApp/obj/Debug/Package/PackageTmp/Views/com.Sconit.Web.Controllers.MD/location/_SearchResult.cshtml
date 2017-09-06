@@ -1,0 +1,57 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MD.Location>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("LocationGrid")
+                .DataKeys(keys =>
+                {
+                    keys.Add(p => p.Code);
+                })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "Location", new { ID = "<#= Code #>" }, null).ToString()); 
+            columns.Bound(o => o.Name);
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.SAPLocation);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+            columns.Bound(o => o.AllowNegative)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='AllowNegative' <#= AllowNegative? checked='checked' : '' #> />");
+            //columns.Bound(o => o.IsMRP)
+            //    .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsMRP' <#= IsMRP? checked='checked' : '' #> />");
+            //columns.Bound(o => o.IsConsignment)
+            // .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsConsignment' <#= IsConsignment? checked='checked' : '' #> />");
+            //columns.Bound(o => o.EnableAdvanceWarehouseManagment)
+            //           .ClientTemplate("<input type='checkbox' disabled='disabled' name='EnableAdvanceWarehouseManagment' <#= EnableAdvanceWarehouseManagment? checked='checked' : '' #> />"); 
+                 })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Location"))
+                .ClientEvents(events => events.OnDataBinding("LocationGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+
+        function LocationGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Name: $('#Name').val(),
+                Region: $('#Region').val(),
+                IsIncludeInActive: $('#IsIncludeInActive').is(':checked'),
+                AllowNegaInv: $('#AllowNegaInv').is(':checked'),
+              //  IsMRP: $('#IsMRP').is(':checked'),
+                SAPLocation: $('#SAPLocation').val()
+            };
+        } 
+    </script>
+</fieldset>

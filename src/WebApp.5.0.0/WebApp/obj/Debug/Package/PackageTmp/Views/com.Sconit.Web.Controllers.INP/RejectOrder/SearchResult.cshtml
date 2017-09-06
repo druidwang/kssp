@@ -1,0 +1,64 @@
+﻿@using com.Sconit.Entity.INP;
+@model IEnumerable<com.Sconit.Entity.INP.RejectMaster>
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("RejectMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.RejectNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.RejectNo).ClientTemplate(Html.ActionLink("<#= RejectNo #>", "Edit", "RejectOrder", new { id = "<#= RejectNo #>" }, null).ToString());
+            columns.Bound(o => o.ReferenceNo);
+            columns.Bound(o => o.RejectMasterStatusDescription);
+            columns.Bound(o => o.RejectMasterHandleResultDescription);
+            columns.Bound(o => o.IsPrint)
+                 .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsPrint' <#= IsPrint? checked='checked' : '' #> />");
+        })
+                .DetailView(details => details.ClientTemplate(
+                            Html.Telerik().Grid<RejectDetail>()
+                                                .Name("RejectDetail<#= RejectNo #>")
+                        .Columns(columns =>
+                        {
+                            columns.Bound(o => o.InspectNo).ReadOnly();
+                            columns.Bound(o => o.Item).ReadOnly();
+                            columns.Bound(o => o.ItemDescription).ReadOnly();
+                            columns.Bound(o => o.Uom).ReadOnly();
+                            columns.Bound(o => o.UnitCount).ReadOnly();
+                            columns.Bound(o => o.HuId).ReadOnly();
+                            columns.Bound(o => o.LotNo).ReadOnly();
+                            columns.Bound(o => o.CurrentLocation).ReadOnly();
+                            columns.Bound(o => o.HandleQty).ReadOnly(ViewBag.Status != com.Sconit.CodeMaster.RejectStatus.Create);
+                            columns.Bound(o => o.FailCode).ReadOnly();
+                        })
+                        .DataBinding(dataBinding => dataBinding.Ajax()
+                                                        .Select("_AjaxRejectDetail", "RejectOrder", new { RejectNo = "<#= RejectNo #>" }))
+                        .Footer(false)
+                        .Resizable(resizing => resizing.Columns(true))
+                        .ToHtmlString()
+            ))
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "RejectOrder"))
+        .ClientEvents(events => events.OnDataBinding("RejectMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function RejectMasterGrid_OnDataBinding(e) {
+            e.data = {
+                RejectNo: $('#RejectNo').val(),
+                Status: $('#Status').val(),
+                InspectNo: $('#InspectNo').val()
+            };
+        } 
+    </script>
+</fieldset>

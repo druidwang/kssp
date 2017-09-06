@@ -1,0 +1,60 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MRP.MD.MachineInstance>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+          .Name("MachineInstanceGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+            keys.Add(p => p.DateIndex);
+            keys.Add(p => p.DateType);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "InstanceEdit", "Machine",
+                new { code = "<#= Code #>", dateIndex = "<#= DateIndex #>", dateType = "<#= DateType #>" }, null).ToString());
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.DateIndex);
+            
+            columns.Bound(o => o.DateTypeDescription);
+            columns.Bound(o => o.ShiftTypeDescription);
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.ShiftQuota);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.Island);
+            columns.Bound(o => o.MachineTypeDescription);
+            columns.Bound(o => o.NormalWorkDayPerWeek);
+            columns.Bound(o => o.MaxWorkDayPerWeek);
+            columns.Bound(o => o.ShiftPerDay);
+            //columns.Bound(o => o.IsManualCreate).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsManualCreate' <#= IsManualCreate? checked='checked' : '' #> />");
+            //columns.Bound(o => o.IsRelease).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsRelease' <#= IsRelease? checked='checked' : '' #> />");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxInstanceList", "Machine"))
+        .ClientEvents(events => events.OnDataBinding("MachineInstanceGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function MachineInstanceGrid_OnDataBinding(e) {
+            e.data = {
+                Region: $('#Region').val(),
+                Code: $('#Code').val(),
+                DateType: $('#DateType').val(),
+                ShiftType: $('#ShiftType').val(),
+                DateIndex: $('#DateIndex').val(),
+                DateIndexTo: $('#DateIndexTo').val(),
+                DateIndexDate: $('#DateIndexDate').val(),
+                DateIndexToDate: $('#DateIndexToDate').val(),
+                MachineType: $('#MachineType').val()
+
+            };
+        } 
+    </script>
+</fieldset>

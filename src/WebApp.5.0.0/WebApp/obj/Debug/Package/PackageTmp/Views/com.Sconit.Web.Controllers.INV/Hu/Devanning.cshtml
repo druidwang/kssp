@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Inventory_Hu_Devanning" });
+}
+
+@Html.Partial("_DevanningSearch")
+
+@Html.Partial("_DevanningHuList")

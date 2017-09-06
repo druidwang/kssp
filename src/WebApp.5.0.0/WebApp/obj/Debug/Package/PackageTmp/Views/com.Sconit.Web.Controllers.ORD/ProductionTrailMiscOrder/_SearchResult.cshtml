@@ -1,0 +1,53 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.MiscOrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("MiscOrderGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.MiscOrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.MiscOrderNo).ClientTemplate(Html.ActionLink("<#= MiscOrderNo #>", "Edit", "ProductionTrailMiscOrder", new { id = "<#= MiscOrderNo #>" }, null).ToString());
+            columns.Bound(o => o.EffectiveDate);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.MoveType);
+            columns.Bound(o => o.StatusDescription);
+            columns.Bound(o => o.Flow).Title("生产线");
+            columns.Bound(o => o.Note).Title("原因");
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ProductionTrailMiscOrder"))
+        .ClientEvents(events => events.OnDataBinding("MiscOrderGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function MiscOrderGrid_OnDataBinding(e) {
+            e.data = {
+                MiscOrderNo: $('#MiscOrderNo').val(),
+                Status: $('#Status').val(),
+                MoveType: $('#MoveType').val(),
+                CostCenter: $('#CostCenter').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                Flow: $('#Flow').val(),
+                Note: $('#Note').val()
+            }
+        }
+    </script>
+</fieldset>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<com.Sconit.Entity.INP.RejectDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("RejectDetailGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.RejectNo);
+            columns.Bound(o => o.InspectNo);
+            columns.Bound(o => o.Item);
+            //columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            //columns.Bound(o => o.UnitCount).Format("{0:0.########}");
+            columns.Bound(o => o.HuId);
+            //columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.ReceiptNo);
+            //columns.Bound(o => o.WMSNo);
+            columns.Bound(o => o.CurrentLocation);
+            columns.Bound(o => o.HandleQty).Format("{0:0.########}");
+            columns.Bound(o => o.FailCode);
+
+            columns.Bound(o => o.JudgeUserName);
+            columns.Bound(o => o.JudgeDate);
+        })
+                .Scrollable(c => c.Enabled(false))
+              .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxRejectDetailList", "RejectOrder"))
+                             .ClientEvents(events => events.OnDataBinding("RejectDetailGrid_OnDataBinding"))
+                             .Pageable(settings =>
+                             {
+                                 settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                                 settings.PageSize(ViewBag.PageSize);
+                             })
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(true)
+    )
+    <script type="text/javascript">
+        function RejectDetailGrid_OnDataBinding(e) {
+            e.data = {
+                RejectNo: $("#RejectNo").val(),
+                Status: $('#Status').val(),
+                HandleResult: $('#HandleResult').val(),
+                CurrentLocation: $('#CurrentLocation').val(),
+                InspectNo: $('#InspectNo').val(),
+                IpNo: $('#IpNo').val(),
+                WMSNo: $('#WMSNo').val(),
+                ReceiptNo: $('#ReceiptNo').val(),
+                JudgeUserName: $("#JudgeUserName").val(),
+                CreateUserName: $("#CreateUserName").val(),
+                StartDate: $("#StartDate").val(),
+                EndDate: $("#EndDate").val(),
+                Item: $("#Item").val()
+
+            };
+        }
+    </script>
+</fieldset>

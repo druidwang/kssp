@@ -1,0 +1,160 @@
+﻿@using com.Sconit.Entity.INV;
+@model IList<com.Sconit.Entity.INV.StockTakeResult>
+ <script type="text/javascript">
+     function StockTakeResultGridView_OnDataBinding(e) {
+         e.data = {
+             Item: $('#Item').val(),
+             stNo: $("#StNo").val(),
+             Location: $("#Location").val(),
+             IsLoss: $("#IsLoss").is(':checked'),
+             IsProfit: $("#IsProfit").is(':checked'),
+             IsBreakEven: $("#IsBreakEven").is(':checked'),
+             isFromList: "true",
+             IsAdjust: $("#IsAdjust").is(':checked')
+         };
+     }
+
+     function btnAdjustResult() {
+         var $checkRecords = $("input[name='checkedRecords']");
+         var Ids = "";
+         for (var i = 0; i < $checkRecords.length; i++) {
+             if ($checkRecords[i].checked) {
+                 if (Ids == "") {
+                     Ids = $checkRecords[i].value;
+                 } else {
+                     Ids += "," + $checkRecords[i].value;
+                 }
+             }
+         }
+         if (Ids == "") {
+             alert('请选择一个盘点结果');
+             return;
+         }
+         var data = {
+             "Ids": Ids,
+             "StNo": $("#StNo").val()
+         };
+         $.ajax({
+             type: "Json",
+             dataType: "Json",
+             url: "/StockTake/_btnAdjust/",
+             data: data,
+             cache: false,
+             success: function (data, textStatus) {
+                 $('#StockTakeResultDetailGridWindow').data('tWindow').close();
+                 $message.success(data.SuccessMessage);
+                 $("#popResumeErrorsul").html('');
+                 
+             },
+             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                 var errorMessages = XMLHttpRequest.responseText;
+                 
+                 $("#popResumeErrorsul").html(errorMessages);
+             }
+
+         });
+     }
+     $(function () {
+         $("#popResumeErrorsul").html("");
+         $("#checkAll").click(function () {
+
+             $('input[name="checkedRecords"]').attr("checked", this.checked);
+             $('input[name="checkedRecords"]').each(function (a, b) {
+
+                 if ($(b).attr("IsAdjust").toString() == "True") {
+                     $(b).attr("checked", false);
+                     $(b).attr("disabled", true);
+                 }
+             });
+             showButtons();
+
+         });
+         var $checkedRecords = $("input[name='checkedRecords']");
+         $checkedRecords.click(function () {
+             $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+         });
+     });
+
+     function showButtons() {
+         var $checkRecords = $("input[name='checkedRecords']");
+
+         var showButton = false;
+         for (var i = 0; i < $checkRecords.length; i++) {
+             if ($checkRecords[i].checked) {
+                 showButton = true;
+                 break;
+             }
+         }
+         $("#btnAdjustResult").attr("style", showButton ? "display:inline" : "display:none");
+     }
+    </script>
+      <div class="validation-summary-errors">
+            <ul id="popResumeErrorsul">
+            </ul>
+        </div>
+        
+    @(Html.Telerik().Grid(Model)
+        .Name("StockTakeResultDetailGridView")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.Complete.ToString())
+            {
+                columns.Bound(o => o.Id)
+                    // .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>' onclick='showButtons()' IsAdjust='<#=IsAdjust #>' />")
+                    .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                   .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            }
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.QualityTypeDescription);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.IsCS).Title("寄售")
+               .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsCS' name='IsCS' value='<#= IsCS #>' <#=IsCS? checked='checked' : '' #> />");
+        })
+        .CellAction(cell =>
+        {
+            if (cell.Column.Member == "Id")
+            {
+                if (cell.DataItem.IsAdjust||cell.DataItem.DifferenceQty==0) {
+                    cell.Text = string.Format("<input type='checkbox' disabled='disabled'   value='" + cell.DataItem.Id + "'/>");
+                }
+                else
+                {
+                    cell.Text = string.Format("<input type='checkbox' id='checkedRecords' name='checkedRecords' onclick='showButtons()' IsAdjust='" + cell.DataItem.IsAdjust + "'  value='" + cell.DataItem.Id + "'/>");
+                }
+            }
+        })
+    .Scrollable(c => c.Enabled(false))
+            //.EnableCustomBinding(true)
+            //.DataBinding(dataBinding => dataBinding.Ajax().Select("_StockTakeResultDetail", "StockTake"))
+                            // .ClientEvents(events => events//.OnDataBinding("StockTakeResultGridView_OnDataBinding")
+                                               //  .OnRowDataBound("StockTakeResultGrid_OnRowDataBound1"))
+               // .Sortable()
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+        //.Pageable(settings =>
+        //{
+        //    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+        //    settings.PageSize(15);
+        //    settings.PageOnScroll(true);
+        //})
+    )
+@{
+      <div class="search-footer">
+      <br />
+    <button id="btnAdjustResult" style="display:none" onclick="btnAdjustResult()">
+    @Resources.SYS.Global.Button_Adjust
+    </button>
+        
+       </div>
+    }
+
+

@@ -1,0 +1,31 @@
+﻿@using com.Sconit.Web.Models.SearchModels.CUST
+@using com.Sconit.Entity.CUST
+<fieldset>
+    @using (Html.BeginForm("List", "HuMemo"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="FailCode_Code">
+                    @Resources.CUST.HuMemo.HuMemo_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["HuMemoSearchModel"] != null ? ((HuMemoSearchModel)TempData["HuMemoSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FailCode_Code">
+                    @Resources.CUST.HuMemo.HuMemo_Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["HuMemoSearchModel"] != null ? ((HuMemoSearchModel)TempData["HuMemoSearchModel"]).Description : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+                
+        </div>
+
+    }
+</fieldset>

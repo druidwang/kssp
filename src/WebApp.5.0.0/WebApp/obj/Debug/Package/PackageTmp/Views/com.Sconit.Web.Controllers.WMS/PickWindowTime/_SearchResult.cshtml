@@ -1,0 +1,41 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.WMS.PickWindowTime>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickWindowTimeGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PickScheduleNo).ClientTemplate(Html.ActionLink("<#= PickScheduleNo #>", "Edit", "PickWindowTime", new { id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.ShiftCode);
+            columns.Bound(o => o.WindowTime);
+                })
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "PickWindowTime"))
+            .ClientEvents(events => events.OnDataBinding("PickWindowTimeGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function PickWindowTimeGrid_OnDataBinding(e) {
+            e.data = {
+                PickScheduleNo: $('#PickScheduleNo').val(),
+                ShiftCode: $('#ShiftCode').val(),
+                WindowTime: $('#WindowTime').val()
+            };
+        } 
+    </script>
+</fieldset>

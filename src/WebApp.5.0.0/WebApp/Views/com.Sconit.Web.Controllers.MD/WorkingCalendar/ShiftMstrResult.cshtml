@@ -1,0 +1,60 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.PRD.ShiftMaster>
+<fieldset>
+
+ <script type="text/javascript">
+     function ShiftMasterGrid_OnDataBinding(e) {
+         e.data = {
+             Code: $('#Code').val(),
+             Name: $('#Name').val()
+         };
+     } 
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("ShiftMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(string.Format("<a href=\"javascript:onShiftMasterEditLinkclick('{0}')\">{1}</a>", "<#= Code #>", "<#= Code #>"));
+            columns.Bound(o => o.Name);
+                 })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxShiftMstrList", "WorkingCalendar"))
+                                .ClientEvents(events => events.OnDataBinding("ShiftMasterGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+   
+</fieldset>
+<script type="text/javascript">
+    function onShiftMasterEditLinkclick(code) {
+        var data = {
+            "Id":code
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/WorkingCalendar/ShiftMstrEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

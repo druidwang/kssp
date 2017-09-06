@@ -1,0 +1,86 @@
+﻿@using com.Sconit.Web.Models.SearchModels.ISI
+<fieldset>
+    <legend>@Resources.ISI.TaskStatus.TaskStatus_TaskStatus</legend>
+    <div class="search">
+        <div class="search-label">
+            <label for="TaskStatus_StartDate">
+                @Resources.ISI.TaskStatus.TaskStatus_StartDate
+            </label>
+        </div>
+        <div class="search-field">
+            @Html.TextBox("TaskStatus_StartDate", TempData["TaskStatusSearchModel"] != null ? ((TaskStatusSearchModel)TempData["TaskStatusSearchModel"]).StartDate : null)
+        </div>
+        <div class="search-label">
+            <label for="TaskStatus_EndDate">
+                @Resources.ISI.TaskStatus.TaskStatus_EndDate
+            </label>
+        </div>
+        <div class="search-field">
+            @Html.TextBox("TaskStatus_EndDate", TempData["TaskStatusSearchModel"] != null ? ((TaskStatusSearchModel)TempData["TaskStatusSearchModel"]).EndDate : null)
+        </div>
+        <div class="search-label">
+            <label for="TaskStatus_Description">
+                @Resources.ISI.TaskStatus.TaskStatus_Description
+            </label>
+        </div>
+        <div class="search-field">
+            @Html.TextBox("TaskStatus_Description", TempData["TaskStatusSearchModel"] != null ? ((TaskStatusSearchModel)TempData["TaskStatusSearchModel"]).Description : string.Empty)
+        </div>
+    </div>
+    @{string TaskCode = ViewBag.TaskCode;}
+    @Html.Hidden("TaskCode", TaskCode)
+    <div class="search-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="btnSearch_TaskStatus" onclick="btnSearch_TaskStatus_Click()">
+            @Resources.SYS.Global.Button_Search</button>
+        @Html.Button(Resources.SYS.Global.Button_New, "Url_Customer_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew_TaskStatus"},
+                {"onclick","btnNew_TaskStatus_Click()"}
+	        })
+        <button type="button" id="btnBack_TaskStatus" onclick="location.href='@Url.Content("~/TaskStatus/List")'">
+            @Resources.SYS.Global.Button_Back
+        </button>
+    </div>
+</fieldset>
+<script type="text/javascript">
+
+    function btnSearch_TaskStatus_Click() {
+        var data = {
+            "StartDate": $("#TaskStatus_StartDate").val(),
+            "EndDate": $("#TaskStatus_EndDate").val(),
+            "Description": $("#TaskStatus_Description").val(),
+            "TaskCode": $("#TaskCode").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "@Url.Content("~/TaskMaster/_TaskStatusList/")",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnNew_TaskStatus_Click() {
+        var data = {
+            "TaskCode": $("#TaskCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "@Url.Content("~/TaskMaster/_TaskStatusNew/")",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,80 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.MRP
+<style>
+    .editor-field-1 input
+    {
+       width:auto;
+    }
+</style>
+<fieldset>
+    @*<legend>手动调用SAP接口测试</legend>
+    <div class="search">
+        <div class="editor-label-1">
+            <label>
+                选择接口
+            </label>
+        </div>
+        <div class="editor-field-1">
+            @Html.RadioButton("tabType", 0, false)<span>销售</span>
+            @Html.RadioButton("tabType", 1, false)<span>采购</span>
+            @Html.RadioButton("tabType", 2, false)<span>库存转储</span>
+            @Html.RadioButton("tabType", 3, false)<span>生产收货</span>
+            @Html.RadioButton("tabType", 4, false)<span>生产废品报工</span>
+            @Html.RadioButton("tabType", 5, false)<span>生产过滤</span>
+            @Html.RadioButton("tabType", 6, false)<span>生产调整</span>
+            @Html.RadioButton("tabType", 7, false)<span>生产试制</span>
+            @Html.RadioButton("tabType", 8, false)<span>所有业务</span>
+            @Html.RadioButton("tabType", 7, false, new { onclick = "doClick(7)" })<span>销售冲销</span>
+        </div>
+
+        <div class="editor-label-2">
+            <label>
+            </label>
+        </div>
+        <div class="editor-field-2">
+        </div>
+        <div class="editor-label-2">
+            <label>
+            </label>
+        </div>
+        <div class="editor-field-2">
+        </div>
+        <hr style="border: 100% dashed black;" />
+    </div>
+    <fieldset>
+        <legend><span id="showTitle">物料</span></legend>
+    </fieldset>*@
+        <div class="editor-label-2">
+            <label>
+                计划外单号
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @Html.TextBox("MiscOrderNo", "")
+        </div>
+        <span id="MiscOrderNoType" style="display: inline"></span>
+    <div class="search-footer">
+        <button type="button" id="btnManualCall" onclick="ManualCallMiscOrderNoTypeClick(this)">
+            调用</button>
+    </div>
+</fieldset>
+<script type="text/javascript">
+
+    function ManualCallMiscOrderNoTypeClick(e) {
+        var data = { MiscOrderNo: $("#MiscOrderNo").val() };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/SAPInterface/ManualCallMiscOrderNoType",
+            data: data,
+            cache: false,
+            success: function (d, textStatus) {
+                $('#MiscOrderNoType').text(d);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+</script>

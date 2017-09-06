@@ -1,0 +1,83 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.WMS.PickTask
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PickTask_View" });
+}
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.WMS.PickTask.PickTask_Edit_Title</legend>
+        <div class="editor">
+            @Html.HiddenFor(model => model.PickTaskNo)
+            @Html.HiddenFor(model => model.CreateUserName)
+            @Html.HiddenFor(model => model.CreateDate)
+            @Html.HiddenFor(model => model.LastModifyUserName)
+            @Html.HiddenFor(model => model.LastModifyDate)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PickTaskNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PickTaskNo)
+            </div>
+            <div class="editor-label-2">
+              
+            </div>
+            <div class="editor-field-2">
+               
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PickLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.PickLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EmergentPickLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.EmergentPickLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.RepackLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.RepackLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EmergentRepackLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.EmergentRepackLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.SpreadLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.SpreadLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EmergentSpreadLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.EmergentSpreadLeadTime)
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_PickTask_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSave"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_PickTask_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDelete"},
+        {"needconfirm","true"},
+        {"onclick","location.href='"+@Url.Content("~/PickTask/Delete/"+@Model.PickTaskNo)+"'"}
+    })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/PickTask/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

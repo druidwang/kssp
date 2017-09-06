@@ -1,0 +1,19 @@
+<%@ CodeTemplate Language="C#" TargetLanguage="C#" Description="Generate the entity class." %>
+<%@ Property Name="NameSpace" Type="String" Default="com.Sconit" Category="EntityClass" Description="The assembly that contains the entity class." %>
+<%@ Property Name="ClassName" Type="String" Category="EntityClass" Description="The entity class name." %>
+<%@ Property Name="ModuleName" Type="String" Category="ModuleGroup" Description="The module group which contains the entity, for example, Security." %>
+using System;
+
+//TODO: Add other using statements here
+
+namespace <%=this.NameSpace%>.<%=this.ModuleName%>
+{
+    public partial class <%= ClassName%>
+    {
+        #region Non O/R Mapping Properties
+
+        //TODO: Add Non O/R Mapping Properties here. 
+
+        #endregion
+    }
+}

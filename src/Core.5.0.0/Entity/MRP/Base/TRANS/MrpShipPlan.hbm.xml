@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.MrpShipPlan, com.Sconit.Entity" table="MRP_MrpShipPlan" lazy="false" dynamic-update="true">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Flow" column="Flow" type="String" length="50" />
+    <property name="OrderType" column="OrderType"  />
+    <property name="Item" column="Item" type="String" length="50" />
+    <property name="StartTime" column="StartTime" type="DateTime"  />
+    <property name="WindowTime" column="WindowTime" type="DateTime"  />
+    <property name="LocationFrom" column="LocationFrom" type="String" length="50" />
+    <property name="LocationTo" column="LocationTo" type="String" length="50" />
+    <property name="SourceId" column="SourceId" type="Int32" />
+    <property name="Qty" column="Qty" type="Double"  />
+    <property name="SourceType" column="SourceType"  />
+    <property name="PlanVersion" column="PlanVersion" type="DateTime"  />
+    <property name="Bom" column="Bom" type="String" length="50" />
+    <property name="GroupId" column="GroupId" type="Int32" />
+    <property name="ParentItem" column="ParentItem" type="String" length="50" />
+    <property name="SourceFlow" column="SourceFlow" type="String" length="50" />
+    <property name="SourceParty" column="SourceParty" type="String" length="50" />
+  </class>
+</hibernate-mapping>

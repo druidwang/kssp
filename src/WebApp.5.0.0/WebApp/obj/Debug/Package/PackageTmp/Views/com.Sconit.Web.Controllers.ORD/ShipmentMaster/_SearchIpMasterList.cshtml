@@ -1,0 +1,95 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpMaster>
+   <script type="text/javascript">
+       $(function () {
+           $("#checkAll").click(function () {
+               $('input[name="checkedRecords"]').attr("checked", this.checked);
+               $("#btnNew").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#labelLicenseplateNo").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#fieldLicenseplateNo").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#labelDeliveryPeople").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#fieldDeliveryPeople").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#fieldTransportCompany").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#labelTransportCompany").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#fieldBoxNumber").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#labelBoxNumber").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#labelAddressTo").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#fieldAddressTo").attr("style", this.checked ? "display:inline" : "display:none");
+           });
+       });
+
+
+
+       function showButtons() {
+           var $checkRecords = $("input[name='checkedRecords']");
+           var showButton = false;
+           for (var i = 0; i < $checkRecords.length; i++) {
+               if ($checkRecords[i].checked) {
+                   showButton = true;
+                   break;
+               }
+           }
+           $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+           $("#btnNew").attr("style", showButton ? "display:inline" : "display:none");
+           $("#labelLicenseplateNo").attr("style", showButton ? "display:inline" : "display:none");
+           $("#fieldLicenseplateNo").attr("style", showButton ? "display:inline" : "display:none");
+           $("#labelDeliveryPeople").attr("style", showButton ? "display:inline" : "display:none");
+           $("#fieldDeliveryPeople").attr("style", showButton ? "display:inline" : "display:none");
+           $("#fieldTransportCompany").attr("style", showButton ? "display:inline" : "display:none");
+           $("#labelTransportCompany").attr("style", showButton ? "display:inline" : "display:none");
+           $("#fieldBoxNumber").attr("style", showButton ? "display:inline" : "display:none");
+           $("#labelBoxNumber").attr("style", showButton ? "display:inline" : "display:none");
+           $("#labelAddressTo").attr("style", showButton ? "display:inline" : "display:none");
+           $("#fieldAddressTo").attr("style", showButton ? "display:inline" : "display:none");
+       }
+
+       function IpMasterGrid_OnDataBinding(e) {
+           e.data = {
+               Flow: $('#Flow').val(),
+               PartyFrom: $('#PartyFrom').val(),
+               PartyTo: $('#PartyTo').val()
+           };
+       } 
+
+</script>
+<fieldset>
+    <legend>@Resources.ORD.ShipmentMaster.ShipmentMaster_IPMaster</legend>
+    @(
+        Html.Telerik().Grid(Model)
+          .Name("OrderMasterGrid")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.IpNo);
+          })
+          .Columns(columns =>
+          {
+              columns.Bound(o=> o.CheckIpNo)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= IpNo #>'   onClick='showButtons()' />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+
+              columns.Bound(o => o.IpNo);
+              columns.Bound(o => o.Flow);
+              columns.Bound(o => o.IpMasterTypeDescription);
+              columns.Bound(o => o.PartyFrom).ClientTemplate("<div title=<#= PartyFromName #>><#= PartyFrom #></div>");
+              columns.Bound(o => o.PartyTo).ClientTemplate("<div title=<#= PartyToName #>><#= PartyTo #></div>"); 
+              columns.Bound(o => o.Dock);
+              columns.Bound(o => o.IpMasterStatusDescription);
+              columns.Bound(o => o.CreateDate);
+              columns.Bound(o => o.CreateUserName);
+            
+          })
+                   .CellAction(cell =>
+                   {
+                       if (cell.Column.Member == "CheckIpNo")
+                       {
+                           cell.Text = string.Format("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='{0}'  />", cell.DataItem.IpNo);
+                       }
+                   })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSearchIpMasterList", "ShipmentMaster"))
+        .ClientEvents(events => events.OnDataBinding("IpMasterGrid_OnDataBinding"))
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

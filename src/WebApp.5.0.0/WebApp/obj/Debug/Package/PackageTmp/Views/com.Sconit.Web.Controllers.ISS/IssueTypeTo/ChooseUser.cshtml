@@ -1,0 +1,217 @@
+﻿@model IEnumerable<com.Sconit.Entity.ACC.User>
+@using com.Sconit.Entity.ISS
+@using com.Sconit.Web.Models.SearchModels.ISS
+
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_IssueTypeTo_View" });
+}
+<div id="DivUserResult">
+@using (Html.BeginForm("ChooseUser", "IssueTypeTo"))
+{  
+<fieldset>
+<legend>@Resources.ISS.IssueTypeToUserDetail.Choose_User</legend>
+
+	<div class="search">
+            @Html.Hidden("code",(string)ViewBag.Code)
+			<div class="search-label">
+                <label for="UserCode">
+                    @Resources.ISS.IssueTypeToUserDetail.UserCode
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("UserCode", TempData["IssueTypeToUserDetailSearchModel"] != null ? ((IssueTypeToUserDetailSearchModel)TempData["IssueTypeToUserDetailSearchModel"]).UserCode : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Email">
+                    @Resources.ISS.IssueTypeToUserDetail.Email
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Email", TempData["IssueTypeToUserDetailSearchModel"] != null ? ((IssueTypeToUserDetailSearchModel)TempData["IssueTypeToUserDetailSearchModel"]).Email : string.Empty)
+            </div>
+			<div class="search-label">
+                <label for="MobilePhone">
+                    @Resources.ISS.IssueTypeToUserDetail.MobilePhone
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MobilePhone", TempData["IssueTypeToUserDetailSearchModel"] != null ? ((IssueTypeToUserDetailSearchModel)TempData["IssueTypeToUserDetailSearchModel"]).MobilePhone : string.Empty)
+            </div>
+			<div class="search-label">
+                <label for="HasEmail">
+                    @Resources.ISS.IssueTypeToUserDetail.HasEmail
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("HasEmail", TempData["IssueTypeToUserDetailSearchModel"] != null ? ((IssueTypeToUserDetailSearchModel)TempData["IssueTypeToUserDetailSearchModel"]).HasEmail : true)
+            </div>
+			<div class="search-label">
+                <label for="HasMobilePhone">
+                    @Resources.ISS.IssueTypeToUserDetail.HasMobilePhone
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("HasMobilePhone", TempData["IssueTypeToUserDetailSearchModel"] != null ? ((IssueTypeToUserDetailSearchModel)TempData["IssueTypeToUserDetailSearchModel"]).HasMobilePhone : true)
+            </div>
+
+			<div class="search-footer">
+				@Html.Hidden("isFromList", true)
+				<button type="submit" id="btnSearch">
+					@Resources.SYS.Global.Button_Search</button>
+			    <button id="addUser" onclick="addCheckedUser()">@Resources.ISS.IssueTypeToUserDetail.Button_Subscibe</button>
+				<button type="button" id="btnBack" onclick="location.href='@Url.Content("~/IssueTypeTo/Edit/" + @ViewBag.Code)'">
+					@Resources.SYS.Global.Button_Back</button>
+			</div>
+	</div>
+
+</fieldset>
+}
+<div id="DivUserResult">
+<fieldset>
+<script language="javascript" type="text/javascript">
+		function UserGrid_OnDataBinding(e) {
+			e.data = {
+				UserCode: $('#UserCode').val(),
+				Email: $("#Email").val(),
+				MobilePhone: $("#MobilePhone").val(),
+				HasEmail: $('#HasEmail').is(':checked'),
+				HasMobilePhone: $('#HasMobilePhone').is(':checked')
+			};
+		}
+</script>
+
+  @(Html.Telerik().Grid(Model)
+        .Name("UserResultGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+			columns.Bound(o => o.Code);
+            columns.Bound(o => o.Name);
+			
+			columns.Bound(o => o.Email).ClientTemplate("<input type='hidden' name='UserId' id='UserId' value='<#=Id#>' /><input type='checkbox' id='ckIsEmail<#=Id#>' name='ckIsEmail' <#= HasEmail ? '' : style='DISPLAY: none' #>  /><label for='ckIsEmail<#=Id#>' ><#= Email #></label/>") 
+                .HeaderTemplate("<input type='checkbox' id='chkEmailAll' name='chkEmailAll' /><label for='chkEmailAll' >"+Resources.ISS.IssueTypeToUserDetail.Email+"</label>");
+
+            columns.Bound(o => o.MobilePhone).ClientTemplate("<input type='checkbox' id='ckIsSMS<#=Id#>' name='ckIsSMS'   <#= HasMobilePhone ? '' :style='DISPLAY: none' #>  /><label for='ckIsSMS<#=Id#>' ><#= MobilePhone #></label/>")
+                .HeaderTemplate("<input type='checkbox' id='chkSMSAll' name='chkSMSAll' /><label for='chkSMSAll' >"+Resources.ISS.IssueTypeToUserDetail.MobilePhone+"</label>");
+        })
+                 .CellAction(cell =>
+                 {
+                     if (cell.Column.Member == "Email")
+                     {
+						if(string.IsNullOrEmpty(cell.DataItem.Email))
+						{
+							cell.Text = string.Format("<input type='hidden' name='UserId' id='UserId' value='{0}' /><input type='checkbox' id='ckIsEmail{0}' name='ckIsEmail' style=\"DISPLAY: none\"  />", cell.DataItem.Id);
+						}else
+						{
+							cell.Text = string.Format("<input type='hidden' name='UserId' id='UserId' value='{0}' /><input type='checkbox' id='ckIsEmai{0}' name='ckIsEmail'  /><label for='ckIsEmail{0}' >{1}</label/>", cell.DataItem.Id,cell.DataItem.Email);
+						}
+                     }
+
+					 if (cell.Column.Member == "MobilePhone")
+                     {
+						if(string.IsNullOrEmpty(cell.DataItem.MobilePhone))
+						{
+							cell.Text =  string.Format("<input type='checkbox' id='ckIsSMS{0}' name='ckIsSMS' style=\"DISPLAY: none\"  />", cell.DataItem.Id);
+						}else
+						{
+							cell.Text = string.Format("<input type='checkbox' id='ckIsSMS{0}' name='ckIsSMS'  /><label for='ckIsSMS{0}' >{1}</label/>", cell.DataItem.Id ,cell.DataItem.MobilePhone);
+						}
+                     }
+                 })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxUserResultList", "IssueTypeTo"))
+        .ClientEvents(events => events.OnDataBinding("UserGrid_OnDataBinding"))
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    
+</fieldset>
+</div>
+<script language="javascript" type="text/javascript">
+    function addCheckedUser() {
+        var $checkedIsSMS = $("input[name='ckIsSMS']:checked");
+        var $ckIsSMS = $("input[name='ckIsSMS']");
+		
+		var $checkedIsEmail = $("input[name='ckIsEmail']:checked");
+        var $ckIsEmail = $("input[name='ckIsEmail']");
+		
+		var $UserId = $("input[name='UserId']");
+		
+        if ($checkedIsSMS.length < 1 && $checkedIsEmail.length < 1) {
+            alert('@Resources.ISS.IssueTypeToUserDetail.Must_Choose_One');
+            return;
+        }
+		var userIdStr = '';
+        var smsStr = '';
+        var emailStr = '';
+
+        for (var i = 0; i < $UserId.length; i++) {
+			if (($ckIsEmail[i].checked && $ckIsEmail[i].style.cssText != 'DISPLAY: none') 
+					|| ($ckIsSMS[i].checked && $ckIsSMS[i].style.cssText != 'DISPLAY: none')) 
+		{
+                userIdStr += $UserId[i].value + ",";
+				if($ckIsEmail[i].style.cssText != 'DISPLAY: none')
+				{
+					emailStr += $ckIsEmail[i].checked;
+				}
+				emailStr +=",";
+
+				if($ckIsSMS[i].style.cssText != 'DISPLAY: none')
+				{
+					smsStr += $ckIsSMS[i].checked;
+				}
+				smsStr += ",";
+			}
+        }
+       
+        userIdStr = userIdStr.substring(0, userIdStr.length - 1);
+	
+        smsStr = smsStr.substring(0, smsStr.length - 1);
+		emailStr = emailStr.substring(0, emailStr.length - 1);
+		
+        var data = {
+             "code": $("#code").val(),
+             "userIdStr": userIdStr,
+             "emailStr": emailStr,
+			 "smsStr": smsStr
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/IssueTypeTo/Subscibe/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var DivUserResult = $("#DivUserResult");
+                $(DivUserResult).html(data);
+            }
+        });
+    }
+</script> 
+
+<script type="text/javascript">
+    $(function () {
+        $("#chkEmailAll").click(function () {
+            $('input[name="ckIsEmail"]').attr("checked", this.checked);
+        });
+        var $ckIsEmail = $("input[name='ckIsEmail']");
+        $ckIsEmail.click(function () {
+            $("#chkEmailAll").attr("checked", $ckIsEmail.length == $("input[name='ckIsEmail']:checked").length ? true : false);
+        });
+
+		$("#chkSMSAll").click(function () {
+            $('input[name="ckIsSMS"]').attr("checked", this.checked);
+        });
+        var $cbIsSMS = $("input[name='cbIsSMS']");
+        $cbIsSMS.click(function () {
+            $("#chkSMSAll").attr("checked", $cbIsSMS.length == $("input[name='cbIsSMS']:checked").length ? true : false);
+        });
+    });  
+</script>
+
+
+

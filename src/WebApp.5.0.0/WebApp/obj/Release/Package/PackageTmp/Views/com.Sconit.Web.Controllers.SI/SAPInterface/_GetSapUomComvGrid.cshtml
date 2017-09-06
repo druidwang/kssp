@@ -1,0 +1,49 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPUomConvertion>
+<fieldset>
+    <legend>单位</legend>
+    <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SAPInterface/SAPTransferLogList")'">
+        @Resources.SYS.Global.Button_Back</button>
+    <br />
+    <br />
+    @(Html.Telerik().Grid(Model)
+                        .Name("SAPUomConvertion")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.MATNR);
+            columns.Bound(o => o.MEINS);
+            columns.Bound(o => o.MEINH);
+            columns.Bound(o => o.UMREZ);
+            columns.Bound(o => o.UMREN);
+            columns.Bound(o => o.BatchNo);
+            columns.Bound(o => o.StatusDesc);
+            columns.Bound(o => o.CreateDate);
+        })
+        .NoRecordsTemplate("没有数据.")
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxUomConvBatchNoList", "SAPInterface"))
+        .ClientEvents(events => events.OnDataBinding("SAPUomConv_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 10 : ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+                )
+</fieldset>
+<script type="text/javascript">
+//    $(document).ready(function () {
+//        $("tr.t-no-data").find("td").text("没有符合条件的记录...");
+//        $(".t-grid-content").removeAttr("style");
+    //    });
+    function SAPUomConv_OnDataBinding(e) {
+        e.data = {
+            BatchNo: $('#BatchNo').val()
+        };
+    }
+</script>

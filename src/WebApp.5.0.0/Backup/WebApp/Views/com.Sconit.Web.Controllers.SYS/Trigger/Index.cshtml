@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_BAT_Trigger_View" });
+   // Layout = "";
+}
+<script type="text/javascript">
+    function Grid_OnRowDataBinding(e) {
+        try
+        {
+            var row = $(e.row.childNodes);
+            if (e.dataItem.Status == 0) {
+                $(e.row.all[13].childNodes[1]).hide();//.hide();//.style.display = "none";
+                row.last().prev().text("");
+                //row.last().text("");
+            }
+            else {
+                $(e.row.all[13].childNodes[0]).hide();//.style.display = "none";
+                //row.last().prev().text("");
+                //row.last().text("");
+            }
+        }
+        catch(ex)
+        {
+        }
+    } 
+</script>
+<fieldset>
+    @(Html.Telerik().Grid<com.Sconit.Entity.SI.BAT.Trigger>()
+  .Name("Grid")
+  .DataKeys(keys =>
+  {
+      keys.Add(p => p.Name);
+  })
+  .DataBinding(dataBinding =>
+  {
+      dataBinding.Ajax()
+         .Update("Index", "Trigger")
+         .Select("_Index", "Trigger");
+  })
+  .Columns(columns =>
+  {
+      //columns.Bound(o => o.Name).ReadOnly().Hidden();//0
+      //columns.Bound(o => o.JobId).ReadOnly();
+      columns.Bound(o => o.Name).ReadOnly().Title(@Resources.SI.Trigger.Trigger_Name);
+      columns.Bound(o => o.Description).ReadOnly().Title(@Resources.SI.Trigger.Trigger_Description);
+      columns.Bound(o => o.PreviousFireTime).ReadOnly().Title(@Resources.SI.Trigger.Trigger_PreviousFireTime).Format("{0:yyyy-MM-dd HH:mm}");
+      columns.Bound(o => o.NextFireTime).Title(@Resources.SI.Trigger.Trigger_NextFireTime).Format("{0:yyyy-MM-dd HH:mm}");
+      columns.Bound(o => o.Status).Hidden(true);
+      columns.Bound(o => o.RepeatCount).ReadOnly().Title(@Resources.SI.Trigger.Trigger_RepeatCount);
+      columns.Bound(o => o.Interval).Title(@Resources.SI.Trigger.Trigger_Interval);
+      // columns.Bound(o => o.IntervalType, (IEnumerable<com.Sconit.Entity.SYS.CodeDetail>)ViewData["CodeDetail"], "Code", "Desc1").EditorTemplateName("GridComboxForeignKey"));
+      columns.ForeignKey(o => o.IntervalType, (IEnumerable<com.Sconit.Entity.SYS.CodeDetail>)ViewData["CodeDetail"], "Value", "Description").Title(@Resources.SI.Trigger.Trigger_IntervalType).Width(120);
+      columns.Bound(o => o.TimesTriggered).ReadOnly().Title("次数");
+      columns.Bound(o => o.StatusName).ReadOnly().Title(@Resources.SI.Trigger.Trigger_TriggerStatusName);
+      columns.Command(commands =>
+      {
+          commands.Edit().ButtonType(GridButtonType.ImageAndText);
+      });
+      columns.Command(
+             commands =>
+             {
+                 commands.Custom("StatusZt")
+                    .Text("暂停")
+                    .Action("TriggerUpdateStatus", "Trigger");
+
+                 commands.Custom("StatusQd")
+                  .Text("启动")
+                  .Action("TriggerUpdateStatusrecovery", "Trigger");
+             });
+  })
+  .ClientEvents(events => events.OnRowDataBound("Grid_OnRowDataBinding"))
+  .Editable(editing => editing.Mode(GridEditMode.InLine))
+    .Pageable(settings =>
+    {
+        settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+        settings.PageSize(20);
+    })
+  .Scrollable(c => c.Enabled(false))
+  .Sortable()
+  )
+</fieldset>

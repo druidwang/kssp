@@ -1,0 +1,47 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetailGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo).Width(100);
+            //columns.Bound(o => o.WMSSeq);
+            columns.Bound(o => o.Item).Width(100);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.ShippedQty).Width(100).Format("{0:0.########}");
+            columns.Bound(o => o.OrderedQty).Width(100).Format("{0:0.########}").Title(@Resources.ORD.OrderDetail.OrderDetail_OrderedQtyReturn);
+        }).DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxReturnOrderDetList", "SupplierOrder"))
+                                            .ClientEvents(events => events.OnDataBinding("ReturnOrderDetGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable(c => c.Enabled(false))
+         .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+                                        )
+    <script type="text/javascript">
+        function ReturnOrderDetGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                WMSNo: $('#WMSNo').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                Status: $('#Status').val(),
+                WmSSeq: $('#WmSSeq').val(),
+                Item: $('#Item').val()
+            };
+        }
+    </script>
+</fieldset>

@@ -1,0 +1,107 @@
+﻿@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.ORD.PickListDetail>
+@{ 
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+<fieldset>
+    <legend>@Resources.ORD.PickListDetail.PickListDetail_Edit_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickListDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Item);
+            //columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemFullDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.LocationFromName);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.IsOdd).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsOdd' <#= IsOdd? checked='checked' : '' #> />"); ;
+            columns.Bound(o => o.IsDevan).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDevan' <#= IsDevan? checked='checked' : '' #> />"); ;
+            columns.Bound(o => o.IsInventory).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsInventory' <#= IsInventory? checked='checked' : '' #> />"); ;
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.PickedQty);
+        })
+          .DetailView(details => details.ClientTemplate(
+            Html.Telerik().Grid<PickListResult>()
+                .Name("PickListResult_<#= Id #>")
+                .Columns(columns =>
+                {
+                    if (ViewBag.Status == com.Sconit.CodeMaster.PickListStatus.InProcess)
+                    {
+                        columns.Bound(o => o.Id)
+                        .ClientTemplate("<input type='checkbox' name='checkedRecords' value='<#= Id #>' />")
+                        .Title("")
+                        .Width(36)
+                        .HtmlAttributes(new { style = "text-align:center" });
+                    }
+                    else
+                    {
+                        columns.Bound(o => o.Id);
+                    }
+                    columns.Bound(o => o.Item);
+                    columns.Bound(o => o.ItemDescription);
+                    columns.Bound(o => o.Uom);
+                    columns.Bound(o => o.UnitCount);
+                    columns.Bound(o => o.LotNo);
+                    columns.Bound(o => o.HuId);
+                    columns.Bound(o => o.Qty);
+                })
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_PickListResultHierarchyAjax", "PickList", new { pickListDetailId = "<#= Id #>" }))
+                .Footer(false)
+                .Resizable(resizing => resizing.Columns(true))
+                .ToHtmlString()
+    ))
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_PickListDetailHierarchyAjax", "PickList", new { pickListNo = ViewBag.pickListNo }))
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <p>
+        @if (ViewBag.Status == com.Sconit.CodeMaster.PickListStatus.InProcess)
+        {
+            <button type="submit" id="btnDeleteResult" onclick="onSubmit()">
+                @Resources.SYS.Global.Button_DeleteResult</button>
+        }
+    </p>
+</fieldset>
+<script type="text/javascript">
+    function onSubmit() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var checkedOrders = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedOrders == "") {
+                    checkedOrders = $checkRecords[i].value;
+                } else {
+                    checkedOrders += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (checkedOrders == "") {
+            alert('Must Check One');
+            return;
+        }
+        var data = {
+            "pickListNo": $("#PickListNo").val(),
+            "checkedResults": checkedOrders
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/PickList/DeletePickListResult/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            }
+        });
+    }
+</script>

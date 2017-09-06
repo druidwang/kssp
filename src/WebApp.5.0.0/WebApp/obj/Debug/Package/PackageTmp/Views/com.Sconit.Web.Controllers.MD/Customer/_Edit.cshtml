@@ -1,0 +1,82 @@
+﻿@model com.Sconit.Entity.MD.Customer  
+@Html.Partial("_AjaxMessage")
+    <fieldset>
+        <legend>@Resources.MD.Party.Party_CurrentParty:@ViewBag.PartyCode </legend>
+        <div class="editor">
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+                <input type="hidden" name="Customer_Code" id="Customer_Code" value="@Model.Code" />
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.LastModifyUserName)
+                @Html.HiddenFor(model => model.LastModifyDate)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsActive)
+            </div>
+
+        </div>
+        <div class="editor-footer">
+        @Html.Button(Resources.SYS.Global.Button_Save, "Url_Customer_Edit", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnSave_Customer"},
+            {"needconfirm","true"},
+            {"onclick","btnSave_Customer_Click()"}
+	    })
+        @Html.Button(Resources.SYS.Global.Button_Delete, "Url_Customer_Delete", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnDelete_Customer"},
+            {"needconfirm","true"},
+            {"onclick","location.href='"+Url.Content("~/Customer/Delete/" + Model.Code) +"'"}
+	    })
+
+
+            <button type="button" id="btnBack_Customer" onclick="location.href='@Url.Content("~/Customer/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+
+<script type="text/javascript">
+    function btnSave_Customer_Click() {
+        var data = {
+            "Code": $("#Customer_Code").val(),
+            "Name": $("#Name").val(),
+            "IsActive": $("#IsActive").is(':checked')
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Customer/_Edit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+            }
+        });
+    }
+</script>

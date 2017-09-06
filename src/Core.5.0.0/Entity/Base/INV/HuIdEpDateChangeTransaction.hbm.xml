@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.INV.HuIdEpDateChangeTransaction, com.Sconit.Entity" table="INV_HuIdEpDateChangeTrans" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+			<generator class="identity" />
+		</id>
+		<property name="Item" column="Item" type="String" length="50" />
+		<property name="HuId" column="HuId" type="String" length="50" />
+		<property name="LotNo" column="LotNo" type="String" length="50" />
+		<property name="Location" column="Location" type="String" length="50" />
+		<property name="Bin" column="Bin" type="String" length="50" />
+    <property name="OldExpiredDate" column="OldExpiredDate" type="DateTime" update="false"/>
+    <property name="NewExpiredDate" column="NewExpiredDate" type="DateTime" update="false"/>
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="50" update="false"/>
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+	</class>
+</hibernate-mapping>

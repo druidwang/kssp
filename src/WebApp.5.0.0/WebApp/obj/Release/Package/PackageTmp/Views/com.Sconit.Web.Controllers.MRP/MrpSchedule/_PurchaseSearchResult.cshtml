@@ -1,0 +1,73 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.PurchasePlanMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PurchasePlanMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id)
+    .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>' onClick='showButtons()' />")
+    .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+    .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.Flow).Title("路线");
+            columns.Bound(o => o.FlowDescription).Title("路线描述");
+            columns.Bound(o => o.DateTypeDescription).Title("类型");
+            columns.Bound(o => o.PlanVersion).Title("版本");
+            columns.Bound(o => o.SnapTime).Title("快照时间");
+            columns.Bound(o => o.SourcePlanVersion).Title("来源版本");
+            columns.Bound(o => o.CreateUserName).Title("创建用户");
+            columns.Bound(o => o.CreateDate).Title("创建日期");
+            columns.Bound(o => o.IsRelease).Title("释放").ClientTemplate("<input type='checkbox' disabled='disabled' name='IsRelease' <#= IsRelease? checked='checked' : '' #> />"); ;
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxPurchaseList", "MrpSchedule"))
+        .ClientEvents(events => events.OnDataBinding("PurchaseGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+  )
+</fieldset>
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+            showButtons();
+        });
+        var $checkedRecords = $("input[name='checkedRecords']");
+        $checkedRecords.click(function () {
+            $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        });
+    });
+
+    function showButtons() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        $("#btnRelease").attr("style", $("input[name='checkedRecords']:checked").length > 0 ? "display:inline" : "display:none");
+        if ($("input[type=checkbox][name=IsRelease]:checked").val() == "true") {
+            $("#btnRelease")[0].innerText = "取消";
+        }
+    }
+
+    function PurchaseGrid_OnDataBinding(e) {
+        
+        e.data = {
+            SnapTime: $('#SnapTime').val(),
+            PlanVersion: $('#PlanVersion').val(),
+            DateType: $('#DateType').val(),
+            IsRelease: $("input[type=checkbox][name=IsRelease]:checked").val(),
+            Flow: $('#Flow').val()
+        };
+    }
+</script>

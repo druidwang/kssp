@@ -1,0 +1,64 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("IpMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.IpNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.IpNo).ClientTemplate(Html.ActionLink("<#= IpNo #>", "Edit", "DistributionIpMaster", new { IpNo = "<#= IpNo #>" }, null).ToString());
+            columns.Bound(o => o.Flow).ClientTemplate("<div title=<#=FlowDescription #>><#=Flow #></div>");
+            columns.Bound(o => o.ExternalIpNo);
+            columns.Bound(o => o.IpMasterTypeDescription);
+            columns.Bound(o => o.OrderSubTypeDescription);
+            columns.Bound(o => o.PartyFromName).ClientTemplate("<div title=<#=ShipFromAddress #>><#=PartyFromName #></div>");
+            columns.Bound(o => o.PartyToName).ClientTemplate("<div title=<#=ShipToAddress #>><#=PartyToName #></div>");
+            //columns.Bound(o => o.ShipFromAddress);
+            columns.Bound(o => o.IpMasterStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "IpNo")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.IpNo, cell.DataItem.IpNo);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "DistributionIpMaster"))
+        .ClientEvents(events => events.OnDataBinding("IpMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 50);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function IpMasterGrid_OnDataBinding(e) {
+            e.data = {
+                IpNo: $('#IpNo').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                OrderSubType: $('#OrderSubType').val(),
+                Dock: $('#Dock').val(),
+                Status: $('#Status').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                CreateUserName: $("#CreateUserName").val(),
+                IpOrderType: $('#IpOrderType').val(),
+                ExternalIpNo: $('#ExternalIpNo').val(),
+                Flow: $("#Flow").val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    <script type="text/javascript">
+//        function onEdit(e) {
+//            if (e.mode == "edit") {
+//                $(e.form).find("#Code").attr("disabled", true);
+//            }
+//        }
+    </script>
+    @(Html.Telerik().Grid(Model)
+               .Name("DetailUnitPriceGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+                
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence).ReadOnly().Width(30); ;
+            //columns.Bound(o => o.IpNo).Width(70).ReadOnly(); 
+            columns.Bound(o => o.OrderNo).Width(70).ReadOnly(); 
+            //columns.Bound(o => o.Flow).Title(Resources.ORD.IpMaster.IpMaster_Flow).ReadOnly().Width(70);
+            columns.Bound(o => o.Item).Width(80).ReadOnly(); 
+            columns.Bound(o => o.ItemDescription).ReadOnly().Width(200);
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly().Width(80); 
+            columns.Bound(o => o.Uom).ReadOnly().Width(50); 
+            //columns.Bound(o => o.Qty).ReadOnly().Width(50);
+            columns.Bound(o => o.UnitPrice).Width(80);
+            columns.Bound(o => o.IsProvisionalEstimate).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsProvisionalEstimate' <#= IsProvisionalEstimate? checked='checked' : '' #> />").Width(50); ;
+            columns.Command(commands =>
+            {
+                commands.Edit();
+            }).Width(110);
+        })
+.DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_DetailUnitPriceAjaxList", "ProcurementOrder")
+            .Update("_DetailUnitPriceUpdate", "ProcurementOrder", new { Item = ViewBag.Item, OrderNo = ViewBag.OrderNo }) )
+                                                        
+        .ClientEvents(events =>
+        {
+            events
+                .OnDataBinding("IpDetail_OnDataBinding");
+        })
+        .EnableCustomBinding(true)
+        //.Pageable(settings =>
+        //{
+        //    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+        //    settings.PageSize(ViewBag.PageSize);
+        //})
+        .Scrollable()
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+                // .Scrollable(c => c.Enabled(false))
+                //.Sortable()
+                //.Footer(false)
+    )
+    <script type="text/javascript">
+        function IpDetail_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Item: $('#Item').val()
+             
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ISI.TaskWeekStatisticsView, com.Sconit.Entity" table="ISI_TaskWeekStatisticsView" lazy="false">
+    <id name="Code" column="Code" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <property name="Name" column="Name" type="String" />
+    <property name="Dept" column="Dept" type="String" length="50" />
+    <property name="Dept2" column="Dept2" type="String" length="50" />
+    <property name="JobNo" column="JobNo" type="String" length="10" />
+    <property name="CreateCount" column="CreateCount" type="Int32"  />
+    <property name="SubmitCount" column="SubmitCount" type="Int32"  />
+    <property name="SubmitFirstCount" column="SubmitFirstCount" type="Int32"  />
+    <property name="CancelCount" column="CancelCount" type="Int32"  />
+    <property name="FirstCount" column="FirstCount" type="Int32"  />
+    <property name="AssignCount" column="AssignCount" type="Int32"  />
+    <property name="StatusCount" column="StatusCount" type="Int32"  />
+    <property name="FileCount" column="FileCount" type="Int32"  />
+    <property name="CommentCount" column="CommentCount" type="Int32"  />
+    <property name="CloseCount" column="CloseCount" type="Int32"  />
+    <property name="OpenCount" column="OpenCount" type="Int32"  />
+    <property name="IsActive" column="IsActive" type="Boolean"  />
+    <property name="Position" column="Position" type="String"  />
+  </class>
+</hibernate-mapping>

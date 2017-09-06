@@ -1,0 +1,220 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("DetailList", "DistributionIpMaster"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.IpMaster.IpMaster_IpNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("IpNo", TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).IpNo : string.Empty)
+            </div>
+            @*<div class="search-label">
+                <label for="IpMaster_ExternalIpNo">
+                    @Resources.ORD.IpMaster.IpMaster_ExternalIpNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ExternalIpNo", TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).ExternalIpNo : string.Empty)
+            </div>*@
+            
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.IpMaster.IpMaster_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).OrderNo : string.Empty)
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.IpMaster.IpMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="IpMaster_Status">
+                    @Resources.ORD.IpMaster.IpMaster_Status
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.IpStatus,
+            controlName = "Status",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).Status : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="IpMaster_OrderType">
+                    @Resources.ORD.IpMaster.IpMaster_OrderType
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.OrderType,
+            controlName = "IpOrderType",
+            orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).IpOrderType : 0
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Pirority">
+                    @Resources.ORD.IpMaster.IpMaster_Type
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.OrderSubType,
+                        controlName = "OrderSubType",
+                        selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).OrderSubType : null
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyFrom">
+                    @Resources.ORD.IpMaster.IpMaster_PartyFromName
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+                        new
+                        {
+
+                            controlName = "PartyFrom",
+                            orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                            selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).PartyFrom : string.Empty
+                        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                    @Resources.ORD.IpMaster.IpMaster_PartyToName
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+                    new
+                    {
+                        controlName = "PartyTo",
+                        orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                        selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).PartyTo : string.Empty
+                    });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_CreateUserName">
+                      @Resources.ORD.IpMaster.IpMaster_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).CreateUserName : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.IpMaster.OrderMaster_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).Item : string.Empty
+            });
+                }
+            </div>
+
+            @*    <div class="search-label">
+                <label for="">
+                    @Resources.ORD.IpMaster.IpMaster_WMSNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("WMSNo", TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).WMSNo : string.Empty)
+            </div>*@
+
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.IpMaster.IpMaster_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartDate")
+         .Value(TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.IpMaster.IpMaster_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EndDate")
+             .Value(TempData["IpMasterSearchModel"] != null ? ((IpMasterSearchModel)TempData["IpMasterSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+              <button type="submit" id="btnExport" >
+                @Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+        //debugger
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+        //debugger
+        if (t == "") {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/DistributionIpMaster/Export/");
+        $('form').submit();
+        //$('form').attr('action', t);
+    });
+
+</script>

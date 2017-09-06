@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3617942C-4554-4B04-927C-5D5AF677D262}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.Sconit.Utility</RootNamespace>
+    <AssemblyName>com.Sconit.Utility</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\Lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\Lib\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\Lib\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NVelocity">
+      <HintPath>..\..\Lib\NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.XML" />
+    <Reference Include="Telerik.Web.Mvc">
+      <HintPath>..\..\Lib\Telerik.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>..\..\Lib\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BarcodeHelper.cs" />
+    <Compile Include="CSVWriter.cs" />
+    <Compile Include="DateTimeHelper.cs" />
+    <Compile Include="EncryptHelper.cs" />
+    <Compile Include="ExcelHelper.cs" />
+    <Compile Include="FlatFileReaderHelper.cs" />
+    <Compile Include="ExtensionsHelper.cs" />
+    <Compile Include="HqlStatementHelper.cs" />
+    <Compile Include="HtmlHelperExtensions.cs" />
+    <Compile Include="IListHelper.cs" />
+    <Compile Include="ImageHelper.cs" />
+    <Compile Include="ImportHelper.cs" />
+    <Compile Include="ISIHelper.cs" />
+    <Compile Include="IWindsorContainer.cs" />
+    <Compile Include="LotNoHelper.cs" />
+    <Compile Include="MultiButtonAttribute.cs" />
+    <Compile Include="ObixHelper.cs" />
+    <Compile Include="Report\Operator\RepPalletOperator.cs" />
+    <Compile Include="Report\Operator\RepBarCodeFGOperator.cs" />
+    <Compile Include="Report\Operator\RepDeliveryBarCodeOperator.cs" />
+    <Compile Include="Report\Operator\RepBarCodePartsOperator.cs" />
+    <Compile Include="Report\Operator\RepBarCodePurchase2DOperator.cs" />
+    <Compile Include="Report\Operator\RepBarCodeMI2DOperator.cs" />
+    <Compile Include="Report\Operator\RepBarCodeFI2DOperator.cs" />
+    <Compile Include="Report\Operator\RepASNProcurementOperator.cs" />
+    <Compile Include="Report\Operator\RepASNSaleOperator.cs" />
+    <Compile Include="Report\Operator\RepORDProductEXOrderOperator.cs.cs" />
+    <Compile Include="Report\Operator\RepORDProductFIOrderOperator.cs" />
+    <Compile Include="Report\Operator\RepORDProductMIOrderOperator.cs" />
+    <Compile Include="Report\Operator\RepPurchaseBillOperator.cs" />
+    <Compile Include="Report\Operator\RepRECSaleOrderOperator.cs" />
+    <Compile Include="Report\Operator\RepRECInvInOrderOperator.cs" />
+    <Compile Include="Report\Operator\RepRECInvOutOrderOperator.cs" />
+    <Compile Include="Report\Operator\RepORDInvOutOrderOperator.cs" />
+    <Compile Include="Report\Operator\RepORDInvInOrderOperator.cs" />
+    <Compile Include="Report\Operator\RepORDSaleOrderOperator.cs" />
+    <Compile Include="Report\Operator\RepShipmentMasterOperator.cs" />
+    <Compile Include="Report\Operator\RepBarCodePurchaseA4Operator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepASNOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepASNTransferOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepAssembleOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepBarCodeA4Operator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepBarCodeExOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepBarCodeMIOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepBarCodeOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepBarCodeFIOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepBarCodePurchaseOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepDistributeLabelOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepEKanBanCardOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepInspectOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepKanBanCardOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepKBLabelOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepKitOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepMiscOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepPickListOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepProductionOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepORDPurchaseOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepReceiptOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepRejectOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepSequenceOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepShiftPlanExOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepStockTakingOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepStockTakingNewOperator.cs" />
+    <Compile Include="Report\Operator\RepORDTransferOrderOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Operator\RepBarCodeEx2DOperator.cs" />
+    <Compile Include="Report\Operator\RepBarCode2DSpecialOperator.cs" />
+    <Compile Include="Report\Operator\RepBarCodeExScrapOperator.cs" />
+    <Compile Include="Report\Operator\RepRECTransferDetailOperator.cs" />
+    <Compile Include="Report\Operator\RepTraceCodeOperator.cs" />
+    <Compile Include="Report\RepTemplate2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SconitAuthorizeAttribute.cs" />
+    <Compile Include="SecurityHelper.cs" />
+    <Compile Include="ExceptionHelper.cs" />
+    <Compile Include="ControlHelper.cs" />
+    <Compile Include="MessageQueueHelper.cs" />
+    <Compile Include="NVelocityTemplateRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\IReportBase.cs" />
+    <Compile Include="Report\IReportGen.cs" />
+    <Compile Include="Report\ReportBase.cs" />
+    <Compile Include="Report\ReportGen.cs" />
+    <Compile Include="Report\RepTemplate1.cs" />
+    <Compile Include="ServiceLocator.cs" />
+    <Compile Include="SMTPHelper.cs" />
+    <Compile Include="SystemHelper.cs" />
+    <Compile Include="WebConstants.cs" />
+    <Compile Include="XlsHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Globalization\Globalization.csproj">
+      <Project>{5907015a-4bec-482d-b4c4-5413e7ee0068}</Project>
+      <Name>Globalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{E4710EAE-2F94-423E-BD3E-258E054714AE}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Report\Operator\RepSaleBillOperator.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

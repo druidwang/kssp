@@ -1,0 +1,68 @@
+﻿@model IEnumerable<com.Sconit.Entity.FMS.FacilityTrans>
+<fieldset>
+<script type="text/javascript">
+    function FacilityTransGrid_OnDataBinding(e) {
+        e.data = {
+            FCID: $('#FCID').val()
+        };
+    } 
+    </script>
+
+    @(Html.Telerik().Grid(Model)
+        .Name("FacilityTransGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.FCID).ClientTemplate(Html.ActionLink("<#= FCID #>", "Edit", "FacilityTrans", new { ID = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.FacilityName);
+            columns.Bound(o => o.AssetNo);
+            columns.Bound(o => o.TransTypeDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+                 })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxFacilityTransList", "FacilityMaster"))
+                .ClientEvents(events => events.OnDataBinding("FacilityTransGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+            @Html.Hidden("FCID", (string)ViewBag.FCID)
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/FacilityMaster/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+
+    
+</fieldset>
+
+<script language="javascript" type="text/javascript">
+   
+    function onFacilityMasterRefclick(Id) {
+        var data = {
+            "Id": Id
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/FacilityMaster/_FacilityTransEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+</script>

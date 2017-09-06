@@ -1,0 +1,55 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("IpMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.IpNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.IpNo).ClientTemplate(Html.ActionLink("<#= IpNo #>", "ReceiveEdit", "ProcurementIpMaster", new { IpNo = "<#= IpNo #>" }, null).ToString());
+            columns.Bound(o => o.Flow).ClientTemplate("<div title=<#=FlowDescription #>><#=Flow #></div>");
+           
+            columns.Bound(o => o.IpMasterTypeDescription);
+            columns.Bound(o => o.PartyFrom).ClientTemplate("<div title=<#= PartyFromName #>><#= PartyFrom #></div>");
+            columns.Bound(o => o.PartyTo).ClientTemplate("<div title=<#= PartyToName #>><#= PartyTo #></div>"); 
+          
+            columns.Bound(o => o.IpMasterStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            
+        })
+               
+                .Scrollable(c => c.Enabled(false))
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_ReceiveAjaxList", "ProcurementIpMaster"))
+                .ClientEvents(events => events.OnDataBinding("IpMasterGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function IpMasterGrid_OnDataBinding(e) {
+            e.data = {
+                IpNo: $('#IpNo').val(),
+                Status: $('#Status').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                IpOrderType: $("#IpOrderType").val(),
+                WMSNo: $('#WMSNo').val(),
+                Flow: $('#Flow').val()
+            };
+        }
+    </script>
+</fieldset>

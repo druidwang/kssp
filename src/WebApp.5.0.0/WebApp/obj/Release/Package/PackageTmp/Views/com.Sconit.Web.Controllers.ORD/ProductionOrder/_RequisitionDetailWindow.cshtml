@@ -1,0 +1,94 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+ <script type="text/javascript">
+     function RequisitionDetailSearch() {
+         var data = {
+            Item: $('#Item').val(),
+            LocationTo: $('#LocationTo').val(),
+            LocationFrom: $('#LocationFrom').val(),
+            MasterorderNo: $("#MasterorderNo").val(),
+            DetailOrderNo: $("#DetailOrderNo").val()
+         };
+         $.ajax({
+             type: "post",
+             dataType: "html",
+             url: "/ProductionOrder/_RequisitionDetailList/",
+             data: data,
+             success: function (data, textStatus) {
+                 var tabStrip = $("#divRequisitionDetailList");
+                 $(tabStrip).html(data);
+             }
+         });
+     }
+ </script>
+ 
+ <div class="search">
+         <div class="search-label">
+                        <label for="OrderDetail_Item">
+                            @Resources.ORD.OrderDetail.OrderDetail_OrderNo
+                        </label>
+                    </div>
+                    <div class="search-field">
+                        @Html.TextBox("DetailOrderNo", (string)ViewBag.DetailOrderNo)
+                         @Html.Hidden("MasterorderNo", (string)ViewBag.MasterorderNo)
+                       
+                    </div>
+            <div class="search-label">
+                <label for="OrderDetail_Item">
+                    @Resources.ORD.OrderDetail.OrderDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_ItemComboBox", "Common", new
+    {
+        controlName = "Item",
+        selectedValue = ViewBag.item != null ? ViewBag.item : string.Empty
+
+    });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderDetail_LocationFrom">
+                    @Resources.ORD.OrderDetail.OrderDetail_LocationFrom
+                </label>
+            </div>
+            <div class="search-field">
+              
+                 @{
+    Html.RenderAction("_LocationComboBox", "Common", new
+                           {
+                               controlName = "LocationFrom",
+                               selectedValue = ViewBag.LocationFrom != null ? ViewBag.LocationFrom : string.Empty
+                           });
+                } 
+            </div>
+            <div class="search-label">
+                <label for="OrderDetail_LocationTo">
+                    @Resources.ORD.OrderDetail.OrderDetail_LocationTo
+                </label>
+            </div>
+            <div class="search-field">
+              
+                 @{
+    Html.RenderAction("_LocationComboBox", "Common", new
+                           {
+                               controlName = "LocationTo",
+                               selectedValue = ViewBag.LocationTo != null ? ViewBag.LocationTo : string.Empty
+                           });
+                } 
+            </div>
+
+            </div>
+            <div class="search-footer">
+            <button type="button" id="btnSearch" onclick="RequisitionDetailSearch()">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+</fieldset>
+<div id="divRequisitionDetailList">
+    @{
+        Html.RenderAction("_RequisitionDetailList", "ProductionOrder", new { MasterorderNo = ViewBag.MasterorderNo });
+    }
+</div>
+

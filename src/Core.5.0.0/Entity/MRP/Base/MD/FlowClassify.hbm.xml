@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.MD.FlowClassify, com.Sconit.Entity" table="MRP_FlowClassify" lazy="false">
+    <composite-id>
+      <key-property name="Code" column="Code" type="String" length="50" />
+      <key-property name="Flow" column="Flow" type="String" length="50" />
+    </composite-id>
+  </class>
+</hibernate-mapping>

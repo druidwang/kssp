@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_EmergencyTransferOrder_View" });
+}
+
+
+<script>
+    function onSuccess(e) {
+     $message.success(e.response.status);
+    }
+    function onUploadError(e) {
+        $('.t-upload-files').remove();
+        var errorMessages =  e.XMLHttpRequest.responseText ;
+        $message.error(errorMessages);
+        
+        e.preventDefault();
+    }
+
+
+
+
+</script>
+
+
+<fieldset>
+  <legend>@Resources.ORD.EmergencyFeeder.EmergencyFeeder_Detail</legend>
+ <div class="search">
+                <div class="search-label">
+                     <label>
+                    <a href='/Resource/Templates/UploadTemplate/EmergencyTransferOrder.xls'>@Resources.EXT.PageLan.TemplateDownload</a>
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().Upload()
+                    .Name("attachments")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("ImportEmergencyFeederDetail", "EmergencyTransferOrder")
+                    .AutoUpload(true))
+                                .ClientEvents(e => e.OnSuccess("onSuccess").OnError("onUploadError")))
+               </div>
+               </div>
+ </fieldset>

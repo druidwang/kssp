@@ -1,0 +1,186 @@
+﻿@model com.Sconit.Web.Models.SearchModels.ORD.RequisitionTransferOrderSearchModel
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProcurementOrder_RequisitionOrder" });
+}
+<script type="text/javascript">
+    function onWindowTimeChange(e) {
+        if ($("#TransferFlow").val() != null && $("#Flow").val() != "") {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                url: "/ProcurementOrder/_WindowTime/",
+                data: { "windowTime": e.value.format("yyyy-MM-dd hh:mm"), "flow": $("#TransferFlow").val() },
+                success: function (data, textStatus) {
+                    var newDate = new Date(data);
+                    $("#StartTime").val(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    }
+
+    function onCreate() {
+        //debugger
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error("明细不能为空");
+            return;
+        }
+        var Sequences = new Array();
+        var Items = new Array();
+        var UnitCounts = new Array();
+        var Uoms = new Array();
+        var OrderedQtys = new Array();
+        var HuTos = new Array();
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var i = 0;
+        var orderedIndex = grid.columns.length - 2;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if (parseFloat($.trim(row.find("#OrderedQty").val())) > 0) {
+                Sequences[i] = $.trim(row[0].childNodes[0].innerText);
+                Items[i] = $.trim(row[0].childNodes[1].innerText);
+                UnitCounts[i] = $.trim(row[0].childNodes[4].innerText);
+                Uoms[i] = $.trim(row[0].childNodes[6].innerText);
+                HuTos[i] = $.trim(row[0].childNodes[10].innerText);
+                OrderedQtys[i] = row.find("#OrderedQty").val();
+                i++;
+            }
+        }
+
+        var ordermstr = {
+            "Flow": $("#Flow").val(),
+            "StartTime": $("#StartTime").val(),
+            "WindowTime": $("#WindowTime").val(),
+            "EffectiveDate": $("#EffectiveDate").val(),
+            "ReferenceOrderNo": $("#ReferenceOrderNo").val(),
+            "ExternalOrderNo": $("#ExternalOrderNo").val(),
+            "Priority": $("input[type=radio][name=Priority]:checked").val()
+        }
+        var made = {
+            "Sequences": Sequences,
+            "Items": Items,
+            "UnitCounts": UnitCounts,
+            "Uoms": Uoms,
+            "OrderedQtys": OrderedQtys,
+            "HuTos": HuTos
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/ProcurementOrder/NewOrder/",
+            data: $.extend(made, ordermstr),
+            traditional: true,
+            success: function (data, ordermstr) {
+                if (data != null && data.Data != null && data.Data.orderNo != undefined) {
+                    window.location.href = "/DistributionOrder/Edit/?orderNo=" + data.Data.orderNo;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    /** 
+    * 时间对象的格式化;  
+    * eg:nowDate = new Date().format("yyyy-MM-dd hh:mm:ss")
+    */
+    Date.prototype.format = function (format) {
+        var o = {
+            "M+": this.getMonth() + 1, // month  
+            "d+": this.getDate(), // day  
+            "h+": this.getHours(), // hour  
+            "m+": this.getMinutes(), // minute  
+            "s+": this.getSeconds(), // second  
+            "q+": Math.floor((this.getMonth() + 3) / 3), // quarter  
+            "S": this.getMilliseconds()
+        }
+
+        if (/(y+)/.test(format)) {
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(format)) {
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+            }
+        }
+        return format;
+    }  
+    
+</script>
+<fieldset>
+    <div class="editor">
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.TransferFlow)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.TransferFlow)
+            @Html.HiddenFor(model => model.TransferFlow)
+        </div>
+        <div class="editor-label-2">
+            <label>
+                优先级</label>
+        </div>
+        <div class="editor-field-2">
+            @Html.RadioButton("Priority", (int)com.Sconit.CodeMaster.OrderPriority.Normal, true)@Resources.SYS.CodeDetail.CodeDetail_OrderPriority_Normal
+            @Html.RadioButton("Priority", (int)com.Sconit.CodeMaster.OrderPriority.Urgent)@Resources.SYS.CodeDetail.CodeDetail_OrderPriority_Urgent
+        </div>
+        <div class="editor-label-2">
+            <label>
+                @Resources.EXT.PageLan.WindowTime</label>
+        </div>
+        <div class="editor-field-2">
+            <div class="editor-field-2">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm")
+                   .Name("WindowTime").ClientEvents(events => events.OnChange("onWindowTimeChange")))
+            </div>
+        </div>
+        <div class="editor-label-2">
+            <label>
+                @Resources.EXT.PageLan.StartTime</label>
+        </div>
+        <div class="editor-field-2">
+            @(Html.Telerik().DateTimePicker()
+                .Format("yyyy-MM-dd HH:mm").Name("StartTime"))
+        </div>
+        <div class="editor-label-2">
+            <label>
+                参考订单号</label>
+        </div>
+        <div class="editor-field-2">
+            @Html.Editor("ReferenceOrderNo")
+        </div>
+        <div class="editor-label-2">
+            <label>
+                外部订单号</label>
+        </div>
+        <div class="editor-field-2">
+            @Html.Editor("ExternalOrderNo")
+        </div>
+    </div>
+    <div class="editor-footer">
+        @Html.Button(Resources.SYS.Global.Button_New, "Url_ProcurementOrder_RequisitionOrder", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"onclick","onCreate()"}
+	        })
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ProcurementOrder/RequisitionOrder")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+</fieldset>
+<div id="fdOrderDetail">
+    @{
+        Html.RenderAction("_RequisitionOrderDetailList", "ProcurementOrder", new
+        {
+            searchModel = ViewBag.SearchModel
+        });
+    }
+</div>

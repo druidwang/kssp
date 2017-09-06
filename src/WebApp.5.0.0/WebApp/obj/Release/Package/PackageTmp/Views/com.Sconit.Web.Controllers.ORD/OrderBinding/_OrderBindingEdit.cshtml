@@ -1,0 +1,91 @@
+﻿@model com.Sconit.Entity.ORD.OrderBinding
+@Html.Partial("_AjaxMessage")
+@using (Html.BeginForm("_OrderBindingEdit", "OrderBinding"))
+{
+    <fieldset>
+        <legend>@Resources.ORD.OrderBinding.OrderBinding_EditOrderBinding</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.OrderNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.OrderNo)
+                @Html.HiddenFor(model => model.OrderNo)
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.ControlName)
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BindFlow)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.BindFlow)
+                @Html.HiddenFor(model => model.BindFlow)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BindFlowStrategy)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common",
+        new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.FlowStrategy,
+            controlName = "BindFlowStrategy",
+            selectedValue = (Int16)Model.BindFlowStrategy
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BindType)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common",
+        new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.BindType,
+            controlName = "BindType",
+            selectedValue = (Int16)Model.BindType
+        });
+                }
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="editor-footer">
+
+       @* <button type="submit" id="btnSave">@Resources.SYS.Global.Button_Save</button>*@
+       @Html.Button(Resources.SYS.Global.Button_Save, "Url_OrderMstr_Production_Edit,Url_OrderMstr_Procurement_Edit,Url_OrderMstr_Distribution_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSave"},
+        {"needconfirm","true"}
+	})
+
+        <button type="button" id="btnBack" onclick="btnBackBinding_Click()">@Resources.SYS.Global.Button_Back</button>
+    </div>
+}
+<script language="javascript" type="text/javascript">
+    function btnBackBinding_Click() {
+        var data = {
+            "id": $("#OrderNo").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/OrderBinding/_OrderBinding/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent).html(data);
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,179 @@
+﻿@model IList<com.Sconit.Entity.INV.StockTakeDetail>
+<script type="text/javascript">
+    function StockTakeDetailGridView_OnDataBinding(e) {
+        
+        e.data = {
+            "StNo": $("#StNo").val(),
+            "ItemCode": $("#ItemCode").val(),
+            "Location": $("#LocationId").val(),
+            "LocationBin": $("#LocationBin").val()
+        };
+    }
+
+    function onLocationComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+        }
+    }
+
+    function onLocation_DataBinding(e) {
+        e.data = {
+            "Region": $("#Region").val(),
+            "checkRegion": false
+        };
+    }
+
+    function onItemComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                $(e.target).parent().parent().next().text("");
+                $(e.target).parent().parent().next().next().html("");
+                $(e.target).parent().parent().next().next().val("");
+                combobox.reload();
+            } else {
+                var data = {
+                    "itemCode": e.value
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/StockTake/_WebBomDetail/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#StockTakeDetailGridView").data("tGrid");
+                        var oldData = $tGrid.dataItem($(e.target).parent().parent().parent());
+                        $(e.target).parent().parent().next().html(data.ItemDescription);
+                        $(e.target).parent().parent().next().next().html(data.Uom);
+                        $(e.target).parent().parent().next().next().val(data.Uom);
+
+                        if (oldData != undefined) {
+                            oldData.ItemDescription = data.ItemDescription;
+                            oldData.Uom = data.Uom;
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+
+    function onSubmit(e) {
+        var grid = $("#StockTakeDetailGridView").data("tGrid");
+        if (grid == null) {
+            alert("明细不能为空");
+            return;
+        }
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+        var oderDetails = grid.changeLog.serialize(inserted, updated, deleted);
+        var ordermstr = {
+            "id": $("#StNo").val()
+        };
+        grid._convert(oderDetails);
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/StockTake/_SaveStockTakeDetailBatchEditing/",
+            data: $.extend(oderDetails, ordermstr),
+            success: function (data, ordermstr) {
+                $message.success(data.SuccessMessage);
+
+                if (data != "") {
+                    var orderData = {
+                        "stNo": $("#StNo").val(),
+                        "Status": $("#Status").val(),
+                        "IsScanHu": $("#IsScanHu").val()
+                    };
+                    $.ajax({
+                        type: "get",
+                        dataType: "Html",
+                        url: "/StockTake/_StockTakeDetail/",
+                        data: orderData,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var tabStrip = $("#TabStrip");
+                            var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                            $(tabStripContent1).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function onUomDataBinding(e) {
+        
+        e.data = {
+            "Item": $("#Uom-input").parent().parent().parent().prev().prev().text()
+        };
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("StockTakeDetailGridView")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.InProcess.ToString())
+            {
+                commands.Insert();
+                commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSubmit()", href = "#" });
+            }
+        })
+
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).EditorTemplateName("ItemGridForeignKey").Width(120);
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            //columns.ForeignKey(o => o.Uom, (IEnumerable<com.Sconit.Entity.MD.Uom>)ViewData["Uom"], "Code", "Code").Width(100);
+            columns.Bound(o => o.Uom).ReadOnly();//.EditorTemplateName("UomGridComboBox").Width(80);
+            columns.Bound(o => o.Location).EditorTemplateName("LocationGridForeignKey").Width(120);
+            columns.Bound(o => o.Qty).Width(80);
+            columns.Command(commands =>
+            {
+                if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.InProcess.ToString())
+                {
+                    commands.Delete();
+                }
+            });
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxStockTakeDetail", "StockTake")
+            // .Update("_SaveStockTakeDetailBatchEditing", "StockTake", new { id = ViewBag.StNo })
+        )
+        .ClientEvents(events => events.OnDataBinding("StockTakeDetailGridView_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 500);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>

@@ -1,0 +1,174 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.MRP
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.MD
+<fieldset>
+    @using (Html.BeginForm("TreeViewList", "RccpPlan"))
+    {   
+        <div class="search">
+           <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateType
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterComboBox", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+            includeBlankOption = true,
+            isRccpPlan = true,
+            isChange = true,
+            controlName = "DateType",
+            selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).DateType : "-1"
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.RccpFiPlan.RccpFiPlan_PlanVersion
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_RccpPlanMasterComboBox", "Common", new
+        {
+            controlName = "PlanVersion",
+            IsRelease = true,
+            selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).PlanVersion : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.RccpTrans.RccpTrans_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).Item : null
+        });
+                }
+            </div>
+          
+            @{
+        if (ViewBag.DateType != "4" || ViewBag.DateType == null)
+        {
+                <div class="search-label" id="Dateindexlabel">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndex
+                    </label>
+                </div>
+                <div class="search-field" id="Dateindexfield">
+                    @{
+            Html.RenderAction("_DateIndexComboBox", "Common", new
+            {
+                includeBlankOption = true,
+                controlName = "DateIndex",
+                selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).DateIndex : string.Empty
+            });
+                    }
+                </div>
+
+
+                <div class="search-label" id="DateIndexDatelabel" style="display: none">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndex
+                    </label>
+                </div>
+                <div class="search-field" id="DateIndexDatefield" style="display: none">
+                    @(Html.Telerik().DatePicker().Name("DateIndexDate")
+.Value(TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).DateIndexDate : System.DateTime.Today).Min(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+        }
+        else
+        {
+                <div class="search-label" id="Dateindexlabel" style="display: none">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndex
+                    </label>
+                </div>
+                <div class="search-field" id="Dateindexfield" style="display: none">
+                    @{
+            Html.RenderAction("_DateIndexComboBox", "Common", new
+            {
+                includeBlankOption = true,
+                controlName = "DateIndex",
+                selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).DateIndex : string.Empty
+            });
+                    }
+                </div>
+
+
+                <div class="search-label" id="DateIndexDatelabel">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndex
+                    </label>
+                </div>
+                <div class="search-field" id="DateIndexDatefield">
+                    @(Html.Telerik().DatePicker().Name("DateIndexDate")
+.Value(TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).DateIndexDate : System.DateTime.Today).Min(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+        }
+            }
+            <div class="search-label">
+                <label>
+                    向下追溯
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsDown", TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).IsDown : true)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+    }
+</fieldset>
+<script type="text/javascript">
+    function CodeMaster_Change(e) {
+        if (e.value == 4) {
+            document.getElementById("Dateindexlabel").style.display = 'none';
+            document.getElementById("Dateindexfield").style.display = 'none';
+            document.getElementById("DateIndexDatelabel").style.display = 'inline';
+            document.getElementById("DateIndexDatefield").style.display = 'inline';
+
+        }
+        else {
+            document.getElementById("Dateindexlabel").style.display = 'inline';
+            document.getElementById("Dateindexfield").style.display = 'inline';
+            document.getElementById("DateIndexDatelabel").style.display = 'none';
+            document.getElementById("DateIndexDatefield").style.display = 'none';
+            $('#DateIndex').data('tComboBox').value('');
+            $('#DateIndex').data('tComboBox').text('');
+            $("#DateIndex").data("tComboBox").reload();
+            $('#PlanVersion').data('tComboBox').value('');
+            $('#PlanVersion').data('tComboBox').text('');
+            $("#PlanVersion").data("tComboBox").reload();
+        }
+
+    }
+
+    function DateIndex_DataBinding(e) {
+        if ($('#DateType').val() != 4) {
+            e.data = {
+                dateType: $('#DateType').val()
+            }
+        }
+    }
+
+    function PlanVersion_DataBinding(e) {
+        if (e.value != "") {
+            e.data = {
+                timeUnit: $('#DateType').val()
+            }
+        }
+    }
+</script>

@@ -1,0 +1,47 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string ajaxActionName = ViewBag.AjaxActionName;
+    bool enable = true;
+    if (ViewBag.Enable!=null)
+    {
+        enable = ViewBag.Enable;
+    }
+}
+@{
+    if (ViewBag.IsChange != null)
+    {
+        if(name=="ShipFrom")
+        {
+            @(Html.Telerik().DropDownList()
+            .Name(name)
+            .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingShipFrom", "Common", null))
+            .ClientEvents(events =>
+            events.OnChange("ShipFrom_Change").OnDataBinding("ShipFrom_DataBinding")
+            )
+            .BindTo(Model)
+            .Enable(enable)
+            )
+        }
+        else if (name == "ShipTo")
+        {
+             @(Html.Telerik().DropDownList()
+            .Name(name)
+               .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingShipTo", "Common", null))
+            .ClientEvents(events =>
+            events.OnChange("ShipTo_Change").OnDataBinding("ShipTo_DataBinding")
+            )
+            .BindTo(Model)
+            .Enable(enable)
+            )
+        }
+    }
+    else
+    { 
+       @(Html.Telerik().DropDownList()
+        .Name(name)
+        .BindTo(Model)
+        .Enable(enable)
+        ) 
+    }
+    }

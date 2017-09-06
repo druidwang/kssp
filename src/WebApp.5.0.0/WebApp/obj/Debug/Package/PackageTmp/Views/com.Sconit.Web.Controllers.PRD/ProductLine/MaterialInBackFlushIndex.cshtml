@@ -1,0 +1,143 @@
+﻿@model com.Sconit.Entity.PRD.ProductLineLocationDetail
+<script type="text/javascript">
+    function Flow_Change(e) {
+
+        $("#ProductLineFacility").data("tComboBox").value('');
+        $("#ProductLineFacility").data("tComboBox").text('');
+        $("#ProductLineFacility").data("tComboBox").reload();
+
+    }
+
+    function onSearch() {
+        var data = {
+            "ProductLine": $("#ProductLine").val(),
+            "ProductLineFacility": $("#ProductLineFacility").val()
+        }
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ProductLine/_BackFlushDetailList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#divBackFlushDeatil").html(data);
+                $("#divBackFlushDeatil").show();
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });
+    }
+
+    function ProductLineFacility_DataBinding(e) {
+        e.data = {
+            productLine: $("#ProductLine").val()
+        };
+    }
+
+    function onSubmit(e) {
+        var grid = $("#ProductLineLocationDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var itemStr = "";
+        var qtyStr = "";
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var item = row.find("#Item").text();
+            var remainQty = parseFloat(row.find("#RemainQty").text());
+            var currentQty = parseFloat(row.find("#CurrentRemainQty").val());
+            if (remainQty > currentQty) {
+                if (itemStr == "") {
+                    itemStr = item;
+                    qtyStr = (remainQty - currentQty).toString();
+                } else {
+                    itemStr += "," + item;
+                    qtyStr += "," + (remainQty - currentQty).toString();
+                }
+            }
+        }
+        var data = {
+            "ProductLine": $("#ProductLine").val(),
+            "ProductLineFacility": $("#ProductLineFacility").val(),
+            "itemStr": itemStr,
+            "qtyStr": qtyStr
+        }
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: data,
+            url: "/ProductLine/BackFlush/",
+            cache: false,
+            success: function (data, textStatus) {
+                $message.success(data.SuccessMessage);
+               
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/ProductLine/_BackFlushDetailList/",
+                    data: {
+                        "ProductLine": $("#ProductLine").val(),
+                        "ProductLineFacility": $("#ProductLineFacility").val()
+                    },
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#divBackFlushDeatil");
+                        $($tGrid).html(data);
+                    }
+                });
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+  
+</script>
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Production_MaterialIn_BackFlush" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ProductLine)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new { controlName = "ProductLine", type = (int)com.Sconit.CodeMaster.OrderType.Production, isChange = true });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ProductLineFacility)
+            </div>
+            <div class="editor-field-2">
+                <div class="editor-field-2">
+                    @{
+    Html.RenderAction("_ProductLineFacilityComboBox", "Common",
+        new { controlName = "ProductLineFacility" });
+                    }
+                </div>
+            </div>
+
+          
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="btnSearch" onclick="onSearch()">
+                @Resources.SYS.Global.Button_Search</button>
+             @Html.Button(Resources.SYS.Global.Button_BackFlush, "Url_Production_MaterialIn_BackFlush", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnBackFlush"},
+        {"needconfirm","true"},
+        {"onclick","onSubmit()"}
+	})
+        </div>
+    </fieldset>
+    <div id="divBackFlushDeatil" style="display: none;">
+    </div>
+}

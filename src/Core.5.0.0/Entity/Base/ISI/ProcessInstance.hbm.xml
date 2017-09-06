@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.ISI.ProcessInstance, com.Sconit.Entity" table="ISI_ProcessInstance" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="TaskCode" column="TaskCode" type="String" length="50" />	
+		<property name="TaskSubType" column="TaskSubType" type="String" length="50" />	
+		<property name="Seq" column="Seq" type="Int32"  />	
+		<property name="Desc1" column="Desc1" type="String" length="255" />	
+		<property name="UserList" column="UserList" type="String" length="300" />	
+		<property name="IsParallel" column="IsParallel" type="Boolean"  />	
+		<property name="IsOpt" column="IsOpt" type="Boolean"  />	
+		<property name="IsApprove" column="IsApprove" type="Boolean"  />	
+		<property name="IsCtrl" column="IsCtrl" type="Boolean"  />	
+		<property name="CreateDate" column="CreateDate" type="DateTime"  />	
+		<property name="CreateUserNm" column="CreateUserNm" type="String" length="255" />	
+		<property name="CreateUser" column="CreateUser" type="String" length="50" />	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />	
+		<property name="LastModifyUser" column="LastModifyUser" type="String" length="50" />	
+		<property name="LastModifyUserNm" column="LastModifyUserNm" type="String" length="255" />	
+		<property name="Version" column="Version" type="Int32"  />	
+  	</class>
+</hibernate-mapping>

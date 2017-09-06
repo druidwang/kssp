@@ -1,0 +1,42 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MRP.MD.ProductType>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ProductTypeGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "MrpProductType", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.OrderSubTypeDescription).Title("订单类型");
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+            columns.Bound(o => o.NeedFreeze)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='NeedFreeze' <#= NeedFreeze? checked='checked' : '' #> />");
+            columns.Bound(o => o.NeedTurn)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='NeedTurn' <#= NeedTurn? checked='checked' : '' #> />"); 
+                 })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "MrpProductType"))
+                .ClientEvents(events => events.OnDataBinding("ProductTypeGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ProductTypeGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val()
+            };
+        } 
+    </script>
+</fieldset>

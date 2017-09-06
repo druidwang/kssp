@@ -1,0 +1,68 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.ISS.IssueTypeToMaster
+@{
+    ViewBag.Title = Resources.ISS.IssueTypeToMaster.New_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_IssueTypeTo_View" });
+}
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.ISS.IssueTypeToMaster.New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Code)
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+			<div class="editor-label-2">
+                @Html.LabelFor(model => model.IssueType)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_IssueTypeDropDownList", "Common", new { controlName = "IssueTypeCode",
+								includeBlankOption = true,
+                                selectedValue = Model!=null?Model.IssueTypeCode:string.Empty});
+                }
+				
+            </div>
+			<div class="editor-label-2">
+                @Html.LabelFor(model => model.IssueLevel)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_IssueLevelDropDownList", "Common", new { controlName = "IssueLevelCode",
+								includeBlankOption = true,
+                                selectedValue = Model!=null?Model.IssueLevelCode:string.Empty });
+                }
+				
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsActive", true)
+            </div>
+			<div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/IssueTypeTo/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

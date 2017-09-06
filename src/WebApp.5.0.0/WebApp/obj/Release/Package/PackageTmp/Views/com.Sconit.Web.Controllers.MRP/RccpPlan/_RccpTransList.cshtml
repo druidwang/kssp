@@ -1,0 +1,24 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.RccpTrans>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("RccpTransGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PlanVersion);
+            columns.Bound(o => o.DateType);
+            columns.Bound(o => o.DateIndex);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.Bom);
+            columns.Bound(o => o.SourcePlanVersion);
+            columns.Bound(o => o.ScrapPercentage);
+            columns.Bound(o => o.IsLastLevel).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsLastLevel' <#= IsLastLevel? checked='checked' : '' #> />"); 
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+
+        .Resizable(resizing => resizing.Columns(true))
+    )
+   
+</fieldset>

@@ -1,0 +1,213 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.MRP
+<fieldset>
+    @using (Html.BeginForm("List", "MrpSnap"))
+    {   
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    类型
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("tabType", 0, true, new { onclick = "doClick(true)" })<span>查询</span><span
+                    style="margin: 4px"></span>
+                @Html.RadioButton("tabType", 1, false, new { onclick = "doClick(false)" })<span>运行</span>
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <hr style="border: 100% dashed black;" />
+
+
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.MrpSnapMaster.MrpSnapMaster_Type
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.SnapType,
+            controlName = "SnapType",
+            selectedValue = TempData["MrpSnapMasterSearchModel"] != null ? ((MrpSnapMasterSearchModel)TempData["MrpSnapMasterSearchModel"]).SnapType : 1
+        });
+                }
+                <input id="cbRun" type="checkbox" name="cbRun" onclick="IsShowLog(this)" style="display: none" />
+            </div>
+            <div id="divSearch">
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpSnapMaster.MrpSnapMaster_IsRelease
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.CheckBox("IsRelease", TempData["MrpSnapMasterSearchModel"] != null ? ((MrpSnapMasterSearchModel)TempData["MrpSnapMasterSearchModel"]).IsRelease : false)
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpSnapMaster.MrpSnapMaster_SnapTimeStart
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Name("SnapTimeStart")
+.Value(TempData["MrpSnapMasterSearchModel"] != null ? ((MrpSnapMasterSearchModel)TempData["MrpSnapMasterSearchModel"]).SnapTimeStart : System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpSnapMaster.MrpSnapMaster_SnapTimeEnd
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Name("SnapTimeEnd")
+.Value(TempData["MrpSnapMasterSearchModel"] != null ? ((MrpSnapMasterSearchModel)TempData["MrpSnapMasterSearchModel"]).SnapTimeEnd : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch" onclick="HiddenLog()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnCheckFlow" onclick="CheckFlow(this)" style="display: none">
+                检查路线</button>
+            <button type="button" id="btnCheckUom" onclick="CheckUom(this)" style="display: none">
+                检查单位</button>
+            <button type="button" id="btnRun" onclick="RunMrpSnap(this)" style="display: none">
+                @Resources.SYS.Global.Button_Run</button>
+        </div>
+    }
+</fieldset>
+<div id="divLog" style="display: none">
+</div>
+<script type="text/javascript">
+    var isShowLog = false;
+    function doClick(bl) {
+        if (bl) {
+            $("#cbRun").attr("checked", false);
+            $("#divSearch").show();
+            $("#btnSearch").show();
+            $("#fldList").show();
+            $("#btnRun").hide();
+            $("#divLog").hide();
+            //$("#btnCheckFlow").hide();
+            //$("#btnCheckUom").hide();
+        }
+        else {
+            $("#divSearch").hide();
+            $("#btnSearch").hide();
+            $("#fldList").hide();
+            $("#btnRun").show();
+            $("#divLog").show();
+            //$("#btnCheckFlow").show();
+            //$("#btnCheckUom").show();
+        }
+        isShowLog = false;
+    }
+
+    function RunMrpSnap(e) {
+        doClick(false);
+        var data =
+            {
+                SnapType: $('#SnapType').val()
+            };
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/MrpSnap/_RunMrpSnap/",
+            data:data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                //$message.success( data );
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+        e.disabled = true;
+        isShowLog = true;
+        ShowLog();
+    }
+
+
+    function IsShowLog(cbRun) {
+        if (cbRun.checked) {
+            ShowLog();
+        }
+        else {
+            HiddenLog();
+        }
+    }
+
+    function ShowLog() {
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSnap/_GetRunLog/",
+            cache: false,
+            //data: null,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+            }
+        });
+        if (isShowLog) {
+            $("#divLog").show();
+            setTimeout(ShowLog, 1000);
+        }
+        else {
+            $("#divLog").hide();
+        }
+    }
+
+
+
+    function HiddenLog() {
+        $("#divLog").hide();
+    }
+
+    function CheckFlow(e) {
+        $("#cbRun").attr("checked", false);
+        $("#divLog").show();
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSnap/_CheckFlow/",
+            cache: false,
+            success: function (data, textStatus) {
+                //DisplayJsonMessages(data);
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function CheckUom(e) {
+        $("#cbRun").attr("checked", false);
+        $("#divLog").show();
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSnap/_CheckUom/",
+            cache: false,
+            //data: null,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>

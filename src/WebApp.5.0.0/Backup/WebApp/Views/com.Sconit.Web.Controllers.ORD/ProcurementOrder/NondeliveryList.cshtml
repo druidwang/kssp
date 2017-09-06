@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Nondelivery_Procurement_View" });
+}
+
+@Html.Partial("_NondeliverySearch")
+
+@Html.Partial("_NondeliverySearchResult")

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.ISS.SMSStatus, com.Sconit.Entity" table="ISS_SMSStatus" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="Issue" column="Issue" type="String" length="50"/>	
+		<property name="IssueDetail" column="IssueDet" type="Int32"/>	
+		<property name="IssueLevel" column="IssueLevel" type="String" length="50"/>	
+		<property name="MsgID" column="MsgID" type="String" length="255"/>	
+		<property name="SeqID" column="SeqID" type="Int32"/>	
+		<property name="SrcID" column="SrcID" type="String" length="255"/>	
+		<property name="DestID" column="DestID" type="String" length="255"/>	
+		<property name="ServiceID" column="ServiceID" type="String" length="255"/>	
+		<property name="SrcTerminalId" column="SrcTerminalId" type="String" length="255"/>	
+		<property name="SrcTerminalType" column="SrcTerminalType" type="Int32"/>	
+		<property name="MsgFmt" column="MsgFmt" type="Int32"/>	
+		<property name="MsgLength" column="MsgLength" type="Int32"/>	
+		<property name="Status" column="Status" type="String" length="255"/>	
+		<property name="Content" column="Content_" type="String" length="255"/>	
+		<property name="DoneDatetime" column="DoneDatetime" type="DateTime"/>	
+		<property name="SubmitDatetime" column="SubmitDatetime" type="DateTime"/>	
+		<property name="EventHandler" column="EventHandler" type="String" length="50"/>	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+  	</class>
+</hibernate-mapping>

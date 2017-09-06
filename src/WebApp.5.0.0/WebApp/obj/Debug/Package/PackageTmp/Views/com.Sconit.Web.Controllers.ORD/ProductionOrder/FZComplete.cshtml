@@ -1,0 +1,89 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_FZComplete" });
+
+}
+<script type="text/javascript">
+    //    $(function () {
+    //        $("#FZOrderNo").unbind("keydown");
+    //        $("#FZOrderNo").keydown(function () {
+    //            if (event.keyCode == 13) {
+
+    //                var data = {
+    //                    "orderNo": $(this).val(),
+    //                    "CompleteAndFeed": $("#CompleteAndFeed").is(":checked")
+    //                }
+    //                $(this).val("");
+    //                $.ajax({
+    //                    type: "post",
+    //                    dataType: "json",
+    //                    data: data,
+    //                    url: "/ProductionOrder/FZOrderComplete/",
+    //                    cache: false,
+    //                    success: function (data, textStatus) {
+    //                       
+    //                        $message.success('分装生产单下线成功。');
+    //                    },
+    //                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //                        var errorMessages = XMLHttpRequest.responseText;
+    //                        $message.error(errorMessages);
+    //                        
+    //                    }
+    //                });
+    //            }
+    //        });
+    //    });
+
+    function FZOrderNoKeydown() {
+        if (event.keyCode == 13) {
+            var data = {
+                "orderNo": $("#FZOrderNo").val(),
+                "CompleteAndFeed": $("#CompleteAndFeed").is(":checked")
+            }
+            $("#FZOrderNo").val("");
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                url: "/ProductionOrder/FZOrderComplete",
+                cache: false,
+                success: function (data, textStatus) {
+                   
+                    $message.success('分装生产单下线成功。');
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    
+                    $message.error(errorMessages);
+                }
+            });
+        }
+
+    }
+
+</script>
+<fieldset>
+    @using (Html.BeginForm())
+    {
+   
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_FZOrderNo
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("FZOrderNo", ViewBag.FZOrderNo != null ? (string)ViewBag.FZOrderNo : string.Empty, new { onkeydown = "FZOrderNoKeydown()" })
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_CompleteAndFeed
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("CompleteAndFeed", ViewBag.CompleteAndFeed != null ? (bool)ViewBag.CompleteAndFeed : true)
+            </div>
+        </div>
+  
+    }
+</fieldset>

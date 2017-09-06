@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.INP.ConcessionMaster, com.Sconit.Entity" table="INP_ConcessionMstr" lazy="false">
+    <id name="ConcessionNo" column="CCSNo" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <version name="Version" column="Version" type="Int32" />
+    <property name="RejectNo" column="RejNo" type="String" length="50"/>
+    <property name="ReferenceNo" column="RefNo" type="String" length="50"/>
+    <property name="Status" column="Status" />
+    <property name="Region" column="Region" type="String" length="50"/>
+    <property name="IsPrint" column="IsPrint" type="Boolean"/>
+    <property name="WMSNo" column="WMSNo" type="String" length="50"/>
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+  </class>
+</hibernate-mapping>

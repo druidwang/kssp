@@ -1,0 +1,244 @@
+﻿@{
+    ViewBag.Title = Resources.ORD.OrderMaster.OrderMaster_OrderNo;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Production_MaterialIn_ReturnOrderMaster" });
+}
+@model com.Sconit.Entity.PRD.ProductLineLocationDetail
+<script type="text/javascript">
+    function onOrderChange(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+         if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+             combobox.value("");
+             combobox.reload();
+             $("#divReturnQtyDeatil").hide();
+         }
+         else {
+             var data = { "OrderNo": $("#OrderNo").val() };
+             $.ajax({
+                 type: "get",
+                 dataType: "html",
+                 url: "/ProductionOrder/_ReturnQtyDetailList/",
+                 data: data,
+                 cache: false,
+                 success: function (data, textStatus) {
+                     $("#divReturnQtyDeatil").html(data);
+                     $("#divReturnQtyDeatil").show();
+
+                 },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                     alert(errorThrown);
+                 }
+             });
+         }
+     }
+
+     function doSearchClick() {
+         $("#btnReturn").attr("style","display:none");
+         if ($("#OrderNo").val() == "") {
+             $message.error("查询条件订单号为必填。");
+             return;
+         }
+         $message.error("");
+         var data = {
+             "OrderNo": $("#OrderNo").val(),
+             "LocationFrom": $("#LocationFrom").val(),
+             "Operation": $("#Operation").val(),
+             "Item": $("#Item").val()
+         };
+         $.ajax({
+             type: "get",
+             dataType: "html",
+             url: "/ProductionOrder/_ReturnQtyDetailList/",
+             data: data,
+             cache: false,
+             success: function (data, textStatus) {
+                 $("#divReturnQtyDeatil").html(data);
+                 $("#divReturnQtyDeatil").show();
+
+             },
+             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                 alert(errorThrown);
+             }
+         });
+     }
+     function onReturnSubmit(e) {
+         
+        
+         var idStr = "";
+         var orderNo = "";
+         var CurrentReturnQtyStr = "";
+         var errorStr = "";
+         var bb = false;
+         var i = 1;
+         var $checkRecords = $("input[name='checkedRecords']");
+         $checkRecords.each(function (a, b) {
+             if ($(b).attr("checked")) {
+                 var qty = $(b).parent().parent().find("#CurrentReturnQty").val();
+                 if (parseFloat(qty) > 0) {
+
+                     if (idStr == "") {
+                         idStr = $(b).val();
+                         orderNo = $(b).parent().parent().children().eq(2).text();
+                         CurrentReturnQtyStr = qty;
+                     } else {
+                         idStr += "," + $(b).val();
+                         CurrentReturnQtyStr +=","+ qty;
+                     }
+                 }
+                 else {
+                     bb = true;
+                     errorStr += "第" + i + "行本次退货数填写不正确。";
+                 }
+             }
+             i++;
+         });
+       
+         if (bb) {
+             $message.error(errorStr);
+             return;
+         }
+         var data = {
+             "OrderNo": orderNo,
+            "idStr":idStr,
+            "CurrentReturnQtyStr": CurrentReturnQtyStr
+        }
+          $.ajax({
+            type: "Post",
+            dataType: "Json",
+            url: "/ProductionOrder/_ReturnQty/",
+            data: data,
+            success: function (data) {
+                $message.success(data.SuccessMessage);
+               
+                var datas = {
+                    "OrderNo": $("#OrderNo").val(),
+                    "LocationFrom": $("#LocationFrom").val(),
+                    "Operation": $("#Operation").val(),
+                    "Item": $("#Item").val()
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/ProductionOrder/_ReturnQtyDetailList/",
+                    data: datas,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#divReturnQtyDeatil");
+                        $($tGrid).html(data);
+                    }
+                });
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+     }
+
+//    function onSubmit(e) {
+//        var grid = $("#ReturnOrderBomDetail").data("tGrid");
+//        var inserted = grid.changeLog.inserted;
+//        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+//        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+//        var orderBomDetails = grid.changeLog.serialize(inserted, updated, deleted);
+//        var orderMaster = {
+//            "OrderNo": $("#OrderNo").val()
+//        }
+//        grid._convert(orderBomDetails);
+//        $.ajax({
+//            type: "post",
+//            dataType: "Json",
+//            url: "/ProductionOrder/ReturnQty/",
+//            data: $.extend(orderBomDetails, orderMaster),
+//            success: function (data) {
+//                $message.success(data.SuccessMessage);
+//               
+//                $.ajax({
+//                    type: "post",
+//                    dataType: "html",
+//                    url: "/ProductionOrder/_ReturnQtyDetailList/",
+//                    data: { orderNo: $("#OrderNo").val() },
+//                    cache: false,
+//                    success: function (data, textStatus) {
+//                        var $tGrid = $("#divReturnQtyDeatil");
+//                        $($tGrid).html(data);
+//                    }
+//                });
+
+//            },
+//            error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                var errorMessages = XMLHttpRequest.responseText;
+//                
+//                $message.error(errorMessages);
+//            }
+//        });
+     //    }
+</script>
+@using (Html.BeginForm("_ReturnQtyDetailList", "ProductionOrder"))
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.OrderNo)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_OrderComboBox", "Common", new { controlName = "OrderNo", canFeed = true, orderType = (int)com.Sconit.CodeMaster.OrderType.Production });
+                }
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.LocationFrom)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_LocationComboBox", "Common",
+        new { controlName = "LocationFrom",
+            selectValue=Model!=null?Model.LocationFrom:string.Empty
+        } );
+       
+                }
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_ItemComboBox", "Common",
+        new { controlName = "Item",
+            selectValue=Model!=null?Model.Item:string.Empty
+        } );
+       
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Operation)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("Operation", Model != null ? Model.Operation.ToString() : string.Empty)
+            </div>
+        
+
+
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="btnSearch" onclick="doSearchClick()">
+                @Resources.SYS.Global.Button_Search</button>
+        @Html.Button(Resources.SYS.Global.Button_Return, "Url_Production_MaterialIn_FeedOrderMaster", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnReturn"},
+        {"needconfirm","true"},
+        {"style","display:none"},
+        {"onclick","onReturnSubmit()"}
+	})
+        </div>
+    </fieldset>
+  
+}
+<div id="divReturnQtyDeatil">
+</div>

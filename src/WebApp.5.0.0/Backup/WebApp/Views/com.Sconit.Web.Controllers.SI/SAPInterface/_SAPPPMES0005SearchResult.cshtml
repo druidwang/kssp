@@ -1,0 +1,65 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPPPMES0005>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("SAPPPMES0005Grid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ZMESSC).Width(110);
+            columns.Bound(o => o.ZMESLN);
+            //columns.Bound(o => o.ZPTYPE);
+            //columns.Bound(o => o.AUFART);
+            //columns.Bound(o => o.WERKS);
+            columns.Bound(o => o.MATXT);
+            columns.Bound(o => o.GAMNG_H);
+            columns.Bound(o => o.GMEIN_H);
+            //columns.Bound(o => o.GLTRP);
+            //columns.Bound(o => o.GSTRP);
+            //columns.Bound(o => o.BLDAT);
+            columns.Bound(o => o.BUDAT);
+            columns.Bound(o => o.BWART_I);
+            columns.Bound(o => o.MATNR_I);
+            columns.Bound(o => o.ERFMG_I);
+            columns.Bound(o => o.GMEIN_I);
+            columns.Bound(o => o.LGORT_I);
+            //columns.Bound(o => o.ZMESGUID);
+            //columns.Bound(o => o.ZCSRQSJ);
+            //columns.Bound(o => o.BatchNo);
+            //columns.Bound(o => o.UniqueCode);
+            columns.Bound(o => o.Status);
+        })
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSAPPPMES0005List", "SAPInterface"))
+        .ClientEvents(events => events.OnDataBinding("SAPPPMES0005_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAPPPMES0005_OnDataBinding(e) {
+            e.data = {
+                BatchNo: $('#BatchNo').val(),
+                ZMESSC: $('#ZMESSC').val(),
+                TransStartDate: $('#TransStartDate').val(),
+                TransEndDate: $("#TransEndDate").val(),
+                MATNR_I: $("#MATNR_I").val(),
+                LGORT_I: $("#LGORT_I").val(),
+                BWART_I: $("#BWART_I").val(),
+                Status: $("input[name='Status']:checked").val(),
+                TimeType: $("input[name='TimeType']:checked").val()
+            }; 
+        } 
+    </script>
+</fieldset>

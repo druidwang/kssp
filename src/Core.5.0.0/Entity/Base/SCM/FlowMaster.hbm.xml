@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.SCM.FlowMaster, com.Sconit.Entity" table="SCM_FlowMstr" lazy="false" dynamic-update="true">
+		<id name="Code" column="Code" type="String" unsaved-value="null" >
+			<generator class="assigned" />
+		</id>
+		<property name="Description" column="Desc1" type="String" length="100" />
+		<property name="IsActive" column="IsActive" type="Boolean"  />
+		<property name="Type" column="Type"  />
+		<property name="ReferenceFlow" column="RefFlow" type="String" length="50" />
+		<property name="PartyFrom" column="PartyFrom" type="String" length="50" />
+		<property name="PartyTo" column="PartyTo" type="String" length="50" />
+		<property name="ShipFrom" column="ShipFrom" type="String" length="50" />
+		<property name="ShipTo" column="ShipTo" type="String" length="50" />
+		<property name="LocationFrom" column="LocFrom" type="String" length="50" />
+		<property name="LocationTo" column="LocTo" type="String" length="50" />
+		<!--<property name="InspectLocationFrom" column="InspLocFrom" type="String" length="50" />	
+		<property name="InspectLocationTo" column="InspLocTo" type="String" length="50" />	
+		<property name="RejectLocationFrom" column="RejLocFrom" type="String" length="50" />	
+		<property name="RejectLocationTo" column="RejLocTo" type="String" length="50" />-->
+		<property name="BillAddress" column="BillAddr" type="String" length="50" />
+		<property name="PriceList" column="PriceList" type="String" length="50" />
+		<property name="Dock" column="Dock" type="String" length="100" />
+		<property name="Routing" column="Routing" type="String" length="50" />
+		<property name="ReturnRouting" column="ReturnRouting" type="String" length="50" />
+		<property name="IsAutoCreate" column="IsAutoCreate" type="Boolean"  />
+		<property name="IsAutoRelease" column="IsAutoRelease" type="Boolean"  />
+		<property name="IsAutoStart" column="IsAutoStart" type="Boolean"  />
+		<property name="IsAutoShip" column="IsAutoShip" type="Boolean"  />
+		<property name="IsAutoReceive" column="IsAutoReceive" type="Boolean"  />
+		<property name="IsAutoBill" column="IsAutoBill" type="Boolean"  />
+		<property name="IsListDet" column="IsListDet" type="Boolean"  />
+		<property name="IsManualCreateDetail" column="IsManualCreateDet" type="Boolean"  />
+		<property name="IsListPrice" column="IsListPrice" type="Boolean"  />
+		<property name="IsPrintOrder" column="IsPrintOrder" type="Boolean"  />
+		<property name="IsPrintAsn" column="IsPrintAsn" type="Boolean"  />
+		<property name="IsPrintRceipt" column="IsPrintRcpt" type="Boolean"  />
+		<property name="IsShipExceed" column="IsShipExceed" type="Boolean"  />
+		<property name="IsReceiveExceed" column="IsRecExceed" type="Boolean"  />
+		<property name="IsOrderFulfillUC" column="IsOrderFulfillUC" type="Boolean"  />
+		<property name="IsShipFulfillUC" column="IsShipFulfillUC" type="Boolean"  />
+		<property name="IsReceiveFulfillUC" column="IsRecFulfillUC" type="Boolean"  />
+		<property name="IsShipScanHu" column="IsShipScanHu" type="Boolean"  />
+		<property name="IsReceiveScanHu" column="IsRecScanHu" type="Boolean"  />
+		<property name="IsCreatePickList" column="IsCreatePL" type="Boolean"  />
+		<property name="IsInspect" column="IsInspect" type="Boolean"  />
+		<property name="IsRejectInspect" column="IsRejInspect" type="Boolean"  />
+		<property name="IsShipFifo" column="IsShipFifo" type="Boolean"  />
+		<property name="IsReceiveFifo" column="IsRecFifo" type="Boolean"  />
+		<!--<property name="IsPickFromBin" column="IsPickFromBin" type="Boolean"  />-->
+		<property name="IsShipByOrder" column="IsShipByOrder" type="Boolean"  />
+		<property name="IsAsnUniqueReceive" column="IsAsnUniqueRec" type="Boolean"  />
+		<property name="IsMRP" column="IsMRP" type="Boolean"  />
+		<property name="ReceiveGapTo" column="RecGapTo"  />
+		<property name="ReceiptTemplate" column="RecTemplate" type="String" length="100" />
+		<property name="OrderTemplate" column="OrderTemplate" type="String" length="100" />
+		<property name="AsnTemplate" column="AsnTemplate" type="String" length="100" />
+		<property name="HuTemplate" column="HuTemplate" type="String" length="100" />
+		<property name="BillTerm" column="BillTerm"  />
+		<property name="CreateHuOption" column="CreateHuOpt"  />
+		<property name="MaxOrderCount" column="MaxOrderCount" type="Int32"  />
+		<property name="MRPOption" column="MRPOpt"  />
+		<property name="IsPause" column="IsPause" type="Boolean"  />
+		<property name="PauseTime" column="PauseTime" type="DateTime"  />
+		<property name="FlowStrategy" column="FlowStrategy"  />
+		<property name="ExtraDemandSource" column="ExtraDmdSource" type="String" length="256" />
+		<property name="PickStrategy" column="PickStrategy" type="String" length="50" />
+		<property name="DAUAT" column="DAUAT" type="String" length="50" />
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+		<property name="IsCheckPartyFromAuthority" column="IsCheckPartyFromAuth" type="Boolean"  />
+		<property name="IsCheckPartyToAuthority" column="IsCheckPartyToAuth" type="Boolean"  />
+		<property name="LastRefreshDate" column="LastRefreshDate" type="DateTime"  />
+		<property name="ResourceGroup" column="ResourceGroup"  />
+		<property name="IsAllowProvEstRec" column="IsAllowProvEstRec" type="Boolean"  />
+		<property name="UcDeviation" column="UcDeviation"  type="Double" />
+		<property name="OrderDeviation" column="OrderDeviation"  type="Double" />
+		<!--<property name="NeedAPS" column="NeedAPS" type="Boolean"  />-->
+
+
+		<property name="ExtraLocationTo" column="ExtraLocationTo" type="String" length="256"  />
+		<property name="ExtraLocationFrom" column="ExtraLocationFrom" type="String" length="256"  />
+
+		<property name="SalesOrg" column="SalesOrg" type="String" length="50"  />
+    <property name="DistrChan" column="DistrChan" type="String" length="50"  />
+    <property name="CostCenter" column="CostCenter" type="String" length="50"  />
+
+	</class>
+</hibernate-mapping>

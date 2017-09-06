@@ -1,0 +1,111 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset>
+    @using (Html.BeginForm("List", "Address"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Address_Code">
+                    @Resources.MD.Address.Address_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["AddressSearchModel"] != null ? ((AddressSearchModel)TempData["AddressSearchModel"]).Code : string.Empty)
+            </div>
+@*            <div class="editor-label-2">
+                <label for="Address_Type">
+                    @Resources.MD.Address.Address_Type
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.AddressType,
+            controlName = "Type",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["AddressSearchModel"] != null ? ((AddressSearchModel)TempData["AddressSearchModel"]).Type : null
+        });
+                }
+            </div>*@
+            <div class="search-label">
+                <label for="Address_Address">
+                    @Resources.MD.Address.Address_Address
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("AddressContent", TempData["AddressSearchModel"] != null ? ((AddressSearchModel)TempData["AddressSearchModel"]).AddressContent : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Address_PostCode">
+                    @Resources.MD.Address.Address_PostCode
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PostCode", TempData["AddressSearchModel"] != null ? ((AddressSearchModel)TempData["AddressSearchModel"]).PostCode : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Address_TelPhone">
+                    @Resources.MD.Address.Address_TelPhone
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("TelPhone", TempData["AddressSearchModel"] != null ? ((AddressSearchModel)TempData["AddressSearchModel"]).TelPhone : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Address_MobilePhone">
+                    @Resources.MD.Address.Address_MobilePhone
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MobilePhone", TempData["AddressSearchModel"] != null ? ((AddressSearchModel)TempData["AddressSearchModel"]).MobilePhone : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Address_Fax">
+                    @Resources.MD.Address.Address_Fax
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Fax", TempData["AddressSearchModel"] != null ? ((AddressSearchModel)TempData["AddressSearchModel"]).Fax : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Address_Email">
+                    @Resources.MD.Address.Address_Email
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Email", TempData["AddressSearchModel"] != null ? ((AddressSearchModel)TempData["AddressSearchModel"]).Email : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Address_ContactPsnNm">
+                    @Resources.MD.Address.Address_ContactPsnNm
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ContactPersonName", TempData["AddressSearchModel"] != null ? ((AddressSearchModel)TempData["AddressSearchModel"]).ContactPersonName : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @*<button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/Address/New")'">
+                @Resources.SYS.Global.Button_New</button>*@
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Address_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_Address_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/Address/New")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>

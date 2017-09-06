@@ -1,0 +1,115 @@
+﻿@model IEnumerable<MenuModel>
+@{
+    Layout = "~/Views/Shared/_Main.cshtml";
+    
+    <style type="text/css">
+        body {
+            background-color: #FFFFFF;
+        }
+
+        div.t-treeview {
+            overflow: visible;
+        }
+
+        .t-treeview span.t-in {
+            cursor: pointer;
+        }
+    </style>
+}
+@section HeadContent {
+    @*<base target="Right" />*@
+    <script type="text/javascript">
+        window.onload = function () {
+            $("#one").height(getTotalHeight() - 33);
+            if (top.location == self.location) {
+                top.location = "/Main/Default";
+            }
+        }
+
+        function ExpandNode(v) {
+            var treeView = $("#TreeView").data("tTreeView");
+            var items = $("#TreeView li.t-item");
+            for (var j = 0; j < items.length; j++) {
+                if ($("input", items[j]).val() == v) {
+                    $("#TreeView .t-in").removeClass("t-state-selected");
+                    $("> div > .t-in", items[j]).addClass("t-state-selected");
+                    var currentitem = $(items[j]);
+                    for (var i = ($(items[j]).parents(".t-item").length) * 2; i > 0; i--) {
+                        currentitem = currentitem.parent();
+                        treeView.expand(currentitem.closest(".t-item"));
+                    }
+                    //break;
+                }
+            }
+        }
+
+        function getTotalHeight() {
+            if ($.browser.msie) {
+                return document.compatMode == "CSS1Compat" ? document.documentElement.clientHeight : document.body.clientHeight;
+            }
+            else {
+                return self.innerHeight;
+            }
+        }
+        window.onresize = function () {
+            $("#one").height(getTotalHeight() - 33);
+        }
+
+        function onTreeViewLoad() {
+            var treeview = $('#TreeView').data('tTreeView');
+
+            $(treeview.element)
+            .delegate('div:not(.t-state-disabled) > .t-in', 'click', $.telerik.delegate(treeview, treeview.nodeClick))
+        }
+
+        function onTreeViewSelect(e) {
+            var treeView = $('#TreeView').data('tTreeView');
+            var url = $(e.item).find("a[href]").attr("href").replace("#~", "");
+            if (url != "") {
+                var name = $(e.item).find("input").val();//treeView.getItemText(e.item);
+                parent.Right.addTab(url, name);
+                $.post("/Main/_CreateLog/", { pageUrl: url, pageName: name })
+            }
+        }
+
+    </script>
+}
+<div style="width: 219px; margin: 0px; height: 27px; background-color: White; border-bottom: 1px solid #CCCCCC; border-right: 1px solid #CCCCCC;">
+    <div style="padding-left: 19px; padding-top: 5px;">
+        @ViewBag.UserCode
+    </div>
+</div>
+<div style="overflow-y: auto; padding-left: 0px; padding-bottom: 0px; width: 214px; background-color: White; padding-top: 5px; text-align: left; border-left: 5px solid #FFFFFF; border-right: 1px solid #CCCCCC;"
+    id="one">
+    @{
+        if (Model != null)
+        {
+        @(Html.Telerik().TreeView()
+                .Name("TreeView")
+                .BindTo(Model, mappings =>
+                {
+                    mappings.For<MenuModel>(binding => binding
+                            .ItemDataBound((item, menu) =>
+                            {
+                                item.Text = menu.Name;
+                                item.ImageUrl = menu.ImageUrl;
+                                item.Value = menu.Description;
+
+                                if (!string.IsNullOrWhiteSpace(menu.PageUrl))
+                                {
+                                    item.Url = "#" + menu.PageUrl;
+                                }
+                                else
+                                {
+                                    item.Url = "#~";
+                                }
+                            })
+                            .Children(menu => menu.ChildrenMenu)
+                            );
+                })
+                .ClientEvents(events => events.OnLoad("onTreeViewLoad")
+                .OnSelect("onTreeViewSelect"))
+            )
+        }
+    }
+</div>

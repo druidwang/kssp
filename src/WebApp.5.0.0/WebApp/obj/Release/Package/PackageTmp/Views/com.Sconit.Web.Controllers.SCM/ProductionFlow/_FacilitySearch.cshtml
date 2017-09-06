@@ -1,0 +1,47 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SCM
+<fieldset>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Item_Code">
+                    @Resources.SCM.ProductLineFacility.Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("code", TempData["Code"] == null ? string.Empty : TempData["Code"])
+                @Html.Hidden("ProductLine", (string)ViewBag.ProductLine)
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            @Html.Hidden("isFromList", true)
+                <button type="button" id="btnSearch" onclick="btnSearchDetail_Click();">
+                @Resources.SYS.Global.Button_Search</button>
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ProductionFlow/List")'">
+                 @Resources.SYS.Global.Button_Back</button>
+            </div>
+        </div>
+    }
+</fieldset>
+<script language="javascript" type="text/javascript">
+    function btnSearchDetail_Click() {
+        var data = {
+            "code": $("#code").val(),
+            "ProductLine": $("#ProductLine").val(),
+            "isFromList": true
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/ProductionFlow/_Facility/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(4);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>

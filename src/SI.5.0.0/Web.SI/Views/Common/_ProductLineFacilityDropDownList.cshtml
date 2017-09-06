@@ -1,0 +1,44 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string Id = ViewBag.ControlId;
+    if (string.IsNullOrWhiteSpace(Id))
+    {
+        Id = name;
+    }
+    string dataBindFunc = ViewBag.DataBindFunc;
+    if (string.IsNullOrWhiteSpace(dataBindFunc))
+    {
+        dataBindFunc = "ProductLineFacility_DataBinding";
+    }
+    bool enable = true;
+    if (ViewBag.Enable != null)
+    {
+        enable = ViewBag.Enable;
+    }
+}
+@{
+    if (ViewBag.IsChange != null)
+    {
+    @(Html.Telerik().DropDownList()
+            .Name(name)
+                 .HiddenInputHtmlAttributes(new { id = Id })
+                .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingProductLineFacility", "Common", null))
+            .ClientEvents(events =>
+                            events.OnDataBinding(dataBindFunc)
+            )
+            .BindTo(Model)
+            .Enable(enable)
+            )
+    }
+
+    else
+    { 
+    @(Html.Telerik().DropDownList()
+        .Name(name)
+        .HiddenInputHtmlAttributes(new { id = Id })
+        .BindTo(Model)
+        .Enable(enable)
+        ) 
+    }
+}

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<com.Sconit.Entity.MD.SwitchTrading>
+<script type="text/javascript">
+    function onPriceListComboBoxChange(e) {
+
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+        }
+    }
+
+</script>
+<fieldset>
+
+    @(Html.Telerik().Grid(Model)
+               .Name("SwitchTradingGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .ToolBar(commands =>
+        {
+
+            commands.Insert();
+
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_AjaxList", "SwitchTrading")
+                .Insert("_Insert", "SwitchTrading")
+                .Update("_Update", "SwitchTrading")
+                .Delete("_Delete", "SwitchTrading"))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.Supplier);
+            columns.Bound(o => o.Customer);
+            columns.Bound(o => o.PurchaseGroup);
+            columns.Bound(o => o.SalesOrg);
+            columns.Bound(o => o.DistrChan);
+            columns.Bound(o => o.DIVISION).Title("产品组");
+            columns.Bound(o => o.PriceList).EditorTemplateName("PriceListForeignKey").Width(100);
+            columns.Command(commands =>
+            {
+                commands.Edit();
+                commands.Delete();
+
+            });
+            
+
+        }).ClientEvents(events =>
+        {
+            events.OnDataBinding("SwitchTrading_OnDataBinding").OnComplete("TelerikGridView_OnComplete");
+        })
+        .EnableCustomBinding(true)
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable()
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SwitchTrading_OnDataBinding(e) {
+            e.data = {
+                Flow: $('#Flow').val(),
+                Supplier: $('#Supplier').val(),
+                PurchaseGroup: $('#PurchaseGroup').val(),
+                Customer: $('#Customer').val(),
+                PriceList: $('#PriceList').val(),
+                DIVISION: $('#DIVISION').val()
+            };
+        }
+    </script>
+</fieldset>

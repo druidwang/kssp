@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.ISI.TaskAddress, com.Sconit.Entity" table="ISI_TaskAddr" lazy="false">
+		<id name="Code" column="Code" type="String" unsaved-value="null" >
+			<generator class="assigned" />
+		</id>
+		<property name="Description" column="Desc_" type="String" length="100" />
+		<property name="Seq" column="Seq" type="Int32"  />
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="50" update="false"/>
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32" />
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="50" />
+	</class>
+</hibernate-mapping>

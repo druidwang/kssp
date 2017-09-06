@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpDetail>
+<fieldset>
+    <legend>@Resources.ORD.IpDetail.IpDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("AdjustIpDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();
+            columns.Bound(o => o.IpNo);
+
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount).Format("{0:0.########}");
+          
+     
+            columns.Bound(o => o.LocationFromName);
+            columns.Bound(o => o.LocationToName);
+            columns.Bound(o => o.Qty).Format("{0:0.########}");
+            columns.Bound(o => o.ReceivedQty).Format("{0:0.########}");
+            columns.Bound(o => o.CurrentReceiveQty);
+        })
+                 .CellAction(cell =>
+                 {
+                     if (cell.Column.Member == "Id")
+                     {
+                         cell.Text = string.Format("<input type='text' id='Id' name='Id' style='display:none' value='" + cell.DataItem.Id + "'/>");
+                     }
+                     if (cell.Column.Member == "CurrentReceiveQty")
+                     {
+                         cell.Text = string.Format("<input type='text' id='CurrentReceiveQty' name='CurrentReceiveQty' style='width:70px' value='" + cell.DataItem.CurrentReceiveQty + "'/>");
+                     }
+                 })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

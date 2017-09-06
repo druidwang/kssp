@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.RccpPlanMaster>
+<fieldset id="fldList">
+    @(Html.Telerik().Grid(Model)
+        .Name("RccpPlanMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PlanVersion);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PlanVersion).ClientTemplate(Html.ActionLink("<#= PlanVersionShow #>", "Edit", "RccpPlan", new { planVersion = "<#= PlanVersionShow #>" }, null).ToString());
+            columns.Bound(o => o.SnapTime);
+            columns.Bound(o => o.DateTypeDescription);
+            columns.Bound(o => o.StatusDescription);
+            columns.Bound(o => o.RccpPlanVersion);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.IsRelease).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsRelease' <#= IsRelease? checked='checked' : '' #> />");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxRccpPlanMasterList", "RccpPlan"))
+        .ClientEvents(events => events.OnDataBinding("RccpPlanMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function RccpPlanMasterGrid_OnDataBinding(e) {
+            e.data = {
+                SnapTime: $('#SnapTime').val(),
+                DateType: $('#DateType').val(),
+                Status: $('#Status').val(),
+                DateIndex: $('#DateIndex').val()
+            };
+        }
+    </script>
+</fieldset>

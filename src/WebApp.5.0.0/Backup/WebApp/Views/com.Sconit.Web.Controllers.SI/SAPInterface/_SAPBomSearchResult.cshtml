@@ -1,0 +1,50 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPBom>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("SAPBomGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.MATNR);
+            columns.Bound(o => o.MAKTX);
+            columns.Bound(o => o.BMENG);
+            columns.Bound(o => o.BMEIN);
+            columns.Bound(o => o.IDNRK);
+            columns.Bound(o => o.MEINS);
+            columns.Bound(o => o.MENGE);
+            columns.Bound(o => o.AUSCH);
+            columns.Bound(o => o.BatchNo);
+            columns.Bound(o => o.StatusDesc);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSAPBomList", "SAPInterface"))
+                        .ClientEvents(events => events.OnDataBinding("SAPBom_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAPBom_OnDataBinding(e) {
+            e.data = {
+                BatchNo: $('#BatchNo').val(),
+                BomCode: $('#BomCode').val(),
+                TransStartDate: $('#TransStartDate').val(),
+                TransEndDate: $("#TransEndDate").val(),
+                Status: $("input[name='Status']:checked").val()
+            }; 
+        } 
+    </script>
+</fieldset>

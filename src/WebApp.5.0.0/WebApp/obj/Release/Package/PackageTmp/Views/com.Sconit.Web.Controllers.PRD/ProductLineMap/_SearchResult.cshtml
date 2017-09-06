@@ -1,0 +1,49 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.ProductLineMap>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.SAPProductLine);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.SAPProductLine).ClientTemplate(Html.ActionLink("<#= SAPProductLine #>", "Edit", "ProductLineMap", new { SAPProductLine = "<#= SAPProductLine #>" }, null).ToString()); ;
+            columns.Bound(o => o.ProductLine);
+            columns.Bound(o => o.CabFlow);
+            columns.Bound(o => o.CabLocation);
+            columns.Bound(o => o.ChassisFlow);
+            columns.Bound(o => o.ChassisLocation);
+            columns.Bound(o => o.ChassisSapLocation);
+            columns.Bound(o => o.VanLocation);
+            columns.Bound(o => o.VanSapLocation);
+            columns.Bound(o => o.PowerFlow);
+            columns.Bound(o => o.TransmissionFlow);
+            columns.Bound(o => o.TireFlow);
+            columns.Bound(o => o.SaddleFlow);
+        })
+        .EnableCustomBinding(true)
+                                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ProductLineMap"))
+                .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                SAPProductLine: $('#SAPProductLine').val(),
+                ProductLine: $('#ProductLine').val(),
+            
+            };
+        } 
+    </script>
+</fieldset>

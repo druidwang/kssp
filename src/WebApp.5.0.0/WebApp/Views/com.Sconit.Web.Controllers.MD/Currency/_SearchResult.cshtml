@@ -1,0 +1,42 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MD.Currency>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("CurrencyGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "Currency", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Name);
+            columns.Bound(o => o.IsBase)
+            .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsBase' <#= IsBase? checked='checked' : '' #> />"); 
+                })
+      
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Currency"))
+            .ClientEvents(events => events.OnDataBinding("CurrencyGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function CurrencyGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Name: $('#Name').val()
+            };
+        } 
+    </script>
+</fieldset>

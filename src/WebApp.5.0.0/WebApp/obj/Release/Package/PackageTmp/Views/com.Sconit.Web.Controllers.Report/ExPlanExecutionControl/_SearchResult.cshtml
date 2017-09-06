@@ -1,0 +1,59 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpExShiftPlan>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpExShiftPlanGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Sequence);
+        })
+      
+        .DataBinding(dataBinding => dataBinding.Ajax()
+                    .Select("_AjaxList", "ExPlanExecutionControl"))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Shift);
+            columns.Bound(o => o.ProductLine);
+            columns.Bound(o => o.StartTime).Format("{0:MM-dd HH:mm}");
+            columns.Bound(o => o.WindowTime).Format("{0:MM-dd HH:mm}");
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Remark);
+            columns.Bound(o => o.IsFreeze)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsFreeze' <#= IsFreeze? checked='checked' : '' #> />");
+            columns.Bound(o => o.UnitCount).Format("{0:0.##}");
+            columns.Bound(o => o.IsNew)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsNew' name='IsNew' value='<#= IsNew #>' <#=IsNew? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsCorrection)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsCorrection' name='IsCorrection' value='<#= IsCorrection #>' <#=IsCorrection? checked='checked' : '' #> />");
+            columns.Bound(o => o.Qty).Format("{0:0.##}");
+            //columns.Bound(o => o.CorrectionQty).Title("修正数");
+            columns.Bound(o => o.ReceivedQty).Format("{0:0.##}");
+            columns.Bound(o => o.CorrectionRate);
+           
+      
+        }).ClientEvents(events =>
+        {
+            events.OnDataBinding("MrpExShiftPlanGrid_OnDataBinding").OnComplete("TelerikGridView_OnComplete");
+        })
+        .EnableCustomBinding(true)
+        .Pageable(settings =>
+        {
+            settings.Enabled(true);
+            settings.PageSize(2000);
+        })
+        //.Scrollable()
+        //.Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function MrpExShiftPlanGrid_OnDataBinding(e) {
+            e.data = {
+                ProdLine: $('#ProdLine').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+            };
+        }
+    </script>
+</fieldset>

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPPPMES0004>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("SAPPPMES0004Grid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ZMESSC).Width(110);
+            columns.Bound(o => o.ZMESLN);
+            columns.Bound(o => o.ZPTYPE);
+            columns.Bound(o => o.BWART_H);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.LGORT_H);
+            columns.Bound(o => o.ERFMG_H);
+            columns.Bound(o => o.FilterId).Title("过滤Id");
+            columns.Bound(o => o.BUDAT);
+            columns.Bound(o => o.ZComnum);
+            columns.Bound(o => o.LMNGA_H);
+            columns.Bound(o => o.XMNGA);
+            //columns.Bound(o => o.ZMESGUID);
+            columns.Bound(o => o.ZCSRQSJ);
+            //columns.Bound(o => o.BatchNo);
+            //columns.Bound(o => o.UniqueCode);
+            columns.Bound(o => o.Status);
+        })
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSAPPPMES0004List", "SAPInterface"))
+        .ClientEvents(events => events.OnDataBinding("SAPPPMES0004_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAPPPMES0004_OnDataBinding(e) {
+            e.data = {
+                BatchNo: $('#BatchNo').val(),
+                ZMESSC: $('#ZMESSC').val(),
+                LFSNR: $('#LFSNR').val(),
+                BWART_H: $('#BWART_H').val(),
+                ZComnum: $("#ZComnum").val(),
+                TransStartDate: $('#TransStartDate').val(),
+                TransEndDate: $("#TransEndDate").val(),
+                Status: $("input[name='Status']:checked").val(),
+                TimeType: $("input[name='TimeType']:checked").val()
+            }; 
+        } 
+    </script>
+</fieldset>

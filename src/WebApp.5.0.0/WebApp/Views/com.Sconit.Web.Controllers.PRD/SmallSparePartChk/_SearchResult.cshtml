@@ -1,0 +1,46 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.PRD.SmallSparePartChk>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ProductTypeGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+                columns.Bound(o => o.Huid);
+                columns.Bound(o => o.HuItem);
+                columns.Bound(o => o.HuQty);
+                columns.Bound(o => o.HuItemDesc);
+                columns.Bound(o => o.SpareItem);
+                columns.Bound(o => o.SpareItemDesc);
+                columns.Bound(o => o.CreateUserName);
+                columns.Bound(o => o.CreateDate);
+        })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SmallSparePartChk"))
+                .ClientEvents(events => events.OnDataBinding("ProductTypeGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+    debugger
+        function ProductTypeGrid_OnDataBinding(e) {
+            e.data = {
+                Huid: $('#Huid').val(),
+                SpareItem: $('#SpareItem').val(),
+                HuItem: $('#HuItem').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+            };
+        } 
+    </script>
+</fieldset>

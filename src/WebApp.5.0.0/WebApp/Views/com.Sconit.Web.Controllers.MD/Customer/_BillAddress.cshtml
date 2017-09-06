@@ -1,0 +1,78 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MD
+
+<fieldset>
+<legend>@Resources.MD.Party.Party_CurrentParty:@ViewBag.PartyCode</legend>
+
+        <div class="search">
+            <div class="search-label">
+                <label for="Address_Code">
+                    @Resources.MD.Party.Party_AddressCode 
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BillAddress_Code", TempData["CustomerBillAddressSearchModel"] != null ? ((PartyAddressSearchModel)TempData["CustomerBillAddressSearchModel"]).AddressCode : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Address_Name">
+                    @Resources.MD.Party.Party_AddressName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BillAddress_AddressContent", TempData["CustomerBillAddressSearchModel"] != null ? ((PartyAddressSearchModel)TempData["CustomerBillAddressSearchModel"]).AddressContent : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch_BillAddress" onclick="btnSearch_BillAddress_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_Customer_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew_BillAddress"},
+                {"onclick","btnNew_BillAddress_Click()"}
+	        })
+            <button type="button" id="btnBack_BillAddress" onclick="location.href='@Url.Content("~/Customer/List")'">
+                @Resources.SYS.Global.Button_Back
+            </button>
+        </div>
+</fieldset>
+
+<script type="text/javascript">
+
+    function btnSearch_BillAddress_Click() {
+        var data = {
+            "PartyCode": $("#PartyCode").val(),
+            "AddressCode": $("#BillAddress_Code").val(),
+            "AddressContent": $("#BillAddress_AddressContent").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Customer/_BillAddressList/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnNew_BillAddress_Click() {
+        var data = {
+            "PartCode": $("#PartCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Customer/_BillAddressNew/",
+            data: "",
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<com.Sconit.Entity.TMS.Vehicle>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("VehicleGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "Vehicle", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.Carrier);
+            columns.Bound(o => o.MobilePhone);
+            columns.Bound(o => o.Tonnage);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Vehicle"))
+        .ClientEvents(events => events.OnDataBinding("VehicleGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+        )
+    <script type="text/javascript">
+        function VehicleGrid_OnDataBinding(e) {
+
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val()
+            };
+        }
+    </script>
+</fieldset>

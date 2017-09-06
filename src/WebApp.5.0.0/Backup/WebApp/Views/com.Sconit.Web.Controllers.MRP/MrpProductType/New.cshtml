@@ -1,0 +1,69 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MRP.MD.ProductType
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProductType_View" });
+}
+@using (Html.BeginForm())
+{
+
+    <fieldset>
+        <legend>@Resources.MRP.ProductType.ProductType_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Code)
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Type">
+                    @Resources.ORD.OrderMaster.OrderMaster_Type
+                </label>
+            </div>
+            <div class="search-field">
+              @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.ScheduleType,
+                        controlName = "SubType",
+                        blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+                        blankOptionValue = "",
+                        selectedValue = (int)Model.SubType
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsActive", true)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.NeedFreeze)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("NeedFreeze", false)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.NeedTurn)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("NeedTurn", false)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/MrpProductType/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

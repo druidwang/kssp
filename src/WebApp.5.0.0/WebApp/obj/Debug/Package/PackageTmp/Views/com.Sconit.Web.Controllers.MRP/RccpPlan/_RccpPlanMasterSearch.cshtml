@@ -1,0 +1,210 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP;
+<fieldset>
+    @using (Html.BeginForm("RccpPlanMasterList", "RccpPlan"))
+    {   
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    类型
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("tabType", 0, true, new { onclick = "doClick(true)" })<span>查询</span><span
+                    style="margin: 4px"></span>
+                @Html.RadioButton("tabType", 1, false, new { onclick = "doClick(false)" })<span>运行</span>
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <hr style="border: 100% dashed black;" />
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.RccpPlanMaster.RccpPlanMaster_SnapTime
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_MrpSnapMasterComboBox", "Common", new
+            {
+                controlName = "SnapTime",
+                SnapType = com.Sconit.CodeMaster.SnapType.Rccp,
+                includeBlankOption = true,
+                isRelease = true,
+                selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).SnapTime : null
+
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.RccpPlanMaster.RccpPlanMaster_DateType
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterComboBox", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+            includeBlankOption = true,
+            isRccpPlan = true,
+            isChange = true,
+            controlName = "DateType",
+            selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).DateType : null
+        });
+                }
+            </div>
+            <div class="search-label" id="Dateindexlabel">
+                <label>
+                    @Resources.MRP.RccpPlanMaster.RccpPlanMaster_DateIndex
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_DateIndexComboBox", "Common", new
+            {
+                includeBlankOption = true,
+                controlName = "DateIndex",
+                selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).DateIndex : string.Empty
+            });
+                }
+            </div>
+            <div id="divSearch">
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlanMaster.RccpPlanMaster_Status
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.MessageType,
+            controlName = "Status",
+            includeBlankOption = true,
+            selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).Status : null
+        });
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnRun" onclick="RunRccp(this)" style="display: none">
+                @Resources.SYS.Global.Button_Run</button>
+        </div>
+    }
+</fieldset>
+<div id="divLog">
+</div>
+<script type="text/javascript">
+    var isShowLog = false;
+    function doClick(bl) {
+        if (bl) {
+            $("#divSearch").show();
+            $("#btnSearch").show();
+            $("#fldList").show();
+            $("#btnRun").hide();
+            $("#divLog").hide();
+        }
+        else {
+            $("#divSearch").hide();
+            $("#btnSearch").hide();
+            $("#fldList").hide();
+            $("#btnRun").show();
+            $("#divLog").show();
+        }
+        isShowLog = false;
+    }
+
+
+    function RunRccp(e) {
+        doClick(false);
+        if ($('#SnapTime').val() == "") {
+            $message.error('快照时间为必选项');
+            return;
+        }
+        if ($('#DateType').val() == "") {
+            $message.error('计划类型为必选项');
+            return;
+        }
+        else {
+            if ($('#DateType').val() == 5) {
+                if ($('#DateIndex').val() == "") {
+                    $message.error('起始周为必选项');
+                    return;
+                }
+            }
+            else {
+                if ($('#DateIndex').val() == "") {
+                    $message.error('起始月为必选项');
+                    return;
+                }
+            }
+        }
+        var data = {
+            snapTime: $('#SnapTime').val(),
+            dateType: $('#DateType').val(),
+            dateIndex: $('#DateIndex').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: "/RccpPlan/_RunRccpPlan/",
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+        e.disabled = true;
+        isShowLog = true;
+        ShowLog();
+    }
+
+    function CodeMaster_Change(e) {
+        if (e.value == 5) {
+            document.getElementById("Dateindexlabel").innerHTML = "<label>起始周</label>";
+        }
+        else {
+            document.getElementById("Dateindexlabel").innerHTML = "<label>起始月</label>";
+        }
+        $('#DateIndex').data('tComboBox').value('');
+        $('#DateIndex').data('tComboBox').text('');
+        $("#DateIndex").data("tComboBox").reload();
+    }
+
+    function DateIndex_DataBinding(e) {
+        e.data = {
+            dateType: $('#DateType').val()
+        }
+    }
+
+    function ShowLog() {
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/RccpPlan/_GetRunLog/",
+            cache: false,
+            //data: null,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+            }
+        });
+        if (isShowLog) {
+            $("#divLog").show();
+            setTimeout(ShowLog, 1000);
+        }
+        else {
+            $("#divLog").hide();
+        }
+    }
+</script>

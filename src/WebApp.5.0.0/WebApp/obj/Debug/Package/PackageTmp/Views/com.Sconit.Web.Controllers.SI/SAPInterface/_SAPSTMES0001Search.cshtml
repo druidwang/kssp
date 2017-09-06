@@ -1,0 +1,120 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SI
+<fieldset>
+    @using (Html.BeginForm("SAPSTMES0001List", "SAPInterface"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPSTMES.SAPSTMES_ZMESKO 
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ZMESKO", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).ZMESKO : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="SAPTransferLog_BatchNo">
+                    物料1
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MATNR1", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).MATNR1 : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="SAPTransferLog_BatchNo">
+                    物料2
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MATNR_TH", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).MATNR_TH : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="SAPTransferLog_BatchNo">
+                    来源库位
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LGORT", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).LGORT : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="SAPTransferLog_BatchNo">
+                    目的库位
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("UMLGO", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).UMLGO : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPSTMES.SAPSTMES_BWARTWA
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BWARTWA", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).BWARTWA : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    时间 从
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("TransStartDate")
+                .Value(TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).TransStartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    至
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("TransEndDate")
+                .Value(TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).TransEndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+           <div class="editor-label-2">
+            <label>
+                <label>
+                时间类型:
+                </label>
+            </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("TimeType", 0, true)<span>调用时间</span>
+                @Html.RadioButton("TimeType", 1, false)<span>过账时间</span>
+            </div>
+           <div class="editor-label-2">
+            <label>
+            @Resources.SI.SAPTransferLog.SAPTransferLog_Status
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @Html.RadioButton("Status", 0, true)<span>所有</span>
+            @Html.RadioButton("Status", 1, false)<span>成功</span>
+            @Html.RadioButton("Status", 2, false)<span>失败</span>
+        </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport" onclick="ExportClick()">
+            @Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    function ExportClick() {
+
+        location.href = '/SAPInterface/ExportSAPSTMES0001XLS/?ZMESKO=' + $('#ZMESKO').val()
+            + '&MATNR1=' + $('#MATNR1').val()
+            + '&LGORT=' + $('#LGORT').val()
+            + '&UMLGO=' + $('#UMLGO').val()
+            + '&MATNR_TH=' + $('#MATNR_TH').val()
+            + '&BWARTWA=' + $('#BWARTWA').val()
+            + '&TransStartDate=' + $('#TransStartDate').val()
+            + '&TransEndDate=' + $('#TransEndDate').val()
+            + '&Status=' + $("input[name='Status']:checked").val()
+            + '&TimeType=' + $("input[name='TimeType']:checked").val();
+    }
+</script>

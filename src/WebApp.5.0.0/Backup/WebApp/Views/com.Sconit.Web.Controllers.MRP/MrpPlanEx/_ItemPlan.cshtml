@@ -1,0 +1,145 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onItemSearch() {
+        if ($('#Item_Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#Item_PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        if ($('#Item_DateIndex').val() == "") {
+            $message.error('时间索引周不能为空。');
+            return;
+        }
+
+        var data = {
+            flow: $('#Item_Flow').val(),
+            planVersion: $('#Item_PlanVersion').val(),
+            dateIndex: $('#Item_DateIndex').val(),
+            section: $('#Item_Section').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/MrpPlanEx/_MrpItemPlanList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                $("#fdItem").html(data);
+                $("#fdItem").show();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function Section_DataBinding(e) {
+        e.data = {
+            flow: $('#Item_Flow').val()
+        }
+    }
+
+    function Section_Change(e) { }
+
+    function Item_Flow_Change(e) {
+        $("#Item_Section").data("tComboBox").reload();
+        $('#Item_Section').data('tComboBox').value('');
+        $('#Item_Section').data('tComboBox').text('');
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_PlanVersion
+                </label>
+            </div>
+            <div class="search-field" id="Item_PlanVersionDiv">
+                @{
+    Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+    {
+        controlName = "Item_PlanVersion",
+        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX
+        //,selectedValue = TempData["MrpPlanExSearchModel"] != null ? ((MrpPlanExSearchModel)TempData["MrpPlanExSearchModel"]).PlanVersion : string.Empty
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_DateIndex
+                </label>
+            </div>
+            <div class="editor-field-2" id="Item_DateIndexDiv">
+                @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+    {
+        controlName = "Item_DateIndex",
+        includeBlankOption = true,
+        dateType = (int)com.Sconit.CodeMaster.TimeUnit.Week
+        //,selectedValue = TempData["MrpPlanExSearchModel"] != null ? ((MrpPlanExSearchModel)TempData["MrpPlanExSearchModel"]).DateIndex : string.Empty
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_ProductLine
+                </label>
+            </div>
+            <div class="editor-field-2" id="Item_FlowDiv">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new
+    {
+        controlName = "Item_Flow",
+        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+        isChange = true,
+        isCreateOrder = false,
+        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX
+        //,selectedValue = TempData["MrpPlanExSearchModel"] != null ? ((MrpPlanExSearchModel)TempData["MrpPlanExSearchModel"]).Flow : string.Empty
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_Section
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_SectionComboBox", "Common", new
+    {
+        controlName = "Item_Section",
+        coupled = true
+    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanEx_Plan", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearchItem"},
+                {"needconfirm","false"},
+                {"onclick","onItemSearch()"},
+	        })
+            
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_Mrp_MrpPlanEx_Plan", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnItemSave"},
+                {"needconfirm","false"},
+                {"onclick","onSaveItem()"},
+	        })
+        </div>
+    </fieldset>
+   
+    <div id="fdItem" style="display: none;">
+    </div>
+}

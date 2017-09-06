@@ -1,0 +1,45 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool checkPermission = ViewBag.CheckPermission != null ? ViewBag.CheckPermission : true;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = "EmptyChange";
+    if (isChange)
+    {
+        if (id == "PartyFrom")
+        {
+            onChangeName = "PartyFrom_Change";
+        }
+        else if (id == "PartyTo")
+        {
+            onChangeName = "PartyTo_Change";
+        }
+        else
+        {
+            onChangeName = "Region_Change";
+        }
+    }
+}
+@{
+    if (enable)
+    {
+        @(Html.Telerik().ComboBox()
+            .DropDownHtmlAttributes(new { style = "width: 300px; " })
+            .Name(name)
+            .AutoFill(true)
+            .HiddenInputHtmlAttributes(new { id = id })
+            .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingRegion", "Common", new 
+            { checkPermission = checkPermission }).Cache(true))
+            .ClientEvents(events => events.OnChange(onChangeName))
+            .HighlightFirstMatch(true)
+            .BindTo(Model)
+            .Enable(enable))
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)  }
+    }
+}

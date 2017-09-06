@@ -1,0 +1,344 @@
+﻿@model com.Sconit.Entity.ORD.MiscOrderMaster
+@using com.Sconit.Entity.CUST
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProductionTrailMiscOrder_View" });
+}
+<script type="text/javascript">
+    function len(s) {
+        var l = 0;
+        var a = s.split("");
+        for (var i = 0; i < a.length; i++) {
+            if (a[i].charCodeAt(0) < 299) {
+                l++;
+            } else {
+                l += 2;
+            }
+        }
+        return l;
+    }
+    function check(e) {
+        var te = /^[1-9]+[0-9]*]*$/;
+        if (!te.test(e)) {
+            return false;
+        }
+        return true;
+    }
+    function onEdit() {
+        var grid = $("#MiscOrderDetailGrid").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            return;
+        }
+        if (($("#MoveType").val() == "581" || $("#MoveType").val() == "582") && (isNaN($("#WBS").val()) || len($("#WBS").val()) != 7)) {
+            $message.error('网络号为必填项,且长度为7的数字。');
+            return;
+        }
+        if (($("#MoveType").val() == "581" || $("#MoveType").val() == "582") && (isNaN($("#WBSRow").val()) || len($("#WBSRow").val()) != 4)) {
+            $message.error('网络行为必填项,且长度为4的数字');
+            return;
+        }
+        debugger
+        if ($("#MoveType").val() == "581" || $("#MoveType").val() == "582") {
+            if ($("#WBSRow").val() != "" && !check($("#WBSRow").val().replace("0", "").replace("0", "").replace("0", ""))) {
+                $message.error('网络行号必须为正整数');
+                return;
+            }
+            if ($("#WBS").val() != "" && !check($("#WBS").val().replace("0", "").replace("0", "").replace("0", ""))) {
+                $message.error('网络行号必须为正整数');
+                return;
+            }
+        }
+        if ($("#MoveType").val() == "281" || $("#MoveType").val() == "282") {
+            if (($("#Note").val() == "" && $("#WorkHour").val() != "") || ($("#Note").val() != "" && $("#WorkHour").val() == "")) {
+                $message.error('SAP订单号和工时只能同时有值或同时为空。');
+                return;
+            }
+            if ($("#Note").val() != "" && !check($("#Note").val())) {
+                $message.error('SAP订单号必须为正整数');
+                return;
+            }
+            if ($("#Note").val() != "" && len($("#Note").val()) != 7) {
+                $message.error('SAP订单长度必须为7.');
+                return;
+            }
+            if ($("#WorkHour").val() != "" && isNaN($("#WorkHour").val())) {
+                $message.error('工时必须为数字。');
+                return;
+            }
+        }
+        var miscmstr = {
+            "MiscOrderNo": $("#MiscOrderNo").val(),
+            "Note": $("#Note").val(),
+            "WorkHour": $("#WorkHour").val(),
+            "WBS": ($("#WBS").val() + "/" + $("#WBSRow").val())
+            
+        }
+
+        var reserveLines = new Array();
+        var reserveNos = new Array();
+        var sequences = new Array();
+        var items = new Array();
+        var workHours = new Array();
+        var qtys = new Array();
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var i = 0;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if ($("#MoveType").val() == "281" || $("#MoveType").val() == "282") {
+                if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim(row[0].childNodes[7].innerText)) != 0) {
+                    sequences[i] = $.trim(row[0].childNodes[0].innerText);
+                    reserveLines[i] = $.trim(row[0].childNodes[1].innerText);
+                    reserveNos[i] = $.trim(row[0].childNodes[2].innerText);
+                    items[i] = $.trim(row[0].childNodes[3].innerText);
+                    qtys[i] = $.trim(row[0].childNodes[7].innerText);
+                    if (len(reserveLines[i]) < 3) {
+                        $message.error('预留号长度必须大于3');
+                        return;
+                    }
+                    i++;
+                }
+            }
+            else {
+                if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim(row[0].childNodes[6].innerText)) != 0) {
+                    sequences[i] = $.trim(row[0].childNodes[0].innerText);
+                    items[i] = $.trim(row[0].childNodes[1].innerText);
+                    //workHours[i] = $.trim(row[0].childNodes[5].innerText);
+                    qtys[i] = $.trim(row[0].childNodes[5].innerText);
+                    i++;
+                }
+            }
+        }
+
+        var made = {
+            "reserveLines": reserveLines,
+            "reserveNos": reserveNos,
+            "sequences": sequences,
+            "items": items,
+            "workHours": workHours,
+            "qtys": qtys
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProductionTrailMiscOrder/EditMiscOrder/",
+            data: $.extend(made, miscmstr),
+            cache: false,
+            traditional: true,
+            success: function (data) {
+                $("#content").html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function Print(e) {
+        var data = {
+            "miscOrderNo": $("#MiscOrderNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/CostCenterMiscOrder/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+    function Export(e) {
+        $("#miscOrderNo").val($("#MiscOrderNo").val());
+        $("#hiddenForm").submit();
+    }
+
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MiscOrderNo)
+            </div>
+            <div class="search-field">
+                @Html.DisplayFor(model => model.MiscOrderNo)
+            </div>
+            <div class="search-label">
+                @Html.LabelFor(model => model.MoveType)
+            </div>
+            <div class="search-field">
+                @{
+           Html.RenderAction("_MoveTypeDropDownList", "Common", new
+               {
+                   SubType = (int)com.Sconit.CodeMaster.MiscOrderSubType.SY03,
+                   controlName = "MoveType1",
+                   enable = false,
+                   selectedValue = Model != null && Model.MoveType != null ? Model.MoveType : string.Empty
+               });
+                }
+            </div>
+           @* <div class="editor-label-2">
+                @Html.LabelFor(model => model.EffectiveDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.EffectiveDate)
+            </div>*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.MiscOrderStatus,
+               controlName = "Status",
+               selectedValue = (int)Model.Status,
+               enable = false
+
+           });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="search-field" id="miscOrderLocation">
+                @Html.DisplayFor(model => model.Flow)
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.EXT.PageLan.CreateTime
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CreateDate)
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    关闭时间
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CloseDate)
+            </div>
+            @{ if (!ViewBag.IsShowReserve)
+               {
+                    <div class="editor-label-2">
+                        <label>
+                        网络号
+                        </label>
+                    </div>
+                    <div class="editor-field-2">
+                        <input name="WBS"  id="WBS" value="@ViewBag.WBS"/>
+                    </div>
+                    <div class="editor-label-2">
+                        <label>
+                        网络行
+                        </label>
+                    </div>
+                    <div class="editor-field-2">
+                        <input name="WBSRow"  id="WBSRow" value="@ViewBag.WBSRow"/>
+                    </div>
+               }
+            }
+        @{ if (ViewBag.IsShowReserve)
+           {
+                <div id="divSAPOrderNO" style="display: inline">
+                    <div class="editor-label-2">
+                        <label>
+                        SAP订单号
+                        </label>
+                    </div>
+                    <div class="editor-field-2">
+                        @Html.EditorFor(model => model.Note)
+                    </div>
+                    <div class="editor-label-2">
+                        <label>
+                        工时 
+                        </label>
+                    </div>
+                    <div class="editor-field-2">
+                        @Html.EditorFor(model => model.WorkHour)
+                    </div>
+                </div>
+           }
+        }
+            @Html.Hidden("MiscOrderNo", Model.MiscOrderNo)
+            @Html.Hidden("MoveType", Model.MoveType)
+            @Html.Hidden("CancelMoveType", Model.CancelMoveType)
+            @Html.Hidden("Status", Model.Status)
+            @Html.Hidden("QualityType", Model.QualityType)
+            @Html.Hidden("Location", Model.Location)
+            @Html.Hidden("CreateDate", Model.CreateDate)
+            @Html.Hidden("EffectiveDate", Model.EffectiveDate)
+            @Html.Hidden("CreateUserId", Model.CreateUserId)
+            @Html.Hidden("CreateUserName", Model.CreateUserName)
+            @Html.Hidden("Version", Model.Version)
+        </div>
+        <div class="editor-footer">
+            @{
+       if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+       {   
+                @Html.Button(Resources.SYS.Global.Button_Save, "Url_ProductionTrailMiscOrder_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"onclick","onEdit()"}
+	        })
+
+                @Html.Button(Resources.SYS.Global.Button_Delete, "Url_ProductionTrailMiscOrder_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnDelete"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/ProductionTrailMiscOrder/btnDelete/" + Model.MiscOrderNo) +"'"}
+	            })
+                @Html.Button(Resources.SYS.Global.Button_Confirm, "Url_ProductionTrailMiscOrder_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnClose"},
+                    {"needconfirm","true"},
+                     {"onclick","location.href='"+Url.Content("~/ProductionTrailMiscOrder/btnClose/" + Model.MiscOrderNo) +"'"}
+	            })
+               
+       }
+       //TrailMiscOrder can't be cancel once it is closed
+              @* else if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Close)
+               {
+                @Html.Button(Resources.SYS.Global.Button_Cancel, "Url_ProductionTrailMiscOrder_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnCancel"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/ProductionTrailMiscOrder/btnCancel/" + Model.MiscOrderNo) +"'"}
+	            })
+               }*@
+            }
+            <button type="button" id="btnPrint" onclick="Print()">
+                @Resources.SYS.Global.Button_Print</button>
+            
+            <button type="button" id="btnExport" onclick="Export()">
+                @Resources.SYS.Global.Button_Export</button>
+
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ProductionTrailMiscOrder/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+    <div id="divOutMiscOrderDetailList">
+        @{
+           Html.RenderAction("_MiscOrderDetail", "ProductionTrailMiscOrder", new { miscOrderNo = Model.MiscOrderNo, moveType = Model.MoveType });
+        }
+    </div>
+}
+<form id="hiddenForm" action="/CostCenterMiscOrder/SaveToClient" target="_blank"
+method="post">
+<input id="miscOrderNo" name="miscOrderNo" type="hidden" />
+</form>

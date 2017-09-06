@@ -1,0 +1,122 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onSearch() {
+        if ($('#Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        if ($('#DateIndex').val() == "") {
+            $message.error('时间索引周不能为空。');
+            return;
+        }
+        var data = {
+            flow: $('#Flow').val(),
+            planVersion: $('#PlanVersion').val(),
+            dateIndex: $('#DateIndex').val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/MrpPlanEx/_MrpSectionPlanList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                $("#fdSection").html(data);
+                $("#fdSection").show();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function DateIndex_DataBinding(e) {
+        e.data = {
+            dateType: 5
+        }
+    }
+
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_PlanVersion
+                </label>
+            </div>
+            <div class="search-field" id="PlanVersionDiv">
+                @{
+    Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+     {
+         controlName = "PlanVersion",
+         resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX
+         //,selectedValue = TempData["MrpPlanExSearchModel"] != null ? ((MrpPlanExSearchModel)TempData["MrpPlanExSearchModel"]).PlanVersion : string.Empty
+     });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_DateIndex
+                </label>
+            </div>
+            <div class="editor-field-2" id="DateIndexDiv">
+                @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+    {
+        includeBlankOption = true,
+        controlName = "DateIndex",
+        dateType = (int)com.Sconit.CodeMaster.TimeUnit.Week
+        //,selectedValue = TempData["MrpPlanExSearchModel"] != null ? ((MrpPlanExSearchModel)TempData["MrpPlanExSearchModel"]).DateIndex : string.Empty
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_ProductLine
+                </label>
+            </div>
+            <div class="editor-field-2" id="FlowDiv">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new
+    {
+        controlName = "Flow",
+        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+        isChange = false,
+        isCreateOrder = false,
+        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+        //,selectedValue = TempData["MrpPlanExSearchModel"] != null ? ((MrpPlanExSearchModel)TempData["MrpPlanExSearchModel"]).Flow : string.Empty,
+        isMrp = true
+    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanEx_Plan", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearchSection"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_Mrp_MrpPlanEx_Plan", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSaveSection"},
+                {"needconfirm","false"},
+                {"onclick","onSaveDetail()"},
+	        })
+        </div>
+    </fieldset>
+   
+    <div id="fdSection" style="display: none;">
+    </div>
+}

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.ORD.MrpExWorkHour>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpExWorkHourGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).ClientTemplate(Html.ActionLink("<#= Id #>", "Edit", "MrpExWorkHour", new { ID = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.HaltTime);
+            columns.Bound(o => o.CreateDate).Title(@Resources.EXT.PageLan.CreateTime);
+        })
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "MrpExWorkHour"))
+            .ClientEvents(events => events.OnDataBinding("MrpExWorkHourGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function MrpExWorkHourGrid_OnDataBinding(e) {
+            e.data = {
+                Flow: $('#Flow').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val()
+            };
+        }
+    </script>
+</fieldset>

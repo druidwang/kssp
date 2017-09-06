@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ReceiptMaster_en_US" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>receiptmaster.en-us.resx;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="ReceiptMaster_en_US_Designer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>receiptmaster.en-us.designer.cs;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Errors_ReceiptDetailIsEmpty" xml:space="preserve">
+    <value>Receipt line can not be empty.</value>
+    <comment>收货明细不能为空。</comment>
+  </data>
+  <data name="ReceiptMaster_CancelReason" xml:space="preserve">
+    <value>Cancel Reason</value>
+    <comment>取消原因</comment>
+  </data>
+  <data name="ReceiptMaster_CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+    <comment>创建日期</comment>
+  </data>
+  <data name="ReceiptMaster_CreateUserName" xml:space="preserve">
+    <value>Create User</value>
+    <comment>创建用户</comment>
+  </data>
+  <data name="ReceiptMaster_Dock" xml:space="preserve">
+    <value>Dock</value>
+    <comment>道口</comment>
+  </data>
+  <data name="ReceiptMaster_EndDate" xml:space="preserve">
+    <value>End Date</value>
+    <comment>结束日期</comment>
+  </data>
+  <data name="ReceiptMaster_ExternalReceiptNo" xml:space="preserve">
+    <value>Ext Receipt No</value>
+    <comment>外部收货单号</comment>
+  </data>
+  <data name="ReceiptMaster_Flow" xml:space="preserve">
+    <value>Flow</value>
+    <comment>路线代码</comment>
+  </data>
+  <data name="ReceiptMaster_IpNo" xml:space="preserve">
+    <value>ASN</value>
+    <comment>送货单号</comment>
+  </data>
+  <data name="ReceiptMaster_IsCheckPartyFromAuthority" xml:space="preserve">
+    <value>Check Partyfrom Permission</value>
+    <comment>检查供应商权限</comment>
+  </data>
+  <data name="ReceiptMaster_IsCheckPartyFromAuthority_Customer" xml:space="preserve">
+    <value>Check Partyto Permission</value>
+    <comment>检查目的权限</comment>
+  </data>
+  <data name="ReceiptMaster_IsCheckPartyFromAuthority_Procurement" xml:space="preserve">
+    <value>Check Partyfrom Permission</value>
+    <comment>检查来源权限</comment>
+  </data>
+  <data name="ReceiptMaster_IsCheckPartyToAuthority" xml:space="preserve">
+    <value>Check Partyto Permission</value>
+    <comment>检查区域权限</comment>
+  </data>
+  <data name="ReceiptMaster_IsPrintReceipt" xml:space="preserve">
+    <value>Print Receipt</value>
+    <comment>打印收货单</comment>
+  </data>
+  <data name="ReceiptMaster_IsReceiveScanHu" xml:space="preserve">
+    <value>Scan HU as Rec</value>
+    <comment>收货扫描条码</comment>
+  </data>
+  <data name="ReceiptMaster_Item" xml:space="preserve">
+    <value>Item</value>
+    <comment>物料代码</comment>
+  </data>
+  <data name="ReceiptMaster_LastModifyDate" xml:space="preserve">
+    <value>Last Modify Date</value>
+    <comment>修改时间</comment>
+  </data>
+  <data name="ReceiptMaster_LastModifyUserName" xml:space="preserve">
+    <value>Last Modify User</value>
+    <comment>修改用户</comment>
+  </data>
+  <data name="ReceiptMaster_OrderSubType" xml:space="preserve">
+    <value>Order Subtype</value>
+    <comment>类型</comment>
+  </data>
+  <data name="ReceiptMaster_OrderSubTypeDescription" xml:space="preserve">
+    <value>Subtype</value>
+    <comment>类型</comment>
+  </data>
+  <data name="ReceiptMaster_OrderType" xml:space="preserve">
+    <value>Order Type</value>
+    <comment>订单类型</comment>
+  </data>
+  <data name="ReceiptMaster_PartyFrom" xml:space="preserve">
+    <value>Partyfrom</value>
+    <comment>发货方代码</comment>
+  </data>
+  <data name="ReceiptMaster_PartyFromName" xml:space="preserve">
+    <value>Partyfrom Name</value>
+    <comment>发货方</comment>
+  </data>
+  <data name="ReceiptMaster_PartyFrom_Procurement" xml:space="preserve">
+    <value>Region</value>
+    <comment>区域</comment>
+  </data>
+  <data name="ReceiptMaster_PartyTo" xml:space="preserve">
+    <value>Partyto</value>
+    <comment>收货方代码</comment>
+  </data>
+  <data name="ReceiptMaster_PartyToName" xml:space="preserve">
+    <value>Partyto</value>
+    <comment>收货方</comment>
+  </data>
+  <data name="ReceiptMaster_PartyTo_Procurement" xml:space="preserve">
+    <value>Supplier</value>
+    <comment>供应商</comment>
+  </data>
+  <data name="ReceiptMaster_ReceiptNo" xml:space="preserve">
+    <value>Receipt No</value>
+    <comment>收货单号</comment>
+  </data>
+  <data name="ReceiptMaster_ReceiptTemplate" xml:space="preserve">
+    <value>Receipt Template</value>
+    <comment>收货单模板</comment>
+  </data>
+  <data name="ReceiptMaster_ShipFrom" xml:space="preserve">
+    <value>Shipfrom</value>
+    <comment>发货地址代码</comment>
+  </data>
+  <data name="ReceiptMaster_ShipFromAddress" xml:space="preserve">
+    <value>Shipfrom Desc</value>
+    <comment>发货地址</comment>
+  </data>
+  <data name="ReceiptMaster_ShipFromContact" xml:space="preserve">
+    <value>Shipfrom Contact</value>
+    <comment>发货方联系人</comment>
+  </data>
+  <data name="ReceiptMaster_ShipFromTel" xml:space="preserve">
+    <value>Shipfrom Tel</value>
+    <comment>发货方固定电话</comment>
+  </data>
+  <data name="ReceiptMaster_ShipTo" xml:space="preserve">
+    <value>Shipto</value>
+    <comment>收货方地址代码</comment>
+  </data>
+  <data name="ReceiptMaster_ShipToAddress" xml:space="preserve">
+    <value>Shipto Address</value>
+    <comment>收货方地址</comment>
+  </data>
+  <data name="ReceiptMaster_ShipToContact" xml:space="preserve">
+    <value>Shipto Contact</value>
+    <comment>收货方联系人</comment>
+  </data>
+  <data name="ReceiptMaster_ShipToTel" xml:space="preserve">
+    <value>Shipto Tel</value>
+    <comment>收货方固定电话</comment>
+  </data>
+  <data name="ReceiptMaster_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+    <comment>开始日期</comment>
+  </data>
+  <data name="ReceiptMaster_Status" xml:space="preserve">
+    <value>Status</value>
+    <comment>状态</comment>
+  </data>
+  <data name="ReceiptMaster_StatusDescription" xml:space="preserve">
+    <value>Status</value>
+    <comment>状态</comment>
+  </data>
+  <data name="ReceiptMaster_Type" xml:space="preserve">
+    <value>ASN Rec Diff</value>
+    <comment>差异收货</comment>
+  </data>
+  <data name="ReceiptMaster_WMSNo" xml:space="preserve">
+    <value>SAP No</value>
+    <comment>SAP号</comment>
+  </data>
+</root>

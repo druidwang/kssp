@@ -1,0 +1,43 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MRP.MD.Island>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+         .Name("IslandGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "Island", new { Code = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.IsActive).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+        })
+       
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Island"))
+                                        .ClientEvents(events => events.OnDataBinding("IslandGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function IslandGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val(),
+                Region: $('#Region').val(),
+                IsActive: $("input[type=checkbox][name=IsActive]:checked").val()
+            };
+        } 
+    </script>
+</fieldset>

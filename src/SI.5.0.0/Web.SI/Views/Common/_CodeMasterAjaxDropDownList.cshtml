@@ -1,0 +1,20 @@
+﻿@{
+    string name = ViewBag.ControlName;
+}
+
+@(Html.Telerik().ComboBox()
+                .Name(name)
+                .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingCodeMaster", "Common"
+                , new { 
+                    code = ViewBag.Code,
+                    includeBlankOption = ViewBag.IncludeBlankOption,
+                    blankOptionDescription = ViewBag.BlankOptionDescription,
+                    blankOptionValue = ViewBag.BlankOptionValue
+                    }).Cache(true))
+                .AutoFill(true)
+                .HighlightFirstMatch(true)
+                )
+
+<script language="javascript" type="text/javascript">
+var @name = $("#@name");
+</script>

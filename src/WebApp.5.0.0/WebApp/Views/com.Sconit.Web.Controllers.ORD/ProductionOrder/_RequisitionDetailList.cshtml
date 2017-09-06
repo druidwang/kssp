@@ -1,0 +1,54 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@using com.Sconit.Entity.SYS;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<script type="text/javascript">
+    function RequisitionDetailGrid_OnDataBinding(e) {
+        e.data = {
+            Item: $('#Item').val(),
+            LocationTo: $('#LocationTo').val(),
+            LocationFrom: $('#LocationFrom').val(),
+            MasterorderNo: $("#MasterorderNo").val(),
+            DetailOrderNo: $("#DetailOrderNo").val()
+        }
+    }
+</script>
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("RequisitionDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.MinUnitCount);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription);
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.OrderedQty);
+            columns.Bound(o => o.ShippedQty);
+            columns.Bound(o => o.ReceivedQty);
+            
+        })
+                .DataBinding(dataBinding =>
+                                    dataBinding.Ajax().Select("_SelectRequisitionDetail", "ProductionOrder"))
+                            .ClientEvents(events => events.OnDataBinding("RequisitionDetailGrid_OnDataBinding"))
+                         .Pageable(settings =>
+                         {
+                             settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                             settings.PageSize(20);
+                         })
+        .Scrollable(c => c.Enabled(true))
+        .Resizable(resizing => resizing.Columns(true))
+                .Sortable()
+            )
+</fieldset>

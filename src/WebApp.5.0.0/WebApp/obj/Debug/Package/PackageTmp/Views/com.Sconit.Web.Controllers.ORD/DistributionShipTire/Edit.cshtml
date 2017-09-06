@@ -1,0 +1,218 @@
+﻿@model com.Sconit.Entity.ORD.IpMaster
+<script type="text/javascript">
+   
+
+    function onSave() {
+        $message.error("");
+        var grid = $("#OrderDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr");
+        var idStr = "";
+        var errors = "";
+
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var currRow = rows[rowIndex];
+            if ($(currRow).children().eq(12).text() == "") {
+                errors += "第"+(rowIndex+1)+"行的供应商不能为空";
+            }
+            if (idStr == "") {
+                idStr = $(currRow).children().eq(0).text();
+               
+            } else {
+                idStr += "," + $(currRow).children().eq(0).text();
+              
+            }
+
+        }
+        if (errors !== "") {
+            
+            $message.error(errors);
+            return;
+        }
+        var data = {
+            "idStr": idStr,
+            "OrderNo": $("#OrderNo").val()
+        }
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: data,
+            url: "/DistributionShipTire/SaveOrderDetail/",
+            cache: false,
+            success: function (data, textStatus) {
+                $message.success(data.SuccessMessage);
+                $message.error("");
+                if (data != "") {
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        data: { OrderNo: data.OrderNo },
+                        url: "/DistributionShipTire/Edit/",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function OnPrintClick(e) {
+        var data = {
+            "orderNo": $("#OrderNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProcurementOrder/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm())
+{
+
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ShipTire" });
+
+    <fieldset>
+        <legend>@Resources.ORD.OrderMaster.OrderMaster_BaseInfo</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyFrom)
+              @Html.Hidden("CheckedOrders", (string)ViewBag.CheckOrders)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyFrom)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyTo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyTo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyFromName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyFromName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyToName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyToName)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromAddress)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_AddressComboBox", "Common",
+        new
+        {
+            controlName = "ShipFrom",
+            type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+            selectedValue = Model.ShipFrom,
+
+            enable = false
+
+        });
+                }
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToAddress)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_AddressComboBox", "Common",
+        new
+        {
+            controlName = "ShipTo",
+            type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+            selectedValue = Model.ShipTo,
+
+            enable = false
+        });
+                }
+            </div>
+
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromContact)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromContact)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToContact)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipToContact)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromTel)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromTel)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToTel)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromTel)
+            </div>
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.Dock)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Dock)
+                @Html.Hidden("OrderNo", (string)ViewBag.OrderNo)
+            </div>
+
+        </div>
+    </fieldset>
+
+    <div class="editor-footer">
+
+    @{
+        if(ViewBag.Status==((int)com.Sconit.CodeMaster.OrderStatus.Submit).ToString()){
+             @Html.Button(Resources.SYS.Global.Button_Save, "Url_ShipTire", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnSave"},
+                    {"needconfirm","true"},
+                    {"onclick","onSave()"}
+	            })
+        }
+    }
+        @Html.Button(Resources.SYS.Global.Button_Print, "Url_ShipTire", new Dictionary<string, string>()
+        {
+	        {"type", "button"},
+	        {"id", "btnPrint"},
+            {"needconfirm","true"},
+            {"onclick","OnPrintClick()"}
+        })
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("/DistributionShipTire/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+}
+<div id="divShpOrderDetail">
+    @{
+        Html.RenderAction("_ShipOrderDetailList", "DistributionShipTire", new { OrderNo = ViewBag.OrderNo,Status = ViewBag.Status });
+    }
+</div>

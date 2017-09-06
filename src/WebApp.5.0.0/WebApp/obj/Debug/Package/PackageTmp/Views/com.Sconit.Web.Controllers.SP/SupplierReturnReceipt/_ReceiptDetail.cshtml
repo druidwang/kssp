@@ -1,0 +1,47 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.ReceiptDetail>
+@using com.Sconit.Entity.ORD;
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ReceiptDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.ReceivedQty);
+        })
+            .DetailView(details => details.ClientTemplate(
+                Html.Telerik().Grid<ReceiptLocationDetail>().Name("ReceiptDetailResult_<#= Id #>")
+            .Columns(columns =>
+            {
+                columns.Bound(o => o.LotNo);
+                columns.Bound(o => o.HuId);
+                columns.Bound(o => o.Qty);
+                columns.Bound(o => o.IsConsignment)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsConsignment' <#= IsConsignment? checked='checked' : '' #> />");
+            })
+            .DataBinding(dataBinding => dataBinding.Ajax()
+            .Select("_ResultHierarchyAjax", "SupplierReturnReceipt", new { id = "<#= Id #>" }))
+            .Footer(false)
+            .Resizable(resizing => resizing.Columns(true))
+            .ToHtmlString()
+            ))
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_ReceiptDetailHierarchyAjax", "SupplierReturnReceipt", new { receiptNo = ViewBag.receiptNo }))
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+                .Footer(false)
+            )
+</fieldset>
+

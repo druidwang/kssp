@@ -1,0 +1,141 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<script type="text/javascript">
+    function shipCheckedShipPlans() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedShipPlans = "";
+        var assignUser = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedShipPlans == "") {
+                    checkedShipPlans = $checkRecords[i].value;
+                } else {
+                    checkedShipPlans += "," + $checkRecords[i].value;
+                }
+            }
+        }
+
+        assignUser = $("#AssignUser").val();
+        if (checkedShipPlans == "") {
+            alert('请选择一条记录');
+            return;
+        }
+
+        if (assignUser == "") {
+            alert('分派用户不能为空');
+            return;
+        }
+        var data = {
+            "checkedShipPlans": checkedShipPlans,
+            "assignUser":assignUser
+        };
+        $.ajax({
+            type: "Post",
+            dataType: "html",
+            url: "/ShipPlan/Assign/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("ShipList", "ShipPlan"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ShipPlan_Flow">
+                    @Resources.WMS.ShipPlan.ShipPlan_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["ShipPlanSearchModel"] != null ? ((ShipPlanSearchModel)TempData["ShipPlanSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="ShipPlan_OrderNo">
+                    @Resources.WMS.ShipPlan.ShipPlan_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["ShipPlanSearchModel"] != null ? ((ShipPlanSearchModel)TempData["ShipPlanSearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="ShipPlan_PartyFrom">
+                    @Resources.WMS.ShipPlan.ShipPlan_PartyFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+                controlName = "PartyFrom",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["ShipPlanSearchModel"] != null ? ((ShipPlanSearchModel)TempData["ShipPlanSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="ShipPlan_PartyTo">
+                    @Resources.WMS.ShipPlan.ShipPlan_PartyTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+            new
+            {
+                controlName = "PartyTo",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["ShipPlanSearchModel"] != null ? ((ShipPlanSearchModel)TempData["ShipPlanSearchModel"]).PartyTo : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="ShipPlan_DateFrom">
+                    @Resources.WMS.ShipPlan.ShipPlan_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+.Value(TempData["ShipPlanSearchModel"] != null ? ((ShipPlanSearchModel)TempData["ShipPlanSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.WMS.ShipPlan.ShipPlan_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+.Value(TempData["ShipPlanSearchModel"] != null ? ((ShipPlanSearchModel)TempData["ShipPlanSearchModel"]).DateTo : System.DateTime.Today.AddDays(0))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+
+                   @Html.Button(Resources.SYS.Global.Button_Ship, "Url_ShipPlan_Ship", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnShip"},
+                    {"needconfirm","true"},
+                    {"onclick","shipCheckedShipPlans()"}
+	            })
+        </div>
+    }
+</fieldset>

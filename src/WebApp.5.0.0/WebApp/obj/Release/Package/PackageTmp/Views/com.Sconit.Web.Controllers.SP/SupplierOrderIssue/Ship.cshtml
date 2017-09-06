@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Supplier_Lading_Deliver" });
+}
+
+@Html.Partial("_ShipSearch")
+
+@Html.Partial("_ShipOrderList")

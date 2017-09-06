@@ -1,0 +1,1387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AllValue" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="BlankValue" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="CodeDetail_Address_BillAddress" xml:space="preserve">
+    <value>开票地址</value>
+  </data>
+  <data name="CodeDetail_Address_ShipAddress" xml:space="preserve">
+    <value>货运地址</value>
+  </data>
+  <data name="CodeDetail_BackFlushMethod_BackFlushOrder" xml:space="preserve">
+    <value>回冲工单在制品</value>
+  </data>
+  <data name="CodeDetail_BackFlushMethod_GoodsReceive" xml:space="preserve">
+    <value>收货回冲</value>
+  </data>
+  <data name="CodeDetail_BackFlushMethod_WeightAverage" xml:space="preserve">
+    <value>加权平均</value>
+  </data>
+  <data name="CodeDetail_FeedMethod_None" xml:space="preserve">
+    <value>不投料</value>
+  </data>
+  <data name="CodeDetail_FeedMethod_ProductionLine" xml:space="preserve">
+    <value>投料至生产线</value>
+  </data>
+  <data name="CodeDetail_FeedMethod_ProductionOrder" xml:space="preserve">
+    <value>投料至工单</value>
+  </data>
+  <data name="CodeDetail_Language_en_US" xml:space="preserve">
+    <value>United States (English)</value>
+  </data>
+  <data name="CodeDetail_Language_zh_CN" xml:space="preserve">
+    <value>中国（简体中文）</value>
+  </data>
+  <data name="CodeDetail_PermissionCategoryType_Customer" xml:space="preserve">
+    <value>客户</value>
+  </data>
+  <data name="CodeDetail_PermissionCategoryType_Region" xml:space="preserve">
+    <value>区域</value>
+  </data>
+  <data name="CodeDetail_PermissionCategoryType_Supplier" xml:space="preserve">
+    <value>供应商</value>
+  </data>
+  <data name="CodeDetail_PermissionCategoryType_Url" xml:space="preserve">
+    <value>页面</value>
+  </data>
+  <data name="CodeDetail_StockTakeDsType_Dynamic" xml:space="preserve">
+    <value>动态</value>
+  </data>
+  <data name="CodeDetail_StockTakeDsType_Static" xml:space="preserve">
+    <value>静态</value>
+  </data>
+  <data name="CodeDetail_StockTakeGroupBy_LocationArea" xml:space="preserve">
+    <value>库位</value>
+  </data>
+  <data name="CodeDetail_StockTakeGroupBy_LocationBin" xml:space="preserve">
+    <value>库格</value>
+  </data>
+  <data name="CodeDetail_StockTakeStatus_Cancel" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="CodeDetail_StockTakeStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_StockTakeStatus_Complete" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="CodeDetail_StockTakeStatus_Create" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="CodeDetail_StockTakeStatus_InProcess" xml:space="preserve">
+    <value>进行中</value>
+  </data>
+  <data name="CodeDetail_StockTakeStatus_Submit" xml:space="preserve">
+    <value>已释放</value>
+  </data>
+  <data name="CodeDetail_StockTakeStType_All" xml:space="preserve">
+    <value>全盘</value>
+  </data>
+  <data name="CodeDetail_StockTakeStType_Part" xml:space="preserve">
+    <value>抽盘</value>
+  </data>
+  <data name="CodeDetail_BomStructureType_Normal" xml:space="preserve">
+    <value>普通结构</value>
+  </data>
+  <data name="CodeDetail_BomStructureType_Virtual" xml:space="preserve">
+    <value>虚结构</value>
+  </data>
+  <data name="CodeDetail_TimeUnit_Day" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="CodeDetail_TimeUnit_Hour" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="CodeDetail_TimeUnit_Minute" xml:space="preserve">
+    <value>分钟</value>
+  </data>
+  <data name="CodeDetail_TimeUnit_Month" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="CodeDetail_TimeUnit_Quarter" xml:space="preserve">
+    <value>季度</value>
+  </data>
+  <data name="CodeDetail_TimeUnit_Second" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="CodeDetail_TimeUnit_Week" xml:space="preserve">
+    <value>星期</value>
+  </data>
+  <data name="CodeDetail_TimeUnit_Year" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="CodeDetail_UserType_Normal" xml:space="preserve">
+    <value>普通用户</value>
+  </data>
+  <data name="CodeDetail_UserType_System" xml:space="preserve">
+    <value>系统用户</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendar_Friday" xml:space="preserve">
+    <value>星期五</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendar_Monday" xml:space="preserve">
+    <value>星期一</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendar_Rest" xml:space="preserve">
+    <value>休息</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendar_Saturday" xml:space="preserve">
+    <value>星期六</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendar_Sunday" xml:space="preserve">
+    <value>星期日</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendar_Thursday" xml:space="preserve">
+    <value>星期四</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendar_Tuesday" xml:space="preserve">
+    <value>星期二</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendar_Wednesday" xml:space="preserve">
+    <value>星期三</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendar_Work" xml:space="preserve">
+    <value>工作</value>
+  </data>
+  <data name="Errors_CodeDetail_ValueNotFound" xml:space="preserve">
+    <value>未知值</value>
+  </data>
+  <data name="CodeDetail_FlowType_CustomerGoods" xml:space="preserve">
+    <value>CustomerGoods</value>
+  </data>
+  <data name="CodeDetail_FlowType_Distribution" xml:space="preserve">
+    <value>Distribution</value>
+  </data>
+  <data name="CodeDetail_FlowType_Procurement" xml:space="preserve">
+    <value>Procurement</value>
+  </data>
+  <data name="CodeDetail_FlowType_Production" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="CodeDetail_FlowType_Subconctracting" xml:space="preserve">
+    <value>Subconctracting</value>
+  </data>
+  <data name="CodeDetail_FlowType_Transfer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="CodeDetail_OrderPriority_Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="CodeDetail_OrderPriority_Urgent" xml:space="preserve">
+    <value>紧急</value>
+  </data>
+  <data name="CodeDetail_OrderStatus_Cancel" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="CodeDetail_OrderStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_OrderStatus_Complete" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="CodeDetail_OrderStatus_Create" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="CodeDetail_OrderStatus_InProcess" xml:space="preserve">
+    <value>执行中</value>
+  </data>
+  <data name="CodeDetail_OrderStatus_Submit" xml:space="preserve">
+    <value>已释放</value>
+  </data>
+  <data name="CodeDetail_OrderType_CustomerGoods" xml:space="preserve">
+    <value>客供品</value>
+  </data>
+  <data name="CodeDetail_OrderType_Distribution" xml:space="preserve">
+    <value>销售</value>
+  </data>
+  <data name="CodeDetail_OrderType_Procurement" xml:space="preserve">
+    <value>采购</value>
+  </data>
+  <data name="CodeDetail_OrderType_Production" xml:space="preserve">
+    <value>生产</value>
+  </data>
+  <data name="CodeDetail_OrderType_Subconctracting" xml:space="preserve">
+    <value>委外</value>
+  </data>
+  <data name="CodeDetail_OrderType_Transfer" xml:space="preserve">
+    <value>移库</value>
+  </data>
+  <data name="CodeDetail_BindType_Start" xml:space="preserve">
+    <value>上线</value>
+  </data>
+  <data name="CodeDetail_BindType_Submit" xml:space="preserve">
+    <value>释放</value>
+  </data>
+  <data name="CodeDetail_CreateHuOption_None" xml:space="preserve">
+    <value>不创建</value>
+    <comment>不创建</comment>
+  </data>
+  <data name="CodeDetail_CreateHuOption_Receive" xml:space="preserve">
+    <value>收货创建</value>
+    <comment>收货</comment>
+  </data>
+  <data name="CodeDetail_CreateHuOption_Ship" xml:space="preserve">
+    <value>发货创建</value>
+    <comment>发货</comment>
+  </data>
+  <data name="CodeDetail_CreateHuOption_Start" xml:space="preserve">
+    <value>上线创建</value>
+    <comment>开始</comment>
+  </data>
+  <data name="CodeDetail_CreateHuOption_Submit" xml:space="preserve">
+    <value>释放创建</value>
+    <comment>释放</comment>
+  </data>
+  <data name="CodeDetail_BillTerm_BAB" xml:space="preserve">
+    <value>下线结算</value>
+    <comment>下线结算</comment>
+  </data>
+  <data name="CodeDetail_BillTerm_BAC" xml:space="preserve">
+    <value>寄售结算</value>
+    <comment>寄售结算</comment>
+  </data>
+  <data name="CodeDetail_BillTerm_BAI" xml:space="preserve">
+    <value>检验结算</value>
+    <comment>检验结算</comment>
+  </data>
+  <data name="CodeDetail_BillTerm_BAR" xml:space="preserve">
+    <value>收货结算</value>
+    <comment>收货结算</comment>
+  </data>
+  <data name="CodeDetail_BillTerm_BBB" xml:space="preserve">
+    <value>上线结算</value>
+    <comment>上线结算</comment>
+  </data>
+  <data name="CodeDetail_MRPOption_OrderBeforePlan" xml:space="preserve">
+    <value>订单优先</value>
+    <comment>订单优先</comment>
+  </data>
+  <data name="CodeDetail_MRPOption_OrderOnly" xml:space="preserve">
+    <value>只看订单</value>
+    <comment>只看订单</comment>
+  </data>
+  <data name="CodeDetail_MRPOption_PlanAddOrder" xml:space="preserve">
+    <value>计划加订单</value>
+    <comment>计划加订单</comment>
+  </data>
+  <data name="CodeDetail_MRPOption_PlanMinusOrder" xml:space="preserve">
+    <value>计划减订单</value>
+    <comment>计划减订单</comment>
+  </data>
+  <data name="CodeDetail_MRPOption_PlanOnly" xml:space="preserve">
+    <value>只看计划</value>
+    <comment>只看计划</comment>
+  </data>
+  <data name="CodeDetail_MRPOption_SafeStockOnly" xml:space="preserve">
+    <value>只看库存</value>
+    <comment>只看库存</comment>
+  </data>
+  <data name="CodeDetail_ReceiveGapTo_GI" xml:space="preserve">
+    <value>调整发货方库存</value>
+    <comment>调整发货方库存</comment>
+  </data>
+  <data name="CodeDetail_ReceiveGapTo_IpGap" xml:space="preserve">
+    <value>记录收货差异</value>
+    <comment>记录收货差异</comment>
+  </data>
+  <data name="CodeDetail_FlowStrategy_JIT" xml:space="preserve">
+    <value>JIT</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_KB" xml:space="preserve">
+    <value>电子看板</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_Manual" xml:space="preserve">
+    <value>手工</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_SEQ" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_ANDON" xml:space="preserve">
+    <value>看板</value>
+  </data>
+  <data name="CodeDetail_PriceListType_Distribution" xml:space="preserve">
+    <value>销售</value>
+    <comment>价格单类型</comment>
+  </data>
+  <data name="CodeDetail_PriceListType_Procuement" xml:space="preserve">
+    <value>采购</value>
+    <comment>价格单类型</comment>
+  </data>
+  <data name="CodeDetail_IpStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_IpStatus_Submit" xml:space="preserve">
+    <value>已释放</value>
+  </data>
+  <data name="CodeDetail_IpStatus_InProcess" xml:space="preserve">
+    <value>执行中</value>
+  </data>
+  <data name="CodeDetail_IpDetailType_Gap" xml:space="preserve">
+    <value>差异</value>
+  </data>
+  <data name="CodeDetail_IpDetailType_Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="CodeDetail_InspectStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_InspectStatus_Submit" xml:space="preserve">
+    <value>已释放</value>
+  </data>
+  <data name="CodeDetail_InspectStatus_InProcess" xml:space="preserve">
+    <value>执行中</value>
+  </data>
+  <data name="CodeDetail_InspectType_Barcode" xml:space="preserve">
+    <value>条码</value>
+  </data>
+  <data name="CodeDetail_InspectType_Quantity" xml:space="preserve">
+    <value>数量</value>
+  </data>
+  <data name="CodeDetail_JudgeResult_Qualified" xml:space="preserve">
+    <value>合格</value>
+  </data>
+  <data name="CodeDetail_JudgeResult_Rejected" xml:space="preserve">
+    <value>不合格</value>
+  </data>
+  <data name="CodeDetail_HandleResult_Concession" xml:space="preserve">
+    <value>让步使用</value>
+  </data>
+  <data name="CodeDetail_HandleResult_Disassembly" xml:space="preserve">
+    <value>拆装回用</value>
+  </data>
+  <data name="CodeDetail_HandleResult_Return" xml:space="preserve">
+    <value>退货</value>
+  </data>
+  <data name="CodeDetail_HandleResult_Rework" xml:space="preserve">
+    <value>返工</value>
+  </data>
+  <data name="CodeDetail_HandleResult_Scrap" xml:space="preserve">
+    <value>报废</value>
+  </data>
+  <data name="CodeDetail_RejectMasterStatus_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="CodeDetail_RejectMasterStatus_Submit" xml:space="preserve">
+    <value>释放</value>
+  </data>
+  <data name="CodeDetail_RejectMasterStatus_InProcess" xml:space="preserve">
+    <value>执行中</value>
+  </data>
+  <data name="CodeDetail_InventoryType_Barcode" xml:space="preserve">
+    <value>按条码</value>
+  </data>
+  <data name="CodeDetail_InventoryType_Quality" xml:space="preserve">
+    <value>按数量</value>
+  </data>
+  <data name="CodeDetail_RoutingTimeUnit_Day" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="CodeDetail_RoutingTimeUnit_Hour" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="CodeDetail_RoutingTimeUnit_Minute" xml:space="preserve">
+    <value>分钟</value>
+  </data>
+  <data name="CodeDetail_RoutingTimeUnit_Second" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="CodeDetail_BillTerm_NA" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="CodeDetail_RoundUpOption_None" xml:space="preserve">
+    <value>不圆整</value>
+  </data>
+  <data name="CodeDetail_RoundUpOption_ToDown" xml:space="preserve">
+    <value>向下圆整</value>
+  </data>
+  <data name="CodeDetail_RoundUpOption_ToUp" xml:space="preserve">
+    <value>向上圆整</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_NA" xml:space="preserve">
+    <value>手工</value>
+  </data>
+  <data name="CodeDetail_OrderSubType_Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="CodeDetail_OrderSubType_Return" xml:space="preserve">
+    <value>退货</value>
+  </data>
+  <data name="CodeDetail_IssuePriority_Normal" xml:space="preserve">
+    <value>正常</value>
+    <comment>正常</comment>
+  </data>
+  <data name="CodeDetail_IssuePriority_Urgent" xml:space="preserve">
+    <value>紧急</value>
+    <comment>紧急</comment>
+  </data>
+  <data name="CodeDetail_IssueType_Changepoint" xml:space="preserve">
+    <value>变化点</value>
+    <comment>变化点</comment>
+  </data>
+  <data name="CodeDetail_IssueType_Improvement" xml:space="preserve">
+    <value>改进</value>
+    <comment>改进</comment>
+  </data>
+  <data name="CodeDetail_IssueType_Issue" xml:space="preserve">
+    <value>问题</value>
+    <comment>问题</comment>
+  </data>
+  <data name="MessageReceivedInterface" xml:space="preserve">
+    <value>接收短信</value>
+  </data>
+  <data name="StatusReceivedInterface" xml:space="preserve">
+    <value>状态报告</value>
+  </data>
+  <data name="SubmitRespInterface" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="CodeDetail_IssueStatus_Cancel" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="CodeDetail_IssueStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_IssueStatus_Complete" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="CodeDetail_IssueStatus_Create" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="CodeDetail_IssueStatus_InProcess" xml:space="preserve">
+    <value>执行中</value>
+  </data>
+  <data name="CodeDetail_IssueStatus_Submit" xml:space="preserve">
+    <value>已释放</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ASN_CustomerGoods" xml:space="preserve">
+    <value>客供品送货单</value>
+  </data>
+  <data name="CodeDetail_PickListStatus_Cancel" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ASN_Distribution" xml:space="preserve">
+    <value>ASN_Distribution  </value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ASN_Procurement" xml:space="preserve">
+    <value>采购送货单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ASN_SubContract" xml:space="preserve">
+    <value>委外送货单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ASN_Transfer" xml:space="preserve">
+    <value>内部送货单</value>
+  </data>
+  <data name="CodeDetail_PickListStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_PickListStatus_InProcess" xml:space="preserve">
+    <value>执行中</value>
+  </data>
+  <data name="CodeDetail_PickListStatus_Submit" xml:space="preserve">
+    <value>已释放</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_BIL_Distribution" xml:space="preserve">
+    <value>BIL_Distribution  </value>
+  </data>
+  <data name="CodeDetail_DocumentsType_BIL_Procurement" xml:space="preserve">
+    <value>BIL_Procurement   </value>
+  </data>
+  <data name="CodeDetail_DocumentsType_STT" xml:space="preserve">
+    <value>STT_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_INS" xml:space="preserve">
+    <value>报验单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_MIS_In" xml:space="preserve">
+    <value>计划外入库单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_MIS_Out" xml:space="preserve">
+    <value>计划外出库单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ORD_CustomerGoods" xml:space="preserve">
+    <value>客供品单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ORD_Distribution" xml:space="preserve">
+    <value>ORD_Distribution_ZN</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ORD_Procurement" xml:space="preserve">
+    <value>采购单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ORD_Production" xml:space="preserve">
+    <value>生产单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ORD_SubContract" xml:space="preserve">
+    <value>委外订单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ORD_Transfer" xml:space="preserve">
+    <value>移库单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_PIK_Distribution" xml:space="preserve">
+    <value>PIK_Distribution_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_PIK_Transfer" xml:space="preserve">
+    <value>PIK_Transfer_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_REC_CustomerGoods" xml:space="preserve">
+    <value>REC_CustomerGoods_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_REC_Distribution" xml:space="preserve">
+    <value>REC_Distribution_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_REC_Procurement" xml:space="preserve">
+    <value>REC_Procurement_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_REC_Production" xml:space="preserve">
+    <value>REC_Production_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_REC_SubContract" xml:space="preserve">
+    <value>REC_SubContract_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_REC_Transfer" xml:space="preserve">
+    <value>REC_Transfer_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_RED_Distribution" xml:space="preserve">
+    <value>RED_Distribution_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_RED_Procurement" xml:space="preserve">
+    <value>RED_Procurement_ZH</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_REJ" xml:space="preserve">
+    <value>REJ_ZH</value>
+  </data>
+  <data name="CodeDetail_OccupyType_Inspect" xml:space="preserve">
+    <value>报验单</value>
+  </data>
+  <data name="CodeDetail_OccupyType_None" xml:space="preserve">
+    <value>未占用</value>
+  </data>
+  <data name="CodeDetail_OccupyType_Pick" xml:space="preserve">
+    <value>拣货单</value>
+  </data>
+  <data name="CodeDetail_QualityType_Inspect" xml:space="preserve">
+    <value>待验</value>
+  </data>
+  <data name="CodeDetail_QualityType_Qualified" xml:space="preserve">
+    <value>合格</value>
+  </data>
+  <data name="CodeDetail_QualityType_Reject" xml:space="preserve">
+    <value>不合格</value>
+  </data>
+  <data name="CodeDetail_HuStatus_Ip" xml:space="preserve">
+    <value>在途</value>
+  </data>
+  <data name="CodeDetail_HuStatus_Location" xml:space="preserve">
+    <value>库存</value>
+  </data>
+  <data name="CodeDetail_HuStatus_NA" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_SEQ" xml:space="preserve">
+    <value>排序单</value>
+  </data>
+  <data name="CodeDetail_ReceiptStatus_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="CodeDetail_ReceiptStatus_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CodeDetail_RejectMasterStatus_Create" xml:space="preserve">
+    <value>创建</value>
+  </data>
+  <data name="CodeDetail_StockTakeType_All" xml:space="preserve">
+    <value>全盘</value>
+  </data>
+  <data name="CodeDetail_StockTakeType_Part" xml:space="preserve">
+    <value>抽盘</value>
+  </data>
+  <data name="CodeDetail_ConcessionStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_ConcessionStatus_Create" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="CodeDetail_ConcessionStatus_Submit" xml:space="preserve">
+    <value>已释放</value>
+  </data>
+  <data name="CodeDetail_MiscOrderStatus_Cancel" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="CodeDetail_MiscOrderStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_MiscOrderStatus_Create" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="CodeDetail_PickOddOption_NotPick" xml:space="preserve">
+    <value>零头不发</value>
+  </data>
+  <data name="CodeDetail_PickOddOption_OddFirst" xml:space="preserve">
+    <value>零头先发</value>
+  </data>
+  <data name="CodeDetail_ShipStrategy_FIFO" xml:space="preserve">
+    <value>先进先出</value>
+  </data>
+  <data name="CodeDetail_ShipStrategy_LIFO" xml:space="preserve">
+    <value>后进先出</value>
+  </data>
+  <data name="CodeDetail_IpStatus_Cancel" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="CodeDetail_PermissionCategoryType_Terminal" xml:space="preserve">
+    <value>手持终端</value>
+  </data>
+  <data name="CodeDetail_BillTransactionType_POBilling" xml:space="preserve">
+    <value>采购开票</value>
+  </data>
+  <data name="CodeDetail_BillTransactionType_POSettle" xml:space="preserve">
+    <value>采购结算</value>
+  </data>
+  <data name="CodeDetail_BillTransactionType_POSettleVoid" xml:space="preserve">
+    <value>采购结算冲销</value>
+  </data>
+  <data name="CodeDetail_BillTransactionType_SOBilling" xml:space="preserve">
+    <value>销售开票</value>
+  </data>
+  <data name="CodeDetail_BillTransactionType_SOSettle" xml:space="preserve">
+    <value>销售结算</value>
+  </data>
+  <data name="CodeDetail_BillTransactionType_SOSettleVoid" xml:space="preserve">
+    <value>销售结算冲销</value>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_AfterInspection" xml:space="preserve">
+    <value>检验结算</value>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_ConsignmentBilling" xml:space="preserve">
+    <value>寄售结算</value>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_LinearClearing" xml:space="preserve">
+    <value>下线结算</value>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_NA" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_OnlineBilling" xml:space="preserve">
+    <value>上线结算</value>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_ReceivingSettlement" xml:space="preserve">
+    <value>收货结算</value>
+  </data>
+  <data name="CodeDetail_OrderType_ScheduleLine" xml:space="preserve">
+    <value>计划协议</value>
+  </data>
+  <data name="CodeDetail_OrderType_SubContractTransfer" xml:space="preserve">
+    <value>委外移库</value>
+  </data>
+  <data name="CodeDetail_ReCalculatePriceOption_Manual" xml:space="preserve">
+    <value>手工</value>
+  </data>
+  <data name="CodeDetail_ReCalculatePriceOption_Receive" xml:space="preserve">
+    <value>收货</value>
+  </data>
+  <data name="CodeDetail_ReCalculatePriceOption_Ship" xml:space="preserve">
+    <value>发货</value>
+  </data>
+  <data name="CodeDetail_ReCalculatePriceOption_Start" xml:space="preserve">
+    <value>上线</value>
+  </data>
+  <data name="CodeDetail_ReCalculatePriceOption_Submit" xml:space="preserve">
+    <value>释放</value>
+  </data>
+  <data name="CodeDetail_RoleType_Normal" xml:space="preserve">
+    <value>普通</value>
+  </data>
+  <data name="CodeDetail_RoleType_System" xml:space="preserve">
+    <value>系统</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_CON" xml:space="preserve">
+    <value>让步使用单</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ORD_ScheduleLine" xml:space="preserve">
+    <value>计划协议</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_ORD_SubContractTransfer" xml:space="preserve">
+    <value>委外移库</value>
+  </data>
+  <data name="CodeDetail_EmailStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_EmailStatus_Open" xml:space="preserve">
+    <value>已开放</value>
+  </data>
+  <data name="CodeDetail_JobRunStatus_Failure" xml:space="preserve">
+    <value>失败</value>
+  </data>
+  <data name="CodeDetail_JobRunStatus_InProcess" xml:space="preserve">
+    <value>执行中</value>
+  </data>
+  <data name="CodeDetail_JobRunStatus_Success" xml:space="preserve">
+    <value>成功</value>
+  </data>
+  <data name="CodeDetail_MessagePriority_High" xml:space="preserve">
+    <value>高</value>
+  </data>
+  <data name="CodeDetail_MessagePriority_Low" xml:space="preserve">
+    <value>低</value>
+  </data>
+  <data name="CodeDetail_MessagePriority_Normal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="CodeDetail_MessageStatus_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="CodeDetail_MessageStatus_Open" xml:space="preserve">
+    <value>开放</value>
+  </data>
+  <data name="CodeDetail_MessageType_Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="CodeDetail_MessageType_Info" xml:space="preserve">
+    <value>消息</value>
+  </data>
+  <data name="CodeDetail_MessageType_Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="CodeDetail_OccupyType_MiscOrder" xml:space="preserve">
+    <value>计划外出入库单</value>
+  </data>
+  <data name="CodeDetail_OccupyType_Sequence" xml:space="preserve">
+    <value>排序单</value>
+  </data>
+  <data name="CodeDetail_RePackType_In" xml:space="preserve">
+    <value>投入</value>
+  </data>
+  <data name="CodeDetail_RePackType_Out" xml:space="preserve">
+    <value>产出</value>
+  </data>
+  <data name="CodeDetail_ScheduleType_BackLog" xml:space="preserve">
+    <value>积压</value>
+  </data>
+  <data name="CodeDetail_ScheduleType_Firm" xml:space="preserve">
+    <value>需求</value>
+  </data>
+  <data name="CodeDetail_ScheduleType_Forecast" xml:space="preserve">
+    <value>预测</value>
+  </data>
+  <data name="CodeDetail_TransactionIOType_In" xml:space="preserve">
+    <value>入库</value>
+  </data>
+  <data name="CodeDetail_TransactionIOType_Out" xml:space="preserve">
+    <value>出库</value>
+  </data>
+  <data name="CodeDetail_TriggerStatus_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="CodeDetail_TriggerStatus_Open" xml:space="preserve">
+    <value>开放</value>
+  </data>
+  <data name="CodeDetail_SequenceStatus_Cancel" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="CodeDetail_SequenceStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_SequenceStatus_Complete" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="CodeDetail_SequenceStatus_Create" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="CodeDetail_SequenceStatus_InProcess" xml:space="preserve">
+    <value>执行中</value>
+  </data>
+  <data name="CodeDetail_SequenceStatus_Submit" xml:space="preserve">
+    <value>已释放</value>
+  </data>
+  <data name="CodeDetail_TransactionType_CYC_CNT" xml:space="preserve">
+    <value>盘点差异出入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_CYC_CNT_VOID" xml:space="preserve">
+    <value>盘点差异出入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_INP" xml:space="preserve">
+    <value>报验出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_INP_CCS" xml:space="preserve">
+    <value>让步使用出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_INP_QDII" xml:space="preserve">
+    <value>检验合格出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_INP_REJ" xml:space="preserve">
+    <value>检验不合格出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_ISL" xml:space="preserve">
+    <value>隔离出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_MIN" xml:space="preserve">
+    <value>生产投料出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_MIN_RTN" xml:space="preserve">
+    <value>生产投料退库出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_PIK" xml:space="preserve">
+    <value>下架出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_PO" xml:space="preserve">
+    <value>采购退货</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_PO_VOID" xml:space="preserve">
+    <value>采购退货冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_PUT" xml:space="preserve">
+    <value>上架出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_REP" xml:space="preserve">
+    <value>翻箱出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_SL" xml:space="preserve">
+    <value>计划协议退货</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_SL_VOID" xml:space="preserve">
+    <value>计划协议退货冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_SO" xml:space="preserve">
+    <value>销售出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_SO_VOID" xml:space="preserve">
+    <value>销售出库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_STR" xml:space="preserve">
+    <value>委外移库出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_STR_RTN" xml:space="preserve">
+    <value>委外移库退货出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_STR_RTN_VOID" xml:space="preserve">
+    <value>委外移库退货出库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_STR_VOID" xml:space="preserve">
+    <value>委外移库出库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_SWO" xml:space="preserve">
+    <value>委外生产出库/原材料</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_SWO_BF" xml:space="preserve">
+    <value>委外生产投料回冲出库/出生产线</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_SWO_BF_VOID" xml:space="preserve">
+    <value>委外生产投料回冲出库/出生产线冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_SWO_VOID" xml:space="preserve">
+    <value>委外生产出库/原材料冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_TR" xml:space="preserve">
+    <value>移库出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_TR_RTN" xml:space="preserve">
+    <value>移库退货出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_TR_RTN_VOID" xml:space="preserve">
+    <value>移库退货出库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_TR_VOID" xml:space="preserve">
+    <value>移库出库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_UNP" xml:space="preserve">
+    <value>计划外出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_UNP_VOID" xml:space="preserve">
+    <value>计划外出库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_WO" xml:space="preserve">
+    <value>生产出库/原材料</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_WO_BF" xml:space="preserve">
+    <value>生产投料回冲出库/出生产线</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_WO_BF_VOID" xml:space="preserve">
+    <value>生产投料回冲出库/出生产线冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_WO_VOID" xml:space="preserve">
+    <value>生产出库/原材料冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_LOC_INI" xml:space="preserve">
+    <value>库存初始化</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_INP" xml:space="preserve">
+    <value>报验入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_INP_CCS" xml:space="preserve">
+    <value>让步使用入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_INP_QDII" xml:space="preserve">
+    <value>检验合格入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_INP_REJ" xml:space="preserve">
+    <value>检验不合格入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_ISL" xml:space="preserve">
+    <value>隔离入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_MIN" xml:space="preserve">
+    <value>生产投料入库/入生产线</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_MIN_RTN" xml:space="preserve">
+    <value>生产投料出库/出生产线</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_PIK" xml:space="preserve">
+    <value>下架入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_PO" xml:space="preserve">
+    <value>采购入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_PO_VOID" xml:space="preserve">
+    <value>采购入库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_PUT" xml:space="preserve">
+    <value>上架入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_REP" xml:space="preserve">
+    <value>翻箱入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_SL" xml:space="preserve">
+    <value>计划协议入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_SL_VOID" xml:space="preserve">
+    <value>计划协议入库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_SO" xml:space="preserve">
+    <value>销售退货入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_SO_VOID" xml:space="preserve">
+    <value>销售退货入库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_STR" xml:space="preserve">
+    <value>委外移库入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_STR_RTN" xml:space="preserve">
+    <value>委外移库退货入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_STR_RTN_VOID" xml:space="preserve">
+    <value>委外移库退货入库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_STR_VOID" xml:space="preserve">
+    <value>委外移库入库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_SWO" xml:space="preserve">
+    <value>委外生产入库/成品</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_SWO_VOID" xml:space="preserve">
+    <value>委外生产入库/成品冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_TR" xml:space="preserve">
+    <value>移库入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_TR_RTN" xml:space="preserve">
+    <value>移库退货入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_TR_RTN_VOID" xml:space="preserve">
+    <value>移库退货入库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_TR_VOID" xml:space="preserve">
+    <value>移库入库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_UNP" xml:space="preserve">
+    <value>计划外入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_UNP_VOID" xml:space="preserve">
+    <value>计划外入库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_WO" xml:space="preserve">
+    <value>生产入库/成品</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_WO_VOID" xml:space="preserve">
+    <value>生产入库/成品冲销</value>
+  </data>
+  <data name="CodeDetail_VehicleInFactoryStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_VehicleInFactoryStatus_InProcess" xml:space="preserve">
+    <value>执行中</value>
+  </data>
+  <data name="CodeDetail_VehicleInFactoryStatus_Submit" xml:space="preserve">
+    <value>已释放</value>
+  </data>
+  <data name="CodeDetail_SequenceStatus_Pack" xml:space="preserve">
+    <value>已装箱</value>
+  </data>
+  <data name="CodeDetail_SequenceStatus_Ship" xml:space="preserve">
+    <value>已发货</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_IIC" xml:space="preserve">
+    <value>库存物料替换出库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_IIC" xml:space="preserve">
+    <value>库存物料替换入库</value>
+  </data>
+  <data name="CodeDetail_TransactionType_ISS_IIC_VOID" xml:space="preserve">
+    <value>库存物料替换出库冲销</value>
+  </data>
+  <data name="CodeDetail_TransactionType_RCT_IIC_VOID" xml:space="preserve">
+    <value>库存物料替换入库冲销</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_Hu" xml:space="preserve">
+    <value>条码</value>
+  </data>
+  <data name="CodeDetail_DocumentsType_VEH" xml:space="preserve">
+    <value>车辆进出厂凭证号</value>
+  </data>
+  <data name="ASN_Procurement" xml:space="preserve">
+    <value>采购送货单</value>
+  </data>
+  <data name="ASN_Transfer" xml:space="preserve">
+    <value>移库送货单</value>
+  </data>
+  <data name="AssemblyNote" xml:space="preserve">
+    <value>总装生产单</value>
+  </data>
+  <data name="BarCode" xml:space="preserve">
+    <value>条码</value>
+  </data>
+  <data name="BarCodeA4" xml:space="preserve">
+    <value>条码A4</value>
+  </data>
+  <data name="KitOrder" xml:space="preserve">
+    <value>台套供货单</value>
+  </data>
+  <data name="ORD_Procurement" xml:space="preserve">
+    <value>采购单</value>
+  </data>
+  <data name="ORD_Production" xml:space="preserve">
+    <value>非总装生产单</value>
+  </data>
+  <data name="ORD_Transfer" xml:space="preserve">
+    <value>移库单</value>
+  </data>
+  <data name="REC_Receipt" xml:space="preserve">
+    <value>收货单</value>
+  </data>
+  <data name="CodeDetail_HandleResult_MaterialWaste" xml:space="preserve">
+    <value>料废</value>
+  </data>
+  <data name="CodeDetail_HandleResult_WorkersWaste" xml:space="preserve">
+    <value>工废</value>
+  </data>
+  <data name="CodeDetail_LocationLevel_Donotcollect" xml:space="preserve">
+    <value>不汇总</value>
+  </data>
+  <data name="CodeDetail_LocationLevel_Factory" xml:space="preserve">
+    <value>工厂</value>
+  </data>
+  <data name="CodeDetail_LocationLevel_Region" xml:space="preserve">
+    <value>区域</value>
+  </data>
+  <data name="CodeDetail_LocationLevel_SinglePlant" xml:space="preserve">
+    <value>分厂</value>
+  </data>
+  <data name="CodeDetail_WindowTimeType_CycledWindowTime" xml:space="preserve">
+    <value>固定间隔时间</value>
+  </data>
+  <data name="CodeDetail_WindowTimeType_FixedWindowTime" xml:space="preserve">
+    <value>固定窗口时间</value>
+  </data>
+  <data name="CodeDetail_WindowTimeType_Cycled" xml:space="preserve">
+    <value>固定间隔时间</value>
+  </data>
+  <data name="CodeDetail_WindowTimeType_Fixed" xml:space="preserve">
+    <value>固定窗口时间</value>
+  </data>
+  <data name="CodeDetail_HandleResult_SelfmadeMaterialWaste1" xml:space="preserve">
+    <value>自制料废</value>
+  </data>
+  <data name="CodeDetail_BillMasterStatus_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CodeDetail_BillMasterStatus_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="CodeDetail_BillMasterStatus_Create" xml:space="preserve">
+    <value>创建</value>
+  </data>
+  <data name="CodeDetail_BillMasterStatus_Submit" xml:space="preserve">
+    <value>释放</value>
+  </data>
+  <data name="CodeDetail_CheckConsignment_Consignment" xml:space="preserve">
+    <value>寄售</value>
+  </data>
+  <data name="CodeDetail_CheckConsignment_Normal" xml:space="preserve">
+    <value>非寄售</value>
+  </data>
+  <data name="CodeDetail_MiscOrderType_Return" xml:space="preserve">
+    <value>退货</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_Assembly" xml:space="preserve">
+    <value>总装</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_Cab" xml:space="preserve">
+    <value>驾驶室</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_Chassis" xml:space="preserve">
+    <value>底盘</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_Semi" xml:space="preserve">
+    <value>自制件</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_Special" xml:space="preserve">
+    <value>特装</value>
+  </data>
+  <data name="ProductLineMapType_NotVan" xml:space="preserve">
+    <value>非整车</value>
+  </data>
+  <data name="ProductLineMapType_Van" xml:space="preserve">
+    <value>整车</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_Repair" xml:space="preserve">
+    <value>返修</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_SparePart" xml:space="preserve">
+    <value>备件</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_Trial" xml:space="preserve">
+    <value>试制</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendarCategory_ProdLine" xml:space="preserve">
+    <value>生产线</value>
+  </data>
+  <data name="CodeDetail_WorkingCalendarCategory_Region" xml:space="preserve">
+    <value>区域</value>
+  </data>
+  <data name="CodeDetail_PauseStatus_None" xml:space="preserve">
+    <value>未暂停</value>
+  </data>
+  <data name="CodeDetail_PauseStatus_Paused" xml:space="preserve">
+    <value>已暂停</value>
+  </data>
+  <data name="CodeDetail_PauseStatus_PlanPause" xml:space="preserve">
+    <value>计划暂停</value>
+  </data>
+  <data name="CodeDetail_CabOutStatus_NotOut" xml:space="preserve">
+    <value>未出库</value>
+  </data>
+  <data name="CodeDetail_CabOutStatus_Out" xml:space="preserve">
+    <value>已出库</value>
+  </data>
+  <data name="CodeDetail_CabOutStatus_Transfer" xml:space="preserve">
+    <value>已移库</value>
+  </data>
+  <data name="CodeDetail_CabType_Purchase" xml:space="preserve">
+    <value>外购</value>
+  </data>
+  <data name="CodeDetail_CabType_SelfMade" xml:space="preserve">
+    <value>自制</value>
+  </data>
+  <data name="CodeDetail_SapOrderType_Z901" xml:space="preserve">
+    <value>整车</value>
+  </data>
+  <data name="CodeDetail_SapOrderType_Z902" xml:space="preserve">
+    <value>面向库存</value>
+  </data>
+  <data name="CodeDetail_SapOrderType_Z903" xml:space="preserve">
+    <value>备件</value>
+  </data>
+  <data name="CodeDetail_SapOrderType_Z90R" xml:space="preserve">
+    <value>返工</value>
+  </data>
+  <data name="CodeDetail_SapOrderType_ZP01" xml:space="preserve">
+    <value>试制</value>
+  </data>
+  <data name="CodeDetail_DateOption_BT" xml:space="preserve">
+    <value>大于等于且小于等于</value>
+  </data>
+  <data name="CodeDetail_DateOption_EQ" xml:space="preserve">
+    <value>等于</value>
+  </data>
+  <data name="CodeDetail_DateOption_GE" xml:space="preserve">
+    <value>大于等于</value>
+  </data>
+  <data name="CodeDetail_DateOption_GT" xml:space="preserve">
+    <value>大于</value>
+  </data>
+  <data name="CodeDetail_DateOption_LE" xml:space="preserve">
+    <value>小于等于</value>
+  </data>
+  <data name="CodeDetail_DateOption_LT" xml:space="preserve">
+    <value>小于</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_Subassembly" xml:space="preserve">
+    <value>分装</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_Check" xml:space="preserve">
+    <value>检测</value>
+  </data>
+  <data name="CodeDetail_OrderPauseType_MovePause" xml:space="preserve">
+    <value>移动暂停</value>
+  </data>
+  <data name="CodeDetail_OrderPauseType_NormalPause" xml:space="preserve">
+    <value>正常暂停</value>
+  </data>
+  <data name="CodeDetail_OrderPauseType_OperationPause" xml:space="preserve">
+    <value>工位暂停</value>
+  </data>
+  <data name="CodeDetail_OrderPauseType_Resume" xml:space="preserve">
+    <value>恢复</value>
+  </data>
+  <data name="CodeDetail_SupplierOrderStatus_Cancel" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="CodeDetail_SupplierOrderStatus_Close" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CodeDetail_SupplierOrderStatus_InProcess" xml:space="preserve">
+    <value>已发货</value>
+  </data>
+  <data name="CodeDetail_SupplierOrderStatus_Submit" xml:space="preserve">
+    <value>待发货</value>
+  </data>
+  <data name="CodeDetail_TransactionType_LOC_INI_VOID" xml:space="preserve">
+    <value>库存初始化冲销</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_CKD" xml:space="preserve">
+    <value>CKD</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_REPAIR" xml:space="preserve">
+    <value>返修</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_SEMI" xml:space="preserve">
+    <value>自制件</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_SPARTPART" xml:space="preserve">
+    <value>备件</value>
+  </data>
+  <data name="CodeDetail_FlowStrategy_TRIAL" xml:space="preserve">
+    <value>试制</value>
+  </data>
+  <data name="CodeDetail_ProdLineType_CKD" xml:space="preserve">
+    <value>CKD</value>
+  </data>
+  <data name="CodeDetail_OrderType_OnlySupplier" xml:space="preserve">
+    <value>直送供应商</value>
+  </data>
+  <data name="CodeDetail_LeadTimeOption_ShiftDetail" xml:space="preserve">
+    <value>班次</value>
+  </data>
+  <data name="CodeDetail_LeadTimeOption_Strategy" xml:space="preserve">
+    <value>策略</value>
+  </data>
+</root>

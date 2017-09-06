@@ -1,0 +1,40 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INP
+@using com.Sconit.Entity.CUST
+<fieldset>
+    @using (Html.BeginForm("List", "FailCode"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="FailCode_Code">
+                    @Resources.CUST.FailCode.FailCode_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["FailCode"] != null ? ((FailCode)TempData["FailCode"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FailCode_Code">
+                    @Resources.CUST.FailCode.FailCode_CHNDescription
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CHNDescription", TempData["FailCode"] != null ? ((FailCode)TempData["FailCode"]).CHNDescription : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FailCode_Code">
+                    @Resources.CUST.FailCode.FailCode_ENGDescription
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ENGDescription", TempData["FailCode"] != null ? ((FailCode)TempData["FailCode"]).ENGDescription : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+                
+        </div>
+
+    }
+</fieldset>

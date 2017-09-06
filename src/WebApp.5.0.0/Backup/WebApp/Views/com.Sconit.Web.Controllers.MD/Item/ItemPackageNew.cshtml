@@ -1,0 +1,84 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.ItemPackage
+@Html.Partial("_AjaxMessage")
+@using (Html.BeginForm("ItemPackageNew", "Item"))
+{
+    <fieldset>
+        <legend>@Resources.MD.ItemPackage.ItemPackage_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.HiddenFor(model => model.Item)
+                <label for="Location_Code">
+                    @Resources.MD.ItemPackage.ItemPackage_Item
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Item)
+                @Html.ValidationMessageFor(model => model.Item)
+            </div>
+            <div class="editor-label-2">
+                <label for="ItemPackage_Description">
+                    @Resources.MD.ItemPackage.ItemPackage_Description
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+            <div class="editor-label-2">
+                <label for="ItemPackage_UC">
+                    @Resources.MD.ItemPackage.ItemPackage_UC
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("UnitCount",Model.UnitCount)
+                @Html.ValidationMessageFor(model => model.UnitCount)
+            </div>
+            <div class="editor-label-2">
+                <label for="ItemPackage_IsDefault">
+                    @Resources.MD.ItemPackage.ItemPackage_IsDefault
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsDefault", false, new { disabled = "disabled" })
+            </div>
+        </div>
+        <div class="editor-footer">
+            <input type="submit" value="@Resources.SYS.Global.Button_New" />
+            <button type="button" id="btnBack" onclick="btnBackItemPackageList_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+<script language="javascript" type="text/javascript">
+    function btnBackItemPackageList_Click() {
+        var data = {
+            "id": $("#Item").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Item/ItemPackage/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("form[action$='ItemPackageNew']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(response);
+            });
+            return false;
+        });
+    });
+    
+
+</script>

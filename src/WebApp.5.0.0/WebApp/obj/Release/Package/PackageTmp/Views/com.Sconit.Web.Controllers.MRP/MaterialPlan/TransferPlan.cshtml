@@ -1,0 +1,160 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MaterialPlan_TransferPlan" });
+}
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                移库路线
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    isChange = true,
+                    type = (int)com.Sconit.CodeMaster.OrderType.Transfer,
+                    selectedValue = TempData["MaterailPlanSearchModel"] != null ? ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).Flow : string.Empty,
+                    isMrp = true
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                版本号
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_TransferPlanMasterComboBox", "Common", new
+                  {
+                      controlName = "PlanVersion",
+                      selectedValue = TempData["MaterailPlanSearchModel"] != null ? ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).PlanVersion : null
+                  });           
+            }
+        </div>
+
+         <div class="search-label">
+            <label>物料组</label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+                {
+                    controlName = "MaterialsGroup",
+                    includeBlankOption = true,
+                    SubCategory = 5
+                });
+            }
+        </div>
+
+        <div class="search-label">
+            <label>
+                物料
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowItemComboBox", "Common", new
+                {
+                    includeBlankOption = true,
+                    controlName = "Item",
+                    selectedValue = TempData["MaterailPlanSearchModel"] != null ? ((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).Item : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                时间类型
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                @Html.RadioButton("IsStartTime", 0, TempData["MaterailPlanSearchModel"] != null ? (((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).IsStartTime) : false)
+                <text>@Resources.EXT.PageLan.StartTime</text>
+                @Html.RadioButton("IsStartTime", 1, TempData["MaterailPlanSearchModel"] != null ? !(((MaterailPlanSearchModel)TempData["MaterailPlanSearchModel"]).IsStartTime) : true)
+                <text>@Resources.EXT.PageLan.WindowTime</text>
+            }
+        </div>
+    </div>
+    <div class="editor-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="Search" onclick="QueryTransferPlanView()">
+            @Resources.SYS.Global.Button_Search</button>
+    </div>
+</fieldset>
+<div id="divTransferPlanView">
+</div>
+<script type="text/javascript">
+
+    function TransferPlanMaster_DataBinding(e) {
+        e.data = {
+            flow: $("#Flow").val(),
+        }
+    }
+
+    function Item_DataBinding(e) {
+        e.data = {
+            flow: $("#Flow").val()
+        }
+    }
+
+    function Flow_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.text("");
+        } else {
+            if (e.value != "") {
+                $('#Item').data('tComboBox').value('');
+                $('#Item').data('tComboBox').text('');
+                $("#Item").data("tComboBox").reload();
+
+                $('#PlanVersion').data('tComboBox').value('');
+                $('#PlanVersion').data('tComboBox').text('');
+                $("#PlanVersion").data("tComboBox").reload();
+            }
+            else {
+                combobox.text("");
+            }
+        }
+    }
+
+    function QueryTransferPlanView() {
+        if ($('#Flow').val() == '') {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanVersion').val() == '') {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        var data = {
+            "flow": $('#Flow').val(),
+            "item": $('#Item').val(),
+            "planVersion": $('#PlanVersion').val(),
+            "isStartTime": $("#IsStartTime:checked").val() == "0",
+            "materialsGroup": $('#MaterialsGroup').val(),
+            "backUrl": "~/MaterialPlan/TransferPlan"
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MaterialPlan/_GetTransferPlan/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divTransferPlanView");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            }
+        });
+    }
+</script>

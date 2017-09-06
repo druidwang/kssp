@@ -1,0 +1,980 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Report_CustReport" });
+}
+<script type="text/javascript">
+    function onSearch() {
+//        if ($('#Flow').val() == "") {
+//            $message.error('路线不能为空。');
+//            return;
+        //        }
+        data = {
+            Code: $("#Code").val(),
+            _AddressComboBox: $("#_AddressComboBox").val(),
+            Text1: $("#Text1").val(),
+            _BomComboBox: $("#_BomComboBox").val(),
+            _CodeMasterComboBox: $("#_CodeMasterComboBox").val(),
+            _CodeMasterDropDownList: $("#_CodeMasterDropDownList").val(),
+            Text2: $("#Text2").val(),
+            _CommonDropDownList: $("#_CommonDropDownList").val(),
+            Text3: $("#Text3").val(),
+            _CostCenterComboBox: $("#_CostCenterComboBox").val(),
+            _CurrencyDropDownList: $("#_CurrencyDropDownList").val(),
+            _CustomerComboBox: $("#_CustomerComboBox").val(),
+            _DateIndexComboBox: $("#_DateIndexComboBox").val(),
+            _DefectCodeComboBox: $("#_DefectCodeComboBox").val(),
+            _DefectCodeDropDownList: $("#_DefectCodeDropDownList").val(),
+            _FailCodeComboBox: $("#_FailCodeComboBox").val(),
+            _FiShiftComboBox: $("#_FiShiftComboBox").val(),
+            _FlowComboBox: $("#_FlowComboBox").val(),
+            _FlowItemComboBox: $("#_FlowItemComboBox").val(),
+            Text4: $("#Text4").val(),
+            _HuToComboBox: $("#_HuToComboBox").val(),
+            _InspectComboBox: $("#_InspectComboBox").val(),
+            _IslandComboBox: $("#_IslandComboBox").val(),
+            Text5: $("#Text5").val(),
+            _ItemCategoryDropDownList: $("#_ItemCategoryDropDownList").val(),
+            _ItemComboBox: $("#_ItemComboBox").val(),
+            _ItemPackageComboBox: $("#_ItemPackageComboBox").val(),
+            _ItemPackageDropDownList: $("#_ItemPackageDropDownList").val(),
+            _LocationAreaDropDownList: $("#_LocationAreaDropDownList").val(),
+            _LocationBinComboBox: $("#_LocationBinComboBox").val(),
+            _LocationBinDropDownList: $("#_LocationBinDropDownList").val(),
+            _LocationComboBox: $("#_LocationComboBox").val(),
+            _MachineComboBox: $("#_MachineComboBox").val(),
+            _ManufacturePartyComboBox: $("#_ManufacturePartyComboBox").val(),
+            _ManufacturePartyDropDownList: $("#_ManufacturePartyDropDownList").val(),
+            _MoveTypeDropDownList: $("#_MoveTypeDropDownList").val(),
+            _MrpPlanMasterComboBox: $("#_MrpPlanMasterComboBox").val(),
+            _MrpSnapMasterComboBox: $("#_MrpSnapMasterComboBox").val(),
+            _OrderMasterPartyFromComboBox: $("#_OrderMasterPartyFromComboBox").val(),
+            _OrderMasterPartyToComboBox: $("#_OrderMasterPartyToComboBox").val(),
+            _PartyDropDownList: $("#_PartyDropDownList").val(),
+            _PickStrategyComboBox: $("#_PickStrategyComboBox").val(),
+            _PriceListComboBox: $("#_PriceListComboBox").val(),
+            _ProductCodeDropDownList: $("#_ProductCodeDropDownList").val(),
+            _ProductionAdjustLocationComboBox: $("#_ProductionAdjustLocationComboBox").val(),
+            _ProductLineFacilityComboBox: $("#_ProductLineFacilityComboBox").val(),
+            _ProductTypeDropDownList: $("#_ProductTypeDropDownList").val(),
+            _RegionCombobox: $("#_RegionCombobox").val(),
+            _RegionWorkShopComboBox: $("#_RegionWorkShopComboBox").val(),
+            _SAPLocationComboBox: $("#_SAPLocationComboBox").val(),
+            _ShiftComboBox: $("#_ShiftComboBox").val(),
+            _SupplierComboBox: $("#_SupplierComboBox").val(),
+            _UomDropDownList: $("#_UomDropDownList").val(),
+            _WorkingCalendarFlowComboBox: $("#_WorkingCalendarFlowComboBox").val(),
+            EndDate: $("#EndDate").val(),
+            StartDate: $("#StartDate").val()
+        };
+        $("#fdOrderDetail").html("Loading.......");
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/CustReport/_GetHtmlStr/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#fdOrderDetail").html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+<fieldset>
+<legend>@ViewBag.Name</legend>
+@using (Html.BeginForm("Export", "CustReport"))
+{  
+    <div class="search">
+        @Html.Hidden("Code", (string)@ViewBag.Code)
+        @if (ViewBag.Text1)
+        {
+             <div class="editor-label-2">
+                  <label>
+                  @ViewBag.Text1Text
+                  </label>
+             </div>
+             <div class="editor-field-2">
+                  @Html.TextBox("Text1", "")
+             </div>
+        }
+        @if (ViewBag.Text2)
+        {
+             <div class="editor-label-2">
+                  <label>
+                  @ViewBag.Text2Text
+                  </label>
+             </div>
+             <div class="editor-field-2">
+                  @Html.TextBox("Text2", "")
+             </div>
+        }
+        @if (ViewBag.Text3)
+        {
+             <div class="editor-label-2">
+                  <label>
+                  @ViewBag.Text3Text
+                  </label>
+             </div>
+             <div class="editor-field-2">
+                  @Html.TextBox("Text3", "")
+             </div>
+        }
+        @if (ViewBag.Text4)
+        {
+             <div class="editor-label-2">
+                  <label>
+                  @ViewBag.Text4Text
+                  </label>
+             </div>
+             <div class="editor-field-2">
+                  @Html.TextBox("Text4", "")
+             </div>
+        }
+        @if (ViewBag.Text5)
+        {
+             <div class="editor-label-2">
+                  <label>
+                  @ViewBag.Text5Text
+                  </label>
+             </div>
+             <div class="editor-field-2">
+                  @Html.TextBox("Text5", "")
+             </div>
+        }
+        @if (ViewBag._AddressComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._AddressComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_AddressComboBox", "Common", new
+                      {
+                          controlName = "_AddressComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._BomComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._BomComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_BomComboBox", "Common", new
+                      {
+                          controlName = "_BomComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._CodeMasterComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._CodeMasterComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_CodeMasterComboBox", "Common", new
+                      {
+                          controlName = "_CodeMasterComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._CodeMasterDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._CodeMasterDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                      {
+                          controlName = "_CodeMasterDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._CommonDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._CommonDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_CommonDropDownList", "Common", new
+                      {
+                          controlName = "_CommonDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._CostCenterComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._CostCenterComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_CostCenterComboBox", "Common", new
+                      {
+                          controlName = "_CostCenterComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._CurrencyDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._CurrencyDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_CurrencyDropDownList", "Common", new
+                      {
+                          controlName = "_CurrencyDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._CustomerComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._CustomerComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_CustomerComboBox", "Common", new
+                      {
+                          controlName = "_CustomerComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._DateIndexComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._DateIndexComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_DateIndexComboBox", "Common", new
+                      {
+                          controlName = "_DateIndexComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._DefectCodeComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._DefectCodeComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_DefectCodeComboBox", "Common", new
+                      {
+                          controlName = "_DefectCodeComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._DefectCodeDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._DefectCodeDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_DefectCodeDropDownList", "Common", new
+                      {
+                          controlName = "_DefectCodeDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._FailCodeComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._FailCodeComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_FailCodeComboBox", "Common", new
+                      {
+                          controlName = "_FailCodeComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._FiShiftComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._FiShiftComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_FiShiftComboBox", "Common", new
+                      {
+                          controlName = "_FiShiftComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._FlowComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._FlowComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_FlowComboBox", "Common", new
+                      {
+                          controlName = "_FlowComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._FlowItemComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._FlowItemComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_FlowItemComboBox", "Common", new
+                      {
+                          controlName = "_FlowItemComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._HuToComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._HuToComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_HuToComboBox", "Common", new
+                      {
+                          controlName = "_HuToComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._InspectComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._InspectComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_InspectComboBox", "Common", new
+                      {
+                          controlName = "_InspectComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._IslandComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._IslandComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_IslandComboBox", "Common", new
+                      {
+                          controlName = "_IslandComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ItemCategoryDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ItemCategoryDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+                      {
+                          controlName = "_ItemCategoryDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ItemComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ItemComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ItemComboBox", "Common", new
+                      {
+                          controlName = "_ItemComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ItemPackageComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ItemPackageComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ItemPackageComboBox", "Common", new
+                      {
+                          controlName = "_ItemPackageComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ItemPackageDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ItemPackageDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ItemPackageDropDownList", "Common", new
+                      {
+                          controlName = "_ItemPackageDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+
+        @if (ViewBag._LocationBinComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._LocationBinComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_LocationBinComboBox", "Common", new
+                      {
+                          controlName = "_LocationBinComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._LocationBinDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._LocationBinDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_LocationBinDropDownList", "Common", new
+                      {
+                          controlName = "_LocationBinDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+
+        @if (ViewBag._MachineComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._MachineComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_MachineComboBox", "Common", new
+                      {
+                          controlName = "_MachineComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ManufacturePartyComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ManufacturePartyComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ManufacturePartyComboBox", "Common", new
+                      {
+                          controlName = "_ManufacturePartyComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ManufacturePartyDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ManufacturePartyDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ManufacturePartyDropDownList", "Common", new
+                      {
+                          controlName = "_ManufacturePartyDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._MoveTypeDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._MoveTypeDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_MoveTypeDropDownList", "Common", new
+                      {
+                          controlName = "_MoveTypeDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._MrpPlanMasterComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._MrpPlanMasterComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+                      {
+                          controlName = "_MrpPlanMasterComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._MrpSnapMasterComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._MrpSnapMasterComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_MrpSnapMasterComboBox", "Common", new
+                      {
+                          controlName = "_MrpSnapMasterComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._OrderMasterPartyFromComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._OrderMasterPartyFromComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_OrderMasterPartyFromComboBox", "Common", new
+                      {
+                          controlName = "_OrderMasterPartyFromComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._OrderMasterPartyToComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._OrderMasterPartyToComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_OrderMasterPartyToComboBox", "Common", new
+                      {
+                          controlName = "_OrderMasterPartyToComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._PartyDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._PartyDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_PartyDropDownList", "Common", new
+                      {
+                          controlName = "_PartyDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._PickStrategyComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._PickStrategyComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_PickStrategyComboBox", "Common", new
+                      {
+                          controlName = "_PickStrategyComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._PriceListComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._PriceListComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_PriceListComboBox", "Common", new
+                      {
+                          controlName = "_PriceListComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ProductCodeDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ProductCodeDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ProductCodeDropDownList", "Common", new
+                      {
+                          controlName = "_ProductCodeDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ProductLineFacilityComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ProductLineFacilityComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ProductLineFacilityComboBox", "Common", new
+                      {
+                          controlName = "_ProductLineFacilityComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ProductTypeDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ProductTypeDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ProductTypeDropDownList", "Common", new
+                      {
+                          controlName = "_ProductTypeDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._RegionCombobox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._RegionComboboxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_RegionCombobox", "Common", new
+                      {
+                          controlName = "_RegionCombobox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._LocationComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._LocationComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_LocationComboBox", "Common", new
+                      {
+                          controlName = "_LocationComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._RegionWorkShopComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._RegionWorkShopComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_RegionWorkShopComboBox", "Common", new
+                      {
+                          controlName = "_RegionWorkShopComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._SAPLocationComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._SAPLocationComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_SAPLocationComboBox", "Common", new
+                      {
+                          controlName = "_SAPLocationComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._ShiftComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._ShiftComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_ShiftComboBox", "Common", new
+                      {
+                          controlName = "_ShiftComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._SupplierComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._SupplierComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_SupplierComboBox", "Common", new
+                      {
+                          controlName = "_SupplierComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._UomDropDownList)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._UomDropDownListText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_UomDropDownList", "Common", new
+                      {
+                          controlName = "_UomDropDownList",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag._WorkingCalendarFlowComboBox)
+        {
+             <div class="editor-label-2">
+                 <label>
+                  @ViewBag._WorkingCalendarFlowComboBoxText
+                </label>
+             </div>
+             <div class="editor-field-2">
+                  @{
+                      Html.RenderAction("_WorkingCalendarFlowComboBox", "Common", new
+                      {
+                          controlName = "_WorkingCalendarFlowComboBox",
+                          includeBlankOption = true
+                      });
+                  }
+             </div>
+        }
+        @if (ViewBag.StartDate)
+        {
+            <div class="search-label">
+                <label>
+                    @ViewBag.StartDateText
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartDate")
+                .Value(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        }
+        @if (ViewBag.EndDate)
+        {
+            <div class="search-label">
+                <label>
+                    @ViewBag.EndDateText
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EndDate")
+                .Value(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        }
+
+    </div>
+    <div class="search-footer">
+        @Html.Button(Resources.SYS.Global.Button_Search, "Url_CustReport_ReportMenu", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    
+}
+</fieldset>
+<div id="fdOrderDetail">
+</div>
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+        $('form').submit();
+    });
+</script>

@@ -1,0 +1,179 @@
+﻿@using com.Sconit.Entity.SAP.TRANS;
+@model IEnumerable<com.Sconit.Entity.SAP.TRANS.InvTrans>
+ <script type="text/javascript">
+     $(function () {
+         $("#checkAll").click(function () {
+             $('input[name="checkedRecords"]').attr("checked", this.checked);
+             $("#btnEdit").attr("style", this.checked ? "display:inline" : "display:none");
+         });
+     });
+
+
+     
+     function showButtons() {
+         var $checkRecords = $("input[name='checkedRecords']");
+         var showButton = false;
+         for (var i = 0; i < $checkRecords.length; i++) {
+             if ($checkRecords[i].checked) {
+                 showButton = true;
+                 break;
+             }
+         }
+         $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+         $("#btnEdit").attr("style", showButton ? "display:inline" : "display:none");
+     }
+</script>
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("SAP_InvTransGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.CheckList)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= FRBNR #>,<#= SGTXT #>'   onClick='showButtons()' />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.TCODE).Title(@Resources.SI.InvTrans.InvTrans_TCODE);
+            columns.Bound(o => o.BWART).Title(@Resources.SI.InvTrans.InvTrans_BWART);
+            columns.Bound(o => o.BLDAT).Title(@Resources.SI.InvTrans.InvTrans_BLDAT);
+            columns.Bound(o => o.BUDAT).Title(@Resources.SI.InvTrans.InvTrans_BUDAT);
+            columns.Bound(o => o.EBELN).Title(@Resources.SI.InvTrans.InvTrans_EBELN);
+            columns.Bound(o => o.EBELP).Title(@Resources.SI.InvTrans.InvTrans_EBELP);
+            columns.Bound(o => o.VBELN).Title(@Resources.SI.InvTrans.InvTrans_VBELN);
+            columns.Bound(o => o.POSNR).Title(@Resources.SI.InvTrans.InvTrans_POSNR);
+            columns.Bound(o => o.LIFNR).Title(@Resources.SI.InvTrans.InvTrans_LIFNR);
+            columns.Bound(o => o.WERKS).Title(@Resources.SI.InvTrans.InvTrans_WERKS);
+            columns.Bound(o => o.LGORT).Title(@Resources.SI.InvTrans.InvTrans_LGORT);
+            columns.Bound(o => o.SOBKZ).Title(@Resources.SI.InvTrans.InvTrans_SOBKZ);
+            columns.Bound(o => o.MATNR).Title(@Resources.SI.InvTrans.InvTrans_MATNR);
+            columns.Bound(o => o.ERFMG).Title(@Resources.SI.InvTrans.InvTrans_ERFMG);
+            columns.Bound(o => o.ERFME).Title(@Resources.SI.InvTrans.InvTrans_ERFME);
+            columns.Bound(o => o.UMLGO).Title(@Resources.SI.InvTrans.InvTrans_UMLGO);
+            columns.Bound(o => o.GRUND).Title(@Resources.SI.InvTrans.InvTrans_GRUND);
+            columns.Bound(o => o.KOSTL).Title(@Resources.SI.InvTrans.InvTrans_KOSTL);
+            columns.Bound(o => o.XBLNR).Title(@Resources.SI.InvTrans.InvTrans_XBLNR);
+            columns.Bound(o => o.RSNUM).Title(@Resources.SI.InvTrans.InvTrans_RSNUM);
+            columns.Bound(o => o.RSPOS).Title(@Resources.SI.InvTrans.InvTrans_RSPOS);
+            columns.Bound(o => o.FRBNR).Title(@Resources.SI.InvTrans.InvTrans_FRBNR);
+            columns.Bound(o => o.SGTXT).Title(@Resources.SI.InvTrans.InvTrans_SGTXT);
+            columns.Bound(o => o.OLD).Title(@Resources.SI.InvTrans.InvTrans_OLD);
+            columns.Bound(o => o.INSMK).Title(@Resources.SI.InvTrans.InvTrans_INSMK);
+            columns.Bound(o => o.XABLN).Title(@Resources.SI.InvTrans.InvTrans_XABLN);
+            columns.Bound(o => o.AUFNR).Title(@Resources.SI.InvTrans.InvTrans_AUFNR);
+            columns.Bound(o => o.UMMAT).Title(@Resources.SI.InvTrans.InvTrans_UMMAT);
+            columns.Bound(o => o.UMWRK).Title(@Resources.SI.InvTrans.InvTrans_UMWRK);
+            columns.Bound(o => o.KZEAR).Title(@Resources.SI.InvTrans.InvTrans_KZEAR);
+            columns.Bound(o => o.CHARG).Title(@Resources.SI.InvTrans.InvTrans_CHARG);
+            columns.Bound(o => o.CreateDate).Title(@Resources.SI.InvTrans.InvTrans_CreateDate);
+            columns.Bound(o => o.LastModifyDate).Title(@Resources.SI.InvTrans.InvTrans_LastModifyDate);
+            columns.Bound(o => o.StatusName).Title(@Resources.SI.InvTrans.InvTrans_Status);
+            columns.Bound(o => o.ErrorCount).Title(@Resources.SI.InvTrans.InvTrans_ErrorCount);
+            columns.Bound(o => o.ErrorId).Title(@Resources.SI.InvTrans.InvTrans_ErrorId);
+            columns.Bound(o => o.ErrorMessage).Title(@Resources.SI.InvTrans.InvTrans_ErrorMessage);
+            columns.Bound(o => o.OrderNo).Title("订单");
+            columns.Bound(o => o.DetailId);   
+        })
+               
+                .DetailView(details => details.ClientTemplate(
+                   Html.Telerik().Grid<InvLoc>()
+                        .Name("FRBNR<#= FRBNR#>SGTXT<#= SGTXT #>")          
+                        .Columns(columns =>
+                        {
+                            columns.Bound(o => o.Id).Title(@Resources.SI.InvLoc.InvLoc_Id);
+                            columns.Bound(o => o.FRBNR).Title(@Resources.SI.InvLoc.InvLoc_FRBNR);
+                            columns.Bound(o => o.SGTXT).Title(@Resources.SI.InvLoc.InvLoc_SGTXT);
+                            columns.Bound(o => o.SourceId).Title(@Resources.SI.InvLoc.InvLoc_SourceId);
+                            columns.Bound(o => o.SourceType).Title(@Resources.SI.InvLoc.InvLoc_SourceType);
+                            columns.Bound(o => o.CreateDate).Title(@Resources.SI.InvLoc.InvLoc_CreateDate);
+                            columns.Bound(o => o.CreateUser).Title(@Resources.SI.InvLoc.InvLoc_CreateUser);
+                        })
+                           .DataBinding(dataBinding => dataBinding.Ajax()// ,SGTXT
+                           .Select("_AjaxListInvLoc", "SAPTrans", new { FRBNR = "<#= FRBNR #>", SGTXT = "<#= SGTXT #>" }))
+                        .Footer(false)
+                        .Resizable(resizing => resizing.Columns(true))
+                        .ToHtmlString()
+            ))
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SAPTrans"))
+                .ClientEvents(events => events.OnDataBinding("SAP_InvTransGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAP_InvTransGrid_OnDataBinding(e) {
+          
+            e.data = {
+                BWART: $('#BWART').val(),
+                BUDAT: $('#BUDAT').val(),
+                EBELN: $('#EBELN').val(),
+                EBELP: $('#EBELP').val(),
+                LIFNR: $('#LIFNR').val(),
+                LGORT: $('#LGORT').val(),
+                Status: $("input[type=radio][name=Status]:checked").val(),
+                MATNR: $('#MATNR').val(),
+                XBLNR: $('#XBLNR').val(),
+                RSNUM: $('#RSNUM').val(),
+                RSPOS: $('#RSPOS').val(),
+                FRBNR: $('#FRBNR').val(),
+                SGTXT: $('#SGTXT').val(),
+                XABLN: $('#XABLN').val(),
+                StartTime: $('#StartTime').val(),
+                EndTime: $('#EndTime').val()
+                
+            };
+        }
+        function editCheckedOrders() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var checkedOrders = "";
+            var SGTXT = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    if (checkedOrders == "") {
+
+                        var arr = $checkRecords[i].value.split(',');
+                        checkedOrders = arr[0];
+                        SGTXT = arr[1];
+                    } else {
+                        var arr = $checkRecords[i].value.split(',');
+                        checkedOrders += "," + arr[0];
+                        SGTXT +=","+ arr[1];
+                    }
+                }
+            }
+
+           
+            if (checkedOrders == "") {
+                alert('Must Check One');
+                return;
+            }
+
+            var data = {
+                "checkedOrders": checkedOrders,
+                "SGTXT":SGTXT
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/SAPTrans/CreateInvTrans/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    var $tGrid = $("#content");
+                    $($tGrid).html(data);
+                }
+            });
+
+        }
+
+
+
+
+    </script>
+</fieldset>

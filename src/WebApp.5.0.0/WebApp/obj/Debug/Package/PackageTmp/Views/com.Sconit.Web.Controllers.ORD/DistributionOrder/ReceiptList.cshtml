@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Distribution_Receipt" });
+}
+
+@Html.Partial("_ReceiptSearch")
+
+@Html.Partial("_ReceiptSearchResult")

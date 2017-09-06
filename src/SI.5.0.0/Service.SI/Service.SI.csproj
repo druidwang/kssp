@@ -1,0 +1,667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3A94E8A3-6ED2-4BEB-9816-EE24510F6FC3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.Sconit.Service.SI</RootNamespace>
+    <AssemblyName>com.Sconit.Service.SI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core.5.0.0\Entity\Entity.csproj">
+      <Project>{E4710EAE-2F94-423E-BD3E-258E054714AE}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\Persistence\Persistence.csproj">
+      <Project>{A2297BAC-3184-4A1C-AE14-2D439F54B699}</Project>
+      <Name>Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\Service\Service.csproj">
+      <Project>{C404091C-8C1D-42BE-BA63-919BB8B5900A}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\Util\Utility.csproj">
+      <Project>{3617942C-4554-4B04-927C-5D5AF677D262}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Globalization\Globalization.csproj">
+      <Project>{5907015a-4bec-482d-b4c4-5413e7ee0068}</Project>
+      <Name>Globalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LeanEngine.5.0.0\LeanEngine\LeanEngine.csproj">
+      <Project>{cc3b1860-71a0-4225-919f-9a7dbad397cc}</Project>
+      <Name>LeanEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity.SI\Entity.SI.csproj">
+      <Project>{2CC4B70A-A63A-4896-A382-5768913DC359}</Project>
+      <Name>Entity.SI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\Lib\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\Lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Transaction">
+      <HintPath>..\..\Lib\Castle.Services.Transaction.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\Lib\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\Lib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle">
+      <HintPath>..\..\Lib\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=1.2.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NVelocity, Version=1.1.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoMapperInstaller.cs" />
+    <Compile Include="BaseMgr.cs" />
+    <Compile Include="Impl\MES\MESServicesMgr.cs" />
+    <Compile Include="Impl\SD_TMSMgrImpl.cs" />
+    <Compile Include="Impl\SD_WMSMgrImpl.cs" />
+    <Compile Include="ISD_TMSMgr.cs" />
+    <Compile Include="ISD_WMSMgr.cs" />
+    <Compile Include="IJobRunMgr.cs" />
+    <Compile Include="Impl\Job\JobRunMgrImpl.cs" />
+    <Compile Include="Impl\Job\Job.cs" />
+    <Compile Include="Impl\SAP\MasterDataMgrImpl.cs" />
+    <Compile Include="Impl\SAP\MaterialManagementMgrImpl.cs" />
+    <Compile Include="Impl\SAP\SalesDistributionMgrImpl.cs" />
+    <Compile Include="Impl\SAP\ProductionPlanningMgr Impl.cs" />
+    <Compile Include="Impl\SAP\SAPInterfaceCommonMgrImpl.cs" />
+    <Compile Include="ISD_FlowMgr.cs" />
+    <Compile Include="ISD_InventoryMgr.cs" />
+    <Compile Include="ILeanEngineMgr.cs" />
+    <Compile Include="ISD_MasterDataMgr.cs" />
+    <Compile Include="Impl\SD_FlowMgrImpl.cs" />
+    <Compile Include="Impl\SD_InventoryMgrImpl.cs" />
+    <Compile Include="Impl\LeanEngineMgrImpl.cs" />
+    <Compile Include="Impl\SD_MasterDataMgrImpl.cs" />
+    <Compile Include="Impl\NativeSqlStatement.cs" />
+    <Compile Include="Impl\SD_OrderMgrImpl.cs" />
+    <Compile Include="Impl\EDI_ScheduleMgrImpl.cs" />
+    <Compile Include="Impl\SD_SecurityMgrImpl.cs" />
+    <Compile Include="ISD_OrderMgr.cs" />
+    <Compile Include="IEDI_ScheduleMgr.cs" />
+    <Compile Include="ISD_SecurityMgr.cs" />
+    <Compile Include="Impl\Job\JobDataMap.cs" />
+    <Compile Include="MES\IMESServicesMgr.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SAP\IMasterDataMgr.cs" />
+    <Compile Include="SAP\IMaterialManagementMgr.cs" />
+    <Compile Include="SAP\ISalesDistributionMgr.cs" />
+    <Compile Include="SAP\IProductionPlanningMgr.cs" />
+    <Compile Include="SAP\ISAPInterfaceCommonMgr.cs" />
+    <Compile Include="Web References\MDMMES0001\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MDMMES0002\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MDMMES0003\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MDMMES0004\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MDMMES0005\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MDMMES0006\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MESQTY0001\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MMMES0001\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MMMES0002\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\PPMES0001\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\PPMES0002\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\PPMES0003\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\PPMES0004\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\PPMES0005\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\PPMES0006\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\SDMES0001\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\SDMES0002\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\STMES0001\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\WSMes\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MDMMES0001\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MDMMES0001\ZfunMdmmes0001Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\MDMMES0001\zws_mdmmes0001.wsdl" />
+    <None Include="Web References\MDMMES0002\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MDMMES0002\ZfunMdmmes0002Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\MDMMES0002\zws_mdmmes0002.wsdl" />
+    <None Include="Web References\MDMMES0003\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MDMMES0003\ZfunMdmmes0003Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\MDMMES0003\zws_mdmmes0003.wsdl" />
+    <None Include="Web References\MDMMES0004\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MDMMES0004\ZfunMdmmes0004Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\MDMMES0004\zws_mdmmes0004.wsdl" />
+    <None Include="Web References\MDMMES0005\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MDMMES0005\ZfunMdmmes0005Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\MDMMES0005\zws_mdmmes0005.wsdl" />
+    <None Include="Web References\MDMMES0006\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MDMMES0006\ZfunMdmmes0006Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\MDMMES0006\zws_mdmmes0006.wsdl" />
+    <None Include="Web References\MESQTY0001\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MESQTY0001\ZfunMesqty0001Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\MESQTY0001\zws_mesqty0001.wsdl" />
+    <None Include="Web References\MMMES0001\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MMMES0001\ZfunMmmes0001Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\MMMES0001\zws_mmmes0001.wsdl" />
+    <None Include="Web References\MMMES0002\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MMMES0002\ZfunMmmes0002Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\MMMES0002\zws_mmmes0002.wsdl" />
+    <None Include="Web References\PPMES0001\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\PPMES0001\ZfunPpmes0001Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PPMES0001\zws_ppmes0001.wsdl" />
+    <None Include="Web References\PPMES0002\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\PPMES0002\ZfunPpmes0002Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PPMES0002\zws_ppmes0002.wsdl" />
+    <None Include="Web References\PPMES0003\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\PPMES0003\ZfunPpmes0003Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PPMES0003\zws_ppmes0003.wsdl" />
+    <None Include="Web References\PPMES0004\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\PPMES0004\ZfunPpmes0004Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PPMES0004\zws_ppmes0004.wsdl" />
+    <None Include="Web References\PPMES0005\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\PPMES0005\ZfunPpmes0005Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PPMES0005\zws_ppmes0005.wsdl" />
+    <None Include="Web References\PPMES0006\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\PPMES0006\ZfunPpmes0006Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PPMES0006\zws_ppmes0006.wsdl" />
+    <None Include="Web References\SDMES0001\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\SDMES0001\ZfunSdmes0001Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SDMES0001\zws_sdmes0001.wsdl" />
+    <None Include="Web References\SDMES0002\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\SDMES0002\ZfunSdmes0002Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\SDMES0002\zws_sdmes0002.wsdl" />
+    <None Include="Web References\STMES0001\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\STMES0001\ZfunStmes0001Response.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\STMES0001\zws_stmes0001.wsdl" />
+    <None Include="Web References\WSMes\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WSMes\WSMes.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_ppmes0001.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\PPMES0001\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_ppmes0001.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_PPMES0001_ZWS_PPMES0001</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_ppmes0004.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\PPMES0004\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_ppmes0004.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_PPMES0004_ZWS_PPMES0004</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_stmes0001.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\STMES0001\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_stmes0001.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_STMES0001_ZWS_STMES0001</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_mdmmes0001.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MDMMES0001\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_mdmmes0001.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_MDMMES0001_ZWS_MDMMES0001</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_mdmmes0002.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MDMMES0002\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_mdmmes0002.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_MDMMES0002_ZWS_MDMMES0002</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_mdmmes0003.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MDMMES0003\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_mdmmes0003.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_MDMMES0003_ZWS_MDMMES0003</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_mdmmes0004.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MDMMES0004\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_mdmmes0004.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_MDMMES0004_ZWS_MDMMES0004</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_mdmmes0005.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MDMMES0005\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_mdmmes0005.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_MDMMES0005_ZWS_MDMMES0005</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_mdmmes0006.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MDMMES0006\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_mdmmes0006.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_MDMMES0006_ZWS_MDMMES0006</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_mmmes0002.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MMMES0002\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_mmmes0002.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_MMMES0002_ZWS_MMMES0002</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_ppmes0002.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\PPMES0002\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_ppmes0002.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_PPMES0002_ZWS_PPMES0002</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_ppmes0003.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\PPMES0003\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_ppmes0003.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_PPMES0003_ZWS_PPMES0003</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_ppmes0005.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\PPMES0005\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_ppmes0005.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_PPMES0005_ZWS_PPMES0005</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_ppmes0006.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\PPMES0006\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_ppmes0006.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_PPMES0006_ZWS_PPMES0006</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_sdmes0001.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\SDMES0001\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_sdmes0001.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_SDMES0001_ZWS_SDMES0001</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_mmmes0001.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MMMES0001\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_mmmes0001.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_MMMES0001_ZWS_MMMES0001</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_mesqty0001.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MESQTY0001\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_mesqty0001.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_MESQTY0001_ZWS_MESQTY0001</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="F:\wsdl\shenya\zws_sdmes0002.xml">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\SDMES0002\</RelPath>
+      <UpdateFromURL>F:\wsdl\shenya\zws_sdmes0002.xml</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_SDMES0002_ZWS_SDMES0002</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.136.3.28:9000/ws%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WSMes\</RelPath>
+      <UpdateFromURL>http://10.136.3.28:9000/ws%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>com_Sconit_Service_SI_WSMes_WSMes</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

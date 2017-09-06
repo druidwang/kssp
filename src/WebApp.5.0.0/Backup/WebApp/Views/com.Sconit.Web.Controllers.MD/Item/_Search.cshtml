@@ -1,0 +1,134 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.SearchModels.MD
+<script type="text/javascript">
+    function ExportClick() {
+
+        location.href = '/Item/ExportXLS/?Code=' + $('#Code').val()
+            + '&Description=' + $('#Description').val()
+            + '&ReferenceCode=' + $('#ReferenceCode').val()
+            + '&ItemCategory=' + $('#ItemCategory').val()
+            + '&MaterialsGroup=' + $('#MaterialsGroup').val()
+            + '&IsActive=' + $("input[type=checkbox][name=IsActive]:checked").val()
+            + '&IsVirtual=' + $("input[type=checkbox][name=IsVirtual]:checked").val()
+    }
+</script>
+
+<fieldset>
+    @using (Html.BeginForm("List", "Item"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Item_Code">
+                    @Resources.MD.Item.Item_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["ItemSearchModel"] != null ? ((ItemSearchModel)TempData["ItemSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                </label>
+            </div>
+            <div class="search-field">
+            </div>
+            <div class="search-label">
+                <label for="Item_Description">
+                    @Resources.MD.Item.Item_ReferenceCode
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ReferenceCode", TempData["ItemSearchModel"] != null ? ((ItemSearchModel)TempData["ItemSearchModel"]).ReferenceCode : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Item_Description">
+                    @Resources.MD.Item.Item_Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["ItemSearchModel"] != null ? ((ItemSearchModel)TempData["ItemSearchModel"]).Description : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MD.Item.Item_ItemCategory
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+        {
+            controlName = "ItemCategory",
+            includeBlankOption = true,
+            selectedValue = TempData["ItemSearchModel"] != null ? ((ItemSearchModel)TempData["ItemSearchModel"]).ItemCategory : string.Empty,
+            SubCategory = 0
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MD.Item.Item_MaterialsGroup
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+        {
+            controlName = "MaterialsGroup",
+            includeBlankOption = true,
+            selectedValue = TempData["ItemSearchModel"] != null ? ((ItemSearchModel)TempData["ItemSearchModel"]).MaterialsGroup : string.Empty,
+            SubCategory = 5
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="Item_IsActive">
+                    @Resources.MD.Item.Item_IsActive
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsActive", TempData["ItemSearchModel"] != null ? ((ItemSearchModel)TempData["ItemSearchModel"]).IsActive : true)
+            </div>
+            <div class="search-label">
+                <label for="Item_IsActive">
+                    @Resources.MD.Item.Item_IsVirtual
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsVirtual", TempData["ItemSearchModel"] != null ? ((ItemSearchModel)TempData["ItemSearchModel"]).IsVirtual : false)
+            </div>
+            <div class="search-label">
+                <label>
+                    <a href='/Resource/Templates/UploadTemplate/Item.xls'>@Resources.EXT.PageLan.TemplateDownload</a>
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().Upload()
+                    .Name("attachments")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("Import", "Item")
+                    .AutoUpload(true))
+                    .ClientEvents(e => e.OnSuccess("TelerikonUpload_OnSuccess")))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @*<button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/Item/New")'">
+                @Resources.SYS.Global.Button_New</button>*@
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Item_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+            <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_Item_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/Item/New")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>

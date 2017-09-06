@@ -1,0 +1,65 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.Hu>
+<fieldset>
+
+    @(Html.Telerik().Grid(Model)
+               .Name("HuGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax()
+            .Select("_AjaxList", "HuIdEpDateChange")
+                    .Update("_Update", "HuIdEpDateChange"))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId).ReadOnly(true);
+            columns.Bound(o => o.HuId).Hidden(true);
+            columns.Bound(o => o.Item).ReadOnly(true);
+            columns.Bound(o => o.Item).Hidden(true);
+            columns.Bound(o => o.ItemDescription).ReadOnly(true);
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly(true);
+            columns.Bound(o => o.MaterialsGroupDesc).ReadOnly(true);
+            columns.Bound(o => o.UnitCount).ReadOnly(true);
+            columns.Bound(o => o.Uom).ReadOnly(true);
+            columns.Bound(o => o.Qty).ReadOnly(true);
+            //columns.Bound(o => o.Location).ReadOnly(true);
+            columns.Bound(o => o.Location).Hidden(true);
+            columns.Bound(o => o.LotNo).ReadOnly(true).Title(@Resources.INV.Hu.Hu_manufacture_date);
+            columns.Bound(o => o.LotNo).Hidden(true);
+            //columns.Bound(o => o.Bin).ReadOnly(true);
+            columns.Bound(o => o.Bin).Hidden(true);
+            columns.Bound(o => o.RemindExpireDateValue).ReadOnly(true).Title(@Resources.INV.Hu.Hu_RemindExpireDate);
+            columns.Bound(o => o.ExpireDateValue).Format("{0:yyyy-MM-dd}").Title(@Resources.INV.Hu.Hu_ExpireDate);
+            columns.Command(commands =>
+            {
+                commands.Edit();
+
+            });
+            
+
+        }).ClientEvents(events =>
+        {
+            events.OnDataBinding("HuIdEpDateChange_OnDataBinding").OnComplete("TelerikGridView_OnComplete");
+        })
+        .EnableCustomBinding(true)
+        .Pageable(settings =>
+        {
+            settings.Enabled(true);
+            settings.PageSize(100);
+        })
+        .Scrollable()
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function HuIdEpDateChange_OnDataBinding(e) {
+            e.data = {
+                Location: $('#Location').val(),
+                Item: $('#Item').val(),
+                LotNo: $('#LotNo').val(),
+                LotNoTo: $('#LotNoTo').val(),
+                IsIncludeAll: $('#IsIncludeAll').is(":checked")
+            };
+        }
+    </script>
+</fieldset>

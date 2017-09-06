@@ -1,0 +1,54 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPItem>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("SAPItemGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.MATNR);
+            columns.Bound(o => o.BISMT);
+            columns.Bound(o => o.MAKTX);
+            columns.Bound(o => o.MEINS);
+            columns.Bound(o => o.WERKS);
+            columns.Bound(o => o.MTART);
+            columns.Bound(o => o.MTBEZ);
+            columns.Bound(o => o.MATKL);
+            columns.Bound(o => o.WGBEZ);
+            columns.Bound(o => o.SPART);
+            columns.Bound(o => o.LVORM);
+            columns.Bound(o => o.SOBSL);
+            columns.Bound(o => o.BatchNo);
+            columns.Bound(o => o.StatusDesc);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSAPItemList", "SAPInterface"))
+                .ClientEvents(events => events.OnDataBinding("SAPItem_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAPItem_OnDataBinding(e) {
+            e.data = {
+                BatchNo: $('#BatchNo').val(),
+                ItemCode: $('#ItemCode').val(),
+                TransStartDate: $('#TransStartDate').val(),
+                TransEndDate: $("#TransEndDate").val(),
+                Status: $("input[name='Status']:checked").val()
+            }; 
+        } 
+    </script>
+</fieldset>

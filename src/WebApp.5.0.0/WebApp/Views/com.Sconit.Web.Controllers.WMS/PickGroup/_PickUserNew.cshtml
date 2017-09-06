@@ -1,0 +1,91 @@
+﻿@model com.Sconit.Entity.WMS.PickUser 
+@Html.Partial("_AjaxMessage")
+
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.WMS.PickUser.PickUser_New_Title </legend>
+        <div class="editor">
+          <div class="editor-label-2">
+                @Html.LabelFor(model => model.PickGroupCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PickGroupCode)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PickUserName)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_WmsUserComboBox", "Common", new
+                    {
+                        checkRegion = false,
+                        controlName = "PickUserId"
+                    });
+                }
+              
+            </div>
+
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBoxFor(model => model.IsActive)
+            </div>
+        </div>
+
+        <div class="editor-footer">
+             @Html.Button(Resources.SYS.Global.Button_New, "Url_PickGroup_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNewPickUser"},
+                {"needconfirm","true"},
+                {"onclick","btnNew_PickUser_Click()"}
+	        })
+            <button type="button" id="btnBack_PickUser" onclick="btnBack_PickUser_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+
+
+<script language="javascript" type="text/javascript">
+    function btnBack_PickUser_Click() {
+        var data = {
+            "PickGroupCode": $("#PickGroupCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/PickGroup/_PickUserList/",
+            data: data,
+            cache:false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    function btnNew_PickUser_Click() {
+        var data = {
+            "PickGroupCode": $("#PickGroupCode").val(),
+            "PickUserId": $("#PickUserId").val(),
+            "IsActive": $('#IsActive').is(':checked')
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/PickGroup/_PickUserNew/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+</script>

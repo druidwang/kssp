@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.MD.SpecialTime, com.Sconit.Entity" table="MD_SpecialTime" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="Region" column="Region" type="String" length="50" />
+    <property name="Flow" column="Flow" type="String" length="50" />
+    <property name="StartTime" column="StartTime" type="DateTime"  />	
+		<property name="EndTime" column="EndTime" type="DateTime"  />	
+		<property name="Description" column="Desc1" type="String" length="100" />	
+		<property name="Type" column="Type"  />
+    <property name="HolidayType" column="HolidayType"  />
+    <property name="Remarks" column="Remarks" type="String" length="100" />
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />	
+  	</class>
+</hibernate-mapping>

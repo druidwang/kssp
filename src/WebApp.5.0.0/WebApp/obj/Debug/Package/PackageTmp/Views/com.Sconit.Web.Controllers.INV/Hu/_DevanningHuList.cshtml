@@ -1,0 +1,39 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.Hu>
+<fieldset>
+    <legend>@Resources.ORD.OrderMaster.OrderMaster_Receive_Title</legend>
+    @(
+       
+ Html.Telerik().Grid(Model)
+          .Name("DevanningHuGrid")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.HuId);
+          })
+          .Columns(columns =>
+          {
+              columns.Bound(o => o.HuId).Hidden().ClientTemplate("<input type='text' id='Id'  name='Id' value='<#= HuId #>' />").Hidden();
+              columns.Bound(o => o.HuId);
+
+              columns.Bound(o => o.Item);
+              columns.Bound(o => o.ItemDescription);
+              columns.Bound(o => o.Uom);
+              columns.Bound(o => o.Qty);
+              columns.Bound(o => o.DevanningQty1).ClientTemplate("<input type='text' style='width:50px;' id='DevanningQty1'  name='DevanningQty1' value='<#= DevanningQty1 #>' />");
+              columns.Bound(o => o.DevanningQty2).ClientTemplate("<input type='text' style='width:50px;' id='DevanningQty2'  name='DevanningQty2' value='<#= DevanningQty2 #>' />");
+              columns.Bound(o => o.DevanningQty3).ClientTemplate("<input type='text' style='width:50px;' id='DevanningQty3'  name='DevanningQty3' value='<#= DevanningQty3 #>' />");
+              columns.Bound(o => o.DevanningQty4).ClientTemplate("<input type='text' style='width:50px;' id='DevanningQty4'  name='DevanningQty4' value='<#= DevanningQty4 #>' />");
+          })
+
+          .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxDevanningHuList", "Hu"))
+                                  .ClientEvents(events => events.OnDataBinding("DevanningHuGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

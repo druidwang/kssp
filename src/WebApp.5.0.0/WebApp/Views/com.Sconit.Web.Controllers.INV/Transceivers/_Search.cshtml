@@ -1,0 +1,426 @@
+﻿@using com.Sconit.Web.Models.ReportModels
+@model com.Sconit.Web.Models.ReportModels.TransceiversSearchModel
+<script>
+    function CodeMaster_Change() {
+        var level = $('#Level').val();
+        if (level == 0) {
+          
+            document.getElementById("regionFromlabel").style.display = 'inline';
+            document.getElementById("regionFromfield").style.display = 'inline';
+            document.getElementById("regionTolabel").style.display = 'inline';
+            document.getElementById("regionTofield").style.display = 'inline';
+
+            document.getElementById("locationFromlabel").style.display = 'inline'
+            document.getElementById("locationFromfield").style.display = 'inline'
+
+            document.getElementById("locationTolabel").style.display = 'inline'
+            document.getElementById("locationTofield").style.display = 'inline'
+
+            //document.getElementById("divMore").style.display = 'none'
+        }
+        else if (level == 1) {
+
+         
+            document.getElementById("regionFromlabel").style.display = 'inline';
+            document.getElementById("regionFromfield").style.display = 'inline';
+            document.getElementById("regionTolabel").style.display = 'inline';
+            document.getElementById("regionTofield").style.display = 'inline';
+
+            document.getElementById("locationFromlabel").style.display = 'none';
+            document.getElementById("locationFromfield").style.display = 'none';
+
+            document.getElementById("locationTolabel").style.display = 'none';
+            document.getElementById("locationTofield").style.display = 'none';
+        }
+        else if (level == 2) {
+
+        
+            document.getElementById("regionFromlabel").style.display = 'none';
+            document.getElementById("regionFromfield").style.display = 'none';
+            document.getElementById("regionTolabel").style.display = 'none';
+            document.getElementById("regionTofield").style.display = 'none';
+            document.getElementById("locationFromlabel").style.display = 'none';
+            document.getElementById("locationFromfield").style.display = 'none';
+            document.getElementById("locationTolabel").style.display = 'none';
+            document.getElementById("locationTofield").style.display = 'none';
+        }
+        else if (level == 3) {
+
+          
+            document.getElementById("regionFromlabel").style.display = 'none';
+            document.getElementById("regionFromfield").style.display = 'none';
+            document.getElementById("regionTolabel").style.display = 'none';
+            document.getElementById("regionTofield").style.display = 'none';
+            document.getElementById("locationFromlabel").style.display = 'none';
+            document.getElementById("locationFromfield").style.display = 'none';
+            document.getElementById("locationTolabel").style.display = 'none';
+            document.getElementById("locationTofield").style.display = 'none';
+        }
+
+
+    }
+
+    function TypeLocationclick(ths) {
+        if (ths.value == "0") {
+            document.getElementById("Levellabel").style.display = 'inline';
+            document.getElementById("Levelfield").style.display = 'inline';
+     
+            document.getElementById("regionFromlabel").style.display = 'inline';
+            document.getElementById("regionFromfield").style.display = 'inline';
+            document.getElementById("regionTolabel").style.display = 'inline';
+            document.getElementById("regionTofield").style.display = 'inline';
+            document.getElementById("locationFromlabel").style.display = 'inline';
+            document.getElementById("locationFromfield").style.display = 'inline';
+            document.getElementById("locationTolabel").style.display = 'inline';
+            document.getElementById("locationTofield").style.display = 'inline';
+
+            document.getElementById("SAPLocationlabel").style.display = "none";
+            document.getElementById("SAPLocationfield").style.display = "none";
+        }
+        else {
+            document.getElementById("Levellabel").style.display = 'none';
+            document.getElementById("Levelfield").style.display = 'none';
+          
+            document.getElementById("regionFromlabel").style.display = 'none';
+            document.getElementById("regionFromfield").style.display = 'none';
+            document.getElementById("regionTolabel").style.display = 'none';
+            document.getElementById("regionTofield").style.display = 'none';
+            document.getElementById("locationFromlabel").style.display = 'none';
+            document.getElementById("locationFromfield").style.display = 'none';
+            document.getElementById("locationTolabel").style.display = 'none';
+            document.getElementById("locationTofield").style.display = 'none';
+
+
+            document.getElementById("SAPLocationlabel").style.display = "inline";
+            document.getElementById("SAPLocationfield").style.display = "inline";
+        }
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("List", "Transceivers"))
+    {
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    
+                    @Resources.Report.Transceivers.Transceivers_TypeLocation
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.RadioButton("TypeLocation", 0, TempData["TransceiversSearchModel"] != null ? (((TransceiversSearchModel)TempData["TransceiversSearchModel"]).TypeLocation == "0" ? true : false) : false, new { onclick = "TypeLocationclick(this)" })MES库位
+                @Html.RadioButton("TypeLocation", 1, TempData["TransceiversSearchModel"] != null ? (((TransceiversSearchModel)TempData["TransceiversSearchModel"]).TypeLocation == "1" ? true : false) : false, new { onclick = "TypeLocationclick(this)" })SAP库位
+            </div>
+            @{
+           if (((TransceiversSearchModel)TempData["TransceiversSearchModel"]).TypeLocation == "1")
+           {  
+                <div class="search-label" id="SAPLocationlabel">
+                    <label>
+                     @Resources.Report.Transceivers.Transceivers_SAPLocation
+                       
+                    </label>
+                </div>
+                <div class="search-field" id="SAPLocationfield">
+                    @{
+               Html.RenderAction("_SAPLocationComboBox", "Common", new
+               {
+
+                   controlName = "SAPLocation",
+                   isChange = false,
+                   selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData["TransceiversSearchModel"]).SAPLocation :string.Empty
+               });
+                    
+                    }
+                </div>
+           }
+           else
+           {
+                <div class="search-label" style="display:none" id="SAPLocationlabel">
+                    <label>
+                       @Resources.Report.Transceivers.Transceivers_SAPLocation
+                    </label>
+                </div>
+                <div class="search-field"  style="display:none"  id="SAPLocationfield">
+                    @{
+               Html.RenderAction("_SAPLocationComboBox", "Common", new
+               {
+
+                   controlName = "SAPLocation",
+                   isChange = false,
+                   selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData["TransceiversSearchModel"]).SAPLocation : string.Empty
+               });
+                    
+                    }
+                </div>
+        
+           }
+          
+            }
+            @{
+        if (((TransceiversSearchModel)TempData["TransceiversSearchModel"]).TypeLocation == "0")
+           {  
+                <div class="search-label" id="Levellabel">
+                    <label>
+                        @Resources.Report.Transceivers.Transceivers_Level
+                    </label>
+                </div>
+                <div class="search-field" id="Levelfield">
+                    @{
+                   Html.RenderAction("_CodeMasterComboBox", "Common", new
+                   {
+                       code = com.Sconit.CodeMaster.CodeMaster.LocationLevel,
+                       controlName = "Level",
+                       isChange = true,
+                       selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData["TransceiversSearchModel"]).Level : string.Empty
+
+                   });
+                    
+                    }
+                </div>
+           }
+           else
+           {
+            
+                <div class="search-label" id="Levellabel" style="display: none">
+                    <label>
+                        @Resources.Report.Transceivers.Transceivers_Level
+                    </label>
+                </div>
+                <div class="search-field" id="Levelfield" style="display: none">
+                    @{
+      
+                   Html.RenderAction("_CodeMasterComboBox", "Common", new
+                   {
+                       code = com.Sconit.CodeMaster.CodeMaster.LocationLevel,
+                       controlName = "Level",
+                       isChange = true,
+                       selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData["TransceiversSearchModel"]).Level : string.Empty
+
+                   });
+                    
+                    }
+                </div>
+           }
+            }
+           
+            @{
+        if (((TransceiversSearchModel)TempData["TransceiversSearchModel"]).TypeLocation == "0" && (TempData["Display"] == null || (string)TempData["Display"] == "1" || (string)TempData["Display"] == "0"))
+           {      
+                <div class="search-label" id="regionFromlabel">
+                    <label>
+                        @Resources.Report.Transceivers.Transceivers_regionFrom
+                    </label>
+                </div>
+                <div class="search-field" id="regionFromfield">
+                    @{
+                   Html.RenderAction("_RegionComboBox", "Common",
+                       new
+                       {
+                           controlName = "regionFrom",
+                           selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData
+
+["TransceiversSearchModel"]).regionFrom : string.Empty
+                       });
+                    }
+                </div>
+        
+                <div class="search-label" id="regionTolabel">
+                    <label>
+                        @Resources.Report.Transceivers.Transceivers_regionTo
+                    </label>
+                </div>
+                <div class="search-field" id="regionTofield">
+                    @{
+                   Html.RenderAction("_RegionComboBox", "Common",
+                                 new
+                                 {
+                                     controlName = "regionTo",
+                                     selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData
+
+["TransceiversSearchModel"]).regionTo : string.Empty
+                                 });
+                    }
+                </div>
+           }
+           else
+           {
+                <div class="search-label" id="regionFromlabel" style="display: none">
+                    <label>
+                        @Resources.Report.Transceivers.Transceivers_regionFrom
+                    </label>
+                </div>
+                <div class="search-field" id="regionFromfield" style="display: none">
+                    @{
+                   Html.RenderAction("_RegionComboBox", "Common",
+                       new
+                       {
+                           controlName = "regionFrom",
+                           selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData
+
+["TransceiversSearchModel"]).regionFrom : string.Empty
+                       });
+                    }
+                </div>
+        
+                <div class="search-label" id="regionTolabel" style="display: none">
+                    <label>
+                        @Resources.Report.Transceivers.Transceivers_regionTo
+                    </label>
+                </div>
+                <div class="search-field" id="regionTofield" style="display: none">
+                    @{
+                   Html.RenderAction("_RegionComboBox", "Common",
+                                 new
+                                 {
+                                     controlName = "regionTo",
+                                     selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData
+
+["TransceiversSearchModel"]).regionTo : string.Empty
+                                 });
+                    }
+                </div>
+            
+            
+           }
+            }
+            @{
+        if (((TransceiversSearchModel)TempData["TransceiversSearchModel"]).TypeLocation == "0" && ((string)TempData["Display"] == "0" || TempData["Display"] == null))
+           {  
+       
+                <div class="search-label" id="locationFromlabel">
+                    <label>
+                        @Resources.Report.Transceivers.Transceivers_locationFrom
+                    </label>
+                </div>
+                <div class="search-field" id="locationFromfield">
+                    @{
+                   Html.RenderAction("_LocationComboBox", "Common", new
+                   {
+                       controlName = "locationFrom",
+                       selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData
+
+["TransceiversSearchModel"]).locationFrom : string.Empty
+
+                   });
+                    }
+                </div>
+                <div class="search-label" id="locationTolabel">
+                    <label for="Hu_HuId">
+                        @Resources.Report.Transceivers.Transceivers_locationTo
+                    </label>
+                </div>
+                <div class="search-field" id="locationTofield">
+                    @{
+                   Html.RenderAction("_LocationComboBox", "Common", new
+                   {
+                       controlName = "locationTo",
+
+                       selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData
+
+["TransceiversSearchModel"]).locationTo : string.Empty
+
+                   });
+                    }
+                </div>
+           }
+           else
+           {
+                <div class="search-label" id="locationFromlabel" style="display: none">
+                    <label>
+                        @Resources.Report.Transceivers.Transceivers_locationFrom
+                    </label>
+                </div>
+                <div class="search-field" id="locationFromfield" style="display: none">
+                    @{
+                   Html.RenderAction("_LocationComboBox", "Common", new
+                   {
+                       controlName = "locationFrom",
+                       selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData
+
+["TransceiversSearchModel"]).locationFrom : string.Empty
+
+                   });
+                    }
+                </div>
+                <div class="search-label" id="locationTolabel" style="display: none">
+                    <label for="Hu_HuId">
+                        @Resources.Report.Transceivers.Transceivers_locationTo
+                    </label>
+                </div>
+                <div class="search-field" id="locationTofield" style="display: none">
+                    @{
+                   Html.RenderAction("_LocationComboBox", "Common", new
+                   {
+                       controlName = "locationTo",
+
+                       selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData
+
+["TransceiversSearchModel"]).locationTo : string.Empty
+
+                   });
+                    }
+                </div>
+           }
+            }
+            <div class="search-label">
+                <label>
+                    @Resources.Report.Transceivers.Transceivers_itemFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+               Html.RenderAction("_ItemComboBox", "Common",
+                   new
+                   {
+                       controlName = "itemFrom",
+                       selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData["TransceiversSearchModel"]).itemFrom : string.Empty
+                   });
+                    
+                }
+            </div>
+            <div class="search-label">
+                <label for="Hu_HuId">
+                    @Resources.Report.Transceivers.Transceivers_itemTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+               Html.RenderAction("_ItemComboBox", "Common",
+                   new
+                   {
+                       controlName = "itemTo",
+                       selectedValue = TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData["TransceiversSearchModel"]).itemTo : string.Empty
+                   });
+                    
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.Report.Transceivers.Transceivers_BeginDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("BeginDate")
+.Value(TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData["TransceiversSearchModel"]).BeginDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="IpMaster_EndDate">
+                    @Resources.Report.Transceivers.Transceivers_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("EndDate")
+.Value(TempData["TransceiversSearchModel"] != null ? ((TransceiversSearchModel)TempData["TransceiversSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+           @* <button type="submit" id="btnExport">
+                @Resources.SYS.Global.Button_Export</button>*@
+        </div>
+
+    }
+</fieldset>

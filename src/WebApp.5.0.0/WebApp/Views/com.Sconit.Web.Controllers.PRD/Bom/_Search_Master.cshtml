@@ -1,0 +1,85 @@
+﻿@using com.Sconit.Entity.PRD
+@using com.Sconit.Web.Models.SearchModels.PRD
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label for="BomMater_Code">
+                @Resources.PRD.Bom.BomMaster_Code
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @*@{
+                    Html.RenderAction("_BomComboBox", "Common",
+                        new { 
+                            controlName = "BomMaster_Code", 
+                            isChange=false,
+                            selectedValue = TempData["BomMasterSearchModel"] != null ? ((BomMasterSearchModel)TempData["BomMasterSearchModel"]).BomMaster_Code : string.Empty 
+                        });
+                    }*@
+            @Html.TextBox("BomMaster_Code", TempData["BomMasterSearchModel"] != null ? ((BomMasterSearchModel)TempData["BomMasterSearchModel"]).BomMaster_Code : string.Empty)
+        </div>
+        <div class="search-label">
+            <label>
+                <a href='/Resource/Templates/UploadTemplate/Bom.xls'>@Resources.EXT.PageLan.TemplateDownload</a>
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().Upload()
+                    .Name("bomattachments")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("Import", "Bom")
+                    .AutoUpload(true))
+                    .ClientEvents(e => e.OnSuccess("TelerikonUpload_OnSuccess")))
+        </div>
+    </div>
+    <div class="search-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="btnSearch_Master" onclick="btnSearch_Master_Click()">
+            @Resources.SYS.Global.Button_Search</button>
+        @Html.Button(Resources.SYS.Global.Button_New, "Url_Bom_Edit", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew_Master"},
+            {"onclick","btnNew_Master_Click()"}
+	    })
+    </div>
+</fieldset>
+<script type="text/javascript">
+    function btnSearch_Master_Click() {
+        var data = {
+            "BomMaster_Code": $("#BomMaster_Code").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Bom/List_Master/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+            }
+        });
+    }
+
+    function btnNew_Master_Click() {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Bom/_New_Master/",
+            data: "",
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+            }
+        });
+    }
+
+    function Bom_Change() {
+
+    }
+</script>

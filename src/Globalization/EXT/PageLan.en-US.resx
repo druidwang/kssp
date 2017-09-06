@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Aging" xml:space="preserve">
+    <value>Aging</value>
+    <comment>Common</comment>
+  </data>
+  <data name="AllBarCodes" xml:space="preserve">
+    <value>AllBarCodes</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ByFinishGoods" xml:space="preserve">
+    <value>ByFinishGoods</value>
+    <comment>Post-Process.cshtml</comment>
+  </data>
+  <data name="ByFlow" xml:space="preserve">
+    <value>ByFlow</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="ByItem" xml:space="preserve">
+    <value>ByItem</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="ByMaterial" xml:space="preserve">
+    <value>ByMaterial</value>
+    <comment>Post-Process.cshtml</comment>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+    <comment>Common</comment>
+  </data>
+  <data name="CreateTime" xml:space="preserve">
+    <value>CreateTime</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Customer</value>
+    <comment>Common</comment>
+  </data>
+  <data name="DailyPlan" xml:space="preserve">
+    <value>DailyPlan</value>
+    <comment>Common</comment>
+  </data>
+  <data name="DateFrom" xml:space="preserve">
+    <value>DateFrom</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Expired</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ExpireDateChange" xml:space="preserve">
+    <value>ExpireDateChange</value>
+    <comment>HuTrans.cshtml</comment>
+  </data>
+  <data name="ExportBarCoe" xml:space="preserve">
+    <value>ExportBarCoe</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+    <comment>Common</comment>
+  </data>
+  <data name="FreezeUnfreeze" xml:space="preserve">
+    <value>FreezeUnfreeze</value>
+    <comment>HuTrans.cshtml</comment>
+  </data>
+  <data name="IncludeEstimatePrice" xml:space="preserve">
+    <value>IncludeEstimatePrice</value>
+    <comment>Repricing.cshtml</comment>
+  </data>
+  <data name="InclueZeroInv" xml:space="preserve">
+    <value>InclueZeroInv</value>
+    <comment>AgingSearh.cshtml</comment>
+  </data>
+  <data name="InExpireDate" xml:space="preserve">
+    <value>InExpireDate</value>
+    <comment>Common</comment>
+  </data>
+  <data name="InspectOrder" xml:space="preserve">
+    <value>InspectOrder</value>
+    <comment>Common</comment>
+  </data>
+  <data name="IsQuick" xml:space="preserve">
+    <value>IsQuick</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ItemExchange" xml:space="preserve">
+    <value>ItemExchange</value>
+    <comment>StockTakeItemExchange</comment>
+  </data>
+  <data name="ItemUom" xml:space="preserve">
+    <value>ItemUom</value>
+    <comment>ItemExchange</comment>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+    <comment>Common</comment>
+  </data>
+  <data name="LocationFrom" xml:space="preserve">
+    <value>LocationFrom</value>
+    <comment>Common</comment>
+  </data>
+  <data name="LocationTo" xml:space="preserve">
+    <value>LocationTo</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+    <comment>Login.cshtml</comment>
+  </data>
+  <data name="LogisticFlow" xml:space="preserve">
+    <value>LogisticFlow</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ManuallySettle" xml:space="preserve">
+    <value>ManuallySettle</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ManufatureDate" xml:space="preserve">
+    <value>ManufatureDate</value>
+    <comment>Common</comment>
+  </data>
+  <data name="MesLocation" xml:space="preserve">
+    <value>MesLocation</value>
+    <comment>Common</comment>
+  </data>
+  <data name="MothPlan" xml:space="preserve">
+    <value>MothPlan</value>
+    <comment>Common</comment>
+  </data>
+  <data name="NewItemUom" xml:space="preserve">
+    <value>NewItemUom</value>
+    <comment>ItemExchange</comment>
+  </data>
+  <data name="OutExpireDate" xml:space="preserve">
+    <value>OutExpireDate</value>
+    <comment>Common</comment>
+  </data>
+  <data name="PickUnpick" xml:space="preserve">
+    <value>PickUnpick</value>
+    <comment>HuTrans.cshtml</comment>
+  </data>
+  <data name="PlandateFrom" xml:space="preserve">
+    <value>PlandateFrom</value>
+    <comment>Post-Process.cshtml</comment>
+  </data>
+  <data name="PlanType" xml:space="preserve">
+    <value>PlanType</value>
+    <comment>Common</comment>
+  </data>
+  <data name="PrintBarCoe" xml:space="preserve">
+    <value>PrintBarCoe</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ProductionLine" xml:space="preserve">
+    <value>ProductionLine</value>
+    <comment>Common</comment>
+  </data>
+  <data name="SAPLocation" xml:space="preserve">
+    <value>SAPLocation</value>
+    <comment>Common</comment>
+  </data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>Save Success</value>
+    <comment>Common</comment>
+  </data>
+  <data name="SearchType" xml:space="preserve">
+    <value>SearchType</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="ShowNonHuQty" xml:space="preserve">
+    <value>ShowNonHuQty</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ShowRows" xml:space="preserve">
+    <value>ShowRows</value>
+    <comment>PickList-New.cshtml</comment>
+  </data>
+  <data name="SortByBin" xml:space="preserve">
+    <value>SortByBin</value>
+    <comment>Common</comment>
+  </data>
+  <data name="SortByItem" xml:space="preserve">
+    <value>SortByItem</value>
+    <comment>Common</comment>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>StartTime</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+    <comment>Common</comment>
+  </data>
+  <data name="TemplateDownload" xml:space="preserve">
+    <value>TemplateDownload</value>
+    <comment>Common</comment>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Trace" xml:space="preserve">
+    <value>Trace</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="TransferFlow" xml:space="preserve">
+    <value>TransferFlow</value>
+    <comment>Common</comment>
+  </data>
+  <data name="WeekPlan" xml:space="preserve">
+    <value>WeekPlan</value>
+    <comment>Common</comment>
+  </data>
+  <data name="WindowTime" xml:space="preserve">
+    <value>WindowTime</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+    <comment>Top.cshtml</comment>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>Font</value>
+    <comment>Top.cshtml</comment>
+  </data>
+  <data name="Logoff" xml:space="preserve">
+    <value>Exit</value>
+    <comment>Top.cshtml</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+    <comment>Top.cshtml</comment>
+  </data>
+</root>

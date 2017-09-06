@@ -1,0 +1,240 @@
+﻿@model com.Sconit.Entity.ORD.MiscOrderMaster
+@using com.Sconit.Entity.CUST
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Inventory_InMiscOrder_New" });
+}
+<script type="text/javascript">
+    function PartyTo_Change(e) {
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+                }
+
+        }
+        $('#Location').data('tComboBox').value('');
+        $('#Location').data('tComboBox').text('');
+        $("#Location").data("tComboBox").reload();
+    }
+
+    function Location_DataBinding(e) {
+        e.data = {
+            region: $("#PartyTo").val()
+        };
+    }
+
+    function MoveType_Change(e) {
+        var data = { "MoveType": e.value };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/InMiscOrder/New/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>基本信息</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MoveType)
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_MoveTypeDropDownList", "Common", new
+        {
+            IOType = (int)com.Sconit.CodeMaster.MiscOrderType.GR,
+            isChange = true,
+            controlName = "MoveType",
+            includeBlankOption = false,
+            isInitInventory = true,
+            selectedValue = Model.MoveType != null ? Model.MoveType : string.Empty
+        });
+                }
+                @Html.ValidationMessageFor(model => model.MoveType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EffectiveDate)
+            </div>
+            <div class="editor-field-2">
+                <div class="editor-field-2">
+                    @Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EffectiveDate")
+                    @Html.ValidationMessageFor(model => model.EffectiveDate)
+                </div>
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Region)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_RegionComboBox", "Common",
+    new
+    {
+        ControlId = "PartyTo",
+        controlName = "Region",
+        isChange = true,
+        selectedValue = Model != null ? Model.Region : string.Empty
+    });
+                }
+                @Html.ValidationMessageFor(model => model.Region)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_LocationComboBox", "Common",
+    new
+    {
+        controlName = "Location",
+        includeBlank = true,
+        checkRegion = true,
+        selectedValue = Model != null ? Model.Location : string.Empty
+    });
+                }
+                @Html.ValidationMessageFor(model => model.Location)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.QualityType)
+            </div>
+            <div class="editor-field-2">
+                @{
+    if (TempData["MiscOrderMoveType"] != null && ((MiscOrderMoveType)TempData["MiscOrderMoveType"]).CheckQualityType != null)
+    {
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.QualityType,
+            controlName = "QualityType",
+            selectedValue = ((int)((MiscOrderMoveType)TempData["MiscOrderMoveType"]).CheckQualityType).ToString(),
+            enable = false
+
+        });
+                    @Html.Hidden("QualityType", (((MiscOrderMoveType)TempData["MiscOrderMoveType"]).CheckQualityType).ToString())
+    }
+    else
+    {
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.QualityType,
+               controlName = "QualityType",
+               selectedValue = Model != null ? ((int)Model.QualityType).ToString() : null,
+               includeBlankOption = true
+
+
+           });
+
+    }
+                }
+                @Html.ValidationMessageFor(model => model.QualityType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsScanHu)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsScanHu", false)
+            </div>
+            @Html.Hidden("Type", com.Sconit.CodeMaster.MiscOrderType.GR)
+        </div>
+        <div class="editor">
+            @{
+    MiscOrderMoveType miscOrderMoveType = TempData["MiscOrderMoveType"] != null ? (MiscOrderMoveType)TempData["MiscOrderMoveType"] : null;
+    if (miscOrderMoveType != null)
+    {
+        if (miscOrderMoveType.CheckDeliverRegion)
+        {
+                <div class="editor-label-2">
+                    <label>
+                        @Resources.ORD.MiscOrderMstr.MiscOrderMstr_PlantFrom
+                    </label>
+                </div> 
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.DeliverRegion)
+                </div>
+        }
+        if (miscOrderMoveType.CheckRecLoc)
+        {
+                <div class="editor-label-2">
+                    <label>
+                        @Resources.ORD.MiscOrderMstr.MiscOrderMstr_LocationFrom
+                    </label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.ReceiveLocation)
+                </div>
+        }
+        if (miscOrderMoveType.CheckNote)
+        {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Note)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.Note)
+                </div>
+        }
+        if (miscOrderMoveType.CheckRefNo)
+        {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.ReferenceNo)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.ReferenceNo)
+                </div>
+        }
+        if (miscOrderMoveType.CheckCostCenter)
+        {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CostCenter)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.CostCenter)
+                </div>
+        }
+        if (miscOrderMoveType.CheckWBS)
+        {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.WBS)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.WBS)
+                </div>
+        }
+        if (miscOrderMoveType.CheckAsn)
+        {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Asn)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.Asn)
+                </div>
+        }
+
+    }
+            }
+        </div>
+        <div class="editor-footer">
+           @* <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>*@
+                 @Html.Button(Resources.SYS.Global.Button_New, "Url_Inventory_InMiscOrder_View", new Dictionary<string, string>()
+	            {
+	                {"type", "submit"},
+	                {"id", "btnNew"},
+                    {"needconfirm","true"}
+	            })
+        </div>
+    </fieldset>
+      
+}

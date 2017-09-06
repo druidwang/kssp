@@ -1,0 +1,49 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISS.IssueDetail>
+<fieldset>
+     @(Html.Telerik().Grid(Model)
+        .Name("IssueDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.IssueCode);
+            columns.Bound(o => o.IssueLevel);
+			columns.Bound(o => o.Sequence);
+			columns.Bound(o => o.UserName);
+			columns.Bound(o => o.IsDefault)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDefault' <#= IsDefault? checked='checked' : '' #> />");
+			columns.Bound(o => o.IsSubmit)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsSubmit' <#= IsSubmit? checked='checked' : '' #> />");
+			columns.Bound(o => o.IsInProcess)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsInProcess' <#= IsInProcess? checked='checked' : '' #> />");
+			columns.Bound(o => o.Email);
+			columns.Bound(o => o.EmailStatus);
+			columns.Bound(o => o.MobilePhone);
+			columns.Bound(o => o.SMSStatus);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "IssueDetail"))
+        .ClientEvents(events => events.OnDataBinding("IssueDetailGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total!=null?ViewBag.Total:0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function IssueDetailGrid_OnDataBinding(e) {
+            e.data = {
+                IssueCode: $('#IssueCode').val(),
+                DateFrom: $('#DateFrom').val(),
+				DateTo: $('#DateTo').val(),
+				MobilePhone: $('#MobilePhone').val(),
+				Email: $('#Email').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "MRP_RccpPlan_Run" });
+}
+
+@Html.Partial("_RccpPlanMasterSearch")
+
+@Html.Partial("_RccpPlanMasterSearchResult")

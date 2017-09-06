@@ -1,0 +1,415 @@
+﻿@using com.Sconit.Entity.SYS
+<div id="DivNewInspection">
+    @{
+        Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_InspectionOrder_New" });
+    }
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+            <div class="editor">
+                <div class="editor-label-2">
+                    @*<label>报验单类型</label>*@
+                </div>
+                <div class="editor-field-2">
+                    @*@{ 
+                     var bb = ViewBag.WindowTimeType != null ? (ViewBag.WindowTimeType == 0 ? true : false) : true;
+                        @Html.RadioButton("WindowTimeType", 0, bb, new { onclick = "doClick(true)" })@Resources.SYS.CodeDetail.CodeDetail_InspectType_Quantity<span style="margin: 4px"></span> 
+                        @Html.RadioButton("WindowTimeType", 1, !bb, new { onclick = "doClick(false)" })@Resources.SYS.CodeDetail.CodeDetail_InspectType_Barcode
+                        @Html.Hidden("IsScanHu",bb);
+                    }*@
+                </div>
+                <div class="editor-label-2">
+                    <label>
+                        @Html.LabelForModel(Resources.INP.InspectMaster.InspectMaster_ReceiptNo)
+                    </label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.TextBox("ReceiptNo")
+                    <button type="button" id="refSearch" onclick="CreateInspectMaster();">
+                        @Resources.SYS.Global.Button_Reference</button>
+                </div>
+                <hr style="border: 100% dashed black;" />
+                <div id="divNoScan">
+                    <div class="editor-label-2">
+                        @Html.LabelForModel(Resources.INP.InspectMaster.InspectMaster_Region)
+                    </div>
+                    <div class="editor-field-2">
+                        @{
+        Html.RenderAction("_RegionComboBox", "Common", new
+        {
+            controlName = "Region",
+            isChange = true,
+            selectedValue = ViewBag.Region != null ? (string)ViewBag.Region : string.Empty
+        });
+                        }
+                    </div>
+                    <div class="editor-label-2">
+                        @Html.LabelForModel(Resources.INP.InspectDetail.InspectDetail_LocationFrom)
+                    </div>
+                    <div class="editor-field-2">
+                        @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "LocationFrom",
+            checkRegion = true,
+            isChange = true,
+            selectedValue = ViewBag.LocationFrom != null ? (string)ViewBag.LocationFrom : string.Empty
+        });
+                        }
+                    </div>
+                </div>
+                <div id="divIsScan" style="display: none;">
+                    <div class="editor-label-2">
+                        <label>
+                            请扫描物料条码
+                        </label>
+                    </div>
+                    <div class="editor-field-2">
+                        @Html.TextBox("HuId", null)
+                    </div>
+                </div>
+            </div>
+            <div class="editor-footer">
+                @Html.Button(Resources.SYS.Global.Button_New, "Url_InspectionOrder_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnNew"},
+                    {"needconfirm","true"},
+                    {"onclick","onSubmit()"}
+	            })
+                @Html.Button(Resources.SYS.Global.Button_New, "Url_InspectionOrder_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnNewScan"},
+                    {"needconfirm","true"},
+                    {"style","display:none"},
+                    {"onclick","onScanSubmit()"}
+	            })
+            </div>
+        </fieldset>
+    }
+    <div id="DivInspectDetail" style="display: none;">
+        @{Html.RenderAction("_InspectionOrderDetail", "InspectionOrder");}
+    </div>
+    <div id="DivInspectDetailScanHu" style="display: none;">
+        @* @{Html.RenderAction("_InspectionOrderDetailScanHu", "InspectionOrder");}*@
+    </div>
+</div>
+<script type="text/javascript">
+    function Region_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        }
+        $('#LocationFrom').data('tComboBox').value('');
+        $('#LocationFrom').data('tComboBox').text('');
+        $("#LocationFrom").data("tComboBox").reload();
+        $("#DivInspectDetail").hide();
+
+
+        //        $.ajax({
+        //            type: "get",
+        //            dataType: "html",
+        //            url: "/InspectionOrder/_InspectionOrderDetail/",
+        //           // data: ordermstr,
+        //            cache: false,
+        //            success: function (data, textStatus) {
+        //                var $tGrid = $("#DivInspectDetail");
+        //                $($tGrid).html(data);
+        //            }
+        //        });
+    }
+
+    function LocationFrom_Change(e) {
+        if (e.value != "") {
+            var combobox = $('#LocationFrom').data("tComboBox");
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+                $("#DivInspectDetail").hide();
+            }
+            else {
+                if ($("#LocationFrom").val() != "" && $("#LocationFrom").val() != null) {
+                    $("#DivInspectDetail").show();
+                } else {
+                    $("#DivInspectDetail").hide();
+
+                }
+            }
+        }
+    }
+
+
+    function LocationFrom_DataBinding(e) {
+        e.data = {
+            region: $("#Region").val()
+        };
+    }
+
+    function onSubmit(e) {
+        if ($("#Region").val() == "") {
+            $message.error("请输入区域");
+            return;
+        }
+
+        var grid = $("#InspectDetail").data("tGrid");
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+        var orderDetails = grid.changeLog.serialize(inserted, updated, deleted);
+        var ordermstr = {
+            "Region": $("#Region").val(),
+            "LocationFrom": $("#LocationFrom").val()
+        }
+
+        grid._convert(orderDetails);
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/InspectionOrder/New/",
+            data: $.extend(orderDetails, ordermstr),
+            success: function (data, ordermstr) {
+                if (data != "") {
+                    
+                    DisplayJsonMessages(data);
+                    var orderData = {
+                        "id": data.data[0]
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "/InspectionOrder/Edit/",
+                        data: orderData,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    $(function () {
+
+        if ($("#IsScanHu").val()) {
+            $("#divNoScan").show();
+            $("#divIsScan").hide();
+        } else {
+            $("#divNoScan").hide();
+            $("#divIsScan").show();
+        }
+        $("#HuId").keydown(function () {
+            if (event.keyCode == 13) {
+
+                var data = {
+                    "HuId": $(this).val()
+                }
+                $(this).val("");
+                $.ajax({
+                    type: "post",
+                    dataType: "text",
+                    data: data,
+                    url: "/InspectionOrder/ItemHuIdScan/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $.ajax({
+                            type: "get",
+                            dataType: "html",
+                            url: "/InspectionOrder/_InspectionOrderDetailScanHu/",
+                            cache: false,
+                            success: function (data, textStatus) {
+                                var $tGrid = $("#DivInspectDetailScanHu");
+                                $($tGrid).html(data);
+                                $($tGrid).show();
+                            }
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        $message.error(errorMessages);
+
+                    }
+                });
+            }
+        });
+
+    });
+    function doClick(bl) {
+        if (bl) {
+            $("#divNoScan").show();
+
+            $("#Region").data("tComboBox").value('');
+            $("#Region").data("tComboBox").reload();
+            $("#LocationFrom").data("tComboBox").value('');
+            $("#LocationFrom").data("tComboBox").reload();
+            $("#divIsScan").hide();
+            $("#btnNewScan").hide();
+            $("#btnNew").show();
+
+            $.ajax({
+                type: "get",
+                url: "/InspectionOrder/_CleanInspectionDetail/",
+                cache: false,
+                success: function (data, textStatus) { }
+            });
+        }
+        else {
+            $("#divNoScan").css("display", "none");
+            $("#divIsScan").show();
+            $("#btnNewScan").show();
+            $("#btnNew").hide();
+        }
+        $("#DivInspectDetailScanHu").hide();
+        $("#DivInspectDetail").hide();
+    }
+
+    $(document).ready(function () {
+        $("#divNoScan").show();
+
+        $("#Region").data("tComboBox").value('');
+        $("#Region").data("tComboBox").reload();
+        $("#LocationFrom").data("tComboBox").value('');
+        $("#LocationFrom").data("tComboBox").reload();
+        $("#divIsScan").hide();
+        $("#btnNewScan").hide();
+        $("#btnNew").show();
+
+        $.ajax({
+            type: "get",
+            url: "/InspectionOrder/_CleanInspectionDetail/",
+            cache: false,
+            success: function (data, textStatus) { }
+        });
+
+    }
+    )
+
+    function onScanSubmit(e) {
+        var grid = $("#InspectDetailScanHu").data("tGrid");
+        if (grid == null || grid == undefined) {
+            $message.error('打印明细不能为空。');
+            return;
+        }
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var ItemStr = "";
+        var HuIdStr = "";
+        var LocationStr = "";
+        var InspectQtyStr = "";
+        var FailCodeStr = "";
+        var NoteStr = "";
+        var errorStr = "";
+
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var FailCode = row.children().eq(8).text();
+            if (FailCode == "" || FailCode == undefined) {
+                errorStr += "第" + (rowIndex + 1) + "行失效代码为必填。";
+            }
+            if (ItemStr == "") {
+                ItemStr = row.children().eq(1).text();
+                HuIdStr = row.children().eq(0).text();
+                LocationStr = row.children().eq(6).text();
+                InspectQtyStr = row.children().eq(7).text();
+                FailCodeStr = row.children().eq(8).text();
+                NoteStr = row.children().eq(9).text();
+            } else {
+                ItemStr += "," + row.children().eq(1).text();
+                HuIdStr += "," + row.children().eq(0).text();
+                LocationStr += "," + row.children().eq(6).text();
+                InspectQtyStr += "," + row.children().eq(7).text();
+                FailCodeStr += "," + row.children().eq(8).text();
+                NoteStr += "," + row.children().eq(9).text();
+            }
+        }
+        if (errorStr != "") {
+            $message.error(errorStr);
+            return;
+        }
+        if (HuIdStr == "") {
+            $message.error('请扫描物料条码，添加明细。');
+            return;
+        }
+        var data = {
+            "ItemStr": ItemStr,
+            "HuIdStr": HuIdStr,
+            "LocationStr": LocationStr,
+            "InspectQtyStr": InspectQtyStr,
+            "FailCodeStr": FailCodeStr,
+            "NoteStr": NoteStr
+        }
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            data: data,
+            async: false,
+            url: "/InspectionOrder/CreateInspectionDetail/",
+            cache: false,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    var orderData = {
+                        "id": data
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "/InspectionOrder/Edit/",
+                        data: orderData,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+
+
+    function CreateInspectMaster() {
+        if ($("#ReceiptNo").val() == "") {
+            $message.success('引用收货单号不能为空！');
+            return;
+        }
+        var data = { "ReceiptNo": $("#ReceiptNo").val() };
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/InspectionOrder/CreateRefReceiptNoInspectMaster/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $message.success(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                $message.error(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+@*<form id="hiddenForm" action="/Hu/CreateHuByFlow" target="_blank"
+method="post">
+<input id="ItemStr" name="ItemStr" type="hidden" />
+<input id="HuIdStr" name="HuIdStr" type="hidden" />
+<input id="LocationStr" name="LocationStr" type="hidden" />
+<input id="InspectQtyStr" name="InspectQtyStr" type="hidden" />
+<input id="FailCodeStr" name="FailCodeStr" type="hidden" />
+<input id="NoteStr" name="NoteStr" type="hidden" />
+</form>*@

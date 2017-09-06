@@ -1,0 +1,32 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_DistributionPriceList_View" });
+}
+
+<input type="hidden" name="PriceListCode" id="PriceListCode" value="@Model" />
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.BIL.PriceListMaster.PriceListMaster_Tab_PriceList)
+               .LoadContentFrom("_Edit", "DistributionPriceList", new { id = Model })
+               .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+               
+            tabstrip.Add()
+                .Text(Resources.BIL.PriceListMaster.PriceListMaster_Tab_PriceListDetail)
+                .LoadContentFrom("_PriceListDetail", "DistributionPriceList", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}

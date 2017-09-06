@@ -1,0 +1,30 @@
+@model double
+          
+
+@*@if (ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty) == "CurrentRejectQty"||
+    ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty) == "CurrentQualifyQty")
+{
+    @(Html.Telerik().NumericTextBox()
+            .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty))
+            .InputHtmlAttributes(new { style = "width:100%" })
+                .ClientEvents(events =>
+                    events.OnChange("CurrentQty_Change")
+                )
+            .Value(Model)
+            .MinValue(0)
+
+    )
+}
+else
+{ *@
+    @(Html.Telerik().NumericTextBox()
+            .Value(Model)
+            .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty))
+            .InputHtmlAttributes(new { style = "width:100%" })
+            
+            .MinValue(0)
+            
+    )
+
+
+    

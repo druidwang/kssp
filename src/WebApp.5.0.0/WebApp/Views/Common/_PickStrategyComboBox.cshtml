@@ -1,0 +1,20 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    int? type = ViewBag.Type;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    //string onChangeName = "EmptyChange";
+    string onChangeName = isChange ? "Flow_Change" : "EmptyChange";
+}
+@(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                 .HiddenInputHtmlAttributes(new { id = id })
+                .DataBinding(binding => binding.Ajax()
+                            .Select("_FlowStrategyAjaxLoading", "Common", new { type = type }).Cache(true))
+
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                            .ClientEvents(events => events.OnChange(onChangeName))
+             )

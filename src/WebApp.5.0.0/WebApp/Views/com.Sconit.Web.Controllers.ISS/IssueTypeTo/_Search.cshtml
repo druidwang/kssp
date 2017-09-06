@@ -1,0 +1,73 @@
+﻿@using com.Sconit.Entity.ISS
+@using com.Sconit.Web.Models.SearchModels.ISS
+<fieldset>
+    @using (Html.BeginForm("List", "IssueTypeTo"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Code">
+                    @Resources.ISS.IssueTypeToMaster.Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["IssueTypeToMasterSearchModel"] != null ? ((IssueTypeToMasterSearchModel)TempData["IssueTypeToMasterSearchModel"]).Code : string.Empty)
+            </div>
+
+			<div class="search-label">
+                <label for="Description">
+                    @Resources.ISS.IssueTypeToMaster.Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["IssueTypeToMasterSearchModel"] != null ? ((IssueTypeToMasterSearchModel)TempData["IssueTypeToMasterSearchModel"]).Description : string.Empty)
+            </div>
+
+			
+			<div class="editor-label-2">
+                <label for="IssueType">
+                    @Resources.ISS.IssueTypeToMaster.IssueType
+                </label>
+            </div>
+            <div class="editor-field-2">
+				@{
+                    Html.RenderAction("_IssueTypeDropDownList", "Common",
+                        new { controlName = "IssueType", includeBlankOption = true,
+                              selectedValue = TempData["IssueTypeToMasterSearchModel"] != null ? ((IssueTypeToMasterSearchModel)TempData["IssueTypeToMasterSearchModel"]).IssueType:string.Empty
+                        });
+                }
+            </div>
+			<div class="editor-label-2">
+                <label for="IssueLevel">
+                    @Resources.ISS.IssueTypeToMaster.IssueLevel
+                </label>
+            </div>
+            <div class="editor-field-2">
+				@{
+                    Html.RenderAction("_IssueLevelDropDownList", "Common",
+                        new { controlName = "IssueLevel", includeBlankOption = true,
+                              selectedValue = TempData["IssueTypeToMasterSearchModel"] != null ? ((IssueTypeToMasterSearchModel)TempData["IssueTypeToMasterSearchModel"]).IssueLevel:string.Empty
+                        });
+                }
+            </div>
+			<div class="search-label">
+                <label for="User_IsActive">
+                    @Resources.ISS.IssueTypeToMaster.IsActive
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsActive", TempData["IssueTypeToMasterSearchModel"] != null ? ((IssueTypeToMasterSearchModel)TempData["IssueTypeToMasterSearchModel"]).IsActive : true)
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+        </div>    
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+			<button type="button" id="btnNew" onclick="location.href='@Url.Content("~/IssueTypeTo/New")'">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+    }
+</fieldset>

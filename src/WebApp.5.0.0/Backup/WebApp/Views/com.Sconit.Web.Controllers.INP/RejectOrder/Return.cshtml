@@ -1,0 +1,187 @@
+﻿@model com.Sconit.Entity.INP.RejectMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_RejectOrder_Return" });
+}
+<script type="text/javascript">
+    function Reject_Search() {
+        var rejCombobox = $("#RejectNo").data("tComboBox");
+        if ((rejCombobox.selectedIndex == undefined || rejCombobox.selectedIndex == -1) && $("#InspectNo").val() == "") {
+            rejCombobox.value("");
+            $message.error("请输入报验单号");
+            return;
+        }
+        var data = {
+            "rejectNo": $("#RejectNo").val(),
+            "inspectNo": $("#InspectNo").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/RejectOrder/_ReturnDetailList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#fdReturnDetail").html(data);
+                $("#fdReturnDetail").show();
+                //$("#btnReturn").show();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+        $("#btnNew").show();
+    }
+
+    function onSubmit() {
+        var flowCombobox = $("#Flow").data("tComboBox");
+        var rejCombobox = $("#RejectNo").data("tComboBox");
+        if ((rejCombobox.selectedIndex == undefined || rejCombobox.selectedIndex == -1) && $("#InspectNo").val() == "") {
+            rejCombobox.value("");
+            $message.error("请输入报验单号");
+            return;
+        }
+        var isInspect = true;
+        if ($("#InspectNo").val() == "") {
+            isInspect = false;
+        }
+        if (flowCombobox.selectedIndex == undefined || flowCombobox.selectedIndex == -1) {
+            flowCombobox.value("");
+            $message.error("@Resources.ORD.OrderMaster.Errors_FlowIsNotCorrect");
+            return;
+        }
+
+        var inspectType = $("#InspectType").val();
+        var data = "";
+        var url = "";
+        if (inspectType == 1) {
+            var grid = $("#ReturnDetail").data("tGrid");
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            var idStr = "";
+            var qtyStr = "";
+
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var row = $(rows[rowIndex]);
+                var id = row.find("#Id").val();
+                var qty = row.find("#CurrentHandleQty").val();
+                if (qty != "" && !isNaN(qty) && parseFloat(qty) > 0) {
+                    if (idStr == "") {
+                        idStr = id;
+                        qtyStr = qty;
+                    } else {
+                        idStr += "," + id;
+                        qtyStr += "," + qty;
+                    }
+                }
+            }
+            data = {
+                "idStr": idStr,
+                "qtyStr": qtyStr,
+                "flow": $("#Flow").val(),
+                "isInspect": isInspect
+            };
+            url = "/RejectOrder/CreateReturnOrder/";
+        } else {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var idStr = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    var id = $checkRecords[i].value;
+                    if (idStr == "") {
+                        idStr = id;
+                    } else {
+                        idStr += "," + id;
+                    }
+                }
+            }
+            data = {
+                "flow": $("#Flow").val(),
+                "idStr": idStr,
+                "isInspect": isInspect
+            }
+            url = "/RejectOrder/CreateHuReturnOrder/";
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: url,
+            data: data,
+            cache: false,
+            success: function (data) {
+                DisplayJsonMessages(data);
+                if (data != null && data.Data != null && data.Data.OrderNo != undefined) {
+                    var orderData = {
+                        "orderNo": data.Data.OrderNo
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "/ProcurementOrder/Edit/",
+                        data: orderData,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            $("#content").html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+
+            <div class="editor-label-2">
+                @*@Html.LabelFor(model => model.InspectNo)*@
+                <label>@Resources.EXT.PageLan.InspectOrder</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model => model.InspectNo)
+            </div>
+
+            <div class="editor-label-2" style="display: none">
+                @Html.LabelFor(model => model.RejectNo)
+            </div>
+            <div class="editor-field-2" style="display: none">
+                @{
+    Html.RenderAction("_RejectComboBox", "Common", new
+    {
+        controlName = "RejectNo",
+        status = (int)com.Sconit.CodeMaster.RejectStatus.Submit,
+        handleResult = (int)com.Sconit.CodeMaster.HandleResult.Return,
+        //isChange = true
+    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new
+    {
+        controlName = "Flow",
+        type = (int)com.Sconit.CodeMaster.OrderType.Procurement
+    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="btnSearch" onclick="Reject_Search();">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="onSubmit()" style="display: none">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+    </fieldset>
+   
+    <div id="fdReturnDetail" style="display: none;">
+    </div>
+   
+}

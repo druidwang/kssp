@@ -1,0 +1,105 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SCM
+@model IEnumerable<com.Sconit.Entity.SCM.FlowShiftDetail>
+<script language="javascript" type="text/javascript">
+    function FlowShiftDetailGrid_OnDataBinding(e) {
+    debugger
+        e.data = {
+            "FlowCode": $("#FlowCode").val(),
+            "Shift": $('#Shift').val()
+        };
+    }
+
+    function onSaveFlowShiftDet() {
+        $("#successesul").html('');
+        $("#errorsul").html('');
+        var SuccessMessage;
+        var grid = $("#FlowShiftDetail").data("tGrid");
+        if (grid == null) {
+            alert("列表不能为空");
+            return;
+        }
+
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined; });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined; });
+        var flowShiftDets = grid.changeLog.serialize(inserted, updated, deleted);
+        var flowShiftDetmstr = { flow: $("#FlowCode").val() };
+
+        grid._convert(flowShiftDets);
+
+        var QuerySearchModel = {
+            flowCode: $('#FlowCode').val(),
+            shift: $('#Shift').val()
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "@Url.Content("~/ProcurementFlow/_SaveflowShoftDetailEdit/")",
+            data: $.extend(flowShiftDets, flowShiftDetmstr),
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                if (data != "") {
+                    $.ajax({
+                        type: "get",
+                        dataType: "html",
+                        url: "@Url.Content("~/ProcurementFlow/_FlowShiftDetailList/")",
+                        data: QuerySearchModel,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var tabStrip = $("#TabStrip");
+                            var tabStripContent4 = tabStrip.data("tTabStrip").getContentElement(4);
+                            $(tabStripContent4).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("FlowShiftDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+         {
+             commands.Insert();
+             commands.Custom().Text(@Resources.Global.Button_Save).HtmlAttributes(new { onClick = "onSaveFlowShiftDet()", href = "#" });
+         })
+        .DataBinding(dataBinding => dataBinding.Ajax()
+        .Select("_AjaxFlowShiftDetailList", "ProcurementFlow", new { flowCode = ViewBag.FlowCode, shift = ViewBag.Shift })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();
+            columns.Bound(o => o.Shift_value).EditorTemplateName("ShiftMasterGridForeignKey");
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.OrderLeadTime);
+            columns.Bound(o => o.OrderEMLeadTime);
+            columns.Bound(o => o.UnloadLeadTime);
+            //columns.Bound(o => o.SafeTime);
+            columns.Command(commands =>
+            {
+                commands.Delete();
+            });
+
+        })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .ClientEvents(events => events.OnDataBinding("FlowShiftDetailGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>

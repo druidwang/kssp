@@ -1,0 +1,71 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_SearchProdTraceCode" });
+}
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label for="OrderMaster_OrderNo">
+                追溯码
+            </label>
+        </div>
+        <div class="search-field">
+            <input type="text" name="TraceCode" id="TraceCode" value="" />   
+        </div>
+        <div class="search-label">
+            <label for="OrderMaster_Flow">
+                产品条码
+            </label>
+        </div>
+        <div class="search-field">
+            <input type="text" name="HuId" id="HuId" value=""  />
+        </div>
+    </div>
+    <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="SearchClick(this)">
+            @Resources.SYS.Global.Button_Search</button>
+    </div>
+</fieldset>
+<fieldset id="traceCodeStats">
+        <legend title="追溯码状态">追溯码条码</legend>
+           @(Html.Telerik().Grid<com.Sconit.Entity.INP.ProdTraceCode>()
+            .Name("ProdTraceCodeGrid")
+            .DataKeys(keys =>
+            {
+                keys.Add(p => p.TraceCode);
+            })
+            .Columns(columns =>
+            {
+                columns.Bound(o => o.TraceCode).Title("追溯码");
+                columns.Bound(o => o.HuId).Title("条码");
+                columns.Bound(o => o.OrderNo).Title("生产单号");
+                columns.Bound(o => o.Item).Title("零件号");
+                columns.Bound(o => o.ItemDesc).Title("零件描述");
+            })
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(20);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxProdTraceCodeList", "ProductionOrder"))
+            .Sortable(s=>s.Enabled(false))
+            .Resizable(resizing => resizing.Columns(true))
+        )
+</fieldset>
+
+<script>
+
+    function SearchClick(e) {
+        var grid = $("#ProdTraceCodeGrid").data("tGrid");
+        grid.ajaxRequest({ TraceCode: $('#TraceCode').val(), HuId: $('#HuId').val() });
+    }
+</script>

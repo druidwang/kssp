@@ -1,0 +1,47 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MD.ItemDiscontinue>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ItemContinueGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(k => k.Id);
+        })
+        .Columns(columns =>
+        {
+           columns.Bound(o => o.Item).ClientTemplate(Html.ActionLink("<#=Item #>","Edit","ItemDiscontinue",new { Id="<#=Id #>"},null).ToString());
+            columns.Bound(o => o.DiscontinueItem);
+            columns.Bound(o => o.Bom);
+            columns.Bound(o => o.UnitQty);
+            columns.Bound(o => o.Priority);
+            columns.Bound(o => o.StartDate);
+            columns.Bound(o => o.EndDate);
+        })
+
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ItemDiscontinue"))
+                        .ClientEvents(events => events.OnDataBinding("ItemDiscontinueGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ItemDiscontinueGrid_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                DiscontinueItem: $('#DiscontinueItem').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<com.Sconit.Entity.MD.PartyAddress>
+<fieldset>
+    <script type="text/javascript">
+        function BillAddress_OnDataBinding(e) {
+            e.data = {
+                "PartyCode": $("#PartyCode").val(),
+                "AddressCode": $("#BillAddress_Code").val(),
+                "AddressContent": $("#BillAddress_AddressContent").val(),
+                "isFromList": "true"
+            };
+        } 
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("BillAddressGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence).ClientTemplate(string.Format("<a href=\"javascript:onBillAddressclick('{0}')\">{1}</a>", "<#=Id #>", "<#=Sequence #>"));
+            columns.Bound(o => o.Address.Code);
+            columns.Bound(o => o.Address.AddressContent);
+            columns.Bound(o => o.Address.PostCode);
+            columns.Bound(o => o.Address.ContactPersonName);
+            columns.Bound(o => o.Address.Fax);
+            columns.Bound(o => o.Address.MobilePhone);
+            columns.Bound(o => o.Address.Email);
+            columns.Bound(o => o.Address.TelPhone);
+            columns.Bound(o => o.IsPrimary).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsPrimary' <#= IsPrimary? checked='checked' : '' #> />");
+
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Sequence")
+                {
+                    cell.Text = string.Format("<a href=\"javascript:onBillAddressclick('{0}')\">{1}</a>", cell.DataItem.Id, cell.DataItem.Sequence);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxBillAddressList", "Customer"))
+        .ClientEvents(events => events.OnDataBinding("BillAddress_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+
+<script type="text/javascript">
+    function onBillAddressclick(code) {
+        var data = {
+            "Id": code
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/Customer/_BillAddressEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

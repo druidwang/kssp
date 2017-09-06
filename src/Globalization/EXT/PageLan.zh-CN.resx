@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Aging" xml:space="preserve">
+    <value>老化</value>
+    <comment>Common</comment>
+  </data>
+  <data name="AllBarCodes" xml:space="preserve">
+    <value>所有条码</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ByFinishGoods" xml:space="preserve">
+    <value>根据成品</value>
+    <comment>Post-Process.cshtml</comment>
+  </data>
+  <data name="ByFlow" xml:space="preserve">
+    <value>通过路线</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="ByItem" xml:space="preserve">
+    <value>通过物料</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="ByMaterial" xml:space="preserve">
+    <value>根据物料</value>
+    <comment>Post-Process.cshtml</comment>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>代码</value>
+    <comment>Common</comment>
+  </data>
+  <data name="CreateTime" xml:space="preserve">
+    <value>创建时间</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>客户</value>
+    <comment>Common</comment>
+  </data>
+  <data name="DailyPlan" xml:space="preserve">
+    <value>天计划</value>
+    <comment>Common</comment>
+  </data>
+  <data name="DateFrom" xml:space="preserve">
+    <value>时间段从</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>已过期</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ExpireDateChange" xml:space="preserve">
+    <value>过期修改</value>
+    <comment>HuTrans.cshtml</comment>
+  </data>
+  <data name="ExportBarCoe" xml:space="preserve">
+    <value>导出条码</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>过滤</value>
+    <comment>Common</comment>
+  </data>
+  <data name="FreezeUnfreeze" xml:space="preserve">
+    <value>冻结/解冻</value>
+    <comment>HuTrans.cshtml</comment>
+  </data>
+  <data name="IncludeEstimatePrice" xml:space="preserve">
+    <value>包含非暂估价</value>
+    <comment>Repricing.cshtml</comment>
+  </data>
+  <data name="InclueZeroInv" xml:space="preserve">
+    <value>包含零库存</value>
+    <comment>AgingSearh.cshtml</comment>
+  </data>
+  <data name="InExpireDate" xml:space="preserve">
+    <value>预警期内</value>
+    <comment>Common</comment>
+  </data>
+  <data name="InspectOrder" xml:space="preserve">
+    <value>报验单</value>
+    <comment>Common</comment>
+  </data>
+  <data name="IsQuick" xml:space="preserve">
+    <value>是否快速</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ItemExchange" xml:space="preserve">
+    <value>物料替换</value>
+    <comment>StockTakeItemExchange</comment>
+  </data>
+  <data name="ItemUom" xml:space="preserve">
+    <value>物料单位</value>
+    <comment>ItemExchange</comment>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>列表</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>库位</value>
+    <comment>Common</comment>
+  </data>
+  <data name="LocationFrom" xml:space="preserve">
+    <value>来源库位</value>
+    <comment>Common</comment>
+  </data>
+  <data name="LocationTo" xml:space="preserve">
+    <value>目的库位</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登录</value>
+    <comment>Login.cshtml</comment>
+  </data>
+  <data name="LogisticFlow" xml:space="preserve">
+    <value>物流路线</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ManuallySettle" xml:space="preserve">
+    <value>手工结算</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ManufatureDate" xml:space="preserve">
+    <value>制造时间</value>
+    <comment>Common</comment>
+  </data>
+  <data name="MesLocation" xml:space="preserve">
+    <value>MES库位</value>
+    <comment>Common</comment>
+  </data>
+  <data name="MothPlan" xml:space="preserve">
+    <value>月计划</value>
+    <comment>Common</comment>
+  </data>
+  <data name="NewItemUom" xml:space="preserve">
+    <value>新物料单位</value>
+    <comment>ItemExchange</comment>
+  </data>
+  <data name="OutExpireDate" xml:space="preserve">
+    <value>预警期外</value>
+    <comment>Common</comment>
+  </data>
+  <data name="PickUnpick" xml:space="preserve">
+    <value>上下架</value>
+    <comment>HuTrans.cshtml</comment>
+  </data>
+  <data name="PlandateFrom" xml:space="preserve">
+    <value>计划时间 从</value>
+    <comment>Post-Process.cshtml</comment>
+  </data>
+  <data name="PlanType" xml:space="preserve">
+    <value>计划类型</value>
+    <comment>Common</comment>
+  </data>
+  <data name="PrintBarCoe" xml:space="preserve">
+    <value>打印条码</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ProductionLine" xml:space="preserve">
+    <value>生产线</value>
+    <comment>Common</comment>
+  </data>
+  <data name="SAPLocation" xml:space="preserve">
+    <value>SAP库位</value>
+    <comment>Common</comment>
+  </data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>保存成功</value>
+    <comment>Common</comment>
+  </data>
+  <data name="SearchType" xml:space="preserve">
+    <value>查询方式</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="ShowNonHuQty" xml:space="preserve">
+    <value>显示数量库存</value>
+    <comment>Common</comment>
+  </data>
+  <data name="ShowRows" xml:space="preserve">
+    <value>显示行数</value>
+    <comment>PickList-New.cshtml</comment>
+  </data>
+  <data name="SortByBin" xml:space="preserve">
+    <value>按库格排序</value>
+    <comment>Common</comment>
+  </data>
+  <data name="SortByItem" xml:space="preserve">
+    <value>按物料排序</value>
+    <comment>Common</comment>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>开始时间</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>汇总</value>
+    <comment>Common</comment>
+  </data>
+  <data name="TemplateDownload" xml:space="preserve">
+    <value>模板下载</value>
+    <comment>Common</comment>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>到</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Trace" xml:space="preserve">
+    <value>追溯</value>
+    <comment>ItemFlowIndex.cshtml</comment>
+  </data>
+  <data name="TransferFlow" xml:space="preserve">
+    <value>移库路线</value>
+    <comment>Common</comment>
+  </data>
+  <data name="WeekPlan" xml:space="preserve">
+    <value>周计划</value>
+    <comment>Common</comment>
+  </data>
+  <data name="WindowTime" xml:space="preserve">
+    <value>窗口时间</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>文档</value>
+    <comment>Top.cshtml</comment>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>字体</value>
+    <comment>Top.cshtml</comment>
+  </data>
+  <data name="Logoff" xml:space="preserve">
+    <value>注销</value>
+    <comment>Top.cshtml</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+    <comment>Top.cshtml</comment>
+  </data>
+</root>

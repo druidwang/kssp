@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.ISI.ProcessApply, com.Sconit.Entity" table="ISI_ProcessApply" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="TaskSubType" column="TaskSubType" type="String" length="50" />	
+		<property name="Apply" column="Apply" type="String" length="50" />	
+		<property name="Seq" column="Seq" type="Int32"  />	
+		<property name="Desc1" column="Desc1" type="String" length="255" />	
+		<property name="Qty" column="Qty" type="Decimal"  />	
+		<property name="UOM" column="UOM" type="String" length="50" />	
+  	</class>
+</hibernate-mapping>

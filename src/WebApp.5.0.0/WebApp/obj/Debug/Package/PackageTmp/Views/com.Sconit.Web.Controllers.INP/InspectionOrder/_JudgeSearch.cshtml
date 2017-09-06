@@ -1,0 +1,103 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INP
+@using com.Sconit.Entity.SYS
+<fieldset>
+    @using (Html.BeginForm("JudgeList", "InspectionOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="InspectMaster_InspectNo">
+                    @Resources.INP.InspectMaster.InspectMaster_InspectNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("InspectNo", TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).InspectNo : string.Empty)
+
+            </div>
+
+            <div class="search-label">
+                <label for="InspectMaster_Region">
+                    @Resources.INP.InspectMaster.InspectMaster_Region
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_RegionComboBox", "Common",
+            new
+            {
+                controlName = "Region",
+                selectedValue = TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).Region : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_IpNo">
+                    @Resources.INP.InspectMaster.InspectMaster_IpNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("IpNo", TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).IpNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_ReceiptNo">
+                    @Resources.INP.InspectMaster.InspectMaster_ReceiptNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ReceiptNo", TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).ReceiptNo : string.Empty)
+            </div>
+
+            <div class="search-label">
+                <label for="InspectMaster_Type">
+                    @Resources.INP.InspectMaster.InspectMaster_Type
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.InspectType,
+            controlName = "Type",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).Type : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_StartDate">
+                    @Resources.INP.InspectMaster.InspectMaster_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).CreateUserName : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_StartDate">
+                    @Resources.INP.InspectMaster.InspectMaster_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("StartDate")
+      .Value(TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                  .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_EndDate">
+                    @Resources.INP.InspectMaster.InspectMaster_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("EndDate")
+.Value(TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                 .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

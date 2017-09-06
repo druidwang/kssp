@@ -1,0 +1,161 @@
+﻿@using com.Sconit.Web.Models.ReportModels
+@{
+    ViewBag.Title = "InventoryIp";
+}
+@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Inventory_InventoryIp" });
+}
+<fieldset>
+    @using (Html.BeginForm("Export", "Inventory"))
+    {   
+    <div class="search">
+
+        <div class="search-label">
+            <label for="OrderMaster_Pirority">
+                @Resources.ORD.OrderMaster.OrderMaster_Type
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.OrderType,
+                    controlName = "IpReportType",
+                    orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                    includeBlankOption = false,
+                    //blankOptionDescription = com.Sconit.Entity.SYS.CodeDetail.SpecialValueEnum.BlankValue
+                    //blankOptionValue = "",
+                    selectedValue = 1
+                });
+            }
+        </div>
+        <div class="search-label">
+        <label for="OrderMaster_Flow">
+            @Resources.ORD.OrderMaster.OrderMaster_Flow
+        </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common",
+                    new
+                    {
+                        controlName = "Flow",
+                        //type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                        selectedValue = string.Empty,
+                        includeBlankOption = true
+                    });
+            }
+        </div>
+        <div class="search-label" id="locationFromlabel">
+            <label>
+                @Resources.EXT.PageLan.LocationFrom
+            </label>
+        </div>
+        <div class="search-field" id="locationFromfield">
+            @{
+            Html.RenderAction("_LocationComboBox", "Common", new
+            {
+                controlName = "locationFrom",
+
+            });
+            }
+        </div>
+        <div class="search-label" id="locationTolabel">
+            <label>
+                @Resources.Report.HistoryInventoryView.HistoryInventoryView_LocationTo
+            </label>
+        </div>
+        <div class="search-field" id="locationTofield">
+            @{
+            Html.RenderAction("_LocationComboBox", "Common", new
+            {
+                controlName = "locationTo",
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.Report.HistoryInventoryView.HistoryInventoryView_ItemFrom
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+            Html.RenderAction("_ItemComboBox", "Common",
+                new
+                {
+                    controlName = "itemFrom",
+                });
+                    
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.Report.HistoryInventoryView.HistoryInventoryView_ItemTo
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+            Html.RenderAction("_ItemComboBox", "Common",
+                new
+                {
+                    controlName = "itemTo",
+                });
+                    
+            }
+        </div>
+    </div>
+    <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="doSearch(this)">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="submit" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    }
+</fieldset>
+<div id="IpInventoryReport">
+</div>
+<script type="text/javascript">
+    function doSearch(e) {
+        if ($('#IpReportType').val()=="" ) {
+            $message.error('错误：订单类型不能为空');
+            return;
+        }
+        if ($('#locationFrom').val() == "" && $('#locationTo').val() != "") {
+            $message.error('错误：第一个库位为空的情况下，不能输入第二个库位');
+            return;
+        }
+        if ($('#itemFrom').val() == "" && $('#itemTo').val() != "") {
+            $message.error('错误：第一个物料为空的情况下，不能输入第二个物料');
+            return;
+        }
+        //debugger
+        $("#IpInventoryReport").html("Loading...");
+        var data = {
+             locationFrom : $('#locationFrom').val(),
+             locationTo : $('#locationTo').val(),
+             itemFrom : $('#itemFrom').val(),
+             itemTo : $('#itemTo').val(),
+             flow : $('#Flow').val(),
+             ipReportType : $('#IpReportType').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/Inventory/_GetIpReport/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#IpInventoryReport");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>

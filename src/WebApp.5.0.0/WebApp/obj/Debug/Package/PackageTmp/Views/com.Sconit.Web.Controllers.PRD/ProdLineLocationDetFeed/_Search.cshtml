@@ -1,0 +1,47 @@
+﻿@using com.Sconit.Web.Models.SearchModels.PRD
+<fieldset>
+
+    @using (Html.BeginForm("List", "ProdLineLocationDetFeed"))
+    {   
+        <div class="search">
+        <div class="search-label">
+             <label>
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_OrderNo
+           </label>
+            </div>
+            <div class="search-field">
+                  @Html.TextBox("OrderNo", TempData["ProductLineLocationDetailSearchModel"] != null ? ((ProductLineLocationDetailSearchModel)TempData["ProductLineLocationDetailSearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+             <label>
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_HuId
+           </label>
+            </div>
+            <div class="search-field">
+                  @Html.TextBox("HuId", TempData["ProductLineLocationDetailSearchModel"] != null ? ((ProductLineLocationDetailSearchModel)TempData["ProductLineLocationDetailSearchModel"]).HuId : string.Empty)
+            </div>
+            <div class="search-label">
+             <label>
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_Item
+           </label>
+            </div>
+            <div class="search-field">
+                    @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = TempData["ProductLineLocationDetailSearchModel"] != null ? ((ProductLineLocationDetailSearchModel)TempData["ProductLineLocationDetailSearchModel"]).Item : string.Empty
+
+        });
+                }
+            </div>
+         
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

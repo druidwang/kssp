@@ -1,0 +1,28 @@
+﻿<p>
+    All Telerik Components for ASP.NET MVC support right-to-left languages like Arabic,
+    Persian and Hebrew.</p>
+<p>
+    To enable the RTL mode, you should:</p>
+<ol>
+    <li>
+        <p>
+            place the component in a container with the <strong>t-rtl</strong> class:</p>
+<pre class="prettyprint">
+&lt;div class=&quot;t-rtl&quot;&gt;
+    &lt;%= Html.Telerik().PanelBar()
+            .Name("PanelBar")
+            ...
+    %&gt;
+&lt;/div&gt;
+</pre>
+    </li>
+    <li>
+        <p>
+            include the <strong>telerik.rtl.css</strong> file in the document <code>&lt;head&gt;</code>,
+            either through the StyleSheetRegistrar or through a HTML <code>&lt;link /&gt;</code>
+            element</p>
+    </li>
+</ol>
+<p>
+    For more information, see the <a href="http://www.telerik.com/help/aspnet-mvc/telerik-ui-components-right-to-left-support.html">
+        help topic on RTL support</a>.</p>

@@ -1,0 +1,281 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_New" });
+}
+<script type="text/javascript">
+    var resourceGroup = null;
+    function Flow_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+            $("#fdOrderDetail").hide();
+        }
+        else {
+            $("#fdOrderDetail").html("Loading...");
+            $("#fdOrderDetail").show();
+            var data = { "flow": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "Json",
+                url: "/ProductionOrder/_GetFlowResourGroup/",
+                data: data,
+                success: function (data1, textStatus) {
+                    resourceGroup = data1;
+                }
+            });
+
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/ProductionOrder/_OrderDetailList/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#fdOrderDetail").html(data);
+                    $("#fdOrderDetail").show();
+                    $("tr.t-no-data").find("td").text("Loading...");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+            $('#Shift').data('tComboBox').value('');
+            $('#Shift').data('tComboBox').text('');
+            $("#Shift").data("tComboBox").reload();
+        }
+    }
+
+    function onWindowTimeChange(e) {
+        if ($("#Flow").val() != null && $("#Flow").val() != "") {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                url: "/ProductionOrder/_WindowTime/",
+                data: { "windowTime": e.value.toUTCString(), "flow": $("#Flow").val() },
+                success: function (data, textStatus) {
+                    var newDate = new Date(data);
+                    $("#StartTime").val(data);
+                    //  $("#StartTime").data("tDateTimePicker").selectedValue = newDate;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    }
+
+    function onCreate() {
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error("@Resources.ORD.OrderMaster.Errors_OrderDetailIsEmpty");
+            return;
+        }
+        if ($("#Shift").val()=="") {
+            $message.error("班次数为必填项");
+            return;
+        }
+
+        var Sequences = new Array();
+        var Items = new Array();
+        var ReferenceItemCodes = new Array();
+        var ItemDescriptions = new Array();
+        var UnitCounts = new Array();
+        var UnitCountDescriptions = new Array();
+        var Uoms = new Array();
+        var LocationFroms = new Array();
+        var LocationTos = new Array();
+        var OrderedQtys = new Array();
+        var HuTos = new Array();
+        var Remarks = new Array();
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var i = 0;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if ($.trim(row[0].childNodes[1].innerText) != "") {
+                if (parseFloat($.trim(row[0].childNodes[10].innerText)) < 0) {
+                    $message.error("订单数不能小于0");
+                    return;
+                }
+                else if (parseFloat($.trim(row[0].childNodes[10].innerText)) == 0) {
+                    continue;
+                }
+                Sequences[i] = $.trim(row[0].childNodes[0].innerText);
+                Items[i] = $.trim(row[0].childNodes[1].innerText);
+                UnitCounts[i] = $.trim(row[0].childNodes[4].innerText);
+                Uoms[i] = $.trim(row[0].childNodes[5].innerText);
+                LocationFroms[i] = $.trim(row[0].childNodes[7].innerText);
+                LocationTos[i] = $.trim(row[0].childNodes[8].innerText);
+                HuTos[i] = $.trim(row[0].childNodes[9].innerText);
+                OrderedQtys[i] = $.trim(row[0].childNodes[10].innerText);
+                Remarks[i] = $.trim(row[0].childNodes[12].innerText);
+                i++;
+            }
+        }
+        var ordermstr = {
+            "Flow": $("#Flow").val(),
+            "StartTime": $("#StartTime").val(),
+            "WindowTime": $("#WindowTime").val(),
+            "EffectiveDate": $("#EffectiveDate").val(),
+            "ReferenceOrderNo": $("#ReferenceOrderNo").val(),
+            "ExternalOrderNo": $("#ExternalOrderNo").val(),
+            "Dock": $("#Dock").val(),
+            "Shift": $("#Shift").val(),
+            "IsIndepentDemand": $("input[type=checkbox][name=IsIndepentDemand]:checked").val(),
+            "SubType": "0"
+        }
+
+        var made = {
+            "Sequences": Sequences,
+            "Items": Items,
+            "UnitCounts": UnitCounts,
+            "Uoms": Uoms,
+            "LocationFroms": LocationFroms,
+            "LocationTos": LocationTos,
+            "OrderedQtys": OrderedQtys,
+            "HuTos": HuTos,
+            "Remarks": Remarks
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/ProductionOrder/NewCreateOrder/",
+            data: $.extend(made, ordermstr),
+            traditional: true,
+            success: function (data, ordermstr) {
+                //debugger
+                DisplayJsonMessages(data);
+                if (data != null && data.Data != null && data.Data.OrderNo != undefined) {
+                    window.location.href = "/ProductionOrder/Edit/?OrderNo=" + data.Data.OrderNo;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function Shift_DataBinding(e) {
+        e.data = {
+            flow: $("#Flow").val()
+        }
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow_Production
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_FlowComboBox", "Common", new
+                    {
+                        controlName = "Flow",
+                        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                        selectedValue = Model != null ? Model.Flow : null,
+                        isChange = true
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_Remarks
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Dock)
+            </div>
+            @*<div class="editor-label-2">
+                @Html.LabelFor(model => model.WindowTime)
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm")
+                            .Name("WindowTime")
+                            .ClientEvents(events => events
+                            .OnChange("onWindowTimeChange")))
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartTime)
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartTime"))
+            </div>*@
+            <div class="editor-label-2">
+                <label>
+                    @Resources.INV.ItemExchange.ItemExchange_Manufacturedate
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DatePicker().Name("EffectiveDate").Min(DateTime.Now)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Shift)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_ShiftComboBox", "Common", new
+                    {
+                        controlName = "Shift",
+                        coupled = true
+                    });
+                }
+            </div>
+
+
+           @*<div class="editor-label-2">
+                <label for="OrderMaster_Type">
+                    @Resources.ORD.OrderMaster.OrderMaster_Type
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.OrderSubType,
+                        controlName = "SubType",
+                        orderType = (int)com.Sconit.CodeMaster.OrderType.Production,
+                    });
+                }
+            </div>*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReferenceOrderNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ReferenceOrderNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsIndepentDemand)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsIndepentDemand)
+            </div>
+            @*<div class="editor-label-2">
+                @Html.LabelFor(model => model.ExternalOrderNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ExternalOrderNo)
+            </div>*@
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_OrderMstr_Production_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnNew"},
+                    {"needconfirm","true"},
+                    {"onclick","onCreate()"}
+	            })
+        </div>
+    </fieldset>
+   
+    <div id="fdOrderDetail" style="display: none;">
+    </div>
+   
+}

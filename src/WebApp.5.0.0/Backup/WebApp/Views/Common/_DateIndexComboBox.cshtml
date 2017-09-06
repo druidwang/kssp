@@ -1,0 +1,22 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "DateIndex_Change" : "EmptyChange";
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+
+}
+@{
+    
+    @(Html.Telerik().ComboBox()
+        .Name(name)
+        .AutoFill(true)
+        .DataBinding(binding => binding.Ajax()
+        .Select("_AjaxLoadingDateIndex", "Common", new { includeBlankOption = ViewBag.IncludeBlankOption}))
+        .ClientEvents(events => events.OnChange(onChangeName).OnDataBinding("DateIndex_DataBinding"))
+        .HighlightFirstMatch(true)
+        .BindTo(Model)
+        .Enable(enable))
+  
+}

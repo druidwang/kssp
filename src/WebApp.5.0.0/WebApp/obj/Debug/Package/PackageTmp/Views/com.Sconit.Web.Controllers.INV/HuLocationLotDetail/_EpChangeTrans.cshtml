@@ -1,0 +1,35 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.HuIdEpDateChangeTransaction>
+<fieldset>
+    <legend>过期修改</legend>
+    @(Html.Telerik().Grid(Model).Name("EpChangeTransaction")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            //columns.Bound(o => o.MaterialsGroup);
+            columns.Bound(o => o.MaterialsGroupDesc);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.OldExpiredDate).Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.NewExpiredDate).Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxEpChangeTransactionList", "HuLocationLotDetail", new { Item = @ViewBag.Item, Location = @ViewBag.Location, Bin = @ViewBag.Bin, HuId = @ViewBag.HuId, LotNo = @ViewBag.LotNo, LotNoTo = @ViewBag.LotNoTo, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate, SearchType = @ViewBag.SearchType }))
+        //.Footer(false)
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

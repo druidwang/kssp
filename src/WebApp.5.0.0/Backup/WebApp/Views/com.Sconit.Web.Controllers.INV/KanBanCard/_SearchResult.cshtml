@@ -1,0 +1,91 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.KanBanCard>
+           
+
+
+<fieldset>
+   <script type="text/javascript">
+
+       function KanBanCardGrid_OnDataBinding(e) {
+           e.data = {
+               Code: $('#Code').val(),
+               Flow: $('#Flow').val(),
+               LocatoinTo: $("#LocatoinTo").val(),
+               Item: $("#Item").val(),
+               Note: $('#Note').val()
+           };
+       }
+       $(function () {
+           
+           $("#checkAll").click(function () {
+               $('input[name="checkedRecords"]').attr("checked", this.checked);
+               $("#btnPrint").attr("style", this.checked ? "display:inline" : "display:none");
+               $("#btnPrintCardLabel").attr("style", this.checked ? "display:inline" : "display:none");
+           });
+       });
+
+       function RowBounding() {
+           var $checkRecords = $("input[name='checkedRecords']");
+           $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+       }
+
+       function showButtons(e) {
+
+           var $checkRecords = $("input[name='checkedRecords']");
+           var showButton = false;
+           for (var i = 0; i < $checkRecords.length; i++) {
+               if ($checkRecords[i].checked) {
+                   showButton = true;
+                   break;
+               }
+           }
+           $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+           $("#btnPrint").attr("style", showButton ? "display:inline" : "display:none");
+           $("#btnPrintCardLabel").attr("style", showButton ? "display:inline" : "display:none");
+
+
+       }
+    </script>
+    @(Html.Telerik().Grid(Model)
+                        .Name("KanBanCardGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(k => k.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code)
+              .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords'  value='<#= Code #>'  onClick='showButtons(this)' />")
+              .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll'  />")
+              .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "KanBanCard", new { cardNo = "<#= Code #>" }, null).ToString()); 
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.LocationTo);
+           
+            columns.Bound(o => o.MultiStation);
+            columns.Bound(o => o.PackType);
+            columns.Bound(o => o.Note);
+            columns.Bound(o => o.ThumbNo);
+            columns.Bound(o => o.IsEleKanBan)
+                .ClientTemplate("<input type='checkbox' name='IsEleKanBan' id='IsEleKanBan' disabled='disabled' value=<#=IsEleKanBan #> <#=IsEleKanBan?checked='checked':'' #> />");
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "KanBanCard"))
+                                        .ClientEvents(events => events.OnDataBinding("KanBanCardGrid_OnDataBinding")
+                                                .OnRowDataBound("RowBounding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+ 
+</fieldset>

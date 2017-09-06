@@ -1,0 +1,53 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.INV.StockTakeMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("StockTakeMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.StNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.StNo).ClientTemplate(Html.ActionLink("<#= StNo #>", "Edit", "StockTake", new { ID = "<#= StNo #>"}, null).ToString());
+            columns.Bound(o => o.TypeDescription);
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.EffectiveDate);
+            columns.Bound(o => o.StockTakeStatusDescription);
+            columns.Bound(o => o.CostCenter);
+            columns.Bound(o => o.CreateUserName).Title("创建用户");
+            columns.Bound(o => o.CreateDate).Title(@Resources.EXT.PageLan.CreateTime);
+            columns.Bound(o => o.IsScanHu)
+            .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsScanHu' <#= IsScanHu? checked='checked' : '' #> />"); 
+            columns.Bound(o => o.Remark);
+            })
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxStockTakeMasterList", "StockTake"))
+            .ClientEvents(events => events.OnDataBinding("StockTakeMasterGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total!=null? ViewBag.Total :0);
+                settings.PageSize(ViewBag.PageSize);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function StockTakeMasterGrid_OnDataBinding(e) {
+            e.data = {
+                StNo: $('#StNo').val(),
+                Type: $('#Type').val(),
+                Region: $('#Region').val(),
+                Status: $('#Status').val(),
+                StockTakeStartDate: $('#StockTakeStartDate').val(),
+                StockTakeEndDate: $('#StockTakeEndDate').val(),
+                CostCenter: $("#CostCenter").val()
+            };
+        } 
+    </script>
+</fieldset>

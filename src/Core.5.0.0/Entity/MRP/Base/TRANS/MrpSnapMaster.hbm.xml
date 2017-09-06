@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.MrpSnapMaster, com.Sconit.Entity" table="MRP_SnapMaster" lazy="false">
+    <id name="SnapTime" column="SnapTime" type="DateTime" >
+      <generator class="assigned" />
+    </id>
+
+    <property name="Status" column="Status" />
+
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+
+    <property name="IsRelease" column="IsRelease" type="Boolean"  />
+    <property name="Type" column="Type" />
+    
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,138 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SI
+<fieldset>
+    @using (Html.BeginForm("SAPMMMES0001List", "SAPInterface"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPMMMES.SAPMMMES_ZMESPO 
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ZMESPO", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).ZMESPO : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPMMMES.SAPMMMES_LFSNR
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LFSNR", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).LFSNR : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPMMMES.SAPMMMES_LIFNR
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LIFNR", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).LIFNR : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPMMMES.SAPMMMES_LGORT
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LGORT", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).LGORT : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPMMMES.SAPMMMES_MATNR
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MATNR", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).MATNR : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPMMMES.SAPMMMES_MATNR_C
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MATNR_C", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).MATNR_C : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPMMMES.SAPMMMES_BWART_H
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BWART_H", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).BWART_H : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPMMMES.SAPMMMES_BWART_C
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BWART_C", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).BWART_C : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                   时间 从
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("TransStartDate")
+                .Value(TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).TransStartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    至
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("TransEndDate")
+    .Value(TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).TransEndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+           <div class="editor-label-2">
+            <label>
+                <label>
+                时间类型:
+                </label>
+            </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("TimeType", 0, true)<span>调用时间</span>
+                @Html.RadioButton("TimeType", 1, false)<span>过账时间</span>
+            </div>
+           <div class="editor-label-2">
+            <label>
+            @Resources.SI.SAPTransferLog.SAPTransferLog_Status
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @Html.RadioButton("Status", 0, true)<span>所有</span>
+            @Html.RadioButton("Status", 1, false)<span>成功</span>
+            @Html.RadioButton("Status", 2, false)<span>失败</span>
+        </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport" onclick="ExportClick()">
+            @Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    function ExportClick() {
+
+        location.href = '/SAPInterface/ExportSAPMMMES0001XLS/?ZMESPO=' + $('#ZMESPO').val()
+            + '&LFSNR=' + $('#LFSNR').val()
+            + '&LIFNR=' + $('#LIFNR').val()
+            + '&LGORT=' + $('#LGORT').val()
+            + '&MATNR=' + $('#MATNR').val()
+            + '&MATNR_C=' + $('#MATNR_C').val()
+            + '&BWART_H=' + $('#BWART_H').val()
+            + '&BWART_C=' + $('#BWART_C').val()
+            + '&TransStartDate=' + $('#TransStartDate').val()
+            + '&TransEndDate=' + $('#TransEndDate').val()
+            + '&Status=' + $("input[name='Status']:checked").val()
+            +'&TimeType=' + $("input[name='TimeType']:checked").val();
+    }
+</script>

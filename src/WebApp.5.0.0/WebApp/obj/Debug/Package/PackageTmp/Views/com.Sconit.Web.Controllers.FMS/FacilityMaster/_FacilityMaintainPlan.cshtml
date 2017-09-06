@@ -1,0 +1,79 @@
+﻿@using com.Sconit.Web.Models.SearchModels.FMS
+
+<fieldset>
+<legend>@Resources.MD.Party.Party_CurrentParty:@ViewBag.PartyCode</legend>
+
+        <div class="search">
+            <div class="search-label">
+                <label for="MaintainPlan_Code">
+                    @Resources.FMS.FacilityMaintainPlan.FacilityMaintainPlan_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["MaintainPlanSearchModel"] != null ? ((MaintainPlanSearchModel)TempData["MaintainPlanSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Address_Name">
+                    @Resources.FMS.FacilityMaintainPlan.FacilityMaintainPlan_Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["MaintainPlanSearchModel"] != null ? ((MaintainPlanSearchModel)TempData["MaintainPlanSearchModel"]).Description : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch_FacilityMaintainPlan" onclick="btnSearch_FacilityMaintainPlan_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+             @Html.Button(Resources.SYS.Global.Button_New, "Url_FacilityMaster_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew_FacilityMaintainPlan"},
+                {"onclick","btnNew_FacilityMaintainPlan_Click()"}
+	        })
+            <button type="button" id="btnBack_FacilityMaintainPlan" onclick="location.href='@Url.Content("~/FacilityMaster/List")'">
+                @Resources.SYS.Global.Button_Back
+            </button>
+        </div>
+</fieldset>
+
+<script type="text/javascript">
+
+    function btnSearch_FacilityMaintainPlan_Click() {
+        var data = {
+            "FCID": $("#FCID").val(),
+            "Code": $("#Code").val(),
+            "Description": $("#Description").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/FacilityMaster/_FacilityMaintainPlanList/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnNew_FacilityMaintainPlan_Click() {
+        debugger;
+        var data = {
+            "FCID": $("#FCID").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/FacilityMaster/_FacilityMaintainPlanNew/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

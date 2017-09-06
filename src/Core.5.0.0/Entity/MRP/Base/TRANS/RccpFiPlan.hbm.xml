@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.RccpFiPlan, com.Sconit.Entity" table="MRP_RccpFiPlan" lazy="false"  dynamic-update="true">
+    <composite-id>
+      <key-property name="ProductLine" column="ProductLine" type="String" length="50" />
+      <key-property name="Machine" column="Machine" type="String" length="50" />
+      <key-property name="Item" column="Item" type="String" length="50" />
+      <key-property name="DateIndex" column="DateIndex" type="String" length="50" />
+      <key-property name="DateType" column="DateType"   />
+      <key-property name="PlanVersion" column="PlanVersion" type="DateTime"  />
+      <key-property name="Model" column="Model" type="String" length="50" />
+    </composite-id>
+
+    <property name="Qty" column="Qty" type="Double"  />
+    <property name="ModelRate" column="ModelRate" type="Double"  />
+  </class>
+</hibernate-mapping>

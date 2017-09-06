@@ -1,0 +1,40 @@
+﻿@model IEnumerable<com.Sconit.Entity.PRD.BomDetail>
+<script type="text/javascript">
+    function onLocationDataBinding(e) {
+        e.data = {
+            "Region": $("#Region").val(),
+            "checkRegion": true
+        };
+    }
+</script>
+<fieldset>
+    <legend>@Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_FeedQty_Detail</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("QtyBomDetail")
+
+       .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+                 .Editable(editing => editing.Mode(GridEditMode.InCell))
+                         .DataBinding(dataBinding =>
+                            dataBinding.Ajax()
+                                                    .Select("_SelectFeedQtyDetailList", "ProductLine", new { flow = ViewBag.Flow })
+                        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).ReadOnly(true).Title(Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_Item);
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly();
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            columns.ForeignKey(o => o.Uom, (IEnumerable<com.Sconit.Entity.MD.Uom>)ViewData["uoms"], "Code", "Code").Width(100);
+            columns.Bound(o => o.UnitCount).ReadOnly();
+
+            columns.Bound(o => o.FeedLocation).EditorTemplateName("LocationGridComboBox").Width(120);
+            columns.Bound(o => o.FeedQty);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+        )
+    @Html.Hidden("Region", (string)ViewBag.Region)
+</fieldset>

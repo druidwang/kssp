@@ -1,0 +1,58 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@Html.Partial("_AjaxMessage")
+<fieldset>
+    @(Html.Telerik().Grid<MrpExSectionPlan>()
+    .Name("MrpExSectionPlan")
+    .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+    .Columns(columns =>
+    {
+        columns.Bound(e => e.ProductLine).Width(30);
+        columns.Bound(e => e.Sequence).Width(30);
+        columns.Bound(e => e.Section).Width(60);
+        columns.Bound(e => e.SectionDescription).Width(120)
+            .ClientTemplate("<div title='<#= Logs #>'><#= SectionDescription #></div>");
+        columns.Bound(e => e.Speed).Width(50).ClientTemplate("<div><#=Speed #> × <#=SpeedTimes #></div>");
+        columns.Bound(e => e.StartTime).Format("{0:MM-dd HH:mm}").Width(80);
+        columns.Bound(e => e.WindowTime).Format("{0:MM-dd HH:mm}").Width(80);
+        columns.Bound(e => e.ShiftQty).Format("{0:0.##}").Width(40);
+        columns.Bound(e => e.Qty).Format("{0:0.##}").Width(60);
+        columns.Bound(e => e.CorrectionQty).Format("{0:0.##}").Width(60);
+        columns.Bound(e => e.AdjustQty).Format("{0:0.##}").Width(60);
+        columns.Bound(e => e.TotalQty).Format("{0:0.##}").Width(60);
+    })
+            //.ClientEvents(events => events.OnRowDataBound("orderDetails_onRowDataBound"))
+    .DetailView(details => details.ClientTemplate(Html.Telerik().Grid<MrpExItemPlan>()
+    .Name("MrpExItemPlan_<#= Id #>")
+    .Resizable(resizing => resizing.Columns(true))
+    .Columns(columns =>
+    {
+        columns.Bound(o => o.ProductLine).Width(30);
+        columns.Bound(o => o.Sequence).Width(40);
+        columns.Bound(o => o.Item).Width(60);
+        columns.Bound(o => o.ItemDescription).Width(120);
+        columns.Bound(e => e.StartTime).Format("{0:MM-dd HH:mm}").Width(80);
+        columns.Bound(e => e.WindowTime).Format("{0:MM-dd HH:mm}").Width(80);
+        columns.Bound(o => o.RateQty).Format("{0:0.##}").Width(50);
+        //columns.Bound(o => o.ShiftQty).Format("{0:0.##}").Width(40);
+        columns.Bound(o => o.Qty).Format("{0:0.##}").Width(60);
+        columns.Bound(o => o.CorrectionQty).Format("{0:0.##}").Width(60);
+        columns.Bound(o => o.AdjustQty).Format("{0:0.##}").Width(60);
+        columns.Bound(o => o.TotalQty).Format("{0:0.##}").Width(60);
+        columns.Bound(o => o.TotalLength).Format("{0:0.##}").Title("长度").Width(60);
+    })
+    .DataBinding(dataBinding => dataBinding.Ajax()
+    .Select("_MrpExItemPlanHierarchyAjax", "MrpPlanEx", new { Id = "<#= Id #>" }))
+    .Pageable(t => t.Enabled(false))
+    .Footer(false)
+        //.Sortable()
+        //.Filterable()
+    .ToHtmlString()
+
+    ))
+    .DataBinding(dataBinding => dataBinding.Ajax().Select("_MrpExSectionPlanHierarchyAjax", "MrpPlanEx", new { planVersion = ViewBag.PlanVersion, flow = ViewBag.Flow, dateIndex = ViewBag.DateIndex }))
+    .Pageable(paging => paging.PageSize(20).Enabled(false))
+    .Footer(false)
+            //.Scrollable(scrolling => scrolling.Height(580))
+    .Sortable()
+)
+</fieldset>

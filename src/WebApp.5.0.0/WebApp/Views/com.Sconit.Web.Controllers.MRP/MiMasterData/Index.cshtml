@@ -1,0 +1,55 @@
+﻿@model com.Sconit.Web.Models.MRP.MiMasterData
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mi_MasterData_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor-label-2">
+            <label>
+                每班清洗时间
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.MiCleanTime).DecimalDigits(2).MinValue(1).MaxValue(400).InputHtmlAttributes(new { style = "width: 80px; " })分钟
+        </div>
+        <div class="editor-label-2">
+            <label>
+                过滤能力
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.MiFilterCapacity).DecimalDigits(2).MinValue(1).MaxValue(1000).InputHtmlAttributes(new { style = "width: 80px; " })车/班
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnSave">
+                @Resources.SYS.Global.Button_Save</button>
+        </div>
+    </fieldset>
+}
+<style type="text/css">
+    .style1
+    {
+        height: 25.5pt;
+        width: 29pt;
+        color: white;
+        font-size: 10.0pt;
+        font-weight: 400;
+        font-style: normal;
+        text-decoration: none;
+        font-family: 宋体;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        border-style: none;
+        border-color: inherit;
+        border-width: medium;
+        padding: 0px;
+    }
+    table td
+    {
+        border-style: none;
+    }
+</style>
+

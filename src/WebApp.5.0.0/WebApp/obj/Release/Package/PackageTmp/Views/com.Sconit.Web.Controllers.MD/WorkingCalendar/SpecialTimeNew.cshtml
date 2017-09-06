@@ -1,0 +1,135 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.SpecialTime
+@Html.Partial("_AjaxMessage")
+@using (Html.BeginForm("SpecialTimeNew", "WorkingCalendar"))
+{
+    <fieldset>
+        <legend>@Resources.MD.WorkingCalendar.SpecialTime_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Region)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_RegionComboBox", "Common", new
+           {
+               isChange = true,
+               controlName = "Region",
+               controlId = "SpecialTimeRegion",
+               selectedValue = Model != null ? Model.Region : string.Empty
+           });
+                }
+                @Html.ValidationMessageFor(model => model.Region)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-2">
+             @{
+        Html.RenderAction("_WorkingCalendarFlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                controlId = "SpecialTimeFlow",
+                selectedValue = Model != null ? Model.Flow : string.Empty
+            });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Type)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.WorkingCalendarType,
+               controlName = "Type",
+               controlId = "SpecialTimeType",
+               selectedValue = Model != null ? (int)Model.Type : 0
+           });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DateTimePickerFor(model => model.StartTime)
+                @Html.ValidationMessageFor(model => model.StartTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EndTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DateTimePickerFor(model => model.EndTime)
+                @Html.ValidationMessageFor(model => model.EndTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Remarks)
+            </div>
+            <div class="editor-field-2">
+            @Html.TextBoxFor(model=>model.Remarks)
+            </div>
+            
+        </div>
+        <div class="editor-footer">
+            <input type="submit" value="@Resources.SYS.Global.Button_New" />
+            <button type="button" id="btnBack" onclick="btnBackSpeTime2_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+
+<script language="javascript" type="text/javascript">
+    function btnBackSpeTime2_Click() {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/WorkingCalendar/SpecialTimeList/",
+            data: "",
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(data);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("form[action$='SpecialTimeNew']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(response);
+            });
+            return false;
+        });
+    });
+
+    function WorkingCalendarFlow_DataBinding(e) {
+        e.data = {
+            "text": e.value,
+            "region": $("#SpecialTimeRegion").val()
+        }
+    }
+
+    function Region_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        }
+        $("#SpecialTimeFlow").data("tComboBox").value("");
+        $("#SpecialTimeFlow").data("tComboBox").reload();
+    }
+</script>

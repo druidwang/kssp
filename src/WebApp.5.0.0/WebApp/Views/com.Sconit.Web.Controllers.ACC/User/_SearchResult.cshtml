@@ -1,0 +1,59 @@
+﻿@model IEnumerable<com.Sconit.Entity.ACC.User>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("UserGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "User", new { ID = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.FirstName);
+            columns.Bound(o => o.LastName);
+            columns.Bound(o => o.Email);
+            columns.Bound(o => o.MobilePhone);
+            columns.Bound(o => o.LanguageDescription);
+            columns.Bound(o => o.Depart);
+            columns.Bound(o => o.Position);
+            columns.Bound(o => o.UserTypeDescription);
+            columns.Bound(o => o.LastPasswordModifyDate);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />"); 
+        })
+      
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "User"))
+        .ClientEvents(events => events.OnDataBinding("UserGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function UserGrid_OnDataBinding(e) {
+            if (e.sortedColumns.length > 0) {
+                if (e.sortedColumns[0].member == "LanguageDescription") {
+                    e.sortedColumns[0].member = "Language";
+                }
+            }
+            e.data = {
+                Code: $('#Code').val(),
+                FirstName: $('#FirstName').val(),
+                LastName: $('#LastName').val(),
+                IsActive: $("#IsActive").is(':checked'),
+                Depart: $('#Depart').val(),
+                Position: $('#Position').val(),
+                Type: $('#Type').val(),
+            };
+        } 
+    </script>
+</fieldset>

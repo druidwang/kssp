@@ -1,0 +1,83 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<fieldset>
+    @using (Html.BeginForm("List", "DeliveryBarCode"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="DeliveryBarCode_DeliveryBarCodeId">
+                    @Resources.WMS.DeliveryBarCode.DeliveryBarCode_BarCode
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BarCode", TempData["DeliveryBarCodeSearchModel"] != null ? ((DeliveryBarCodeSearchModel)TempData["DeliveryBarCodeSearchModel"]).BarCode : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="PickTask_Item">
+                    @Resources.WMS.DeliveryBarCode.DeliveryBarCode_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new
+    {
+        controlName = "Flow",
+        type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+        selectedValue = TempData["DeliveryBarCodeSearchModel"] != null ? ((DeliveryBarCodeSearchModel)TempData["DeliveryBarCodeSearchModel"]).Flow : string.Empty
+    });
+                }
+            </div>
+            <div class="search-label">
+                <label for="DeliveryBarCode_Item">
+                    @Resources.WMS.DeliveryBarCode.DeliveryBarCode_Item
+                </label>
+            </div>
+            <div class="search-field">
+
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["DeliveryBarCodeSearchModel"] != null ? ((DeliveryBarCodeSearchModel)TempData["DeliveryBarCodeSearchModel"]).Item : string.Empty
+            });
+                    
+                }
+            </div>
+             <div class="search-label">
+                <label for="DeliveryBarCode_CreateUserName">
+                    @Resources.WMS.DeliveryBarCode.DeliveryBarCode_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", TempData["DeliveryBarCodeSearchModel"] != null ? ((DeliveryBarCodeSearchModel)TempData["DeliveryBarCodeSearchModel"]).CreateUserName : (string)@ViewBag.CreateUserName)
+            </div>
+            <div class="search-label">
+                <label for="DeliveryBarCode_StartDate">
+                    @Resources.WMS.DeliveryBarCode.DeliveryBarCode_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("StartDate")
+.Value(TempData["DeliveryBarCodeSearchModel"] != null ? ((DeliveryBarCodeSearchModel)TempData["DeliveryBarCodeSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_EndDate">
+                    @Resources.WMS.DeliveryBarCode.DeliveryBarCode_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("EndDate")
+            .Value(TempData["DeliveryBarCodeSearchModel"] != null ? ((DeliveryBarCodeSearchModel)TempData["DeliveryBarCodeSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnPrint" onclick="btnPrintClick()" style="display: none">@Resources.SYS.Global.Button_Print</button>
+        </div>
+    }
+</fieldset>

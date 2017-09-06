@@ -1,0 +1,90 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.Location
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Location_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MD.Location.Location_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Code)
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.SAPLocation)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.SAPLocation)
+                @Html.ValidationMessageFor(model => model.SAPLocation)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Region)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_RegionComboBox", "Common", new
+    {
+        controlName = "Region",
+        selectedValue = Model != null ? Model.Region : string.Empty
+    });
+                }
+                @Html.ValidationMessageFor(model => model.Region)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsActive", true)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.AllowNegative)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("AllowNegative", false)
+            </div>
+            @*<div  class="editor-label-2">
+                 @Html.LabelFor(model => model.EnableAdvanceWarehouseManagment)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("EnableAdvanceWarehouseManagment", false)
+            </div>
+            <div  class="editor-label-2">
+                @Html.LabelFor(model => model.IsConsignment)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsConsignment", false)
+            </div>*@
+         @*   <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsMRP)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsMRP", false)
+            </div>
+                  <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsConsignment)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsConsignment", false)
+            </div>*@
+            <input id="PartSuffix" name="PartSuffix" value="0" type="hidden" />
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Location/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

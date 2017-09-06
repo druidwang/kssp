@@ -1,0 +1,1 @@
+alter table WMS_PickUser drop column Version;

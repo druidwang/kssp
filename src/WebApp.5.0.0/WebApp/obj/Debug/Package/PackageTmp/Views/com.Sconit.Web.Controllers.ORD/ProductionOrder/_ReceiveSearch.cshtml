@@ -1,0 +1,74 @@
+﻿@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.SYS
+
+<script type="text/javascript">
+    function Flow_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+            $("#fdReciveOrderDetail").hide();
+        }
+        else {
+            ListDetail(e.value);            
+        }
+    }
+
+    function ListDetail(flow)
+    {
+        var data = {
+            "flow": flow
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ProductionOrder/_MIReceiveOrderDetailList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#fdReciveOrderDetail").html(data);
+                $("#fdReciveOrderDetail").show();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>
+
+<fieldset>
+    @using (Html.BeginForm("ReceiveList", "ProductionOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow_Production
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                resourceGroup = ViewBag.ResourceGroup,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Flow : string.Empty,
+                isChange = true
+            });
+                }
+            </div>
+        </div>
+    }
+</fieldset>
+<div id="fdReciveOrderDetail" style="display: none;"></div>
+
+
+
+
+

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.ItemAverage>
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+               .Name("ItemAverageGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Item);
+        })
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                            .Select("_AjaxList", "ItemAverage")
+                            .Delete("_Delete", "ItemAverage"))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).Title(Resources.CUST.ItemTrace.ItemTrace_Item); //.EditorTemplateName("ItemGridForeignKey");
+
+            columns.Command(commands =>
+            {
+               commands.Delete();
+            });
+        }).ClientEvents(events =>
+        {
+            events
+                .OnDataBinding("ItemAverage_OnDataBinding");
+        })
+        .EnableCustomBinding(true)
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable()
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function ItemAverage_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val()
+            };
+        } 
+    </script>
+</fieldset>

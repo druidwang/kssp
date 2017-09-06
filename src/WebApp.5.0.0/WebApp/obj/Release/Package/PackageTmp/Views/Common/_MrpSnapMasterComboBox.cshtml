@@ -1,0 +1,36 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "MrpSnapMaster_Change" : "EmptyChange";
+    bool enable = ViewBag.Enable == null ? true : ViewBag.Enable;
+    bool isRelease = ViewBag.IsRelease == null ? false : ViewBag.IsRelease;
+}
+@{
+    if (enable)
+    {
+    @(Html.Telerik().ComboBox()
+      .HiddenInputHtmlAttributes(new { id = id })
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax().Select("_MrpSnapMasterAjaxLoading", "Common", new
+                {
+                    isRelease = isRelease,
+                    includeBlankOption = ViewBag.IncludeBlankOption,
+                    SnapType = ViewBag.SnapType
+                }))
+                .ClientEvents(events => events.OnChange(onChangeName))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                )
+    }
+    else
+    {
+
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)     }
+
+    }
+    
+}

@@ -1,0 +1,36 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            //columns.Bound(o => o.ReferenceItemCode).ReadOnly();
+            columns.Bound(o => o.UnitCount).Format("{0:0.###}");
+            columns.Bound(o => o.Uom).ReadOnly();
+            //columns.Bound(o => o.UnitCountDescription).ReadOnly();
+            //columns.Bound(o => o.LocationFrom).ReadOnly();
+            //columns.Bound(o => o.LocationTo).ReadOnly();
+            columns.Bound(o => o.Direction).ReadOnly();
+            columns.Bound(o => o.Remark).ReadOnly();
+            columns.Bound(o => o.InvQty).Format("{0:0.###}").ReadOnly();
+            columns.Bound(o => o.RequiredQty).Format("{0:0.###}").ReadOnly();
+            columns.Template(
+     @<text>
+    <input name="OrderedQty" type="text" value="@item.OrderedQty.ToString("0.##")" title="OrderedQty" style="width:60px"/>
+    </text>).Title("订单数").Width(70).HtmlAttributes(new { style = "text-align:center" });
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+)
+</fieldset>

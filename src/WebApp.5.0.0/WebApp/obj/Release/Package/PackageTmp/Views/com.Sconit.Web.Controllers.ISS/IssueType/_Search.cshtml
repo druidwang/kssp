@@ -1,0 +1,47 @@
+﻿@using com.Sconit.Entity.ISS
+@using com.Sconit.Web.Models.SearchModels.ISS
+<fieldset>
+    @using (Html.BeginForm("List", "IssueType"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Code">
+                    @Resources.ISS.IssueType.Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["IssueTypeSearchModel"] != null ? ((IssueTypeSearchModel)TempData["IssueTypeSearchModel"]).Code : string.Empty)
+            </div>
+
+			<div class="search-label">
+                <label for="Description">
+                    @Resources.ISS.IssueType.Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["IssueTypeSearchModel"] != null ? ((IssueTypeSearchModel)TempData["IssueTypeSearchModel"]).Description : string.Empty)
+            </div>
+
+			<div class="search-label">
+                <label for="User_IsActive">
+                    @Resources.ISS.IssueType.IsActive
+                </label>
+            </div>
+            <div class="search-field">
+               @Html.CheckBox("IsActive", TempData["IssueTypeSearchModel"] != null ? ((IssueTypeSearchModel)TempData["IssueTypeSearchModel"]).IsActive : true)
+               
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+        </div>    
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+			<button type="button" id="btnNew" onclick="location.href='@Url.Content("~/IssueType/New")'">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+    }
+</fieldset>

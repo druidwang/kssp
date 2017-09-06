@@ -1,0 +1,38 @@
+<%@ CodeTemplate Language="C#" TargetLanguage="C#" Description="Generate the service class." %>
+<%@ Property Name="NameSpace" Type="String" Default="com.Sconit" Category="EntityClass" Description="The assembly that contains the entity class." %>
+<%@ Property Name="ClassName" Type="String" Category="EntityClass" Description="The entity class name." %>
+<%@ Property Name="ModuleName" Type="String" Category="ModuleGroup" Description="The module group which contains the entity, for example, Security." %>
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using Castle.Services.Transaction;
+using com.Sconit.Persistence.<%=ModuleName%>;
+
+//TODO: Add other using statements here.
+
+namespace <%=this.NameSpace%>.Service.<%=ModuleName%>.Impl
+{
+    [Transactional]
+    public class <%=ClassName%>Mgr : <%=ClassName%>BaseMgr, I<%=ClassName%>Mgr
+    {
+        #region Customized Methods
+
+        //TODO: Add other methods here.
+
+        #endregion Customized Methods
+    }
+}
+
+
+#region Extend Class
+
+namespace <%=this.NameSpace%>.Service.Ext.<%=ModuleName%>.Impl
+{
+    [Transactional]
+    public partial class <%=ClassName%>MgrE : <%=this.NameSpace%>.Service.<%=ModuleName%>.Impl.<%=ClassName%>Mgr, I<%=ClassName%>MgrE
+    {
+    }
+}
+
+#endregion Extend Class

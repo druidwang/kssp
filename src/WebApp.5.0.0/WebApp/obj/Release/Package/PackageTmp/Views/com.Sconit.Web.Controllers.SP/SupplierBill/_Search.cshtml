@@ -1,0 +1,98 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.BIL
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("List", "SupplierBill"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.BIL.TransportBillMaster.TransportBillMaster_BillNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BillNo", TempData["BillMasterSearchModel"] != null ? ((BillMasterSearchModel)TempData["BillMasterSearchModel"]).BillNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.BIL.TransportBillMaster.TransportBillMaster_Status
+
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.OrderStatus,
+            controlName = "Status",
+            includeBlankOption = true,
+            isSupplier = true,
+            selectedValue = TempData["BillMasterSearchModel"] != null ? ((BillMasterSearchModel)TempData["BillMasterSearchModel"]).Status : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.BIL.TransportBillMaster.TransportBillMaster_PartyNm
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_SupplierComboBox", "Common", new
+       {
+           controlName = "Party",
+           selectedValue = TempData["BillMasterSearchModel"] != null ? ((BillMasterSearchModel)TempData["BillMasterSearchModel"]).Party : string.Empty
+       });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.BIL.TransportBillMaster.TransportBillMaster_ExternalBillNo
+
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("ExternalBillNo", TempData["BillMasterSearchModel"] != null ? ((BillMasterSearchModel)TempData["BillMasterSearchModel"]).ExternalBillNo : string.Empty)
+            </div>
+
+            <div class="search-label">
+                <label>
+                    @Resources.BIL.TransportBillMaster.TransportBillMaster_StartTime
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("StartTime")
+                .Value(TempData["BillMasterSearchModel"] != null ? ((BillMasterSearchModel)TempData["BillMasterSearchModel"]).StartTime : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.BIL.TransportBillMaster.TransportBillMaster_EndTime
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("EndTime")
+                .Value(TempData["BillMasterSearchModel"] != null ? ((BillMasterSearchModel)TempData["BillMasterSearchModel"]).EndTime : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+                <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+
+    function ExportClick() {
+        //debugger
+        location.href = '/SupplierBill/ExportXLSBillNotice/?BillNo=' + $('#BillNo').val() + '&ExternalBillNo=' + $('#ExternalBillNo').val()
+                        + '&Status=' + $('#Status').val() + '&Party=' + $('#Party').val() + '&EndTime=' + $('#EndTime').val()
+                        + '&StartTime=' + $('#StartTime').val()
+    }
+</script>

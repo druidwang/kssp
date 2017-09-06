@@ -1,0 +1,61 @@
+﻿@model IEnumerable<com.Sconit.Entity.SCM.FlowMaster>
+@{
+    Layout = null;
+}
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("FlowMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "SubConctractingTransferFlow", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.PartyFrom).Title(Resources.SCM.FlowMaster.FlowMaster_TransferPartyFrom);
+            columns.Bound(o => o.PartyTo).Title(Resources.SCM.FlowMaster.FlowMaster_TransferPartyTo); ;
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />"); ;
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SubConctractingTransferFlow"))
+        .ClientEvents(events => events.OnDataBinding("UserGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function UserGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                LocationFrom: $('#LocationFrom').val(),
+                LocationTo: $('#LocationTo').val(), 
+                IsActive: $('#IsActive').is(':checked'),
+                Description: $('#Description').val(),
+                Supplier: $('#Supplier').val(),
+                Region: $('#Region').val()
+            };
+        } 
+    </script>
+</fieldset>

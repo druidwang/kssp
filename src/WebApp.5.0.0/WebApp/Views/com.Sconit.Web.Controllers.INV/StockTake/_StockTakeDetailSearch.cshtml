@@ -1,0 +1,163 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    <legend>@Resources.INV.StockTake.StockTakeDetail_StNo:@ViewBag.StNo</legend>
+    @using (Html.BeginForm("_StockTakeDetail", "StockTake"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="StockTakeDetail_Bin">
+                    @Resources.INV.StockTake.StockTakeDetail_Location
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            ControlId = "LocationId",
+            controlName = "Location",
+            checkRegion = true,
+            isChange = true,
+            selectedValue = TempData["StockTakeDetailSearchModel"] != null ? ((StockTakeDetailSearchModel)TempData["StockTakeDetailSearchModel"]).Location : null
+
+        });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="StockTakeDetail_Item">
+                    @Resources.INV.StockTake.StockTakeDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+
+        Html.RenderAction("_ItemComboBox", "Common", new { controlName = "ItemCode", selectedValue = ViewBag.ItemCode != null ? ViewBag.ItemCode : string.Empty });
+        
+                }
+            </div>
+            @{
+        if (ViewBag.IsScanHu)
+        {
+                <div class="search-label">
+                    <div id="div_LocationBinDropDownListTitle">
+                        <label for="StockTakeDetail_Bin">
+                            @Resources.INV.StockTake.StockTakeDetail_Bin
+                        </label>
+                    </div>
+                </div>
+           
+                <div class="search-field">
+                    <div id="div_LocationBinDropDownList">
+                        @{
+            Html.RenderAction("_LocationBinComboBox", "Common", new
+            {
+                controlName = "LocationBin",
+                selectedValue = TempData["StockTakeDetailSearchModel"] != null ? ((StockTakeDetailSearchModel)TempData["StockTakeDetailSearchModel"]).LocationBin : null
+
+            });
+                        }
+                    </div>
+                </div>
+        }
+            }
+            @if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.InProcess.ToString() && !ViewBag.IsScanHu)
+            {
+                <div class="search-label">
+                    <label>
+                        @* <a href='/Resource/Templates/UploadTemplate/StockTake.xls'>@Resources.EXT.PageLan.TemplateDownload</a>*@
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().Upload()
+                    .Name("attachments")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("ImportStcokTakeDetail", "StockTake", new { stNo = ViewBag.StNo })
+                    .AutoUpload(true))
+                    .ClientEvents(e => e.OnSuccess("TelerikonUpload_OnSuccess")))
+                </div>
+            }
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("stNo", (string)ViewBag.StNo)
+            @Html.Hidden("Status", (string)ViewBag.Status)
+            @Html.Hidden("IsScanHu", (bool)ViewBag.IsScanHu)
+            <button type="button" id="btnSearch" onclick="btnSearchStockTakeDetail_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/StockTake/StockTakeMasterList")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    }
+</fieldset>
+<script language="javascript" type="text/javascript">
+    function btnSearchStockTakeDetail_Click() {
+        
+        var data = {
+            "stNo": $("#StNo").val(),
+            "ItemCode": $("#ItemCode").val(),
+            "Location": $("#LocationId").val(),
+            "LocationBin": $("#LocationBin").val(),
+            "Status": $("#Status").val(),
+            "IsScanHu": $("#IsScanHu").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/StockTake/_StockTakeDetail/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        if ($("#status").val() == "Close" || $("#status").val() == "Complete") {
+            $("#btnExportDetail").hide();
+            $("#div_LocationBinDropDownList").hide();
+            $("#div_LocationBinDropDownListTitle").hide();
+        }
+        if ($("#status").val() == "Close" || $("#status").val() == "InProcess") {
+            $("#btnAdjust").hide();
+            $("#btnAllAdjust").hide();
+            $("#btnClose").hide();
+        }
+    });
+
+
+    function onUploadSuccess(e) {
+
+        $('.t-upload-files').remove();
+        var successMessages = "@Resources.INV.StockTake.StockTakeDetailImported";
+
+        $message.success(successMessages);
+    }
+
+    function onUploadError(e) {
+
+        $('.t-upload-files').remove();
+        var errorMessages = e.XMLHttpRequest.responseText;
+        $message.error(errorMessages);
+
+        e.preventDefault();
+    }
+
+    function LocationBin_DataBinding(e) {
+        e.data = {
+            Location: $('#Location').val()
+        }
+    }
+    function ExportClick() {
+        
+        location.href = '/StockTake/ExportSTDetailXLS/?stNo=' + $('#StNo').val()
+            + '&ItemCode=' + $('#ItemCode').val() + '&Location=' + $('#LocationId').val()
+            + '&IsScanHu=' + $('#IsScanHu').val()
+            + '&LocationBin=' + $('#LocationBin').val();
+    }
+</script>

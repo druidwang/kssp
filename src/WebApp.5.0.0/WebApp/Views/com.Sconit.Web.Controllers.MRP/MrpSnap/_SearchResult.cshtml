@@ -1,0 +1,44 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpSnapMaster>
+<fieldset id="fldList">
+    @(Html.Telerik().Grid(Model)
+         .Name("MrpSnapMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.SnapTime);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.SnapTime).ClientTemplate(Html.ActionLink("<#= SnapTimeShow #>", "Edit", "MrpSnap", new { snapTime = "<#= SnapTimeShow #>" }, null).ToString());
+            columns.Bound(o => o.StatusDescription);
+            columns.Bound(o => o.TypeDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.IsRelease).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsRelease' <#= IsRelease? checked='checked' : '' #> />");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "MrpSnap"))
+        .ClientEvents(events => events.OnDataBinding("MrpSnapMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function MrpSnapMasterGrid_OnDataBinding(e) {
+            e.data = {
+                SnapTimeStart: $('#SnapTimeStart').val(),
+                SnapTimeEnd: $('#SnapTimeEnd').val(),
+                IsRelease: $("input[type=checkbox][name=IsRelease]:checked").val(),
+                SnapType: $('#SnapType').val()
+            };
+        } 
+    </script>
+</fieldset>

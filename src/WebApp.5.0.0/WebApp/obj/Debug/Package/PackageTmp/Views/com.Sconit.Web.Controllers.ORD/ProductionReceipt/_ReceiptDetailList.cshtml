@@ -1,0 +1,44 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.ReceiptDetail>
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ReceiptDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+             columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.ReceiptNo);
+            columns.Bound(o => o.OrderNo).Title(@Resources.ORD.ReceiptDetail.ReceiptDetail_OrderNo_Production);
+            columns.Bound(o => o.Item).Width(100);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.ReceivedQty).Width(100);
+            })
+            .DetailView(detailView => detailView.Template(
+            @<text>
+            @(Html.Telerik().Grid(item.ReceiptLocationDetails)
+                            .Name("Orders_" + item.Id)
+                            .Columns(columns =>
+                            {
+                                columns.Bound(o => o.ReceiptNo);
+                                columns.Bound(o => o.Item);
+                                columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+                                columns.Bound(o => o.HuId);
+                                columns.Bound(o => o.Qty);
+                            })
+
+                    )
+            </text>
+            ))
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+            )
+</fieldset>
+

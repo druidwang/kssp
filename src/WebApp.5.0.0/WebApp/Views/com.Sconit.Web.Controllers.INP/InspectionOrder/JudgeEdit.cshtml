@@ -1,0 +1,30 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_InspectionOrder_Judge" });
+}
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.INP.InspectMaster.InspectMaster_Tab_InspectDetail)
+               .LoadContentFrom("_JudgeEdit", "InspectionOrder", new { id = Model })
+               .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+               
+            tabstrip.Add()
+                .Text(Resources.INP.InspectMaster.InspectMaster_Tab_InspectResult)
+                .LoadContentFrom("InspectionResult", "InspectionOrder", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}

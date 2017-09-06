@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.MrpExItemPlan, com.Sconit.Entity" table="MRP_MrpExItemPlan" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Sequence" column="Sequence" type="Int32"/>
+    <property name="SectionId" column="SectionId" type="Int32"/>
+    <property name="ProductLine" column="ProductLine" type="String"  length="50" />
+    <property name="Item" column="Item" type="String"  length="50" />
+    <property name="DateIndex" column="DateIndex" type="String"  length="10" />
+    <property name="PlanVersion" column="PlanVersion" type="DateTime"  />
+    <property name="Section" column="Section" type="String" length="50"/>
+    <property name="RateQty" column="RateQty" type="Double"/>
+    <property name="PlanQty" column="PlanQty" type="Double"/>
+    <property name="Qty" column="Qty" type="Double"/>
+    <property name="CorrectionQty" column="CorrectionQty" type="Double"/>
+    <property name="AdjustQty" column="AdjustQty" type="Double"/>
+    <property name="UnitCount" column="UnitCount" type="Double"/>
+    <!--<property name="Shift" column="Shift" type="String"  length="50" />-->
+    <property name="ItemDescription" column="ItemDescription" type="String"  length="100" />
+    <property name="UsedQty" column="UsedQty" type="Double"/>
+    <property name="InvQty" column="InvQty" type="Double"/>
+
+    <property name="PlanDate" column="PlanDate" type="DateTime"/>
+    <property name="IsOld" column="IsOld" type="Boolean"/>
+  </class>
+</hibernate-mapping>

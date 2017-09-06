@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_MrpSnap_MasterDataCheck" });
+}
+<fieldset>
+    <div>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" id="btnCheckRedundanceFlow" onclick="CheckCheckRedundanceFlow(this)">
+            重复路线检查</button>
+        <button type="button" id="btnOnlyInProductLine" onclick="CheckOnlyInProductLine(this)">
+            生产线检查</button>
+        <button type="button" id="btnOnlyNotInProductLine" onclick="CheckOnlyNotInProductLine(this)">
+            非生产线检查</button>
+        <button type="button" id="btnCheckFlow" onclick="CheckFlow(this)">
+            物流完整性检查</button>
+        <button type="button" id="btnCheckUom" onclick="CheckUom(this)">
+            单位检查</button>
+        <button type="button" id="btnCheckProdExFlowDet" onclick="CheckProdExFlowDet(this)">
+            挤出生产线明细检查</button>
+    </div>
+</fieldset>
+<div id="divLog">
+</div>
+<script type="text/javascript">
+    function CheckProdExFlowDet(e) {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/MrpSnap/_CheckProdExFlowDet/",
+            cache: false,
+            success: function (data, textStatus) {
+                $("#divLog").html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function CheckOnlyInProductLine(e) {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/MrpSnap/_CheckOnlyInProductLine/",
+            cache: false,
+            success: function (data, textStatus) {
+                $("#divLog").html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+        //$("#divLog").load("/MrpSnap/_CheckOnlyInProductLine/");
+    }
+
+    function CheckOnlyNotInProductLine(e) {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/MrpSnap/_CheckOnlyNotInProductLine/",
+            cache: false,
+            success: function (data, textStatus) {
+                $("#divLog").html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+        //$("#divLog").load("/MrpSnap/_CheckOnlyNotInProductLine/");
+    }
+
+    function CheckCheckRedundanceFlow(e) {
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSnap/_CheckCheckRedundanceFlow/",
+            cache: false,
+            success: function (data, textStatus) {
+                //DisplayJsonMessages(data);
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function CheckFlow(e) {
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSnap/_CheckFlow/",
+            cache: false,
+            success: function (data, textStatus) {
+                //DisplayJsonMessages(data);
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function CheckUom(e) {
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSnap/_CheckUom/",
+            cache: false,
+            //data: null,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>

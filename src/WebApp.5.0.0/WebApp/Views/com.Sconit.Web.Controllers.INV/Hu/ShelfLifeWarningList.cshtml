@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Inventory_ShelfLifeWarning" });
+}
+
+@Html.Partial("_ShelfLifeWarningSearch")
+
+@Html.Partial("_ShelfLifeWarningSearchResult")

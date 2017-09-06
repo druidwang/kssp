@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Menu_Issue_Admin" xml:space="preserve">
+    <value>异常管理</value>
+  </data>
+  <data name="Url_Address_Delete" xml:space="preserve">
+    <value>删除地址</value>
+  </data>
+  <data name="Url_Address_Edit" xml:space="preserve">
+    <value>编辑地址</value>
+  </data>
+  <data name="Url_Address_View" xml:space="preserve">
+    <value>查看地址</value>
+  </data>
+  <data name="Url_ASNGap_View" xml:space="preserve">
+    <value>收发差异查询</value>
+  </data>
+  <data name="Url_Container_Delete" xml:space="preserve">
+    <value>删除容器</value>
+  </data>
+  <data name="Url_Container_Edit" xml:space="preserve">
+    <value>编辑容器</value>
+  </data>
+  <data name="Url_Container_View" xml:space="preserve">
+    <value>查看容器</value>
+  </data>
+  <data name="Url_Currency_Delete" xml:space="preserve">
+    <value>删除货币</value>
+  </data>
+  <data name="Url_Currency_Edit" xml:space="preserve">
+    <value>编辑货币</value>
+  </data>
+  <data name="Url_Currency_View" xml:space="preserve">
+    <value>查看货币</value>
+  </data>
+  <data name="Url_CustomerGoodsFlow_Delete" xml:space="preserve">
+    <value>删除客供品路线</value>
+  </data>
+  <data name="Url_CustomerGoodsFlow_Edit" xml:space="preserve">
+    <value>编辑客供品路线</value>
+  </data>
+  <data name="Url_CustomerGoodsFlow_View" xml:space="preserve">
+    <value>查看客供品路线</value>
+  </data>
+  <data name="Url_Customer_Delete" xml:space="preserve">
+    <value>删除客户</value>
+  </data>
+  <data name="Url_Customer_Edit" xml:space="preserve">
+    <value>编辑客户</value>
+  </data>
+  <data name="Url_Customer_View" xml:space="preserve">
+    <value>查看客户</value>
+  </data>
+  <data name="Url_DistributionFlow_Delete" xml:space="preserve">
+    <value>删除销售路线</value>
+  </data>
+  <data name="Url_DistributionFlow_Edit" xml:space="preserve">
+    <value>编辑销售路线</value>
+  </data>
+  <data name="Url_DistributionFlow_View" xml:space="preserve">
+    <value>查看销售路线</value>
+  </data>
+  <data name="Url_DistributionIpMaster_View" xml:space="preserve">
+    <value>查看送货单</value>
+  </data>
+  <data name="Url_DistributionPriceList_Delete" xml:space="preserve">
+    <value>删除价格单</value>
+  </data>
+  <data name="Url_DistributionPriceList_Edit" xml:space="preserve">
+    <value>编辑价格单</value>
+  </data>
+  <data name="Url_DistributionPriceList_View" xml:space="preserve">
+    <value>查看价格单</value>
+  </data>
+  <data name="Url_EntityPreference_Delete" xml:space="preserve">
+    <value>删除选项</value>
+  </data>
+  <data name="Url_EntityPreference_Edit" xml:space="preserve">
+    <value>编辑选项</value>
+  </data>
+  <data name="Url_EntityPreference_View" xml:space="preserve">
+    <value>查看选项</value>
+  </data>
+  <data name="Url_FinanceCalendar_Delete" xml:space="preserve">
+    <value>删除会计期间</value>
+  </data>
+  <data name="Url_FinanceCalendar_Edit" xml:space="preserve">
+    <value>编辑会计期间</value>
+  </data>
+  <data name="Url_FinanceCalendar_View" xml:space="preserve">
+    <value>查看会计期间</value>
+  </data>
+  <data name="Url_InspectionOrder" xml:space="preserve">
+    <value>报验单</value>
+  </data>
+  <data name="Url_InspectionOrder_New" xml:space="preserve">
+    <value>新建报验单</value>
+  </data>
+  <data name="Url_InspectionOrder_View" xml:space="preserve">
+    <value>查看报验单</value>
+  </data>
+  <data name="Url_Inventory_OutMiscOrder_View" xml:space="preserve">
+    <value>查看计划外出库</value>
+  </data>
+  <data name="Url_IssueAddress_Delete" xml:space="preserve">
+    <value>删除地址</value>
+  </data>
+  <data name="Url_IssueAddress_Edit" xml:space="preserve">
+    <value>编辑地址</value>
+  </data>
+  <data name="Url_IssueAddress_View" xml:space="preserve">
+    <value>查看地址</value>
+  </data>
+  <data name="Url_IssueDetail_View" xml:space="preserve">
+    <value>异常明细</value>
+  </data>
+  <data name="Url_IssueLevel_Delete" xml:space="preserve">
+    <value>删除等级</value>
+  </data>
+  <data name="Url_IssueLevel_Edit" xml:space="preserve">
+    <value>编辑等级</value>
+  </data>
+  <data name="Url_IssueLevel_View" xml:space="preserve">
+    <value>查看等级</value>
+  </data>
+  <data name="Url_IssueLog_View" xml:space="preserve">
+    <value>异常跟踪</value>
+  </data>
+  <data name="Url_IssueNo_Delete" xml:space="preserve">
+    <value>删除异常码</value>
+  </data>
+  <data name="Url_IssueNo_Edit" xml:space="preserve">
+    <value>编辑异常码</value>
+  </data>
+  <data name="Url_IssueNo_View" xml:space="preserve">
+    <value>查看异常码</value>
+  </data>
+  <data name="Url_IssueTypeTo_Delete" xml:space="preserve">
+    <value>删除发送人</value>
+  </data>
+  <data name="Url_IssueTypeTo_Edit" xml:space="preserve">
+    <value>编辑发送人</value>
+  </data>
+  <data name="Url_IssueTypeTo_View" xml:space="preserve">
+    <value>查看发送人</value>
+  </data>
+  <data name="Url_IssueType_Delete" xml:space="preserve">
+    <value>删除分类</value>
+  </data>
+  <data name="Url_IssueType_Edit" xml:space="preserve">
+    <value>编辑分类</value>
+  </data>
+  <data name="Url_IssueType_View" xml:space="preserve">
+    <value>查看分类</value>
+  </data>
+  <data name="Url_Issue_Batch" xml:space="preserve">
+    <value>批量处理</value>
+  </data>
+  <data name="Url_Issue_Delete" xml:space="preserve">
+    <value>删除异常</value>
+  </data>
+  <data name="Url_Issue_Edit" xml:space="preserve">
+    <value>编辑异常</value>
+  </data>
+  <data name="Url_Issue_New" xml:space="preserve">
+    <value>新建异常</value>
+  </data>
+  <data name="Url_Issue_View" xml:space="preserve">
+    <value>查看异常</value>
+  </data>
+  <data name="Url_ItemCategory_Delete" xml:space="preserve">
+    <value>删除产品类</value>
+  </data>
+  <data name="Url_ItemCategory_Edit" xml:space="preserve">
+    <value>编辑产品类</value>
+  </data>
+  <data name="Url_ItemCategory_View" xml:space="preserve">
+    <value>查看产品类</value>
+  </data>
+  <data name="Url_Item_Delete" xml:space="preserve">
+    <value>删除物料</value>
+  </data>
+  <data name="Url_Item_Edit" xml:space="preserve">
+    <value>编辑物料</value>
+  </data>
+  <data name="Url_Item_View" xml:space="preserve">
+    <value>查看物料</value>
+  </data>
+  <data name="Url_Location_Delete" xml:space="preserve">
+    <value>删除库位</value>
+  </data>
+  <data name="Url_Location_Edit" xml:space="preserve">
+    <value>编辑库位</value>
+  </data>
+  <data name="Url_Location_View" xml:space="preserve">
+    <value>查看库位</value>
+  </data>
+  <data name="Url_OrderMstr_Distribution_View" xml:space="preserve">
+    <value>发货单查询</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement" xml:space="preserve">
+    <value>要货单</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement_batchProcess" xml:space="preserve">
+    <value>批量处理</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement_Edit" xml:space="preserve">
+    <value>编辑要货单</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement_New" xml:space="preserve">
+    <value>新建要货单</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement_View" xml:space="preserve">
+    <value>查看要货单</value>
+  </data>
+  <data name="Url_Permission_Delete" xml:space="preserve">
+    <value>删除权限组</value>
+  </data>
+  <data name="Url_Permission_Edit" xml:space="preserve">
+    <value>编辑权限组</value>
+  </data>
+  <data name="Url_Permission_View" xml:space="preserve">
+    <value>查看权限组</value>
+  </data>
+  <data name="Url_PickList_View" xml:space="preserve">
+    <value>查看拣货单</value>
+  </data>
+  <data name="Url_ProcurementFlow_Delete" xml:space="preserve">
+    <value>删除采购路线</value>
+  </data>
+  <data name="Url_ProcurementFlow_Edit" xml:space="preserve">
+    <value>编辑采购路线</value>
+  </data>
+  <data name="Url_ProcurementFlow_View" xml:space="preserve">
+    <value>查看采购路线</value>
+  </data>
+  <data name="Url_ProcurementIpMaster_View" xml:space="preserve">
+    <value>查看发货</value>
+  </data>
+  <data name="Url_ProcurementPriceList_Delete" xml:space="preserve">
+    <value>删除价格单</value>
+  </data>
+  <data name="Url_ProcurementPriceList_Edit" xml:space="preserve">
+    <value>编辑价格单</value>
+  </data>
+  <data name="Url_ProcurementPriceList_View" xml:space="preserve">
+    <value>查看价格单</value>
+  </data>
+  <data name="Url_ProcurementReceipt_View" xml:space="preserve">
+    <value>查看发货</value>
+  </data>
+  <data name="Url_ProductionFlow_Delete" xml:space="preserve">
+    <value>删除生产线</value>
+  </data>
+  <data name="Url_ProductionFlow_Edit" xml:space="preserve">
+    <value>编辑生产线</value>
+  </data>
+  <data name="Url_ProductionFlow_View" xml:space="preserve">
+    <value>查看生产线</value>
+  </data>
+  <data name="Url_RejectOrder_New" xml:space="preserve">
+    <value>新建不合格品处理单</value>
+  </data>
+  <data name="Url_RejectOrder_View" xml:space="preserve">
+    <value>查看不合格品处理单</value>
+  </data>
+  <data name="Url_Role_Delete" xml:space="preserve">
+    <value>删除角色</value>
+  </data>
+  <data name="Url_Role_Edit" xml:space="preserve">
+    <value>编辑角色</value>
+  </data>
+  <data name="Url_Role_View" xml:space="preserve">
+    <value>查看角色</value>
+  </data>
+  <data name="Url_Routing_Delete" xml:space="preserve">
+    <value>删除工艺流程</value>
+  </data>
+  <data name="Url_Routing_Edit" xml:space="preserve">
+    <value>编辑工艺流程</value>
+  </data>
+  <data name="Url_Routing_View" xml:space="preserve">
+    <value>查看工艺流程</value>
+  </data>
+  <data name="Url_SMSRec_View" xml:space="preserve">
+    <value>短信接收</value>
+  </data>
+  <data name="Url_SMSStatus_View" xml:space="preserve">
+    <value>短信状态</value>
+  </data>
+  <data name="Url_StockTake_Delete" xml:space="preserve">
+    <value>删除盘点</value>
+  </data>
+  <data name="Url_StockTake_Edit" xml:space="preserve">
+    <value>编辑盘点</value>
+  </data>
+  <data name="Url_StockTake_View" xml:space="preserve">
+    <value>查看盘点</value>
+  </data>
+  <data name="Url_SubconctractingFlow_Delete" xml:space="preserve">
+    <value>删除委外路线</value>
+  </data>
+  <data name="Url_SubconctractingFlow_Edit" xml:space="preserve">
+    <value>编辑委外路线</value>
+  </data>
+  <data name="Url_SubconctractingFlow_View" xml:space="preserve">
+    <value>查看委外路线</value>
+  </data>
+  <data name="Url_Supplier_Delete" xml:space="preserve">
+    <value>删除供应商</value>
+  </data>
+  <data name="Url_Supplier_Edit" xml:space="preserve">
+    <value>编辑供应商</value>
+  </data>
+  <data name="Url_Supplier_View" xml:space="preserve">
+    <value>查看供应商</value>
+  </data>
+  <data name="Url_TransferFlow_Delete" xml:space="preserve">
+    <value>删除移库路线</value>
+  </data>
+  <data name="Url_TransferFlow_Edit" xml:space="preserve">
+    <value>编辑移库路线</value>
+  </data>
+  <data name="Url_TransferFlow_View" xml:space="preserve">
+    <value>查看移库路线</value>
+  </data>
+  <data name="Url_Uom_Delete" xml:space="preserve">
+    <value>删除单位</value>
+  </data>
+  <data name="Url_Uom_Edit" xml:space="preserve">
+    <value>编辑单位</value>
+  </data>
+  <data name="Url_Uom_View" xml:space="preserve">
+    <value>查看单位</value>
+  </data>
+  <data name="Url_UserFav_Delete" xml:space="preserve">
+    <value>删除用户偏好</value>
+  </data>
+  <data name="Url_UserFav_Edit" xml:space="preserve">
+    <value>编辑用户偏好</value>
+  </data>
+  <data name="Url_UserFav_View" xml:space="preserve">
+    <value>查看用户偏好</value>
+  </data>
+  <data name="Url_User_Delete" xml:space="preserve">
+    <value>删除用户</value>
+  </data>
+  <data name="Url_User_Edit" xml:space="preserve">
+    <value>编辑用户</value>
+  </data>
+  <data name="Url_User_View" xml:space="preserve">
+    <value>查看用户</value>
+  </data>
+  <data name="Url_WorkingCalendar_Delete" xml:space="preserve">
+    <value>删除日历</value>
+  </data>
+  <data name="Url_WorkingCalendar_Edit" xml:space="preserve">
+    <value>编辑日历</value>
+  </data>
+  <data name="Url_WorkingCalendar_View" xml:space="preserve">
+    <value>查看日历</value>
+  </data>
+</root>

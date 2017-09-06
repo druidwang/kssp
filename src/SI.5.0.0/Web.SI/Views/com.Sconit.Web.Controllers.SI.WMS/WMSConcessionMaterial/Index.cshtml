@@ -1,0 +1,64 @@
+﻿@using System.Data;
+@using com.Sconit.Web.Models.SearchModels.SI.SAP
+@model com.Sconit.Web.Controllers.ViewModel
+<fieldset>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Id">
+                    ID
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Id", TempData["SearchModel"] != null ? ((SearchModel)TempData["SearchModel"]).Id : null)
+            </div>
+            <div class="search-label">
+                <label for="Status">
+                    Status
+                </label>
+            </div>
+            <div class="search-field">
+                @{Html.RenderAction("_StatusDropDownList", "Common", new
+                  {
+                      selectedValue = TempData["SearchModel"] != null ? ((SearchModel)TempData["SearchModel"]).Status : 2
+                  });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Name("StartDate").Format("yyyy-MM-dd HH:mm").Value(DateTime.Now.AddDays(-1)))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Name("EndDate").Format("yyyy-MM-dd HH:mm").Value(DateTime.Now))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.Global.Button_Search</button>
+        </div>
+    }
+</fieldset>
+<fieldset>
+    @(Html.Telerik().Grid<System.Data.DataRow>(Model.Data.Rows.Cast<System.Data.DataRow>())
+.Name("Grid")
+.Columns(columns =>
+{
+    columns.LoadSettings(Model.Columns as IEnumerable<GridColumnSettings>);
+})
+.Reorderable(resizing => resizing.Columns(true))
+.Resizable(resizing => resizing.Columns(true))
+.EnableCustomBinding(true)
+.Sortable()
+)
+</fieldset>

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPSDMES0002>
+<fieldset>
+    <legend>销售冲销</legend>
+    <input type="hidden" name="BatchNo"  id="BatchNo" value="@ViewBag.BatchNo"/>
+    <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SAPInterface/SAPTransferLogList")'">
+        @Resources.SYS.Global.Button_Back</button>
+    <br />
+    <br />
+    @(Html.Telerik().Grid(Model)
+        .Name("SDCancel")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ZMESGUID);
+            columns.Bound(o => o.ZMESSO);
+            columns.Bound(o => o.ZCSRQSJ);
+            columns.Bound(o => o.Status);
+            columns.Bound(o => o.BatchNo);
+            columns.Bound(o => o.UniqueCode);
+        })
+        .NoRecordsTemplate("没有数据.")
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSDCancelBatchNoList", "SAPInterface"))
+        .ClientEvents(events => events.OnDataBinding("SAPSDNormal_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 10 : ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>
+<script type="text/javascript">
+//    $(document).ready(function () {
+//        $("tr.t-no-data").find("td").text("没有符合条件的记录...");
+//        $(".t-grid-content").removeAttr("style");
+    //    });
+    function SAPSDNormal_OnDataBinding(e) {
+        e.data = {
+            BatchNo: $('#BatchNo').val()
+        };
+    }
+</script>
+

@@ -1,0 +1,410 @@
+﻿@model com.Sconit.Entity.SCM.FlowDetail
+@using com.Sconit.Entity.SYS;
+@Html.Partial("_AjaxMessage") 
+<script type="text/javascript">
+    function Item_Change() {
+        $("#ReferenceItemCode").value = "";
+        $("#UnitCount").value = "";
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        } else {
+            var data = {
+                item: $("#Item").val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/ProcurementFlow/GetRefItemCode/",
+                data: data,
+                cache: false,
+                success: function (data) {
+                    //$("#ReferenceItemCode").val(data.ReferenceCode);
+                    $("#Uom").val(data.Uom);
+                    $("#UnitCount").val(data.UnitCount);
+                }
+            });
+            var uomData = {
+                item: $("#Item").val(),
+                controlName: "Uom"
+            };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/Common/_NewUomDropDownList/",
+                data: uomData,
+                cache: false,
+                success: function (data) {
+                    $("#UomDiv").html(data);
+                }
+            });
+        }
+    }
+   
+</script>
+@using (Html.BeginForm("_DetailEdit", "SubconctractingFlow"))
+{
+    <fieldset>
+        <legend>@Resources.SCM.FlowDetail.FlowDetail_LegendBaseInfo</legend>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Flow)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayTextFor(model => model.Flow)
+            @Html.HiddenFor(model => model.Flow)
+            @Html.HiddenFor(model => model.Id)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Sequence)
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.Sequence).DecimalDigits(0).MinValue(0)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Item)
+        </div>
+        <div class="editor-field-2">
+            @{
+    Html.RenderAction("_ItemComboBox", "Common", new { controlName = "Item", selectedValue = Model.Item, coupled = true });
+            }
+            @Html.ValidationMessageFor(model => model.Item)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ReferenceItemCode)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.ReferenceItemCode)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Uom)
+        </div>
+        <div class="editor-field-2" id="UomDiv">
+            @{
+    Html.RenderAction("_NewUomDropDownList", "Common",
+        new
+        {
+            controlName = "Uom",
+            item = Model.Item,
+            includeBlankOption = false,
+            selectedValue = Model.Uom
+        });
+            }
+        </div>
+ <div class="editor-label-2">
+            @Html.LabelFor(model => model.UnitCount)
+        </div>
+        <div class="editor-field-2">
+            <div id="divUnitCount">
+                @Html.EditorFor(model => model.UnitCount)
+                @Html.ValidationMessageFor(model => model.UnitCount)
+            </div>
+        </div>
+      @*  <div class="editor-label-2">
+            @Html.LabelFor(model => model.Container)
+        </div>
+        <div class="editor-field-2">
+            @{
+            Html.RenderAction("_ContainerDropDownList", "Common",
+            new
+            {
+                controlName = "Container",
+                includeBlankOption = true,
+                selectedValue = Model != null ? Model.Container : string.Empty
+            });
+            }
+            @Html.ValidationMessageFor(model => model.Container)
+            </div>*@
+    </fieldset>
+    <fieldset>
+        <legend>@Resources.SCM.FlowDetail.FlowDetail_LegendOtherInfo</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DateTimePickerFor(model => model.StartDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DateTimePickerFor(model => model.EndDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.SafeStock)
+            </div>
+            <div class="editor-field-2">
+               @Html.Telerik().NumericTextBoxFor(model => model.SafeStock).DecimalDigits(2).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MaxStock)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.MaxStock).DecimalDigits(2).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MinLotSize)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.MinLotSize).DecimalDigits(2).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BatchSize)
+            </div>
+            <div class="editor-field-2">
+               @Html.Telerik().NumericTextBoxFor(model => model.BatchSize).DecimalDigits(2).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.OrderLotSize)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.OrderLotSize).DecimalDigits(2).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReceiveLotSize)
+            </div>
+            <div class="editor-field-2">
+               @Html.Telerik().NumericTextBoxFor(model => model.ReceiveLotSize).DecimalDigits(2).MinValue(0)
+            </div>
+            
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.RoundUpOption)
+            </div>
+            <div class="editor-field-2">
+               @{
+           Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.RoundUpOption,
+               controlName = "RoundUpOption",
+               selectedValue = Model != null ? (Int16)Model.RoundUpOption : 0
+
+           });
+                }
+                @Html.ValidationMessageFor(model => model.RoundUpOption)
+            </div>
+            @*<div class="editor-label-2">
+                @Html.LabelForModel(Resources.SCM.FlowDetail.FlowDetail_SubconctractingStrategy)
+            </div>
+            <div class="editor-field-2">
+             @{
+           if (Model.Strategy != null)
+           {
+               Html.RenderAction("_CodeMasterDropDownList", "Common", new
+               {
+                   code = com.Sconit.CodeMaster.CodeMaster.FlowStrategy,
+                   controlName = "Strategy",
+                   controlId = "FlowDetailStrategy",
+                   selectedValue = (Int16)Model.Strategy,
+                   includeBlankOption = true
+
+               });
+           }
+           else
+           {
+               Html.RenderAction("_CodeMasterDropDownList", "Common", new
+               {
+                   code = com.Sconit.CodeMaster.CodeMaster.FlowStrategy,
+                   controlName = "Strategy",
+                   includeBlankOption = true
+
+               });
+           }
+                }
+            </div>*@
+            @*<div class="editor-label-1">
+                <label>@Resources.SCM.FlowDetail.FlowDetail_ExtraDemandSourceFormat</label>
+            </div>
+            <div class="editor-field-1">
+                @Resources.SCM.FlowDetail.FlowDetail_ExtraDemandSourceToolTips
+            </div>
+   
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ExtraLocationFrom)
+        </div>
+        <div class="editor-field-2">
+            @Html.TextBoxFor(model => model.ExtraLocationFrom)
+        </div>
+
+          <div class="editor-label-2">
+            @Html.LabelFor(model => model.ExtraLocationTo)
+        </div>
+        <div class="editor-field-2">
+            @Html.TextBoxFor(model => model.ExtraLocationTo)
+        </div>*@
+
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>@Resources.SCM.FlowDetail.FlowDetail_LegendDefault</legend>
+        <div class="editor">
+        @*<div class="editor-label-2">
+                @Html.LabelForModel(Resources.SCM.FlowMaster.FlowMaster_SubconctractingLocationFrom)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_LocationComboBox", "Common",
+           new { controlName = "LocationFrom",
+                 controlId = "FlowDetailLocationFrom",
+                 selectedValue = Model.LocationFrom
+           });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelForModel(Resources.SCM.FlowMaster.FlowMaster_SubconctractingLocationTo)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_LocationComboBox", "Common",
+           new { controlName = "LocationTo",
+                 controlId = "FlowDetailLocationTo",
+                 includeBlankOption = true,
+                 selectedValue = Model.LocationTo
+           });
+                }
+            </div>*@
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.Bom)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_BomComboBox", "Common", new
+           {
+               controlName = "Bom",
+               selectedValue = Model.Bom
+           });
+                }
+                @Html.ValidationMessageFor(model => model.Bom)
+            </div>
+
+            @*<div class="editor-label-2">
+                @Html.LabelFor(model => model.BillTerm)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common",
+                        new
+                        {
+                            code = com.Sconit.CodeMaster.CodeMaster.OrderBillTerm,
+                            controlName = "BillTerm",
+                            controlId = "FlowDetailBillTerm",
+                            isConsignment = false,
+                            selectedValue = (int)com.Sconit.CodeMaster.OrderBillTerm.ReceivingSettlement,
+                            enable = false
+                        });
+                }
+            </div>*@
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>@Resources.SCM.FlowDetail.FlowDetail_LegendControl</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsAutoCreate)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsAutoCreate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsInspect)
+            </div>
+            <div class="editor-field-2">
+                 @Html.EditorFor(model => model.IsInspect)
+            </div>
+
+                <div class="editor-label-2">
+                @Html.LabelFor(model => model.MrpWeight)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.MrpWeight)
+                @Html.ValidationMessageFor(model => model.MrpWeight)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MrpPriority)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.MrpPriority)
+                @Html.ValidationMessageFor(model => model.MrpPriority)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsChangeUnitCount)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsChangeUnitCount)
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="editor-footer">
+        @*<button type="submit" id="btnNew">@Resources.SYS.Global.Button_Save</button>
+         <button type="button" id="btnDel" onclick="btnDelete_Click()">
+                @Resources.SYS.Global.Button_Delete</button>*@
+         @Html.Button(Resources.SYS.Global.Button_Save, "Url_SubconctractingFlow_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnNew"},
+        {"needconfirm","true"}
+	})
+    @Html.Button(Resources.SYS.Global.Button_Delete, "Url_SubconctractingFlow_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDel"},
+        {"needconfirm","true"},
+        {"onclick","btnDelete_Click()"}
+	})
+        <button type="button" id="btnBack" onclick="btnBackDetail_Click()">@Resources.SYS.Global.Button_Back</button>
+    </div>
+}
+<script language="javascript" type="text/javascript">
+    function btnBackDetail_Click() {
+        var data = {
+            "id": $("#Flow").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/SubconctractingFlow/_Detail/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    function btnDelete_Click() {
+        var data = {
+            "Id": $("#Id").val(),
+            "Flow": $("#Flow").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/SubconctractingFlow/btnDel/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("form[action$='_DetailEdit']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(response);
+            });
+            return false;
+        });
+    });
+
+</script>

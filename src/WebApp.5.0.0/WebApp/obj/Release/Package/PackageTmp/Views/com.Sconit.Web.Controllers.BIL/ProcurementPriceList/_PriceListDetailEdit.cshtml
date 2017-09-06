@@ -1,0 +1,142 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.BIL.PriceListDetail
+@Html.Partial("_AjaxMessage")
+@using (Html.BeginForm("_PriceListDetailEdit", "ProcurementPriceList"))
+{
+    <fieldset>
+        <legend>@Resources.BIL.PriceListDetail.PriceListDetail_Title_Edit</legend>
+        <div class="editor">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.PriceListCode)
+                @Html.HiddenFor(model => model.StartDate)
+                @Html.HiddenFor(model => model.Item)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.LastModifyUserName)
+                @Html.HiddenFor(model => model.LastModifyDate)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PriceListCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PriceListCode)
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+               @{
+    Html.RenderAction("_ItemComboBox", "Common",
+        new { controlName = "ComboBoxItem", selectedValue = Model.Item, enable = false });
+                    }
+                @Html.ValidationMessageFor(model => model.Item)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Uom)
+            </div>
+            <div class="editor-field-2">
+                 @{
+    Html.RenderAction("_NewUomDropDownList", "Common",
+        new { controlName = "Uom", includeBlankOption = false, item = Model.Item, selectedValue = Model.Uom });
+                }
+                @Html.ValidationMessageFor(model => model.Uom)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DatePickerFor(model => model.StartDate).HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }).Name("PriceListDetailStartDate").Enable(false)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="editor-field-2">
+               @Html.Telerik().DatePickerFor(model => model.EndDate).HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" })
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.UnitPrice)
+            </div>
+            <div class="editor-field-2">
+               @Html.Telerik().NumericTextBoxFor(model => model.UnitPrice).DecimalDigits(4).MinValue(0)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsProvisionalEstimate)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsProvisionalEstimate)
+            </div>
+        </div>
+        <div class="editor-footer">
+         @Html.Button(Resources.SYS.Global.Button_Save, "Url_ProcurementPriceList_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSave"},
+        {"needconfirm","true"}
+	})
+    @Html.Button(Resources.SYS.Global.Button_Delete, "Url_ProcurementPriceList_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDelete"},
+        {"needconfirm","true"},
+        {"onclick","btnDeletePriceListDetail_Click()"}
+	})
+            <button type="button" id="btnBack" onclick="btnBackPriceListDetail_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+
+<script  type="text/javascript">
+    function btnDeletePriceListDetail_Click() {
+        var data = {
+            "Id": $("#Id").val(),
+            "priceListCode": $("#PriceListCode").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/ProcurementPriceList/_PriceListDetailDelete/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        $("form[action$='_PriceListDetailEdit']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(response);
+            });
+            return false;
+        });
+    });
+
+    function btnBackPriceListDetail_Click() {
+        var data = {
+            "priceListCode": $("#PriceListCode").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/ProcurementPriceList/_PriceListDetailList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.FMS.FacilityItem, com.Sconit.Entity" table="Fac_FacilityItem" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+			<generator class="identity" />
+		</id>
+		<property name="Item" column="Item"  type="String" length="50" />
+		<property name="FCID" column="FCID"  type="String" length="50" />
+		<property name="IsActive" column="IsActive" type="Boolean"  />
+		<property name="IsAllocate" column="IsAllocate" type="Boolean"  />
+		<property name="Qty" column="Qty" type="Decimal"  />
+		<property name="Amount" column="Amount" type="Decimal"  />
+		<property name="AllocatedQty" column="AllocatedQty" type="Decimal"  />
+		<property name="AllocatedAmount" column="AllocatedAmount" type="Decimal"  />
+		<property name="AllocateType" column="AllocateType"  type="String" length="50" />
+		<property name="WarnRate" column="WarnRate"   type="Decimal"  />
+		<property name="PassRate" column="PassRate"   type="Decimal"  />
+		<property name="CreateDate" column="CreateDate" type="DateTime"  />
+		<property name="CreateUser" column="CreateUser" type="String" length="50" />
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+		<property name="LastModifyUser" column="LastModifyUser" type="String" length="50" />
+	</class>
+</hibernate-mapping>

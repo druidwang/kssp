@@ -1,0 +1,38 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpMaster>
+<fieldset>
+    <legend>@Resources.ORD.ShipmentMaster.ShipmentMaster_IPMaster</legend>
+    @(
+ Html.Telerik().Grid(Model)
+                  .Name("IPMasterList")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.IpNo);
+          })
+          
+          .Columns(columns =>
+          {
+              columns.Bound(o => o.IpNo);
+              columns.Bound(o => o.Flow);
+              columns.Bound(o => o.IpMasterTypeDescription);
+              columns.Bound(o => o.PartyFrom);
+              columns.Bound(o => o.PartyTo);
+              columns.Bound(o => o.Dock);
+              columns.Bound(o => o.IpMasterStatusDescription);
+              columns.Bound(o => o.CreateDate);
+              columns.Bound(o => o.CreateUserName);
+              columns.Command(commands => commands.Delete());
+          })
+          .Scrollable()
+        .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax()
+                                .Select("_AjaxSelectIpMasterList", "ShipmentMaster")
+                                .Delete("_AjaxDeleteIpMasterList", "ShipmentMaster"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 50 : ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

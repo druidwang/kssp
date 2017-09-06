@@ -1,0 +1,31 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_TaskMaster_View" });
+}
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.ISI.TaskMaster.TaskMaster_BasicInfo)
+               .LoadContentFrom("_Edit", "TaskMaster", new { code = Model })
+               .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+
+            tabstrip.Add()
+                .Text(Resources.ISI.TaskMaster.TaskMaster_TaskStatus)
+                .LoadContentFrom("_TaskStatus", "TaskMaster", new { code = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}

@@ -1,0 +1,40 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset>
+    @using (Html.BeginForm("List", "MrpProductType"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ProductType_Code">
+                    @Resources.MRP.ProductType.ProductType_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["ProductTypeSearchModel"] != null ? ((ProductTypeSearchModel)TempData["ProductTypeSearchModel"]).Code : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="ProductType_Description">
+                    @Resources.MRP.ProductType.ProductType_Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["ProductTypeSearchModel"] != null ? ((ProductTypeSearchModel)TempData["ProductTypeSearchModel"]).Description : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_ProductType_View", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnSearch"}
+	        })
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_ProductType_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"onclick","location.href='"+@Url.Content("~/MrpProductType/New")+"'"}
+	        })
+        </div>
+
+    }
+</fieldset>

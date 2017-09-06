@@ -1,0 +1,144 @@
+﻿@using com.Sconit.Entity.MD;
+
+@model IEnumerable<com.Sconit.Entity.ORD.IpLocationDetail>
+         
+    <fieldset>
+        <legend>@Resources.INV.Hu.Hu_FlowDetail</legend>
+        <div>
+            @(Html.Telerik().Grid(Model)
+        .Name("FlowDetail")
+
+       .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+                  .Editable(editing => editing.Mode(GridEditMode.InCell))
+                               
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId).ReadOnly(true)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= HuId #>'   onClick='showButtons()' />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.Item).ReadOnly(true);
+            columns.Bound(o => o.HuId).ReadOnly(true);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.Qty);
+           
+            
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxIpLocationDetailList", "Hu"))
+        .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+        settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+        settings.PageSize(ViewBag.PageSize); 
+        })
+
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+        )
+        </div>
+    </fieldset>
+
+     <form id="hiddenForm" action="/Hu/SaveToClientTo" target="_blank"  method="post">
+        <input id="checkedOrders" name="checkedOrders" type="hidden" />
+    </form>
+
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+
+            e.data = {
+                IpNo: $('#IpNo').val(),
+                Item: $('#ItemScanHu').val()
+            };
+        }
+
+
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+                $("#btnEdit").attr("style", this.checked ? "display:inline" : "display:none");
+                $("#btnExport").attr("style", this.checked ? "display:inline" : "display:none");
+            });
+        });
+
+
+
+        function showButtons() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            $("#btnEdit").attr("style", showButton ? "display:inline" : "display:none");
+            $("#btnExport").attr("style", showButton ? "display:inline" : "display:none");
+        }
+
+
+        function HuMasterGrid_OnDataBinding(e) {
+            e.data = {
+                HuId: $('#HuId').val(),
+                Item: $('#Item').val(),
+                lotNo: $('#lotNo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+            }
+        }
+
+
+        function CheckedExport(isExport) {
+            var $checkRecords = $("input[name='checkedRecords']");
+
+            var checkedOrders = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    if (checkedOrders == "") {
+                        checkedOrders = $checkRecords[i].value;
+                    } else {
+                        checkedOrders += "," + $checkRecords[i].value;
+                    }
+                }
+            }
+            if (checkedOrders == "") {
+                alert('Must Check One');
+                return;
+            }
+
+            var data = {
+                "checkedOrders": checkedOrders
+            };
+
+            if (isExport) {
+                $("#checkedOrders").val(checkedOrders);
+                $("#hiddenForm").submit();
+            } else {
+                $.ajax({
+                    type: "post",
+                    dataType: "Json",
+                    data: data,
+                    async: false,
+                    url: "/Hu/FlowPrint/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $message.success(data.SuccessMessage);
+                       
+                        if (data.PrintUrl != "") {
+                            PrintOrder(data.PrintUrl);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        
+                        $message.error(errorMessages);
+                    }
+                });
+            }
+        }
+   
+    
+    </script>

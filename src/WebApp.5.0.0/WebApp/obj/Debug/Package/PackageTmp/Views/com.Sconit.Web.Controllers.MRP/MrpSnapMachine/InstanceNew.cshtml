@@ -1,0 +1,284 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@model com.Sconit.Entity.MRP.TRANS.SnapMachine
+
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpSnap_MachineAdjust" });
+}
+<script type="text/javascript">
+    function CodeMaster_Change(e) {
+        if (e.value == 4) {
+            document.getElementById("DateindexlabelTo").style.display = 'inline';
+            document.getElementById("DateindexfieldTo").style.display = 'inline';
+            document.getElementById("Dateindexlabel").style.display = 'none';
+            document.getElementById("Dateindexfield").style.display = 'none';
+        }
+        else {
+            document.getElementById("DateindexlabelTo").style.display = 'none';
+            document.getElementById("DateindexfieldTo").style.display = 'none';
+            document.getElementById("Dateindexlabel").style.display = 'inline';
+            document.getElementById("Dateindexfield").style.display = 'inline';
+            $('#DateIndex').data('tComboBox').value('');
+            $('#DateIndex').data('tComboBox').text('');
+            $("#DateIndex").data("tComboBox").reload();
+        }
+
+    }
+
+    function DateIndex_DataBinding(e) {
+        if ($('#DateType').val() != 4) {
+            e.data = {
+                dateType: $('#DateType').val()
+            }
+        }
+
+    }
+
+    function Machine_Change(e) {
+        if (e.value != "") {
+            var data = { "code": e.value };
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                url: "/MrpSnapMachine/_MachineJson/",
+                cache: false,
+                success: function (data, textStatus) {
+                    //debugger;
+                    if (data != "") {
+                        $("#Description").val(data.Description);
+                        $("#ShiftQuota").val(data.ShiftQuota);
+                        $("#Qty").val(data.Qty);
+                        $('#Island').data('tComboBox').value(data.Island);
+                        $("#MachineType").data('tComboBox').value(data.MachineType);
+                        $("#MachineType").data('tComboBox').text(data.MachineTypeDescription);
+                        $("#ShiftType").data('tComboBox').value(data.ShiftType);
+                        $("#ShiftType").data('tComboBox').text(data.ShiftTypeDescription);
+                        $("#NormalWorkDayPerWeek").val(parseInt(data.NormalWorkDayPerWeek));
+                        $("#MaxWorkDayPerWeek").val(parseInt(data.MaxWorkDayPerWeek));
+                        $("#ShiftPerDay").val(data.ShiftPerDay);
+                        $("#IslandQty").val(data.IslandQty);
+                        $("#IslandDescription").val(data.IslandDescription);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                    
+                }
+            });
+        
+        }
+    }
+
+    function Island_Change(e) {
+        if (e.value != "") {
+            var data = { "code": e.value };
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                url: "/MrpSnapMachine/_IslandJson/",
+                cache: false,
+                success: function (data, textStatus) {
+                    if (data != "") {
+                        $("#IslandQty").val(data.Qty);
+                        $("#IslandDescription").val(data.Description);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                    
+                }
+            });
+        }
+    }
+
+
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MRP.MachineInstance.MachineInstance_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_MachineComboBox", "Common",
+            new
+            {
+                controlName = "Code",
+                isChange = true,
+                selectedValue = Model!=null?Model.Code:string.Empty
+            });
+                }
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+              
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.DateType)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterComboBox", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+            isRccpPlan = true,
+            includeBlankOption = true,
+            isChange = true,
+            controlName = "DateType",
+            selectedValue = Model != null ? (int)Model.DateType : -1
+        });
+                }
+                @Html.ValidationMessageFor(model => model.DateType)
+            </div>
+        <div class="search-label">
+             @Html.LabelFor(model => model.SnapTime)
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_MrpSnapMasterComboBox", "Common", new
+                    {
+                        controlName = "SnapTime",
+                        includeBlankOption = true,
+                        isRelease = true,
+                        SnapType = com.Sconit.CodeMaster.SnapType.Rccp,
+                        selectedValue = Model==null ? DateTime.Now: Model.SnapTime 
+                    });
+            }
+        </div>
+            <div class="editor-label-2" id="Dateindexlabel">
+                @Html.LabelFor(model => model.DateIndex)
+            </div>
+            <div class="editor-field-2" id="Dateindexfield">
+                @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "DateIndex",
+            selectedValue = Model != null ? Model.DateIndex : string.Empty
+        });
+                }
+                @Html.ValidationMessageFor(model => model.DateIndex)
+            </div>
+            <div class="editor-label-2" id="DateindexlabelTo" style="display: none">
+                @Html.LabelFor(model => model.DateIndex)
+            </div>
+            <div class="editor-field-2" id="DateindexfieldTo" style="display: none">
+                @(Html.Telerik().DatePicker().Name("DateIndexDate")
+                        .Value(Model != null ? Model.DateIndexDate : DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                @Html.ValidationMessageFor(model => model.DateIndexDate)
+            </div>
+          <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShiftType)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterComboBox", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.ShiftType,
+        includeBlankOption = true,
+        controlName = "ShiftType",
+        selectedValue = Model != null ? (int)Model.ShiftType : -1
+    });
+                }
+                @Html.ValidationMessageFor(model => model.ShiftType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MachineType)
+            </div>
+            <div class="editor-field-2">
+                @{
+                Html.RenderAction("_CodeMasterComboBox", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.MachineType,
+                    includeBlankOption = true,
+                    controlName = "MachineType",
+                    selectedValue = Model != null ? (int)Model.MachineType : -1
+                });
+                }
+                @Html.ValidationMessageFor(model => model.MachineType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Island)
+            </div>
+            <div class="editor-field-2">
+                   @{
+                Html.RenderAction("_IslandComboBox", "Common",
+                    new
+                    {
+                        controlName = "Island",
+                        isChange = true,
+                        selectedValue = Model!=null?Model.Island:string.Empty
+                    });
+                }
+                 @Html.HiddenFor(model => model.Island)
+                @Html.ValidationMessageFor(model => model.Island)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IslandQty)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IslandQty)
+                 @Html.ValidationMessageFor(model => model.IslandQty)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IslandDescription)
+            </div>
+            <div class="editor-field-2">
+             @Html.EditorFor(model => model.IslandDescription)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShiftQuota)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ShiftQuota)
+              @Html.ValidationMessageFor(model => model.ShiftQuota)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Qty)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Qty)
+                 @Html.ValidationMessageFor(model => model.Qty)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.NormalWorkDayPerWeek)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.NormalWorkDayPerWeek)
+                @Html.ValidationMessageFor(model => model.NormalWorkDayPerWeek)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MaxWorkDayPerWeek)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.MaxWorkDayPerWeek)
+               @Html.ValidationMessageFor(model => model.MaxWorkDayPerWeek)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShiftPerDay)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ShiftPerDay)
+                 @Html.ValidationMessageFor(model => model.ShiftPerDay)
+            </div>
+           
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/MrpSnapMachine/InstanceList")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

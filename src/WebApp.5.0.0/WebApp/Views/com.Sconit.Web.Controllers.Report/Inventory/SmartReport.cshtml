@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Rep_SmartReport" });
+}
+<fieldset>
+    @using (Html.BeginForm())
+    {   
+    //<div class="search-field"> <div class="t-widget t-combobox t-header"><div class="t-dropdown-wrap t-state-default"><input class="t-input" id="ItemFrom-input" name="ItemFrom-input" type="text" /><span class="t-select t-header"><span class="t-icon t-arrow-down">select</span></span></div><input id="ItemFrom" name="ItemFrom" style="display:none" type="text" /></div> </div>
+ 
+        <fieldset id = "MyFile"></fieldset>
+        <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="doSearch(this)">
+            查询</button>
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+
+    }
+</fieldset>
+<div id="fdMonitorInventoryReport">
+</div>
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+        if ($('#Location').val() == "") {
+            $message.error('库位为必填项。');
+            return;
+        }
+        $('form').submit();
+    });
+
+    function doSearch() {
+        var data = {
+            Location: $('#Location').val()
+        };
+
+        var str = '<div class="search-field"> <div class="t-widget t-combobox t-header"><div class="t-dropdown-wrap t-state-default"><input class="t-input" id="ItemFrom-input" name="ItemFrom-input" type="text" /><span class="t-select t-header"><span class="t-icon t-arrow-down">select</span></span></div><input id="ItemFrom" name="ItemFrom" style="display:none" type="text" /></div> </div>'
+        document.getElementById('MyFile').insertAdjacentHTML("beforeEnd", str)
+
+        $("#fdMonitorInventoryReport").html("Loading...");
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/Inventory/_GetTestString/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                debugger
+                var tabStrip = $("#fdMonitorInventoryReport");
+                $(tabStrip).html("<div class=\"search-field\"> @@\{ Html.RenderAction\(\"_ItemComboBox\", \"Common\", new { controlName = \"ItemFrom\", selectedValue = Model != null ? Model.ItemFrom : null \}\); \} </div>");
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>

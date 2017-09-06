@@ -1,0 +1,73 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPMMMES0001>
+<fieldset>
+    <legend>生产收货</legend>
+    <input type="hidden" name="BatchNo"  id="BatchNo" value="@ViewBag.BatchNo"/>
+    <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SAPInterface/SAPTransferLogList")'">
+        @Resources.SYS.Global.Button_Back</button>
+    <br />
+    <br />
+    @(Html.Telerik().Grid(Model)
+        .Name("MMMES0001")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ZMESPO);
+            columns.Bound(o => o.LIFNR);
+            columns.Bound(o => o.BSART);
+            columns.Bound(o => o.EKORG);
+            columns.Bound(o => o.EKGRP);
+            columns.Bound(o => o.BUKRS);
+            columns.Bound(o => o.BWART_H);
+            columns.Bound(o => o.BUDAT);
+            columns.Bound(o => o.BLDAT);
+            columns.Bound(o => o.EBELP_I);
+            columns.Bound(o => o.EPSTP);
+            columns.Bound(o => o.MATNR);
+            columns.Bound(o => o.TARGET_QTY_I);
+            columns.Bound(o => o.NETPR);
+            columns.Bound(o => o.PEINH);
+            columns.Bound(o => o.WAERS);
+            columns.Bound(o => o.BPRME_I);
+            columns.Bound(o => o.EINDT);
+            columns.Bound(o => o.WERKS);
+            columns.Bound(o => o.LGORT);
+            columns.Bound(o => o.RETPO);
+            columns.Bound(o => o.BWART_C);
+            columns.Bound(o => o.MATNR_C);
+            columns.Bound(o => o.TARGET_QTY_C);
+            columns.Bound(o => o.BPRME_C);
+            columns.Bound(o => o.ZMESGUID);
+            columns.Bound(o => o.ZCSRQSJ);
+            columns.Bound(o => o.Status);
+            columns.Bound(o => o.BatchNo);
+            columns.Bound(o => o.UniqueCode);
+        })
+        .NoRecordsTemplate("没有数据.")
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxMMMES0001BatchNoList", "SAPInterface"))
+        .ClientEvents(events => events.OnDataBinding("SAPMMMES0001_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 10 : ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>
+<script type="text/javascript">
+//    $(document).ready(function () {
+//        $("tr.t-no-data").find("td").text("没有符合条件的记录...");
+//        $(".t-grid-content").removeAttr("style");
+    //    });
+    function SAPMMMES0001_OnDataBinding(e) {
+        e.data = {
+            BatchNo: $('#BatchNo').val()
+        };
+    }
+</script>
+

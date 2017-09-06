@@ -1,0 +1,19 @@
+<%@ CodeTemplate Language="C#" TargetLanguage="C#" Description="Generate the entity class." %>
+<%@ Property Name="NameSpace" Type="String" Default="com.Sconit" Category="EntityClass" Description="The assembly that contains the entity class." %>
+<%@ Property Name="ClassName" Type="String" Category="EntityClass" Description="The entity class name." %>
+<%@ Property Name="ModuleName" Type="String" Category="ModuleGroup" Description="The module group which contains the entity, for example, Security." %>
+using System;
+
+//TODO: Add other using statements here
+
+namespace <%=this.NameSpace%>.Persistence.<%=this.ModuleName%>
+{
+    public interface I<%=ClassName%>Dao : I<%=ClassName%>BaseDao
+    {
+        #region Customized Methods
+
+        //TODO: Add other customized methods.
+
+        #endregion Customized Methods
+    }
+}

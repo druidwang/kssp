@@ -1,0 +1,242 @@
+﻿@model IEnumerable<com.Sconit.Web.Models.MRP.FlowClassify>
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "URl_MRP_FlowClassify_View" });
+}
+<script type="text/javascript">
+    function onSaveFlowClassify(e) {
+        
+        var successesul;
+        var grid = $("#FlowClassify").data("tGrid");
+        if (grid == null) {
+            alert("明细不能为空");
+            return;
+        }
+        var flows = "";
+        var classify01s = "";
+        var classify02s = "";
+        var classify03s = "";
+        var classify04s = "";
+        var classify05s = "";
+        var classify06s = "";
+        var classify07s = "";
+        var classify08s = "";
+        var classify09s = "";
+        var classify10s = "";
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if (row[0].cells[0].childNodes[0].nodeValue != "" && row[0].cells[0].childNodes[0].nodeValue != undefined) {
+                if (flows == "") {
+                    flows = row[0].cells[0].childNodes[0].nodeValue;
+                    if (row[0].childNodes[1].childNodes[0].nodeName == "INPUT") {
+                        classify01s = row[0].childNodes[1].childNodes[0].checked;
+                    }
+                    else {
+                        classify01s = row[0].childNodes[1].childNodes[1].checked;
+                    }
+
+                    if (row[0].childNodes[2].childNodes[0].nodeName == "INPUT") {
+                        classify02s = row[0].childNodes[2].childNodes[0].checked;
+                    }
+                    else {
+                        classify02s = row[0].childNodes[2].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[3].childNodes[0].nodeName == "INPUT") {
+                        classify03s = row[0].childNodes[3].childNodes[0].checked;
+                    }
+                    else {
+                        classify03s = row[0].childNodes[3].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[4].childNodes[0].nodeName == "INPUT") {
+                        classify04s = row[0].childNodes[4].childNodes[0].checked;
+                    }
+                    else {
+                        classify04s = row[0].childNodes[4].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[5].childNodes[0].nodeName == "INPUT") {
+                        classify05s = row[0].childNodes[5].childNodes[0].checked;
+                    }
+                    else {
+                        classify05s = row[0].childNodes[5].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[6].childNodes[0].nodeName == "INPUT") {
+                        classify06s = row[0].childNodes[6].childNodes[0].checked;
+                    }
+                    else {
+                        classify06s = row[0].childNodes[6].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[7].childNodes[0].nodeName == "INPUT") {
+                        classify07s = row[0].childNodes[7].childNodes[0].checked;
+                    }
+                    else {
+                        classify07s = row[0].childNodes[7].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[8].childNodes[0].nodeName == "INPUT") {
+                        classify08s = row[0].childNodes[8].childNodes[0].checked;
+                    }
+                    else {
+                        classify08s = row[0].childNodes[8].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[9].childNodes[0].nodeName == "INPUT") {
+                        classify09s = row[0].childNodes[9].childNodes[0].checked;
+                    }
+                    else {
+                        classify09s = row[0].childNodes[9].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[10].childNodes[0].nodeName == "INPUT") {
+                        classify10s = row[0].childNodes[10].childNodes[0].checked;
+                    }
+                    else {
+                        classify10s = row[0].childNodes[10].childNodes[1].checked;
+                    }
+                }
+                else {
+                    flows += "," + row[0].childNodes[0].innerText;
+                    if (row[0].childNodes[1].childNodes[0].nodeName == "INPUT") {
+                        classify01s += "," + row[0].childNodes[1].childNodes[0].checked;
+                    }
+                    else {
+                        classify01s += "," + row[0].childNodes[1].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[2].childNodes[0].nodeName == "INPUT") {
+                        classify02s += "," + row[0].childNodes[2].childNodes[0].checked;
+                    }
+                    else {
+                        classify02s += "," + row[0].childNodes[2].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[3].childNodes[0].nodeName == "INPUT") {
+                        classify03s += "," + row[0].childNodes[3].childNodes[0].checked;
+                    }
+                    else {
+                        classify03s += "," + row[0].childNodes[3].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[4].childNodes[0].nodeName == "INPUT") {
+                        classify04s += "," + row[0].childNodes[4].childNodes[0].checked;
+                    }
+                    else {
+                        classify04s += "," + row[0].childNodes[4].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[5].childNodes[0].nodeName == "INPUT") {
+                        classify05s += "," + row[0].childNodes[5].childNodes[0].checked;
+                    }
+                    else {
+                        classify05s += "," + row[0].childNodes[5].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[6].childNodes[0].nodeName == "INPUT") {
+                        classify06s += "," + row[0].childNodes[6].childNodes[0].checked;
+                    }
+                    else {
+                        classify06s += "," + row[0].childNodes[6].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[7].childNodes[0].nodeName == "INPUT") {
+                        classify07s += "," + row[0].childNodes[7].childNodes[0].checked;
+                    }
+                    else {
+                        classify07s += "," + row[0].childNodes[7].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[8].childNodes[0].nodeName == "INPUT") {
+                        classify08s += "," + row[0].childNodes[8].childNodes[0].checked;
+                    }
+                    else {
+                        classify08s += "," + row[0].childNodes[8].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[9].childNodes[0].nodeName == "INPUT") {
+                        classify09s += "," + row[0].childNodes[9].childNodes[0].checked;
+                    }
+                    else {
+                        classify09s += "," + row[0].childNodes[9].childNodes[1].checked;
+                    }
+                    if (row[0].childNodes[10].childNodes[0].nodeName == "INPUT") {
+                        classify10s += "," + row[0].childNodes[10].childNodes[0].checked;
+                    }
+                    else {
+                        classify10s += "," + row[0].childNodes[10].childNodes[1].checked;
+                    }
+
+                }
+            }
+        }
+        var data = {
+            "flows": flows,
+            "classify01s": classify01s,
+            "classify02s": classify02s,
+            "classify03s": classify03s,
+            "classify04s": classify04s,
+            "classify05s": classify05s,
+            "classify06s": classify06s,
+            "classify07s": classify07s,
+            "classify08s": classify08s,
+            "classify09s": classify09s,
+            "classify10s": classify10s
+        }
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/FlowClassify/_SavaFlowClassify/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    successesul =  data ;
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/FlowClassify/Index/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#content");
+                        $($tGrid).html(data);
+                        DisplayJsonMessages(data);
+                    }
+                });
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+
+
+    }
+   
+</script>
+<fieldset>
+    <legend>@Resources.MRP.FlowClassify.FlowClassify_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("FlowClassify")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Flow);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSaveFlowClassify()", href = "#" });
+
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+           .Select("_SelectFlowClassifyList", "FlowClassify")
+           )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Flow).ReadOnly(true);
+            columns.Bound(o => o.Classify01).ClientTemplate("<input type='checkbox' disabled='disabled' id='Classify01' name='Classify01' value='<#= Classify01 #>' <#=Classify01? checked='checked' : '' #> />"); 
+            columns.Bound(o => o.Classify02).ClientTemplate("<input type='checkbox' disabled='disabled' id='Classify02' name='Classify02' value='<#= Classify02 #>' <#= Classify02? checked='checked' : '' #> />");
+            columns.Bound(o => o.Classify03).ClientTemplate("<input type='checkbox' disabled='disabled' id='Classify03' name='Classify03' value='<#= Classify03 #>' <#= Classify03? checked='checked' : '' #> />");
+            columns.Bound(o => o.Classify04).ClientTemplate("<input type='checkbox' disabled='disabled' id='Classify04' name='Classify04' value='<#= Classify04 #>' <#= Classify04? checked='checked' : '' #> />");
+            columns.Bound(o => o.Classify05).ClientTemplate("<input type='checkbox' disabled='disabled' id='Classify05' name='Classify05' value='<#= Classify05 #>' <#= Classify05? checked='checked' : '' #> />");
+            columns.Bound(o => o.Classify06).ClientTemplate("<input type='checkbox'  disabled='disabled' id='Classify06' name='Classify06' value='<#= Classify06 #>' <#= Classify06? checked='checked' : '' #> />");
+            columns.Bound(o => o.Classify07).ClientTemplate("<input type='checkbox' disabled='disabled' id='Classify07' name='Classify07' value='<#= Classify07 #>' <#= Classify07? checked='checked' : '' #> />");
+            columns.Bound(o => o.Classify08).ClientTemplate("<input type='checkbox' disabled='disabled' id='Classify08' name='Classify08' value='<#= Classify08 #>' <#= Classify08? checked='checked' : '' #> />");
+            columns.Bound(o => o.Classify09).ClientTemplate("<input type='checkbox' disabled='disabled' id='Classify09' name='Classify09' value='<#= Classify09 #>' <#= Classify09? checked='checked' : '' #> />");
+            columns.Bound(o => o.Classify10).ClientTemplate("<input type='checkbox' disabled='disabled' id='Classify10' name='Classify10' value='<#= Classify10 #>' <#= Classify10? checked='checked' : '' #> />");
+
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+            )
+</fieldset>

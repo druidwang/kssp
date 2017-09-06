@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.RccpLog, com.Sconit.Entity" table="MRP_RccpLog" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="ErrorLevel" column="ErrorLevel" type="String" length="50"/>
+    <property name="PlanVersion" column="PlanVersion" type="DateTime"  />
+    <property name="Logger" column="Logger" type="String" length="50"/>
+    <property name="Message" column="Message" type="String" length="4000"/>
+  </class>
+</hibernate-mapping>

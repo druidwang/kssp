@@ -1,0 +1,52 @@
+﻿@using com.Sconit.Entity.MRP.VIEW;
+@model IEnumerable<MrpPlanTraceView>
+<fieldset>
+    @(Html.Telerik().Grid(Model).Name("MrpPlanTraceGrid")
+        .Columns(columns =>
+        {
+            //物料号	物料描述	最大	最小	待收	待发	当前库存
+            columns.Bound(o => o.Item).Title("物料");
+            columns.Bound(o => o.ItemDescription).Title("物料描述");
+            columns.Bound(o => o.MaxStock).Format("{0:0.##}").Title("最大库存");
+            columns.Bound(o => o.SafeStock).Format("{0:0.##}").Title("安全库存");
+            columns.Bound(o => o.StartTransQty).Format("{0:0.##}").Title("期初在途");
+            columns.Bound(o => o.StartQty).Format("{0:0.##}").Title("期初库存");
+            columns.Bound(o => o.PlanInQty).Format("{0:0.##}").Title("计划入");
+            columns.Bound(o => o.InQty).Format("{0:0.##}").Title("入库");
+            columns.Bound(o => o.PlanOutQty).Format("{0:0.##}").Title("计划出");
+            columns.Bound(o => o.OutQty).Format("{0:0.##}").Title("出库");
+            columns.Bound(o => o.EndTransQty).Format("{0:0.##}").Title("期末在途");
+            columns.Bound(o => o.EndQty).Format("{0:0.##}").Title("期末库存");
+        }).ClientEvents(events => events.OnDetailViewExpand("OnDetailViewExpand"))
+        .DetailView(detailView => detailView.Template(
+            @<text>
+    @(Html.Telerik().Grid(item.MrpPlanTraceDetailViewList)
+        .Name("Detail_" + item.Item)
+        .Columns(columns =>
+            {
+                //可能原因（质量，生产，客户） 订单号 时间 库位 单位 数量
+                columns.Bound(o => o.TransTypeDescription).Title("事务类型");
+                columns.Bound(o => o.OrderNo).Title("订单号");
+                columns.Bound(o => o.CreateDate).Title("时间");
+                //columns.Bound(o => o.Location);
+                //columns.Bound(o => o.LocationName);
+                columns.Bound(o => o.LocationFrom).Title("来源库位");
+                columns.Bound(o => o.LocationTo).Title("目的库位");
+                columns.Bound(o => o.Uom).Title("单位");
+                columns.Bound(o => o.Qty).Format("{0:0.##}").Title("数量");
+            }).NoRecordsTemplate(@Resources.GridLocalization.NoRecords)
+            .Scrollable(c => c.Enabled(false))
+            .Footer(false)
+            )
+    </text>
+         ))
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+)
+</fieldset>
+<script type="text/javascript">
+    function OnDetailViewExpand(e) {
+        $("tr.t-no-data").find("td").text("@Resources.GridLocalization.NoRecords");
+    }
+</script>

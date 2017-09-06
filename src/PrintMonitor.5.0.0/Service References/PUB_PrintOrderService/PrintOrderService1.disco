@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://mes.shenya-sealing.com/WebService/PUB/PrintOrderService.asmx?wsdl" docRef="http://mes.shenya-sealing.com/WebService/PUB/PrintOrderService.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://mes.shenya-sealing.com/WebService/PUB/PrintOrderService.asmx" xmlns:q1="http://com.Sconit.WebService.SI.PUB_PrintOrderService/" binding="q1:PUB_PrintOrderServiceSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://mes.shenya-sealing.com/WebService/PUB/PrintOrderService.asmx" xmlns:q2="http://com.Sconit.WebService.SI.PUB_PrintOrderService/" binding="q2:PUB_PrintOrderServiceSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

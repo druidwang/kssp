@@ -1,0 +1,12 @@
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Debug\com.Sconit.Persistence.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Debug\com.Sconit.Persistence.pdb
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Debug\Castle.Core.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Debug\Castle.Facilities.NHibernateIntegration.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Debug\Castle.Windsor.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Debug\NHibernate.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Debug\Castle.Services.Transaction.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Debug\log4net.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\bin\Debug\Iesi.Collections.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\obj\Debug\com.Sconit.Persistence.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\obj\Debug\com.Sconit.Persistence.pdb
+D:\src\Les_parts\trunk\src\Core.5.0.0\Persistence\obj\Debug\Persistence.csprojResolveAssemblyReference.cache

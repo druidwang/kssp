@@ -1,0 +1,86 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SCM
+@model IEnumerable<com.Sconit.Entity.SCM.FlowDetail>
+
+<script language="javascript" type="text/javascript">
+    function DetailGrid_OnDataBinding(e) {
+        e.data = {
+            "flowCode": $("#flow").val(),
+            Item: $('#Item').val(),
+            Uom: $('#Uom').val(),
+            UnitCount: $('#UnitCount').val(),
+            HuLotSize: $('#HuLotSize').val(),
+            MaxStock: $('#MaxStock').val(),
+            FlowDetailLocationTo: $('#LocationTo').val(),
+            SafeStock: $('#SafeStock').val(),
+            IsAutoCreate: $('#IsAutoCreate').is(':checked')
+        };
+    }
+
+
+    function onDetailclick(Id) {
+        var data = {
+            "Id": Id
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/SubconctractingFlow/_DetailEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>
+
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("FlowDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item).ClientTemplate(string.Format("<a href=\"javascript:onDetailclick('{0}')\">{1}</a>", "<#= Id #>", "<#= Item #>")); ;
+            //columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription);
+            columns.Bound(o => o.SafeStock);
+            columns.Bound(o => o.MaxStock);
+            columns.Bound(o => o.StartDate);
+            columns.Bound(o => o.EndDate);
+            //columns.Bound(o => o.LocationTo);
+            //columns.Bound(o => o.LocationFrom).Title("原材料库位");
+            columns.Bound(o => o.IsAutoCreate)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsAutoCreate' <#= IsAutoCreate? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsChangeUnitCount)
+                 .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsChangeUnitCount' <#= IsChangeUnitCount? checked='checked' : '' #> />");
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Item")
+                {
+                    cell.Text = string.Format("<a href=\"javascript:onDetailclick('{0}')\">{1}</a>", cell.DataItem.Id, cell.DataItem.Item);
+                }
+            })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxDetailList", "SubconctractingFlow"))
+                .ClientEvents(events => events.OnDataBinding("DetailGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total!=null?ViewBag.Total:0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>

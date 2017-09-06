@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2CC4B70A-A63A-4896-A382-5768913DC359}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.Sconit.Entity.SI</RootNamespace>
+    <AssemblyName>com.Sconit.Entity.SI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="**\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Base\BAT\JobDetail.hbm.xml" />
+    <EmbeddedResource Include="Base\BAT\JobParameter.hbm.xml" />
+    <EmbeddedResource Include="Base\BAT\RunLog.hbm.xml" />
+    <EmbeddedResource Include="Base\BAT\Trigger.hbm.xml" />
+    <EmbeddedResource Include="Base\BAT\TriggerParameter.hbm.xml" />
+    <EmbeddedResource Include="Base\EDI_Ford\PlanningScheduleDetail.hbm.xml" />
+    <EmbeddedResource Include="Base\EDI_Ford\PlanningScheduleMaster.hbm.xml" />
+    <EmbeddedResource Include="Base\EDI_Ford\ShippingScheduleDetail.hbm.xml" />
+    <EmbeddedResource Include="Base\EDI_Ford\ShippingScheduleMaster.hbm.xml" />
+    <EmbeddedResource Include="Base\LogToUser.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPBom.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPCustomer.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPItem.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPMMMES0001.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPMMMES0002.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPPPMES0001.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPPPMES0002.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPPPMES0003.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPPPMES0004.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPPPMES0005.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base\SAP\SAPPPMES0006.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base\SAP\SAPPriceList.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPSDMES0001.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPSDMES0002.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPSnapShotInv.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base\SAP\SAPSTMES0001.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPSupplier.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPTransferLog.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPTransferTimeControl.hbm.xml" />
+    <EmbeddedResource Include="Base\SAP\SAPUomConvertion.hbm.xml" />
+    <EmbeddedResource Include="Base\TableIndex.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core.5.0.0\Entity\Entity.csproj">
+      <Project>{E4710EAE-2F94-423E-BD3E-258E054714AE}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Globalization\Globalization.csproj">
+      <Project>{5907015a-4bec-482d-b4c4-5413e7ee0068}</Project>
+      <Name>Globalization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Base\MES\MES_Interface_CreatePallet.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base\MES\MES_Interface_CreateHu.hbm.xml" />
+    <EmbeddedResource Include="Base\MES\MES_Interface_Inventory.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Base\MES\MES_Interface_MaterialIO.hbm.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

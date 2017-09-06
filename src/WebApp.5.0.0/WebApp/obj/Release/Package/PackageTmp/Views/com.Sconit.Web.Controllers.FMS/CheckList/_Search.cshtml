@@ -1,0 +1,41 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.FMS
+<fieldset>
+    @using (Html.BeginForm("List", "CheckList"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="CheckList_Code">
+                    @Resources.FMS.CheckList.CheckList_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["CheckListSearchModel"] != null ? ((CheckListSearchModel)TempData["CheckListSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FacilityCategory_Address">
+                    @Resources.FMS.CheckList.CheckList_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["CheckListSearchModel"] != null ? ((CheckListSearchModel)TempData["CheckListSearchModel"]).Description : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_CheckList_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_CheckList_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/CheckList/New")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>

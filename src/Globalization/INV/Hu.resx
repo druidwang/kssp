@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Hu_CreateDate" xml:space="preserve">
+    <value>CreateDate</value>
+  </data>
+  <data name="Hu_CreateUserName" xml:space="preserve">
+    <value>CreateUserName</value>
+  </data>
+  <data name="Hu_EndDate" xml:space="preserve">
+    <value>EndDate</value>
+  </data>
+  <data name="Hu_Flow" xml:space="preserve">
+    <value>Flow</value>
+  </data>
+  <data name="Hu_FlowDetail" xml:space="preserve">
+    <value>FlowDetail</value>
+  </data>
+  <data name="Hu_HuCreatedByFlow" xml:space="preserve">
+    <value>Hu Created</value>
+  </data>
+  <data name="Hu_HuCreatedByOrder" xml:space="preserve">
+    <value>Hu Created</value>
+  </data>
+  <data name="Hu_HuId" xml:space="preserve">
+    <value>HuId</value>
+  </data>
+  <data name="Hu_HuStatusDescription" xml:space="preserve">
+    <value>HuStatusDescription</value>
+  </data>
+  <data name="Hu_Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="Hu_lotNo" xml:space="preserve">
+    <value>lotNo</value>
+  </data>
+  <data name="Hu_ManufactureParty" xml:space="preserve">
+    <value>ManufactureParty</value>
+  </data>
+  <data name="Hu_manufacture_date" xml:space="preserve">
+    <value>manufacture date</value>
+  </data>
+  <data name="Hu_OrderDetail" xml:space="preserve">
+    <value>OrderDetail</value>
+  </data>
+  <data name="Hu_OrderNo" xml:space="preserve">
+    <value>OrderNo</value>
+  </data>
+  <data name="Hu_Qty" xml:space="preserve">
+    <value>Qty</value>
+  </data>
+  <data name="Hu_StartDate" xml:space="preserve">
+    <value>StartDate</value>
+  </data>
+  <data name="Hu_Tab_FlowMaster" xml:space="preserve">
+    <value>FlowMaster</value>
+  </data>
+  <data name="Hu_Tab_OrderMaster" xml:space="preserve">
+    <value>OrderMaster</value>
+  </data>
+  <data name="Hu_FirstInventoryDate" xml:space="preserve">
+    <value>FirstInventoryDate</value>
+  </data>
+  <data name="Hu_ReferenceItemCode" xml:space="preserve">
+    <value>ReferenceItemCode</value>
+  </data>
+  <data name="Hu_UnitCount" xml:space="preserve">
+    <value>UnitCount</value>
+  </data>
+  <data name="Hu_Uom" xml:space="preserve">
+    <value>Uom</value>
+  </data>
+  <data name="Hu_Tab_Hu" xml:space="preserve">
+    <value>Hu</value>
+  </data>
+  <data name="Hu_IsOdd" xml:space="preserve">
+    <value>IsOdd</value>
+  </data>
+  <data name="Hu_ItemDescription" xml:space="preserve">
+    <value>ItemDescription</value>
+  </data>
+  <data name="Hu_RemindExpireDate_End" xml:space="preserve">
+    <value>RemindExpireDate_End</value>
+  </data>
+  <data name="Hu_RemindExpireDate_start" xml:space="preserve">
+    <value>RemindExpireDate_start</value>
+  </data>
+  <data name="Hu_RemindExpireDate" xml:space="preserve">
+    <value>RemindExpireDate</value>
+  </data>
+  <data name="Hu_Tab_IPMaster" xml:space="preserve">
+    <value>IPMaster</value>
+  </data>
+  <data name="Hu_HuPrintedByIpMaster" xml:space="preserve">
+    <value>HuPrintedByIpMaster</value>
+  </data>
+  <data name="Hu_SupplierLotNo" xml:space="preserve">
+    <value>SupplierLotNo</value>
+  </data>
+  <data name="Hu_IpDetail" xml:space="preserve">
+    <value>IpDetail</value>
+  </data>
+  <data name="Hu_Tab_Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="Hu_Printde" xml:space="preserve">
+    <value>print</value>
+  </data>
+  <data name="Hu_LocationTo" xml:space="preserve">
+    <value>LocationTo</value>
+  </data>
+  <data name="Hu_Remark" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="Hu_ConcessionCount" xml:space="preserve">
+    <value>ConcessionCount</value>
+  </data>
+  <data name="Hu_ContainerDesc" xml:space="preserve">
+    <value>ContainerDesc</value>
+  </data>
+  <data name="Hu_Direction" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Hu_ExpireDate" xml:space="preserve">
+    <value>ExpireDate</value>
+  </data>
+  <data name="Hu_HuOption" xml:space="preserve">
+    <value>HuOption</value>
+  </data>
+  <data name="Hu_IsChangeUnitCount" xml:space="preserve">
+    <value>IsChangeUnitCount</value>
+  </data>
+  <data name="Hu_LastModifyDate" xml:space="preserve">
+    <value>LastModifyDate</value>
+  </data>
+  <data name="Hu_LastModifyUserName" xml:space="preserve">
+    <value>LastModifyUserName</value>
+  </data>
+  <data name="Hu_Length" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="Hu_Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Hu_PrintCount" xml:space="preserve">
+    <value>PrintCount</value>
+  </data>
+  <data name="Hu_ReceiptNo" xml:space="preserve">
+    <value>ReceiptNo</value>
+  </data>
+  <data name="Hu_Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="Hu_UnitCountDescription" xml:space="preserve">
+    <value>UnitCountDescription</value>
+  </data>
+  <data name="Hu_UnitQty" xml:space="preserve">
+    <value>UnitQty</value>
+  </data>
+  <data name="Hu_AgingEndTime" xml:space="preserve">
+    <value>AgingEndTime</value>
+  </data>
+  <data name="Hu_AgingStartTime" xml:space="preserve">
+    <value>AgingStartTime</value>
+  </data>
+  <data name="Hu_IpNo" xml:space="preserve">
+    <value>IpNo</value>
+  </data>
+  <data name="Hu_ItemVersion" xml:space="preserve">
+    <value>ItemVersion</value>
+  </data>
+  <data name="Hu_MaterialsGroup" xml:space="preserve">
+    <value>MaterialsGroup</value>
+  </data>
+  <data name="Hu_RefHu" xml:space="preserve">
+    <value>RefHu</value>
+  </data>
+  <data name="Bin" xml:space="preserve">
+    <value>Bin</value>
+  </data>
+  <data name="Hu_Status" xml:space="preserve">
+    <value>HuStatus</value>
+  </data>
+  <data name="IsATP" xml:space="preserve">
+    <value>IsATP</value>
+  </data>
+  <data name="IsConsignment" xml:space="preserve">
+    <value>IsConsignment</value>
+  </data>
+  <data name="IsFreeze" xml:space="preserve">
+    <value>IsFreeze</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="OccupyReferenceNo" xml:space="preserve">
+    <value>OccupyReferenceNo</value>
+  </data>
+  <data name="OccupyType" xml:space="preserve">
+    <value>OccupyType</value>
+  </data>
+  <data name="QualityType" xml:space="preserve">
+    <value>QualityType</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Hu_HuStatusOccupyTypeDescription" xml:space="preserve">
+    <value>OccupyTypeDescription</value>
+  </data>
+  <data name="Hu_HuTemplate" xml:space="preserve">
+    <value>条码模板</value>
+  </data>
+  <data name="Hu_HuAction" xml:space="preserve">
+    <value>HuAction</value>
+  </data>
+  <data name="Hu_lotNoTo" xml:space="preserve">
+    <value>lotNoTo</value>
+  </data>
+  <data name="Hu_HuQualityTypeDescription" xml:space="preserve">
+    <value>HuQualityTypeDescription</value>
+  </data>
+  <data name="Hu_HuOptionTypeDescription" xml:space="preserve">
+    <value>HuOptionTypeDescription</value>
+  </data>
+  <data name="Hu_AgedQty" xml:space="preserve">
+    <value>AgedQty</value>
+  </data>
+  <data name="Hu_AgingQty" xml:space="preserve">
+    <value>AgingQty</value>
+  </data>
+  <data name="Hu_SQty" xml:space="preserve">
+    <value>SQty</value>
+  </data>
+  <data name="Hu_TotalQty" xml:space="preserve">
+    <value>TotalQty</value>
+  </data>
+  <data name="Hu_UnAgingQty" xml:space="preserve">
+    <value>UnAgingQty</value>
+  </data>
+  <data name="Hu_NoNeedAgingQty" xml:space="preserve">
+    <value>NoNeedAgingQty</value>
+  </data>
+  <data name="Hu_Tab_OrderMaster_Production" xml:space="preserve">
+    <value>OrderMaster_Production</value>
+  </data>
+  <data name="Hu_Qty0" xml:space="preserve">
+    <value>Qty0</value>
+  </data>
+  <data name="Hu_Qty1" xml:space="preserve">
+    <value>Qty1</value>
+  </data>
+  <data name="Hu_Qty2" xml:space="preserve">
+    <value>Qty3</value>
+  </data>
+  <data name="Hu_Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="Hu_Tab_Parts" xml:space="preserve">
+    <value>Parts</value>
+  </data>
+  <data name="Hu_NonFreezeQty" xml:space="preserve">
+    <value>NonFreezeQty</value>
+  </data>
+  <data name="Hu_NewExpiredDate" xml:space="preserve">
+    <value>NewExpiredDate</value>
+  </data>
+  <data name="Hu_OldExpiredDate" xml:space="preserve">
+    <value>OldExpiredDate</value>
+  </data>
+  <data name="Hu_IsPrintPallet" xml:space="preserve">
+    <value>IsPrintPallet</value>
+  </data>
+  <data name="Hu_PalletCode" xml:space="preserve">
+    <value>PalletCode</value>
+  </data>
+  <data name="Hu_ExternalOrderNo" xml:space="preserve">
+    <value>ExternalOrderNo</value>
+  </data>
+  <data name="HU_ProductBarCode_Not_Check" xml:space="preserve">
+    <value>Must Check One ProductBarCode</value>
+  </data>
+  <data name="Hu_QtyNotMatch" xml:space="preserve">
+    <value>Qty Not Match</value>
+  </data>
+  <data name="HU_Repacked" xml:space="preserve">
+    <value>Hu Repacked</value>
+  </data>
+  <data name="Hu_DevanningQty" xml:space="preserve">
+    <value>DevanningQty</value>
+  </data>
+  <data name="HU_Hu_Not_Check" xml:space="preserve">
+    <value>Hu Not Check</value>
+  </data>
+  <data name="Hu_DevanningQty1" xml:space="preserve">
+    <value>DevanningQty1</value>
+  </data>
+  <data name="Hu_DevanningQty2" xml:space="preserve">
+    <value>DevanningQty2</value>
+  </data>
+  <data name="Hu_DevanningQty3" xml:space="preserve">
+    <value>DevanningQty3</value>
+  </data>
+  <data name="Hu_DevanningQty4" xml:space="preserve">
+    <value>DevanningQty4</value>
+  </data>
+  <data name="Hu_DevanningSuccessfully" xml:space="preserve">
+    <value>Hu Devanning Successfully</value>
+  </data>
+</root>

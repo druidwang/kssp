@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    @Html.Partial("_Meta")
+    <title>@ViewBag.Title</title>
+    @RenderSection("HeadContent", required: false)
+    @Html.Partial("_Header")
+
+    @(Html.Telerik().StyleSheetRegistrar()
+            .DefaultGroup(group => group
+            .Add("telerik.common.css")
+            .Add("telerik.windows7.css")
+            .Add("~/Content/Site.css")
+            .Add("~/Content/Jquery-ui/Smoothness/jquery-ui-1.10.3.custom.min.css")
+            .Add("~/Content/Jquery-ui/jquery.multiselect.css")
+            .Combined(false)
+                    .Compress(false))
+      )
+    @(Html.Telerik().ScriptRegistrar().Globalization(true)
+    .DefaultGroup(group => group
+        .Add("~/Scripts/Sconit.js")
+        .Add("~/Scripts/Sconit.Message.js")
+        .Add("~/Scripts/Sconit.Boxover.js")
+        .Add("~/Scripts/jquery.fixedtableheader-1-0-2.min.js")
+        .Add("~/Scripts/jquery-ui-1.10.3.custom.min.js")
+        .Add("~/Scripts/jquery.multiselect.js")
+                .Add("~/Scripts/jquery.timers-1.2.js")
+                        .Combined(false).Compress(false)))
+</head>
+<body>
+    @Html.Partial("_Message")
+    @Html.Partial("_AjaxMessage")
+    <div class="page">
+        <div id="main">
+            <div id="content">
+                @RenderBody()
+            </div>
+            @*   <div id="footer">
+                @Html.Partial("_Footer")
+            </div>*@
+        </div>
+    </div>
+</body>
+</html>

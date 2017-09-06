@@ -1,0 +1,94 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SI
+<fieldset>
+    @using (Html.BeginForm("SAPSupplierList", "SAPInterface"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="SAPItem_BatchNo">
+                    @Resources.SI.SAPItem.SAPItem_BatchNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BatchNo", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).BatchNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                </label>
+            </div>
+            <div class="search-field">
+               
+            </div>
+            <div class="search-label">
+                <label for="SAPItem_MATNR">
+                    @Resources.SI.SAPSupplier.SAPSupplier_BUKRS
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BUKRS", TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).BUKRS : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.SI.SAPPriceList.SAPPriceList_LIFNR
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_SupplierComboBox", "Common", new
+        {
+            controlName = "SupplierCode",
+            selectedValue = TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).SupplierCode : string.Empty
+        });
+                }
+            </div>
+            
+             <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    调用时间 从
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("TransStartDate")
+    .Value(TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).TransStartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    至
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("TransEndDate")
+    .Value(TempData["SAPInterfaceSearchModel"] != null ? ((SAPInterfaceSearchModel)TempData["SAPInterfaceSearchModel"]).TransEndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+           <div class="editor-label-2">
+            <label>
+            @Resources.SI.SAPTransferLog.SAPTransferLog_Status
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @Html.RadioButton("Status", 0, true)<span>所有</span>
+            @Html.RadioButton("Status", 1, false)<span>成功</span>
+            @Html.RadioButton("Status", 2, false)<span>失败</span>
+        </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport" onclick="ExportClick()">
+            @Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    function ExportClick() {
+        location.href = '/SAPInterface/ExportSAPSupplierXLS/?BatchNo=' + $('#BatchNo').val()
+            + '&BUKRS=' + $('#BUKRS').val()
+            + '&SupplierCode=' + $('#SupplierCode').val()
+            + '&TransStartDate=' + $('#TransStartDate').val()
+            + '&TransEndDate=' + $('#TransEndDate').val()
+            + '&Status=' + $("input[name='Status']:checked").val();
+    }
+</script>

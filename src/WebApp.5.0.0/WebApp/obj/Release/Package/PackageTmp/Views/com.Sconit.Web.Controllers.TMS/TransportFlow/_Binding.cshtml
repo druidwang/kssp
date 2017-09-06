@@ -1,0 +1,95 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SCM
+@model IEnumerable<com.Sconit.Entity.SCM.FlowBinding>
+@Html.Partial("_AjaxMessage")      
+
+<script language="javascript" type="text/javascript">
+
+    function btnNewBind_Click() {
+        var data = {
+            "id": $("#flow").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/TransferFlow/_BindingNew/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(data);
+            }
+        });
+    }
+
+    function onDetailclick(Id) {
+        var data = {
+            "Id": Id
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/TransferFlow/_BindingEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(data);
+            }
+        });
+    }
+</script>
+<fieldset>
+    <legend>@Resources.SCM.FlowBinding.FlowBinding_Action</legend>
+    <div class="editor-footer">
+        @Html.Hidden("flow", (string)ViewBag.flow)
+        @Html.Hidden("isFromList", true)
+        @*<button type="button" id="btnNewDetail" onclick="btnNewBind_Click();">@Resources.SYS.Global.Button_New</button>*@
+        @Html.Button(Resources.SYS.Global.Button_New, "Url_TransferFlow_Edit", new Dictionary<string, string>()
+        {
+	        {"type", "button"},
+	        {"id", "btnNewDetail"},
+            {"onclick","btnNewBind_Click()"}
+        })
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/TransferFlow/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>@Resources.SCM.FlowBinding.FlowBinding_BindFlow</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("FlowBinding")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.BindedFlow.Code).ClientTemplate(string.Format("<a href=\"javascript:onDetailclick('{0}')\">{1}</a>", "<#= Id #>", "<#= BindedFlow.Code #>"));
+            columns.Bound(o => o.BindedFlow.Description);
+            //columns.Bound(o => o.BindedFlowType);
+            columns.Bound(o => o.BindTypeDescription);
+        })
+        .CellAction(cell =>
+        {
+            if (cell.Column.Member == "BindedFlow.Code")
+            {
+                cell.Text = string.Format("<a href=\"javascript:onDetailclick('{0}')\">{1}</a>", cell.DataItem.Id, cell.DataItem.BindedFlow.Code);
+            }
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxBinding", "TransferFlow"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+@{
+    Html.RenderAction("_Binded", "TransferFlow", new { id = ViewBag.flow });
+}

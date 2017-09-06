@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Button_Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Button_ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="Button_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Button_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Button_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Button_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Common_CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+  </data>
+  <data name="Common_CreateUserName" xml:space="preserve">
+    <value>Create User</value>
+  </data>
+  <data name="Common_LastModifyDate" xml:space="preserve">
+    <value>Last Modify Date</value>
+  </data>
+  <data name="Common_LastModifyUserName" xml:space="preserve">
+    <value>Last Modify User</value>
+  </data>
+  <data name="Permission_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PermissionGroup_Edit_Title" xml:space="preserve">
+    <value>Edit PermissionGroup</value>
+  </data>
+  <data name="PermissionGroup_Added" xml:space="preserve">
+    <value>Role has been added successfully.</value>
+  </data>
+  <data name="PermissionGroup_Deleted" xml:space="preserve">
+    <value>Role has been Deleted successfully.</value>
+  </data>
+  <data name="PermissionGroup_Updated" xml:space="preserve">
+    <value>Role has been Updated successfully.</value>
+  </data>
+  <data name="Common_EndTime" xml:space="preserve">
+    <value>End Time</value>
+  </data>
+  <data name="Common_StartTime" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
+  <data name="Common_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Common_Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Common_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="PermissionGroup_Code" xml:space="preserve">
+    <value>PermissionGroup  Name</value>
+  </data>
+  <data name="PermissionGroup_Desc" xml:space="preserve">
+    <value>PermissionGroup  Description</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Button_Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="Button_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Button_ExportDetail" xml:space="preserve">
+    <value>Export Detail</value>
+  </data>
+  <data name="Button_Adjust" xml:space="preserve">
+    <value>Adjust</value>
+  </data>
+  <data name="Button_AllAdjust" xml:space="preserve">
+    <value>All Adjust</value>
+  </data>
+  <data name="Button_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Button_Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Button_Pick" xml:space="preserve">
+    <value>Pick</value>
+  </data>
+  <data name="Button_PickUp" xml:space="preserve">
+    <value>Pick Up</value>
+  </data>
+  <data name="Button_PutAway" xml:space="preserve">
+    <value>Put Away</value>
+  </data>
+  <data name="Button_Receive" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="Button_Ship" xml:space="preserve">
+    <value>Ship</value>
+  </data>
+  <data name="Button_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Button_Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Button_Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="Button_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Button_MaterialIn" xml:space="preserve">
+    <value>MaterialIn</value>
+  </data>
+  <data name="Button_CreatePickList" xml:space="preserve">
+    <value>CreatePickList</value>
+  </data>
+  <data name="Button_DeleteResult" xml:space="preserve">
+    <value>DeleteResult</value>
+  </data>
+  <data name="Button_BackFlush" xml:space="preserve">
+    <value>BackFlush</value>
+  </data>
+  <data name="Button_FinanceCalendar" xml:space="preserve">
+    <value>Finance Calendar</value>
+  </data>
+  <data name="Button_Judge" xml:space="preserve">
+    <value>Judge</value>
+  </data>
+  <data name="Button_JudgeQualify" xml:space="preserve">
+    <value>JudgeQualify</value>
+  </data>
+  <data name="Button_JudgeReject" xml:space="preserve">
+    <value>JudgeReject</value>
+  </data>
+  <data name="Button_Concession" xml:space="preserve">
+    <value>Concession</value>
+  </data>
+  <data name="Button_Cancellations" xml:space="preserve">
+    <value>Cancel the shipment</value>
+  </data>
+  <data name="Button_SaveDetail" xml:space="preserve">
+    <value>Save Detail</value>
+  </data>
+  <data name="Button_SaveMaster" xml:space="preserve">
+    <value>Save Master</value>
+  </data>
+  <data name="Button_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Button_Complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="Button_Check" xml:space="preserve">
+    <value>Check</value>
+  </data>
+  <data name="Button_Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Button_CreateRequisitionList" xml:space="preserve">
+    <value>CreateRequisitionList</value>
+  </data>
+  <data name="Button_AdjustGI" xml:space="preserve">
+    <value>AdjustGI</value>
+  </data>
+  <data name="Button_AdjustGR" xml:space="preserve">
+    <value>AdjustGR</value>
+  </data>
+  <data name="Button_BomDetail" xml:space="preserve">
+    <value>BomDetail</value>
+  </data>
+  <data name="Button_Routing" xml:space="preserve">
+    <value>Routing</value>
+  </data>
+  <data name="Button_online" xml:space="preserve">
+    <value>online</value>
+  </data>
+  <data name="Button_ConfirmOperation" xml:space="preserve">
+    <value>Are you sure to {0}</value>
+  </data>
+  <data name="Button_UnFreeze" xml:space="preserve">
+    <value>UnFreeze</value>
+  </data>
+  <data name="Button_Freeze" xml:space="preserve">
+    <value>Freeze</value>
+  </data>
+  <data name="Grid_DispalyType" xml:space="preserve">
+    <value>DispalyType</value>
+  </data>
+  <data name="Grid_DispalyType_Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Grid_DispalyType_Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Button_RequisitionDetail" xml:space="preserve">
+    <value>Requisition Detail</value>
+  </data>
+  <data name="Button_Start_Production" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Button_Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Button_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Button_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Button_AddDetail" xml:space="preserve">
+    <value>AddDetail</value>
+  </data>
+  <data name="Button_DeleteDetail" xml:space="preserve">
+    <value>DeleteDetail</value>
+  </data>
+  <data name="Button_StartEmptyVanOrder" xml:space="preserve">
+    <value>StartEmptyVanOrder</value>
+  </data>
+  <data name="Button_Transfer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="Button_OffLine" xml:space="preserve">
+    <value>OffLine</value>
+  </data>
+  <data name="Button_DistributionLabel_Print" xml:space="preserve">
+    <value>Button_DistributionLabel_Print</value>
+  </data>
+  <data name="Button_Receive_Distrabution" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="Button_KBOrderBomDet" xml:space="preserve">
+    <value>KBOrderBomDet</value>
+  </data>
+  <data name="Button_DistributionLabel_Cancel" xml:space="preserve">
+    <value>DistributionLableCancel</value>
+  </data>
+  <data name="Button_PrintCard" xml:space="preserve">
+    <value>PrintCard</value>
+  </data>
+  <data name="Button_PrintCardLabel" xml:space="preserve">
+    <value>PrintCardLabel</value>
+  </data>
+  <data name="Button_DistributionLabel_Export" xml:space="preserve">
+    <value>DistributionLabel_Export</value>
+  </data>
+  <data name="Button_BackPricing" xml:space="preserve">
+    <value>BackPricing</value>
+  </data>
+  <data name="Button_AddDetaile" xml:space="preserve">
+    <value>AddDetaile</value>
+  </data>
+  <data name="Button_Reference" xml:space="preserve">
+    <value>Reference</value>
+  </data>
+  <data name="Button_AuditInspectionHuid" xml:space="preserve">
+    <value>AuditInspectionHuid</value>
+  </data>
+  <data name="Button_IsFreezeFalse" xml:space="preserve">
+    <value>IsFreezeFalse</value>
+  </data>
+  <data name="Button_OutToDetermine" xml:space="preserve">
+    <value>OutToDetermine</value>
+  </data>
+  <data name="Button_Run" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="Button_Settle" xml:space="preserve">
+    <value>Settle</value>
+  </data>
+  <data name="Button_Filter" xml:space="preserve">
+    <value>BatchFilter</value>
+  </data>
+  <data name="Button_Assign" xml:space="preserve">
+    <value>Assign</value>
+  </data>
+  <data name="Common_CancelDate" xml:space="preserve">
+    <value>取消日期</value>
+  </data>
+  <data name="Common_CancelUserName" xml:space="preserve">
+    <value>取消用户</value>
+  </data>
+  <data name="Common_CloseDate" xml:space="preserve">
+    <value>关闭日期</value>
+  </data>
+  <data name="Common_CloseUserName" xml:space="preserve">
+    <value>关闭用户</value>
+  </data>
+  <data name="Common_StartDate" xml:space="preserve">
+    <value>开始日期</value>
+  </data>
+  <data name="Common_StartUserName" xml:space="preserve">
+    <value>开始用户</value>
+  </data>
+  <data name="Common_SubmitDate" xml:space="preserve">
+    <value>提交日期</value>
+  </data>
+  <data name="Common_SubmitUserName" xml:space="preserve">
+    <value>提交用户</value>
+  </data>
+  <data name="Button_Repack" xml:space="preserve">
+    <value>Repack</value>
+  </data>
+  <data name="Button_Calculate" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
+  <data name="Button_Devanning" xml:space="preserve">
+    <value>Devanning</value>
+  </data>
+  <data name="Button_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+</root>

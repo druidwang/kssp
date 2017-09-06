@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.SCM.FlowDetail, com.Sconit.Entity" table="SCM_FlowDet" lazy="false" dynamic-update="true">
+        <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+            <generator class="identity" />
+        </id>
+        <property name="Flow" column="Flow" type="String" length="50" />
+        <property name="Strategy" column="Strategy"  />
+        <property name="Sequence" column="Seq" type="Int32"  />
+        <property name="Item" column="Item" type="String" length="50" />
+        <property name="ReferenceItemCode" column="RefItemCode" type="String" length="50" />
+        <property name="BaseUom" column="BaseUom" type="String" length="5" />
+        <property name="Uom" column="Uom" type="String" length="5" />
+        <!--<property name="Uom1" column="Uom1" type="String" length="5" />-->
+        <property name="UnitCount" column="UC" type="Decimal"  />
+        <property name="UnitCountDescription" column="UCDesc" type="String" length="50" />
+        <property name="MinUnitCount" column="MinUC" type="Decimal"  />
+        <property name="StartDate" column="StartDate" type="DateTime"  />
+        <property name="EndDate" column="EndDate" type="DateTime"  />
+        <!--<property name="HuLotSize" column="HuLotSize" type="Decimal"  />-->
+        <property name="Bom" column="Bom" type="String" length="50" />
+        <property name="LocationFrom" column="LocFrom" type="String" length="50" />
+        <property name="LocationTo" column="LocTo" type="String" length="50" />
+        <!--<property name="InspectLocationFrom" column="InspLocFrom" type="String" length="50" />
+        <property name="InspectLocationTo" column="InspLocTo" type="String" length="50" />
+        <property name="RejectLocationFrom" column="RejLocFrom" type="String" length="50" />
+        <property name="RejectLocationTo" column="RejLocTo" type="String" length="50" />-->
+        <property name="BillAddress" column="BillAddr" type="String" length="50" />
+        <property name="PriceList" column="PriceList" type="String" length="50" />
+        <property name="Routing" column="Routing" type="String" length="50" />
+        <property name="ReturnRouting" column="ReturnRouting" type="String" length="50" />
+        <property name="ProductionScan" column="ProdScan" type="String" length="50" />
+        <property name="IsAutoCreate" column="IsAutoCreate" type="Boolean"  />
+        <property name="IsInspect" column="IsInspect" type="Boolean"  />
+        <property name="IsRejectInspect" column="IsRejInspect" type="Boolean"  />
+        <property name="SafeStock" column="SafeStock" type="Decimal"  />
+        <property name="MaxStock" column="MaxStock" type="Decimal"  />
+        <property name="MinLotSize" column="MinLotSize" type="Decimal"  />
+        <property name="OrderLotSize" column="OrderLotSize" type="Decimal"  />
+        <property name="ReceiveLotSize" column="RecLotSize" type="Decimal"  />
+        <property name="BatchSize" column="BatchSize" type="Decimal"  />
+        <property name="RoundUpOption" column="RoundUpOpt"  />
+        <property name="BillTerm" column="BillTerm"  />
+        <property name="MrpWeight" column="MrpWeight" type="Int32"  />
+        <property name="MrpTotal" column="MrpTotal" type="Decimal"  />
+        <property name="MrpTotalAdjust" column="MrpTotalAdj" type="Decimal"  />
+        <property name="ExtraDemandSource" column="ExtraDmdSource" type="String" length="256" />
+        <property name="Container" column="Container" type="String" length="50"/>
+        <property name="ContainerDescription" column="ContainerDesc" type="String" length="50" />
+        <property name="PickStrategy" column="PickStrategy" type="String" length="50" />
+        <property name="EBELN" column="EBELN" type="String" length="50" />
+        <property name="EBELP" column="EBELP" type="String" length="50" />
+        <property name="BinTo" column="BinTo" type="String" length="50" />
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+        <property name="IsChangeUnitCount" column="IsChangeUC" type="Boolean"  />
+        <!--<property name="ShiftQuota" column="ShiftQuota"  type="Double" />-->
+        <property name="Machine" column="Machine" type="String" length="50" />
+        <property name="MrpPriority" column="MrpPriority" type="Int32"  />
+        <property name="ExtraLocationTo" column="ExtraLocationTo" type="String" length="256"  />
+        <property name="ExtraLocationFrom" column="ExtraLocationFrom" type="String" length="256"  />
+        <property name="PalletCode" column="PalletCode" type="String" length="50"  />
+        <property name="PalletLotSize" column="PalletLotSize" type="Decimal" />
+        <property name="PackageVolume" column="PackageVolume" type="Decimal" />
+        <property name="PackageWeight" column="PackageWeight" type="Decimal" />
+    </class>
+</hibernate-mapping>

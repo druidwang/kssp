@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Errors_ItemKit_ChildrenItemNotFound" xml:space="preserve">
+    <value>Kitting {0} not maintain children items.</value>
+  </data>
+  <data name="Errors_Item_UomConvertionNotFound" xml:space="preserve">
+    <value>Not maintain uom convertion of material {0} between {1} and {2}.</value>
+  </data>
+  <data name="ItemErrors_Existing_Code" xml:space="preserve">
+    <value>Item code existed.</value>
+  </data>
+  <data name="ItemErrors_NotExisting_Bom" xml:space="preserve">
+    <value>BOM code not exist.</value>
+  </data>
+  <data name="ItemErrors_NotExisting_Location" xml:space="preserve">
+    <value>Location code not exist.</value>
+  </data>
+  <data name="ItemErrors_NotExisting_Routing" xml:space="preserve">
+    <value>Routing code not exist.</value>
+  </data>
+  <data name="Item_Added" xml:space="preserve">
+    <value>Item added successfully.</value>
+  </data>
+  <data name="Item_Bom" xml:space="preserve">
+    <value>BOM</value>
+  </data>
+  <data name="Item_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Item_ContainerSize" xml:space="preserve">
+    <value>Appliance Size</value>
+  </data>
+  <data name="Item_Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="Item_Deleted" xml:space="preserve">
+    <value>Item deleted successfully.</value>
+  </data>
+  <data name="Item_Description" xml:space="preserve">
+    <value>Item Desc</value>
+  </data>
+  <data name="Item_Division" xml:space="preserve">
+    <value>Item Group</value>
+  </data>
+  <data name="Item_Edit_Title" xml:space="preserve">
+    <value>Edit Item</value>
+  </data>
+  <data name="Item_HuQty" xml:space="preserve">
+    <value>Qty</value>
+  </data>
+  <data name="Item_HuUnitCount" xml:space="preserve">
+    <value>UC</value>
+  </data>
+  <data name="Item_HuUom" xml:space="preserve">
+    <value>UOM</value>
+  </data>
+  <data name="Item_IsActive" xml:space="preserve">
+    <value>Is Active</value>
+  </data>
+  <data name="Item_IsCustomerGoods" xml:space="preserve">
+    <value>Is Customer-goods</value>
+  </data>
+  <data name="Item_IsInvFreeze" xml:space="preserve">
+    <value>Inventory Freeze</value>
+  </data>
+  <data name="Item_IsKit" xml:space="preserve">
+    <value>Is Kit</value>
+  </data>
+  <data name="Item_IsManufacture" xml:space="preserve">
+    <value>Is Manufacture</value>
+  </data>
+  <data name="Item_IsPurchase" xml:space="preserve">
+    <value>Is Purchase</value>
+  </data>
+  <data name="Item_IsSales" xml:space="preserve">
+    <value>Is Sales</value>
+  </data>
+  <data name="Item_IsSection" xml:space="preserve">
+    <value>Is Section</value>
+  </data>
+  <data name="Item_IsSubContract" xml:space="preserve">
+    <value>Is Sourcing</value>
+  </data>
+  <data name="Item_IsVirtual" xml:space="preserve">
+    <value>Is Virtual</value>
+  </data>
+  <data name="Item_ItemCategory" xml:space="preserve">
+    <value>Item Category</value>
+  </data>
+  <data name="Item_ItemCategoryDesc" xml:space="preserve">
+    <value>Item Category Desc</value>
+  </data>
+  <data name="Item_ItemClass" xml:space="preserve">
+    <value>Item Class</value>
+  </data>
+  <data name="Item_ItemOption" xml:space="preserve">
+    <value>Item Option</value>
+  </data>
+  <data name="Item_ItemPriority" xml:space="preserve">
+    <value>Item Priority</value>
+  </data>
+  <data name="Item_Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Item_LotNo" xml:space="preserve">
+    <value>Lot No</value>
+  </data>
+  <data name="Item_ManufactureDate" xml:space="preserve">
+    <value>Manufacture Date</value>
+  </data>
+  <data name="Item_ManufactureParty" xml:space="preserve">
+    <value>Manufactor</value>
+  </data>
+  <data name="Item_MaterialsGroup" xml:space="preserve">
+    <value>Item Group</value>
+  </data>
+  <data name="Item_MaterialsGroupDesc" xml:space="preserve">
+    <value>Item Group Desc</value>
+  </data>
+  <data name="Item_MinUnitCount" xml:space="preserve">
+    <value>To-line UC</value>
+  </data>
+  <data name="Item_New_Title" xml:space="preserve">
+    <value>New Item</value>
+  </data>
+  <data name="Item_ReferenceCode" xml:space="preserve">
+    <value>Ref Item Code</value>
+  </data>
+  <data name="Item_Routing" xml:space="preserve">
+    <value>Routing</value>
+  </data>
+  <data name="Item_SafeStock" xml:space="preserve">
+    <value>Safety Stock</value>
+  </data>
+  <data name="Item_ScrapPercent" xml:space="preserve">
+    <value>Scrap Percent</value>
+  </data>
+  <data name="Item_ShortCode" xml:space="preserve">
+    <value>Short Code</value>
+  </data>
+  <data name="Item_SupplierLotNo" xml:space="preserve">
+    <value>Supplier Lot No</value>
+  </data>
+  <data name="Item_Tab_Title" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="Item_UC" xml:space="preserve">
+    <value>UC</value>
+  </data>
+  <data name="Item_Uom" xml:space="preserve">
+    <value>UOM</value>
+  </data>
+  <data name="Item_Updated" xml:space="preserve">
+    <value>Item updated successfully.</value>
+  </data>
+  <data name="Item_WarnLeadTime" xml:space="preserve">
+    <value>Warn Lead Time</value>
+  </data>
+  <data name="Item_Warranty" xml:space="preserve">
+    <value>Warranty</value>
+  </data>
+  <data name="Item_Weight" xml:space="preserve">
+    <value>Weight</value>
+  </data>
+  <data name="Item_WorkHour" xml:space="preserve">
+    <value>Work Hour</value>
+  </data>
+</root>

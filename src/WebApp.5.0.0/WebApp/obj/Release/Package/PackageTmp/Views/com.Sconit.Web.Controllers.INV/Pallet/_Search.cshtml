@@ -1,0 +1,59 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+
+<fieldset>
+    @using (Html.BeginForm("List", "Pallet"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Pallet_Code">
+                    @Resources.INV.Pallet.Pallet_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["PalletSearchModel"] != null ? ((PalletSearchModel)TempData["PalletSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Pallet_Description">
+                    @Resources.INV.Pallet.Pallet_Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["PalletSearchModel"] != null ? ((PalletSearchModel)TempData["PalletSearchModel"]).Description : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Pallet_HuId">
+                    @Resources.INV.Pallet.Pallet_HuId
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("HuId", TempData["PalletSearchModel"] != null ? ((PalletSearchModel)TempData["PalletSearchModel"]).HuId : string.Empty)
+            </div>
+          
+            <div class="search-label">
+                <label for="Hu_StartDate">
+                    @Resources.INV.Pallet.Pallet_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("StartDate")
+.Value(TempData["PalletSearchModel"] != null ? ((PalletSearchModel)TempData["PalletSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_EndDate">
+                    @Resources.INV.Pallet.Pallet_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("EndDate")
+            .Value(TempData["PalletSearchModel"] != null ? ((PalletSearchModel)TempData["PalletSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+    }
+</fieldset>

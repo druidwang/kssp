@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.BIL.BillMaster, com.Sconit.Entity" table="BIL_TransportBillMaster" lazy="false">
+		<id name="BillNo" column="BillNo" type="String" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<version name="Version" column="Version" type="Int32" />	
+		<property name="ExternalBillNo" column="ExtBillNo" type="String" length="50"/>	
+		<!--<property name="ReferenceBillNo" column="RefBillNo" type="String" length="50"/>-->	
+		<property name="Type" column="Type"/>	
+		<property name="SubType" column="SubType"/>	
+		<property name="Status" column="Status"/>	
+		<property name="BillAddress" column="BillAddr" type="String" length="50"/>	
+		<property name="BillAddressDescription" column="BillAddrDesc" type="String" length="256"/>	
+		<property name="Party" column="Party" type="String" length="50"/>	
+		<property name="PartyName" column="PartyNm" type="String" length="100"/>	
+		<property name="Currency" column="Currency" type="String" length="50"/>	
+		<!--<property name="IsIncludeTax" column="IsIncludeTax" type="Boolean"/>	
+		<property name="Tax" column="Tax" type="String" length="50"/>
+		<property name="EffectiveDate" column="EffDate" type="DateTime"/>-->		
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+
+		<property name="ReleaseUserId" column="ReleaseUser" type="Int32" />
+		<property name="ReleaseUserName" column="ReleaseUserNm" type="String" length="100" />
+		<property name="ReleaseDate" column="ReleaseDate" type="DateTime" />
+
+		<property name="CloseUserId" column="CloseUser" type="Int32" />
+		<property name="CloseUserName" column="CloseUserNm" type="String" length="100" />
+		<property name="CloseDate" column="CloseDate" type="DateTime"/>
+
+		<property name="CancelUserId" column="CancelUser" type="Int32" />
+		<property name="CancelUserName" column="CancelUserNm" type="String" length="100" />
+		<property name="CancelDate" column="CancelDate" type="DateTime" />
+		<property name="CancelReason" column="CancelReason" type="String" length="100" />
+		<property name="InvoiceNo" column="InvoiceNo" type="String" length="50" />
+		<property name="InvoiceDate" column="InvoiceDate" type="DateTime"  />
+		<property name="Amount" column="Amount" type="Decimal"/>
+	</class>
+</hibernate-mapping>

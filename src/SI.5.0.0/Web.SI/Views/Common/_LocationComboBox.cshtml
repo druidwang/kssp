@@ -1,0 +1,55 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string Id = ViewBag.ControlId;
+    if (string.IsNullOrWhiteSpace(Id))
+    {
+        Id = name;
+    }
+    bool enable = true;
+    if (ViewBag.Enable!=null)
+    {
+        enable = ViewBag.Enable;
+    }
+}
+@{
+    if (ViewBag.IsChange != null)
+    {
+        if (name == "LocationTo")
+        {
+        @(Html.Telerik().ComboBox()
+        .Name(name)
+        .HiddenInputHtmlAttributes(new { id = Id })
+        .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingLocationTo", "Common", null))
+        .ClientEvents(events =>
+        events.OnChange("LocationTo_Change").OnDataBinding("LocationTo_DataBinding")
+        )
+        .BindTo(Model)
+        .Enable(enable)
+        )
+    }else
+    {
+        @(Html.Telerik().ComboBox()
+        .Name(name)
+            .HiddenInputHtmlAttributes(new { id = Id })
+            .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingLocationFrom", "Common", null))
+        .ClientEvents(events =>
+        events.OnChange("LocationFrom_Change").OnDataBinding("LocationFrom_DataBinding")
+        )
+        .BindTo(Model)
+        .Enable(enable)
+        )
+    }
+    }
+    else
+    { 
+       @(Html.Telerik().ComboBox()
+        .Name(name)
+        .HiddenInputHtmlAttributes(new { id = Id })
+        .DataBinding(binding => binding.Ajax().Select("_LocationAjaxLoading", "Common"))
+        .BindTo(Model)
+        .Enable(enable)
+        .AutoFill(true)
+        ) 
+    }
+    }

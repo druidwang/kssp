@@ -1,0 +1,67 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo).ClientTemplate(Html.ActionLink("<#= OrderNo #>", "Edit", "SupplierOrder", new { OrderNo = "<#= OrderNo #>", Flow = "<#= Flow #>" }, null).ToString());
+            //columns.Bound(o => o.WMSNo);
+            columns.Bound(o => o.Flow).ClientTemplate(string.Format("<span title={0}>{1}</span>","<#=FlowDescription #>","<#=Flow #>"));
+            columns.Bound(o => o.ReferenceOrderNo);
+            //columns.Bound(o => o.ExternalOrderNo);
+            columns.Bound(o => o.OrderTypeDescription);
+            columns.Bound(o => o.OrderPriorityDescription);
+            //columns.Bound(o => o.PartyFromName).ClientTemplate("<div title=<#=PartyFromName #>><#=PartyFrom #></div>");
+            columns.Bound(o => o.PartyToName).ClientTemplate("<div title=<#=ShipToAddress #>><#=PartyToName #></div>");
+            columns.Bound(o => o.WindowTime);
+            //columns.Bound(o => o.ShipToAddress);
+            columns.Bound(o => o.OrderStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "OrderNo")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.OrderNo, cell.DataItem.OrderNo);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SupplierOrder"))
+                .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                Dock: $('#Dock').val(),
+                Status: $('#Status').val(),
+                Priority: $('#Priority').val(),
+                ReferenceOrderNo: $('#ReferenceOrderNo').val(),
+                ExternalOrderNo: $('#ExternalOrderNo').val(),
+                WMSNO: $('#WMSNO').val(),
+                Sequence: $('#Sequence').val()
+            };
+        } 
+    </script>
+</fieldset>

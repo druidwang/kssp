@@ -1,0 +1,12 @@
+﻿@(Html.Telerik().ComboBox().HtmlAttributes(new { style = "width: 80px;display: block;" })
+    .DropDownHtmlAttributes(new { style = "width: 300px; " })
+    .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(""))
+    .DataBinding(binding => binding.Ajax().Select("_ItemAjaxLoadingFilterBySection", "Common",
+    new
+    {
+        section = ViewBag.Section
+    }).Cache(true))
+    .AutoFill(true)
+    .HighlightFirstMatch(true)
+    .ClientEvents(events => events.OnChange("onItemComboBoxChange").OnDataBinding("ItemComboBox_DataBinding"))
+)

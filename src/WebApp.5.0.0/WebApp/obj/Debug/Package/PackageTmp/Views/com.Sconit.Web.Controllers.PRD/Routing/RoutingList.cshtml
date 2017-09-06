@@ -1,0 +1,32 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Routing_View" });
+}
+<input type="hidden" name="RoutingMasterCode" id="RoutingMasterCode" value="@Model" />
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.PRD.Routing.Routing_Tab_RoutingMaster)
+               .LoadContentFrom("RoutingMasterEdit", "Routing", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+               
+            tabstrip.Add()
+                .Text(Resources.PRD.Routing.Routing_Tab_RoutingDetail)
+                .LoadContentFrom("RoutingDetailResult", "Routing", new { RoutingMasterCode = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}

@@ -1,0 +1,61 @@
+﻿@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("List", "SupplierSortMaster"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.SequenceMaster.SequenceMaster_SequenceNo
+                </label>
+            </div>
+            <div class="search-field">
+               @Html.TextBox("SequenceNo", TempData["SequenceMasterSearchModel"] != null ? ((SequenceMasterSearchModel)TempData["SequenceMasterSearchModel"]).SequenceNo: string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.SequenceMaster.SequenceMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new { 
+                controlName = "Flow", 
+                selectedValue = TempData["SequenceMasterSearchModel"] != null ? ((SequenceMasterSearchModel)TempData["SequenceMasterSearchModel"]).Flow : string.Empty,
+                isSupplier = true, type = (int)com.Sconit.CodeMaster.OrderType.Procurement 
+            });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.SequenceMaster.SequenceMaster_StartTime
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("StartTime")
+.Value(TempData["SequenceMasterSearchModel"] != null ? ((SequenceMasterSearchModel)TempData["SequenceMasterSearchModel"]).StartTime : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.SequenceMaster.SequenceMaster_EndTime
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("EndTime")
+.Value(TempData["SequenceMasterSearchModel"] != null ? ((SequenceMasterSearchModel)TempData["SequenceMasterSearchModel"]).EndTime : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+            
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

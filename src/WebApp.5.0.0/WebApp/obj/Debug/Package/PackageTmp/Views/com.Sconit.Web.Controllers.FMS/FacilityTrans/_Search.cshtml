@@ -1,0 +1,56 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.FMS
+<fieldset>
+    @using (Html.BeginForm("List", "FacilityTrans"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="FacilityTrans_FCID">
+                    @Resources.FMS.FacilityTrans.FacilityTrans_FCID
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("FCID", TempData["FacilityTransSearchModel"] != null ? ((FacilityTransSearchModel)TempData["FacilityTransSearchModel"]).FCID : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FacilityTrans_Name">
+                    @Resources.FMS.FacilityTrans.FacilityTrans_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Name", TempData["FacilityTransSearchModel"] != null ? ((FacilityTransSearchModel)TempData["FacilityTransSearchModel"]).Name : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="FacilityTrans_Category">
+                    @Resources.FMS.FacilityTrans.FacilityTrans_Category
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FacilityCategoryComboBox", "Common", new
+        {
+            controlName = "Category",
+            includeBlankOption = true,
+            selectedValue = TempData["FacilityTransSearchModel"] != null ? ((FacilityTransSearchModel)TempData["FacilityTransSearchModel"]).Category : string.Empty
+        });
+ }
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_FacilityTrans_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_FacilityTrans_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/FacilityTrans/New")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>

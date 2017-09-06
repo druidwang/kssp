@@ -1,0 +1,186 @@
+﻿@model com.Sconit.Entity.BIL.BillMaster
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.BIL.BillMstr.BillMstr_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BillNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.BillNo)
+                @Html.HiddenFor(model => model.BillNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ExternalBillNo)
+            </div>
+            <div class="editor-field-2">
+               @Html.DisplayFor(model => model.ExternalBillNo)
+  
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BillAddress)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.BillAddress)
+                @Html.HiddenFor(model => model.Party)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CreateUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CreateUserName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @* @Html.DisplayFor(model => model.Status)*@
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.BillStatus,
+        controlName = "Status",
+        includeBlankOption = true,
+        selectedValue = (int)Model.Status,
+        enable = false
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.InvoiceNo)
+            </div>
+            @{
+    if (Model.Status == com.Sconit.CodeMaster.BillStatus.Create || Model.Status == com.Sconit.CodeMaster.BillStatus.Submit)
+    {
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.InvoiceNo)
+                </div>
+    }
+    else
+    {
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.InvoiceNo)
+                </div>
+    }
+            }
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.InvoiceDate)
+            </div>
+            @{
+    if (Model.Status == com.Sconit.CodeMaster.BillStatus.Create || Model.Status == com.Sconit.CodeMaster.BillStatus.Submit)
+    {
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.InvoiceDate)
+                </div>
+    }
+    else
+    {
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.InvoiceDate)
+                </div>
+    }
+                <div class="editor-label-2">
+                </div>
+                <div class="editor-field-2">
+                    @Html.RadioButton("groupOrDetail", 1, ViewBag.groupOrDetail == "1" ? true : false, new { onclick = "selectAllDetailGroupOrDetail(this)" })明细
+                    @Html.RadioButton("groupOrDetail", 0, ViewBag.groupOrDetail == "0" ? true : false, new { onclick = "selectAllDetailGroupOrDetail(this)" })汇总
+                </div>
+            }
+        </div>
+        <div class="search-footer">
+           @{
+                <button type="button" id="btnPrint" onclick="Print()">@Resources.SYS.Global.Button_Print</button>
+                <button type="button" id="btnExport" onclick="Export()">@Resources.SYS.Global.Button_Export</button>
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SupplierBill/List")'">@Resources.SYS.Global.Button_Back</button>
+            }
+        </div>
+    </fieldset>
+    
+    <div id="divBillDetailList">
+        @{
+    if (ViewBag.groupOrDetail == "0")
+    {
+        Html.RenderAction("_BillGroupDetailList", "SupplierBill", new { BillNo = Model.BillNo });
+    }
+    else
+    {
+        Html.RenderAction("_BillDetailList", "SupplierBill", new { BillNo = Model.BillNo });
+    }
+        }
+    </div>
+
+}
+<form id="hiddenForm" action="/SupplierBill/SaveToClient" target="_blank" method="post">
+<input id="billNo" name="billNo" type="hidden" />
+</form>
+<script type="text/javascript">
+    function selectAllDetailGroupOrDetail(e) {
+        var data = {
+            "BillNo": $('#BillNo').val()
+        };
+
+        if (e.value == "1") {
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/SupplierBill/_BillDetailList/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#divBillDetailList");
+                    $(tabStrip).html(data);
+                    $("#btnEdit").show();
+                }
+            });
+        }
+        else {
+
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/SupplierBill/_BillGroupDetailList/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#divBillDetailList");
+                    $(tabStrip).html(data);
+                    $("#btnEdit").hide();
+                }
+            });
+        }
+    }
+
+    function Export(e) {
+        $("#billNo").val($("#BillNo").val());
+       // alert($("#billNo").val());
+        $("#hiddenForm").submit();
+    }
+
+    function Print(e) {
+        var data = {
+            "billNo": $("#BillNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/SupplierBill/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>

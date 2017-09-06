@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SNRule_View" });
+    var strBlockSeq = (string)ViewBag.BlockSeq;
+    var strId = (string)ViewBag.Id;
+}
+<fieldset>
+    @using (Html.BeginForm("ChooseSNRuleBlock", "SNRule", FormMethod.Post))
+    {      
+        @Html.Hidden("Code", strId) 
+        
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_PreFixed:</div>
+        <div class="editor-field-1">@Html.CheckBox("FixCode", true, new { disabled = "disabled" })</div>
+  
+        if (strBlockSeq.Contains('2'))
+        {
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_YearCode:</div>
+        <div class="editor-field-1">@Html.CheckBox("YearCode", true)</div>
+        }
+        else
+        {
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_YearCode:</div>
+        <div class="editor-field-1">@Html.CheckBox("YearCode", false)</div>
+        }
+
+        if (strBlockSeq.Contains('3'))
+        {
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_MonthCode:</div>
+        <div class="editor-field-1">@Html.CheckBox("MonthCode", true)</div>
+        }
+        else
+        {
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_MonthCode:</div>
+        <div class="editor-field-1">@Html.CheckBox("MonthCode", false)</div>
+        }
+
+        if (strBlockSeq.Contains('4'))
+        {
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_DayCode:</div>
+        <div class="editor-field-1">@Html.CheckBox("DayCode", true)</div>         
+        }
+        else
+        {
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_DayCode:</div>
+        <div class="editor-field-1">@Html.CheckBox("DayCode", false)</div>                  
+        }
+
+        if (strBlockSeq.Contains('5'))
+        {
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_SeqLength:</div>
+        <div class="editor-field-1">@Html.CheckBox("SequnceNum", true)</div>
+        }
+        else
+        {
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_SeqLength:</div>
+        <div class="editor-field-1">@Html.CheckBox("SequnceNum", false)</div>
+        }
+
+        if (strBlockSeq.Contains('6'))
+        {
+        <div class="editor-label-1">@Resources.SYS.SNRule.SNRule_FiledRef:</div>
+        <div class="editor-field-1">@Html.CheckBox("FiledRef", true)</div>
+        }
+        else
+        {
+        <div class="multilinetext-label-1">@Resources.SYS.SNRule.SNRule_FiledRef:</div>
+        <div class="multilinetext-field-1">@Html.CheckBox("FiledRef", false)</div>
+        }
+        <br />
+        <div class="search-footer">
+            <button type="submit" id="btnConfirm">
+                @Resources.SYS.Global.Button_Confirm</button>
+        </div>
+    }
+</fieldset>

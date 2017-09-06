@@ -1,0 +1,30 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool coupled = ViewBag.Coupled != null ? ViewBag.Coupled : false;
+    string onChangeName = coupled ? "Section_Change" : "EmptyChange";
+    string onBindingName = coupled ? "Section_DataBinding" : "EmptyDataBinding";
+}
+@{
+    if (enable)
+    {
+    @(Html.Telerik().ComboBox()
+        .DropDownHtmlAttributes(new { style = "width: 200px; " })
+        .Name(name)
+        .HiddenInputHtmlAttributes(new { id = id })
+        .AutoFill(true)
+        .DataBinding(binding => binding.Ajax().Select("_SectionAjaxLoadingFilterByFlow", "Common",
+            new { flow = ViewBag.Flow,includeBlankOption = ViewBag.IncludeBlankOption }))
+        .ClientEvents(events => events.OnChange(onChangeName).OnDataBinding(onBindingName))
+        .HighlightFirstMatch(true)
+        .BindTo(Model)
+        .Enable(enable))
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)   }
+    }
+}

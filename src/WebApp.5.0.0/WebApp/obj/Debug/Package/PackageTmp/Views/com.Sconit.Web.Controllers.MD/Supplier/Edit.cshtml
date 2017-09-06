@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = Resources.MD.Party.Party_Supplier_Edit_Title ;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Menu.Procurement.Supplier" });
+}
+<input type="hidden" name="PartyCode" id="PartyCode" value="@Model" />
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.MD.Party.Party_Supplier_TabTitle_Supplier)
+                .LoadContentFrom("_Edit", "Supplier", new { Id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.Party.Party_Supplier_TabTitle_BillAddress)
+                .LoadContentFrom("_BillAddress", "Supplier", new { Id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.Party.Party_Supplier_TabTitle_ShipAddress)
+                .LoadContentFrom("_ShipAddress", "Supplier", new { Id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}
+
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.FMS.FacilityStockMaster, com.Sconit.Entity" table="Fac_StockTakeMstr" lazy="false">
+		<id name="StNo" column="StNo" type="String" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<property name="EffDate" column="EffDate" type="DateTime"  />	
+		<property name="CreateUser" column="CreateUser" type="String" length="50" />	
+		<property name="CreateDate" column="CreateDate" type="DateTime"  />	
+		<property name="LastModifyUser" column="LastModifyUser" type="String" length="50" />	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />	
+		<property name="ChargeOrg" column="ChargeOrg"  type="StringClob" />
+    <property name="ChargePerson" column="ChargePerson" type="StringClob" />
+    <property name="ChargePersonName" column="ChargePersonNm" type="StringClob" />
+		<property name="ChargeSite" column="ChargeSite" type="StringClob" />
+		<property name="FacilityCategory" column="FacilityCategory" type="StringClob" />
+		<property name="Status" column="Status" type="String" length="50" />	
+		<property name="ReleaseUser" column="ReleaseUser" type="String" length="50" />	
+		<property name="ReleaseDate" column="ReleaseDate" type="DateTime"  />	
+		<property name="CancelUser" column="CancelUser" type="String" length="50" />	
+		<property name="CancelDate" column="CancelDate" type="DateTime"  />	
+		<property name="CloseUser" column="CloseUser" type="String" length="50" />	
+		<property name="CloseDate" column="CloseDate" type="DateTime"  />	
+		<property name="StartUser" column="StartUser" type="String" length="50" />	
+		<property name="StartDate" column="StartDate" type="DateTime"  />	
+		<property name="CompleteUser" column="CompleteUser" type="String" length="50" />	
+		<property name="CompleteDate" column="CompleteDate" type="DateTime"  />
+    <property name="AssetNo" column="AssetNo" type="StringClob" />
+  	</class>
+</hibernate-mapping>

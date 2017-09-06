@@ -1,0 +1,108 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpSnap_MachineInstance" });
+}
+<fieldset>
+    @using (Html.BeginForm("ExportMachineInstance", "MrpSnap"))
+    { 
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpFiPlan.RccpFiPlan_Island
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_IslandComboBox", "Common",
+            new
+            {
+                controlName = "Island",
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpFiPlan.RccpFiPlan_Machine
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_MachineComboBox", "Common",
+            new
+            {
+                controlName = "Machine",
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.ProdLineExInstance.ProdLineExInstance_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            itemCategory = "FERT",
+        });
+            }
+        </div>
+        <div class="search-label" id="PlanDatelabel">
+            <label>
+                日期
+            </label>
+        </div>
+        <div class="search-field" id="PlanDatefield">
+            @(Html.Telerik().DatePicker().Name("Date")
+            .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }).Value(DateTime.Today))
+        </div>
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="Search" onclick="QueryMachineInstance()">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    }
+</fieldset>
+<div id="divMachineInstance">
+</div>
+<script type="text/javascript">
+    function QueryMachineInstance() {
+        if ($('#Date').val() == "") {
+            $message.error('时间为必填项');
+            return;
+        }
+        var data = {
+            "island": $('#Island').val(),
+            "machine": $('#Machine').val(),
+            "item": $('#Item').val(),
+            "date": $('#Date').val()
+        };
+        $("#divMachineInstance").html("Loading.....");
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSnap/_GetMachineInstance/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divMachineInstance");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            }
+        });
+    }
+
+    $('#btnExport').click(function () {
+        if ($('#Date').val() == "") {
+            $message.error('时间为必填项');
+            return;
+        }
+        $('form').submit();
+    });
+</script>

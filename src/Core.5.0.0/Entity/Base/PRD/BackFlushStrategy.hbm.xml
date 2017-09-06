@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.PRD.BackFlushStrategy, com.Sconit.Entity" table="PRD_BFStrategy" lazy="false">
+		<id name="Code" column="Code" type="String" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<property name="Description" column="Desc1" type="String" length="100" />	
+		<property name="BackFlushMethod" column="BFMethod"  />	
+		<property name="FeedMethod" column="FeedMethod"  />	
+		<!--<property name="IsScanHu" column="IsScanHu" type="Boolean"  />-->	
+		<property name="IsAutoFeed" column="IsAutoFeed" type="Boolean"  />	
+		<!--<property name="BackFlushInShortHandle" column="BFShortHandle"  />-->	
+  	</class>
+</hibernate-mapping>

@@ -1,0 +1,262 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP;
+<fieldset>
+    @using (Html.BeginForm("PurchaseList", "MrpSchedule"))
+    {   
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    类型
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("tabType", 0, true, new { onclick = "doClick(true)" })<span>查询</span>@*<span
+                    style="margin: 4px"></span>
+                @Html.RadioButton("tabType", 1, false, new { onclick = "doClick(false)" })<span>运行天计划</span>*@
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <hr style="border: dashed black 100%; width: 100%" />
+            <div id="divRun" style="display: none">
+                <div class="search-label">
+                    <label>
+                        炼胶计划版本
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+        Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+        {
+            controlName = "MiPlanVersion",
+            resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.MI,
+            includeBlankOption = true,
+            isRelease = true,
+            selectedValue = TempData["PurchasePlanMasterSearchModel"] != null ? ((PurchasePlanMasterSearchModel)TempData["PurchasePlanMasterSearchModel"]).MiPlanVersion : null
+        });
+                    }
+                </div>
+                <div class="editor-label-2">
+                    <label>
+                    </label>
+                </div>
+                <div class="editor-field-2">
+                </div>
+            </div>
+            <!-----------===========--search---->
+            <div id="divSearch">
+                @*<div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpPlanMaster.MrpPlanMaster_SnapTime
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+        Html.RenderAction("_MrpSnapMasterComboBox", "Common", new
+            {
+                controlName = "SnapTime",
+                SnapType = com.Sconit.CodeMaster.SnapType.Mrp,
+                isRelease = true,
+                includeBlankOption = true,
+                selectedValue = TempData["PurchasePlanMasterSearchModel"] != null ? ((PurchasePlanMasterSearchModel)TempData["PurchasePlanMasterSearchModel"]).SnapTime : null
+            });
+                    }
+                </div>*@
+                <div class="search-label">
+                    <label>
+                        物流路线
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+                        Html.RenderAction("_FlowComboBox", "Common", new
+                        {
+                            controlName = "Flow",
+                            isChange = true,
+                            type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                            isSupplier = true,
+                            selectedValue = TempData["PurchasePlanMasterSearchModel"] != null ? ((PurchasePlanMasterSearchModel)TempData["PurchasePlanMasterSearchModel"]).Flow : string.Empty
+                        });
+                    }
+                </div>
+                <div class="search-label">
+                    <label>
+                        版本号
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+        Html.RenderAction("_PurchasePlanMasterComboBox", "Common", new
+        {
+            isRelease = true,
+            controlName = "PlanVersion",
+            selectedValue = TempData["PurchasePlanMasterSearchModel"] != null ? ((PurchasePlanMasterSearchModel)TempData["PurchasePlanMasterSearchModel"]).PlanVersion : null
+        });           
+                    }
+                </div>
+
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpWorkCalendar.MrpWorkCalendar_DateType
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+                        Html.RenderAction("_CodeMasterComboBox", "Common", new
+                        {
+                            code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+                            includeBlankOption = true,
+                            isMrp = true,
+                            isChange = false,
+                            controlName = "DateType",
+                            selectedValue = TempData["PurchasePlanMasterSearchModel"] != null ? ((PurchasePlanMasterSearchModel)TempData["PurchasePlanMasterSearchModel"]).DateType : null
+                        });
+                    }
+
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpSnapMaster.MrpSnapMaster_IsRelease
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.CheckBox("IsRelease", TempData["PurchasePlanMasterSearchModel"] != null ? ((PurchasePlanMasterSearchModel)TempData["PurchasePlanMasterSearchModel"]).IsRelease : false)
+                </div>
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnRelease" onclick="Release()" style="display: none">
+                @Resources.SYS.Global.Button_Submit</button>
+
+            <button type="button" id="btnRun" onclick="Run(this)" style="display: none">
+                @Resources.SYS.Global.Button_Run</button>
+        </div>
+    }
+</fieldset>
+<div id="divLog" style="display: none">
+</div>
+<script type="text/javascript">
+    var isShowLog = false;
+    function Flow_Change(e) {
+        if (e.value != "") {
+            $('#PlanVersion').data('tComboBox').value('');
+            $('#PlanVersion').data('tComboBox').text('');
+            $("#PlanVersion").data("tComboBox").reload();
+        }
+    }
+
+    function PurchasePlanMaster_DataBinding(e) {
+        e.data = {
+            //flow: $("#Flow").val(),
+            //dateType: $("#DateType:checked").val() == undefined ? "4" : $("#DateType:checked").val()
+        }
+    }
+
+    function doClick(bl) {
+        if (bl) {
+            $("#divSearch").show();
+            $("#fldGrid").show();
+            $("#btnSearch").show();
+            $("#btnRun").hide();
+            $("#divLog").hide();
+            $("#divRun").hide();
+        }
+        else {
+            $("#divSearch").hide();
+            $("#btnSearch").hide();
+            $("#fldGrid").hide();
+            $("#btnRun").show();
+            $("#divLog").show();
+            $("#divRun").show();
+        }
+        isShowLog = false;
+    }
+
+    function Run(e) {
+
+        doClick(false);
+        if ($('#MiPlanVersion').val() == "") {
+            $message.error('炼胶计划版本为必选项');
+            return;
+        }
+
+        var data = {
+            planVersion: $('#MiPlanVersion').val()
+        }
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: "/MrpSchedule/_RunPurchase/",
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+        isShowLog = true;
+        e.disabled = true;
+        if (isShowLog) {
+            setTimeout(ShowLog, 1000);
+        }
+        else {
+            $("#divLog").hide();
+        }
+    }
+
+    function ShowLog() {
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSchedule/_GetRunLog/",
+            cache: false,
+            //data: null,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+            }
+        });
+        if (isShowLog) {
+            $("#divLog").show();
+            setTimeout(ShowLog, 1000);
+        }
+        else {
+            $("#divLog").hide();
+        }
+    }
+
+    function Release() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var ids = new Array();
+        var j = 0;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                ids[j] = $checkRecords[i].value;
+                j++;
+            }
+        }
+        var data = {
+            "ids": ids,
+            "isRelease": $("input[type=checkbox][name=IsRelease]:checked").val() !== undefined
+        }
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/MrpSchedule/BatchPurchaseEdit",
+            data: data,
+            cache: false,
+            traditional: true,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            }
+        });
+    }
+</script>

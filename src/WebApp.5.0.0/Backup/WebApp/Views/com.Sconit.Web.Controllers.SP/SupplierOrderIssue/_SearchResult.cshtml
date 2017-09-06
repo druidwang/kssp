@@ -1,0 +1,61 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo).ClientTemplate(Html.ActionLink("<#= OrderNo #>", "Edit", "SupplierOrderIssue", new { Id = "<#= OrderNo #>" }, null).ToString());
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.OrderTypeDescription).Width(40);
+            columns.Bound(o => o.OrderPriorityDescription).Width(50);
+            //columns.Bound(o => o.PartyFrom).ClientTemplate("<div title=<#= PartyFromName #>><#= PartyFrom #></div>");
+            columns.Bound(o => o.PartyTo).ClientTemplate("<div title=<#= PartyToName #>><#= PartyTo #></div>"); ;
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.OrderStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "OrderNo")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.OrderNo, cell.DataItem.OrderNo);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SupplierOrderIssue"))
+                .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total!=null?ViewBag.Total:0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                OrderTypeDescription: $('#OrderTypeDescription').val(),
+                OrderPriorityDescription: $('#OrderPriorityDescription').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                StartTime: $('#StartTime').val(),
+                WindowTime: $('#WindowTime').val(),
+                OrderStatusDescription: $('#OrderStatusDescription').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                SubType: $('#SubType').val()
+            };
+        } 
+    </script>
+</fieldset>

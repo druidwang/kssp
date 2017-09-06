@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.SCM.PickStrategy, com.Sconit.Entity" table="SCM_PickStrategy" lazy="false">
+    <id name="Code" column="Code" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <property name="IsPickFromBin" column="IsPickFromBin" type="Boolean"/>
+    <property name="OddOption" column="OddOption"/>
+    <property name="IsOddOccupy" column="IsOddOccupy" type="Boolean"/>
+    <property name="IsDevan" column="IsDevan" type="Boolean"/>
+    <property name="IsFulfillUC" column="IsFulfillUC" type="Boolean"/>
+    <property name="ShipStrategy" column="ShipStrategy"/>
+    <property name="IsSimple" column="IsSimple" type="Boolean"/>
+    <property name="IsMatchDirection" column="IsMatchDirection" type="Boolean"/>
+    <property name="UcDeviation" column="UcDeviation" type="Double"/>
+    
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+  </class>
+</hibernate-mapping>

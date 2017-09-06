@@ -1,0 +1,1309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C9F33316-A20B-4F2E-85E8-F62B2FE24074}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.Sconit.Web.SI</RootNamespace>
+    <AssemblyName>com.Sconit.Web.SI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\Lib\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\Lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.AutoTx">
+      <HintPath>..\..\Lib\Castle.Facilities.AutoTx.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.Logging">
+      <HintPath>..\..\Lib\Castle.Facilities.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.NHibernateIntegration">
+      <HintPath>..\..\Lib\Castle.Facilities.NHibernateIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.Log4netIntegration">
+      <HintPath>..\..\Lib\Castle.Services.Logging.Log4netIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Transaction">
+      <HintPath>..\..\Lib\Castle.Services.Transaction.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\Lib\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NHibernate">
+      <HintPath>..\..\Lib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle">
+      <HintPath>..\..\Lib\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Telerik.Web.Mvc">
+      <HintPath>..\..\Lib\Telerik.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\2011.3.1115\Black\editor.png" />
+    <Content Include="Content\2011.3.1115\Black\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Black\loading.gif" />
+    <Content Include="Content\2011.3.1115\Black\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Black\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Black\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Black\sprite.png" />
+    <Content Include="Content\2011.3.1115\Black\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Black\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Black\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Default\editor.png" />
+    <Content Include="Content\2011.3.1115\Default\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Default\loading.gif" />
+    <Content Include="Content\2011.3.1115\Default\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Default\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Default\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Default\sprite.png" />
+    <Content Include="Content\2011.3.1115\Default\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Default\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Default\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Forest\editor.png" />
+    <Content Include="Content\2011.3.1115\Forest\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Forest\loading.gif" />
+    <Content Include="Content\2011.3.1115\Forest\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Forest\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Forest\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Forest\sprite.png" />
+    <Content Include="Content\2011.3.1115\Forest\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Forest\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Forest\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Hay\editor.png" />
+    <Content Include="Content\2011.3.1115\Hay\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Hay\loading.gif" />
+    <Content Include="Content\2011.3.1115\Hay\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Hay\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Hay\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Hay\sprite.png" />
+    <Content Include="Content\2011.3.1115\Hay\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Hay\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Hay\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Metro\editor.png" />
+    <Content Include="Content\2011.3.1115\Metro\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Metro\loading.gif" />
+    <Content Include="Content\2011.3.1115\Metro\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Metro\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Metro\sprite.png" />
+    <Content Include="Content\2011.3.1115\Office2007\editor.png" />
+    <Content Include="Content\2011.3.1115\Office2007\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Office2007\loading.gif" />
+    <Content Include="Content\2011.3.1115\Office2007\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Office2007\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Office2007\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Office2007\sprite.png" />
+    <Content Include="Content\2011.3.1115\Office2007\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Office2007\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Office2007\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Office2010Black\editor.png" />
+    <Content Include="Content\2011.3.1115\Office2010Black\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Office2010Black\loading.gif" />
+    <Content Include="Content\2011.3.1115\Office2010Black\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Office2010Black\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Office2010Black\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Office2010Black\sprite.png" />
+    <Content Include="Content\2011.3.1115\Office2010Black\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Office2010Black\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Office2010Black\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Office2010Blue\editor.png" />
+    <Content Include="Content\2011.3.1115\Office2010Blue\gradient.png" />
+    <Content Include="Content\2011.3.1115\Office2010Blue\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Office2010Blue\loading.gif" />
+    <Content Include="Content\2011.3.1115\Office2010Blue\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Office2010Blue\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Office2010Blue\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Office2010Blue\sprite.png" />
+    <Content Include="Content\2011.3.1115\Office2010Silver\editor.png" />
+    <Content Include="Content\2011.3.1115\Office2010Silver\gradient.png" />
+    <Content Include="Content\2011.3.1115\Office2010Silver\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Office2010Silver\loading.gif" />
+    <Content Include="Content\2011.3.1115\Office2010Silver\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Office2010Silver\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Office2010Silver\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Office2010Silver\sprite.png" />
+    <Content Include="Content\2011.3.1115\Outlook\editor.png" />
+    <Content Include="Content\2011.3.1115\Outlook\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Outlook\loading.gif" />
+    <Content Include="Content\2011.3.1115\Outlook\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Outlook\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Outlook\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Outlook\sprite.png" />
+    <Content Include="Content\2011.3.1115\Outlook\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Outlook\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Outlook\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Simple\editor.png" />
+    <Content Include="Content\2011.3.1115\Simple\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Simple\loading.gif" />
+    <Content Include="Content\2011.3.1115\Simple\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Simple\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Simple\sprite.png" />
+    <Content Include="Content\2011.3.1115\Simple\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Simple\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Simple\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Sitefinity\editor.png" />
+    <Content Include="Content\2011.3.1115\Sitefinity\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Sitefinity\loading.gif" />
+    <Content Include="Content\2011.3.1115\Sitefinity\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Sitefinity\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Sitefinity\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Sitefinity\sprite.png" />
+    <Content Include="Content\2011.3.1115\Sitefinity\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Sitefinity\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Sitefinity\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Sunset\editor.png" />
+    <Content Include="Content\2011.3.1115\Sunset\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Sunset\loading.gif" />
+    <Content Include="Content\2011.3.1115\Sunset\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Sunset\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Sunset\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Sunset\sprite.png" />
+    <Content Include="Content\2011.3.1115\Sunset\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Sunset\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Sunset\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\telerik.black.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.common.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.default.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.forest.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.hay.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.metro.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.office2007.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.office2010black.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.office2010blue.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.office2010silver.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.outlook.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.rtl.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.simple.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.sitefinity.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.sunset.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.telerik.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.transparent.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.vista.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.web20.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.webblue.min.css" />
+    <Content Include="Content\2011.3.1115\telerik.windows7.min.css" />
+    <Content Include="Content\2011.3.1115\Telerik\editor.png" />
+    <Content Include="Content\2011.3.1115\Telerik\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Telerik\loading.gif" />
+    <Content Include="Content\2011.3.1115\Telerik\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Telerik\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Telerik\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Telerik\sprite.png" />
+    <Content Include="Content\2011.3.1115\Telerik\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Telerik\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Telerik\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Transparent\active.png" />
+    <Content Include="Content\2011.3.1115\Transparent\editor.png" />
+    <Content Include="Content\2011.3.1115\Transparent\gradient.png" />
+    <Content Include="Content\2011.3.1115\Transparent\group.png" />
+    <Content Include="Content\2011.3.1115\Transparent\hover.png" />
+    <Content Include="Content\2011.3.1115\Transparent\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Transparent\loading.gif" />
+    <Content Include="Content\2011.3.1115\Transparent\selected.png" />
+    <Content Include="Content\2011.3.1115\Transparent\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Transparent\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Transparent\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Transparent\sprite.png" />
+    <Content Include="Content\2011.3.1115\Transparent\toolbar.png" />
+    <Content Include="Content\2011.3.1115\Transparent\widget.png" />
+    <Content Include="Content\2011.3.1115\Vista\editor.png" />
+    <Content Include="Content\2011.3.1115\Vista\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Vista\loading.gif" />
+    <Content Include="Content\2011.3.1115\Vista\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Vista\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Vista\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Vista\sprite.png" />
+    <Content Include="Content\2011.3.1115\Web20\editor.png" />
+    <Content Include="Content\2011.3.1115\Web20\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Web20\loading.gif" />
+    <Content Include="Content\2011.3.1115\Web20\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Web20\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Web20\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Web20\sprite.png" />
+    <Content Include="Content\2011.3.1115\Web20\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\Web20\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\Web20\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\WebBlue\editor.png" />
+    <Content Include="Content\2011.3.1115\WebBlue\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\WebBlue\loading.gif" />
+    <Content Include="Content\2011.3.1115\WebBlue\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\WebBlue\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\WebBlue\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\WebBlue\sprite.png" />
+    <Content Include="Content\2011.3.1115\WebBlue\treeview-line.png" />
+    <Content Include="Content\2011.3.1115\WebBlue\treeview-nodes-rtl.png" />
+    <Content Include="Content\2011.3.1115\WebBlue\treeview-nodes.png" />
+    <Content Include="Content\2011.3.1115\Windows7\editor.png" />
+    <Content Include="Content\2011.3.1115\Windows7\imagebrowser.png" />
+    <Content Include="Content\2011.3.1115\Windows7\loading.gif" />
+    <Content Include="Content\2011.3.1115\Windows7\slider-h.gif" />
+    <Content Include="Content\2011.3.1115\Windows7\slider-v.gif" />
+    <Content Include="Content\2011.3.1115\Windows7\sprite-vertical.png" />
+    <Content Include="Content\2011.3.1115\Windows7\sprite.png" />
+    <Content Include="Content\Common\Icons\Ajax\Editor.png" />
+    <Content Include="Content\Common\Icons\Ajax\Grid.png" />
+    <Content Include="Content\Common\Icons\Ajax\Scheduler.png" />
+    <Content Include="Content\Common\Icons\delete.png" />
+    <Content Include="Content\Common\Icons\edit.png" />
+    <Content Include="Content\Common\Icons\favicon.png" />
+    <Content Include="Content\Common\Icons\folder.png" />
+    <Content Include="Content\Common\Icons\Mvc\Grid.png" />
+    <Content Include="Content\Common\Icons\Mvc\Menu.png" />
+    <Content Include="Content\Common\Icons\Mvc\PanelBar.png" />
+    <Content Include="Content\Common\Icons\Mvc\TabStrip.png" />
+    <Content Include="Content\Common\Icons\page_white_text.png" />
+    <Content Include="Content\Common\Icons\Sl\Chart.gif" />
+    <Content Include="Content\Common\Icons\Sl\Docking.gif" />
+    <Content Include="Content\Common\Icons\Sl\GridView.gif" />
+    <Content Include="Content\Common\Icons\Sl\Scheduler.gif" />
+    <Content Include="Content\Common\Icons\Suites\ajax.png" />
+    <Content Include="Content\Common\Icons\Suites\mvc.png" />
+    <Content Include="Content\Common\Icons\Suites\orm.png" />
+    <Content Include="Content\Common\Icons\Suites\rep.png" />
+    <Content Include="Content\Common\Icons\Suites\sitefinity.png" />
+    <Content Include="Content\Common\Icons\Suites\sl.png" />
+    <Content Include="Content\Common\Icons\Suites\test.png" />
+    <Content Include="Content\Common\Icons\Suites\win.png" />
+    <Content Include="Content\Common\Icons\Suites\wpf.png" />
+    <Content Include="Content\Common\Icons\Suites_32\AJAX.png" />
+    <Content Include="Content\Common\Icons\Suites_32\CMS.png" />
+    <Content Include="Content\Common\Icons\Suites_32\JustCode.png" />
+    <Content Include="Content\Common\Icons\Suites_32\MVC.png" />
+    <Content Include="Content\Common\Icons\Suites_32\ORM.png" />
+    <Content Include="Content\Common\Icons\Suites_32\PD.png" />
+    <Content Include="Content\Common\Icons\Suites_32\REP.png" />
+    <Content Include="Content\Common\Icons\Suites_32\SL.png" />
+    <Content Include="Content\Common\Icons\Suites_32\Test.png" />
+    <Content Include="Content\Common\Icons\Suites_32\TFS.png" />
+    <Content Include="Content\Common\Icons\Suites_32\WinForms.png" />
+    <Content Include="Content\Common\Icons\Suites_32\WPF.png" />
+    <Content Include="Content\Common\Icons\wave.png" />
+    <Content Include="Content\Common\orm-comparison.png" />
+    <Content Include="Content\Common\sprite.png" />
+    <Content Include="Content\Common\validation-error-message.png" />
+    <Content Include="Content\Images\2011-11-15.jpg" />
+    <Content Include="Content\Images\Banner_bg.png" />
+    <Content Include="Content\Images\Error.gif" />
+    <Content Include="Content\Images\error_1.gif" />
+    <Content Include="Content\Images\error_2.gif" />
+    <Content Include="Content\Images\error_pro.jpg" />
+    <Content Include="Content\Images\Icon\asc.gif" />
+    <Content Include="Content\Images\Icon\close.gif" />
+    <Content Include="Content\Images\Icon\close.png" />
+    <Content Include="Content\Images\Icon\close1.png" />
+    <Content Include="Content\Images\Icon\close_over.gif" />
+    <Content Include="Content\Images\Icon\content.gif" />
+    <Content Include="Content\Images\Icon\delete.gif" />
+    <Content Include="Content\Images\Icon\desc.gif" />
+    <Content Include="Content\Images\Icon\dot.gif" />
+    <Content Include="Content\Images\Icon\dot_MinusAlert.gif" />
+    <Content Include="Content\Images\Icon\down.gif" />
+    <Content Include="Content\Images\Icon\down_over.gif" />
+    <Content Include="Content\Images\Icon\down_time.gif" />
+    <Content Include="Content\Images\Icon\down_time_over.gif" />
+    <Content Include="Content\Images\Icon\help.gif" />
+    <Content Include="Content\Images\Icon\help.png" />
+    <Content Include="Content\Images\Icon\help_en.png" />
+    <Content Include="Content\Images\Icon\home.gif" />
+    <Content Include="Content\Images\Icon\home.png" />
+    <Content Include="Content\Images\Icon\home_en.png" />
+    <Content Include="Content\Images\Icon\icon_sugg.png" />
+    <Content Include="Content\Images\Icon\InTransit.gif" />
+    <Content Include="Content\Images\Icon\Inv.gif" />
+    <Content Include="Content\Images\Icon\left.gif" />
+    <Content Include="Content\Images\Icon\left_over.gif" />
+    <Content Include="Content\Images\Icon\loadingAnimation.gif" />
+    <Content Include="Content\Images\Icon\Lock.gif" />
+    <Content Include="Content\Images\Icon\MaxStock.gif" />
+    <Content Include="Content\Images\Icon\MinusAlert.gif" />
+    <Content Include="Content\Images\Icon\my_account.png" />
+    <Content Include="Content\Images\Icon\my_account_en.png" />
+    <Content Include="Content\Images\Icon\odd_InTransit.gif" />
+    <Content Include="Content\Images\Icon\odd_Inv.gif" />
+    <Content Include="Content\Images\Icon\odd_MinusAlert.gif" />
+    <Content Include="Content\Images\Icon\odd_ToBeIn.gif" />
+    <Content Include="Content\Images\Icon\odd_ToBeOut.gif" />
+    <Content Include="Content\Images\Icon\orderPoint.gif" />
+    <Content Include="Content\Images\Icon\refresh.gif" />
+    <Content Include="Content\Images\Icon\refresh.png" />
+    <Content Include="Content\Images\Icon\refresh_en.png" />
+    <Content Include="Content\Images\Icon\remove.png" />
+    <Content Include="Content\Images\Icon\remove1.png" />
+    <Content Include="Content\Images\Icon\reply.gif" />
+    <Content Include="Content\Images\Icon\right.gif" />
+    <Content Include="Content\Images\Icon\right_over.gif" />
+    <Content Include="Content\Images\Icon\SafeStock.gif" />
+    <Content Include="Content\Images\Icon\Search.gif" />
+    <Content Include="Content\Images\Icon\securityStock.gif" />
+    <Content Include="Content\Images\Icon\signout.gif" />
+    <Content Include="Content\Images\Icon\sign_out.png" />
+    <Content Include="Content\Images\Icon\sign_out_en.png" />
+    <Content Include="Content\Images\Icon\ToBeIn.gif" />
+    <Content Include="Content\Images\Icon\ToBeOut.gif" />
+    <Content Include="Content\Images\Icon\write.gif" />
+    <Content Include="Content\Images\LeftHead.png" />
+    <Content Include="Content\Images\Line.gif" />
+    <Content Include="Content\Images\Login\bg.png" />
+    <Content Include="Content\Images\Login\bottom.jpg" />
+    <Content Include="Content\Images\Login\but1.gif" />
+    <Content Include="Content\Images\Login\but2.gif" />
+    <Content Include="Content\Images\Login\head.jpg" />
+    <Content Include="Content\Images\Login\left01.jpg" />
+    <Content Include="Content\Images\Login\left02.jpg" />
+    <Content Include="Content\Images\Login\left03.jpg" />
+    <Content Include="Content\Images\Login\loginbut.gif" />
+    <Content Include="Content\Images\Login\Login_box_bottom.png" />
+    <Content Include="Content\Images\Login\Login_box_top.png" />
+    <Content Include="Content\Images\Login\Login_top_stripe.png" />
+    <Content Include="Content\Images\Login\right01.jpg" />
+    <Content Include="Content\Images\Login\right02.jpg" />
+    <Content Include="Content\Images\Login\right03.jpg" />
+    <Content Include="Content\Images\Login\SIH\login_1.jpg" />
+    <Content Include="Content\Images\Login\SIH\login_2.jpg" />
+    <Content Include="Content\Images\Login\SIH\login_3.jpg" />
+    <Content Include="Content\Images\Login\SIH\Login_top_stripe.png" />
+    <Content Include="Content\Images\Login\SIH\Logo_SI.jpg" />
+    <Content Include="Content\Images\logo.jpg" />
+    <Content Include="Content\Images\Logo.png" />
+    <Content Include="Content\Images\Logo_Sconit.png" />
+    <Content Include="Content\Images\Main\AddtoFavorite.png" />
+    <Content Include="Content\Images\Main\Banner_bg.png" />
+    <Content Include="Content\Images\Main\Check.gif" />
+    <Content Include="Content\Images\Main\Error.gif" />
+    <Content Include="Content\Images\Main\Favorite_Active.png" />
+    <Content Include="Content\Images\Main\Favorite_Inactive.png" />
+    <Content Include="Content\Images\Main\fujianFavorite_Inactive.png" />
+    <Content Include="Content\Images\Main\History_Active.png" />
+    <Content Include="Content\Images\Main\History_Inactive.png" />
+    <Content Include="Content\Images\Main\Line.gif" />
+    <Content Include="Content\Images\Main\Logo_trans.png" />
+    <Content Include="Content\Images\Main\Nav_Active.png" />
+    <Content Include="Content\Images\Main\Nav_Inactive.png" />
+    <Content Include="Content\Images\Main\NoPermission.png" />
+    <Content Include="Content\Images\Main\On_loading1.gif" />
+    <Content Include="Content\Images\Main\On_loading2.gif" />
+    <Content Include="Content\Images\Main\On_loading3.gif" />
+    <Content Include="Content\Images\Main\Remove.png" />
+    <Content Include="Content\Images\Main\start.png" />
+    <Content Include="Content\Images\Main\stop.png" />
+    <Content Include="Content\Images\Main\Success.gif" />
+    <Content Include="Content\Images\Main\Test.png" />
+    <Content Include="Content\Images\Main\Test_Lit.png" />
+    <Content Include="Content\Images\Main\Transparent.gif" />
+    <Content Include="Content\Images\Main\Warning.gif" />
+    <Content Include="Content\Images\Nav\%24.png" />
+    <Content Include="Content\Images\Nav\ActingPOBillDetail.png" />
+    <Content Include="Content\Images\Nav\ActingPurchaseBillAging.png" />
+    <Content Include="Content\Images\Nav\ActingPurchaseBillInitiation.png" />
+    <Content Include="Content\Images\Nav\ActingSalesBillAging.png" />
+    <Content Include="Content\Images\Nav\ActingSalesBillDetail.png" />
+    <Content Include="Content\Images\Nav\ActingSalesBillInitiation.png" />
+    <Content Include="Content\Images\Nav\Application.png" />
+    <Content Include="Content\Images\Nav\approve.png" />
+    <Content Include="Content\Images\Nav\ASN.png" />
+    <Content Include="Content\Images\Nav\ASNGap.png" />
+    <Content Include="Content\Images\Nav\AsnMonitoring.png" />
+    <Content Include="Content\Images\Nav\Backflush.png" />
+    <Content Include="Content\Images\Nav\BatchPickList.png" />
+    <Content Include="Content\Images\Nav\BatchStart.png" />
+    <Content Include="Content\Images\Nav\Bom.png" />
+    <Content Include="Content\Images\Nav\BOMMaintain.png" />
+    <Content Include="Content\Images\Nav\CheckSheetImport.png" />
+    <Content Include="Content\Images\Nav\CheckSheetMaintain.png" />
+    <Content Include="Content\Images\Nav\Client.png" />
+    <Content Include="Content\Images\Nav\components.png" />
+    <Content Include="Content\Images\Nav\ConfirmingRateReport.png" />
+    <Content Include="Content\Images\Nav\Console.png" />
+    <Content Include="Content\Images\Nav\ContainerSearch.png" />
+    <Content Include="Content\Images\Nav\ControlPanel.png" />
+    <Content Include="Content\Images\Nav\createNewFolder.png" />
+    <Content Include="Content\Images\Nav\CreateUpdateWO.png" />
+    <Content Include="Content\Images\Nav\CSAdmin.png" />
+    <Content Include="Content\Images\Nav\Currency.png" />
+    <Content Include="Content\Images\Nav\CusScheduleMaintain.png" />
+    <Content Include="Content\Images\Nav\CustItem.png" />
+    <Content Include="Content\Images\Nav\CustItemMaintain.png" />
+    <Content Include="Content\Images\Nav\CustKpSelect.png" />
+    <Content Include="Content\Images\Nav\Customer.png" />
+    <Content Include="Content\Images\Nav\CustomerGoodsFlow.png" />
+    <Content Include="Content\Images\Nav\CustomerRollingPlan.png" />
+    <Content Include="Content\Images\Nav\CycleCount.png" />
+    <Content Include="Content\Images\Nav\CycleCountDiff.png" />
+    <Content Include="Content\Images\Nav\DataImport.png" />
+    <Content Include="Content\Images\Nav\Default.png" />
+    <Content Include="Content\Images\Nav\Devanning.png" />
+    <Content Include="Content\Images\Nav\Distribution.png" />
+    <Content Include="Content\Images\Nav\DistributionFlow.png" />
+    <Content Include="Content\Images\Nav\DistributionOrder.png" />
+    <Content Include="Content\Images\Nav\DistributionPriceList.png" />
+    <Content Include="Content\Images\Nav\DistributionReceiptNotes.png" />
+    <Content Include="Content\Images\Nav\DmdSchedule.png" />
+    <Content Include="Content\Images\Nav\DSSGear.png" />
+    <Content Include="Content\Images\Nav\Employee.png" />
+    <Content Include="Content\Images\Nav\ExternalIntegration.png" />
+    <Content Include="Content\Images\Nav\Favorites.png" />
+    <Content Include="Content\Images\Nav\Feed.png" />
+    <Content Include="Content\Images\Nav\GeneralCode.png" />
+    <Content Include="Content\Images\Nav\GeneralMaster.png" />
+    <Content Include="Content\Images\Nav\generalSetup.png" />
+    <Content Include="Content\Images\Nav\GIConfirm.png" />
+    <Content Include="Content\Images\Nav\GoodsReceipt.png" />
+    <Content Include="Content\Images\Nav\GoodsTraceability.png" />
+    <Content Include="Content\Images\Nav\GoodsUniting.png" />
+    <Content Include="Content\Images\Nav\GRAdjustment.png" />
+    <Content Include="Content\Images\Nav\groupby.png" />
+    <Content Include="Content\Images\Nav\GRRejectReturn.png" />
+    <Content Include="Content\Images\Nav\GRReturn.png" />
+    <Content Include="Content\Images\Nav\help.png" />
+    <Content Include="Content\Images\Nav\HistoricalInventory.png" />
+    <Content Include="Content\Images\Nav\HuInbound.png" />
+    <Content Include="Content\Images\Nav\Info.png" />
+    <Content Include="Content\Images\Nav\Information.png" />
+    <Content Include="Content\Images\Nav\Initiation.png" />
+    <Content Include="Content\Images\Nav\InitiationTemplates.png" />
+    <Content Include="Content\Images\Nav\Inspection.png" />
+    <Content Include="Content\Images\Nav\InspectionOrder.png" />
+    <Content Include="Content\Images\Nav\InvAdjust.png" />
+    <Content Include="Content\Images\Nav\InvAdjustment.png" />
+    <Content Include="Content\Images\Nav\InvAging.png" />
+    <Content Include="Content\Images\Nav\Inventory.png" />
+    <Content Include="Content\Images\Nav\InventoryAdjustment.png" />
+    <Content Include="Content\Images\Nav\InventoryDetail.png" />
+    <Content Include="Content\Images\Nav\InventoryIOB.png" />
+    <Content Include="Content\Images\Nav\InventoryManagement.png" />
+    <Content Include="Content\Images\Nav\InventoryQuery.png" />
+    <Content Include="Content\Images\Nav\InventoryReport.png" />
+    <Content Include="Content\Images\Nav\InventoryTrans.png" />
+    <Content Include="Content\Images\Nav\InvIn.png" />
+    <Content Include="Content\Images\Nav\InvIntial.png" />
+    <Content Include="Content\Images\Nav\InvIntiation.png" />
+    <Content Include="Content\Images\Nav\InvMovement.png" />
+    <Content Include="Content\Images\Nav\InvOut.png" />
+    <Content Include="Content\Images\Nav\InvTrans.png" />
+    <Content Include="Content\Images\Nav\InvTurnRate.png" />
+    <Content Include="Content\Images\Nav\InvVisualBoard.png" />
+    <Content Include="Content\Images\Nav\Item.png" />
+    <Content Include="Content\Images\Nav\ItemJPHMaintain.png" />
+    <Content Include="Content\Images\Nav\ItemSearch.png" />
+    <Content Include="Content\Images\Nav\KpSelect.png" />
+    <Content Include="Content\Images\Nav\LeanEngine.png" />
+    <Content Include="Content\Images\Nav\List.png" />
+    <Content Include="Content\Images\Nav\Location.png" />
+    <Content Include="Content\Images\Nav\LocationBin.png" />
+    <Content Include="Content\Images\Nav\LocationMaintain.png" />
+    <Content Include="Content\Images\Nav\LocInAndOutSearch.png" />
+    <Content Include="Content\Images\Nav\LocInAndOutSearch1.png" />
+    <Content Include="Content\Images\Nav\LogMasterSearch.png" />
+    <Content Include="Content\Images\Nav\ManageSconit.png" />
+    <Content Include="Content\Images\Nav\MasterData.png" />
+    <Content Include="Content\Images\Nav\masterDataManagement.png" />
+    <Content Include="Content\Images\Nav\MaterialReuse.png" />
+    <Content Include="Content\Images\Nav\MPS.png" />
+    <Content Include="Content\Images\Nav\MRP.png" />
+    <Content Include="Content\Images\Nav\NamedQueries.png" />
+    <Content Include="Content\Images\Nav\NewItemDistributionOrder.png" />
+    <Content Include="Content\Images\Nav\NewItemProcurementOrder.png" />
+    <Content Include="Content\Images\Nav\NewItemWorkOrder.png" />
+    <Content Include="Content\Images\Nav\OfflineTerminal.png" />
+    <Content Include="Content\Images\Nav\online.png" />
+    <Content Include="Content\Images\Nav\OrderIssue.png" />
+    <Content Include="Content\Images\Nav\OrderMonitoring.png" />
+    <Content Include="Content\Images\Nav\OrderQuick.png" />
+    <Content Include="Content\Images\Nav\OutOrderDeliver.png" />
+    <Content Include="Content\Images\Nav\OutOrderQuick.png" />
+    <Content Include="Content\Images\Nav\Partner.png" />
+    <Content Include="Content\Images\Nav\Party.png" />
+    <Content Include="Content\Images\Nav\PartyMaintain.png" />
+    <Content Include="Content\Images\Nav\Permission.png" />
+    <Content Include="Content\Images\Nav\PhysicalCountMgt.png" />
+    <Content Include="Content\Images\Nav\PickList.png" />
+    <Content Include="Content\Images\Nav\PickUp.png" />
+    <Content Include="Content\Images\Nav\Planning.png" />
+    <Content Include="Content\Images\Nav\plugin.png" />
+    <Content Include="Content\Images\Nav\PluginInstallation.png" />
+    <Content Include="Content\Images\Nav\POBill.png" />
+    <Content Include="Content\Images\Nav\POMonitoring.png" />
+    <Content Include="Content\Images\Nav\POPlanBill.png" />
+    <Content Include="Content\Images\Nav\POPlannedBillDetail.png" />
+    <Content Include="Content\Images\Nav\Preference.png" />
+    <Content Include="Content\Images\Nav\previousFolder.png" />
+    <Content Include="Content\Images\Nav\PrintSetup.png" />
+    <Content Include="Content\Images\Nav\ProcessWO.png" />
+    <Content Include="Content\Images\Nav\Procurement.png" />
+    <Content Include="Content\Images\Nav\ProcurementFlow.png" />
+    <Content Include="Content\Images\Nav\ProcurementIntransitDetail.png" />
+    <Content Include="Content\Images\Nav\ProcurementOrder.png" />
+    <Content Include="Content\Images\Nav\ProcurementPriceList.png" />
+    <Content Include="Content\Images\Nav\ProdInputOutput.png" />
+    <Content Include="Content\Images\Nav\ProdItemGroupMtn.png" />
+    <Content Include="Content\Images\Nav\ProdLine.png" />
+    <Content Include="Content\Images\Nav\ProdLineMaintain.png" />
+    <Content Include="Content\Images\Nav\Production.png" />
+    <Content Include="Content\Images\Nav\ProductionFlow.png" />
+    <Content Include="Content\Images\Nav\ProductionIOReport.png" />
+    <Content Include="Content\Images\Nav\ProductionManagement.png" />
+    <Content Include="Content\Images\Nav\ProductionReceiptNotes.png" />
+    <Content Include="Content\Images\Nav\progressCursorTracker.png" />
+    <Content Include="Content\Images\Nav\PS.PNG" />
+    <Content Include="Content\Images\Nav\PSModelImport.png" />
+    <Content Include="Content\Images\Nav\PurchaseSales.png" />
+    <Content Include="Content\Images\Nav\PutAway.png" />
+    <Content Include="Content\Images\Nav\Quality.png" />
+    <Content Include="Content\Images\Nav\QueryRate.png" />
+    <Content Include="Content\Images\Nav\QueryWO.png" />
+    <Content Include="Content\Images\Nav\ReceiptNotes.png" />
+    <Content Include="Content\Images\Nav\ReferenceData.png" />
+    <Content Include="Content\Images\Nav\Region.png" />
+    <Content Include="Content\Images\Nav\RejectReuse.png" />
+    <Content Include="Content\Images\Nav\Repack.png" />
+    <Content Include="Content\Images\Nav\RepackNotes.png" />
+    <Content Include="Content\Images\Nav\RePrintWO.png" />
+    <Content Include="Content\Images\Nav\RestTimeMaintain.png" />
+    <Content Include="Content\Images\Nav\Role.png" />
+    <Content Include="Content\Images\Nav\Routing.png" />
+    <Content Include="Content\Images\Nav\RushDO.png" />
+    <Content Include="Content\Images\Nav\RushPO.png" />
+    <Content Include="Content\Images\Nav\RushWO.png" />
+    <Content Include="Content\Images\Nav\SaleTrans.png" />
+    <Content Include="Content\Images\Nav\SaleTrans5.png" />
+    <Content Include="Content\Images\Nav\SaleTrans6.png" />
+    <Content Include="Content\Images\Nav\ScrapMaterial.png" />
+    <Content Include="Content\Images\Nav\Security.png" />
+    <Content Include="Content\Images\Nav\SequenceWO.png" />
+    <Content Include="Content\Images\Nav\server.png" />
+    <Content Include="Content\Images\Nav\Setup.png" />
+    <Content Include="Content\Images\Nav\SetWOComponentLotNo.png" />
+    <Content Include="Content\Images\Nav\ShiftProductionReport.png" />
+    <Content Include="Content\Images\Nav\ShipAdjustment.png" />
+    <Content Include="Content\Images\Nav\ShipmentMonitoring.png" />
+    <Content Include="Content\Images\Nav\ShipReturn.png" />
+    <Content Include="Content\Images\Nav\SOBill.png" />
+    <Content Include="Content\Images\Nav\SOMonitoring.png" />
+    <Content Include="Content\Images\Nav\SOPlanBill.png" />
+    <Content Include="Content\Images\Nav\SOPlannedBillDetail.png" />
+    <Content Include="Content\Images\Nav\SO_Delivery.png" />
+    <Content Include="Content\Images\Nav\Spacer.gif" />
+    <Content Include="Content\Images\Nav\StartWO.png" />
+    <Content Include="Content\Images\Nav\StumbleUponIcon.gif" />
+    <Content Include="Content\Images\Nav\SubconctractingFlow.png" />
+    <Content Include="Content\Images\Nav\SupItem.png" />
+    <Content Include="Content\Images\Nav\SupItemGroupMaintain.png" />
+    <Content Include="Content\Images\Nav\Supplier.png" />
+    <Content Include="Content\Images\Nav\SupplierHuPrint.png" />
+    <Content Include="Content\Images\Nav\SupplierMenu.png" />
+    <Content Include="Content\Images\Nav\SupplierSchedule.png" />
+    <Content Include="Content\Images\Nav\SupplyChainRouting.png" />
+    <Content Include="Content\Images\Nav\temp\-AddPermissionToRole.png" />
+    <Content Include="Content\Images\Nav\temp\-AddUserToRole.png" />
+    <Content Include="Content\Images\Nav\temp\-OrderRec.png" />
+    <Content Include="Content\Images\Nav\temp\-PartyMaintain.png" />
+    <Content Include="Content\Images\Nav\temp\-PickUp.png" />
+    <Content Include="Content\Images\Nav\temp\-RushDO.png" />
+    <Content Include="Content\Images\Nav\temp\1394353.png" />
+    <Content Include="Content\Images\Nav\temp\1ASN.png" />
+    <Content Include="Content\Images\Nav\temp\complore.gif" />
+    <Content Include="Content\Images\Nav\temp\dash_iconInventory.gif" />
+    <Content Include="Content\Images\Nav\temp\delicious.png" />
+    <Content Include="Content\Images\Nav\temp\diamonds_red_maroon.gif" />
+    <Content Include="Content\Images\Nav\temp\docs.png" />
+    <Content Include="Content\Images\Nav\temp\download.png" />
+    <Content Include="Content\Images\Nav\temp\experimental.png" />
+    <Content Include="Content\Images\Nav\temp\file-16-word.gif" />
+    <Content Include="Content\Images\Nav\temp\file-icon.png" />
+    <Content Include="Content\Images\Nav\temp\financialManagement.png" />
+    <Content Include="Content\Images\Nav\temp\folder.png" />
+    <Content Include="Content\Images\Nav\temp\folder_closed.gif" />
+    <Content Include="Content\Images\Nav\temp\folder_closed.png" />
+    <Content Include="Content\Images\Nav\temp\folder_drop.gif" />
+    <Content Include="Content\Images\Nav\temp\folder_file.gif" />
+    <Content Include="Content\Images\Nav\temp\folder_file.png" />
+    <Content Include="Content\Images\Nav\temp\folder_open.gif" />
+    <Content Include="Content\Images\Nav\temp\folder_open.png" />
+    <Content Include="Content\Images\Nav\temp\folder_opened.png" />
+    <Content Include="Content\Images\Nav\temp\hidetoc.gif" />
+    <Content Include="Content\Images\Nav\temp\iconAutoForm.png" />
+    <Content Include="Content\Images\Nav\temp\iconElement.png" />
+    <Content Include="Content\Images\Nav\temp\iconExternalLink.png" />
+    <Content Include="Content\Images\Nav\temp\iconFavourites.png" />
+    <Content Include="Content\Images\Nav\temp\iconFolderClosed.png" />
+    <Content Include="Content\Images\Nav\temp\iconFolderOpened.png" />
+    <Content Include="Content\Images\Nav\temp\iconInfo.png" />
+    <Content Include="Content\Images\Nav\temp\iconPackage.png" />
+    <Content Include="Content\Images\Nav\temp\iconPackageOpened.png" />
+    <Content Include="Content\Images\Nav\temp\iconTask.png" />
+    <Content Include="Content\Images\Nav\temp\icon_remove_files_Disabled.png" />
+    <Content Include="Content\Images\Nav\temp\Image26.gif" />
+    <Content Include="Content\Images\Nav\temp\inventory.gif" />
+    <Content Include="Content\Images\Nav\temp\Inventory.jpg" />
+    <Content Include="Content\Images\Nav\temp\inventory.png" />
+    <Content Include="Content\Images\Nav\temp\Inventory1.png" />
+    <Content Include="Content\Images\Nav\temp\inventory2.png" />
+    <Content Include="Content\Images\Nav\temp\jabber.png" />
+    <Content Include="Content\Images\Nav\temp\keys.png" />
+    <Content Include="Content\Images\Nav\temp\link.png" />
+    <Content Include="Content\Images\Nav\temp\mt_logo.png" />
+    <Content Include="Content\Images\Nav\temp\postreply.gif" />
+    <Content Include="Content\Images\Nav\temp\save.png" />
+    <Content Include="Content\Images\Nav\temp\search.png" />
+    <Content Include="Content\Images\Nav\temp\sphinn.gif" />
+    <Content Include="Content\Images\Nav\temp\start.png" />
+    <Content Include="Content\Images\Nav\temp\star_on_blue.png" />
+    <Content Include="Content\Images\Nav\temp\StumbleUponIcon.gif" />
+    <Content Include="Content\Images\Nav\temp\tools.png" />
+    <Content Include="Content\Images\Nav\temp\tr_16x16_type_12.gif" />
+    <Content Include="Content\Images\Nav\temp\up-d.gif" />
+    <Content Include="Content\Images\Nav\temp\upOneLevel.png" />
+    <Content Include="Content\Images\Nav\temp\WebFavorite.png" />
+    <Content Include="Content\Images\Nav\temp\`GRReturn.png" />
+    <Content Include="Content\Images\Nav\temp\`MRP.png" />
+    <Content Include="Content\Images\Nav\temp\`RushDO.png" />
+    <Content Include="Content\Images\Nav\TerminalLog.png" />
+    <Content Include="Content\Images\Nav\TerminalMonitor.png" />
+    <Content Include="Content\Images\Nav\Trans.png" />
+    <Content Include="Content\Images\Nav\Transaction.png" />
+    <Content Include="Content\Images\Nav\TransferFlow.png" />
+    <Content Include="Content\Images\Nav\Trigger.png" />
+    <Content Include="Content\Images\Nav\Uom.png" />
+    <Content Include="Content\Images\Nav\User.png" />
+    <Content Include="Content\Images\Nav\UserAdd.png" />
+    <Content Include="Content\Images\Nav\ViewInventory.png" />
+    <Content Include="Content\Images\Nav\ViewItemFlow.png" />
+    <Content Include="Content\Images\Nav\ViewProcurementOrder.png" />
+    <Content Include="Content\Images\Nav\ViewWOIP.png" />
+    <Content Include="Content\Images\Nav\Visualization.png" />
+    <Content Include="Content\Images\Nav\Warehouse.png" />
+    <Content Include="Content\Images\Nav\WOCheckIn.png" />
+    <Content Include="Content\Images\Nav\WOGR.png" />
+    <Content Include="Content\Images\Nav\WOGRAdjustment.png" />
+    <Content Include="Content\Images\Nav\WOImportExport.png" />
+    <Content Include="Content\Images\Nav\WOMonitoring.png" />
+    <Content Include="Content\Images\Nav\WOPrint.png" />
+    <Content Include="Content\Images\Nav\WOReturn.png" />
+    <Content Include="Content\Images\Nav\WorkCalendar.png" />
+    <Content Include="Content\Images\Nav\WorkOrder.png" />
+    <Content Include="Content\Images\Nav\WorkshopScrap.png" />
+    <Content Include="Content\Images\new ui_1.png" />
+    <Content Include="Content\Images\Page\left.png" />
+    <Content Include="Content\Images\Page\top.png" />
+    <Content Include="Content\Images\sih-logo-l.png" />
+    <Content Include="Content\Images\sih-logo-w.jpg" />
+    <Content Include="Content\Images\sih-logo.gif" />
+    <Content Include="Content\Images\sih-logo.png" />
+    <Content Include="Content\Images\sih-pic.jpg" />
+    <Content Include="Content\Images\SIH.jpg" />
+    <Content Include="Content\Images\Skin\Enterprise\switch_bg.png" />
+    <Content Include="Content\Images\Skin\Enterprise\top_bg0.png" />
+    <Content Include="Content\Images\Skin\Enterprise\top_bg1.png" />
+    <Content Include="Content\Images\Skin\Enterprise\top_bg2.png" />
+    <Content Include="Content\Images\Skin\Enterprise\top_bg3.png" />
+    <Content Include="Content\Images\Test_Lit.png" />
+    <Content Include="Content\Main.css" />
+    <Content Include="Content\PanelBar\Descriptions\Accessibility.html" />
+    <Content Include="Content\PanelBar\Descriptions\AjaxLoading.html" />
+    <Content Include="Content\PanelBar\Descriptions\AnimationEffects.html" />
+    <Content Include="Content\PanelBar\Descriptions\ClientSideApi.html" />
+    <Content Include="Content\PanelBar\Descriptions\ClientSideEvents.html" />
+    <Content Include="Content\PanelBar\Descriptions\DataBindingToModel.html" />
+    <Content Include="Content\PanelBar\Descriptions\FirstLook.html" />
+    <Content Include="Content\PanelBar\Descriptions\RtlSupport.html" />
+    <Content Include="Content\PanelBar\Descriptions\SiteMapBinding.html" />
+    <Content Include="Content\PanelBar\Descriptions\Sprites.html" />
+    <Content Include="Content\PanelBar\Descriptions\Templates.html" />
+    <Content Include="Content\PanelBar\FirstLook\contacts.gif" />
+    <Content Include="Content\PanelBar\FirstLook\contactsItems.gif" />
+    <Content Include="Content\PanelBar\FirstLook\foldersList.gif" />
+    <Content Include="Content\PanelBar\FirstLook\mail.gif" />
+    <Content Include="Content\PanelBar\FirstLook\mailDeletedItems.gif" />
+    <Content Include="Content\PanelBar\FirstLook\mailfolder.gif" />
+    <Content Include="Content\PanelBar\FirstLook\mailInbox.gif" />
+    <Content Include="Content\PanelBar\FirstLook\mailItems.gif" />
+    <Content Include="Content\PanelBar\FirstLook\mailOutbox.gif" />
+    <Content Include="Content\PanelBar\FirstLook\mailPersonalFolders.gif" />
+    <Content Include="Content\PanelBar\FirstLook\mailSearch.gif" />
+    <Content Include="Content\PanelBar\FirstLook\mailSent.gif" />
+    <Content Include="Content\PanelBar\FirstLook\notes.gif" />
+    <Content Include="Content\PanelBar\FirstLook\notesItems.gif" />
+    <Content Include="Content\PanelBar\FirstLook\tasks.gif" />
+    <Content Include="Content\PanelBar\FirstLook\tasksItems.gif" />
+    <Content Include="Content\PanelBar\Templates\digitalCamera.gif" />
+    <Content Include="Content\PanelBar\Templates\exposure.gif" />
+    <Content Include="Content\PanelBar\Templates\How-to-find-us.gif" />
+    <Content Include="Content\PanelBar\Templates\slr.gif" />
+    <Content Include="Content\PanelBar\Templates\Testimonials.gif" />
+    <Content Include="Content\Site.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Resource\Templates\NVelocity\ExportTrans.htm" />
+    <Content Include="Resource\Templates\NVelocity\ImportProcOrder.htm" />
+    <Content Include="Resource\Templates\NVelocity\ImportProdBom.htm" />
+    <Content Include="Resource\Templates\NVelocity\ImportProdOrder.htm" />
+    <Content Include="Resource\Templates\NVelocity\ImportQuota.htm" />
+    <Content Include="Resource\Templates\NVelocity\LeanEngineCreateOrderError.htm" />
+    <Content Include="Resource\Templates\NVelocity\Common.htm" />
+    <Content Include="Scripts\2011.3.1115\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\2011.3.1115\jquery.validate.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.autocomplete.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.calendar.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.chart.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.combobox.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.common.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.datepicker.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.datetimepicker.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.draganddrop.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.editor.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.editing.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.filtering.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.grouping.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.reordering.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.resizing.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.imagebrowser.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.list.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.menu.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.panelbar.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.slider.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.splitter.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.tabstrip.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.textbox.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.timepicker.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.treeview.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.upload.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.window.min.js" />
+    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jQuery.dualListBox-1.3.js" />
+    <Content Include="Scripts\jquery.dualListBox-1.3.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\Sconit.js" />
+    <Content Include="Scripts\telerik.extensions.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="WebService\LeanEngineService.asmx" />
+    <Content Include="WebService\OrderService.asmx" />
+    <Content Include="WebService\EmailService.asmx" />
+    <Content Include="WebService\SecurityService.asmx" />
+    <Content Include="WebService\SmartDeviceService.asmx" />
+    <Content Include="WebService\SMSService.asmx" />
+    <Content Include="WebService\MrpService.asmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_GlobalResources\EditorLocalization.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.en-US.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.zh-CN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.en-US.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.zh-CN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ACC\AuthorizationBaseController.cs" />
+    <Compile Include="Controllers\ACC\PermissionGroupController.cs" />
+    <Compile Include="Controllers\ACC\RoleController.cs" />
+    <Compile Include="Controllers\ACC\UserController.cs" />
+    <Compile Include="Controllers\ACC\UserFavoriteController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\EDI\EDIPlanningScheduleController.cs" />
+    <Compile Include="Controllers\EDI\EDIScheduleLineController.cs" />
+    <Compile Include="Controllers\EDI\EDIShippingScheduleController.cs" />
+    <Compile Include="Controllers\ExceptionHandlerController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\SAP\SAPOpReportController.cs" />
+    <Compile Include="Controllers\SAP\SAPPostDOController.cs" />
+    <Compile Include="Controllers\SAP\SAPTransController.cs" />
+    <Compile Include="Controllers\SAP\SAPSupplierController.cs" />
+    <Compile Include="Controllers\SAP\SAPMapMoveTypeTCodeController.cs" />
+    <Compile Include="Controllers\SAP\SAPProcOrderController.cs" />
+    <Compile Include="Controllers\SAP\SAPProcOrderDetailController.cs" />
+    <Compile Include="Controllers\SAP\SAPProdOrderController.cs" />
+    <Compile Include="Controllers\SAP\SAPProdOrderBomDetController.cs" />
+    <Compile Include="Controllers\SAP\SAPProdSeqReportController.cs" />
+    <Compile Include="Controllers\SAP\SAPQuotaController.cs" />
+    <Compile Include="Controllers\SAP\SAPTableIndexController.cs" />
+    <Compile Include="Controllers\SAP\SAPTransCallBackController.cs" />
+    <Compile Include="Controllers\SAP\SAPSourceOrderController.cs" />
+    <Compile Include="Controllers\SAP\SAPInvLocController.cs" />
+    <Compile Include="Controllers\SI\SIEntityPreferenceController.cs" />
+    <Compile Include="Controllers\SI\SILogToUserController.cs" />
+    <Compile Include="Controllers\WMS\WMSInspectResultInputController.cs" />
+    <Compile Include="Controllers\WebAppBaseController.cs" />
+    <Compile Include="Controllers\SAP\SAPItemController.cs" />
+    <Compile Include="Controllers\WMS\WMSExchangeMaterialController.cs" />
+    <Compile Include="Controllers\WMS\WMSIpDetailInputController.cs" />
+    <Compile Include="Controllers\WMS\WMSMessageQueueController.cs" />
+    <Compile Include="Controllers\WMS\WMSMessageQueueLogController.cs" />
+    <Compile Include="Controllers\WMS\WMSMiscOrderDetailController.cs" />
+    <Compile Include="Controllers\WMS\WMSReceiptDetailInputController.cs" />
+    <Compile Include="Controllers\WMS\WMSTransferInputController.cs" />
+    <Compile Include="Controllers\WMS\WMSReturnOrderDetailInputController.cs" />
+    <Compile Include="Filters\ExceptionFilter.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Installers\AutoMapperInstaller.cs" />
+    <Compile Include="Installers\ControllerInstaller.cs" />
+    <Compile Include="Installers\ServiceEDIInstaller.cs" />
+    <Compile Include="Installers\ServiceSIInstaller.cs" />
+    <Compile Include="Installers\LoggerInstaller.cs" />
+    <Compile Include="Installers\MvcComponentsInstaller.cs" />
+    <Compile Include="Installers\SDServiceInstaller.cs" />
+    <Compile Include="Installers\ServiceSDInstaller.cs" />
+    <Compile Include="Installers\ServiceInstaller.cs" />
+    <Compile Include="Installers\ServiceMRPInstaller.cs" />
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\SearchModels\SI\EDI\SearchModel.cs" />
+    <Compile Include="Models\SearchModels\SI\SAP\OpReportSearchModel.cs" />
+    <Compile Include="Models\SearchModels\SI\SAP\PostDOSearchModel.cs" />
+    <Compile Include="Models\SearchModels\SI\SAP\ItemSearchModel.cs" />
+    <Compile Include="Models\SearchModels\ACC\PermissionGroupSearchModel.cs" />
+    <Compile Include="Models\SearchModels\ACC\RoleSearchModel.cs" />
+    <Compile Include="Models\SearchModels\ACC\UserSearchModel.cs" />
+    <Compile Include="Models\SearchModels\CurrencySearchModel.cs" />
+    <Compile Include="Models\SearchModels\SearchCacheModel.cs" />
+    <Compile Include="Models\SearchModels\SearchModelBase.cs" />
+    <Compile Include="Models\SearchModels\SearchStatementModel.cs" />
+    <Compile Include="Models\SearchModels\SI\SAP\SupplierSearchModel.cs" />
+    <Compile Include="Models\SearchModels\SI\SearchModel.cs" />
+    <Compile Include="Models\SearchModels\SI\SAP\InvTransSearchModel.cs" />
+    <Compile Include="Pluming\ControllerContextHost.cs" />
+    <Compile Include="Pluming\RequestContextHost.cs" />
+    <Compile Include="Pluming\SconitRazorViewEngine .cs" />
+    <Compile Include="Pluming\SconitWebFormViewEngine.cs" />
+    <Compile Include="Pluming\WindsorControllerFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\data-access-nh.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\log4net.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\properties.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core.5.0.0\CodeMaster\CodeMaster.csproj">
+      <Project>{54A57A3A-8722-451D-983B-9D2990D2D121}</Project>
+      <Name>CodeMaster</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\Entity\Entity.csproj">
+      <Project>{E4710EAE-2F94-423E-BD3E-258E054714AE}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\Persistence\Persistence.csproj">
+      <Project>{A2297BAC-3184-4A1C-AE14-2D439F54B699}</Project>
+      <Name>Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\PrintModel\PrintModel.csproj">
+      <Project>{1ffdb06f-eb22-4c88-acad-c9b92b17fe10}</Project>
+      <Name>PrintModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\Service\Service.csproj">
+      <Project>{C404091C-8C1D-42BE-BA63-919BB8B5900A}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\Util\Utility.csproj">
+      <Project>{3617942C-4554-4B04-927C-5D5AF677D262}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.5.0.0\WebService\WebService.csproj">
+      <Project>{3536D590-4AA5-4681-BD46-20C182652197}</Project>
+      <Name>WebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.MRP.5.0.0\Entity.MRP\Entity.MRP.csproj">
+      <Project>{9ffb3e2e-29ff-4ea8-a2b4-4bc77c131615}</Project>
+      <Name>Entity.MRP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core.MRP.5.0.0\Service.MRP\Service.MRP.csproj">
+      <Project>{38889667-9f2a-42f1-b120-8dbeeffcaae3}</Project>
+      <Name>Service.MRP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Globalization\Globalization.csproj">
+      <Project>{5907015A-4BEC-482D-B4C4-5413E7EE0068}</Project>
+      <Name>Globalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LeanEngine.5.0.0\LeanEngine\LeanEngine.csproj">
+      <Project>{cc3b1860-71a0-4225-919f-9a7dbad397cc}</Project>
+      <Name>LeanEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WebApp.5.0.0\WebUtil\WebUtil.csproj">
+      <Project>{E1DEA368-D891-42C2-AB25-2A5E3BF0437A}</Project>
+      <Name>WebUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity.SI\Entity.SI.csproj">
+      <Project>{2CC4B70A-A63A-4896-A382-5768913DC359}</Project>
+      <Name>Entity.SI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service.SI\Service.SI.csproj">
+      <Project>{3A94E8A3-6ED2-4BEB-9816-EE24510F6FC3}</Project>
+      <Name>Service.SI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\component-persistence.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\component-service.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Config\component-velocity.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Config\component-leanengine.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Content\Images\Login\head.psd" />
+    <None Include="Content\Images\Main\History_Active.psd" />
+    <None Include="Content\Images\psd\page.psd" />
+    <None Include="Content\Images\psd\SIH.psd" />
+    <None Include="Content\Template\Excel\ASN.xls" />
+    <None Include="Content\Template\Excel\BarCode.xls" />
+    <None Include="Content\Template\Excel\BarCodeA4.xls" />
+    <None Include="Content\Template\Excel\BelowBrade.xls" />
+    <None Include="Content\Template\Excel\Bill.xls" />
+    <None Include="Content\Template\Excel\BillMarket.xls" />
+    <None Include="Content\Template\Excel\CycleCount.xls" />
+    <None Include="Content\Template\Excel\DeliveryNote.xls" />
+    <None Include="Content\Template\Excel\InsideBarCode.xls" />
+    <None Include="Content\Template\Excel\InsideBarCodeA4.xls" />
+    <None Include="Content\Template\Excel\InspectOrder.xls" />
+    <None Include="Content\Template\Excel\PickList.xls" />
+    <None Include="Content\Template\Excel\Production.xls" />
+    <None Include="Content\Template\Excel\PurchaseOrder.xls" />
+    <None Include="Content\Template\Excel\ReceiptNotes.xls" />
+    <None Include="Content\Template\Excel\Repack.xls" />
+    <None Include="Content\Template\Excel\RequisitionOrder.xls" />
+    <None Include="Content\Template\Excel\Stocktaking.xls" />
+    <None Include="Content\Template\Excel\StockTaking.xlsx" />
+    <None Include="Content\Template\Excel\UnqualifiedGoods.xls" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Resource\Templates\NVelocity\ImportMasterData.htm" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Common\_AddressDropDownList.cshtml" />
+    <Content Include="Views\Common\_BillAddressComboBox.cshtml" />
+    <Content Include="Views\Common\_BillAddressDropDownList.cshtml" />
+    <Content Include="Views\Common\_BomComboBox.cshtml" />
+    <Content Include="Views\Common\_CodeMasterAjaxDropDownList.cshtml" />
+    <Content Include="Views\Common\_CodeMasterDropDownList.cshtml" />
+    <Content Include="Views\Common\_CommonDropDownList.cshtml" />
+    <Content Include="Views\Common\_ContainerDropDownList.cshtml" />
+    <Content Include="Views\Common\_CurrencyDropDownList.cshtml" />
+    <Content Include="Views\Common\_CustomerComboBox.cshtml" />
+    <Content Include="Views\Common\_CustomerDropDownList.cshtml" />
+    <Content Include="Views\Common\_FlowComboBox.cshtml" />
+    <Content Include="Views\Common\_FlowDropDownList.cshtml" />
+    <Content Include="Views\Common\_IssueAddressComboBox.cshtml" />
+    <Content Include="Views\Common\_IssueAddressDropDownList.cshtml" />
+    <Content Include="Views\Common\_IssueLevelDropDownList.cshtml" />
+    <Content Include="Views\Common\_IssueNoDropDownList.cshtml" />
+    <Content Include="Views\Common\_IssueTypeDropDownList.cshtml" />
+    <Content Include="Views\Common\_ItemCategoryDropDownList.cshtml" />
+    <Content Include="Views\Common\_ItemComboBox.cshtml" />
+    <Content Include="Views\Common\_ItemDropDownList.cshtml" />
+    <Content Include="Views\Common\_ItemPackageComboBox.cshtml" />
+    <Content Include="Views\Common\_ItemPackageDropDownList.cshtml" />
+    <Content Include="Views\Common\_LocationAreaDropDownList.cshtml" />
+    <Content Include="Views\Common\_LocationBinComboBox.cshtml" />
+    <Content Include="Views\Common\_LocationBinDropDownList.cshtml" />
+    <Content Include="Views\Common\_LocationComboBox.cshtml" />
+    <Content Include="Views\Common\_LocationDropDownList.cshtml" />
+    <Content Include="Views\Common\_OrderComboBox.cshtml" />
+    <Content Include="Views\Common\_OrderMasterPartyFromDropDownList.cshtml" />
+    <Content Include="Views\Common\_OrderMasterPartyToDropDownList.cshtml" />
+    <Content Include="Views\Common\_PartyDropDownList.cshtml" />
+    <Content Include="Views\Common\_PriceListDropDownList.cshtml" />
+    <Content Include="Views\Common\_ProductLineFacilityDropDownList.cshtml" />
+    <Content Include="Views\Common\_RegionCombobox.cshtml" />
+    <Content Include="Views\Common\_RegionDropDownList.cshtml" />
+    <Content Include="Views\Common\_RejectComboBox.cshtml" />
+    <Content Include="Views\Common\_RoutingComboBox.cshtml" />
+    <Content Include="Views\Common\_RoutingDropDownList.cshtml" />
+    <Content Include="Views\Common\_ShipAddressComboBox.cshtml" />
+    <Content Include="Views\Common\_ShipAddressDropDownList.cshtml" />
+    <Content Include="Views\Common\_SiteMapPath.cshtml" />
+    <Content Include="Views\Common\_SupplierComboBox.cshtml" />
+    <Content Include="Views\Common\_SupplierDropDownList.cshtml" />
+    <Content Include="Views\Common\_TaxDropDownList.cshtml" />
+    <Content Include="Views\Common\_TraceCodeComboBox.cshtml" />
+    <Content Include="Views\Common\_UomDropDownList.cshtml" />
+    <Content Include="Views\Common\_UserComboBox.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Main\AjaxView_Nav.cshtml" />
+    <Content Include="Views\Main\Default.cshtml" />
+    <Content Include="Views\Main\LeftTop.cshtml" />
+    <Content Include="Views\Main\Nav.cshtml" />
+    <Content Include="Views\Main\Switch.cshtml" />
+    <Content Include="Views\Main\Top.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Decimal.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EmailAddress.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Html.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\String.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Url.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ComboBoxGridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GridComboxForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ItemGridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ReadonlyTextBox.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\ObjectNotFound.cshtml" />
+    <Content Include="Views\Shared\Unauthorized.cshtml" />
+    <Content Include="Views\Shared\_AjaxMessage.cshtml" />
+    <Content Include="Views\Shared\_Default.cshtml" />
+    <Content Include="Views\Shared\_EventLog.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LeftNavigation.cshtml" />
+    <Content Include="Views\Shared\_Main.cshtml" />
+    <Content Include="Views\Shared\_Message.cshtml" />
+    <Content Include="Views\Shared\_Meta.cshtml" />
+    <Content Include="Views\web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPItem\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPSupplier\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPTrans\Index.cshtml" />
+    <Content Include="Views\Common\_StatusDropDownList.cshtml" />
+    <Content Include="Views\Account\Logoff.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPQuota\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPMapMoveTypeTCode\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPProcOrder\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPProcOrderDetail\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPProdOrder\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPProdOrderBomDet\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPProdSeqReport\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPSourceOrder\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPTableIndex\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPTransCallBack\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.WMS\WMSInspectResultInput\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.WMS\WMSExchangeMaterial\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.WMS\WMSIpDetailInput\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.WMS\WMSMessageQueue\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.WMS\WMSMessageQueueLog\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.WMS\WMSMiscOrderDetail\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.WMS\WMSReceiptDetailInput\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.WMS\WMSTransferInput\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.WMS\WMSReturnOrderDetailInput\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI\SIEntityPreference\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI\SILogToUser\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPInvLoc\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPTrans\SAPIndex.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPTrans\List.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPTrans\_Search.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPTrans\_SearchResult.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPPostDO\_Search.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPPostDO\_SearchResult.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPPostDO\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPPostDO\List.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPOpReport\_Search.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPOpReport\_SearchResult.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPOpReport\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.SAP\SAPOpReport\List.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.EDI\EDIPlanningSchedule\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.EDI\EDIScheduleLine\Index.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.EDI\EDIScheduleLine\List.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.EDI\EDIScheduleLine\ShipEdit.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.EDI\EDIScheduleLine\_Search.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.EDI\EDIScheduleLine\_SearchResult.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.EDI\EDIScheduleLine\_ShipOrderDetailList.cshtml" />
+    <Content Include="Views\com.Sconit.Web.Controllers.SI.EDI\EDiShippingSchedule\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Js\" />
+    <Folder Include="Content\Template\NVelocity\" />
+    <Folder Include="Resource\Templates\Excel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.en-US.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\EditorLocalization.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\EditorLocalization.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\GridLocalization.en-US.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.en-US.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\GridLocalization.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\GridLocalization.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>1122</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

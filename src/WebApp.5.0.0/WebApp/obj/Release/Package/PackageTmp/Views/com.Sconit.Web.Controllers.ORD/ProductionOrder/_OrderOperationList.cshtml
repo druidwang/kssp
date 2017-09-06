@@ -1,0 +1,30 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@using com.Sconit.Entity.SYS;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderOperation>
+<fieldset>
+    @(Html.Telerik().Grid<com.Sconit.Entity.ORD.OrderOperation>()
+                .Name("OrderOperation")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_AjaxProdTraceCodeList", "ProductionOrder")
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.OpDesc);
+            columns.Bound(o => o.ReportQty);
+        })
+                   .Pageable(settings =>
+                   {
+                       settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                       settings.PageSize(ViewBag.PageSize == null ? 20 : ViewBag.PageSize);
+                   })
+        .Scrollable(c => c.Enabled(false))
+        .Footer(true)
+            )
+</fieldset>

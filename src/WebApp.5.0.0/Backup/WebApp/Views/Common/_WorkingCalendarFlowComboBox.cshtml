@@ -1,0 +1,21 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "Flow_Change" : "EmptyChange";
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true; 
+}
+@(Html.Telerik().ComboBox()
+                .Name(name)
+                     .HiddenInputHtmlAttributes(new { id = id })
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                        .Select("_WorkingCalendarFlowAjaxLoading", "Common"))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                     .Enable(enable)
+                            .ClientEvents(events => events.OnChange(onChangeName)
+                                .OnDataBinding("WorkingCalendarFlow_DataBinding")
+                            )
+ )

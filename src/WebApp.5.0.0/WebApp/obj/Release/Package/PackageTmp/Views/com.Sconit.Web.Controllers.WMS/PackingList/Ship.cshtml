@@ -1,0 +1,120 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<script type="text/javascript">
+   function Flow_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            $("#fdPackingList").hide();
+        } else {
+            $("#fdPackingList").html("Loading...");
+            $("#fdPackingList").show();
+            var data = { "flow": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/PackingList/_PackingList/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#fdPackingList").html(data);
+                    $("tr.t-no-data").find("td").text("Loading...");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+
+    function editCheckedPackingLists() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedPackingLists = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedPackingLists == "") {
+                    checkedPackingLists = $checkRecords[i].value;
+                } else {
+                    checkedPackingLists += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (checkedPackingLists == "") {
+            alert('Must Check One');
+            return;
+        }
+        var data = {
+            "checkedPackingLists": checkedPackingLists
+        };
+        $.ajax({
+            type: "Post",
+            dataType: "html",
+            url: "/PackingList/ShipPackingList/",
+            data: data,
+            cache: false,
+             success: function (data, textStatus) {
+                if (data != "") {
+                      DisplayTextMessages(data);
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "@Url.Content("~/PackingList/Ship/")",
+                        data: "",
+                        cache: false,
+                        success: function (data, textStatus) {
+
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+</script>
+@using (Html.BeginForm("NewList", "PackingList"))
+{  
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="PackingList_Flow">
+                    @Resources.WMS.PackingList.PackingList_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "Flow",
+            type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+            isChange = true
+        });
+                }
+            </div>
+          
+        </div>
+        <div class="search-footer">
+       
+            @Html.Button(Resources.SYS.Global.Button_Ship, "Url_PackingList_Ship", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnShip"},
+        {"onclick","editCheckedPackingLists()"},
+        {"style","display:none"}
+	})
+        </div>
+        
+    </fieldset>
+
+    <div id="fdPackingList" style="display: none;">
+    </div>
+}

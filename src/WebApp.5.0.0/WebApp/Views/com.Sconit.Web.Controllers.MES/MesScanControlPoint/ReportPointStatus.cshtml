@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "状态报告";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_MesScanControlPoint_View" });
+}
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label for="OrderMaster_OrderNo">
+                设备编号
+            </label>
+        </div>
+        <div class="search-field">
+            <input type="text" name="ControlPoint" id="ControlPoint" value="" />   
+        </div>
+@*        <div class="search-label">
+            <label for="OrderMaster_Flow">
+                参数
+            </label>
+        </div>
+        <div class="search-field">
+            <input type="text" name="Note" id="Note" value=""  />
+        </div>*@
+    </div>
+    <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="SearchClick(this)">
+            @Resources.SYS.Global.Button_Search</button>
+    </div>
+</fieldset>
+
+<fieldset>
+@( Html.Telerik().Chart<com.Sconit.Entity.MES.MesScanControlPoint>()
+    .Name("StatusChart")
+    .Legend(legend => legend.Position(ChartLegendPosition.Top))
+    .SeriesDefaults(series => series.ScatterLine().Width(2))
+    .Series(s =>
+    {
+        s.Line(l => l.NoteValue).Name("温度").Labels(true).Labels(l => l.Format("{0:N0}"));
+    })
+    .DataBinding(dataBinding => dataBinding
+    .Ajax().Select("_GetPointStatus", "MesScanControlPoint")
+       )
+    .CategoryAxis(axis => axis
+        .Categories(s => s.ScanTime)
+    )
+    .Tooltip(true)
+    .HtmlAttributes(new { style = "height: 400px; margin: auto;" })
+) 
+</fieldset>
+<script>
+    function SearchClick() {
+        var chart = $("#StatusChart").data("tChart");
+        chart.rebind({ controlPoint: $('#ControlPoint').val() });
+    }
+</script>

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.Transceivers>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("HuGrid")
+
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.Location).Title(ViewBag.Location);
+           
+            columns.Bound(o => o.BOPQty);
+           
+            columns.Bound(o => o.InputQty).ClientTemplate(Html.ActionLink("<#= InputQty #>", "Edit", "Transceivers", new
+            {
+                IOType = 0,
+                Item = "<#= Item #>",
+                Location = "<#= Location #>",
+                BeginDate = ViewBag.BeginDate,
+                EndDate = ViewBag.EndDate,
+                TypeLocation = ViewBag.TypeLocation,
+                Level = ViewBag.Level,
+                SAPLocation = ViewBag.SAPLocation
+            }, null).ToString()); ;
+            columns.Bound(o => o.OutputQty).ClientTemplate(Html.ActionLink("<#= OutputQty #>", "Edit", "Transceivers", new
+            {
+                IOType = 1,
+                Item = "<#= Item #>",
+                Location = "<#= Location #>",
+                BeginDate = ViewBag.BeginDate,
+                EndDate = ViewBag.EndDate,
+                TypeLocation = ViewBag.TypeLocation,
+                Level = ViewBag.Level,
+                SAPLocation = ViewBag.SAPLocation
+            }, null).ToString());
+            columns.Bound(o => o.EOPQty);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Transceivers"))
+                 .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            if (e.sortedColumns.length > 0) {
+                if (e.sortedColumns[0].member == "Description" || e.sortedColumns[0].member == "Uom" || e.sortedColumns[0].member == "Name") {
+                    e.sortedColumns[0].member = "Id";
+                }
+            }
+            e.data = {
+                plantFrom: $('#plantFrom').val(),
+                plantTo: $('#plantTo').val(),
+                regionFrom: $('#regionFrom').val(),
+                regionTo: $('#regionTo').val(),
+                locationFrom: $('#locationFrom').val(),
+                locationTo: $('#locationTo').val(),
+                itemFrom: $('#itemFrom').val(),
+                itemTo: $('#itemTo').val(),
+                Level: $('#Level').val(),
+                TheFactory: $('#TheFactory').val(),
+                BeginDate: $('#BeginDate').val(),
+                EndDate: $('#EndDate').val(),
+                TheFactoryTo: $('#TheFactoryTo').val(),
+                TypeLocation: $("input[type=radio][name=TypeLocation]:checked").val(),
+                SAPLocation: $('#SAPLocation').val()
+            };
+        } 
+    </script>
+</fieldset>

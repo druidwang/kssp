@@ -1,0 +1,47 @@
+﻿@model IEnumerable<com.Sconit.Entity.ACC.PermissionGroup>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PermissionGroupGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(string.Format("<a href=\"Edit/{0}\">{1}</a>", "<#=Id #>", "<#=Code #>"));
+            columns.Bound(o => o.Description);
+
+        })
+        //.CellAction(cell =>
+        //    {
+        //        if (cell.Column.Member == "Code")
+        //        {
+        //            cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Id, cell.DataItem.Code);
+
+        //        }
+        //    })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "PermissionGroup"))
+                                .ClientEvents(events => events.OnDataBinding("PermissionGroupGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function PermissionGroupGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val()
+            };
+        } 
+    </script>
+</fieldset>

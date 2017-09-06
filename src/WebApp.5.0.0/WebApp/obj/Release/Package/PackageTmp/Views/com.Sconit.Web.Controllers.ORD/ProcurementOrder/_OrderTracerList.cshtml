@@ -1,0 +1,33 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@using com.Sconit.Entity.SYS;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderTracer>
+<fieldset>
+    @(Html.Telerik().Grid(Model).Name("OrderTracer")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax().Select("_SelectOrderTracerList", "ProcurementOrder", new { orderDetailId = (String)ViewBag.OrderDetailId })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code);
+            columns.Bound(o => o.ReqTime);
+            columns.Bound(o => o.Item).Width(80);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.OrderedQty).Width(80);
+            //columns.Bound(o => o.FinishedQty);
+            columns.Bound(o => o.Qty).Width(80);
+            columns.Bound(o => o.RefId).Width(50);
+        })
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(15);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+   )
+</fieldset>

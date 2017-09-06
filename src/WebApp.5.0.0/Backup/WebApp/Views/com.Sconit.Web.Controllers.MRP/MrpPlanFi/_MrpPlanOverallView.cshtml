@@ -1,0 +1,78 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@using com.Sconit.CodeMaster;
+@using com.Sconit.Utility;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpFiMachinePlan>
+@{  
+    if (Model == null || Model.Count() == 0)
+    {
+ <text>没有记录.</text>
+        return;
+    }
+    var startDate = Model.Select(p => p.PlanDate).Min();
+    DateTime currentDate = startDate;
+    var endDate = Model.Select(p => p.PlanDate).Max();
+    var planBodyList = Model.GroupBy(p => new { p.ProductLine, p.Island, p.Machine })
+        .OrderBy(p => p.Key.ProductLine).ThenBy(p => p.First().IslandDescription).ThenBy(p => p.Key.Machine).ToList();
+
+    string island = planBodyList.First().Key.Island;
+    int l = 0;
+}
+
+@Html.Partial("_AjaxMessage")
+<table border="0" id="datatable1" style="width: 100%">
+    <thead>
+        <tr style="text-align: center">
+            <th style="min-width: 40px" rowspan="2">生产线</th>
+            <th style="min-width: 40px" rowspan="2">岛区</th>
+            <th style="min-width: 40px" rowspan="2">模具</th>
+            <th rowspan="2">模具描述</th>
+            @while (currentDate <= endDate)
+            {
+                Output.Write("<th>");
+                Output.Write(currentDate.ToString("dddd", new System.Globalization.CultureInfo("zh-CN")));
+                Output.Write("</th>");
+                currentDate = currentDate.AddDays(1);
+            }
+            @{currentDate = startDate;}
+        </tr>
+        <tr>
+            @while (currentDate <= endDate)
+            {
+                Output.Write("<th>");
+                Output.Write(currentDate.ToString("MM-dd"));
+                Output.Write("</th>");
+                currentDate = currentDate.AddDays(1);
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var planBody in planBodyList)
+        {
+            if (island != planBody.Key.Island)
+            {
+                island = planBody.Key.Island;
+                l++;
+            }
+            var dic = planBody.ToDictionary(d => d.PlanDate, d => d.ShiftSplit);
+            currentDate = startDate;
+            var style = "";
+            if (l % 2 == 1)
+            {
+                style = "t-alt";
+            }
+            <tr class="@style">
+                <td>@planBody.Key.ProductLine</td>
+                <td>@planBody.Key.Island</td>
+                <td>@planBody.Key.Machine</td>
+                <td>@planBody.First().MachineDescription</td>
+                @while (currentDate <= endDate)
+                {
+                    Output.Write("<td>");
+                    Output.Write(dic.ValueOrDefault(currentDate) ?? "-");
+                    Output.Write("</td>");
+                    currentDate = currentDate.AddDays(1);
+                }
+            </tr>
+        }
+    </tbody>
+</table>

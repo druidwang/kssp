@@ -1,0 +1,84 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.FMS
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+
+<fieldset>
+    @using (Html.BeginForm("List", "CheckListOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label >
+                    巡检单代码
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CheckListOrderNo", TempData["CheckListOrderSearchModel"] != null ? ((CheckListOrderSearchModel)TempData["CheckListOrderSearchModel"]).CheckListOrderNo:string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    巡检代码
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("CheckListCode", TempData["CheckListOrderSearchModel"] != null ? ((CheckListOrderSearchModel)TempData["CheckListOrderSearchModel"]).CheckListCode : string.Empty)
+            </div>
+
+
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+.Value(TempData["CheckListOrderSearchModel"] != null ? ((CheckListOrderSearchModel)TempData["CheckListOrderSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+.Value(TempData["CheckListOrderSearchModel"] != null ? ((CheckListOrderSearchModel)TempData["CheckListOrderSearchModel"]).DateTo : System.DateTime.Today.AddDays(0))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+            <div class="search-label">
+                <label>
+                    巡检用户
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", TempData["CheckListOrderSearchModel"] != null ? ((CheckListOrderSearchModel)TempData["CheckListOrderSearchModel"]).CreateUserName : string.Empty)
+            </div>
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        @Html.Button(Resources.SYS.Global.Button_New, "Url_CheckListOrder_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/CheckListOrder/New")+"'"}
+	})
+        </div>
+    }
+ 
+</fieldset>
+
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+   
+</script>

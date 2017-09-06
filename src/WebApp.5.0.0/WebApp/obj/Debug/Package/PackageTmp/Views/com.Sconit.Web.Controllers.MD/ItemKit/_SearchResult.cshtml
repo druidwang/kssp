@@ -1,0 +1,46 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MD.ItemKit>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ItemContinueGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(k => k.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.KitItem).ClientTemplate(Html.ActionLink("<#=KitItem #>", "Edit", "ItemKit", new { Id = "<#=Id #>" }, null).ToString());
+            columns.Bound(o => o.ChildItem.Code);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.IsActive).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDefault' <#= IsActive? checked='checked' : '' #> />");
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ItemKit"))
+                        .ClientEvents(events => events.OnDataBinding("ItemKitGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ItemKitGrid_OnDataBinding(e) {
+            e.data = {
+                KitItem: $('#KitItem').val(),
+                ChildItem: $('#ChildItem').val(),
+                IsActive: $('#IsActive').is(':checked'),
+                CreateUserName: $('#CreateUserName').val()
+            };
+        } 
+    </script>
+</fieldset>

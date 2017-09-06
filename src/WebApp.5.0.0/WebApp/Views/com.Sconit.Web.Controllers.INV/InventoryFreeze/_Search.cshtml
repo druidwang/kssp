@@ -1,0 +1,98 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+<script type="text/javascript">
+</script>
+    @using (Html.BeginForm("List", "InventoryFreeze"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+              </label>
+            </div>
+            <div class="search-field">
+                  @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Item : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+             <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Location
+           </label>
+            </div>
+            <div class="search-field">
+                   @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+                               {
+                                   controlName = "Location",
+                                   selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Location : null
+                               });
+                }   
+            </div>
+            <div class="search-label">
+                <label for="LocationLotDetail_LotNo">
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_ManufactureDate
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LotNo", TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).LotNo : string.Empty)
+            </div>
+
+            <div class="search-label">
+                <label for="LocationLotDetail_LotNo">
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_IsFreeze
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsFreeze", TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).IsFreeze : false)
+            </div>
+  
+             
+        </div>
+        <div class="search-footer">
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_Freeze, "Url_Inventory_InventoryFreeze_Freeze", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "Freeze"},
+        {"onclick","OpenFreezeWindow('"+true+"')"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_UnFreeze, "Url_Inventory_InventoryFreeze_UnFreeze", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "UnFreeze"},
+        {"onclick","OpenFreezeWindow('"+false+"')"}
+	})
+        </div>
+
+    }
+
+</fieldset>
+@{Html.Telerik().Window()
+        .Name("PopFreezeWindow")
+        .Title("冻结/解冻")
+        .Draggable(true)
+        .Scrollable(false)
+       
+        .Resizable()
+        .Width(700)
+       .Height(300)
+        .Visible(false)
+           .Modal(true)
+       
+       .Render();
+    }
+
+    <script type="text/javascript">
+        function OpenFreezeWindow(e) {
+            var detailWindow = $("#PopFreezeWindow").data("tWindow");
+            detailWindow.ajaxRequest("/InventoryFreeze/PopFreeze/", { IsFreeze: e });
+            detailWindow.center().open();
+        }
+    </script>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.CUST.ProductLineMap, com.Sconit.Entity" table="CUST_ProductLineMap" lazy="false">
+        <id name="SAPProductLine" column="SAPProdLine" type="String" unsaved-value="null" >
+            <generator class="assigned" />
+        </id>
+        <property name="ProductLine" column="ProdLine" type="String" length="50"/>
+        <property name="CabLocation" column="CabLoc" type="String" length="50"/>
+        <property name="ChassisLocation" column="ChaLoc" type="String" length="50"/>
+        <property name="VanLocation" column="VanLoc" type="String" length="50"/>
+        <property name="CabFlow" column="CabFlow" type="String" length="50"/>
+        <property name="ChassisFlow" column="ChaFlow" type="String" length="50"/>
+        <property name="ChassisSapLocation" column="ChaSapLoc" type="String" length="50"/>
+        <property name="VanSapLocation" column="VanSapLoc" type="String" length="50"/>
+        <property name="PowerFlow" column="PowerFlow" type="String" length="50"/>
+        <property name="TransmissionFlow" column="TransFlow" type="String" length="50"/>
+        <property name="TireFlow" column="TireFlow" type="String" length="50"/>
+        <property name="SaddleFlow" column="SaddleFlow" type="String" length="50"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable == null ? true : ViewBag.Enable;
+}
+@{
+    if (enable)
+    {
+    @(Html.Telerik().ComboBox()
+        .HiddenInputHtmlAttributes(new { id = id })
+        .Name(name)
+        .AutoFill(true)
+        .DataBinding(binding => binding.Ajax().Select("_TransferPlanMasterAjaxLoading", "Common", new
+        {
+            flow = ViewBag.Flow,
+            includeBlankOption = ViewBag.IncludeBlankOption
+        })).ClientEvents(events => events.OnDataBinding("TransferPlanMaster_DataBinding"))
+        .HighlightFirstMatch(true)
+        .BindTo(Model)
+)
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     
+    @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)   
+        }
+    }
+}

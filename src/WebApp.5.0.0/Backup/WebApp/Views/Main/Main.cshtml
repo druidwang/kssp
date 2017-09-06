@@ -1,0 +1,216 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <title>MainPage</title>
+    <style>
+        #tabs li .ui-icon-close {
+            float: left;
+            margin: 0.4em 0.2em 0 0;
+            cursor: pointer;
+        }
+
+        .ui-widget-content {
+            border: none;
+        }
+
+        .ui-widget {
+        }
+
+        .ui-tabs {
+            padding: 0;
+        }
+
+            .ui-tabs .ui-tabs-nav li a {
+                float: left;
+                padding: .1em .4em;
+                text-decoration: none;
+            }
+
+            .ui-tabs .ui-tabs-panel {
+                padding: 0;
+            }
+
+        .ui-widget-header {
+            border: 0;
+            background: #fff;
+            color: #222;
+            font-weight: bold;
+            border-bottom: solid 1px #AAA;
+        }
+
+        .ui-corner-all, .ui-corner-bottom, .ui-corner, .ui-corner-br {
+            border-bottom-right-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-top-left-radius: 0px;
+        }
+
+        .ui-tabs .ui-tabs-nav {
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            padding: 0;
+        }
+
+        .liatmain {
+            width: 100%;
+            background-color: #ff0000;
+            margin: 0 auto;
+        }
+
+        .left {
+            background: #eeffee none repeat scroll 0% 0%;
+            float: left;
+            width: 18px;
+            height: 50px;
+        }
+
+        .right {
+            background: #eeeeff none repeat scroll 0% 0%;
+            margin-left: 18px;
+        }
+    </style>
+
+    <script>
+        var tabs = null;
+        $(function () {
+            tabs = $("#tabs").tabs();
+            // close icon: removing the tab on click
+            tabs.delegate("span.ui-icon-close", "click", function () {
+                var panelId = $(this).closest("li").remove().attr("aria-controls");
+                $("#" + panelId).remove();
+                tabs.tabs("refresh");
+                var id = $("#tabs li.ui-state-active").attr('title');
+                parent.parent.Nav.ExpandNode(id);
+            });
+
+            tabs.bind("keyup", function (event) {
+                if (event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE) {
+                    var panelId = tabs.find(".ui-tabs-active").remove().attr("aria-controls");
+                    var tabs = $("#tabs").tabs();
+                    $("#" + panelId).remove();
+                    tabs.tabs("refresh");
+                }
+            });
+
+            $("#tabs").height(getTotalHeight() - 29);
+            addTab("@ViewBag.MainPageUrl", "@ViewBag.MainPageName");
+
+            $("#tabs").tabs({
+                activate: function (event, ui) {
+                    //debugger
+                    var id = $("#tabs li.ui-state-active").attr('title');
+                    parent.parent.Nav.ExpandNode(id);
+                    handleOnLoad();
+                    window.parent.parent.document.title = id;
+
+                    var value = $(ui.newPanel[0]).attr("url");
+                    var exp = new Date();
+                    exp.setTime(exp.getTime() + 365 * 24 * 60 * 60 * 1000);
+                    document.cookie = "Sconit_MainPageUrl" + "@ViewBag.CurrentUserCode" + "=" + escape(value) + ";expires=" + exp.toGMTString();
+                }
+            });
+
+        });
+
+        var tabTemplate = "<li title='#{title}'><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>";
+
+        // actual addTab function: adds new tab using the input from the form above
+        function addTab(url, title) {
+            var Data = {
+                name: title
+            };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/Main/_GetTransName",
+                data: Data,
+                cache: false,
+                async: false,
+                success: function (data1) {
+                    title = data1
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+            var splittitle = title.split("-");
+            var name = splittitle[splittitle.length - 2] + "-" + splittitle[splittitle.length - 1];
+
+            var id = url.replace(/\//g, "_").replace("=","_").replace("?","_");
+            var li = $(tabTemplate.replace(/#\{href\}/g, "#" + id).replace(/#\{label\}/g, name).replace(/#\{title\}/g, title));
+            var index = $('#tabs a[href="#' + id + '"]').parent().index();
+            if (index == -1) {
+                tabs.find(".ui-tabs-nav").append(li);
+                tabs.append("<div id='" + id + "' url='" + url + "'><iframe src='" + url + "' width='100%' height='100%' frameborder='0' marginwidth='0' hspace='0' noresize style='border: none;' id='ifr" + id + "' /></div>");
+                //<iframe src='" + url + "' width='100%' height='100%' frameborder='0' marginwidth='0' hspace='0' noresize style='border: none;' id='ifr" + id + "' />
+                //createIframe(id, url);
+                if ($('#tabs > ul').height() > 30) {
+                    $('#tabs > ul > li:first').remove();
+                }
+                tabs.tabs("refresh");
+                index = $('#tabs a[href="#' + id + '"]').parent().index();
+                tabs.tabs("option", "active", index);
+                $("#" + id).height(getTotalHeight() - 29);
+                $("#" + id + " > iframe").height(getTotalHeight() - 29);
+            }
+            else {
+                tabs.tabs("option", "active", index);
+                refresh();
+            }
+        }
+
+        function getTotalHeight() {
+            if ($.browser.msie) {
+                return document.compatMode == "CSS1Compat" ? document.documentElement.clientHeight : document.body.clientHeight;
+            }
+            else {
+                return self.innerHeight;
+            }
+        }
+
+        function handleOnLoad() {
+            var id = $("#tabs li.ui-state-active a").attr('href');
+            $("#tabs").height(getTotalHeight() - 29);
+            $(id).height(getTotalHeight() - 29);
+            $(id + " > iframe").height(getTotalHeight() - 29);
+        }
+        window.onresize = handleOnLoad;
+
+        window.onload = function () {
+            var id = $("#tabs li.ui-state-active").attr('title');
+            parent.parent.Nav.ExpandNode(id);
+            handleOnLoad();
+        }
+
+        function refresh() {
+            var id = $("#tabs li.ui-state-active a").attr('href');
+            $(id + " > iframe")[0].src = $(id + " > iframe")[0].src;
+        }
+
+        //function createIframe(id, url) {
+        //    var i = parent.document.createElement("iframe");
+        //    i.src = url;
+        //    //i.scrolling = "auto";
+        //    i.frameBorder = "0";
+        //    i.width = "100%";
+        //    i.height = "100%";
+        //    i.marginWidth = "0";
+        //    i.hspace = "0";
+        //    i.noResize;
+        //    i.style = "border: none;";
+        //    i.id = "ifr" + id;
+        //    document.getElementById(id).appendChild(i);
+        //};
+
+    </script>
+</head>
+<body>
+    <div id="tabs">
+        <ul>
+        </ul>
+    </div>
+</body>
+</html>

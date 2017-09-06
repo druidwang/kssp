@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = Resources.MD.Party.Party_Carrier_Edit_Title ;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Menu.Distribution.Carrier" });
+}
+<input type="hidden" name="PartyCode" id="PartyCode" value="@Model" />
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.MD.Party.Party_Carrier_TabTitle_Carrier)
+                .LoadContentFrom("_Edit", "Carrier", new { Id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.Party.Party_Carrier_TabTitle_BillAddress)
+                .LoadContentFrom("_BillAddress", "Carrier", new { Id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+        })
+        .Render();
+}
+
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}
+
+

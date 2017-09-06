@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.MSG.Message, com.Sconit.Entity" table="MSG_Message" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="SendTo" column="SendTo" type="String" length="256"/>	
+		<property name="Content" column="Content" type="String" length="256"/>	
+		<property name="Priority" column="Priority" type="Int16"/>	
+		<property name="Status" column="Status" type="Int16"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+  	</class>
+</hibernate-mapping>

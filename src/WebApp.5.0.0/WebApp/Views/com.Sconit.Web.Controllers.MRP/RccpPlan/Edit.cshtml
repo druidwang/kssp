@@ -1,0 +1,117 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MRP.TRANS.RccpPlanMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "MRP_RccpPlan_Run" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MRP.RccpPlanMaster.RccpPlanMaster_Edit_Title</legend>
+        <div class="editor">
+            @Html.HiddenFor(model => model.PlanVersionShow)
+            @Html.HiddenFor(model => model.CreateUserName)
+            @Html.HiddenFor(model => model.CreateDate)
+            @Html.HiddenFor(model => model.CreateUserId)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.SnapTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.SnapTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.MessageType,
+        controlName = "Status",
+        includeBlankOption = true,
+        enable = false,
+        selectedValue = (int)Model.Status
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CreateUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CreateUserName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CreateDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CreateDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsRelease)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.IsRelease)
+                @Html.HiddenFor(model => model.IsRelease)
+            </div>
+
+        </div>
+        <div class="editor-footer">
+            @{
+    if (Model.Status != com.Sconit.CodeMaster.MessageType.Error)
+    {
+        if (Model.IsRelease)
+        {
+                @Html.Button(Resources.SYS.Global.Button_Cancel, "MRP_RccpPlan_Run", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSubmit"},
+                {"needconfirm","true"},
+                {"onclick","OnSava()"}
+            })
+        }
+        else
+        {
+                @Html.Button(Resources.SYS.Global.Button_Submit, "MRP_RccpPlan_Run", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSubmit"},
+                {"needconfirm","true"},
+                {"onclick","OnSava()"}
+            })
+        }
+    }
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/RccpPlan/RccpPlanMasterList")'">
+                    @Resources.SYS.Global.Button_Back</button>
+            }
+        </div>
+    </fieldset>
+    
+  
+    Html.RenderAction("_RccpPlanMasterError", "RccpPlan", new { planVersion = Model.PlanVersion });
+}
+<script type="text/javascript">
+    function OnSava() {
+
+        var data = {
+            "planVersion": $("#PlanVersionShow").val(),
+            "isRelease": $("#IsRelease").val().toUpperCase() == "FALSE"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/RccpPlan/Save/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+
+            }
+        });
+    }
+
+</script>
+

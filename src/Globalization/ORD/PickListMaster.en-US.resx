@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PickListMaster_AsnTemplate" xml:space="preserve">
+    <value>ASN Template</value>
+    <comment>送货单模板</comment>
+  </data>
+  <data name="PickListMaster_CancelDate" xml:space="preserve">
+    <value>Cancel Date</value>
+    <comment>取消时间</comment>
+  </data>
+  <data name="PickListMaster_Canceled" xml:space="preserve">
+    <value>PickList canceled</value>
+    <comment>拣货单取消成功</comment>
+  </data>
+  <data name="PickListMaster_CancelUserName" xml:space="preserve">
+    <value>Cancel User</value>
+    <comment>取消用户</comment>
+  </data>
+  <data name="PickListMaster_CloseDate" xml:space="preserve">
+    <value>Close Date</value>
+    <comment>关闭时间</comment>
+  </data>
+  <data name="PickListMaster_CloseUserName" xml:space="preserve">
+    <value>Close User</value>
+    <comment>关闭用户</comment>
+  </data>
+  <data name="PickListMaster_CompleteDate" xml:space="preserve">
+    <value>Complete Date</value>
+    <comment>完成时间</comment>
+  </data>
+  <data name="PickListMaster_CompleteUserName" xml:space="preserve">
+    <value>Complete User</value>
+    <comment>完成用户</comment>
+  </data>
+  <data name="PickListMaster_Created" xml:space="preserve">
+    <value>PickList created</value>
+    <comment>拣货单创建成功</comment>
+  </data>
+  <data name="PickListMaster_CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+    <comment>创建日期</comment>
+  </data>
+  <data name="PickListMaster_CreateUserName" xml:space="preserve">
+    <value>Create User</value>
+    <comment>创建人</comment>
+  </data>
+  <data name="PickListMaster_Dock" xml:space="preserve">
+    <value>Dock</value>
+    <comment>道口</comment>
+  </data>
+  <data name="PickListMaster_Edit_Title" xml:space="preserve">
+    <value>Edit PickList</value>
+    <comment>基本信息</comment>
+  </data>
+  <data name="PickListMaster_EndDate" xml:space="preserve">
+    <value>End Date</value>
+    <comment>结束日期</comment>
+  </data>
+  <data name="PickListMaster_Flow" xml:space="preserve">
+    <value>Flow</value>
+    <comment>路线代码</comment>
+  </data>
+  <data name="PickListMaster_HuTemplate" xml:space="preserve">
+    <value>HU Template</value>
+    <comment>条码模板</comment>
+  </data>
+  <data name="PickListMaster_IpNo" xml:space="preserve">
+    <value>ASN No</value>
+    <comment>送货单号</comment>
+  </data>
+  <data name="PickListMaster_IsAsnUniqueReceive" xml:space="preserve">
+    <value>ASN Unique Rec</value>
+    <comment>送货单一次收货</comment>
+  </data>
+  <data name="PickListMaster_IsAutoReceive" xml:space="preserve">
+    <value>Auto Receipt</value>
+    <comment>自动收货</comment>
+  </data>
+  <data name="PickListMaster_IsCheckPartyFromAuthority" xml:space="preserve">
+    <value>Check Partyfrom Permission</value>
+    <comment>检查来源权限</comment>
+  </data>
+  <data name="PickListMaster_IsCheckPartyToAuthority" xml:space="preserve">
+    <value>Check Partyto Permission</value>
+    <comment>检查目的权限</comment>
+  </data>
+  <data name="PickListMaster_IsPrintAsn" xml:space="preserve">
+    <value>Print ASN</value>
+    <comment>打印送货单</comment>
+  </data>
+  <data name="PickListMaster_IsPrintReceipt" xml:space="preserve">
+    <value>Print Receipt</value>
+    <comment>打印收货单</comment>
+  </data>
+  <data name="PickListMaster_IsReceiveExceed" xml:space="preserve">
+    <value>Allow Over Rec</value>
+    <comment>允许超收</comment>
+  </data>
+  <data name="PickListMaster_IsReceiveFifo" xml:space="preserve">
+    <value>Rec FIFO</value>
+    <comment>收货先进先出</comment>
+  </data>
+  <data name="PickListMaster_IsReceiveFulfillUC" xml:space="preserve">
+    <value>Rec w Full UC</value>
+    <comment>整包收货</comment>
+  </data>
+  <data name="PickListMaster_IsReceiveScanHu" xml:space="preserve">
+    <value>Scan HU as Rec</value>
+    <comment>收货扫描条码</comment>
+  </data>
+  <data name="PickListMaster_Item" xml:space="preserve">
+    <value>Item</value>
+    <comment>物料代码</comment>
+  </data>
+  <data name="PickListMaster_LastModifyDate" xml:space="preserve">
+    <value>Last Modify Date</value>
+    <comment>最后更新日期</comment>
+  </data>
+  <data name="PickListMaster_LastModifyUserName" xml:space="preserve">
+    <value>Last Modify User</value>
+    <comment>最后更新用户</comment>
+  </data>
+  <data name="PickListMaster_OrderType" xml:space="preserve">
+    <value>Order Type</value>
+    <comment>订单类型</comment>
+  </data>
+  <data name="PickListMaster_PartyFrom" xml:space="preserve">
+    <value>Partyfrom</value>
+    <comment>发货方代码</comment>
+  </data>
+  <data name="PickListMaster_PartyFromName" xml:space="preserve">
+    <value>Partyfrom Name</value>
+    <comment>发货方</comment>
+  </data>
+  <data name="PickListMaster_PartyTo" xml:space="preserve">
+    <value>Partyto</value>
+    <comment>收货方代码</comment>
+  </data>
+  <data name="PickListMaster_PartyToName" xml:space="preserve">
+    <value>Partyto Name</value>
+    <comment>收货方</comment>
+  </data>
+  <data name="PickListMaster_PickListNo" xml:space="preserve">
+    <value>Pick List No</value>
+    <comment>拣货单号</comment>
+  </data>
+  <data name="PickListMaster_PickListResultDeleted" xml:space="preserve">
+    <value>Pick Result Deleted</value>
+    <comment>拣货单结果删除成功</comment>
+  </data>
+  <data name="PickListMaster_PickList_Title" xml:space="preserve">
+    <value>Pick List</value>
+    <comment>拣货单</comment>
+  </data>
+  <data name="PickListMaster_ReceiptTemplate" xml:space="preserve">
+    <value>Receipt Template</value>
+    <comment>收货单模板</comment>
+  </data>
+  <data name="PickListMaster_ShipFrom" xml:space="preserve">
+    <value>Shipfrom</value>
+    <comment>发货地址代码</comment>
+  </data>
+  <data name="PickListMaster_ShipFromAddress" xml:space="preserve">
+    <value>Shipfrom Desc</value>
+    <comment>发货地址</comment>
+  </data>
+  <data name="PickListMaster_ShipFromCell" xml:space="preserve">
+    <value>Shipfrom Cell</value>
+    <comment>发货方移动电话</comment>
+  </data>
+  <data name="PickListMaster_ShipFromContact" xml:space="preserve">
+    <value>Shipfrom Contact</value>
+    <comment>发货方联系人</comment>
+  </data>
+  <data name="PickListMaster_ShipFromTel" xml:space="preserve">
+    <value>ShipfromTel</value>
+    <comment>发货方固定电话</comment>
+  </data>
+  <data name="PickListMaster_Shipped" xml:space="preserve">
+    <value>Pick List Shipped</value>
+    <comment>拣货单发货成功</comment>
+  </data>
+  <data name="PickListMaster_ShipTo" xml:space="preserve">
+    <value>Shipto</value>
+    <comment>收货地址代码</comment>
+  </data>
+  <data name="PickListMaster_ShipToAddress" xml:space="preserve">
+    <value>Shipto Desc</value>
+    <comment>收货地址</comment>
+  </data>
+  <data name="PickListMaster_ShipToCell" xml:space="preserve">
+    <value>Shipto Cell</value>
+    <comment>收货方移动电话</comment>
+  </data>
+  <data name="PickListMaster_ShipToContact" xml:space="preserve">
+    <value>Shipto Contact</value>
+    <comment>收货方联系人</comment>
+  </data>
+  <data name="PickListMaster_ShipToTel" xml:space="preserve">
+    <value>Shipto Tel</value>
+    <comment>收货方固定电话</comment>
+  </data>
+  <data name="PickListMaster_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+    <comment>上线日期</comment>
+  </data>
+  <data name="PickListMaster_Started" xml:space="preserve">
+    <value>Pick List Started</value>
+    <comment>拣货单上线成功</comment>
+  </data>
+  <data name="PickListMaster_StartTime" xml:space="preserve">
+    <value>Start Time</value>
+    <comment>开始日期</comment>
+  </data>
+  <data name="PickListMaster_StartUserName" xml:space="preserve">
+    <value>Start User</value>
+    <comment>上线用户</comment>
+  </data>
+  <data name="PickListMaster_Status" xml:space="preserve">
+    <value>Status</value>
+    <comment>状态</comment>
+  </data>
+  <data name="PickListMaster_WindowTime" xml:space="preserve">
+    <value>Window Time</value>
+    <comment>窗口时间</comment>
+  </data>
+</root>

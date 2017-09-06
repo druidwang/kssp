@@ -1,0 +1,108 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.MD
+@Html.Partial("_AjaxMessage")
+<fieldset>
+<script language="javascript" type="text/javascript">
+    function btnNewWorkingCal_Click() {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/WorkingCalendar/New/",
+            data: "",
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    function btnSearchWorkingCal_Click() {
+        var data = {
+            "Region": $("#WorkingCalendarRegion").val(),
+            "isFromList": "true",
+            "Flow": $("#WorkingCalendarFlow").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/WorkingCalendar/List/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    function WorkingCalendarFlow_DataBinding(e) {
+        e.data = {
+            "text": e.value,
+            "region": $("#WorkingCalendarRegion").val()
+        }
+    }
+
+    function Region_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        }
+        $("#WorkingCalendarFlow").data("tComboBox").value("");
+        $("#WorkingCalendarFlow").data("tComboBox").reload();
+    }
+</script>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="WorkingCalendar_Region">
+                    @Resources.MD.WorkingCalendar.WorkingCalendar_Region
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_RegionComboBox", "Common", new
+               {
+                   controlName = "Region",
+                   isChange=true,
+                   controlId = "WorkingCalendarRegion",
+                   selectedValue = TempData["WorkingCalendarSearchModel"] != null ? ((WorkingCalendarSearchModel)TempData["WorkingCalendarSearchModel"]).Region : string.Empty
+               });
+                }
+            </div>
+            <div class="search-label">
+            <label for="WorkingCalendar_Region">
+                    @Resources.MD.WorkingCalendar.WorkingCalendar_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                 @{
+        Html.RenderAction("_WorkingCalendarFlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                controlId = "WorkingCalendarFlow",
+                selectedValue = TempData["WorkingCalendarSearchModel"] != null ? ((WorkingCalendarSearchModel)TempData["WorkingCalendarSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch" onclick="btnSearchWorkingCal_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="btnNewWorkingCal_Click()">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+
+    }
+</fieldset>
+

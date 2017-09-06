@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FlowMaster_AsnTemplate" xml:space="preserve">
+    <value>ASN模板</value>
+  </data>
+  <data name="FlowMaster_BillAddress" xml:space="preserve">
+    <value>开票地址</value>
+  </data>
+  <data name="FlowMaster_BillTerm" xml:space="preserve">
+    <value>结算方式</value>
+  </data>
+  <data name="FlowMaster_Code" xml:space="preserve">
+    <value>代码</value>
+    <comment>代码</comment>
+  </data>
+  <data name="FlowMaster_CreateHuOption" xml:space="preserve">
+    <value>生成条码</value>
+  </data>
+  <data name="FlowMaster_Description" xml:space="preserve">
+    <value>路线描述</value>
+    <comment>路线描述</comment>
+  </data>
+  <data name="FlowMaster_Dock" xml:space="preserve">
+    <value>道口</value>
+  </data>
+  <data name="FlowMaster_HuTemplate" xml:space="preserve">
+    <value>条码模板</value>
+  </data>
+  <data name="FlowMaster_IsActive" xml:space="preserve">
+    <value>生效</value>
+    <comment>是否有效</comment>
+  </data>
+  <data name="FlowMaster_IsAsnUniqueReceive" xml:space="preserve">
+    <value>ASN一次性收货</value>
+  </data>
+  <data name="FlowMaster_IsAutoBill" xml:space="preserve">
+    <value>自动结算</value>
+  </data>
+  <data name="FlowMaster_IsAutoCreate" xml:space="preserve">
+    <value>自动创建</value>
+  </data>
+  <data name="FlowMaster_IsAutoReceive" xml:space="preserve">
+    <value>自动收货</value>
+  </data>
+  <data name="FlowMaster_IsAutoRelease" xml:space="preserve">
+    <value>自动释放</value>
+  </data>
+  <data name="FlowMaster_IsAutoShip" xml:space="preserve">
+    <value>自动发货</value>
+  </data>
+  <data name="FlowMaster_IsAutoStart" xml:space="preserve">
+    <value>自动开始</value>
+  </data>
+  <data name="FlowMaster_IsCreatePickList" xml:space="preserve">
+    <value>创建拣货单</value>
+  </data>
+  <data name="FlowMaster_IsInspect" xml:space="preserve">
+    <value>进货检验</value>
+  </data>
+  <data name="FlowMaster_IsListDet" xml:space="preserve">
+    <value>显示订单明细</value>
+  </data>
+  <data name="FlowMaster_IsListPrice" xml:space="preserve">
+    <value>显示价格</value>
+  </data>
+  <data name="FlowMaster_IsManualCreateDetail" xml:space="preserve">
+    <value>允许添加明细</value>
+  </data>
+  <data name="FlowMaster_IsMRP" xml:space="preserve">
+    <value>MRP运算</value>
+  </data>
+  <data name="FlowMaster_IsOrderFulfillUC" xml:space="preserve">
+    <value>按整包装下单</value>
+  </data>
+  <data name="FlowMaster_IsPickFromBin" xml:space="preserve">
+    <value>按库格拣货</value>
+  </data>
+  <data name="FlowMaster_IsPrintAsn" xml:space="preserve">
+    <value>打印ASN</value>
+  </data>
+  <data name="FlowMaster_IsPrintOrder" xml:space="preserve">
+    <value>打印订单</value>
+  </data>
+  <data name="FlowMaster_IsPrintRceipt" xml:space="preserve">
+    <value>打印收货单</value>
+  </data>
+  <data name="FlowMaster_IsReceiveExceed" xml:space="preserve">
+    <value>允许超收</value>
+  </data>
+  <data name="FlowMaster_IsReceiveFifo" xml:space="preserve">
+    <value>收货先进先出</value>
+  </data>
+  <data name="FlowMaster_IsReceiveFulfillUC" xml:space="preserve">
+    <value>按整包装收货</value>
+  </data>
+  <data name="FlowMaster_IsReceiveScanHu" xml:space="preserve">
+    <value>收货扫描条码</value>
+  </data>
+  <data name="FlowMaster_IsRejectInspect" xml:space="preserve">
+    <value>退货检验</value>
+  </data>
+  <data name="FlowMaster_IsShipByOrder" xml:space="preserve">
+    <value>允许订单发货</value>
+  </data>
+  <data name="FlowMaster_IsShipExceed" xml:space="preserve">
+    <value>允许超发</value>
+  </data>
+  <data name="FlowMaster_IsShipFulfillUC" xml:space="preserve">
+    <value>按整包装发货</value>
+  </data>
+  <data name="FlowMaster_IsShipScanHu" xml:space="preserve">
+    <value>发货扫描条码</value>
+  </data>
+  <data name="FlowMaster_LocationFrom" xml:space="preserve">
+    <value>来源库位</value>
+  </data>
+  <data name="FlowMaster_LocationTo" xml:space="preserve">
+    <value>目的库位</value>
+    <comment>目的库位</comment>
+  </data>
+  <data name="FlowMaster_MaxOrderCount" xml:space="preserve">
+    <value>最大上线数</value>
+  </data>
+  <data name="FlowMaster_MRPOption" xml:space="preserve">
+    <value>MRP选项</value>
+  </data>
+  <data name="FlowMaster_OrderTemplate" xml:space="preserve">
+    <value>订单模板</value>
+  </data>
+  <data name="FlowMaster_PartyFrom" xml:space="preserve">
+    <value>供应商</value>
+  </data>
+  <data name="FlowMaster_PartyTo" xml:space="preserve">
+    <value>区域</value>
+  </data>
+  <data name="FlowMaster_PriceList" xml:space="preserve">
+    <value>价格单</value>
+  </data>
+  <data name="FlowMaster_ReceiptTemplate" xml:space="preserve">
+    <value>收货单模板</value>
+  </data>
+  <data name="FlowMaster_ReceiveGapTo" xml:space="preserve">
+    <value>收货差异调整</value>
+  </data>
+  <data name="FlowMaster_ReferenceFlow" xml:space="preserve">
+    <value>引用路线</value>
+  </data>
+  <data name="FlowMaster_Region" xml:space="preserve">
+    <value>区域</value>
+    <comment>区域</comment>
+  </data>
+  <data name="FlowMaster_ReturnRouting" xml:space="preserve">
+    <value>返工流程</value>
+  </data>
+  <data name="FlowMaster_Routing" xml:space="preserve">
+    <value>工艺流程</value>
+  </data>
+  <data name="FlowMaster_ShipFrom" xml:space="preserve">
+    <value>发货地址</value>
+  </data>
+  <data name="FlowMaster_ShipTo" xml:space="preserve">
+    <value>收货地址</value>
+  </data>
+  <data name="FlowMaster_Supplier" xml:space="preserve">
+    <value>供应商</value>
+    <comment>供应商</comment>
+  </data>
+  <data name="FlowMaster_Type" xml:space="preserve">
+    <value>路线类型</value>
+  </data>
+  <data name="FlowMaster_Added" xml:space="preserve">
+    <value>新增路线成功</value>
+    <comment>新增路线成功</comment>
+  </data>
+  <data name="FlowMaster_BindedFlowType" xml:space="preserve">
+    <value>绑定路线</value>
+  </data>
+  <data name="FlowMaster_Customer" xml:space="preserve">
+    <value>供应商</value>
+    <comment>供应商</comment>
+  </data>
+  <data name="FlowMaster_CustomerGoods" xml:space="preserve">
+    <value>客供品路线</value>
+    <comment>客供品路线</comment>
+  </data>
+  <data name="FlowMaster_Distribution" xml:space="preserve">
+    <value>销售路线</value>
+    <comment>销售路线</comment>
+  </data>
+  <data name="FlowMaster_FlowTypeDescription" xml:space="preserve">
+    <value>路线类型描述</value>
+    <comment>路线类型描述</comment>
+  </data>
+  <data name="FlowMaster_LegendAutomatic" xml:space="preserve">
+    <value>自动化</value>
+    <comment>自动化</comment>
+  </data>
+  <data name="FlowMaster_LegendBarCode" xml:space="preserve">
+    <value>条码</value>
+    <comment>条码</comment>
+  </data>
+  <data name="FlowMaster_LegendBaseInfo" xml:space="preserve">
+    <value>基本信息</value>
+    <comment>基本信息</comment>
+  </data>
+  <data name="FlowMaster_LegendOrderControl" xml:space="preserve">
+    <value>订单控制</value>
+    <comment>订单控制</comment>
+  </data>
+  <data name="FlowMaster_LegendPrint" xml:space="preserve">
+    <value>打印控制</value>
+    <comment>打印控制</comment>
+  </data>
+  <data name="FlowMaster_MasterFlowType" xml:space="preserve">
+    <value>主路线类型</value>
+  </data>
+  <data name="FlowMaster_Procurement" xml:space="preserve">
+    <value>采购路线</value>
+    <comment>采购路线</comment>
+  </data>
+  <data name="FlowMaster_ProductionLine" xml:space="preserve">
+    <value>生产线</value>
+    <comment>生产线</comment>
+  </data>
+  <data name="FlowMaster_Subconctracting" xml:space="preserve">
+    <value>委外路线</value>
+    <comment>委外路线</comment>
+  </data>
+  <data name="FlowMaster_TabBinding" xml:space="preserve">
+    <value>绑定</value>
+    <comment>绑定</comment>
+  </data>
+  <data name="FlowMaster_TabDetail" xml:space="preserve">
+    <value>明细</value>
+    <comment>明细</comment>
+  </data>
+  <data name="FlowMaster_TabStrategy" xml:space="preserve">
+    <value>策略</value>
+    <comment>策略</comment>
+  </data>
+  <data name="FlowMaster_TransferFlow" xml:space="preserve">
+    <value>移库路线</value>
+    <comment>移库路线</comment>
+  </data>
+  <data name="FlowMaster_PauseTime" xml:space="preserve">
+    <value>暂停时间</value>
+  </data>
+  <data name="FlowMaster_Updated" xml:space="preserve">
+    <value>路线更新成功</value>
+    <comment>路线更新成功</comment>
+  </data>
+  <data name="FlowMaster_ExtraDemandSource" xml:space="preserve">
+    <value>其他需求源</value>
+  </data>
+  <data name="FlowMaster_IsCheckPartyFromAuth" xml:space="preserve">
+    <value>检查来源权限</value>
+  </data>
+  <data name="FlowMaster_IsCheckPartyToAuth" xml:space="preserve">
+    <value>检查目的权限</value>
+  </data>
+  <data name="FlowMaster_IsShipFifo" xml:space="preserve">
+    <value>发货先进先出</value>
+  </data>
+  <data name="FlowMaster_SubconctractingIsAutoStart" xml:space="preserve">
+    <value>自动上线</value>
+  </data>
+  <data name="FlowMaster_SubconctractingIsInspect" xml:space="preserve">
+    <value>下线检验</value>
+  </data>
+  <data name="FlowMaster_SubconctractingIsListDet" xml:space="preserve">
+    <value>显示生产单明细</value>
+  </data>
+  <data name="FlowMaster_SubconctractingIsPrintOrder" xml:space="preserve">
+    <value>打印生产单</value>
+  </data>
+  <data name="FlowMaster_SubconctractingIsShipByOrder" xml:space="preserve">
+    <value>允许生产单发货</value>
+  </data>
+  <data name="FlowMaster_SubconctractingLegendOrderControl" xml:space="preserve">
+    <value>生产单控制</value>
+  </data>
+  <data name="FlowMaster_SubconctractingOrderTemplate" xml:space="preserve">
+    <value>生产单模板</value>
+  </data>
+  <data name="FlowMaster_SubconctractingReferenceFlow" xml:space="preserve">
+    <value>生产线</value>
+  </data>
+  <data name="FlowMaster_CustomerGoodsIsInspect" xml:space="preserve">
+    <value>收货检验</value>
+  </data>
+  <data name="FlowMaster_DistributionPartyFrom" xml:space="preserve">
+    <value>区域</value>
+  </data>
+  <data name="FlowMaster_DistributionPartyTo" xml:space="preserve">
+    <value>客户</value>
+  </data>
+  <data name="FlowMaster_TransferIsInspect" xml:space="preserve">
+    <value>收货检验</value>
+  </data>
+  <data name="FlowMaster_TransferPartyFrom" xml:space="preserve">
+    <value>来源区域</value>
+  </data>
+  <data name="FlowMaster_TransferPartyTo" xml:space="preserve">
+    <value>目的区域</value>
+  </data>
+  <data name="FlowMaster_ProductionDescription" xml:space="preserve">
+    <value>生产线描述</value>
+  </data>
+  <data name="FlowMaster_ProductionLocationFrom" xml:space="preserve">
+    <value>原材料库位</value>
+  </data>
+  <data name="FlowMaster_ProductionLocationTo" xml:space="preserve">
+    <value>成品库位</value>
+  </data>
+  <data name="FlowMaster_ProductionPartyFrom" xml:space="preserve">
+    <value>区域</value>
+  </data>
+  <data name="FlowMaster_SubconctractingLocationFrom" xml:space="preserve">
+    <value>原材料库位</value>
+  </data>
+  <data name="FlowMaster_SubconctractingLocationTo" xml:space="preserve">
+    <value>成品库位</value>
+  </data>
+  <data name="FlowMaster_List_Title" xml:space="preserve">
+    <value>路线</value>
+  </data>
+  <data name="FlowMaster_Paused" xml:space="preserve">
+    <value>路线暂停成功</value>
+  </data>
+  <data name="FlowMaster_Resumed" xml:space="preserve">
+    <value>路线恢复成功</value>
+  </data>
+  <data name="FlowMaster_IsPause" xml:space="preserve">
+    <value>是否暂停</value>
+  </data>
+  <data name="FlowMaster_PickStrategy" xml:space="preserve">
+    <value>拣货规则</value>
+  </data>
+  <data name="FlowMaster_ProductLineFacility" xml:space="preserve">
+    <value>设备</value>
+  </data>
+  <data name="Errors_CodeExist" xml:space="preserve">
+    <value>路线代码已存在</value>
+    <comment>路线代码已存在</comment>
+  </data>
+  <data name="FlowMaster_Deleted" xml:space="preserve">
+    <value>路线删除成功</value>
+  </data>
+  <data name="Errors_FlowIsNotCorrect" xml:space="preserve">
+    <value>线路输入错误</value>
+  </data>
+  <data name="FlowMaster_DAUAT" xml:space="preserve">
+    <value>SAP生产单类型</value>
+  </data>
+  <data name="FlowMaster_ResourceGroup" xml:space="preserve">
+    <value>资源组</value>
+  </data>
+  <data name="FlowMaster_IsAllowProvEstRec" xml:space="preserve">
+    <value>允许暂估价释放</value>
+  </data>
+  <data name="FlowMaster_ProductionRegion" xml:space="preserve">
+    <value>原材料区域</value>
+  </data>
+  <data name="FlowMaster_ProductionRegionTo" xml:space="preserve">
+    <value>成品区域</value>
+  </data>
+  <data name="FlowMaster_SubConctractingTransferFlow" xml:space="preserve">
+    <value>委外移库路线</value>
+  </data>
+  <data name="FlowMaster_UcDeviation" xml:space="preserve">
+    <value>单包装浮动率</value>
+  </data>
+  <data name="FlowMaster_ExtraLocationFrom" xml:space="preserve">
+    <value>其他目的库位</value>
+  </data>
+  <data name="FlowMaster_ExtraLocationTo" xml:space="preserve">
+    <value>其他来源库位</value>
+  </data>
+  <data name="FlowMaster_Feed" xml:space="preserve">
+    <value>投料回冲</value>
+  </data>
+  <data name="FlowMaster_OrderDeviation" xml:space="preserve">
+    <value>订单超收率</value>
+  </data>
+  <data name="FlowMaster_DistrChan" xml:space="preserve">
+    <value>分销渠道</value>
+  </data>
+  <data name="FlowMaster_SalesOrg" xml:space="preserve">
+    <value>销售组织</value>
+  </data>
+  <data name="FlowShiftDetail_TabDetail" xml:space="preserve">
+    <value>窗口时间</value>
+    <comment>窗口时间</comment>
+  </data>
+</root>

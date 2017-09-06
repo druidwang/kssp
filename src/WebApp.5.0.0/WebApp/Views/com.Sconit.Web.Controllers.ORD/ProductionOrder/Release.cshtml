@@ -1,0 +1,60 @@
+﻿
+@Html.Partial("_AjaxMessage")
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_Release" });
+}
+
+<script type="text/javascript">
+    function orderNoKeyDown(e) {
+        if (event.keyCode == 13) {
+            var orderNo = $('#orderNo').val();
+            if (orderNo == "") {
+                $message.error('生产单号不允许为空。');
+                return;
+            }
+            var data = {
+                "orderNo": orderNo
+            };
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/ProductionOrder/ReleaseCheck/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    debugger;
+                    if (data.Data.Status === 0) {
+                        DisplayJsonMessages(data);
+                    }
+                    else {
+                        window.location = "/ProductionOrder/ReleaseOrder/?orderNo=" + orderNo;
+                    }
+                    //                    var content = $("#content");
+                    //                    $(content).html(data);
+                }
+            });
+        }
+    }
+
+
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                生产单号
+            </label>
+        </div>
+        <div class="search-field">
+            <input type="text" name="orderNo" id="orderNo" value="" onkeydown="orderNoKeyDown(this)" />
+        </div>
+
+    </div>
+@*    <div class="editor-footer">
+        <button type="button" id="btnSearch" onclick="BillMasterQuery()">@Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnCreateActingBill" onclick="CreateActingBill()" style="display: none">@Resources.SYS.Global.Button_Create</button>
+        <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+    </div>*@
+</fieldset>
+<div id="divActingBilllList">
+</div>

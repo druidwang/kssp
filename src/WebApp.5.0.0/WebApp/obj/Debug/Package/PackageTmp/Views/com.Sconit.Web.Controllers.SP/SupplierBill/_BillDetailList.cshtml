@@ -1,0 +1,124 @@
+﻿@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.BIL.BillDetail>
+<fieldset>
+ 
+    @(Html.Telerik().Grid(Model)
+        .Name("ActingBill")
+
+       .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();
+            columns.Bound(o => o.ReceiptNo);
+            columns.Bound(o => o.ExternalReceiptNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.EffectiveDate).Format("{0:d}");
+            columns.Bound(o => o.UnitPrice);
+            columns.Bound(o => o.Currency);
+            columns.Bound(o => o.BillQty);//已结算
+            columns.Bound(o => o.BilledQty);//已开数
+            columns.Bound(o => o.CurrentBillQty);//本次开票数
+            columns.Bound(o => o.CurrentDiscount);//折扣
+            columns.Bound(o => o.CurrentBillAmount);//本次开票金额
+        })
+      
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+      )
+      <table width="100%" border="0">
+    <tr>
+        <td style="width: 20%">
+              
+        </td>
+        <td style="width: 50%">
+        </td>
+        <td style="width: 10%" align="right">
+            金额合计:
+        </td>
+        <td style="width: 20%" align="left">
+            <input name="TotalDetailAmount" type="text" value="@ViewBag.BilledAmount" id="TotalDetailAmount"
+                onfocus="this.blur();" style="width: 150px;" disabled='true' />
+        </td>
+    </tr>
+</table>
+</fieldset>
+
+
+<script type="text/javascript">
+    function CurrentBillAmountValue(e, UnitPrice) {
+        var maxBillAmount = parseFloat($(e).parent().prev().prev().text()) - parseFloat($(e).parent().prev().text());
+        if (isNaN(e.value) || parseInt(e.value) < 0) {
+            
+            $message.error("开票数必须为大于0的数字。");
+            $(e).val(maxBillAmount);
+            $(e).parent().next().next().children().val(parseInt((maxBillAmount * UnitPrice - parseFloat($(e).parent().next().children().val()))*10000000)/10000000.00);
+            return;
+        }
+        if (parseFloat(e.value) > maxBillAmount) {
+            
+            $message.error("本次最大可开票数为" + maxBillAmount + "。");
+            $(e).val(maxBillAmount);
+            $(e).parent().next().next().children().val(parseInt((maxBillAmount * UnitPrice - parseFloat($(e).parent().next().children().val())) * 10000000) / 10000000.00);
+            return;
+        }
+        $message.error("");
+        $message.error("");
+        var amount = parseFloat(e.value) * UnitPrice - parseFloat($(e).parent().next().children().val());
+        if (!isNaN(amount) && amount > 0) {
+            $(e).parent().next().next().children().val(parseInt(amount*10000000)/10000000.00);
+        }
+        else {
+            $(e).parent().next().next().children().val(parseInt(parseFloat(e.value) * UnitPrice*10000000)/10000000.00);
+            $(e).parent().next().children().val(0);
+        }
+        var BilledAmount = 0;
+
+        $("input[name='CurrentBillAmount']").each(function (k, v) {
+        BilledAmount += parseFloat($(v).val());
+        
+        });
+    $("#TotalDetailAmount").val(parseInt(BilledAmount * 10000000) / 10000000.00);
+}
+
+function onCurrentDiscountBlur(e, UnitPrice) {
+    $message.error("");
+    var currentBillQty = $(e).parent().prev().children().val();
+    if (parseFloat(currentBillQty) == 0 || currentBillQty == "") {
+        $message.error("请先填写本次开票数,在填写折扣。");
+        $(e).val(0);
+        $(e).parent().next().children().val(parseInt(parseFloat(currentBillQty) * UnitPrice*10000000)/10000000.00);
+        return;
+    }
+    if (isNaN(e.value) || parseFloat(e.value) < 0) {
+        
+        $message.error("折扣必须为大于0的数字。");
+        $(e).val(0);
+        $(e).parent().next().children().val(parseInt((currentBillQty) * UnitPrice*10000000)/10000000.00);
+        return;
+    }
+    if (parseFloat(e.value) > parseFloat(currentBillQty) * UnitPrice) {
+        $message.error("折扣不能大于本次开票金额。");
+        $(e).val(0);
+        $(e).parent().next().children().val(parseInt((currentBillQty) * UnitPrice*10000000)/10000000.00);
+        return;
+    }
+    $(e).parent().next().children().val(parseInt((parseFloat(currentBillQty) * UnitPrice - parseFloat(e.value))*10000000)/10000000.00);
+    var BilledAmount = 0;
+    $("input[name='CurrentBillAmount']").each(function (k, v) {
+        BilledAmount += parseFloat($(v).val());
+
+    });
+    $("#TotalDetailAmount").val(parseInt(BilledAmount * 10000000) / 10000000.00);
+}
+
+
+
+</script>

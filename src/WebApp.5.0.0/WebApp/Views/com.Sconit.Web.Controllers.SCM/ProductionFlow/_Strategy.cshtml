@@ -1,0 +1,235 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.SCM.FlowStrategy
+@Html.Partial("_AjaxMessage")
+@{
+    Layout = null;
+}
+<form action="/ProductionFlow/_Strategy" method="post">
+    <fieldset>
+        <legend>@Resources.SCM.FlowStrategy.FlowStrategy_Strategy</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_ProductionStrategy</label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.FlowStrategy,
+                        controlName = "Strategy",
+                        selectedValue = (Int16)Model.Strategy,
+                        includeBlankOption = true
+                    });
+                }
+                @Html.HiddenFor(model => model.Flow)
+            </div>
+            <div class="editor-label-2">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_Desc1</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+            <div class="editor-label-2">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_LeadTime</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.LeadTime).MinValue(0).DecimalDigits(2)
+                @Html.ValidationMessageFor(model => model.LeadTime)
+            </div>
+            <div class="editor-label-2">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_EmLeadTime</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.EmergencyLeadTime).MinValue(0).DecimalDigits(2)
+                @Html.ValidationMessageFor(model => model.EmergencyLeadTime)
+            </div>
+            <div class="editor-label-2">
+                <label for="FlowStrategy_TimeUnit">
+                    @Resources.SCM.FlowStrategy.FlowStrategy_TimeUnit
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+                        controlName = "TimeUnit",
+                        selectedValue = (int)Model.TimeUnit
+                    });
+                }
+                @Html.ValidationMessageFor(model => model.TimeUnit)
+            </div>
+
+            <div class="editor-label-2">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WeekInterval</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.WeekInterval).MinValue(0).DecimalDigits(0)
+                @Html.ValidationMessageFor(model => model.WeekInterval)
+            </div>
+ 
+            @*<div class="editor-label-2">
+            <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTime</label>
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.WaitTime).MinValue(0).DecimalDigits(2)
+            <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitTimeWithHour</label>
+            @Html.ValidationMessageFor(model => model.WaitTime)
+        </div>
+        <div class="editor-label-2">
+            <label>@Resources.SCM.FlowStrategy.FlowStrategy_WaitBatch</label>
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.WaitBatch).MinValue(0).DecimalDigits(2)
+            @Html.ValidationMessageFor(model => model.WaitBatch)
+        </div>*@
+            <div class="editor-label-2">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_HaltTime</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.HaltTime).MinValue(0).DecimalDigits(0)
+                (天)
+            </div>
+            <div class="editor-label-2">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_TrialProduceTime</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.TrialProduceTime).MinValue(0).DecimalDigits(0)
+                (天)
+            </div>
+
+            <div class="editor-label-2">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_NextOderTime</label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    if (ViewBag.NextOrderTime != null)
+                    {
+                    @Html.EditorFor(model => model.NextOrderTime);
+                    }
+                    else
+                    {
+                    @Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("NextOrderTime");
+                    }
+                }
+            </div>
+            <div class="editor-label-2">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_NextWindowTime</label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    if (ViewBag.NextWindowTime != null)
+                    {
+                    @Html.EditorFor(model => model.NextWindowTime);
+                    }
+                    else
+                    {
+                    @Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("NextWindowTime");
+                    }
+             
+                }
+            </div>
+            <div style="display: none">
+                <div class="editor-label-2">
+                    @*<label>@Resources.SCM.FlowStrategy.FlowStrategy_WindowTimeType</label>*@
+                </div>
+                <div class="editor-field-2">
+                    @{ 
+                        var aa = ViewBag.WindowTimeType != null ? (ViewBag.WindowTimeType == 0 ? true : false) : true;
+                        
+                        @Html.RadioButton("WindowTimeType", (int)com.Sconit.CodeMaster.WindowTimeType.FixedWindowTime, aa)@Resources.SYS.CodeDetail.CodeDetail_WindowTimeType_Fixed<span
+                            style="margin: 4px"></span> 
+                        @Html.RadioButton("WindowTimeType", (int)com.Sconit.CodeMaster.WindowTimeType.CycledWindowTime, !aa)@Resources.SYS.CodeDetail.CodeDetail_WindowTimeType_Cycled 
+
+                    }
+                </div>
+                <div class="editor-label-2">
+                </div>
+                <div class="editor-field-2">
+                </div>
+            </div>
+        </div>
+        <div class="editor">
+            <div class="editor-label-1">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTime</label>
+            </div>
+            <div class="editor-field-1">
+                @Resources.SCM.FlowStrategy.FlowStrategy_WinTimeToolTip
+            </div>
+            <div class="editor-label-1">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTime1</label>
+            </div>
+            <div class="editor-field-1">
+                @Html.EditorFor(model => model.WindowTime1)
+                @Html.ValidationMessageFor(model => model.WindowTime1)
+            </div>
+            <div class="editor-label-1">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTime2</label>
+            </div>
+            <div class="editor-field-1">
+                @Html.EditorFor(model => model.WindowTime2)
+                @Html.ValidationMessageFor(model => model.WindowTime2)
+            </div>
+            <div class="editor-label-1">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTime3</label>
+            </div>
+            <div class="editor-field-1">
+                @Html.EditorFor(model => model.WindowTime3)
+                @Html.ValidationMessageFor(model => model.WindowTime3)
+            </div>
+            <div class="editor-label-1">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTime4</label>
+            </div>
+            <div class="editor-field-1">
+                @Html.EditorFor(model => model.WindowTime4)
+                @Html.ValidationMessageFor(model => model.WindowTime4)
+            </div>
+            <div class="editor-label-1">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTime5</label>
+            </div>
+            <div class="editor-field-1">
+                @Html.EditorFor(model => model.WindowTime5)
+                @Html.ValidationMessageFor(model => model.WindowTime5)
+            </div>
+            <div class="editor-label-1">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTime6</label>
+            </div>
+            <div class="editor-field-1">
+                @Html.EditorFor(model => model.WindowTime6)
+                @Html.ValidationMessageFor(model => model.WindowTime6)
+            </div>
+            <div class="editor-label-1">
+                <label>@Resources.SCM.FlowStrategy.FlowStrategy_WinTime7</label>
+            </div>
+            <div class="editor-field-1">
+                @Html.EditorFor(model => model.WindowTime7)
+                @Html.ValidationMessageFor(model => model.WindowTime7)
+            </div>
+        </div>
+    </fieldset>
+    <div class="editor-footer">
+        @*<button type="submit" id="btnEdit">
+            @Resources.SYS.Global.Button_Save</button>*@
+        @Html.Button(Resources.SYS.Global.Button_Save, "Url_ProductionFlow_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnEdit"},
+        {"needconfirm","true"}
+	})
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ProductionFlow/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+</form>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("form[action$='_Strategy']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(response);
+            });
+            return false;
+        });
+    });
+</script>

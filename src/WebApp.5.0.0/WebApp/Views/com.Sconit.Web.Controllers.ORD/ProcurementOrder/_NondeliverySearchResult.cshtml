@@ -1,0 +1,93 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("OrderNondeliveryGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+             columns.Bound(o => o.OrderNo).Width(100);
+            columns.Bound(o => o.Item).Width(100);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription);
+     
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.PartyFromName);
+            columns.Bound(o => o.PartyToName);
+            columns.Bound(o => o.LocationTo);
+           
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.OrderedQty).Width(100);
+            columns.Bound(o => o.ShippedQty).Width(100);
+            columns.Bound(o => o.ReceivedQty).Width(100);
+
+
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxNondeliveryList", "ProcurementOrder"))
+                .ClientEvents(events => events.OnDataBinding("OrderNondeliveryGrid_OnDataBinding")
+                                                .OnRowDataBound("OrderNondeliveryGrid_OnComplete"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderNondeliveryGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                LocationTo: $('#LocationTo').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                Status: $('#Status').val(),
+                Item: $("#Item").val()
+            };
+        }
+        $(function () {
+            ij = 1;
+        });
+
+        var ij = 1;
+        function OrderNondeliveryGrid_OnComplete(e) {
+            if (ij >1) { return; }
+            ij++;
+            var rows = $("tbody").children("tr:not(.t-no-data)");
+            for (var i = 0; i < rows.length; i++) {
+                var cells = $(rows[i]).children();
+                if (parseFloat(cells.eq(17).text()) < parseFloat(cells.eq(15).text())) {
+                    var WindowTime = cells.eq(14).text();
+                    var WindowTimes = WindowTime.split(' ');
+                    var dates = WindowTimes[0].split('/');
+                    winMonth = parseInt(dates[1]) > 9 ? dates[1] : "0" + dates[1];
+                    winDay = parseInt(dates[2]) > 9 ? dates[2] : "0" + dates[2];
+                    var newWindowTime = winMonth + '-' + winDay + '-' + dates[0] + ' ' + WindowTimes[1];
+
+                    var date = new Date();
+                    var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : "0" + (date.getMonth() + 1);
+                    var day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+                    var currentDate = date.getFullYear() + "-" + month + "-" + day + ' ' + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                    currentDate = month + '-' + day + '-' + date.getFullYear() + ' ' + ' ' + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
+                    //   alert(Date.parse(currentDate) + "   " + currentDate + "=====" + newWindowTime + "  " + Date.parse(newWindowTime));
+                    var a = (Date.parse(currentDate) - Date.parse(newWindowTime)) / 3600 / 1000;
+                    if (a > 0) {
+                       // $(b).parent().parent().children().eq(10).html("<font color='red'>" + WindowTime + "</font>");
+                        cells.eq(14).html("<font color='red'>" + WindowTime + "</font>");
+                    }
+                }
+            }
+        }
+    </script>
+</fieldset>

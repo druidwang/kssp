@@ -1,0 +1,111 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            if (ViewBag.GetType == "Ajax")
+            {
+                columns.Bound(o => o.OrderNo).ClientTemplate("<a href='#' onclick ='ForceMaterialEdit(\"<#=OrderNo #>\",\"<#=ReferenceOrderNo #>\")'><#=OrderNo #></a>");
+            }
+            else
+            {
+                columns.Bound(o => o.OrderNo).ClientTemplate(Html.ActionLink("<#= OrderNo #>", "Edit", "ProductionOrder", new { OrderNo = "<#= OrderNo #>", Flow = "<#= Flow #>" }, null).ToString());
+            }
+                columns.Bound(o => o.Flow).Title(@Resources.ORD.OrderMaster.OrderMaster_Flow_Production).ClientTemplate("<div title=<#=FlowDescription #>><#=Flow #></div>");
+            //columns.Bound(o => o.FlowDescription).Title(@Resources.ORD.OrderMaster.OrderMaster_FlowDescription_Production);
+            //columns.Bound(o => o.Sequence); 
+            //columns.Bound(o => o.TraceCode);
+            if (ViewBag.GetType == "View")
+            {
+                columns.Bound(o => o.OrderSubTypeDescription);
+            }
+            columns.Bound(o => o.ReferenceOrderNo);
+            //columns.Bound(o => o.ExternalOrderNo);
+            columns.Bound(o => o.PartyFromName).Title(@Resources.ORD.OrderMaster.OrderMaster_PartyFromName_Production);
+            columns.Bound(o => o.Shift);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime).ClientTemplate("<div style='<#=ColorStyle #>'><#= WindowTimeFromat #></div>");
+            columns.Bound(o => o.OrderStatusDescription);
+            if (ViewBag.GetType == "View")
+            {
+                columns.Bound(o => o.IsIndepentDemand)
+                     .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDefault' <#= IsIndepentDemand? checked='checked' : '' #> />");
+            }
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ProductionOrder"))
+                .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 10 : ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                Status: $('#Status').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                ReferenceOrderNo: $('#ReferenceOrderNo').val(),
+                ExternalOrderNo: $('#ExternalOrderNo').val(),
+                WMSNO: $('#WMSNO').val(),
+                Type: $('#Type').val(),
+                SubType: $('#SubType').val(),
+                TraceCode: $('#TraceCode').val(),
+                QueryOrderType: $('#QueryOrderType').val(),
+                IsPause: $('#IsPause').is(':checked'),
+                DateType: $("input[type=radio][name=DateType]:checked").val(),
+                SearchForceMaterialOrder: $('#SearchForceMaterialOrder').val(),
+                MultiStatus: $('#MultiStatus').val()
+            };
+        }
+
+
+        function ForceMaterialEdit(orderNo, referenceOrderNo) {
+            //debugger
+            var orderData = {
+                "orderNo": orderNo,
+                "ReferenceOrderNo": referenceOrderNo
+            };
+            $("#OrderNo_1").val(orderNo);
+            $("#OrderNo").val(orderNo);
+            $("#ReferenceOrderNo_1").val(referenceOrderNo);
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/ProductionOrder/_ForceFeedQtyDetailList/",
+                data: orderData,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#divForceFeedQtyDeatil").html(data);
+                    $("#divForceFeedQtyDeatil").show();
+                    $("#btnMaterialIn").show();
+                    $("#divOrderList").hide();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    </script>
+
+</fieldset>

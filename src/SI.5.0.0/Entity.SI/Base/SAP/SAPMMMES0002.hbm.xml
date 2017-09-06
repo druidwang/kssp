@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.SAP.SAPMMMES0002, com.Sconit.Entity.SI" table="SAP_Interface_MMMES0002" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="ZMESPO" column="ZMESPO" type="String" length="20"/>	
+		<property name="ZMESGUID" column="ZMESGUID" type="String" length="18"/>	
+		<property name="ZCSRQSJ" column="ZCSRQSJ" type="DateTime"/>	
+		<property name="Status" column="Status" type="Int32"/>	
+		<property name="BatchNo" column="BatchNo" type="String" length="50"/>	
+		<property name="UniqueCode" column="UniqueCode" type="String" length="50"/>
+    <property name="CancelDate" column="CancelDate" type="DateTime"/>
+  	</class>
+</hibernate-mapping>

@@ -1,0 +1,178 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Distribution_New" });
+}
+<script type="text/javascript">
+    function onWindowTimeChange(e) {
+        if ($("#Flow").val() != null && $("#Flow").val() != "") {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                url: "/DistributionOrder/_WindowTime/",
+                data: { "windowTime": e.value.format("yyyy-MM-dd hh:mm"), "flow": $("#Flow").val() },
+                success: function (data, textStatus) {
+                    var newDate = new Date(data);
+                    $("#StartTime").val(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    }
+
+    function onCreate() {
+        //debugger
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error("明细不能为空");
+            return;
+        }
+        var Sequences = new Array();
+        var Items = new Array();
+        var ReferenceItemCodes = new Array();
+        var ItemDescriptions = new Array();
+        var UnitCounts = new Array();
+        var UnitCountDescriptions = new Array();
+        var Uoms = new Array();
+        var LocationFroms = new Array();
+        var LocationTos = new Array();
+        var OrderedQtys = new Array();
+        var HuTos = new Array();
+
+        var isDistribution = ($("#IsDistribution").val().toUpperCase() == "TRUE");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var i = 0;
+        var orderedIndex = grid.columns.length - 1;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim(row[0].childNodes[orderedIndex].innerText)) > 0) {
+                Sequences[i] = $.trim(row[0].childNodes[0].innerText);
+                Items[i] = $.trim(row[0].childNodes[1].innerText);
+                UnitCounts[i] = $.trim(row[0].childNodes[4].innerText);
+                Uoms[i] = $.trim(row[0].childNodes[5].innerText);
+                LocationFroms[i] = $.trim(row[0].childNodes[7].innerText);
+                HuTos[i] = $.trim(row[0].childNodes[orderedIndex - 1].innerText);
+                OrderedQtys[i] = $.trim(row[0].childNodes[orderedIndex].innerText);
+                if (!isDistribution) {
+                    LocationTos[i] = $.trim(row[0].childNodes[8].innerText);
+                }
+                i++;
+            }
+        }
+        var ordermstr = {
+            "Flow": $("#Flow").val(),
+            "StartTime": $("#StartTime").val(),
+            "WindowTime": $("#WindowTime").val(),
+            "EffectiveDate": $("#EffectiveDate").val(),
+            "ReferenceOrderNo": $("#ReferenceOrderNo").val(),
+            "ExternalOrderNo": $("#ExternalOrderNo").val(),
+            "Priority": $("input[type=radio][name=Priority]:checked").val()
+        }
+        var made = {
+            "Sequences": Sequences,
+            "Items": Items,
+            "UnitCounts": UnitCounts,
+            "Uoms": Uoms,
+            "LocationFroms": LocationFroms,
+            "LocationTos": LocationTos,
+            "OrderedQtys": OrderedQtys,
+            "HuTos": HuTos
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/DistributionOrder/NewCreateOrderFromPlan/",
+            data: $.extend(made, ordermstr),
+            traditional: true,
+            success: function (data, ordermstr) {
+                if (data != null && data.Data != null && data.Data.orderNo != undefined) {
+                    window.location.href = "/DistributionOrder/Edit/?orderNo=" + data.Data.orderNo;
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Flow)
+                [@ViewBag.FlowDescription ]
+                @Html.HiddenFor(model => model.Flow)
+                @Html.HiddenFor(model => model.Type)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Priority)
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("Priority", (int)com.Sconit.CodeMaster.OrderPriority.Normal, true)@Resources.SYS.CodeDetail.CodeDetail_OrderPriority_Normal
+                @Html.RadioButton("Priority", (int)com.Sconit.CodeMaster.OrderPriority.Urgent)@Resources.SYS.CodeDetail.CodeDetail_OrderPriority_Urgent
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.WindowTime)
+            </div>
+            <div class="editor-field-2">
+                <div class="editor-field-2">
+                    @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm")
+                    .Name("WindowTime")//.Value(model => model.WindowTime)
+                    .ClientEvents(events => events.OnChange("onWindowTimeChange")
+                        )
+                    )
+                    @Html.ValidationMessageFor(model => model.WindowTime)
+                </div>
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartTime)
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DateTimePicker()//.Value(model => model.StartTime)
+                .Format("yyyy-MM-dd HH:mm").Name("StartTime"))
+                @Html.ValidationMessageFor(model => model.StartTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReferenceOrderNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ReferenceOrderNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ExternalOrderNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ExternalOrderNo)
+                @Html.HiddenFor(model => model.ExternalOrderNo)
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_OrderMstr_Distribution_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"orderType",((int)Model.Type).ToString()},
+                {"onclick","onCreate()"}
+	        })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content(ViewBag.BackUrl)'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+   
+    <div id="fdOrderDetail">
+        @{
+    Html.RenderAction("_OrderDetailListFromPlan", "DistributionOrder", new
+    {
+        Flow = Model.Flow,
+        PlanDate = ViewBag.PlanDate
+    });
+        }
+    </div>
+}

@@ -1,0 +1,20 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+
+
+}
+@(Html.Telerik().ComboBox()
+        .Name(name)
+                .HiddenInputHtmlAttributes(new { id = id })
+            .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingTaskAddress", "Common"))
+        .ClientEvents(events => events
+
+                                    .OnDataBinding("TaskAddress_DataBinding")
+        )
+        .BindTo(Model)
+        .Enable(enable)
+             .AutoFill(true)
+)

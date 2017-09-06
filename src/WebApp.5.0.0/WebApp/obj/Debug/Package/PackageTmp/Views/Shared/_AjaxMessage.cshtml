@@ -1,0 +1,38 @@
+﻿@using com.Sconit.Utility
+<script type="text/javascript" charset="utf-8">
+@{
+    if (ViewData[WebConstants.ErrorMessages] != null)
+    {
+        foreach (string errorMessage in (IList<string>)ViewData[WebConstants.ErrorMessages])
+        {
+           <text>
+    $message.error('@errorMessage');
+           </text>
+        }
+        ViewData[WebConstants.ErrorMessages] = null;
+    }
+
+    if (ViewData[WebConstants.WarningMessages] != null)
+    {
+        foreach (string warningMessage in (IList<string>)ViewData[WebConstants.WarningMessages])
+        {
+           <text>
+    $message.warning('@warningMessage');
+           </text>
+        }
+        ViewData[WebConstants.WarningMessages] = null;
+    }
+
+    if (ViewData[WebConstants.SuccessMessages] != null)
+    {
+        foreach (string successMessage in (IList<string>)ViewData[WebConstants.SuccessMessages])
+        {
+           <text>
+    $message.success('@successMessage');
+    </text>
+        }
+        ViewData[WebConstants.SuccessMessages] = null;
+    }
+}
+</script>
+

@@ -1,0 +1,35 @@
+﻿@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.ORD.SequenceDetail>
+@*@model com.Sconit.Entity.ORD.SequenceDetail*@
+
+<fieldset>
+    <legend>@Resources.ORD.SequenceDetail.SequenceDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("SequenceDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.TraceCode);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+            
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.IsClose).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsClose' <#= IsClose? checked='checked' : '' #> />");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+</fieldset>

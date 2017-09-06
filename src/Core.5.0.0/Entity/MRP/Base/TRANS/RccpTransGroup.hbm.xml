@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.RccpTransGroup, com.Sconit.Entity" table="MRP_RccpTransGroup" lazy="false" dynamic-update="true">
+
+    <composite-id>
+      <key-property name="DateIndex" length="7" type="String" column="DateIndex"/>
+      <key-property name="Item" length="50" type="String" column="Item"/>
+      <key-property name="DateType" column="DateType"/>
+      <key-property name="PlanVersion" type="DateTime" column="PlanVersion"/>
+    </composite-id>
+
+    <property name="Qty" column="Qty" type="Double"  />
+    <property name="ScrapPercentage" column="ScrapPercentage" type="Double"  />
+    <property name="IsLastLevel" column="IsLastLevel" type="Boolean"  />
+  </class>
+</hibernate-mapping>

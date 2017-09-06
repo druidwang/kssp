@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.MD.HuToMapping>
+<fieldset>
+    @(Html.Telerik().Grid(Model).Name("HuToMappingGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).ClientTemplate(Html.ActionLink("<#= HuTo #>", "HuToMappingEdit", "HuTo", new { id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.Party);
+            columns.Bound(o => o.PartyName);
+            columns.Bound(o => o.PartyType);
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.FlowDescription);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Fg);
+            columns.Bound(o => o.FgDescription);
+            //columns.Bound(o => o.CreateUserName);
+            //columns.Bound(o => o.CreateDate);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxHuToMappingList", "HuTo"))
+        .ClientEvents(events => events.OnDataBinding("HuToMappingGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+   )
+    <script type="text/javascript">
+        function HuToMappingGrid_OnDataBinding(e) {
+            e.data = {
+                HuTo: $('#HuTo').val(),
+                Party: $('#Party').val(),
+                Flow: $('#Flow').val(),
+                Item: $('#Item').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.MD.Machine, com.Sconit.Entity" table="MRP_Machine" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Code" column="Code" type="String"  length="50" />
+    <property name="StartDate" column="StartDate" type="DateTime"  />
+    <property name="EndDate" column="EndDate" type="DateTime"  />
+    <property name="Description" column="Desc1" type="String" length="50" />
+    <property name="ShiftQuota" column="ShiftQuota"  type="Double" />
+    <!--<property name="Capacity" column="Capacity"  type="Double" />-->
+    <property name="Qty" column="Qty"  type="Double" />
+    <property name="Island" column="Island" type="String" length="50" />
+    <property name="MachineType" column="MachineType"  />
+    <property name="ShiftType" column="ShiftType"  />
+    <property name="NormalWorkDayPerWeek" column="NormalWorkDayPerWeek" type="Double"/>
+    <property name="MaxWorkDayPerWeek" column="MaxWorkDayPerWeek" type="Double"/>
+    <property name="ShiftPerDay" column="ShiftPerDay" type="Int32"/>
+    <property name="Seq" column="Seq" type="Int32"/>
+
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+  </class>
+</hibernate-mapping>

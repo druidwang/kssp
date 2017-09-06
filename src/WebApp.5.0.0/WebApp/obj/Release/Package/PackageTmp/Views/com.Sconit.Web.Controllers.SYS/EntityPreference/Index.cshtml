@@ -1,0 +1,50 @@
+﻿@using com.Sconit.Entity.SYS
+@model IEnumerable<com.Sconit.Entity.SYS.EntityPreference>
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_EntityPreference_View" });
+}
+<fieldset>
+    <script type="text/javascript">
+        function Grid_OnDataBinding(e) {
+            e.data = {
+                Value: $('#Value').val(),
+                Description: $('#EntityPreferenceDesc').val()
+            };
+
+        } 
+    </script>
+    @(Html.Telerik().Grid(Model)
+  .Name("Grid")
+  .DataKeys(keys =>
+  {
+      keys.Add(p => p.Id);
+  })
+            .Editable(editing => editing.Mode(GridEditMode.InLine))
+  .Columns(columns =>
+  {
+
+      columns.Bound(p => p.EntityPreferenceDesc).ReadOnly().Width(500);
+      columns.Bound(p => p.Value).Width(120);
+      columns.Command(commands =>
+      {
+          commands.Edit().ButtonType(GridButtonType.ImageAndText);
+      }).Width(150);
+  })
+    .DataBinding(dataBinding =>
+    {
+        dataBinding.Ajax()
+            .Update("update", "EntityPreference")
+            .Select("_AjaxIndex", "EntityPreference");
+    })
+        .ClientEvents(events => events.OnDataBinding("Grid_OnDataBinding"))
+
+    .Pageable(settings =>
+    {
+        settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+        settings.PageSize(ViewBag.PageSize);
+    })
+  .Scrollable(c => c.Enabled(false))
+  .Sortable()
+  )
+</fieldset>

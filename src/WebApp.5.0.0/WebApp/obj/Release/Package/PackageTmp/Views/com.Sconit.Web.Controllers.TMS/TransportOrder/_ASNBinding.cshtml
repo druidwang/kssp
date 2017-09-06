@@ -1,0 +1,70 @@
+﻿
+
+<div class="editor">
+      @(Html.Telerik().Grid<com.Sconit.Entity.TMS.TransportOrderDetail>()
+                .Name("OrderDetailGrid")
+                .Editable(editing => editing.Mode(GridEditMode.InCell))
+                .ToolBar(commands =>
+                {
+                    commands.Insert();
+                    commands.Custom().Text("选择ASN").HtmlAttributes(new { onclick="SelectASNClick(this)" }).Url("#");
+                })
+                .DataKeys(keys =>
+                {
+                    keys.Add(p => p.Id);
+                })
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_LoadOrderDetail", "TransportOrder"))
+                .Columns(columns =>
+                {
+                    columns.Bound(o => o.Sequence).ClientTemplate(Html.ActionLink("<#= Sequence #>", "RouteEdit", "TransportFlow", new { ID = "<#= Id #>" }, null).ToString()).Width(50);
+                    columns.Bound(o => o.IpNo).Width(150).EditorTemplateName("IpNoTemplate");
+                    columns.Bound(o => o.ShipFrom).ReadOnly(true);
+                    columns.Bound(o => o.ShipTo).ReadOnly(true);
+                    columns.Bound(o => o.Dock).ReadOnly(true);
+                    columns.Bound(o => o.Volume).ReadOnly(true);
+                    columns.Bound(o => o.Weight).ReadOnly(true);
+                    columns.Bound(o => o.PalletQty).ReadOnly(true);
+                    columns.Bound(o => o.BoxCount).ReadOnly(true);
+                    columns.Command(commands =>
+                    {
+                        commands.Delete();
+                    }).Width(150);
+                })
+                        .ClientEvents(events => events.OnError("TelerikGridView_OnError").OnDataBinding("OrderDetailGridDateBinding"))
+
+                    )
+</div>
+
+<div >
+    @{Html.Telerik().Window()
+        .Name("SelectASNWindow")
+        .Title("选择ASN")
+        .Draggable(true)
+        .Scrollable(true)
+       
+        .Resizable()
+        .Width(900)
+       .Height(600)
+        .Visible(false)
+           .Modal(true)
+       
+       .Render();
+    }
+</div>
+
+<script>
+    function IpNoKeyDown(e) {
+        //debugger;
+        if (event.keyCode == 13) {
+            //$(e).parent().next().text('aaa')
+        }
+    }
+
+    function SelectASNClick(e) {
+        var detailWindow = $("#SelectASNWindow").data("tWindow");
+        detailWindow.ajaxRequest("/TransportOrder/_SelectASN/", { flow: $('#Flow').val() });
+        detailWindow.center().open();
+    }
+
+
+</script>

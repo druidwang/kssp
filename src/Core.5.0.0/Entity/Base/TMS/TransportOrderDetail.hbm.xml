@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.TMS.TransportOrderDetail, com.Sconit.Entity" table="TMS_OrderDet" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<version name="Version" column="Version" type="Int32" />	
+		<property name="OrderNo" column="OrderNo" type="String" length="50"/>	
+		<property name="Sequence" column="Seq" type="Int32"/>	
+		<property name="IpNo" column="IpNo" type="String" length="50"/>
+        <property name="OrderRouteFrom" column="OrderRouteFrom" type="Int32"/>
+        <property name="OrderRouteTo" column="OrderRouteTo" type="Int32"/>	
+		<property name="EstPalletQty" column="EstPalletQty" type="Int32"/>	
+		<property name="PalletQty" column="PalletQty" type="Int32"/>	
+		<property name="EstVolume" column="EstVolume" type="Decimal"/>	
+		<property name="Volume" column="Volume" type="Decimal"/>	
+		<property name="EstWeight" column="EstWeight" type="Decimal"/>	
+		<property name="Weight" column="Weight" type="Decimal"/>	
+		<property name="EstBoxCount" column="EstBoxCount" type="Int32"/>	
+		<property name="BoxCount" column="BoxCount" type="Int32"/>	
+		<property name="LoadTime" column="LoadTime" type="DateTime"/>	
+		<property name="UnloadTime" column="UnloadTime" type="DateTime"/>	
+		<property name="PartyFrom" column="PartyFrom" type="String" length="50"/>	
+		<property name="PartyFromName" column="PartyFromNm" type="String" length="100"/>	
+		<property name="PartyTo" column="PartyTo" type="String" length="50"/>	
+		<property name="PartyToName" column="PartyToNm" type="String" length="100"/>
+        <property name="ShipFrom" column="ShipFrom" type="String" length="50" />
+        <property name="ShipFromAddress" column="ShipFromAddr" type="String" length="256" />
+        <property name="ShipFromTel" column="ShipFromTel" type="String" length="50" />
+        <property name="ShipFromCell" column="ShipFromCell" type="String" length="50" />
+        <property name="ShipFromFax" column="ShipFromFax" type="String" length="50" />
+        <property name="ShipFromContact" column="ShipFromContact" type="String" length="50" />
+        <property name="ShipTo" column="ShipTo" type="String" length="50" />
+        <property name="ShipToAddress" column="ShipToAddr" type="String" length="256" />
+        <property name="ShipToTel" column="ShipToTel" type="String" length="50" />
+        <property name="ShipToCell" column="ShipToCell" type="String" length="50" />
+        <property name="ShipToFax" column="ShipToFax" type="String" length="50" />
+        <property name="ShipToContact" column="ShipToContact" type="String" length="50" />
+        <property name="Dock" column="Dock" type="String" length="100" />
+		<property name="PalletCode" column="PalletCode" type="String" length="50" />
+		<property name="Distance" column="Distance" type="Decimal"/>	
+		<property name="IsReceived" column="IsRec" type="Boolean"/>
+		<property name="IsValuated" column="IsValuated" type="Boolean"/>
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="255" update="false"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="255"/>	
+  	</class>
+</hibernate-mapping>

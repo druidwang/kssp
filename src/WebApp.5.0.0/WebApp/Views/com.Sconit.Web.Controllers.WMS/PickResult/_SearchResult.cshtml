@@ -1,0 +1,55 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.WMS.PickResult>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickResultGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PickTaskId).ClientTemplate(Html.ActionLink("<#= Item #>", "Edit", "PickResult", new { id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.UCDescription);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Area);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o=>o.PickQty);
+            columns.Bound(o => o.PickUserName);
+            columns.Bound(o => o.PickDate);
+                })
+      
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "PickResult"))
+            .ClientEvents(events => events.OnDataBinding("PickResultGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function PickResultGrid_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                Location: $('#Location').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                OrderNo: $('#OrderNo').val()
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,50 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string ajaxActionName = ViewBag.AjaxActionName;
+    string Id = ViewBag.ControlId;
+    if (string.IsNullOrWhiteSpace(Id))
+    {
+        Id = name;
+    }
+    bool enable = true;
+    if (ViewBag.Enable!=null)
+    {
+        enable = ViewBag.Enable;
+    }
+}
+@{
+    if (ViewBag.Coupled!=null)
+    {
+        if(name=="PartyFrom")
+        {
+            @(Html.Telerik().DropDownList()
+            .Name(name)
+            .HiddenInputHtmlAttributes(new { id = Id })
+            .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingRegion", "Common", null))
+            .ClientEvents(events => events.OnChange("NewRegion_Change"))
+            .BindTo(Model)
+            .Enable(enable)
+            )
+        }else if(name=="PartyTo")
+        {
+            @(Html.Telerik().DropDownList()
+            .Name(name)
+            .HiddenInputHtmlAttributes(new { id = Id })
+            .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingRegion", "Common", null))
+            .ClientEvents(events => events.OnChange("PartyTo_Change"))
+            .BindTo(Model)
+            .Enable(enable)
+            )
+        }
+    }
+    else
+    {
+       @(Html.Telerik().DropDownList()
+        .Name(name)
+        .HiddenInputHtmlAttributes(new { id = Id })
+        .BindTo(Model)
+        .Enable(enable)
+        ) 
+    }
+    }

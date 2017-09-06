@@ -1,0 +1,63 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.ItemExchange>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("ItemExchangeGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(k => k.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ItemFrom).ClientTemplate(Html.ActionLink("<#=ItemFrom #>", "Edit", "ItemExchange", new { Id = "<#=Id #>" }, null).ToString());
+            columns.Bound(o => o.ItemFromDesc);
+            columns.Bound(o => o.ItemTo);
+            columns.Bound(o => o.ItemToDesc).Title("新物料描述");
+            //columns.Bound(o => o.RegionFrom);
+            //columns.Bound(o => o.RegionTo);
+            columns.Bound(o => o.LocationFrom).Title("库位");
+            //columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.NewUom);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.NewQty);
+            columns.Bound(o => o.OldHu);
+            columns.Bound(o => o.NewHu);
+            columns.Bound(o => o.ItemExchangeTypeDesc);
+            //columns.Bound(o => o.CreateUserName);
+            //columns.Bound(o => o.CreateDate);
+        })
+
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ItemExchange"))
+                                .ClientEvents(events => events.OnDataBinding("ItemExchangeGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ItemExchangeGrid_OnDataBinding(e) {
+           //debugger
+            e.data = {
+                ItemFrom: $('#ItemFrom').val(),
+                ItemTo: $('#ItemTo').val(),
+                RegionFrom: $("#PartyFrom").val(),
+                RegionTo: $("#PartyTo").val(),
+                LocationFrom: $('#LocationFrom').val(),
+                LocationTo: $('#LocationTo').val(),
+                HuId: $('#HuId').val(),
+                NewHu: $('#NewHu').val(),
+                OldHu: $('#OldHu').val(),
+                ItemExchangeType: $("input[type=radio][name=ItemExchangeType]:checked").val()
+            };
+        }
+    </script>
+</fieldset>

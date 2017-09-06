@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "HuToMappingList";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_CUST_HuToMapping" });
+}
+
+@Html.Partial("_HuToMappingSearch")
+
+@Html.Partial("_HuToMappingSearchResult")

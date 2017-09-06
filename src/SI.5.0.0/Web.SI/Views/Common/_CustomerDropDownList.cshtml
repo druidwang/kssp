@@ -1,0 +1,29 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string ajaxActionName = ViewBag.AjaxActionName;
+    bool enable = true;
+    if (ViewBag.Enable!=null)
+    {
+        enable = ViewBag.Enable;
+    }
+}
+@{
+    if (ViewBag.Coupled!=null)
+    {
+        @(Html.Telerik().DropDownList()
+        .Name(name)
+            .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingCustomer", "Common", null))
+        .ClientEvents(events => events.OnChange("Customer_Change"))
+        .BindTo(Model)
+        .Enable(enable)
+        )
+    }else
+    {
+       @(Html.Telerik().DropDownList()
+        .Name(name)
+        .BindTo(Model)
+        .Enable(enable)
+        ) 
+    }
+}

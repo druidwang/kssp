@@ -1,0 +1,211 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.ISS
+@using com.Sconit.Entity.SYS
+<fieldset>
+    <script type="text/javascript">
+        function batchCheckedIssue(type) {
+            var $checkedRecords = $(':checked');
+            if ($checkedRecords.length < 1) {
+                alert('@Resources.ISS.IssueMaster.Must_Choose_One');
+                return;
+            }
+            var codeStr = "";
+            for (var i = 0; i < $checkedRecords.length; i++) {
+                if ($checkedRecords[i].value != "on") {
+                    codeStr += $checkedRecords[i].value + ",";
+                }
+            }
+            codeStr = codeStr.substring(0, codeStr.length - 1);
+
+            var data = {
+                "codeStr": codeStr
+            };
+            var url = "";
+            if (type == 'close') {
+                url = "/Issue/BatchClose/";
+            } else if (type == 'delete') {
+                url = "/Issue/BatchDelete/";
+            }
+
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: url,
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    var DivResult = $("#DivResult");
+                    $(DivResult).html(data);
+                }
+            });
+        }
+        
+    </script>
+    @using (Html.BeginForm("BatchProcessList", "Issue"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Code">
+                    @Resources.ISS.IssueMaster.Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="IssueSubject">
+                    @Resources.ISS.IssueMaster.IssueSubject
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("IssueSubject", TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).IssueSubject : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Priority">
+                    @Resources.ISS.IssueMaster.Priority
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.IssuePriority,
+            controlName = "Priority",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).Priority : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="Type">
+                    @Resources.ISS.IssueMaster.Type
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.IssueType,
+            controlName = "Type",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).Type : null
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="IssueType">
+                    @Resources.ISS.IssueMaster.IssueType
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_IssueTypeDropDownList", "Common",
+            new
+            {
+                controlName = "IssueType",
+                includeBlankOption = true,
+                selectedValue = TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).IssueTypeCode : string.Empty
+            });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="IssueType">
+                    @Resources.ISS.IssueMaster.IssueNo
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_IssueNoDropDownList", "Common",
+            new
+            {
+                controlName = "IssueNo",
+                includeBlankOption = true,
+                selectedValue = TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).IssueNoCode : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="BackYards">
+                    @Resources.ISS.IssueMaster.BackYards
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BackYards", TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).BackYards : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="UserName">
+                    @Resources.ISS.IssueMaster.UserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("UserName", TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).UserName : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Email">
+                    @Resources.ISS.IssueMaster.Email
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Email", TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).Email : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="MobilePhone">
+                    @Resources.ISS.IssueMaster.MobilePhone
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MobilePhone", TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).MobilePhone : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Content">
+                    @Resources.ISS.IssueMaster.Content
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Content", TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).Content : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Solution">
+                    @Resources.ISS.IssueMaster.Solution
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Solution", TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).Solution : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Status">
+                    @Resources.ISS.IssueMaster.Status
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.IssueStatus,
+            controlName = "Status",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            blankOptionValue = "",
+            selectedValue = TempData["IssueMasterSearchModel"] != null ? ((IssueMasterSearchModel)TempData["IssueMasterSearchModel"]).Status : null
+        });
+                }
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnClose" onclick="batchCheckedIssue('close')">@Resources.SYS.Global.Button_Close</button>
+            <button type="button" id="btnDelete" onclick="batchCheckedIssue('delete')">@Resources.SYS.Global.Button_Delete</button>
+        </div>
+
+    }
+</fieldset>

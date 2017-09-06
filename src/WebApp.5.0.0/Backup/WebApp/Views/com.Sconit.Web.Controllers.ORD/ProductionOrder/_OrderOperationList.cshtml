@@ -1,0 +1,35 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@using com.Sconit.Entity.SYS;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderOperation>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("OrderOperation")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+                            .Select("_SelectOperationBatchEditing", "ProductionOrder", new { orderDetailId = (String)ViewBag.OrderDetailId })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Operation);
+            columns.Bound(o => o.SAPOperation);
+            columns.Bound(o => o.OpReference);
+            columns.Bound(o => o.TimeUnit);
+            columns.Bound(o => o.LeadTime);
+            columns.Bound(o => o.WorkCenter);
+            columns.Bound(o => o.IsReport).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsReport' <#= IsReport? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsBackflush).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsBackflush' <#= IsBackflush? checked='checked' : '' #> />");
+        })
+                   .Pageable(settings =>
+                   {
+                       settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                       settings.PageSize(ViewBag.PageSize == null ? 20 : ViewBag.PageSize);
+                   })
+        .Scrollable(c => c.Enabled(false))
+        .Footer(true)
+            )
+</fieldset>

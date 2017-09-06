@@ -1,0 +1,158 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    <script type="text/javascript">
+    </script>
+    <div class="editor-label-2">
+        <label>
+            @Resources.EXT.PageLan.SearchType
+        </label>
+    </div>
+    <div class="editor-field-2">
+        @Html.RadioButton("searchCondition", 0, true, new { onclick = "doClick(true)" })<span>@Resources.EXT.PageLan.ByItem</span><span
+            style="margin: 4px"></span>
+        @Html.RadioButton("searchCondition", 1, false, new { onclick = "doClick(false)" })<span>@Resources.EXT.PageLan.ByFlow</span>
+    </div>
+    <div class="editor-label-2">
+        <label>
+        </label>
+    </div>
+    <div class="editor-field-2">
+    </div>
+    <hr style="border: 100% dashed black;" />
+    <div class="search" id="SearchByFlow" style="display: none">
+        <div class="search-label">
+            <label>
+                @Resources.ORD.IpMaster.IpMaster_Flow
+            </label>
+        </div>
+        <div class="search-field">
+            @*@{
+                Html.RenderAction("_FlowComboBox", "Common",
+                    new
+                    {
+                        controlName = "Flow"
+                    });
+            }*@
+            @Html.TextBox("Flow")   
+        </div>
+    </div>
+    <div class="search" id="SearchByItem">
+        <div class="search-label">
+            <label>
+                @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ItemComboBox", "Common", new
+                {
+                    controlName = "Item",
+                    selectedValue = ViewBag.Item != null ? ViewBag.Item : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.ORD.IpDetail.IpDetail_Type
+            </label>
+        </div>
+        <div class="search-field">
+            @Html.RadioButton("ListType", 0, true, new { onclick = "ListTypeClick(true)" })
+            <span>@Resources.EXT.PageLan.List</span><span style="margin: 4px"></span>
+            @Html.RadioButton("ListType", 1, false, new { onclick = "ListTypeClick(false)" })
+            <span>@Resources.EXT.PageLan.Trace</span>
+        </div>
+    </div>
+    <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="SearchClick()">
+            @Resources.SYS.Global.Button_Search</button>
+    </div>
+
+    <script type="text/javascript">
+        function SearchClick() {
+            var div = "#ItemSearch"
+            var searchCondition = $("input[type=radio][name=searchCondition]:checked").val();
+            if (searchCondition == "0") {
+                if ($("#Item").val() == "") {
+                    $message.error('请按物料进行查询。');
+                    return;
+                }
+                var data = {
+                    flow: $("#Flow").val(),
+                    item: $("#Item").val(),
+                    searchType: "searchItem"
+                }
+            } else {
+                if ($("#Flow").val().length < 5) {
+                    $message.error('字符数需大于5个');
+                    return;
+                }
+                var data = {
+                    flow: $("#Flow").val(),
+                    item: $("#Item").val(),
+                    searchType: "searchFlow"
+                }
+                div = "#FlowSearch"
+            }
+
+            var url = "/ItemFlow/_SearchResult/";
+            var importType = $("input[type=radio][name=ListType]:checked").val();
+            if (importType == "1" && searchCondition == "0") {
+                url = "/ItemFlow/_ScmModelResult/";
+            }
+            //debugger
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: url,
+                cache: false,
+                data: data,
+                success: function (data) {
+                    //debugger
+                    $("#ItemResult").html(data);
+                }
+            });
+        }
+
+        document.onkeypress = function (e) {
+            var theEvent = window.event || e;
+            var code = theEvent.keyCode || theEvent.which;
+            if (code == "13") {
+                var btnSearch = document.getElementById("btnSearch");
+                btnSearch.click();
+            }
+        }
+
+        function ListTypeClick(bl) {
+            if (bl) {
+                $("#ItemResult").html("");
+            }
+            else {
+                $("#ItemResult").html("");
+            }
+        }
+        function doClick(bl) {
+            if (bl) {
+                document.getElementById("SearchByItem").style.display = 'inline';
+                document.getElementById("SearchByFlow").style.display = 'none';
+                $("#ItemResult").html("");
+                //            $("#ItemResult").show();
+                //            $("#FlowResult").hide();
+            }
+            else {
+                document.getElementById("SearchByItem").style.display = 'none';
+                document.getElementById("SearchByFlow").style.display = 'inline';
+                $("#ItemResult").html("");
+                //            $("#FlowResult").show();
+                //            $("#ItemResult").hide();
+            }
+        }
+    </script>
+
+</fieldset>
+<div id="ItemResult">
+</div>
+@*<div id="FlowResult">
+</div>*@
+
+

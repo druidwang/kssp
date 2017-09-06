@@ -1,0 +1,42 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.ContainerDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ContainerGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.ContainerId);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ContainerId).Title("容器编号").ClientTemplate(Html.ActionLink("<#= ContainerId #>", "Edit", "ContainerDetail", new { ID = "<#= ContainerId #>" }, null).ToString());
+
+            columns.Bound(o => o.Container).Title("容器类型");
+            columns.Bound(o => o.ContainerDescription).Title("容器类型描述");
+            columns.Bound(o => o.ContainerQty).Title("容量");
+        })
+
+                .Scrollable(c => c.Enabled(false))
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ContainerDetail"))
+                .ClientEvents(events => events.OnDataBinding("ContainerDetailGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ContainerDetailGrid_OnDataBinding(e) {
+            e.data = {
+                ContainerId: $('#ContainerId').val(),
+                ContainerDescription: $('#ContainerDescription').val()
+            };
+        }
+    </script>
+</fieldset>

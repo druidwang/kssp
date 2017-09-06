@@ -1,0 +1,6 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SAPCustomer_View" });
+}
+@Html.Partial("_SAPCustomerSearch")
+@Html.Partial("_SAPCustomerSearchResult")

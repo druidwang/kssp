@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = Resources.MD.Uom.Uom_Edit_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Uom_View" });
+}
+
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.MD.Uom.Uom_Tab_Title)
+                .LoadContentFrom("_Search", "Uom")
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.UomConvert.UomConvert_Tab_Title)
+                .LoadContentFrom("_UomConvert", "Uom")
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);              
+            </text>
+        );
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.MD.UomConversion, com.Sconit.Entity" table="MD_UomConv" lazy="false">
+        <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+            <generator class="identity" />
+        </id>
+        <!--<property name="Item" column="Item" type="String" length="50" />-->
+        <many-to-one name="Item" column="Item" class="com.Sconit.Entity.MD.Item, com.Sconit.Entity" cascade="none" />
+        <property name="BaseUom" column="BaseUom" type="String" length="5" />
+        <property name="AlterUom" column="AltUom" type="String" length="5" />
+        <property name="BaseQty" column="BaseQty" type="Decimal"  />
+        <property name="AlterQty" column="AltQty" type="Decimal"  />
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+    </class>
+</hibernate-mapping>

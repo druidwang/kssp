@@ -1,0 +1,60 @@
+﻿@using com.Sconit.Entity.INV;
+@model IEnumerable<com.Sconit.Web.Models.ReportModels.ReceiveReturnModel>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ProcurementReturnPPMGrid")
+
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Supplier);
+            columns.Bound(o => o.SupplierName);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.ReceivedQty);
+            columns.Bound(o => o.RejectedQty);
+            columns.Bound(o => o.PPM);
+
+        })
+                 .DetailView(details => details.ClientTemplate(
+                    Html.Telerik().Grid<LocationTransaction>()
+                                        .Name("LocationTransaction_<#= Supplier #>_<#= Item #>")
+                        .Columns(columns =>
+                        {
+                            columns.Bound(o => o.TransactionTypeDescription);
+                            columns.Bound(o => o.EffectiveDate);
+                            columns.Bound(o => o.OrderNo);
+                            columns.Bound(o => o.IpNo);
+                            columns.Bound(o => o.ReceiptNo);
+                            columns.Bound(o => o.PartyFrom);
+                            columns.Bound(o => o.PartyTo);
+                            columns.Bound(o => o.LocationFrom);
+                            columns.Bound(o => o.LocationTo);
+                            columns.Bound(o => o.IOTypeDescription);
+                            columns.Bound(o => o.HuId);
+                            columns.Bound(o => o.LotNo);
+                            columns.Bound(o => o.Qty);
+                        })
+                        .DataBinding(dataBinding => dataBinding.Ajax()
+                                .Select("_ReturnDetailHierarchyAjax", "PPM", new { item = "<#= Item #>", supplier = "<#= Supplier #>", dateFrom = ViewBag.DateFrom, dateTo = ViewBag.DateTo }))
+                        .Footer(false)
+                        .Resizable(resizing => resizing.Columns(true))
+                        .ToHtmlString()
+            ))
+                             .DataBinding(dataBinding => dataBinding.Ajax().Select("_ReturnHierarchyAjax", "PPM"))
+                                       .ClientEvents(events => events.OnDataBinding("ProcurementReturnPPMGrid_OnDataBinding"))
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>
+<script type="text/javascript">
+    function ProcurementReturnPPMGrid_OnDataBinding(e) {
+        e.data = {
+            Supplier: $('#Supplier').val(),
+            Item: $('#Item').val(),
+            DateFrom: $('#DateFrom').val(),
+            DateTo: $('#DateTo').val()
+        };
+    } 
+</script>

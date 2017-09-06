@@ -1,0 +1,289 @@
+﻿@model com.Sconit.Entity.ORD.MiscOrderMaster
+@using com.Sconit.Entity.CUST
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Inventory_InMiscOrder_View" });
+}
+<script type="text/javascript">
+    function Region_Change(e) {
+        $('#Location').data('tComboBox').value('');
+        $('#Location').data('tComboBox').text('');
+        $("#Location").data("tComboBox").reload();
+    }
+
+    function Location_DataBinding(e) {
+        e.data = {
+            region: $("#Region").val()
+        };
+    }
+
+    function onSuccess(e) {
+        $message.success(e.response.status);
+        var data = {
+            "MiscOrderNo": $("#MiscOrderNo").val(),
+            "MoveType": $("#MoveType").val(),
+            "Status": $("#Status").val()
+        }
+        var url = "";
+        if ($("#IsScanHu").val()=="True") {
+            url = "/InMiscOrder/_MiscOrderDetailIsScanHu/";
+        }
+        else {
+            url = "/InMiscOrder/_MiscOrderDetailNoScanHu/";
+        }
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: url,
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var $tGrid = $("#divInMiscOrderDetailList");
+                $($tGrid).html(data);
+            }
+        });
+    }
+    function onUploadError(e) {
+        $('.t-upload-files').remove();
+        var errorMessages =  e.XMLHttpRequest.responseText ;
+        $message.error(errorMessages);
+        
+        e.preventDefault();
+    }
+    function onUpload(e) {
+        e.data = { MiscOrderNo: $("#MiscOrderNo").val()
+        };
+
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MiscOrderNo)
+            </div>
+            <div class="search-field">
+                @Html.DisplayFor(model => model.MiscOrderNo)
+            </div>
+            <div class="search-label">
+                <label for="MiscOrderMstr_Status">
+                    @Html.LabelFor(model => model.MoveType)
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.DisplayFor(model => model.MoveType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EffectiveDate)
+            </div>
+            <div class="editor-field-2">
+                @if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+                {
+                    @Html.EditorFor(model => model.EffectiveDate)
+                    @Html.ValidationMessageFor(model => model.EffectiveDate)
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.EffectiveDate)
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Region)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Region)
+                @Html.Hidden("Region", Model.Region)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="editor-field-2">
+                @{
+                Html.RenderAction("_LocationComboBox", "Common",
+                new
+                {
+                    controlName = "Location",
+                    includeBlank = true,
+                    checkRegion = true,
+                    ControlId = "MasterLocation",
+                    enable = Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create,
+                    selectedValue = Model != null ? Model.Location : string.Empty
+                });
+                }
+                @Html.ValidationMessageFor(model => model.Location)
+            </div>
+            @{
+                MiscOrderMoveType miscOrderMoveType = TempData["MiscOrderMoveType"] != null ? (MiscOrderMoveType)TempData["MiscOrderMoveType"] : null;
+                if (miscOrderMoveType != null)
+                {
+                    if (miscOrderMoveType.CheckDeliverRegion)
+                    {
+                <div class="editor-label-2">
+                    <label>
+                        @Resources.ORD.MiscOrderMstr.MiscOrderMstr_PlantFrom
+                    </label>
+                </div> 
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.DeliverRegion, (String)ViewBag.editorTemplate)
+                </div>
+                    }
+                    if (miscOrderMoveType.CheckRecLoc)
+                    {
+                <div class="editor-label-2">
+                    <label>
+                        @Resources.ORD.MiscOrderMstr.MiscOrderMstr_LocationFrom
+                    </label>
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.ReceiveLocation, (String)ViewBag.editorTemplate)
+                </div>
+                    }
+                    if (miscOrderMoveType.CheckNote)
+                    {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Note)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.Note, (String)ViewBag.editorTemplate)
+                </div>
+                    }
+                    if (miscOrderMoveType.CheckRefNo)
+                    {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.ReferenceNo)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.ReferenceNo, (String)ViewBag.editorTemplate)
+                </div>
+                    }
+                    if (miscOrderMoveType.CheckCostCenter)
+                    {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CostCenter)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.CostCenter, (String)ViewBag.editorTemplate)
+                </div>
+                    }
+                    if (miscOrderMoveType.CheckWBS)
+                    {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.WBS)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.WBS, (String)ViewBag.editorTemplate)
+                </div>
+                    }
+                    if (miscOrderMoveType.CheckAsn)
+                    {
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Asn)
+                </div>
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.Asn, (String)ViewBag.editorTemplate)
+                </div>
+                    }
+
+                }
+            }
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsScanHu)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("ScanHu", Model.IsScanHu, new { disabled = true })
+                @Html.Hidden("IsScanHu", Model.IsScanHu)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.StatusDescription)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.QualityType)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.QualityTypeDescription)
+            </div>
+            <div class="search-label">
+                <label>
+                    <a href='/Resource/Templates/UploadTemplate/InMiscOrder.xls'>@Resources.EXT.PageLan.TemplateDownload</a>
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().Upload()
+                    .Name("attachments")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("ImportInMiscOrderDetail", "InMiscOrder")
+                    .AutoUpload(true))
+                    .ClientEvents(e => e.OnSuccess("onSuccess").OnError("onUploadError"))
+                    .ClientEvents(c => c.OnUpload("onUpload")
+                    ))
+            </div>
+            @Html.Hidden("MiscOrderNo", Model.MiscOrderNo)
+            @Html.Hidden("MoveType", Model.MoveType)
+            @Html.Hidden("CancelMoveType", Model.CancelMoveType)
+            @Html.Hidden("Status", Model.Status)
+            @Html.Hidden("QualityType", Model.QualityType)
+            @Html.Hidden("CreateDate", Model.CreateDate)
+            @Html.Hidden("EffectiveDate", Model.EffectiveDate)
+            @Html.Hidden("CreateUserId", Model.CreateUserId)
+            @Html.Hidden("CreateUserName", Model.CreateUserName)
+            @Html.Hidden("Version", Model.Version)
+            @Html.Hidden("Type", Model.Type)
+        </div>
+        <div class="editor-footer">
+            @{
+                if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+                {   
+                @Html.Button(Resources.SYS.Global.Button_Save, "Url_Inventory_InMiscOrder_New", new Dictionary<string, string>()
+	            {
+	                {"type", "submit"},
+	                {"id", "btnSave"},
+                    {"needconfirm","true"}
+	            })
+                @Html.Button(Resources.SYS.Global.Button_Delete, "Url_Inventory_InMiscOrder_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnDelete"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/InMiscOrder/btnDelete/" + Model.MiscOrderNo) +"'"}
+	            })
+                @Html.Button(Resources.SYS.Global.Button_Confirm, "Url_Inventory_InMiscOrder_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnClose"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/InMiscOrder/btnClose/" + Model.MiscOrderNo) +"'"}
+	            })
+                }
+                else if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Close)
+                {
+                @Html.Button(Resources.SYS.Global.Button_Cancel, "Url_Inventory_OutMiscOrder_New", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnCancel"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/InMiscOrder/btnCancel/" + Model.MiscOrderNo) +"'"}
+	            })
+                }
+            }
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/InMiscOrder/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+    
+    <div id="divInMiscOrderDetailList">
+    @{
+                if (Model.IsScanHu)
+                {
+                    Html.RenderAction("_MiscOrderDetailIsScanHu", "InMiscOrder", new { MiscOrderNo = Model.MiscOrderNo, MoveType = Model.MoveType, Status = Model.Status });
+                }
+                else
+                {
+                    Html.RenderAction("_MiscOrderDetailNoScanHu", "InMiscOrder", new { MiscOrderNo = Model.MiscOrderNo, MoveType = Model.MoveType, Status = Model.Status });
+                }
+}
+       </div>
+}

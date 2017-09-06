@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Button_Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="Button_AddDetail" xml:space="preserve">
+    <value>添加明细</value>
+  </data>
+  <data name="Button_Adjust" xml:space="preserve">
+    <value>调整</value>
+  </data>
+  <data name="Button_AdjustGI" xml:space="preserve">
+    <value>调整发货方库存</value>
+  </data>
+  <data name="Button_AdjustGR" xml:space="preserve">
+    <value>调整收货方库存</value>
+  </data>
+  <data name="Button_AllAdjust" xml:space="preserve">
+    <value>全部调整</value>
+  </data>
+  <data name="Button_Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="Button_BackFlush" xml:space="preserve">
+    <value>回冲</value>
+  </data>
+  <data name="Button_BomDetail" xml:space="preserve">
+    <value>物料清单</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Button_Cancellations" xml:space="preserve">
+    <value>取消发货</value>
+  </data>
+  <data name="Button_ChangePassword" xml:space="preserve">
+    <value>修改密码</value>
+  </data>
+  <data name="Button_Check" xml:space="preserve">
+    <value>路线可用性检查</value>
+  </data>
+  <data name="Button_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="Button_Complete" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="Button_Concession" xml:space="preserve">
+    <value>回用</value>
+  </data>
+  <data name="Button_Confirm" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="Button_ConfirmOperation" xml:space="preserve">
+    <value>确认要{0}吗？</value>
+  </data>
+  <data name="Button_Create" xml:space="preserve">
+    <value>创建</value>
+  </data>
+  <data name="Button_CreatePickList" xml:space="preserve">
+    <value>创建拣货单</value>
+  </data>
+  <data name="Button_CreateRequisitionList" xml:space="preserve">
+    <value>生产拉料</value>
+  </data>
+  <data name="Button_Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Button_DeleteDetail" xml:space="preserve">
+    <value>删除明细</value>
+  </data>
+  <data name="Button_DeleteResult" xml:space="preserve">
+    <value>删除明细</value>
+  </data>
+  <data name="Button_DistributionLabel_Cancel" xml:space="preserve">
+    <value>取消配送标签</value>
+  </data>
+  <data name="Button_DistributionLabel_Export" xml:space="preserve">
+    <value>导出配送标签</value>
+  </data>
+  <data name="Button_DistributionLabel_Print" xml:space="preserve">
+    <value>打印配送标签</value>
+  </data>
+  <data name="Button_Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="Button_Export" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="Button_ExportDetail" xml:space="preserve">
+    <value>导出明细</value>
+  </data>
+  <data name="Button_FinanceCalendar" xml:space="preserve">
+    <value>月结</value>
+  </data>
+  <data name="Button_Freeze" xml:space="preserve">
+    <value>冻结</value>
+  </data>
+  <data name="Button_Import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="Button_Judge" xml:space="preserve">
+    <value>判定</value>
+  </data>
+  <data name="Button_JudgeQualify" xml:space="preserve">
+    <value>合格</value>
+  </data>
+  <data name="Button_JudgeReject" xml:space="preserve">
+    <value>不合格</value>
+  </data>
+  <data name="Button_KBOrderBomDet" xml:space="preserve">
+    <value>看板物料清单</value>
+  </data>
+  <data name="Button_MaterialIn" xml:space="preserve">
+    <value>投料</value>
+  </data>
+  <data name="Button_New" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="Button_OffLine" xml:space="preserve">
+    <value>下线</value>
+  </data>
+  <data name="Button_online" xml:space="preserve">
+    <value>上线</value>
+  </data>
+  <data name="Button_OutToDetermine" xml:space="preserve">
+    <value>放行</value>
+  </data>
+  <data name="Button_Pause" xml:space="preserve">
+    <value>暂停</value>
+  </data>
+  <data name="Button_Pick" xml:space="preserve">
+    <value>拣货</value>
+  </data>
+  <data name="Button_PickUp" xml:space="preserve">
+    <value>上架</value>
+  </data>
+  <data name="Button_Preview" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="Button_Print" xml:space="preserve">
+    <value>打印</value>
+  </data>
+  <data name="Button_PrintCard" xml:space="preserve">
+    <value>打印看板卡</value>
+  </data>
+  <data name="Button_PrintCardLabel" xml:space="preserve">
+    <value>打印看板标签</value>
+  </data>
+  <data name="Button_PutAway" xml:space="preserve">
+    <value>下架</value>
+  </data>
+  <data name="Button_Receive" xml:space="preserve">
+    <value>收货</value>
+  </data>
+  <data name="Button_Receive_Distrabution" xml:space="preserve">
+    <value>过账</value>
+  </data>
+  <data name="Button_Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="Button_RequisitionDetail" xml:space="preserve">
+    <value>拉料明细</value>
+  </data>
+  <data name="Button_Resume" xml:space="preserve">
+    <value>恢复</value>
+  </data>
+  <data name="Button_Return" xml:space="preserve">
+    <value>退料</value>
+  </data>
+  <data name="Button_Routing" xml:space="preserve">
+    <value>工艺流程</value>
+  </data>
+  <data name="Button_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Button_SaveDetail" xml:space="preserve">
+    <value>保存明细</value>
+  </data>
+  <data name="Button_SaveMaster" xml:space="preserve">
+    <value>保存主表</value>
+  </data>
+  <data name="Button_Search" xml:space="preserve">
+    <value>查询</value>
+  </data>
+  <data name="Button_SearchExport" xml:space="preserve">
+    <value>查询导出</value>
+  </data>
+  <data name="Button_Ship" xml:space="preserve">
+    <value>发货</value>
+  </data>
+  <data name="Button_Start" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="Button_StartEmptyVanOrder" xml:space="preserve">
+    <value>空车上线</value>
+  </data>
+  <data name="Button_Start_Production" xml:space="preserve">
+    <value>上线</value>
+  </data>
+  <data name="Button_Submit" xml:space="preserve">
+    <value>释放</value>
+  </data>
+  <data name="Button_Transfer" xml:space="preserve">
+    <value>移库</value>
+  </data>
+  <data name="Button_UnFreeze" xml:space="preserve">
+    <value>解冻</value>
+  </data>
+  <data name="Button_Upload" xml:space="preserve">
+    <value>上传</value>
+  </data>
+  <data name="Common_CreateDate" xml:space="preserve">
+    <value>创建日期</value>
+  </data>
+  <data name="Common_CreateUserName" xml:space="preserve">
+    <value>创建用户</value>
+  </data>
+  <data name="Common_LastModifyDate" xml:space="preserve">
+    <value>修改日期</value>
+  </data>
+  <data name="Common_LastModifyUserName" xml:space="preserve">
+    <value>修改用户</value>
+  </data>
+  <data name="Common_To" xml:space="preserve">
+    <value>至</value>
+  </data>
+  <data name="Export_No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="Export_Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="Grid_DispalyType" xml:space="preserve">
+    <value>显示类型</value>
+  </data>
+  <data name="Grid_DispalyType_Detail" xml:space="preserve">
+    <value>明细</value>
+  </data>
+  <data name="Grid_DispalyType_Summary" xml:space="preserve">
+    <value>汇总</value>
+  </data>
+  <data name="ImportSuccess_BatchImportSuccessful" xml:space="preserve">
+    <value>批量导入成功</value>
+  </data>
+  <data name="Login_SiteId" xml:space="preserve">
+    <value>站点</value>
+  </data>
+  <data name="SapOrderType" xml:space="preserve">
+    <value>Sap生产单类型</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>是</value>
+  </data>
+</root>

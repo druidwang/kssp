@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Inventory_StockTake_View" });
+}
+
+@Html.Partial("_StockTakeMasterSearch")
+
+@Html.Partial("_StockTakeMasterSearchResult")

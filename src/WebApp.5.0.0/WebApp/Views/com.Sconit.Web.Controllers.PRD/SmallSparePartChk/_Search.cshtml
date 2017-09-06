@@ -1,0 +1,83 @@
+﻿@using com.Sconit.Entity.PRD
+@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    @using (Html.BeginForm("List", "SmallSparePartChk"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ProductType_Code">
+                    @Resources.PRD.SmallSparePartChk.SmallSparePartChk_Huid
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Huid", TempData["HuSearchModel"] != null ? ((HuSearchModel)TempData["HuSearchModel"]).HuId : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="ProductType_Description">
+                    @Resources.PRD.SmallSparePartChk.SmallSparePartChk_SpareItem
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("SpareItem", TempData["HuSearchModel"] != null ? ((HuSearchModel)TempData["HuSearchModel"]).SpareItem : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="ProductType_Description">
+                    @Resources.PRD.SmallSparePartChk.SmallSparePartChk_HuItem
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("HuItem", TempData["HuSearchModel"] != null ? ((HuSearchModel)TempData["HuSearchModel"]).HuItem : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Hu_CreateUserName">
+                    @Resources.INV.Hu.Hu_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", TempData["HuSearchModel"] != null ? ((HuSearchModel)TempData["HuSearchModel"]).CreateUserName : (string)@ViewBag.CreateUserName)
+            </div>
+
+            <div class="search-label">
+                <label for="Hu_StartDate">
+                    @Resources.INV.Hu.Hu_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("StartDate")
+                .Value(TempData["HuSearchModel"] != null ? ((HuSearchModel)TempData["HuSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_EndDate">
+                    @Resources.INV.Hu.Hu_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("EndDate")
+            .Value(TempData["HuSearchModel"] != null ? ((HuSearchModel)TempData["HuSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_SmallSparePartChk_View", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnSearch"}
+	        })
+           <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    function ExportClick() {
+        location.href = '/SmallSparePartChk/ExportXLS/?Huid=' + $('#Huid').val()
+            + '&SpareItem=' + $('#SpareItem').val()
+            + '&HuItem=' + $('#HuItem').val()
+            + '&CreateUserName=' + $('#CreateUserName').val()
+            + '&StartDate=' + $('#StartDate').val()
+            + '&EndDate=' + $('#EndDate').val()
+    }
+</script>

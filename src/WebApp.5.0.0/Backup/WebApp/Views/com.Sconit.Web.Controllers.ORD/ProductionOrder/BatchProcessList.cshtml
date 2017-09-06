@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_BatchProcess" });
+}
+
+@Html.Partial("BatchProcessSearch")
+
+@Html.Partial("BatchProcessSearchResult")

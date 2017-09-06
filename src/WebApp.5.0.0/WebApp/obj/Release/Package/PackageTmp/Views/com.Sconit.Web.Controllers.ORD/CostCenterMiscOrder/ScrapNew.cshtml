@@ -1,0 +1,217 @@
+﻿@model com.Sconit.Entity.ORD.MiscOrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ExProductionOrder_ScrapNew" });
+}
+<script type="text/javascript">
+    function onCreate() {
+        //debugger
+        var grid = $("#MiscOrderDetailGrid").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            return;
+        }
+
+        if ($("#EffectiveDate").val() == "") {
+            $message.error('生效日期为必填项。');
+            return;
+        }
+
+        if ($("#Location").val() == "") {
+            $message.error('库位为必填项。');
+            return;
+        }
+        if ($("#ReferenceNo").val() == "") {
+            $message.error('参考单号为必填项。');
+            return;
+        }
+        //        if ($("#MoveType").val() == "") {
+        //            $message.error('移动类型为必填项。');
+        //            return;
+        //        }
+
+        //if ($("#GeneralLedger").val() == "") {
+        //    $message.error('总账科目为必填项。');
+        //    return;
+        //}
+
+        if ($("#CostCenter").val() == "") {
+            $message.error('成本中心为必填项。');
+            return;
+        }
+
+        var miscmstr = {
+            "MoveType": $("#MoveType").val(),
+            "Location": $("#Location").val(),
+            "EffectiveDate": $("#EffectiveDate").val(),
+            //"GeneralLedger": $("#GeneralLedger").val(),
+            "SubType":"26",
+            "CostCenter": "212",
+            "Note": $("#Note").val(),
+            "ReferenceDocumentsType": $("#ReferenceDocumentsType").val(),
+            "IsScanHu": $("#IsScanHu").val(),
+            //"ReferenceNo": $("#ReferenceNo").val(),
+            "QualityType": $("#QualityType").val()
+        }
+
+        var sequences = "";
+        var items = "";
+        var locations = "";
+        var qtys = "";
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim(row[0].childNodes[6].innerText)) != 0) {
+                if (items != "") {
+                    sequences += ",";
+                    items += ",";
+                    locations += ",";
+                    qtys += ",";
+                }
+                sequences += $.trim(row[0].childNodes[0].innerText);
+                items += $.trim(row[0].childNodes[1].innerText);
+                locations += $.trim(row[0].childNodes[5].innerText);
+                qtys += $.trim(row[0].childNodes[6].innerText);
+            }
+        }
+
+        var made = {
+            "sequences": sequences,
+            "items": items,
+            "locations": locations,
+            "qtys": qtys
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/CostCenterMiscOrder/CreateScrapMiscOrder/",
+            data: $.extend(miscmstr, made),
+            cache: false,
+            success: function (data) {
+                $("#content").html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function MoveType_Change(e) {
+    }
+
+    function loadReferenceNo() {
+        if ($("#ReferenceNo").val() == "") {
+            $message.success('引用明细参考订单号不能为空！');
+            return;
+        }
+        var data = { "referenceNo": $("#ReferenceNo").val() };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/CostCenterMiscOrder/New/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#content").html(data);
+                //$("#fdOrderDetail").show();
+                $("tr.t-no-data").find("td").text("Loading...");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $message.error(errorThrown);
+            }
+        });
+    }
+
+</script>
+<fieldset>
+    <legend>基本信息</legend>
+    <div class="editor">
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.MoveType)
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_MoveTypeDropDownList", "Common", new
+                    {
+                        //IOType = (int)com.Sconit.CodeMaster.MiscOrderType.GI,
+                        SubType = (int)com.Sconit.CodeMaster.MiscOrderSubType.MES26,
+                        isChange = false,
+                        controlName = "MoveType",
+                        blankOptionValue = "",
+                        selectedValue = Model != null && Model.MoveType != null ? Model.MoveType : string.Empty
+                    });
+            }
+            @Html.ValidationMessageFor(model => model.MoveType)
+            @Html.HiddenFor(model => model.IsScanHu)
+            @Html.HiddenFor(model => model.ReferenceDocumentsType)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.EffectiveDate)
+        </div>
+        <div class="editor-field-2">
+            @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EffectiveDate").Value(DateTime.Now)
+            .Min(DateTime.Now.AddDays(-30)).Max(DateTime.Now)
+            .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            @Html.ValidationMessageFor(model => model.EffectiveDate)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Location)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_LocationComboBox", "Common", new
+                {
+                    controlName = "Location",
+                    checkRegion = false,
+                    selectedValue = Model != null ? Model.Location : null
+                });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.CostCenter)
+        </div>
+        <div class="editor-field-2">
+            212 [密封条车间]
+        </div>
+        @*<div class="editor-label-2">
+            <label>
+                参考单号</label>
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.ReferenceNo)
+        </div>*@
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.QualityType)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                   {
+                       code = com.Sconit.CodeMaster.CodeMaster.QualityType,
+                       controlName = "QualityType",
+                       selectedValue = Model != null ? ((int)Model.QualityType).ToString() : null
+                   });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Note)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.Note)
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_ExProductionOrder_ScrapNew", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"onclick","onCreate()"}
+	        })
+        </div>
+    </div>
+</fieldset>
+@{
+    Html.RenderAction("_MiscOrderDetail", "CostCenterMiscOrder", new { referenceNo = ViewBag.ReferenceNo, referenceDocumentsType = ViewBag.ReferenceDocumentsType });
+}
+<div id="fdOrderDetail">
+</div>

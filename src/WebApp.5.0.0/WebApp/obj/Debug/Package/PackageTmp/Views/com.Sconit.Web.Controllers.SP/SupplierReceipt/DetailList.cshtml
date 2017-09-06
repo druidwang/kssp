@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Supplier_Invoice_Detail_Query" });
+}
+
+@Html.Partial("_DetailSearch")
+
+@Html.Partial("_SearchDetailResult")

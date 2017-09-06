@@ -1,0 +1,97 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+@model com.Sconit.Web.Models.SearchModels.INV.LocationLotDetailSearchModel
+<script type="text/javascript">
+    function ExportClick() {
+        //debugger
+        location.href = '/ItemExchangeProd/ExportXLS/?Location=' + $('#Location').val() + '&Item=' + $('#Item').val()
+                        + '&LotNo=' + $('#LotNo').val() + '&HuOption=' + $("input[type=radio][name=HuOption]:checked").val()
+                        + '&IsIncludeEmptyStock=' + $("#IsIncludeEmptyStock").is(":checked")
+                        + '&IsIncludeNoNeedAging=' + $("#IsIncludeNoNeedAging").is(":checked")
+    }
+    function doClick(bl) {
+        if (bl) {
+            $("#IsIncludeEmptyStock").attr("Checked", false);
+            $("#IsIncludeNoNeedAging").attr("Checked", false);
+        }
+    }
+</script>
+@{
+    ViewBag.Title = "AgeingList";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ItemExchange_Ageing_Search" });
+}
+<fieldset>
+    @using (Html.BeginForm("AgeingList", "ItemExchangeProd"))
+    {
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.INV.Hu.Hu_LocationTo</label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common",
+            new
+            {
+                controlName = "Location",
+                selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Location : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.BIL.ActingBill.ActingBill_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Item : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.Hu_manufacture_date
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LotNo", TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).LotNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.RadioButton("HuOption", 4, TempData["LocationLotDetailSearchModel"] == null || ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).HuOption == null || ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).HuOption == 4)<span>@Resources.SYS.Global.Grid_DispalyType_Summary</span>
+                @Html.CheckBox("IsIncludeEmptyStock", TempData["LocationLotDetailSearchModel"] != null ?
+                 ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).IsIncludeEmptyStock : false)包含零库存
+                @Html.CheckBox("IsIncludeNoNeedAging", TempData["LocationLotDetailSearchModel"] != null ?
+                ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).IsIncludeNoNeedAging : false)是否包含无需老化
+            </div>
+            <div class="search-label">
+                <label>
+                </label>
+            </div>
+            <div class="search-field">
+            </div>
+            <div class="search-label">
+                <label>
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.RadioButton("HuOption", 1, TempData["LocationLotDetailSearchModel"] != null && ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).HuOption == 1, new { onclick = "doClick(true)" })<span>@Resources.INV.Hu.Hu_UnAgingQty</span>
+                @Html.RadioButton("HuOption", 2, TempData["LocationLotDetailSearchModel"] != null && ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).HuOption == 2, new { onclick = "doClick(true)" })<span>@Resources.INV.Hu.Hu_AgedQty</span>
+                @Html.RadioButton("HuOption", 3, TempData["LocationLotDetailSearchModel"] != null && ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).HuOption == 3, new { onclick = "doClick(true)" })<span>@Resources.INV.Hu.Hu_AgingQty</span>
+            </div>
+            <div class="search-footer">
+                @Html.Hidden("isFromList", true)
+                <button type="submit" id="btnSearch">
+                    @Resources.SYS.Global.Button_Search</button>
+                <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+            </div>
+        </div>
+    }
+</fieldset>

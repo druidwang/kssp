@@ -1,0 +1,110 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlanEx_Demand" });
+}
+<script type="text/javascript">
+    function onSearch() {
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+
+        var data = {
+            planVersion: $('#PlanVersion').val(),
+        };
+        //debugger
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/MrpPlanEx/_GetDemand/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#fdOrderDetail").html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("ExportExDemand","MrpPlanEx"))
+    {
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.MrpExSectionPlan.MrpExSectionPlan_PlanVersion
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+                    {
+                        controlName = "PlanVersion",
+                        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+                        isRelease = true,
+                        isChange = true
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    周
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("WeekRange","",new { disabled = "disabled" })
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanEx_Demand", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+            <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+        </div>
+            
+    }
+</fieldset>
+<div id="fdOrderDetail">
+</div>
+<script type="text/javascript">
+    function MrpPlanMaster_Change() {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        } else {
+            var Data = {
+                planVersion: $('#PlanVersion').val()
+            };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/MrpPlanEx/_GetWeekIndex/",
+                data: Data,
+                cache: false,
+                success: function (data1) {
+                    $('#WeekRange').val(data1);
+                }
+            });
+        }
+    }
+    $('#btnExport').click(function () {
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        $('form').submit();
+    });
+</script>

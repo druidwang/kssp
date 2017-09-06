@@ -1,0 +1,111 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.MD
+@Html.Partial("_AjaxMessage")
+<fieldset>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="WorkingCalendar_Region">
+                    @Resources.MD.WorkingCalendar.WorkingCalendar_Region
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_RegionComboBox", "Common", new
+        {
+            isChange = true,
+            controlName = "Region",
+            selectedValue = TempData["WorkingCalendarSearchModelregion"] != null ? TempData["WorkingCalendarSearchModelregion"].ToString() : null
+        });
+                 }
+            </div>
+            <div class="search-label">
+            <label for="WorkingCalendar_Region">
+                    @Resources.MD.WorkingCalendar.WorkingCalendar_Flow
+                </label>
+            </div>
+            <div class="search-field">
+             @{
+        Html.RenderAction("_WorkingCalendarFlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                selectedValue = ViewBag.Flow != null ? (string)ViewBag.Flow : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="ShiftDetail_StartTime">
+                    @Resources.MD.WorkingCalendar.ShiftDetail_StartTime
+                </label>
+            </div>
+            <div class="search-field">
+                  @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("shiftDetail_StartTime")
+               .Value(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+           <div class="search-label">
+                <label for="ShiftDetail_EndTime">
+                    @Resources.MD.WorkingCalendar.ShiftDetail_EndTime
+                </label>
+            </div>
+            <div class="search-field">
+             @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("shiftDetail_EndTime")
+              .Value(System.DateTime.Today.AddDays(7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch" onclick="btnSearchWorkingView_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>
+
+<script language="javascript" type="text/javascript">
+    function btnSearchWorkingView_Click() {
+        var data = {
+            "region": $("#Region").val(),
+            "shiftDetail_StartTime": $("#shiftDetail_StartTime").val(),
+            "shiftDetail_EndTime": $("#shiftDetail_EndTime").val(),
+            "Flow":$("#Flow").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/WorkingCalendar/_ViewList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+            }
+        });
+    }
+    function WorkingCalendarFlow_DataBinding(e) {
+        e.data = {
+            "text": e.value,
+            "region": $("#Region").val()
+        }
+    }
+
+    function Region_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        }
+        $("#Flow").data("tComboBox").value("");
+        $("#Flow").data("tComboBox").reload();
+    }
+</script>
+
+

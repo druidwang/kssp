@@ -1,0 +1,122 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label for="SpecialTime_Region">
+                @Resources.MD.WorkingCalendar.SpecialTime_Region
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_RegionComboBox", "Common",
+                    new
+                    {
+                        isChange = true,
+                        controlName = "Region",
+                        controlId = "SpecialTimeRegion",
+                        selectedValue = TempData["SpecialTimeSearchModel"] != null ? ((SpecialTimeSearchModel)TempData["SpecialTimeSearchModel"]).Region : string.Empty
+                    });
+            }
+        </div>
+        <div class="search-label">
+            <label for="WorkingCalendar_Flow">
+                    @Resources.MD.WorkingCalendar.WorkingCalendar_Flow
+                </label>
+            </div>
+            <div class="search-field">
+             
+             @{
+        Html.RenderAction("_WorkingCalendarFlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                controlId = "SpecialTimeFlow",
+                selectedValue = TempData["SpecialTimeSearchModel"] != null ? ((SpecialTimeSearchModel)TempData["SpecialTimeSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+        <div class="search-label">
+            <label for="Item_IsActive">
+                @Resources.MD.WorkingCalendar.ShiftDetail_StartTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("StartTime").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:172px", }))
+        </div>
+        <div class="search-label">
+            <label for="Item_IsActive">
+                @Resources.MD.WorkingCalendar.ShiftDetail_EndTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("EndTime").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:172px", }))
+        </div>
+    </div>
+    <div class="search-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="btnSpeTimeSearch" onclick="btnSearchSpeTime_Click()">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnSpeTimeNew" onclick="btnNewSpeTime_Click()">
+            @Resources.SYS.Global.Button_New</button>
+    </div>
+</fieldset>
+<script language="javascript" type="text/javascript">
+    function btnNewSpeTime_Click() {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/WorkingCalendar/SpecialTimeNew/",
+            data: "",
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(data);
+            }
+        });
+    }
+
+    function btnSearchSpeTime_Click() {
+        var data = {
+            "Region": $("#SpecialTimeRegion").val(),
+            "isFromList": "true",
+            "StartTime": $("#StartTime").val(),
+            "EndTime": $("#EndTime").val(),
+            "Flow": $("#SpecialTimeFlow").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/WorkingCalendar/SpecialTimeList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(data);
+            }
+        });
+    }
+
+    function WorkingCalendarFlow_DataBinding(e) {
+        e.data = {
+            "text": e.value,
+            "region": $("#SpecialTimeRegion").val()
+        }
+    }
+
+    function Region_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        }
+        $("#SpecialTimeFlow").data("tComboBox").value("");
+        $("#SpecialTimeFlow").data("tComboBox").reload();
+    }
+</script>

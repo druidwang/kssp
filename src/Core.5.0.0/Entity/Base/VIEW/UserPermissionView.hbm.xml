@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.VIEW.UserPermissionView, com.Sconit.Entity" table="VIEW_UserPermission" lazy="false">
+    <composite-id>
+      <key-property name="UserId" column="UserId" type="Int32"  />
+      <key-property name="PermissionCode" column="PermissionCode" type="String"  length="50" />
+      <key-property name="PermissionCategory" column="Category" type="String" length="50"/>
+    </composite-id>
+    <property name="PermissionCategoryType" column="CategoryType"/>
+  </class>
+</hibernate-mapping>

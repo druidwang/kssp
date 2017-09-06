@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SYS.SNRule, com.Sconit.Entity" table="SYS_SNRule" lazy="false">
+		<id name="Code" column="Code" type="Int32" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<property name="Description" column="Desc1" type="String" length="50"/>	
+		<property name="PreFixed" column="PreFixed" type="String" length="10"/>	
+		<property name="YearCode" column="YearCode" type="String" length="6"/>	
+		<property name="MonthCode" column="MonthCode" type="String" length="4"/>	
+		<property name="DayCode" column="DayCode" type="String" length="4"/>	
+		<property name="BlockSeq" column="BlockSeq" type="String" length="10"/>	
+		<property name="SeqLength" column="SeqLength" type="Int16"/>	
+		<property name="SeqBaseType" column="SeqBaseType" type="String" length="10"/>	
+		<property name="SeqMin" column="SeqMin" type="Int32"/>	
+  	</class>
+</hibernate-mapping>

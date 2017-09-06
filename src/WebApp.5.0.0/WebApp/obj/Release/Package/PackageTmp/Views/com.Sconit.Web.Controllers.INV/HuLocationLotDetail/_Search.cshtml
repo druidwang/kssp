@@ -1,0 +1,264 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    @using (Html.BeginForm("List", "HuLocationLotDetail"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Location
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_LocationComboBox", "Common", new
+                    {
+                        checkRegion = false,
+                        controlName = "Location",
+                        isChange = true,
+                        selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Location : string.Empty
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="StockTakeDetail_Bin">
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Bin
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_LocationBinComboBox", "Common", new
+                    {
+                        controlName = "Bin",
+                        selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Bin : string.Empty
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_ItemComboBox", "Common", new
+                    {
+                        controlName = "Item",
+                        selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).Item : string.Empty
+
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_HuId
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("HuId", TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).HuId : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.EXT.PageLan.ManufatureDate
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LotNoFrom", TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).LotNoFrom : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.Hu_lotNoTo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LotNoTo", TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).LotNoTo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_ManufactureParty
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_HuManufacturePartyComboBox", "Common", new
+                    {
+                        controlName = "ManufactureParty",
+                        selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).ManufactureParty : string.Empty
+
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.Hu_HuStatusOccupyTypeDescription
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common",
+                        new
+                        {
+                            code = com.Sconit.CodeMaster.CodeMaster.OccupyType,
+                            controlName = "OccupyType",
+                            includeBlankOption = true,
+                            selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).OccupyType : 0
+
+                        });
+                }
+            </div>
+
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.QualityType
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common",
+                        new
+                        {
+                            code = com.Sconit.CodeMaster.CodeMaster.QualityType,
+                            controlName = "QualityType",
+                            includeBlankOption = true,
+                            selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).QualityType : null
+                        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.IsConsignment
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common",
+                        new
+                        {
+                            code = com.Sconit.CodeMaster.CodeMaster.ConsignmentStatus,
+                            controlName = "IsConsignment2",
+                            includeBlankOption = true,
+                            selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).IsConsignment2 : null
+                        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.IsFreeze
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common",
+                        new
+                        {
+                            code = com.Sconit.CodeMaster.CodeMaster.FreezeStatus,
+                            controlName = "IsFreeze2",
+                            includeBlankOption = true,
+                            selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).IsFreeze2 : null
+                        });
+                }
+            </div>
+              @* <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.Hu_HuOption
+                </label>
+            </div>
+         <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterMultiSelectBox", "Common", new
+                    {
+                        checkedValues = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).HuOptionHuLot : "0,1,2,3,4",
+                        code = com.Sconit.CodeMaster.CodeMaster.HuOption,
+                        controlName = "MultiHuOption",
+                        controlId = "MultiHuOption"
+                    });
+                }
+                @Html.Hidden("HuOptionHuLot", TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).HuOptionHuLot : "0,1,2,3,4")
+            </div>*@
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_ExportDetail</button>
+            <button type="button" id="btnPrintHu" onclick="CheckedExport(false)" style="display: none">
+                @Resources.EXT.PageLan.PrintBarCoe</button>
+            <button type="button" id="btnExportHu" onclick="CheckedExport(true)" style="display: none">
+                @Resources.EXT.PageLan.ExportBarCoe</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    $(function () {
+        $('#MultiHuOption').multiselect({
+            noneSelectedText: "选择选项...",
+            selectedText: "已选#个选项",
+            checkAllText: "全选",
+            uncheckAllText: "取消全选",
+            selectedList: 3,
+            click: function (event, ui) {
+                $('#HuOptionHuLot').attr("value", getMultiRegions());
+            },
+            checkAll: function () {
+                $('#HuOptionHuLot').attr("value", getMultiRegions());
+            },
+            uncheckAll: function () {
+                $('#HuOptionHuLot').attr("value", getMultiRegions());
+            }
+        });
+    });
+
+    function EmptyChange(e) { 
+        
+    }
+
+    function HuManufactureParty_DataBinding(e) {
+    }
+
+    function getMultiRegions() {
+        var m = "";
+        var array_of_checked_values = $("#MultiHuOption").multiselect("getChecked").map(function () {
+            return this.value;
+        }).get();
+        if (array_of_checked_values != null) {
+            if (array_of_checked_values.length > 0) {
+                m = array_of_checked_values[0];
+                for (var i = 1; i < array_of_checked_values.length; i++) {
+                    m = m + "," + array_of_checked_values[i];
+                };
+            }
+        }
+        return m;
+    }
+
+    function ExportClick() {
+        location.href = '/HuLocationLotDetail/ExportXLS/?Item=' + $('#Item').val()
+            + '&Location=' + $('#Location').val()
+            + '&HuId=' + $('#HuId').val()
+            + '&LotNo=' + $('#LotNo').val()
+            + '&LotNoTo=' + $('#LotNoTo').val()
+            + '&LotNoFrom=' + $('#LotNoFrom').val()
+            + '&LotNoFrom=' + $('#LotNoFrom').val()
+            + '&Bin=' + $('#Bin').val()
+            + '&OccupyType=' + $('#OccupyType').val()
+            + '&IsFreeze2=' + $('#IsFreeze2').val()
+            + '&IsConsignment2=' + $('#IsConsignment2').val()
+            + '&ManufactureParty=' + $('#ManufactureParty').val()
+            + '&QualityType=' + $('#QualityType').val();
+    };
+
+    function LocationBin_DataBinding(e) {
+        e.data = {
+            Location: $('#Location').val()
+        }
+    }
+
+    function Location_Change(e) {
+        if (e.value != "") {
+            $('#Bin').data('tComboBox').value('');
+            $('#Bin').data('tComboBox').text('');
+            $("#Bin").data("tComboBox").reload();
+        }
+    }
+
+</script>

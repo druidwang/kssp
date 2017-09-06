@@ -1,0 +1,79 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.ORD.RccpPlan>
+<script type="text/javascript">
+    function RccpPlanGrid_OnDataBinding(e) {
+        var item;
+        var ImportType = $("input[type=radio][name=ImportType]:checked").val();
+        if (ImportType == "4") {
+            item = $("#ItemDay").val();
+        }
+        if (ImportType == "5") {
+            item = $("#Item").val();
+        }
+        else if (ImportType == "6") {
+            item = $("#ItemTo").val();
+        }
+        e.data = {
+            importType: ImportType,
+            StartWeek: $("#WeekStart").val(),
+            StartMonth: $("#MonthStart").val(),
+            EndMonth: $("#MonthEnd").val(),
+            EndWeek: $("#WeekEnd").val(),
+            StartDate: $("#startDate").val(),
+            EndDate: $("#endDate").val(),
+            Item: item
+        };
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpPlanGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InLine))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.DateIndex).Hidden();
+            columns.Bound(o => o.Item).Hidden();
+            columns.Bound(o => o.DateType).Hidden();
+            columns.Bound(o => o.Flow).ReadOnly(true).Width(80);
+            columns.Bound(o => o.DateIndex).ReadOnly(true).Width(150);
+            columns.Bound(o => o.DateTypeDescription).ReadOnly(true).Width(150);
+            columns.Bound(o => o.Item).ReadOnly(true).Width(150);
+            columns.Bound(o => o.Qty).Width(150);
+            columns.Bound(o => o.PlanVersion).ReadOnly(true).Width(150);
+
+            columns.Command(commands =>
+            {
+                commands.Edit();
+            });
+        })
+        .DataBinding(dataBinding =>
+        {
+            dataBinding.Ajax()
+                .Update("_Update", "RccpPlan", new
+                {
+                    importTypeTo = ViewBag.ImportType,
+                    itemTo = ViewBag.Item,
+                    startWeekTo = ViewBag.StartWeek,
+                    endWeekTo = ViewBag.EndWeek,
+                    startMonthTo = ViewBag.StartMonth,
+                    endMonthTo = ViewBag.EndMonth,
+                    startDate = ViewBag.StartDate,
+                    endDate = ViewBag.EndDate
+                })
+                .Select("_AjaxList", "RccpPlan");
+        })
+                .ClientEvents(events => events.OnDataBinding("RccpPlanGrid_OnDataBinding"))
+
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+    )
+</fieldset>

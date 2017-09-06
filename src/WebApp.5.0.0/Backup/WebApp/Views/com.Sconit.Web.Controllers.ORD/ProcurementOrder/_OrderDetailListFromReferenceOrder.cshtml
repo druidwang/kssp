@@ -1,0 +1,261 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<script type="text/javascript">
+    function onItemComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            } else {
+                var data = {
+                    "flow": $("#currentFlow").val().toString(),
+                    "itemCode": e.value,
+                    "orderSubType": $("#orderSubType").val()
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/ProcurementOrder/_WebOrderDetail/",
+                    data: data,
+                    success: function (data, textStatus) {
+
+                        var $tGrid = $("#OrderDetail").data("tGrid");
+                        var $itemCell = $(e.target).parent().parent();
+                        $itemCell.prev().html('<span class="t-dirty"></span>' + data.Sequence);
+                        $itemCell.next().html(data.ItemDescription);
+                        $itemCell.next().next().html(data.ReferenceItemCode);
+                        $itemCell.next().next().next().html('<span class="t-dirty"></span>' + data.UnitCount);
+                        $itemCell.next().next().next().next().html(data.Uom);
+                        $itemCell.next().next().next().next().next().html('<span class="t-dirty"></span>' + data.UnitCountDescription);
+                        if (!isProcurement) {
+                            $itemCell.next().next().next().next().next().next().html('<span class="t-dirty"></span>' + data.LocationFrom);
+                            $itemCell.next().next().next().next().next().next().next().html('<span class="t-dirty"></span>' + data.LocationTo);
+                        }
+                        else {
+                            $itemCell.next().next().next().next().next().next().html('<span class="t-dirty"></span>' + data.LocationTo);
+                        }
+                        var oldData = $tGrid.dataItem($itemCell.parent());
+                        if (oldData != undefined) {
+                            oldData.Sequence = data.Sequence;
+                            oldData.ItemDescription = data.ItemDescription;
+                            oldData.Uom = data.Uom;
+                            oldData.UnitCount = data.UnitCount;
+                            oldData.UnitCountDescription = data.UnitCountDescription;
+                            oldData.ReferenceItemCode = data.ReferenceItemCode;
+                            oldData.LocationFrom = data.LocationFrom;
+                            oldData.LocationTo = data.LocationTo;
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+
+    function onLocationFromComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+        }
+    }
+
+    function onLocationFromDataBinding(e) {
+        e.data = {
+            "Region": $("#PartyFrom").val(),
+            "checkRegion": true
+        };
+    }
+
+    function onLocationToComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+        }
+    }
+
+    function onLocationToDataBinding(e) {
+        e.data = {
+            "Region": $("#PartyTo").val(),
+            "checkRegion": true
+        };
+    }
+
+    function onSaveDetail(e) {
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            alert("明细不能为空");
+            return;
+        }
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+        var oderDetails = grid.changeLog.serialize(inserted, updated, deleted);
+        var ordermstr = {
+            "orderSubType": $("#orderSubType").val(),
+            "orderNo": $("#OrderNo").val(),
+            "flow": $("#currentFlow").val()
+        };
+        grid._convert(oderDetails);
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/ProcurementOrder/_SaveBatchEditing/",
+            data: $.extend(oderDetails, ordermstr),
+            success: function (data, ordermstr) {
+                $message.success(data.SuccessMessage);
+
+                if (data != "") {
+                    var orderData = {
+                        "orderNo": $("#OrderNo").val()
+                    };
+                    $.ajax({
+                        type: "get",
+                        dataType: "html",
+                        url: "/ProcurementOrder/_Edit/",
+                        data: orderData,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var tabStrip = $("#TabStrip");
+                            var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(0);
+                            $(tabStripContent1).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function onManufacturePartyDataBinding(e) {
+        e.data = {
+            "item": $(e.target).parent().parent().parent().children().eq(1).text()
+        }
+    }
+
+    function onManufacturePartyChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+        }
+    }
+
+    function ItemComboBox_DataBinding(e) {
+        if (e.value != "") {
+            e.data = {
+                "flow": $("#currentFlow").val().toString()
+            }
+        }
+    }
+</script>
+<fieldset>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            if (ViewBag.isManualCreateDetail)
+            {
+                commands.Insert();
+            }
+            if (!string.IsNullOrEmpty(ViewBag.OrderNo))
+            {
+                commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSaveDetail()", href = "#" });
+            }
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_SelectBatchEditingTo", "ProcurementOrder", new { newOrEdit = ViewBag.newOrEdit, flow = ViewBag.flow, ReferenceOrderNo = ViewBag.ReferenceOrderNo })
+           )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();//0
+            columns.Bound(o => o.Sequence).Width(57);
+            if (ViewBag.isManualCreateDetail)
+            {
+                columns.Bound(o => o.Item).EditorTemplateName("ItemFilterByFlow").Width(120);
+            }
+            else
+            {
+                columns.Bound(o => o.Item).Width(60).ReadOnly();
+            }
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly();
+            columns.Bound(o => o.UnitCount).Format("{0:0.###}").Width(40);
+            if (ViewBag.isManualCreateDetail)
+            {
+                columns.ForeignKey(o => o.Uom, (IEnumerable<Uom>)ViewData["uoms"], "Code", "Code").Width(100);
+                columns.Bound(o => o.UnitCountDescription).ReadOnly().Width(60);
+                if (!ViewBag.IsProcurement)
+                {
+                    columns.Bound(o => o.LocationFrom).EditorTemplateName("LocationFromGridForeignKey").Width(120);
+                }
+                columns.Bound(o => o.LocationTo).EditorTemplateName("LocationToGridForeignKey").Width(120);
+            }
+            else
+            {
+                columns.Bound(o => o.Uom).Width(30).ReadOnly();
+                columns.Bound(o => o.UnitCountDescription).ReadOnly().Width(60);
+                if (!ViewBag.IsProcurement)
+                {
+                    columns.Bound(o => o.LocationFrom).Width(70).ReadOnly();
+                }
+                columns.Bound(o => o.LocationTo).Width(70).ReadOnly();
+            }
+            //if (ViewBag.isShowInv)
+            //{
+            //    columns.Bound(o => o.InvQty).Format("{0:0.###}").Width(70).ReadOnly();
+            //}
+            columns.Bound(o => o.Direction).EditorTemplateName("HuToGridComboBox").Width(120);
+            columns.Bound(o => o.RequiredQty).Format("{0:0.###}").Width(70).ReadOnly(true);
+            columns.Bound(o => o.OrderedQty).Format("{0:0.###}").Width(70);
+            columns.Bound(o => o.Remark).Width(80);
+            columns.Command(commands => commands.Delete()).Width(80).Title("操作");
+
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+            )
+    @Html.Hidden("currentFlow", (String)ViewBag.flow)
+    @Html.Hidden("PartyFrom", (string)ViewBag.PartyFrom)
+    @Html.Hidden("PartyTo", (string)ViewBag.PartyTo)
+    @Html.Hidden("orderSubType", (int)ViewBag.orderSubType)
+    @Html.Hidden("onsumitType", 0)
+    @Html.Hidden("IsProcurement", (bool)ViewBag.IsProcurement)
+    @Html.Hidden("IsFromReferenceOrder", true)
+</fieldset>

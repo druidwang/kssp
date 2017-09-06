@@ -1,0 +1,36 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<fieldset>
+    @using (Html.BeginForm("List", "ShipGroup"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="PickGroup_PickGroupNo">
+                    @Resources.WMS.PickGroup.PickGroup_PickGroupCode
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PickGroupNo", TempData["PickGroupSearchModel"] != null ? ((PickGroupSearchModel)TempData["PickGroupSearchModel"]).PickGroupCode : string.Empty)
+            </div>
+             <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+                @Html.Button(Resources.SYS.Global.Button_Search, "Url_PickGroup_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_PickGroup_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/ShipGroup/New")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>

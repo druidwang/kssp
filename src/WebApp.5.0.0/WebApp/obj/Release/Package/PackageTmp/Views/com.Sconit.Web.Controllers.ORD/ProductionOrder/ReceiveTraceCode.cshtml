@@ -1,0 +1,95 @@
+﻿
+@Html.Partial("_AjaxMessage")
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_ReceiveTraceCode" });
+}
+
+<script type="text/javascript">
+    var rows = [];
+    function traceCodeKeyDown(e) {
+        if (event.keyCode == 13) {
+            var traceCode = $('#traceCode').val();
+            var scanedTcs = $('#scanedTraceCodes').val();
+            if (traceCode == "") {
+                $message.error('追溯码不允许为空。');
+                return;
+            }
+
+            if (scanedTcs.indexOf(traceCode) > 0) {
+                $message.error('追溯码请勿重复扫描。');
+                return;
+            }
+
+            var data = {
+                "traceCode": traceCode,
+                "scanedTraceCodes": $('#scanedTraceCodes').val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/ProductionOrder/TraceCodeCheck/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    $('#traceCode').val("")
+                    if (data.Data.Status === 0) {
+                        DisplayJsonMessages(data);
+                    }
+                    else if (data.Data.Status === 2) {
+                        DisplayJsonMessages(data);
+                        rows = [];
+                        var grid = $("#ProdTraceCodeGrid").data("tGrid");
+                        grid.dataBind(rows);
+                        PrintOrder(data.Data.huReportUrl);
+                    }
+                    else {
+                        var scanedTraceCodes = $('#scanedTraceCodes').val();
+                        $('#scanedTraceCodes').val(scanedTraceCodes + "," + data.Data.ProdTrace.TraceCode);
+                        rows.push(data.Data.ProdTrace);
+                        var grid = $("#ProdTraceCodeGrid").data("tGrid");
+                        grid.dataBind(rows);
+                    }
+                }
+            });
+        }
+    }
+
+    $(document).ready(function (e) {
+        var grid = $("#ProdTraceCodeGrid").data("tGrid");
+        grid.dataBind(rows);
+    })
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                追溯码
+            </label>
+        </div>
+        <div class="search-field">
+            <input type="text" name="traceCode" id="traceCode" value="" onkeydown="traceCodeKeyDown(this)" />
+        </div>
+
+    </div>
+    <input type="hidden" name="scanedTraceCodes" id="scanedTraceCodes" value="" />
+</fieldset>
+<div id="traceCodeList">
+    @(Html.Telerik().Grid<com.Sconit.Entity.INP.ProdTraceCode>()
+            .Name("ProdTraceCodeGrid")
+            .DataKeys(keys =>
+            {
+                keys.Add(p => p.TraceCode);
+            })
+            .Columns(columns =>
+            {
+                columns.Bound(o => o.TraceCode).Title("追溯码");
+                columns.Bound(o => o.OrderNo).Title("生产单号");
+                columns.Bound(o => o.Item).Title("零件号");
+                columns.Bound(o => o.ItemDesc).Title("零件描述");
+            })
+            .Scrollable(c => c.Enabled(false))
+
+            .Sortable(s=>s.Enabled(false))
+            .Resizable(resizing => resizing.Columns(true))
+        )
+</div>

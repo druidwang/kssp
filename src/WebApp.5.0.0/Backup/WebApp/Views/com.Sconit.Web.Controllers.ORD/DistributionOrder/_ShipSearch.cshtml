@@ -1,0 +1,145 @@
+﻿@using com.Sconit.Entity.ORD
+@using com.Sconit.Web.Models.SearchModels.ORD
+<script type="text/javascript">
+
+    function editCheckedOrders() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedOrders = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedOrders == "") {
+                    checkedOrders = $checkRecords[i].value;
+                } else {
+                    checkedOrders += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (checkedOrders == "") {
+            alert('Must Check One');
+            return;
+        }
+        var data = {
+            "checkedOrders": checkedOrders
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/DistributionOrder/ShipEdit/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var $tGrid = $("#content");
+                $($tGrid).html(data);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("Ship", "DistributionOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="">
+                    @Resources.ORD.OrderMaster.OrderMaster_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_PartyFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+                controlName = "PartyFrom",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_PartyTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+            new
+            {
+                controlName = "PartyTo",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).PartyTo : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Pirority">
+                    @Resources.ORD.IpMaster.IpMaster_Type
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.OrderSubType,
+                        controlName = "SubType",
+                        selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).SubType : null
+                    });
+                }
+            </div>
+            @*  <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.OrderMaster.OrderMaster_Dock
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Dock", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Dock : string.Empty)
+            </div>
+
+            <div class="editor-label-2">
+             <label>
+               @Resources.ORD.OrderMaster.OrderMaster_ExternalOrderNo
+               </label>
+            </div>
+            <div class="editor-field-2">
+            @Html.TextBox("ExternalOrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).ExternalOrderNo : string.Empty)
+            </div>*@
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_Ship, "Url_OrderMstr_Distribution_Ship", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnEdit"},
+            {"style", "display: none"},
+            {"onclick","editCheckedOrders()"}
+	    })
+        </div>
+    }
+</fieldset>

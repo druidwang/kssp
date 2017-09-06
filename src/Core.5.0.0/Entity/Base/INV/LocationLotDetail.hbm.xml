@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.INV.LocationLotDetail, com.Sconit.Entity" table="VIEW_LocationLotDet" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <version name="Version" column="Version" type="Int32" />
+    <property name="Location" column="Location" type="String" length="50"/>
+    <property name="Bin" column="Bin" type="String" length="50"/>
+    <property name="Item" column="Item" type="String" length="50"/>
+    <property name="LotNo" column="LotNo" type="String" length="50"/>
+    <property name="HuId" column="HuId" type="String" length="50"/>
+    <property name="Qty" column="Qty" type="Decimal" precision="18" scale="8"/>
+    <property name="IsConsignment" column="IsCS" type="Boolean"/>
+    <property name="PlanBill" column="PlanBill" type="Int32"/>
+    <property name="QualityType" column="QualityType"/>
+    <property name="IsFreeze" column="IsFreeze" type="Boolean"/>
+    <property name="IsATP" column="IsATP" type="Boolean"/>
+    <property name="OccupyType" column="OccupyType"/>
+    <property name="OccupyReferenceNo" column="OccupyRefNo" type="String" length="50"/>
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+    <property name="Area" column="Area" type="String" length="50" insert="false" update="false" />
+    <property name="BinSequence" column="BinSeq" type="Int32" insert="false" update="false" />
+    <property name="HuQty" column="HuQty" type="Decimal" insert="false" update="false" precision="18" scale="8"/>
+    <property name="UnitCount" column="UC" type="Decimal" insert="false" update="false"/>
+    <property name="HuUom" column="HuUom" type="String" length="5" insert="false" update="false" />
+    <property name="BaseUom" column="BaseUom" type="String" length="5" insert="false" update="false" />
+    <property name="UnitQty" column="UnitQty" type="Decimal" insert="false" update="false" precision="18" scale="8"/>
+    <property name="ManufactureParty" column="ManufactureParty" type="String" length="50" insert="false" update="false" />
+    <property name="ManufactureDate" column="ManufactureDate"  type="DateTime" insert="false" update="false" />
+    <property name="FirstInventoryDate" column="FirstInvDate" type="DateTime" insert="false" update="false" />
+    <property name="ConsigementParty" column="ConsigementParty" type="String" length="50" insert="false" update="false" />
+    <property name="IsOdd" column="IsOdd" type="Boolean" insert="false" update="false" />
+    <property name="Direction" column="Direction" type="String" length="50" insert="false" update="false" />
+	<property name="SupplierLotNo" column="SupplierLotNo" type="String" length="50"/>
+    <sql-insert>
+      exec USP_Split_LocationLotDet_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+    </sql-insert>
+    <sql-update>
+      exec USP_Split_LocationLotDet_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+    </sql-update>
+    <sql-delete>
+      exec USP_Split_LocationLotDet_Delete ?,?
+    </sql-delete>
+  </class>
+</hibernate-mapping>

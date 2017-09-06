@@ -1,0 +1,210 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MRP.ORD.MrpExScrap
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_MrpExScrap_View" });
+}
+
+@using (Html.BeginForm("New", "MrpExScrap"))
+{
+    <fieldset>
+        <legend>@Resources.MRP.MrpExScrap.MrpExScrap_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>废品单号</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("RefOrderNo")
+                <button type="button" id="btnRefOrderNo" onclick="btnRefOrderNo_click()">获取</button>
+            </div>
+
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-2">
+                <div id="divFlow">
+                    @{
+    Html.RenderAction("_FlowComboBox", "Common", new
+    {
+        controlName = "Flow",
+        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+        //selectedValue = Model.Flow,
+        isCreateOrder = false,
+        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+        isMrp = true
+    });
+                    }
+                </div>
+                <input type="text" disabled="disabled" id="flow" style="display: none" />
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+                <div id="divItem">
+                    @{
+    Html.RenderAction("_ItemComboBox", "Common",
+    new
+    {
+        coupled = true,
+        controlName = "Item",
+        //selectedValue = Model.Item,
+        itemCategory = "ZHDM,ZHJC"
+    });
+                    }
+                </div>
+                <input type="text" disabled="disabled" id="item" style="display: none" />
+
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EffectDate)
+            </div>
+            <div class="editor-field-2">
+                <div id="divEffectDate">
+                    @(Html.Telerik().DatePicker().Value(DateTime.Now).Format("yyyy-MM-dd").Name("EffectDate"))
+                </div>
+                <input type="text" disabled="disabled" id="effectDate" style="display: none" />
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Shift)
+            </div>
+            <div class="editor-field-2">
+                <div id="divShift">
+                    @{
+                        Html.RenderAction("_ShiftComboBox", "Common", new
+                        {
+                            controlName = "Shift",
+                            resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+                            //selectedValue = Model.Shift
+                        });
+                    }
+                </div>
+                <input type="text" disabled="disabled" id="shift" style="display: none" />
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ScrapType)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterComboBox", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.ScheduleType,
+                        controlName = "ScrapType",
+                        //selectedValue = Model.ScrapType
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ScrapQty)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.ScrapQty).DecimalDigits(2).MinValue(0.01).MaxValue(10000) KG
+            </div>
+
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="btnNew" onclick="onNew()">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/MrpExScrap/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+<script type="text/javascript">
+    function onNew() {
+        $.get("/MrpExScrap/IsShiftPlanContainsItem/",
+            { planDate: $("#effectDate").val(), flow: $("#flow").val(), shift: $("#shift").val(), itemCode: $("#item").val() },
+          function (data) {
+              
+              if (!data) {
+                  var r = confirm("此时间段没有生产此物料,是否继续废品报工?");
+                  if (r == true) {
+                      $("form").submit();
+                  }
+              }
+              else {
+                  $("form").submit();
+              }
+          });
+    }
+
+
+    function btnRefOrderNo_click() {
+        var data = {
+            "orderNo": $("#RefOrderNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/MrpExScrap/GetOrder/",
+            data: data,
+            success: function (data, textStatus) {
+                
+                $("#flow").val(data.Flow);
+                $("#item").val(data.Item + "[" + data.ItemDescription + "]");
+                $("#effectDate").val(getDate(ConvertJSONDateToJSDateObject(data.StartTime)));
+                $("#shift").val(data.ShiftName);
+
+                $("#flow").show();
+                $("#item").show();
+                $("#effectDate").show();
+                $("#shift").show();
+
+                $("#Flow").val(data.Flow);
+                $("#Item").val(data.Item);
+                $("#EffectDate").val(getDate(ConvertJSONDateToJSDateObject(data.StartTime)));
+                $("#Shift").val(data.ShiftName);
+
+                $("#divFlow").hide();
+                $("#divItem").hide();
+                $("#divEffectDate").hide();
+                $("#divShift").hide();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+
+    $(function () {
+        $("#RefOrderNo").keydown(function () {
+            if (event.keyCode == 13) {
+                btnRefOrderNo_click();
+            }
+        });
+    });
+
+    function ConvertJSONDateToJSDateObject(jsondate) {
+        var date = new Date(parseInt(jsondate.replace("/Date(", "").replace(")/", ""), 10));
+        return date;
+    }
+
+
+    function getDate(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        return year + "-" + month + "-" + day;
+    }
+
+    function getDateTime(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hh = date.getHours();
+        var mm = date.getMinutes();
+        var ss = date.getSeconds();
+        return year + "-" + month + "-" + day + " " + hh + ":" + mm + ":" + ss;
+    }
+
+    function Item_Change() {
+
+    }
+
+</script>

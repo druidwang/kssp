@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "延科信息科技";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+@section HeadContent {
+    <title>@ViewBag.Title</title>
+    <script language="javascript" type="text/javascript">
+        if (top.location !== self.location) {
+            top.location = self.location;
+        }
+
+        function LoadRightFrame() {
+            //document.getElementById("Right").src = "ViewBag.MainPageUrl";
+            document.getElementById("Right").src = "/Main/Main";
+        }  
+    </script>
+}
+<FRAMESET framespacing="0" rows="51,*" frameborder="NO" name="WinFrame" id="WinFrame">
+	<FRAME name="TopFrame" id="TopFrame" src="Top" scrolling=no />
+	<FRAMESET id="Mainframeset" name="mainframeset" frameSpacing="0" frameBorder="NO" cols="220,12,*" scrolling="no">
+		<FRAME id="Nav" name="Nav" src="Nav" scrolling="auto" target="right" onload="LoadRightFrame()"/>
+		<FRAME id="Switch" name="Switch" src="Switch" frameBorder="no" noResize scrolling="no" />
+		<FRAME id="Right" name="Right" scrolling="auto" />
+	</FRAMESET>
+</FRAMESET>

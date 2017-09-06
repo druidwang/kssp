@@ -1,0 +1,71 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .ToolBar(commands =>
+        {
+            if (ViewBag.StartEmptyVanOrder ==true )
+            {
+                commands.Custom().Text(@Resources.SYS.Global.Button_StartEmptyVanOrder).HtmlAttributes(new { onClick = "onStartEmptyVanOrder()", href = "#" });
+            }
+        })
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {   columns.Bound(o => o.Sequence);
+        columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.ExternalOrderNo);
+            columns.Bound(o => o.Flow).Title(@Resources.ORD.OrderMaster.OrderMaster_Flow_Production);
+            columns.Bound(o => o.FlowDescription);
+            columns.Bound(o => o.TraceCode);
+            columns.Bound(o => o.CurrentOperation);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.StartTime);
+            
+
+
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "DeferredFeedCounter"))
+                .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                Flow: $('#Flow').val()
+            };
+        }
+
+        function onStartEmptyVanOrder() {
+            if (confirm("确定空车上线吗？")) {
+                var data = { Flow: $('#Flow').val() };
+                $.ajax({
+                    type: "Get",
+                    //                dataType: "Json",
+                    data: data,
+                    url: "/DeferredFeedCounter/StartEmptyVanOrder/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                       
+                        $message.success(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $message.error(XMLHttpRequest.responseText);
+                        
+                    }
+                });
+            }
+        }
+    </script>
+</fieldset>

@@ -1,0 +1,34 @@
+﻿@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.ORD.IpMaster>
+
+<fieldset>
+    <legend>@Resources.ORD.ShipmentMaster.ShipmentDetail_Title</legend>
+    <div>
+        @(Html.Telerik().Grid(Model)
+                        .Name("ShipmentDetailList")
+       .DataKeys(keys =>
+        {
+            keys.Add(p => p.IpNo);
+        })
+
+        .Columns(columns =>
+        {
+            //columns.Bound(o => o.ShipmentNo).Title(@Resources.ORD.ShipmentMaster.ShipmentMaster_ShipmentNo);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.IpMasterTypeDescription);
+            columns.Bound(o => o.PartyFrom).ClientTemplate("<div title=<#= PartyFromName #>><#= PartyFrom #></div>");
+            columns.Bound(o => o.PartyTo).ClientTemplate("<div title=<#= PartyToName #>><#= PartyTo #></div>"); 
+            columns.Bound(o => o.Dock);
+            //columns.Bound(o => o.IpMasterStatusDescription);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+          
+        })
+
+          .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxShipmentDetailList", "ShipmentMaster", new { ShipmentNo = ViewBag.ShipmentNo }))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        )
+    </div>
+</fieldset>

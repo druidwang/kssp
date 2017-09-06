@@ -1,0 +1,76 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.BIL
+@using com.Sconit.Web.Models.SearchModels.BIL
+@Html.Partial("_AjaxMessage") 
+<fieldset> 
+        <div class="search">
+            
+            <div class="search-label">
+                <label for="PriceListDetail_Item">
+                    @Resources.BIL.PriceListDetail.PriceListDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+               @{
+                   Html.RenderAction("_ItemComboBox", "Common", 
+                       new { controlName = "Item",
+                             selectedValue = TempData["PriceListDetailSearchModel"] != null ? ((PriceListDetailSearchModel)TempData["PriceListDetailSearchModel"]).Item : string.Empty
+                       });
+                    }
+            </div>
+            
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnAreaSearch" onclick="btnSearchPriceListDetail_Click();">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_DistributionPriceList_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnAreaNew"},
+                    {"onclick","btnNewPriceListDetail_Click()"}
+	            })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/DistributionPriceList/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+        </div>
+</fieldset>
+
+<script language="javascript" type="text/javascript">
+    function btnNewPriceListDetail_Click() {
+        var data = {
+            "priceListCode": $("#PriceListCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/DistributionPriceList/_PriceListDetailNew/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnSearchPriceListDetail_Click() {
+        var data = {
+            "priceListCode": $("#PriceListCode").val(),
+            "Item": $("#Item").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/DistributionPriceList/_PriceListDetailList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

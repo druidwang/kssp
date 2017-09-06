@@ -1,0 +1,10 @@
+﻿@model IEnumerable<com.Sconit.Web.Models.ORD.ScheduleBody>
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ScheduleDetail")
+                .Columns(columns => columns.LoadSettings((IEnumerable<GridColumnSettings>)ViewData["Columns"]))
+                .Scrollable(c => c.Enabled(false))
+                .Footer(false)
+            )
+</fieldset>

@@ -1,0 +1,94 @@
+﻿@using com.Sconit.Entity.ORD
+@using com.Sconit.Web.Models.SearchModels.ORD
+<fieldset >
+    @using (Html.BeginForm("List", "DistributionShipTire"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="">
+                    @Resources.ORD.OrderMaster.OrderMaster_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).OrderNo : string.Empty)
+            </div>
+              <div class="search-label">
+                <label for="Hu_Flow">
+                   @Resources.ORD.OrderMaster.OrderMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common", new { controlName = "Flow", isChange = false, isSupplier = true, type = (int)com.Sconit.CodeMaster.OrderType.Transfer,
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Flow : string.Empty });
+                }
+            </div>
+
+             <div class="search-label">
+                <label for="OrderMaster_PartyFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_PartyFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+                controlName = "PartyFrom",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Transfer,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_PartyTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+                        new
+                        {
+                            controlName = "PartyTo",
+                            orderType = (int)com.Sconit.CodeMaster.OrderType.Transfer,
+                            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).PartyTo : string.Empty
+                        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.OrderMaster.OrderMaster_TraceCode
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("TraceCode", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).TraceCode : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.OrderMaster.OrderMaster_ExternalOrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ExternalOrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).ExternalOrderNo : string.Empty)
+            </div>
+           <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.OrderMaster.OrderMaster_Dock
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Dock", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Dock : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+           @* <button type="button" id="btnEdit" onclick="editCheckedOrders()" style="display: none">@Resources.SYS.Global.Button_Ship</button>*@
+        </div>
+        
+      
+   
+    }
+</fieldset>

@@ -1,0 +1,57 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.BIL.PriceListMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PriceListMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns => 
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "DistributionPriceList", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Party).Title(Resources.BIL.PriceListMaster.PriceListMaster_DistributionParty);
+            columns.Bound(o => o.PartyName).Title(Resources.BIL.PriceListMaster.PriceListMaster_DistributionPartyName);
+            columns.Bound(o => o.Currency);
+            //columns.Bound(o => o.Tax);
+            //columns.Bound(o => o.IsIncludeTax)
+                //.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsIncludeTax' <#= IsIncludeTax? checked='checked' : '' #> />"); 
+            columns.Bound(o => o.IsActive)
+                       .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />"); 
+                 })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "DistributionPriceList"))
+        .ClientEvents(events => events.OnDataBinding("PriceListMasterGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function PriceListMasterGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Party: $('#Party').val(),
+                Currency: $('#Currency').val(),
+                Tax: $('#Tax').val(),
+                IsIncludeTax: $('#IsIncludeTax').is(':checked'),
+                IsActive: $('#IsActive').is(':checked')
+            };
+        } 
+    </script>
+</fieldset>

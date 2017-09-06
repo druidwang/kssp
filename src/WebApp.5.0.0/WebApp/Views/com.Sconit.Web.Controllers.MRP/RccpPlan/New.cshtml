@@ -1,0 +1,219 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_RccpPlan_New" });
+}
+@using (Html.BeginForm())
+{
+    <script type="text/javascript">
+        function onDayUpload(e) {
+            e.data = {
+                startDate: $("#startDate").val(),
+                endDate: $("#endDate").val()
+            };
+        }
+
+        function onWeekUpload(e) {
+            e.data = {
+                weekStart: $("#WeekStart").val(),
+                weekEnd: $("#WeekEnd").val(),
+                periodType: "Week"
+            };
+        }
+
+        function onMonthUpload(e) {
+            e.data = {
+                startMonth: $("#MonthStart").val(),
+                endMonth: $("#MonthEnd").val(),
+                periodType: "Month"
+            };
+        }
+
+        function doClick(bl) {
+            if (bl == 4) {
+                $("#divDay").show();
+                $("#divWeek").hide();
+                $("#divMonth").hide();
+
+            }
+            else if (bl == 5) {
+                $("#divDay").hide();
+                $("#divWeek").show();
+                $("#divMonth").hide();
+            }
+            else if (bl == 6) {
+                $("#divDay").hide();
+                $("#divWeek").hide();
+                $("#divMonth").show();
+            }
+        }
+
+        function DateIndex_DataBinding(e) {
+            var importType = $("input[type=radio][name=ImportType]:checked").val();
+            e.data = {
+                dateType: importType
+            }
+        }
+
+    </script>
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.RccpPlan.RccpPlan_ImportType
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("ImportType", 4, true, new { onclick = "doClick(4)" })<span>@Resources.MRP.RccpPlan.RccpPlan_ImportDayPlan</span>
+                <span style="margin: 4px"></span>
+                @Html.RadioButton("ImportType", 5, false, new { onclick = "doClick(5)" })<span>@Resources.MRP.RccpPlan.RccpPlan_ImportWeekplan</span>
+                <span style="margin: 4px"></span>
+                @Html.RadioButton("ImportType", 6, false, new { onclick = "doClick(6)" })<span>@Resources.MRP.RccpPlan.RccpPlan_ImportMonthplan</span>
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <hr style="border: 100% dashed black;" />
+          <div style="color:red">规则:开始时间=Max(Excel中的最小时间,页面中开始时间),结束时间=Min(Excel中的最大时间,页面中结束时间)<br /><br /></div>  
+            <div id="divDay">
+                <div class="search-label">
+                    <label>
+                        开始天
+                    </label>
+                </div>
+
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Name("startDate").Min(DateTime.Today).Format("yyyy-MM-dd")
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+                <div class="search-label">
+                    <label>
+                        结束天
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Name("endDate").Min(DateTime.Today).Format("yyyy-MM-dd")
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+                <div class="search-label">
+                    <label>
+                        <a href='/Resource/Templates/UploadTemplate/MRP/RccpDailyPlan.xls'>天计划模板下载</a>
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().Upload().Name("ImportDayRccpPlan")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("ImportRccpPlanDay", "RccpPlan")
+                    .AutoUpload(true)).ClientEvents(e => e.OnSuccess("TelerikonUpload_OnSuccess").OnUpload("onDayUpload")))
+                </div>
+            </div>
+
+            <div id="divWeek" style="display: none">
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_StartWeek
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "WeekStart",
+            isMrpPlan = true,
+            selectedValue = string.Empty
+        });
+                    }
+
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_EndWeek
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "WeekEnd",
+            isMrpPlan = true,
+            selectedValue = string.Empty
+        });
+                    }
+                </div>
+
+                <div class="search-label">
+                    <label>
+                        <a href='/Resource/Templates/UploadTemplate/MRP/RccpWeeklyPlan.xls'>周计划模板下载</a>
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().Upload()
+                        .Name("ImportWeekRccpPlan")
+                        .Multiple(false)
+                        .Async(async => async
+                        .Save("ImportRccpPlanWeek", "RccpPlan")
+                        .AutoUpload(true))
+                        .ClientEvents(e => e.OnSuccess("TelerikonUpload_OnSuccess").OnUpload("onWeekUpload")))
+                </div>
+
+            </div>
+            <div id="divMonth" style="display: none">
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_StartMonth
+                    </label>
+                </div>
+                <div class="search-field">
+                    <span id="WeekOfYearStartdiv">
+                        @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "MonthStart",
+            isMrpPlan = true,
+            selectedValue = string.Empty
+        });
+                        }
+                    </span>&nbsp&nbsp<span id="startTime"></span>
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_EndMonth
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "MonthEnd",
+            isMrpPlan = true,
+            selectedValue = string.Empty
+        });
+                    }
+
+                </div>
+
+                <div class="search-label">
+                    <label>
+                        <a href='/Resource/Templates/UploadTemplate/MRP/RccpMonthlyPlan.xls'>月计划模板下载</a>
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().Upload()
+                  .Name("ImportMonthRccpPlan")
+                    .Multiple(false)
+                    .Async(async => async
+                    .Save("ImporRccpPlanMonth", "RccpPlan")
+                    .AutoUpload(true))
+      .ClientEvents(e => e.OnSuccess("TelerikonUpload_OnSuccess").OnUpload("onMonthUpload")))
+
+                </div>
+            </div>
+        </div>
+    </fieldset>   
+}

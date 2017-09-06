@@ -1,0 +1,121 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.Report.CustReportDetail
+@Html.Partial("_AjaxMessage")
+@using (Html.BeginForm("_DetailEdit", "CustReport"))
+{
+    <fieldset>
+        <legend>@Resources.Report.CustReport.CustReport_Edit_Title</legend>
+        @Html.HiddenFor(model => model.CreateUserName)
+        @Html.HiddenFor(model => model.CreateDate)
+        @Html.HiddenFor(model => model.LastModifyUserName)
+        @Html.HiddenFor(model => model.LastModifyDate)
+        @Html.HiddenFor(model => model.Code)
+        <div class="editor">
+            @Html.HiddenFor(model => model.Id)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Code)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.Code)
+            @Html.HiddenFor(model => model.Code)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ParamType)
+        </div>
+        <div class="editor-field-2">
+            @{
+       Html.RenderAction("_CustreportParaTypeDropDownList", "Common",
+           new
+           {
+               controlName = "ParamType",
+               selectedValue = Model.ParamType
+           });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ParamKey)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.ParamKey)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ParamText)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.ParamText)
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_CustReport_ReportMenu", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnSave"},
+                {"needconfirm","true"}
+	        })
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_CustReport_ReportMenu", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnDel"},
+                {"needconfirm","true"},
+                {"onclick","btnDelete_Click()"}
+            })
+            @*@Html.Button(Resources.SYS.Global.Button_New, "Url_CustReport_ReportMenu", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"onclick","location.href='"+@Url.Content("~/CustReport/DetailNew/"+@Model.Id)+"'"}
+	        })*@
+        <button type="button" id="btnBack" onclick="btnBackDetail_Click()">@Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+
+<script type="text/javascript">
+    function btnBackDetail_Click() {
+        var data = {
+            "code": $("#Code").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/CustReport/_Detail/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnDelete_Click() {
+        var data = {
+            "Id": $("#Id").val(),
+            "Code": $("#Code").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/CustReport/btnDel/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("form[action$='_DetailEdit']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(response);
+            });
+            return false;
+        });
+    });
+
+</script>

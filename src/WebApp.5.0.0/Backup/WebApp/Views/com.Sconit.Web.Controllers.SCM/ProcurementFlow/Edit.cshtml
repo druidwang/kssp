@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = Resources.SCM.FlowMaster.FlowMaster_Procurement;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProcurementFlow_View" });
+}
+@Html.Partial("_AjaxMessage") 
+<input type="hidden" name="flow" id="flow" value="@Model" />
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.SCM.FlowMaster.FlowMaster_Procurement)
+                .LoadContentFrom("_Edit", "ProcurementFlow", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" }); 
+
+            tabstrip.Add()
+                .Text(Resources.SCM.FlowMaster.FlowMaster_TabStrategy)
+                .LoadContentFrom("_Strategy", "ProcurementFlow", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.SCM.FlowMaster.FlowMaster_TabDetail)
+                .LoadContentFrom("_DetailSearch", "ProcurementFlow", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.SCM.FlowMaster.FlowMaster_TabBinding)
+                .LoadContentFrom("_Binding", "ProcurementFlow", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}

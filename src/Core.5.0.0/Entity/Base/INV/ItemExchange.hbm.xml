@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.INV.ItemExchange, com.Sconit.Entity" table="INV_ItemExchange" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="ItemFrom" column="ItemFrom" type="String" length="50"/>
+    <property name="ItemTo" column="ItemTo" type="String" length="50"/>
+    <property name="RegionFrom" column="RegionFrom" type="String" length="50"/>
+    <property name="RegionTo" column="RegionTo" type="String" length="50"/>
+    <property name="LocationFrom" column="LocationFrom" type="String" length="50"/>
+    <property name="LocationTo" column="LocationTo" type="String" length="50"/>
+    <property name="Qty" column="Qty" type="Decimal"/>
+    <property name="Uom" column="Uom" type="String" length="5"/>
+    <property name="BaseUom" column="BaseUom" type="String" length="5"/>
+    <property name="UnitQty" column="UnitQty" type="Decimal"/>
+    
+    <property name="NewQty" column="NewQty" type="Decimal"/>
+    <property name="NewUom" column="NewUom" type="String" length="5"/>
+    <property name="NewBaseUom" column="NewBaseUom" type="String" length="5"/>
+    <property name="NewUnitQty" column="NewUnitQty" type="Decimal"/>
+    <property name="OldHu" column="OldHu" type="String"/>
+    <property name="NewHu" column="NewHu" type="String"/>
+    <property name="LotNo" column="LotNo" type="String"/>
+    <property name="ItemExchangeType" column="ItemExchangeType" type="Int32"/>
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+    <property name="QualityType" column="QualityType" type="Int32" />
+    <property name="EffectiveDate" column="EffDate" type="DateTime"/>
+    <property name="IsVoid" column="IsVoid" type="Boolean" />
+  </class>
+</hibernate-mapping>

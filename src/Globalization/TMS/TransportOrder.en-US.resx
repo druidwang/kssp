@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TransportOrderDetail_BoxCount" xml:space="preserve">
+    <value>箱数</value>
+  </data>
+  <data name="TransportOrderDetail_Distance" xml:space="preserve">
+    <value>距离</value>
+  </data>
+  <data name="TransportOrderDetail_Dock" xml:space="preserve">
+    <value>收货道口</value>
+  </data>
+  <data name="TransportOrderDetail_EstBoxCount" xml:space="preserve">
+    <value>箱数（暂估）</value>
+  </data>
+  <data name="TransportOrderDetail_EstPalletQty" xml:space="preserve">
+    <value>栈板数（暂估）</value>
+  </data>
+  <data name="TransportOrderDetail_EstVolume" xml:space="preserve">
+    <value>体积（暂估）</value>
+  </data>
+  <data name="TransportOrderDetail_EstWeight" xml:space="preserve">
+    <value>重量（暂估）</value>
+  </data>
+  <data name="TransportOrderDetail_IpNo" xml:space="preserve">
+    <value>送货单号</value>
+  </data>
+  <data name="TransportOrderDetail_IpNo1" xml:space="preserve">
+    <value>送货单号</value>
+  </data>
+  <data name="TransportOrderDetail_IsReceived" xml:space="preserve">
+    <value>已收</value>
+  </data>
+  <data name="TransportOrderDetail_IsValuated" xml:space="preserve">
+    <value>IsValuated</value>
+  </data>
+  <data name="TransportOrderDetail_LoadTime" xml:space="preserve">
+    <value>装载时间</value>
+  </data>
+  <data name="TransportOrderDetail_OrderRouteFrom" xml:space="preserve">
+    <value>起始站点</value>
+  </data>
+  <data name="TransportOrderDetail_OrderRouteTo" xml:space="preserve">
+    <value>到达站点</value>
+  </data>
+  <data name="TransportOrderDetail_PalletCode" xml:space="preserve">
+    <value>PalletCode</value>
+  </data>
+  <data name="TransportOrderDetail_PalletQty" xml:space="preserve">
+    <value>栈板数</value>
+  </data>
+  <data name="TransportOrderDetail_PartyFrom" xml:space="preserve">
+    <value>发货方代码</value>
+  </data>
+  <data name="TransportOrderDetail_PartyFromName" xml:space="preserve">
+    <value>发货方名称</value>
+  </data>
+  <data name="TransportOrderDetail_PartyTo" xml:space="preserve">
+    <value>收货方代码</value>
+  </data>
+  <data name="TransportOrderDetail_PartyToName" xml:space="preserve">
+    <value>收货方名称</value>
+  </data>
+  <data name="TransportOrderDetail_Sequence" xml:space="preserve">
+    <value>序号</value>
+  </data>
+  <data name="TransportOrderDetail_ShipFrom" xml:space="preserve">
+    <value>发货地址代码</value>
+  </data>
+  <data name="TransportOrderDetail_ShipFromAddress" xml:space="preserve">
+    <value>发货地址</value>
+  </data>
+  <data name="TransportOrderDetail_ShipFromCell" xml:space="preserve">
+    <value>发货方移动电话</value>
+  </data>
+  <data name="TransportOrderDetail_ShipFromContact" xml:space="preserve">
+    <value>发货方固定电话</value>
+  </data>
+  <data name="TransportOrderDetail_ShipFromFax" xml:space="preserve">
+    <value>发货方地址传真</value>
+  </data>
+  <data name="TransportOrderDetail_ShipFromTel" xml:space="preserve">
+    <value>发货方固定电话</value>
+  </data>
+  <data name="TransportOrderDetail_ShipTo" xml:space="preserve">
+    <value>收货地址代码</value>
+  </data>
+  <data name="TransportOrderDetail_ShipToAddress" xml:space="preserve">
+    <value>收货地址</value>
+  </data>
+  <data name="TransportOrderDetail_ShipToCell" xml:space="preserve">
+    <value>收货方移动电话</value>
+  </data>
+  <data name="TransportOrderDetail_ShipToContact" xml:space="preserve">
+    <value>收货方联系人</value>
+  </data>
+  <data name="TransportOrderDetail_ShipToFax" xml:space="preserve">
+    <value>收货方传真</value>
+  </data>
+  <data name="TransportOrderDetail_ShipToTel" xml:space="preserve">
+    <value>收货方固定电话</value>
+  </data>
+  <data name="TransportOrderDetail_UnloadTime" xml:space="preserve">
+    <value>卸货时间</value>
+  </data>
+  <data name="TransportOrderDetail_Volume" xml:space="preserve">
+    <value>体积</value>
+  </data>
+  <data name="TransportOrderDetail_Weight" xml:space="preserve">
+    <value>重量</value>
+  </data>
+  <data name="TransportOrderMaster_BillAddress" xml:space="preserve">
+    <value>账单地址</value>
+  </data>
+  <data name="TransportOrderMaster_Calculated" xml:space="preserve">
+    <value>TransportOrder Calculated Successfully</value>
+  </data>
+  <data name="TransportOrderMaster_Canceled" xml:space="preserve">
+    <value>TransportOrder Cancled Successfully</value>
+  </data>
+  <data name="TransportOrderMaster_Carrier" xml:space="preserve">
+    <value>承运商</value>
+  </data>
+  <data name="TransportOrderMaster_CarrierName" xml:space="preserve">
+    <value>承运商描述</value>
+  </data>
+  <data name="TransportOrderMaster_Closed" xml:space="preserve">
+    <value>TransportOrder Closed Successfully</value>
+  </data>
+  <data name="TransportOrderMaster_Driver" xml:space="preserve">
+    <value>驾驶员</value>
+  </data>
+  <data name="TransportOrderMaster_DriverMobilePhone" xml:space="preserve">
+    <value>驾驶员手机</value>
+  </data>
+  <data name="TransportOrderMaster_DrivingNo" xml:space="preserve">
+    <value>行驶证号</value>
+  </data>
+  <data name="TransportOrderMaster_ExternalOrderNo" xml:space="preserve">
+    <value>外部单号</value>
+  </data>
+  <data name="TransportOrderMaster_Flow" xml:space="preserve">
+    <value>运输路线</value>
+  </data>
+  <data name="TransportOrderMaster_FlowDescription" xml:space="preserve">
+    <value>运输路线描述</value>
+  </data>
+  <data name="TransportOrderMaster_IsAutoRelease" xml:space="preserve">
+    <value>自动释放</value>
+  </data>
+  <data name="TransportOrderMaster_IsAutoStart" xml:space="preserve">
+    <value>自动开始</value>
+  </data>
+  <data name="TransportOrderMaster_LicenseNo" xml:space="preserve">
+    <value>驾照</value>
+  </data>
+  <data name="TransportOrderMaster_LoadVolume" xml:space="preserve">
+    <value>体积(m³)</value>
+  </data>
+  <data name="TransportOrderMaster_LoadWeight" xml:space="preserve">
+    <value>载重(kg)</value>
+  </data>
+  <data name="TransportOrderMaster_MinLoadRate" xml:space="preserve">
+    <value>放行配载率</value>
+  </data>
+  <data name="TransportOrderMaster_MultiSitePick" xml:space="preserve">
+    <value>多点提货</value>
+  </data>
+  <data name="TransportOrderMaster_OrderNo" xml:space="preserve">
+    <value>运单号</value>
+  </data>
+  <data name="TransportOrderMaster_PriceList" xml:space="preserve">
+    <value>运价单</value>
+  </data>
+  <data name="TransportOrderMaster_PricingMethod" xml:space="preserve">
+    <value>PricingMethod</value>
+  </data>
+  <data name="TransportOrderMaster_ReferenceOrderNo" xml:space="preserve">
+    <value>参考单号</value>
+  </data>
+  <data name="TransportOrderMaster_ShipFrom" xml:space="preserve">
+    <value>始发地</value>
+  </data>
+  <data name="TransportOrderMaster_ShipFromAddress" xml:space="preserve">
+    <value>始发地地址</value>
+  </data>
+  <data name="TransportOrderMaster_ShipTo" xml:space="preserve">
+    <value>目的地</value>
+  </data>
+  <data name="TransportOrderMaster_ShipToAddress" xml:space="preserve">
+    <value>目的地地址</value>
+  </data>
+  <data name="TransportOrderMaster_Started" xml:space="preserve">
+    <value>TransportOrder Started Successfully</value>
+  </data>
+  <data name="TransportOrderMaster_Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="TransportOrderMaster_Submited" xml:space="preserve">
+    <value>TransportOrder Released Successfully</value>
+  </data>
+  <data name="TransportOrderMaster_Tonnage" xml:space="preserve">
+    <value>吨位</value>
+  </data>
+  <data name="TransportOrderMaster_TransportMode" xml:space="preserve">
+    <value>运输方式</value>
+  </data>
+  <data name="TransportOrderMaster_Vehicle" xml:space="preserve">
+    <value>运输工具</value>
+  </data>
+  <data name="TransportOrderRoute_ArriveInputUser" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TransportOrderRoute_ArriveInputUserName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TransportOrderRoute_ArriveTime" xml:space="preserve">
+    <value>到达时间</value>
+  </data>
+  <data name="TransportOrderRoute_DepartInputUser" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TransportOrderRoute_DepartInputUserName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TransportOrderRoute_DepartTime" xml:space="preserve">
+    <value>离开时间</value>
+  </data>
+  <data name="TransportOrderRoute_Distance" xml:space="preserve">
+    <value>距离</value>
+  </data>
+  <data name="TransportOrderRoute_EstArriveTime" xml:space="preserve">
+    <value>到达时间（预估）</value>
+  </data>
+  <data name="TransportOrderRoute_EstDepartTime" xml:space="preserve">
+    <value>离开时间（预估）</value>
+  </data>
+  <data name="TransportOrderRoute_IsArrive" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TransportOrderRoute_LoadRate" xml:space="preserve">
+    <value>负载率</value>
+  </data>
+  <data name="TransportOrderRoute_Sequence" xml:space="preserve">
+    <value>序号</value>
+  </data>
+  <data name="TransportOrderRoute_ShipAddress" xml:space="preserve">
+    <value>地址代码</value>
+  </data>
+  <data name="TransportOrderRoute_ShipAddressDescription" xml:space="preserve">
+    <value>地址描述</value>
+  </data>
+  <data name="TransportOrderRoute_WeightRate" xml:space="preserve">
+    <value />
+  </data>
+</root>

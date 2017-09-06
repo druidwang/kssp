@@ -1,0 +1,126 @@
+﻿@using com.Sconit.Entity.MRP
+@using com.Sconit.Web.Models.SearchModels.SCM
+@using com.Sconit.Web.Models.SearchModels.CUST
+@model com.Sconit.Entity.CUST.SubPrintOrder
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SubPrintOrder_View" });
+}
+<script type="text/javascript">
+
+    function Region_Change(e) {
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+            $('#Location').data('tComboBox').value('');
+            $('#Location').data('tComboBox').text('');
+            $("#Location").data("tComboBox").reload();
+        }
+    }
+
+    function Location_DataBinding(e) {
+        e.data = {
+            region: $("#Region").val()
+        };
+    }
+
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>新建</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.UserCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.UserCode)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Region)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_RegionComboBox", "Common", new
+                    {
+                        controlName = "Region",
+                        coupled = true,
+                        isChange = true,
+                        selectedValue = TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).Region : string.Empty
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-2">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    //isSupplier = true,
+                    //type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                    selectedValue = ViewBag.Flow != null ? ViewBag.Flow : string.Empty
+                });
+            }
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="editor-field-2">
+            @{
+                Html.RenderAction("_LocationComboBox", "Common",
+                    new
+                    {
+                        controlName = "Location",
+                        checkRegion = true,
+                        selectedValue = TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).Location : string.Empty
+                    });
+            }
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ExcelTemplate)
+            </div>
+            <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common",
+                    new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.AsnTemplate,
+                        controlName = "ExcelTemplate",
+                        //includeBlankOption=true,
+                        selectedValue = TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).ExcelTemplate : string.Empty
+                    });
+            }
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Printer)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Printer)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Client)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Client)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SubPrintOrder/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

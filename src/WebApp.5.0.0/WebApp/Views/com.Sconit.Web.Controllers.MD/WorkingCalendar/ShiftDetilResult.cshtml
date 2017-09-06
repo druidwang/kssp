@@ -1,0 +1,48 @@
+﻿ @using com.Sconit.Entity.PRD
+ @{
+     IEnumerable<ShiftDetail> shiftDetail  = ViewBag.shiftDetList;
+     }
+<fieldset>
+    @(Html.Telerik().Grid(shiftDetail)
+        .Name("ShiftDetailGrid")
+        .DataKeys(keys => 
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).ClientTemplate(Html.ActionLink("<#= Id #>", "ShiftDetEdit", "WorkingCalendar", new { ID = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.ShiftTime);
+            columns.Bound(o => o.StartDate);
+            columns.Bound(o => o.EndDate);
+                 })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Id")
+                {
+                    cell.Text = string.Format("<a href=\"ShiftDetEdit/{0}\">{1}</a>", cell.DataItem.Id, cell.DataItem.Id);
+                }
+            })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxShiftDetailList", "WorkingCalendar"))
+                .ClientEvents(events => events.OnDataBinding("ShiftDetailGrid_OnDataBinding"))
+                        .Pageable(settings =>
+                        {
+                            settings.Total(ViewBag.Total);
+                            settings.PageSize(ViewBag.PageSize != 0 ? ViewBag.PageSize : 10);
+                        })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ShiftDetailGrid_OnDataBinding(e) {
+            e.data = {
+                Id: $('#Id').val(),
+                ShiftTime: $('#ShiftTime').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+            };
+        } 
+    </script>
+</fieldset>

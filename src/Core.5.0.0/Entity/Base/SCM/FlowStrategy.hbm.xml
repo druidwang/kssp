@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.SCM.FlowStrategy, com.Sconit.Entity" table="SCM_FlowStrategy" lazy="false" dynamic-update="true">
+    <id name="Flow" column="Flow" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <property name="Description" column="Desc1" type="String" length="100" />
+    <property name="Strategy" column="Strategy"  />
+    <property name="LeadTime" column="LeadTime" type="Decimal"  />
+    <property name="EmergencyLeadTime" column="EmLeadTime" type="Decimal"  />
+    <property name="TimeUnit" column="TimeUnit"  />
+    <property name="WindowTimeType" column="WinTimeType"  />
+    <property name="WindowTime1" column="WinTime1" type="String" length="256" />
+    <property name="WindowTime2" column="WinTime2" type="String" length="256" />
+    <property name="WindowTime3" column="WinTime3" type="String" length="256" />
+    <property name="WindowTime4" column="WinTime4" type="String" length="256" />
+    <property name="WindowTime5" column="WinTime5" type="String" length="256" />
+    <property name="WindowTime6" column="WinTime6" type="String" length="256" />
+    <property name="WindowTime7" column="WinTime7" type="String" length="256" />
+    <property name="WeekInterval" column="WeekInterval" type="Int32"  />
+    <property name="WaitTime" column="WaitTime" type="Decimal"  />
+    <property name="WaitBatch" column="WaitBatch" type="Int32"  />
+    <property name="NextOrderTime" column="NextOrderTime" type="DateTime"  />
+    <property name="NextWindowTime" column="NextWinTime" type="DateTime"  />
+    <property name="WinTimeDiff" column="WinTimeDiff" type="Decimal"  />
+    <property name="RccpLeadTime" column="RccpLeadTime" type="Decimal"  />
+
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+
+    <property name="HaltTime" column="HaltTime" type="Double"  />
+    <property name="TrialProduceTime" column="TrialProduceTime" type="Double"  />
+    <property name="IsCheckMrpDailyPlan" column="IsCheckMrpDailyPlan" type="Boolean" length="50" />
+    <property name="IsCheckMrpWeeklyPlan" column="IsCheckMrpWeeklyPlan" type="Boolean" length="50" />
+    <property name="IsCheckMrpMonthlyPlan" column="IsCheckMrpMonthlyPlan" type="Boolean" length="50" />
+
+    <property name="SafeTime" column="SafeTime" type="Decimal" />
+    <property name="SeqGroup" column="SeqGroup" type="String" length="50" />
+    <property name="MrpTotalAdjust" column="MrpTotalAdjust" type="Decimal" update="false" />
+    <property name="MrpWeight" column="MrpWeight" type="Int32" update="false" />
+    <property name="MrpTotal" column="MrpTotal" type="Decimal" update="false" />
+
+  
+  </class>
+</hibernate-mapping>

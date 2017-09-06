@@ -1,0 +1,188 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.SearchModels.INV
+<script type="text/javascript">
+
+</script>
+<fieldset>
+    @using (Html.BeginForm("List", "KanBanCard"))
+    {   
+        <div class="search">
+          <div class="search-label">
+                <label for="Note">
+                    @Resources.INV.KanBanCard.KanBanCard_CardNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["KanBanCardSearchModel"] != null ? ((KanBanCardSearchModel)TempData["KanBanCardSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.KanBanCard.KanBanCard_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+               Html.RenderAction("_FlowComboBox", "Common",
+                   new
+                   {
+                       controlName = "Flow",
+                       type = (int)com.Sconit.CodeMaster.OrderType.Transfer,
+                       selectedValue = TempData["KanBanCardSearchModel"] != null ? ((KanBanCardSearchModel)TempData["KanBanCardSearchModel"]).Flow : string.Empty
+                   });
+                }
+            </div>
+            <div class="search-label">
+                <label for="LocTo">
+                    @Resources.INV.KanBanCard.KanBanCard_LocationTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+               Html.RenderAction("_LocationComboBox", "Common", new
+                    {
+                        controlName = "LocatoinTo",
+                        includeBlankOption = true,
+                        selectedValue = TempData["KanBanCardSearchModel"] != null ? ((KanBanCardSearchModel)TempData["KanBanCardSearchModel"]).LocatoinTo : string.Empty
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label for="Item">
+                    @Resources.INV.KanBanCard.KanBanCard_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+               Html.RenderAction("_ItemComboBox", "Common",
+                   new
+                   {
+                       controlName = "Item",
+                       selectedValue = TempData["KanBanCardSearchModel"] != null ? ((KanBanCardSearchModel)TempData["KanBanCardSearchModel"]).Item : string.Empty
+                   });
+                }
+            </div>
+            <div class="search-label">
+                <label for="Note">
+                    @Resources.INV.KanBanCard.KanBanCard_Note
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Note", TempData["KanBanCardSearchModel"] != null ? ((KanBanCardSearchModel)TempData["KanBanCardSearchModel"]).Note : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+    @Html.Button(Resources.SYS.Global.Button_New, "Url_KanBanCard_New", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnAdd"},
+        {"onclick","location.href='"+Url.Content("~/KanBanCard/New/" ) +"'"}
+	})
+     @Html.Button(Resources.SYS.Global.Button_PrintCard, "Url_KanBanCard_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnPrint"},
+        {"needconfirm","true"},
+        {"style","display:none"},
+        {"onclick","OnPrintClick()"}
+	})
+    @Html.Button(Resources.SYS.Global.Button_PrintCardLabel, "Url_KanBanCard_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnPrintCardLabel"},
+        {"needconfirm","true"},
+        {"style","display:none"},
+        {"onclick","PrintLabelClick()"}
+	})
+            
+        </div>
+
+    }
+
+    <script type="text/javascript">
+        function PrintLabelClick() {
+           
+            
+            var $checkRecords = $("input[name='checkedRecords']:checked");
+            var codeStr = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    if ($($checkRecords[i]).parent().parent().find("#IsEleKanBan").val() == "true") {
+                        $message.error('电子看板不能打印看板标签。');
+                        return;
+                     }
+                    if (codeStr == "") {
+                        codeStr = $checkRecords[i].value;
+                    } else {
+                        codeStr += "," + $checkRecords[i].value;
+                    }
+                }
+            }
+            if (codeStr == "") {
+                alert('请选择打印明细。');
+                return;
+            }
+            var data = {
+                "codeStr": codeStr
+            };
+            $.ajax({
+                type: "Get",
+                dataType: "text",
+                url: "/KanBanCard/CardLabelPrint/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    if (data != "") {
+                        PrintOrder(data);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                }
+            });
+        }
+        function OnPrintClick() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var codeStr = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    if (codeStr == "") {
+                        codeStr = $checkRecords[i].value;
+                    } else {
+                        codeStr += "," + $checkRecords[i].value;
+                    }
+                }
+            }
+            if (codeStr == "") {
+                alert('请选择打印明细。');
+                return;
+            }
+
+            var data = {
+                "codeStr": codeStr
+            };
+            $.ajax({
+                type: "Get",
+                dataType: "text",
+                url: "/KanBanCard/KanBanCardPrint/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    if (data != "") {
+                        var printUrl = data.split(',');
+                        $(printUrl).each(function (k,v) {
+                            PrintOrder(v);
+                        });
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                }
+            });
+        }
+    </script>
+</fieldset>

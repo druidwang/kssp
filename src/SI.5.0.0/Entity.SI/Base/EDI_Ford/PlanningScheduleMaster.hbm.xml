@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.EDI_Ford.PlanningScheduleMaster, com.Sconit.Entity.SI" table="SI_EDI_Ford_PlanningScheduleMaster" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="FileType" column="FileType" type="String" length="50"/>	
+		<property name="SenderID" column="SenderID" type="String" length="50"/>
+    <property name="ReceiverID" column="ReceiverID" type="String" length="50"/>
+		<property name="FileName" column="FileName" type="String" length="500"/>
+    <property name="IsImported" column="IsImported" type="Boolean" />
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false" insert="false"/>	
+  	</class>
+</hibernate-mapping>

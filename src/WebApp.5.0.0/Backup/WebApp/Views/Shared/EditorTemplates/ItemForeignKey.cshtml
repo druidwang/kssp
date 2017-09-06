@@ -1,0 +1,10 @@
+﻿@(Html.Telerik().ComboBox().HtmlAttributes(new { style = "width: 80px" })
+.DropDownHtmlAttributes(new { style = "width: 300px; " })
+      .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(""))
+      .DataBinding(binding => binding.Ajax().Select("_ItemAjaxLoading", "Common")
+      .Cache(true))
+      .AutoFill(true)
+      .HighlightFirstMatch(true)
+      .ClientEvents(events => events.OnChange("onItemComboBoxChange"))
+)
+

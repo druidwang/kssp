@@ -1,0 +1,86 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    <script type="text/javascript">
+    </script>
+    @using (Html.BeginForm("List", "PPM"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.View.Visualization.Visualization_Supplier
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_SupplierComboBox", "Common", new
+        {
+            controlName = "Supplier",
+            selectedValue = ViewBag.Supplier != null ? ViewBag.Supplier : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.View.Visualization.Visualization_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = ViewBag.Item != null ? ViewBag.Item : string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom").Value(DateTime.Today).HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo").Value(DateTime.Today.AddDays(1)).HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            <button type="button" id="btnSearch" onclick="SearchClick()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnImport" onclick="ImportClick()">
+                @Resources.SYS.Global.Button_Import</button>
+        </div>
+
+    }
+    <script type="text/javascript">
+        function SearchClick() {
+           
+            var data = {
+                Item: $('#Item').val(),
+                Supplier: $('#Supplier').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/PPM/_SearchResult/",
+                data: data,
+                cache: false,
+                success: function (data) {
+                    $("#divSearchResult").html(data);
+                }
+            });
+        }
+    </script>
+</fieldset>
+<div id="divSearchResult">
+</div>

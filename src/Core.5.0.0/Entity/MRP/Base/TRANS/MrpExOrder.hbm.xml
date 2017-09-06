@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.MrpExOrder, com.Sconit.Entity" table="MRP_MrpExOrder" lazy="false">
+    <id name="PlanNo" column="PlanNo" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <property name="SectionId" column="SectionId" type="Int32"/>
+    <property name="ProductLine" column="ProductLine" type="String" length="50" />
+    <property name="DateIndex" column="DateIndex" type="String" length="10" />
+    <property name="Section" column="Section" type="String" length="50" />
+    <property name="PlanVersion" column="PlanVersion" type="DateTime"/>
+    <property name="Sequence" column="Sequence" type="Int32"/>
+    <property name="Status" column="Status" />
+    <property name="StartTime" column="StartTime" type="DateTime"/>
+    <property name="WindowTime" column="WindowTime" type="DateTime"/>
+    <property name="StartDate" column="StartDate" type="DateTime"/>
+    <property name="CloseDate" column="CloseDate" type="DateTime"/>
+    <property name="ScrapQty" column="ScrapQty" type="Double"/>
+
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+    
+    
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.ItemTrace>
+<script type="text/javascript">
+
+    function onItemComboBoxChange(e) {
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+       .Name("ItemTraceGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Item);
+        })
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                                                .Select("_AjaxList", "ItemTrace")
+                                       .Delete("_Delete", "ItemTrace"))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item); //.EditorTemplateName("ItemGridForeignKey");
+
+            columns.Command(commands =>
+            {
+               commands.Delete();
+
+            });
+        }).ClientEvents(events =>
+        {
+            events
+                .OnDataBinding("ItemTrace_OnDataBinding");
+        })
+        .EnableCustomBinding(true)
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable()
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function ItemTrace_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val()
+            };
+        } 
+    </script>
+</fieldset>

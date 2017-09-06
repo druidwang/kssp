@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Web.Models.MRP.ExProductLineReportData>
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ExReport_ProdLineView" });
+}
+<script type="text/javascript">
+
+
+</script>
+<fieldset>
+    @(Html.Telerik().Chart<com.Sconit.Web.Models.MRP.ExProductLineReportData>()
+    .Name("chartAjax")
+    .Title("挤出生产线执行情况监控")
+    .Legend(legend => legend.Position(ChartLegendPosition.Bottom).Visible(false))
+    .Series(series =>
+    {
+        series.Bar(s => s.Qty1)
+            .Labels(labels => labels
+                .Position(ChartBarLabelsPosition.InsideEnd)
+                .Visible(false)
+            ).Stack(true);
+        series.Bar(s => s.Qty2).Labels(false).Stack(true);
+        series.Bar(s => s.Qty3).Labels(false).Stack(true);
+        series.Bar(s => s.Qty4).Labels(false).Stack(true);
+        series.Bar(s => s.Qty5).Labels(false).Stack(true);
+        series.Bar(s => s.Qty6).Labels(false).Stack(true);
+        series.Bar(s => s.Qty7).Labels(false).Stack(true);
+        series.Area(s => s.CurrentQty).Labels(false).Stack(false);
+    })
+    .CategoryAxis(axis => axis
+        .Categories(s => s.ProductLine)
+    )
+    .DataBinding(dataBinding => dataBinding
+        .Ajax().Select("_SalesData", "MrpPlanEx")
+    )
+    .ValueAxis(axis => axis
+            .Numeric().Labels(labels => labels.Format("{0:#,##0}"))
+            .MajorGridLines(majorGridLines => majorGridLines.Visible(false))
+            .PlotBands(plotBands =>
+            {
+                plotBands.Add().Color("#cccccc").From(0).To(@ViewBag.Valueto).Opacity(0.3);
+            })
+    ).Tooltip(tooltip => tooltip.Visible(false).Template("Qty:<#= dataItem.Qty  #>,TotalQty:<#= dataItem.TotalQty  #>")
+   .Format("${0:#,##0}")
+    )
+)
+</fieldset>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<com.Sconit.Entity.WMS.RepackTask>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("RepackTaskGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).ClientTemplate(Html.ActionLink("<#= Item #>", "Edit", "RepackTask", new { id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.UCDescription);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.RepackQty);
+            columns.Bound(o => o.RepackUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CloseDate);
+            columns.Bound(o => o.CloseUserName);
+        })
+
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "RepackTask"))
+            .ClientEvents(events => events.OnDataBinding("RepackTaskGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function RepackTaskGrid_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                Location: $('#Location').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                RepackUser: $('#RepackUser').val(),
+                IsActive: $('#IsActive').is(':checked')
+            };
+        } 
+    </script>
+</fieldset>

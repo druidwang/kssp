@@ -1,0 +1,295 @@
+﻿@model com.Sconit.Entity.ORD.MiscOrderMaster
+@using com.Sconit.Entity.CUST
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProductionAdjustMiscOrder_View" });
+}
+<script type="text/javascript">
+    function onSuccess(e) {
+        TelerikonUpload_OnSuccess(e);
+        var data = {
+            "MiscOrderNo": $("#MiscOrderNo").val(),
+            "MoveType": $("#MoveType").val(),
+            "Status": $("#Status").val()
+        }
+        var url = "/ProductionAdjustMiscOrder/_MiscOrderDetail/";
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: url,
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var $tGrid = $("#divOutMiscOrderDetailList");
+                $($tGrid).html(data);
+            }
+        });
+    }
+    function onUpload(e) {
+        e.data = { MiscOrderNo: $("#MiscOrderNo").val()
+        };
+
+    }
+    function onEdit() {
+        var grid = $("#MiscOrderDetailGrid").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            return;
+        }
+        var miscmstr = {
+            "MiscOrderNo": $("#MiscOrderNo").val(),
+            "MoveType": $("#MoveType").val(),
+            "Flow": $("#Flow").val(),
+            "EffectiveDate": $("#EffectiveDate").val(),
+            "Note": $("#Note").val(),
+            "QualityType": $("#QualityType").val()
+        }
+        var sequences = "";
+        var items = "";
+        var qtys = "";
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim(row[0].childNodes[5].innerText)) != 0) {
+                if (items != "") {
+                    sequences += ",";
+                    items += ",";
+                    qtys += ",";
+                }
+                sequences += $.trim(row[0].childNodes[0].innerText);
+                items += $.trim(row[0].childNodes[1].innerText);
+                qtys += $.trim(row[0].childNodes[5].innerText);
+            }
+        }
+
+        var made = {
+            "sequences": sequences,
+            "items": items,
+            "qtys": qtys
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProductionAdjustMiscOrder/EditMiscOrder/",
+            data: $.extend(miscmstr, made),
+            success: function (data) {
+                $("#content").html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function Flow_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+        } else {
+            var data = { "flow": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "text",
+                url: "/ProductionAdjustMiscOrder/_GetMiscOrderLocation/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    document.getElementById("miscOrderLocation").innerHTML = "<label>" + data + "</label>";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+
+    function Print(isExport) {
+        var data = {
+            "miscOrderNo": $("#MiscOrderNo").val()
+        };
+        if (isExport) {
+            location.href = "/CostCenterMiscOrder/SaveToClient/?miscOrderNo=" + $("#MiscOrderNo").val();
+        } else {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                url: "/CostCenterMiscOrder/Print/",
+                data: data,
+                success: function (data, textStatus) {
+                    if (data != "") {
+                        PrintOrder(data);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                }
+            });
+        }
+    }
+    function Export(e) {
+        $("#miscOrderNo").val($("#MiscOrderNo").val());
+        $("#hiddenForm").submit();
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MiscOrderNo)
+            </div>
+            <div class="search-field">
+                @Html.DisplayFor(model => model.MiscOrderNo)
+            </div>
+            <div class="search-label">
+                @Html.LabelFor(model => model.MoveType)
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_MoveTypeDropDownList", "Common", new
+        {
+            SubType = (int)com.Sconit.CodeMaster.MiscOrderSubType.SY05,
+            controlName = "MoveType1",
+            enable = false,
+            selectedValue = Model != null && Model.MoveType != null ? Model.MoveType : string.Empty
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EffectiveDate)
+            </div>
+            @if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+            {   
+                <div class="editor-field-2">
+                    @Html.EditorFor(model => model.EffectiveDate)
+                </div>
+            }
+            else
+            {
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.EffectiveDate)
+                </div>
+            }
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.MiscOrderStatus,
+        controlName = "Status",
+        selectedValue = (int)Model.Status,
+        enable = false
+
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="search-field" id="miscOrderLocation">
+                @Html.DisplayFor(model => model.Location)
+            </div>
+            <div class="editor-label-2">
+                <label>
+                最后修改日期
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.LastModifyDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Note)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Note)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.QualityType)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+       {
+           code = com.Sconit.CodeMaster.CodeMaster.QualityType,
+           controlName = "QualityType",
+           selectedValue = Model != null ? ((int)Model.QualityType).ToString() : null,
+           enable = Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create
+       });
+                }
+            </div>
+            @Html.Hidden("MiscOrderNo", Model.MiscOrderNo)
+            @Html.Hidden("MoveType", Model.MoveType)
+            @Html.Hidden("CancelMoveType", Model.CancelMoveType)
+            @Html.Hidden("Status", Model.Status)
+            @Html.Hidden("QualityType", Model.QualityType)
+            @Html.Hidden("Location", Model.Location)
+            @Html.Hidden("CreateDate", Model.CreateDate)
+            @Html.Hidden("EffectiveDate", Model.EffectiveDate)
+            @Html.Hidden("CreateUserId", Model.CreateUserId)
+            @Html.Hidden("CreateUserName", Model.CreateUserName)
+            @Html.Hidden("Version", Model.Version)
+        </div>
+        <div class="editor-footer">
+            @{
+    if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create)
+    {   
+                @Html.Button(Resources.SYS.Global.Button_Save, "Url_ProductionAdjustMiscOrder_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"},
+                {"onclick","onEdit()"}
+	        })
+
+                @Html.Button(Resources.SYS.Global.Button_Delete, "Url_ProductionAdjustMiscOrder_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnDelete"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/ProductionAdjustMiscOrder/btnDelete/" + Model.MiscOrderNo) +"'"}
+	            })
+                @Html.Button(Resources.SYS.Global.Button_Confirm, "Url_ProductionAdjustMiscOrder_Confirm", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnClose"},
+                    {"needconfirm","true"},
+                     {"onclick","location.href='"+Url.Content("~/ProductionAdjustMiscOrder/btnClose/" + Model.MiscOrderNo) +"'"}
+	            })
+               
+    }
+    else if (Model.Status == com.Sconit.CodeMaster.MiscOrderStatus.Close)
+    {
+                @Html.Button(Resources.SYS.Global.Button_Cancel, "Url_ProductionAdjustMiscOrder_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnCancel"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/ProductionAdjustMiscOrder/btnCancel/" + Model.MiscOrderNo) +"'"}
+	            })
+    }
+            }
+            <button type="button" id="btnPrint" onclick="Print(false)">
+                @Resources.SYS.Global.Button_Print</button>
+            <button type="button" id="btnExport" onclick="Print(true)">
+                @Resources.SYS.Global.Button_Export</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ProductionAdjustMiscOrder/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+    <div id="divOutMiscOrderDetailList">
+        @{
+    Html.RenderAction("_MiscOrderDetail", "ProductionAdjustMiscOrder", new { miscOrderNo = Model.MiscOrderNo, flow = Model.Flow });
+        }
+    </div>
+}
+<form id="hiddenForm" action="/ProductAdjustMiscOrder/SaveToClient" target="_blank"
+    method="post">
+    <input id="miscOrderNo" name="miscOrderNo" type="hidden" />
+</form>

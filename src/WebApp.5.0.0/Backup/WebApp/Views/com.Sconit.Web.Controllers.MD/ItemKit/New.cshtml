@@ -1,0 +1,53 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MD
+@model com.Sconit.Entity.MD.ItemKit
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ItemKit_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>新建套件物料</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.KitItem)
+            </div>
+            <div class="editor-field-2">
+                  @{
+    Html.RenderAction("_ItemComboBox", "Common", new
+               {
+                    controlName = "KitItem",
+                    selectedValue = Model != null ? Model.KitItem : string.Empty
+                });
+                }
+                 @Html.ValidationMessageFor(model => model.KitItem)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ChildItem)
+            </div>
+            <div class="editor-field-2">
+                   @{
+    Html.RenderAction("_ItemComboBox", "Common", new
+               {
+                   controlName = "ChildItemCode",
+                   selectedValue = Model != null ? Model.ChildItemCode : string.Empty
+                });
+                }
+                 @Html.ValidationMessageFor(model => model.ChildItem)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Qty)
+            </div>
+            <div class="editor-field-2">
+                 @Html.Telerik().NumericTextBoxFor(model => model.Qty).DecimalDigits(1).MinValue(1)
+                @Html.ValidationMessageFor(model => model.Qty)
+            </div>
+            
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ItemKit/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

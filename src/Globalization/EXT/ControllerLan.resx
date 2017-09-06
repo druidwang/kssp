@@ -1,0 +1,2180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Con_ActualAmount" xml:space="preserve">
+    <value>实际用量</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_AddedSuccessfully" xml:space="preserve">
+    <value>添加成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_AdjustDetailCanNotBeEmpty" xml:space="preserve">
+    <value>调整明细不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_AdjustOrder" xml:space="preserve">
+    <value>调整单</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_AgingTimeAgingMathodSpecCanNotBeEmpty" xml:space="preserve">
+    <value>老化时间、老化方法、规格、规格单位为必填项。</value>
+    <comment>MD\ItemController</comment>
+  </data>
+  <data name="Con_AlreadyExists" xml:space="preserve">
+    <value>已经存在</value>
+    <comment>MD\ItemDiscontinueController</comment>
+  </data>
+  <data name="Con_AlreadyExistsSameFlowItemCodePlanTypeTypeTimeIndex" xml:space="preserve">
+    <value>已经存在相同路线{0}物料代码{1}计划类型类型{2}时间索引{3}</value>
+    <comment>MRP\ProdLineExController</comment>
+  </data>
+  <data name="Con_AlreadyExistsSameFlowItemCodePlanTypeTypeTimeIndexSnapVersion" xml:space="preserve">
+    <value>已经存在相同路线{0}物料代码{1}计划类型类型{2}时间索引{3}快照版本{4}</value>
+    <comment>MRP\MrpSnapProdLineExController</comment>
+  </data>
+  <data name="Con_AlreadyExistsSameMachineCodePlanTypeTimeIndex" xml:space="preserve">
+    <value>已经存在相同模具代码{0}计划类型类型{1}时间索引{2}.</value>
+    <comment>MRP\MachineController</comment>
+  </data>
+  <data name="Con_AlreadyExistsSameMachineCodePlanTypeTypeTimeIndexVersion" xml:space="preserve">
+    <value>已经存在相同模具代码{0}计划类型类型{1}时间索引{2}快照版本{3}.</value>
+    <comment>MRP\MrpSnapMachineController</comment>
+  </data>
+  <data name="Con_AlreadyExitsSameData" xml:space="preserve">
+    <value>已存在相同的数据，请重新填写。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_AlreadyReleased" xml:space="preserve">
+    <value>已释放</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_Area" xml:space="preserve">
+    <value>区域</value>
+    <comment>MRP\HuToController</comment>
+  </data>
+  <data name="Con_AreaCanNotBeEmpty" xml:space="preserve">
+    <value>区域为必填项</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_AreaFrom" xml:space="preserve">
+    <value>来源区域</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_AreaTo" xml:space="preserve">
+    <value>目的区域</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_AtLeastScanOneShipOrder" xml:space="preserve">
+    <value>至少扫描一张送货单！</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_BackFlushDetailInputSuccessfully" xml:space="preserve">
+    <value>投料明细投入成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BackFlushDetailIsEmpty" xml:space="preserve">
+    <value>投料明细为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BackOrder" xml:space="preserve">
+    <value>欠交</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BarcodeCancellFreezeSuccessfully" xml:space="preserve">
+    <value>条码{0}取消冻结成功</value>
+    <comment>INP\HuIdFreezeController</comment>
+  </data>
+  <data name="Con_BarcodeCanNotBeEmpty" xml:space="preserve">
+    <value>条码不能为空。</value>
+    <comment>PRD\ItemExchangeProdController</comment>
+  </data>
+  <data name="Con_BarcodeCanNotFindPleaseReInput" xml:space="preserve">
+    <value>条码没有找到，请重新输入。</value>
+    <comment>ORD\ProcurementSQOrderController</comment>
+  </data>
+  <data name="Con_BarcodeExportedSuccessfully" xml:space="preserve">
+    <value>条码导出成功,共导出了{0}张条码</value>
+    <comment>INV\HuController</comment>
+  </data>
+  <data name="Con_BarcodeFreezeSuccessfully" xml:space="preserve">
+    <value>条码{0}冻结成功</value>
+    <comment>INP\HuIdFreezeController</comment>
+  </data>
+  <data name="Con_BarcodePrintedSuccessfully" xml:space="preserve">
+    <value>条码打印成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BarcodePrintedSuccessfully_1" xml:space="preserve">
+    <value>条码打印成功,共打印了{0}张条码</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BarcodeReceiveUnsuccessfully" xml:space="preserve">
+    <value>条码收货失败</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_BaseUom" xml:space="preserve">
+    <value>基本单位</value>
+    <comment>MRP\MrpSnapController</comment>
+  </data>
+  <data name="Con_BatchImportCostCenter" xml:space="preserve">
+    <value>批导成本中心发料.</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BatchNumberCanNotBeEmpty" xml:space="preserve">
+    <value>批号不能为空</value>
+    <comment>INV\InventoryFreezeController</comment>
+  </data>
+  <data name="Con_BillAccountCancelledSuccessfully" xml:space="preserve">
+    <value>账单号{0}取消成功！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BillAccountCanNotBeEmpty" xml:space="preserve">
+    <value>账单号不能为空。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BillAccountClosedSuccessfully" xml:space="preserve">
+    <value>账单号{0}关闭成功！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BillAccountDeletedSuccessfully" xml:space="preserve">
+    <value>账单号{0}删除成功！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BillAccountNumberSavedSuccessfully" xml:space="preserve">
+    <value>账单号保存成功.</value>
+    <comment>BIL\ProcurementBillController</comment>
+  </data>
+  <data name="Con_BillAccountReleasedSuccessfully" xml:space="preserve">
+    <value>账单{0}释放成功。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_BillAccountUpdatedSuccessfully" xml:space="preserve">
+    <value>销售账单{0}更新成功。</value>
+    <comment>BIL\DistributionBillController</comment>
+  </data>
+  <data name="Con_Bin" xml:space="preserve">
+    <value>库格:{0}</value>
+    <comment>CUST\SpecialBarCodeController</comment>
+  </data>
+  <data name="Con_BinIsNotInLocation" xml:space="preserve">
+    <value>库格{0}不在库位{1}中</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_BomSuccessfullyImport" xml:space="preserve">
+    <value>Bom成功导入</value>
+    <comment>PRD\BomController</comment>
+  </data>
+  <data name="Con_BusinessCurrentDateIs" xml:space="preserve">
+    <value>业务截止日期是:</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_BusinessData" xml:space="preserve">
+    <value>所有业务</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_BusinessDataAdjustTailOrder" xml:space="preserve">
+    <value>尾差调整</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_BusinessDataCostCenterAdjustOrder" xml:space="preserve">
+    <value>成本中心和调整</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_CalendarDays" xml:space="preserve">
+    <value>日历天数</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_CancelledReleasedSuccessfully" xml:space="preserve">
+    <value>取消释放成功.</value>
+    <comment>MRP\MrpScheduleController</comment>
+  </data>
+  <data name="Con_CancelledSuccessfully" xml:space="preserve">
+    <value>取消成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_CancelledUnsuccessfully" xml:space="preserve">
+    <value>取消失败:{0}</value>
+    <comment>MRP\MrpExScrapController</comment>
+  </data>
+  <data name="Con_CanNotFindCorrespondingDistributeToProductionOrder" xml:space="preserve">
+    <value>没有找到对应的分装生产单</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_CanNotFindRefDetail" xml:space="preserve">
+    <value>没有找到引用明细:</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_CanNotFindTheItemSectionbom" xml:space="preserve">
+    <value>没有找到此物料{0}的断面bom</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_CanNotFindTheSection" xml:space="preserve">
+    <value>没有找到此断面{0}</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_CanNotFindThisExcelTemplate" xml:space="preserve">
+    <value>没有找到此excel模板</value>
+    <comment>CUST\SubPrintOrderController</comment>
+  </data>
+  <data name="Con_CanNotInputSecondAreaWhenErrorFirstAreaIsEmpty" xml:space="preserve">
+    <value>错误：第一个区域为空的情况下，不能输入第二个区域！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_CanNotInputSecondItemWhenErrorFirstItemIsEmpty" xml:space="preserve">
+    <value>错误：第一个物料为空的情况下，不能输入第二个物料！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_CanNotInputSecondLocationWhenErrorFirstLocationIsEmpty" xml:space="preserve">
+    <value>错误：第一个库位为空的情况下，不能输入第二个库位！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_CanNotNewAddedTheSection" xml:space="preserve">
+    <value>不能新增此断面{0}</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_Code" xml:space="preserve">
+    <value>代码</value>
+    <comment>MRP\MrpSnapController</comment>
+  </data>
+  <data name="Con_CodeAlreadyExists" xml:space="preserve">
+    <value>代码已经存在</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ConditionSearchNeeded" xml:space="preserve">
+    <value>请根据条件查询！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ConfirmSuccessfully" xml:space="preserve">
+    <value>确认成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_Consignment" xml:space="preserve">
+    <value>委外</value>
+    <comment>MRP\RccpPlanMiController</comment>
+  </data>
+  <data name="Con_ConsignmentInventory" xml:space="preserve">
+    <value>寄售库存</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_ContainerIsEnough" xml:space="preserve">
+    <value>工位器具够用</value>
+    <comment>MRP\MrpPlanMiController</comment>
+  </data>
+  <data name="Con_CostCenterCanNotBeEmpty" xml:space="preserve">
+    <value>成本中心不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_CreateProductionOrderSuccessfully" xml:space="preserve">
+    <value>创建生产单成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_CreateSuccessfully" xml:space="preserve">
+    <value>新建成功</value>
+    <comment>CUST\SubPrintOrderController</comment>
+  </data>
+  <data name="Con_CurrentAccountCanNotLoginTestSystem" xml:space="preserve">
+    <value>此账号不能登录测试系统</value>
+    <comment>AccountController</comment>
+  </data>
+  <data name="Con_CurrentInventory" xml:space="preserve">
+    <value>当前库存</value>
+    <comment>MRP\MrpPlanFiController</comment>
+  </data>
+  <data name="Con_CurrentMaxCapacity" xml:space="preserve">
+    <value>现有最大能力</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_CurrentQuantity" xml:space="preserve">
+    <value>现有数量</value>
+    <comment>MD\ContainerController</comment>
+  </data>
+  <data name="Con_CurrentVersionNumberMustGreaterFormerVersionNumber" xml:space="preserve">
+    <value>当前版本号必须大于前版本号。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_Customer" xml:space="preserve">
+    <value>客户</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_CustomerCalendarDailyPlanImportSuccessfully" xml:space="preserve">
+    <value>客户日程天计划导入成功.</value>
+    <comment>MRP\MrpPlanController</comment>
+  </data>
+  <data name="Con_CustomerCalendarWeekPlanImportSuccessfully" xml:space="preserve">
+    <value>客户日程周计划导入成功.</value>
+    <comment>MRP\MrpPlanController</comment>
+  </data>
+  <data name="Con_CustomerIsWrong" xml:space="preserve">
+    <value>客户填写有误。</value>
+    <comment>MD\SwitchTradingController</comment>
+  </data>
+  <data name="Con_CustomerName" xml:space="preserve">
+    <value>客户名称</value>
+    <comment>Report\IOBController</comment>
+  </data>
+  <data name="Con_DataExceedRow" xml:space="preserve">
+    <value>数据超过{0}行</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_DataExceedRowTheSpecifiedRows" xml:space="preserve">
+    <value>数据超过{0}行,只显示前{0}行</value>
+    <comment>Report\PPMController</comment>
+  </data>
+  <data name="Con_DateCanNotBeEmpty" xml:space="preserve">
+    <value>日期不能为空</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_DayWord" xml:space="preserve">
+    <value>天</value>
+    <comment>INV\LibraryAgeStatementsController</comment>
+  </data>
+  <data name="Con_DeletedSuccessfully" xml:space="preserve">
+    <value>删除成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_DeletedUnsuccessfully" xml:space="preserve">
+    <value>删除失败</value>
+    <comment>MD\LocationController</comment>
+  </data>
+  <data name="Con_DeletedUnsuccessfullyTheShiftIsOccupied" xml:space="preserve">
+    <value>删除失败该班次已经被占用。</value>
+    <comment>MD\WorkingCalendarController</comment>
+  </data>
+  <data name="Con_DeliveryOrder" xml:space="preserve">
+    <value>交货单</value>
+    <comment>ORD\DistributionOrderController</comment>
+  </data>
+  <data name="Con_DeliveryOrderNumber" xml:space="preserve">
+    <value>交货单号为：</value>
+    <comment>ORD\DistributionOrderController</comment>
+  </data>
+  <data name="Con_Description" xml:space="preserve">
+    <value>描述</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_DetailBeEmptyCanNotCreate" xml:space="preserve">
+    <value>明细为空不能创建。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_DetailBeEmptyCanNotExecuteConfirm" xml:space="preserve">
+    <value>明细为空，不能执行确认</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_DetailCanNotBeEmpty" xml:space="preserve">
+    <value>明细不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_DetailRowGapQuantityCanNotBeEmpty" xml:space="preserve">
+    <value>明细行差异数量不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_DetailRowItemCanNotBeEmpty" xml:space="preserve">
+    <value>明细行物料不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_Deviation" xml:space="preserve">
+    <value>偏差</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_DistrChanCanNotBeEmpty" xml:space="preserve">
+    <value>分销渠道不能为空。</value>
+    <comment>MD\SwitchTradingController</comment>
+  </data>
+  <data name="Con_DistributionProductionOrderNumberCanNotBeEmpty" xml:space="preserve">
+    <value>分装生产单号不能为空</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_EmergencyLead" xml:space="preserve">
+    <value>紧急提前期</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_EmptyCarGoLiveSuccessfully" xml:space="preserve">
+    <value>空车上线成功</value>
+    <comment>CUST\DeferredFeedCounter</comment>
+  </data>
+  <data name="Con_EndInventory" xml:space="preserve">
+    <value>期末</value>
+    <comment>MRP\MrpPlanFiController</comment>
+  </data>
+  <data name="Con_EndMothCanNotBeEmpty" xml:space="preserve">
+    <value>结束月不能为空</value>
+    <comment>#N/A</comment>
+  </data>
+  <data name="Con_EndTimeCanNotBeEmpty" xml:space="preserve">
+    <value>结束时间不能为空。</value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_EndTimeNeedToBeGreaterStartToTime" xml:space="preserve">
+    <value>结束时间{0}需大于开始时间{1}</value>
+    <comment>MRP\MrpExWorkHourController</comment>
+  </data>
+  <data name="Con_EndWeekCanNotBeEmpty" xml:space="preserve">
+    <value>结束周不能为空。</value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_EntranceLogisticsInformationUpdatedSuccessfully" xml:space="preserve">
+    <value>入场物流信息更新成功。</value>
+    <comment>INP\InspectResultExtController</comment>
+  </data>
+  <data name="Con_EquipmentAddedSuccessfully" xml:space="preserve">
+    <value>设备添加成功</value>
+    <comment>SCM\ProductionFlowController</comment>
+  </data>
+  <data name="Con_EquipmentAlreadyExistsRefill" xml:space="preserve">
+    <value>设备已经存在,重新填写</value>
+    <comment>SCM\ProductionFlowController</comment>
+  </data>
+  <data name="Con_EquipmentDeletedSuccessfully" xml:space="preserve">
+    <value>设备删除成功</value>
+    <comment>SCM\ProductionFlowController</comment>
+  </data>
+  <data name="Con_EquipmentModificateSuccessfully" xml:space="preserve">
+    <value>设备修改成功</value>
+    <comment>SCM\ProductionFlowController</comment>
+  </data>
+  <data name="Con_ErrorSameAreaTypeFlowTimeSpanAlreadyExits" xml:space="preserve">
+    <value>错误：已经有相同区域，类型，路线时间区间的特殊时间存在。</value>
+    <comment>MD\WorkingCalendarController</comment>
+  </data>
+  <data name="Con_ErrorShippingOrderNumberCanNotBeEmpty" xml:space="preserve">
+    <value>错误：运单号不能为空。</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_ErrorShippingOrderNumberIsNotReleasedStatus" xml:space="preserve">
+    <value>错误：运单号不是释放状态。</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_ErrorShippingOrderNumberNotExits" xml:space="preserve">
+    <value>错误：运单号不存在。</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_ExceedMinutesOfIsm" xml:space="preserve">
+    <value>工时超出{0}分钟。</value>
+    <comment>MRP\MrpPlanMiController</comment>
+  </data>
+  <data name="Con_ExecuteSuccessfully" xml:space="preserve">
+    <value>调用成功。</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_ExecuteUnsuccessfully" xml:space="preserve">
+    <value>调用失败</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_ExitedStockTakeResultIsDeleted" xml:space="preserve">
+    <value>已存在于库位中的盘点结果已删除!</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_EXOrder" xml:space="preserve">
+    <value>挤出</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_ExportTimeRowRecordCurrentExportedRowRecords" xml:space="preserve">
+    <value>导出时间:{0},共有{1}行记录,本次导出{2}行记录</value>
+    <comment>WebAppBaseController</comment>
+  </data>
+  <data name="Con_ExportUnsuccessfully" xml:space="preserve">
+    <value>导出失败，导出的数量超过了{0}行,请重新设置查询条件</value>
+    <comment>INV\LocationTransactionController</comment>
+  </data>
+  <data name="Con_ExternalOrderNumberCanNotBeEmpty" xml:space="preserve">
+    <value>回单号不能为空!</value>
+    <comment>ORD\DistributionIpMasterController</comment>
+  </data>
+  <data name="Con_ExtrusionFlowFunctionClassificationSavedSuccessfully" xml:space="preserve">
+    <value>挤出线功能分类保存成功.</value>
+    <comment>MRP\FlowClassifyController</comment>
+  </data>
+  <data name="Con_ExtrusionParamDeletedSuccessfully" xml:space="preserve">
+    <value>挤出参数删除成功。</value>
+    <comment>MD\ItemController</comment>
+  </data>
+  <data name="Con_ExtrusionParamUpdatedSuccessfully" xml:space="preserve">
+    <value>挤出参数更新成功。</value>
+    <comment>MD\ItemController</comment>
+  </data>
+  <data name="Con_FailureInformation" xml:space="preserve">
+    <value>失败信息</value>
+    <comment>SI\SAPInterface</comment>
+  </data>
+  <data name="Con_FilterCapacityIsEnough" xml:space="preserve">
+    <value>过滤产能够用</value>
+    <comment>MRP\MrpPlanMiController</comment>
+  </data>
+  <data name="Con_FilterOrder" xml:space="preserve">
+    <value>过滤</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_FinishGood" xml:space="preserve">
+    <value>成品</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_FinishGoodDescription" xml:space="preserve">
+    <value>成品描述</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_FinishGoodUom" xml:space="preserve">
+    <value>成品单位</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_FinishTimeAlreadyIncluded" xml:space="preserve">
+    <value>完成时间已经在Id{0}时间{1}和{2}中包含</value>
+    <comment>MRP\MrpExWorkHourController</comment>
+  </data>
+  <data name="Con_FIOrder" xml:space="preserve">
+    <value>后加工</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_FirstBatchNumberBeEmptyCanNotInputSecondBatchNumber" xml:space="preserve">
+    <value>第一个批号为空,不能输入第二个批号！</value>
+    <comment>INP\AuditInspectionController</comment>
+  </data>
+  <data name="Con_FirstBatchNumberCanNotBeEmpty" xml:space="preserve">
+    <value>第一个批号不能为空！</value>
+    <comment>INP\AuditInspectionController</comment>
+  </data>
+  <data name="Con_Flow" xml:space="preserve">
+    <value>路线</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_FlowAlreadyMaitained" xml:space="preserve">
+    <value>路线{0}已经维护，请确认！</value>
+    <comment>MD\SwitchTradingController</comment>
+  </data>
+  <data name="Con_FlowCanNotBeEmpty" xml:space="preserve">
+    <value>路线不能为空</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_FlowChooseIsWrongPleaseConfirm" xml:space="preserve">
+    <value>路线选择不正确，请确认。</value>
+    <comment>ORD\DistributionShipTireController</comment>
+  </data>
+  <data name="Con_FlowCodeCanNotBeEmpty" xml:space="preserve">
+    <value>路线代码不能为空。</value>
+    <comment>MD\SwitchTradingController</comment>
+  </data>
+  <data name="Con_FlowCodeIsWrong" xml:space="preserve">
+    <value>路线代码填写有误。</value>
+    <comment>MD\SwitchTradingController</comment>
+  </data>
+  <data name="Con_FlowDescription" xml:space="preserve">
+    <value>路线描述</value>
+    <comment>MRP\MrpSnapController</comment>
+  </data>
+  <data name="Con_FlowDetailCanNotBeEmpty" xml:space="preserve">
+    <value>路线明细不能为空</value>
+    <comment>MRP\QuotaController</comment>
+  </data>
+  <data name="Con_FlowImportSuccessfully" xml:space="preserve">
+    <value>路线成功导入</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_Forcast" xml:space="preserve">
+    <value>预测</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ForceMaterial" xml:space="preserve">
+    <value>塞芯</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_Freeze" xml:space="preserve">
+    <value>冻结</value>
+    <comment>INV\HuLocationLotDetailController</comment>
+  </data>
+  <data name="Con_FreezeCount" xml:space="preserve">
+    <value>冻结数</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_FreezeInventory" xml:space="preserve">
+    <value>冻结库存</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_Gap" xml:space="preserve">
+    <value>差异</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_GeneratedSuccessfully" xml:space="preserve">
+    <value>生成成功！</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_GeneratedSuccessfullyItemCodeIs" xml:space="preserve">
+    <value>生成成功，物料代码</value>
+    <comment>ORD\EmergencyTransferOrder</comment>
+  </data>
+  <data name="Con_Gross" xml:space="preserve">
+    <value>{0}毛</value>
+    <comment>MRP\MrpPlanFiController</comment>
+  </data>
+  <data name="Con_GrossRequirement" xml:space="preserve">
+    <value>毛需求</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_HalfFinishedGood" xml:space="preserve">
+    <value>半制品</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_HalfFinishedGoodDescription" xml:space="preserve">
+    <value>半制品描述</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_HaltDays" xml:space="preserve">
+    <value>停机天数</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_HaltHours" xml:space="preserve">
+    <value>停机时间(小时)</value>
+    <comment>MRP\RccpPlanMiController</comment>
+  </data>
+  <data name="Con_HolidayHours" xml:space="preserve">
+    <value>节假日(小时)</value>
+    <comment>MRP\RccpPlanMiController</comment>
+  </data>
+  <data name="Con_Holidays" xml:space="preserve">
+    <value>节假日</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_IdStartToTimeAndEndTimeContainCurrentTime" xml:space="preserve">
+    <value>在Id{0}开始时间{1}和结束事件{2}中包含此时间段</value>
+    <comment>MRP\MrpExWorkHourController</comment>
+  </data>
+  <data name="Con_ImportSuccessfully" xml:space="preserve">
+    <value>导入成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ImportTemplateDetailBeEmpty" xml:space="preserve">
+    <value>导入模板明细为空。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ImportUnsuccessfully" xml:space="preserve">
+    <value>导入失败。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_InInventory" xml:space="preserve">
+    <value>收</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_InProcess" xml:space="preserve">
+    <value>在途</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_InputDeliveryOrderNumberToMuchThatExceedTheMaximum" xml:space="preserve">
+    <value>输入的交货单号过多为{0}，超过最大数量100。</value>
+    <comment>ORD\DistributionOrderController</comment>
+  </data>
+  <data name="Con_InputOrderNumberIsNotProductionOrderNumber" xml:space="preserve">
+    <value>输入的单号{0}不是生产单号。</value>
+    <comment>INV\HuController</comment>
+  </data>
+  <data name="Con_Inqualified" xml:space="preserve">
+    <value>不合格</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_InqualifiedCount" xml:space="preserve">
+    <value>不合格数</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_InqualifiedGoodProcessOrderClosedSuccessfully" xml:space="preserve">
+    <value>不合格品处理单{0}关闭成功。</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_InqualifiedGoodProcessOrderCreateSuccessfully" xml:space="preserve">
+    <value>不合格品处理单创建成功</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_InqualifiedGoodsProcessOrderDetailAddedSuccessfully" xml:space="preserve">
+    <value>不合格品处理单明细添加成功</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_InqualifiedGoodsProcessOrderDetailDeletedSuccessfully" xml:space="preserve">
+    <value>不合格品处理单明细删除成功</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_InqualifiedGoodsProcessOrderDetailSavedSuccessfully" xml:space="preserve">
+    <value>不合格品处理单明细保存成功</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_InqualifiedGoodsProcessOrderSubmitSuccessfully" xml:space="preserve">
+    <value>不合格品处理单提交成功</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_InqualifiedInventory" xml:space="preserve">
+    <value>不合格库存</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_InspectionDetailCanNotBeEmpty" xml:space="preserve">
+    <value>待验明细不能为空</value>
+    <comment>INP\InspectionOrderController</comment>
+  </data>
+  <data name="Con_InspectionOrderJudgeSuccessfully" xml:space="preserve">
+    <value>报验单{0}判定成功</value>
+    <comment>INP\InspectionOrderController</comment>
+  </data>
+  <data name="Con_InspectionOrderNumberGeneratedSuccessfully" xml:space="preserve">
+    <value>报验单号{0}生成成功！</value>
+    <comment>INP\InspectionOrderController</comment>
+  </data>
+  <data name="Con_InspectionQuantityMustGreaterThenZero" xml:space="preserve">
+    <value>第</value>
+    <comment>INP\InspectionOrderController</comment>
+  </data>
+  <data name="Con_InspectionResultSavedSuccessfully" xml:space="preserve">
+    <value>报验结果保存成功</value>
+    <comment>INP\InspectionOrderController</comment>
+  </data>
+  <data name="Con_InvalidInventory" xml:space="preserve">
+    <value>无效库存</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_Inventory" xml:space="preserve">
+    <value>9101库存</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_Inventory1" xml:space="preserve">
+    <value>9102库存</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_Inventory2" xml:space="preserve">
+    <value>9103库存</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_Inventory3" xml:space="preserve">
+    <value>存</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_InventoryEffectiveDateLessThanCurrentFinancialMothStartToDate" xml:space="preserve">
+    <value>库存的生效日期{0}小于当前财政月的开始日期{1}，不能进行库存操作。</value>
+    <comment>MRP\MrpExScrapController</comment>
+  </data>
+  <data name="Con_IslandAlreadyBeenOccupiedCanNotDeleted" xml:space="preserve">
+    <value>岛区已经被占用不能删除.</value>
+    <comment>MRP\IslandController</comment>
+  </data>
+  <data name="Con_ISM" xml:space="preserve">
+    <value>工时</value>
+    <comment>MRP\RccpPlanMiController</comment>
+  </data>
+  <data name="Con_IsNotExtrusionProductionOrder" xml:space="preserve">
+    <value>不是挤出生产单</value>
+    <comment>MRP\MrpExScrapController</comment>
+  </data>
+  <data name="Con_IsNotPurchaseConsignmentOrderCanNotModifyPrice" xml:space="preserve">
+    <value>不是采购/委外单不能修改价格！</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_IsNotPurchaseConsignmentShipOrderCanNotModifyPrice" xml:space="preserve">
+    <value>不是采购/委外送货单不能修改价格！</value>
+    <comment>ORD\ProcurementIpMasterController</comment>
+  </data>
+  <data name="Con_Item" xml:space="preserve">
+    <value>物料</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ItemAlreadyExists" xml:space="preserve">
+    <value>物料已经存在</value>
+    <comment>CUST\ItemAverageController</comment>
+  </data>
+  <data name="Con_ItemAlreadyExistsPleaseReselect" xml:space="preserve">
+    <value>物料已经存在，请重新选择。</value>
+    <comment>SCM\ProcurementFlowController</comment>
+  </data>
+  <data name="Con_ItemCanNotBeEmpty" xml:space="preserve">
+    <value>物料不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ItemCode" xml:space="preserve">
+    <value>物料代码</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ItemCodeCanNotBeEmpty" xml:space="preserve">
+    <value>物料代码为必选项！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ItemDescription" xml:space="preserve">
+    <value>物料描述</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ItemReceiveDSuccessfullyBarcodeNumber" xml:space="preserve">
+    <value>物料 {0}[{1}] 收货成功,条码号:{2}</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_ItemRequirementQuantityBomUomScraptRate" xml:space="preserve">
+    <value>物料:{0}[{1}]; 需求数量:{2}{5}; Bom单位用量:{3}{6}; 废品率:{4}. </value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_ItemSuccessfullyImport" xml:space="preserve">
+    <value>物料成功导入</value>
+    <comment>MD\ItemController</comment>
+  </data>
+  <data name="Con_ItemUrgentReceivedSuccessfully" xml:space="preserve">
+    <value>物料 {0}[{1}] 紧急收货成功,条码号:{2}</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_JudgeSuccessfully" xml:space="preserve">
+    <value>判定成功</value>
+    <comment>INP\InspectionOrderController</comment>
+  </data>
+  <data name="Con_KeeperCreateSuccessfully" xml:space="preserve">
+    <value>保管员创建成功。</value>
+    <comment>MD\CustodianController</comment>
+  </data>
+  <data name="Con_KeyArticleAlreadyExists" xml:space="preserve">
+    <value>关键件已经存在</value>
+    <comment>CUST\ItemTraceController</comment>
+  </data>
+  <data name="Con_KitCreatedSuccessfully" xml:space="preserve">
+    <value>套件创建成功。</value>
+    <comment>MD\ItemKitController</comment>
+  </data>
+  <data name="Con_KitUpdatedSuccessfully" xml:space="preserve">
+    <value>套件更新成功。</value>
+    <comment>MD\ItemKitController</comment>
+  </data>
+  <data name="Con_LackDetailCanNotCreateOrder" xml:space="preserve">
+    <value>没有明细，不能创建订单</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_LackDetailCanNotUpdatedRate" xml:space="preserve">
+    <value>没有明细，不能更新比率</value>
+    <comment>MRP\MrpExPlanItemRateController</comment>
+  </data>
+  <data name="Con_LackExitedStockTakeResult" xml:space="preserve">
+    <value>没有可删除的已存在于库位中的盘点结果!</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_LackJudgeDetail" xml:space="preserve">
+    <value>没有判定明细</value>
+    <comment>INP\InspectionOrderController</comment>
+  </data>
+  <data name="Con_LackModificateTheOrderPermission" xml:space="preserve">
+    <value>没有修改此订单的权限！</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_LackModificateTheShipOrderPermission" xml:space="preserve">
+    <value>没有修改此送货单的权限！</value>
+    <comment>ORD\ProcurementIpMasterController</comment>
+  </data>
+  <data name="Con_LackProductionPurchaseOrderImportDataError" xml:space="preserve">
+    <value>没有生产要货单，导入数据错误</value>
+    <comment>ORD\EmergencyTransferOrderController</comment>
+  </data>
+  <data name="Con_LackTheFlowPermission" xml:space="preserve">
+    <value>没有此路线{0}的权限</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_LackTheFlowPermission_1" xml:space="preserve">
+    <value>没有此路线的权限</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_LackTheOrderNumberPermission" xml:space="preserve">
+    <value>没有此订单{0}的权限</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_LackTheShipOrderNumberPermission" xml:space="preserve">
+    <value>没有此送货单号{0}的权限</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_LaterDate" xml:space="preserve">
+    <value>以上</value>
+    <comment>INV\LibraryAgeStatement</comment>
+  </data>
+  <data name="Con_LatestStartTo" xml:space="preserve">
+    <value>最晚开始</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_LineMaterialLocationFromLocationToMRPweights" xml:space="preserve">
+    <value>{7}路线:{0}[{1}]; 物料:{2}[{3}]; 来源库位:{4}; 目的库位:{5}; MRP权重:{6}</value>
+    <comment>Report\ItemFlowController</comment>
+  </data>
+  <data name="Con_LoadRate" xml:space="preserve">
+    <value>负荷率</value>
+    <comment>MRP\RccpPlanMiController</comment>
+  </data>
+  <data name="Con_Location" xml:space="preserve">
+    <value>库位</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_LocationAlreadyExists" xml:space="preserve">
+    <value>库位已经存在</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_LocationAlreadyExistsPleaseReselect" xml:space="preserve">
+    <value>库位已经存在,重新选择</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_LocationCanNotBeEmpty" xml:space="preserve">
+    <value>库位不能为空！</value>
+    <comment>INP\AuditInspectionController</comment>
+  </data>
+  <data name="Con_LocationCodeCanNotBeEmpty" xml:space="preserve">
+    <value>库位代码为必选项！</value>
+    <comment>PRD\ItemExchangeProdController</comment>
+  </data>
+  <data name="Con_LocationFrom" xml:space="preserve">
+    <value>来源库位</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_LocationIsWrong" xml:space="preserve">
+    <value>的库位不正确</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_LocationSearchConditionCanNotBeEmpty" xml:space="preserve">
+    <value>查询条件中库位为必选项。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_LocationTo" xml:space="preserve">
+    <value>目的库位</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_Location_1" xml:space="preserve">
+    <value>库位:{0}</value>
+    <comment>CUST\SpecialBarCodeController</comment>
+  </data>
+  <data name="Con_LogisticsFlowIntegrityCheckSuccessfully" xml:space="preserve">
+    <value>物流路线的完整性检查成功</value>
+    <comment>MRP\MrpSnapController</comment>
+  </data>
+  <data name="Con_Machine" xml:space="preserve">
+    <value>模具</value>
+    <comment>MRP\MrpPlanFiController</comment>
+  </data>
+  <data name="Con_MachineDescription" xml:space="preserve">
+    <value>模具描述</value>
+    <comment>MRP\MrpPlanFiController</comment>
+  </data>
+  <data name="Con_MaterialGroup" xml:space="preserve">
+    <value>物料组</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_MaterialGroupDescription" xml:space="preserve">
+    <value>物料组描述</value>
+    <comment>INV\LibraryAgeStatementsController</comment>
+  </data>
+  <data name="Con_MaxCapacity" xml:space="preserve">
+    <value>最大能力</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_MaxGapRate" xml:space="preserve">
+    <value>最大差额</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_MaxInventory" xml:space="preserve">
+    <value>最大库存</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_MIOrder" xml:space="preserve">
+    <value>炼胶</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_MMPurchase" xml:space="preserve">
+    <value>采购</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_MMPurchaseCancel" xml:space="preserve">
+    <value>采购冲销</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_ModelDailyPlanImportSuccessfully" xml:space="preserve">
+    <value>车型天计划导入成功.</value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_ModelMothPlanImportSuccessfully" xml:space="preserve">
+    <value>车型月计划导入成功.</value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_ModelSeqImportSuccessfully" xml:space="preserve">
+    <value>整车序列导入成功</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_ModelWeekPlanImportSuccessfully" xml:space="preserve">
+    <value>车型周计划导入成功.</value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_ModificateSuccessfully" xml:space="preserve">
+    <value>修改成功。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_MoveReasonCanNotBeEmpty" xml:space="preserve">
+    <value>移动原因不能为空</value>
+    <comment>ORD\InMiscOrderController</comment>
+  </data>
+  <data name="Con_NeedInputShipOrderToSearch" xml:space="preserve">
+    <value>请根据送货单进行查询！</value>
+    <comment>INP\InspectResultExtController</comment>
+  </data>
+  <data name="Con_NeedToCancelShippingOrderIfNeedToReship" xml:space="preserve">
+    <value>运单应经出门，如果想重新进行出门请到查询中取消</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_Net" xml:space="preserve">
+    <value>{0}净</value>
+    <comment>MRP\MrpPlanFiController</comment>
+  </data>
+  <data name="Con_NetRequirement" xml:space="preserve">
+    <value>净需求</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_NewAddedSuccessfully" xml:space="preserve">
+    <value>新增成功</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_NewAddedUnsuccessfully" xml:space="preserve">
+    <value>新增失败</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_NewAddedUnsuccessfully_1" xml:space="preserve">
+    <value>新增失败:{0}</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_NoData" xml:space="preserve">
+    <value>没有数据</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_NoRecord" xml:space="preserve">
+    <value>没有记录</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_NotBeenUsedStockTakeMaterial" xml:space="preserve">
+    <value>未被使用的盘点材料</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_NoteCanNotBeEmpty" xml:space="preserve">
+    <value>Note不能为空</value>
+    <comment>ORD\OutMiscOrderController</comment>
+  </data>
+  <data name="Con_NotImport" xml:space="preserve">
+    <value>没有导入</value>
+    <comment>ORD\EmergencyTransferOrder</comment>
+  </data>
+  <data name="Con_NotProvisionalEstimate" xml:space="preserve">
+    <value>非暂估价</value>
+    <comment>ORD\ProcurementOrder</comment>
+  </data>
+  <data name="Con_NotReleased" xml:space="preserve">
+    <value>未释放</value>
+    <comment>MRP\MaterialPlan</comment>
+  </data>
+  <data name="Con_NotSupportTheTypeOrderReference" xml:space="preserve">
+    <value>不支持此类型的订单引用</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_OnlyExecuteStatusPickOrderCanBeShipped" xml:space="preserve">
+    <value>只有状态为执行中的拣货单才能发货。</value>
+    <comment>ORD\PickListController</comment>
+  </data>
+  <data name="Con_OrderCountCanNotLessThanZero" xml:space="preserve">
+    <value>订单数不能小于0</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_OrderNumber" xml:space="preserve">
+    <value>订单</value>
+    <comment>SP\SupplierOrderIssueController</comment>
+  </data>
+  <data name="Con_OrderNumberCanNotBeEmpty" xml:space="preserve">
+    <value>订单号不能为空！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_OrderNumberNotExits" xml:space="preserve">
+    <value>订单号不存在！</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_OrderTypeIsWrong" xml:space="preserve">
+    <value>订单类型不正确</value>
+    <comment>MRP\MrpExScrapController</comment>
+  </data>
+  <data name="Con_Others" xml:space="preserve">
+    <value>其它</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_OutInventory" xml:space="preserve">
+    <value>发</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_OutputQuantity" xml:space="preserve">
+    <value>产出数量</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_OverTimeTimeCanNotBeEmpty" xml:space="preserve">
+    <value>过期时间不能为空。</value>
+    <comment>INV\HuIdEpDateChangeController</comment>
+  </data>
+  <data name="Con_ParamTypeDuplicate" xml:space="preserve">
+    <value>ParamType 重复！</value>
+    <comment>Report\CustReportController</comment>
+  </data>
+  <data name="Con_PartAlreadyExists" xml:space="preserve">
+    <value>零件已经存在</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_PartAlreadyExists1" xml:space="preserve">
+    <value>零件已经存在,重新选择</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_PartExceedTwoHundred" xml:space="preserve">
+    <value>零件超过200个！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_PartExceedTwoThousand" xml:space="preserve">
+    <value>零件超过2000个！</value>
+    <comment>INV\ViewLocationLotDetailController</comment>
+  </data>
+  <data name="Con_Pause" xml:space="preserve">
+    <value>暂停</value>
+    <comment>SYS\TriggerController</comment>
+  </data>
+  <data name="Con_PercentRate" xml:space="preserve">
+    <value>百分比</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_Pick" xml:space="preserve">
+    <value>上架</value>
+    <comment>INV\HuLocationLotDetailController</comment>
+  </data>
+  <data name="Con_PickDetailCanNotBeEmpty" xml:space="preserve">
+    <value>拣货明细不能为空</value>
+    <comment>ORD\PickListController</comment>
+  </data>
+  <data name="Con_PickOrderNumberNotExits" xml:space="preserve">
+    <value>拣货单号不存在。</value>
+    <comment>ORD\PickListController</comment>
+  </data>
+  <data name="Con_PlanProtocolRefreshSuccessfully" xml:space="preserve">
+    <value>计划协议刷新成功。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_PlanReleasedSuccessfullyDailyPlanTransformToShiftPlanSuccessfully" xml:space="preserve">
+    <value>计划释放成功,天计划转班产计划成功</value>
+    <comment>MRP\MrpPlanMiController</comment>
+  </data>
+  <data name="Con_PlanTimeSpanCanNotBeEmpty" xml:space="preserve">
+    <value>计划时间段不能为空。</value>
+    <comment>Report\ExPlanExecutionControlController</comment>
+  </data>
+  <data name="Con_PlantsOfSelectedShipOrderInconsistent" xml:space="preserve">
+    <value>所选送货单的分厂不一致，请从新选择</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_PlanTypeVersionTimeItemCodeTimeIndexCanNotBeEmpty" xml:space="preserve">
+    <value>计划类型,版本时间,物料代码,时间索引都不能为空.</value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_PlanVersionAndResourceGroupCanNotBeEmpty" xml:space="preserve">
+    <value>计划版本和资源组是必填项</value>
+    <comment>MRP\MrpInvInController</comment>
+  </data>
+  <data name="Con_PleaseCancelCorrespondingProductionOrderOfThisFlowShiftExits" xml:space="preserve">
+    <value>此路线{0}班次{1}已经有生产单{2}。请先取消对应的生产单。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_PleaseChooseCustomer" xml:space="preserve">
+    <value>请选择客户</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_PleaseChooseFlowToSearch" xml:space="preserve">
+    <value>请选择路线进行查询。</value>
+    <comment>ORD\DistributionShipTireController</comment>
+  </data>
+  <data name="Con_PleaseChooseOneDetail" xml:space="preserve">
+    <value>请选择一条明细</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_PleaseChooseOneFlow" xml:space="preserve">
+    <value>请选择一条路线</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_PleaseChoosePrintedDetail" xml:space="preserve">
+    <value>请选择打印明细。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_PleaseChooseProcessMathod" xml:space="preserve">
+    <value>请选择处理方法</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_PleaseChooseValuationItem" xml:space="preserve">
+    <value>请选择计价项！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_PleaseFillCanNotBeEmpty" xml:space="preserve">
+    <value>请填写必填项。</value>
+    <comment>MD\ItemKitController</comment>
+  </data>
+  <data name="Con_PleaseFirstlyChooseOneDetail" xml:space="preserve">
+    <value>请先选择一条明细</value>
+    <comment>ORD\PickListController</comment>
+  </data>
+  <data name="Con_PleaseFirstlyToDoOffLineToProductionPlanOrder" xml:space="preserve">
+    <value>请先对生产计划单号{0}做下线处理</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_PleaseInputBarcodeToSearch" xml:space="preserve">
+    <value>请输条码进行查询。</value>
+    <comment>ORD\ProcurementSQOrderController</comment>
+  </data>
+  <data name="Con_PleaseInputDeliveryOrderNumber" xml:space="preserve">
+    <value>请输入交货单号。</value>
+    <comment>ORD\DistributionOrderController</comment>
+  </data>
+  <data name="Con_PleaseInputKeeperToSearch" xml:space="preserve">
+    <value>请输入保管员进行查询。</value>
+    <comment>ORD\ProcurementSQOrderController</comment>
+  </data>
+  <data name="Con_PleaseInputOrderNumber" xml:space="preserve">
+    <value>请输入订单号</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_PleaseInputPlanOrderNumberOrProductionLineWeek" xml:space="preserve">
+    <value>请输入计划订单号或生产线、周</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_PleaseInputProductionLineCodeOrOrderNumber" xml:space="preserve">
+    <value>请输入生产线代码或订单号。</value>
+    <comment>PRD\ProdLineLocationDetailController</comment>
+  </data>
+  <data name="Con_PleaseInputProductionLineSearch" xml:space="preserve">
+    <value>请输入生产线查询</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_PleaseInputProductionLineToSearch" xml:space="preserve">
+    <value>请输入生产线进行查询。</value>
+    <comment>CUST\DeferredFeedCounterController</comment>
+  </data>
+  <data name="Con_PleaseInputProductionOrderNumber" xml:space="preserve">
+    <value>请输入生产单号</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_PleaseInputTransferFlowStartToTimeEndTimeSearch" xml:space="preserve">
+    <value>请输入移库路线，开始时间，结束时间查询</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_PleaseInputVersionTimePlanSearch" xml:space="preserve">
+    <value>请输入版本时间，计划查询</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_PleaseInputVersionTimeWeekProductionLineSearch" xml:space="preserve">
+    <value>请输入版本时间，周，生产线查询</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_PleaseInputVersionTimeWeekSearch" xml:space="preserve">
+    <value>请输入版本时间，周查询</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_PleaseInputWeekProductionLineToSearch" xml:space="preserve">
+    <value>请输入周，生产线查询</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_PleaseMustInputOneSearchConditionExceptRowNumber" xml:space="preserve">
+    <value>除行号外，请必须输入一个查询条件。</value>
+    <comment>ORD\PickListController</comment>
+  </data>
+  <data name="Con_PostDetailCanNotBeEmpty" xml:space="preserve">
+    <value>过账明细不能为空。</value>
+    <comment>ORD\DistributionOrderController</comment>
+  </data>
+  <data name="Con_PostingSuccessfully" xml:space="preserve">
+    <value>过账成功。</value>
+    <comment>ORD\DistributionOrder</comment>
+  </data>
+  <data name="Con_PPAdjust" xml:space="preserve">
+    <value>生产调整</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_PPExScrapt" xml:space="preserve">
+    <value>挤出废品报工</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_PPMIFilter" xml:space="preserve">
+    <value>炼胶过滤</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_PPReceive" xml:space="preserve">
+    <value>生产收货</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_PPReceiveCancel" xml:space="preserve">
+    <value>生产收货冲销</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_PPTrail" xml:space="preserve">
+    <value>生产试制</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_PrepareingDataForPlan" xml:space="preserve">
+    <value>正在获取计划准备数据,请等待.数据版本号:{0}</value>
+    <comment>MRP\MrpSnapController</comment>
+  </data>
+  <data name="Con_PriceList" xml:space="preserve">
+    <value>价格单</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_PrintedBarcodeQuantityCanNotExceedFiveHundred" xml:space="preserve">
+    <value>每次打印条码的数量不能超过500</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ProcessCanNotBeEmpty" xml:space="preserve">
+    <value>工序不能为空</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_ProcessMathodCanNotBeEmpty" xml:space="preserve">
+    <value>处理方式不能为空</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_ProductionLine" xml:space="preserve">
+    <value>生产线</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ProductionLineCanNotBeEmpty" xml:space="preserve">
+    <value>生产线不能为空</value>
+    <comment>PRD\ProductLineController</comment>
+  </data>
+  <data name="Con_ProductionLineIsWrong" xml:space="preserve">
+    <value>生产线不正确，请重新输入。</value>
+    <comment>CUST\DeferredFeedCounterController</comment>
+  </data>
+  <data name="Con_ProductionLineIsWrongOrLackPermission" xml:space="preserve">
+    <value>生产线不正确或没有权限</value>
+    <comment>PRD\ProductLineController</comment>
+  </data>
+  <data name="Con_ProductionLineShiftPlanAlreadyReleasedPleaseConfirmIfNeedToCover" xml:space="preserve">
+    <value>生产线{0}的班产计划已经释放,请确定是否需要覆盖原计划</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_ProductionOrderCanNotBeEmpty" xml:space="preserve">
+    <value>生产单不能为空</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_ProductionOrderIsWrongOrLackPermission" xml:space="preserve">
+    <value>生产单不正确或没有权限</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_ProductionPlanOrderNumberGoLiveSuccessfully" xml:space="preserve">
+    <value>生产计划单号{0}上线成功</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_ProductionPlanOrderNumberOutPutSuccessfully" xml:space="preserve">
+    <value>生产计划单号{0}下线成功</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_ProvisionalEstimate" xml:space="preserve">
+    <value>暂估价</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_PurchaseBillAccountCreatedSuccessfully" xml:space="preserve">
+    <value>{0}采购账单创建成功！</value>
+    <comment>BIL\ProcurementBillController</comment>
+  </data>
+  <data name="Con_PurchaseBillAccountUpdatedSuccessfully" xml:space="preserve">
+    <value>采购账单{0}更新成功。</value>
+    <comment>BIL\ProcurementBillController</comment>
+  </data>
+  <data name="Con_PurchaseOrder" xml:space="preserve">
+    <value>要货单：</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_PurchaseOrderNumber" xml:space="preserve">
+    <value>要货单号:</value>
+    <comment>ORD\EmergencyTransferOrderController</comment>
+  </data>
+  <data name="Con_PurchaseOrderNumberCanNotBeEmpty" xml:space="preserve">
+    <value>要货单号不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_PurchaseOrderRowNumberCanNotBeEmpty" xml:space="preserve">
+    <value>要货单行号不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_Qualified" xml:space="preserve">
+    <value>合格</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_QualifiedCount" xml:space="preserve">
+    <value>合格数</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_QuantityCanNotBeEmpty" xml:space="preserve">
+    <value>数量不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_QuantityInputError" xml:space="preserve">
+    <value>数量输入错误,根据单包装浮动范围物料代码{0}的最大数量为{1},最小数量为{2}</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_QuantityMustGreaterOrEqual" xml:space="preserve">
+    <value>数量必须大于等于0</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_Quota" xml:space="preserve">
+    <value>定额</value>
+    <comment>MRP\MrpPlanFiController</comment>
+  </data>
+  <data name="Con_RateEditSuccessfully" xml:space="preserve">
+    <value>比例编辑成功</value>
+    <comment>MRP\MrpExPlanItemRateController</comment>
+  </data>
+  <data name="Con_RecalculateTimeSuccessfully" xml:space="preserve">
+    <value>重新计算时间成功。</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_ReceiveAreaCanNotBeEmpty" xml:space="preserve">
+    <value>收货区域不能为空</value>
+    <comment>ORD\OutMiscOrderController</comment>
+  </data>
+  <data name="Con_ReceiveDetailCanNotBeEmpty" xml:space="preserve">
+    <value>收货明细不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ReceiveLocationCanNotBeEmpty" xml:space="preserve">
+    <value>收货库位不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ReceiveOrderCancelledSuccessfully" xml:space="preserve">
+    <value>收货单取消成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ReceiveOrderNumberNotExits" xml:space="preserve">
+    <value>收货单号不存在，请重新输入！</value>
+    <comment>INP\InspectionOrderController</comment>
+  </data>
+  <data name="Con_refertoCountCanNotBeEmpty" xml:space="preserve">
+    <value>参考数不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_Released" xml:space="preserve">
+    <value>释放</value>
+    <comment>MRP\MrpPlanMiController</comment>
+  </data>
+  <data name="Con_ReleasedAgain" xml:space="preserve">
+    <value>重新释放</value>
+    <comment>MRP\MrpPlanMiController</comment>
+  </data>
+  <data name="Con_ReleasedSuccessfully" xml:space="preserve">
+    <value>释放成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ReleaseSuccessfully" xml:space="preserve">
+    <value>放行成功！</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_RemainedMinutesOfIsm" xml:space="preserve">
+    <value>工时还剩{0}分钟。</value>
+    <comment>MRP\MrpPlanMiController</comment>
+  </data>
+  <data name="Con_ReProcessSAPMESBOMUnsuccessfully" xml:space="preserve">
+    <value>重处理SAP传输到MES的BOM失败,批次号为：</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_ReProcessSAPMESCustomerUnsuccessfully" xml:space="preserve">
+    <value>重处理SAP传输到MES的客户失败,批次号为：</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_ReProcessSAPMESItemUnsuccessfully" xml:space="preserve">
+    <value>重处理SAP传输到MES的物料失败,批次号为：</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_ReProcessSAPMESPriceListOrderUnsuccessfully" xml:space="preserve">
+    <value>重处理SAP传输到MES的价格单失败,批次号为：</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_ReProcessSAPMESSupplierUnsuccessfully" xml:space="preserve">
+    <value>重处理SAP传输到MES的供应商失败,批次号为：</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_ReProcessSAPMESUomTrandformUnsuccessfully" xml:space="preserve">
+    <value>重处理SAP传输到MES的单位转换失败,批次号为：</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_ReprocessSuccessfully" xml:space="preserve">
+    <value>重新处理成功</value>
+    <comment>SI\SAPInterfaceController</comment>
+  </data>
+  <data name="Con_RequirementLength" xml:space="preserve">
+    <value>需求长度</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_RequirementMachine" xml:space="preserve">
+    <value>需求模具</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_RequirementShift" xml:space="preserve">
+    <value>需求班次</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_RequirementSum" xml:space="preserve">
+    <value>需求合计</value>
+    <comment>MD\ContainerController</comment>
+  </data>
+  <data name="Con_ReserveNumberAndReserveRowNumberCanNotBeEmpty" xml:space="preserve">
+    <value>预留号和预留行号不能为空。</value>
+    <comment>ORD\ProductionTrailMiscOrderController</comment>
+  </data>
+  <data name="Con_ReserveNumberCanNotBeEmpty" xml:space="preserve">
+    <value>预留号不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ReserveRowCanNotBeEmpty" xml:space="preserve">
+    <value>预留行不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ResourceGroupCanNotBeEmpty" xml:space="preserve">
+    <value>资源组必填</value>
+    <comment>MRP\MrpPlanTraceController</comment>
+  </data>
+  <data name="Con_ReturnGoodsDetailCanNotBeEmpty" xml:space="preserve">
+    <value>退货明细不能为空</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_ReturnMaterialDetailBeEmpty" xml:space="preserve">
+    <value>退料明细为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_RevaluatedSuccessfully" xml:space="preserve">
+    <value>重新计价成功！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_RouteHasBeenCitedCanNotBeDeleted" xml:space="preserve">
+    <value>路线已经被引用，不能删除。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_RowCount" xml:space="preserve">
+    <value>行数</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_RowItemCanNotBeEmpty" xml:space="preserve">
+    <value>行物料为必填</value>
+    <comment>INP\InspectionOrder</comment>
+  </data>
+  <data name="Con_RunningEXShiftVersion" xml:space="preserve">
+    <value>正在运行挤出排产.版本:{0}</value>
+    <comment>MRP\MrpScheduleController</comment>
+  </data>
+  <data name="Con_RunningFIShiftVersion" xml:space="preserve">
+    <value>正在运行后加工排产.版本:{0}</value>
+    <comment>MRP\MrpScheduleController</comment>
+  </data>
+  <data name="Con_RunningMIShiftVersion" xml:space="preserve">
+    <value>正在运行炼胶排产.版本:{0}</value>
+    <comment>MRP\MrpScheduleController</comment>
+  </data>
+  <data name="Con_RunningPurchaseDailPlan" xml:space="preserve">
+    <value>正在运行天采购需求计划..</value>
+    <comment>MRP\MrpScheduleController</comment>
+  </data>
+  <data name="Con_RunningRccPlan" xml:space="preserve">
+    <value>正在运行粗能力计划,请等待.版本号:{0}</value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_RWKOrder" xml:space="preserve">
+    <value>返工</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_SafeGapRate" xml:space="preserve">
+    <value>安全差额</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_SafeInventory" xml:space="preserve">
+    <value>安全库存</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SaleOrgCanNotBeEmpty" xml:space="preserve">
+    <value>销售组织不能为空。</value>
+    <comment>MD\SwitchTradingController</comment>
+  </data>
+  <data name="Con_SalesBillAccountCreatedSuccessfully" xml:space="preserve">
+    <value>销售账单创建成功！</value>
+    <comment>BIL\DistributionBillController</comment>
+  </data>
+  <data name="Con_SalesDistribution" xml:space="preserve">
+    <value>销售</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_SalesDistributionDCancel" xml:space="preserve">
+    <value>销售冲销</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_SameGlueMaterialAttributeAlreadyExists" xml:space="preserve">
+    <value>胶料定向属性已存在，请重新填写。</value>
+    <comment>CUST\ItemPropertyController</comment>
+  </data>
+  <data name="Con_SameGlueMaterialCodeAlreadyExists" xml:space="preserve">
+    <value>已经存在相同胶料物料代码{0}定向属性{1}定向半制品物料号{2}定向生产线{3}.</value>
+    <comment>CUST\ItemPropertyController</comment>
+  </data>
+  <data name="Con_SAPLocationCanNotBeEmpty" xml:space="preserve">
+    <value>错误：SAP库位查询时，SAP库位不能为空！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SAPLocationCanNotBeEmpty_1" xml:space="preserve">
+    <value>错误：根据SAP库位查询，SAP库位不能为空！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SAPProductionOrderNumberCanNotBeEmpty" xml:space="preserve">
+    <value>SAP生产单号不能为空</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_SavedEditSuccessfully" xml:space="preserve">
+    <value>保存编辑成功。</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_SavedPlanSuccessfully" xml:space="preserve">
+    <value>保存计划成功。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SavedSuccessfully" xml:space="preserve">
+    <value>保存成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ScraptCreatedSuccessfully" xml:space="preserve">
+    <value>废品报工成功。</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_ScraptCreateSuccessfully" xml:space="preserve">
+    <value>工废创建成功</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_ScraptDetailCanNotBeEmpty" xml:space="preserve">
+    <value>工废明细不能为空</value>
+    <comment>INP\RejectOrderController</comment>
+  </data>
+  <data name="Con_ScraptType" xml:space="preserve">
+    <value>牵引</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_ScraptType1" xml:space="preserve">
+    <value>头子</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_ScraptType2" xml:space="preserve">
+    <value>皮子</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_ScraptType3" xml:space="preserve">
+    <value>过程</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_ScraptType4" xml:space="preserve">
+    <value>工艺</value>
+    <comment>ORD\ProductionController</comment>
+  </data>
+  <data name="Con_ScraptTypeCanNotBeEmpty" xml:space="preserve">
+    <value>废品类型必填</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_SearchConditionCanNotBeEmpty" xml:space="preserve">
+    <value>查询条件不能为空。</value>
+    <comment>MRP\MrpPlanEx</comment>
+  </data>
+  <data name="Con_SearchConditionNeedLocationAndBatchNo" xml:space="preserve">
+    <value>查询条件至少库位和第一个批次号不能为空！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SearchConditionNeedManufactureDate" xml:space="preserve">
+    <value>第一个制造日期为空,不能输入第二个制造日期！</value>
+    <comment>INP\HuIdFreezeController</comment>
+  </data>
+  <data name="Con_SearchConditionNeedManufactureDateAndBatchNo" xml:space="preserve">
+    <value>第一个制造日期和第二个制造日期都不能为空！</value>
+    <comment>INP\HuIdFreezeController</comment>
+  </data>
+  <data name="Con_Section" xml:space="preserve">
+    <value>断面</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SelectedBarcodePrintedTemplatesAreInconsistent" xml:space="preserve">
+    <value>所选的条码的打印模板不一致，无法一次性导出</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SelfMade" xml:space="preserve">
+    <value>自制</value>
+    <comment>MRP\RccpPlanMiController</comment>
+  </data>
+  <data name="Con_SeqNumberCanNotBeEmpty" xml:space="preserve">
+    <value>序号不能为空</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_Settled" xml:space="preserve">
+    <value>固定</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SettledSuccessfully" xml:space="preserve">
+    <value>结算成功</value>
+    <comment>BIL\MauallySettleCsBillController</comment>
+  </data>
+  <data name="Con_ShipOrderCancelledSuccessfully" xml:space="preserve">
+    <value>送货单取消成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ShipOrderCanNotBeEmpty" xml:space="preserve">
+    <value>送货单不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ShipOrderClosedSuccessfully" xml:space="preserve">
+    <value>送货单关闭成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ShipOrderNotExits" xml:space="preserve">
+    <value>送货单不存在！</value>
+    <comment>ORD\ProcurementIpMasterController</comment>
+  </data>
+  <data name="Con_ShipOrderNumberNotExits" xml:space="preserve">
+    <value>送货单号不存在，请重新输入！</value>
+    <comment>INV\HuController</comment>
+  </data>
+  <data name="Con_ShipOrderSearchConditionIsNeeded" xml:space="preserve">
+    <value>请根据送货单查询</value>
+    <comment>INV\HuController</comment>
+  </data>
+  <data name="Con_ShippingAreaCanNotBeEmpty" xml:space="preserve">
+    <value>发货区域不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ShippingDetailCanNotBeEmpty" xml:space="preserve">
+    <value>发货明细不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_ShippingLabelCancelledSuccessfully" xml:space="preserve">
+    <value>配送标签取消成功</value>
+    <comment>ORD\ProcurementSQOrderController</comment>
+  </data>
+  <data name="Con_ShippingLocationCanNotBeEmpty" xml:space="preserve">
+    <value>发货库位不能为空</value>
+    <comment>ORD\InMiscOrderController</comment>
+  </data>
+  <data name="Con_ShippingOrderNumber" xml:space="preserve">
+    <value>运单号：</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_ShippingOrderNumberCanNotBeEmpty" xml:space="preserve">
+    <value>运单号不能为空</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_ShippingOrderNumberInputError" xml:space="preserve">
+    <value>您输入的运单号错误</value>
+    <comment>ORD\ShipmentMasterController</comment>
+  </data>
+  <data name="Con_ShippingPlantCanNotBeEmpty" xml:space="preserve">
+    <value>发货工厂不能为空</value>
+    <comment>ORD\InMiscOrderController</comment>
+  </data>
+  <data name="Con_ShipSuccessfully" xml:space="preserve">
+    <value>发货成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SnapTimeCanNotBeEmpty" xml:space="preserve">
+    <value>快照时间不能为空.</value>
+    <comment>MRP\MrpSnapController</comment>
+  </data>
+  <data name="Con_SortedOrder" xml:space="preserve">
+    <value>排序单</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SourceAreaCanNotBeEmpty" xml:space="preserve">
+    <value>来源区域不能为空！</value>
+    <comment>ORD\TransferOrderController</comment>
+  </data>
+  <data name="Con_SourceMaterial" xml:space="preserve">
+    <value>原材料</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_SourceMaterialDescription" xml:space="preserve">
+    <value>原材料描述</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_SourceMaterialUom" xml:space="preserve">
+    <value>原材料单位</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_StartTimeAlreadyIncluded" xml:space="preserve">
+    <value>开始时间已经在Id{0}时间{1}和{2}中包含</value>
+    <comment>MRP\MrpExWorkHourController</comment>
+  </data>
+  <data name="Con_StartToMothCanNotBeEmpty" xml:space="preserve">
+    <value>开始月不能为空。</value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_StartToTimeAndEndTimeCanNotBeEmpty" xml:space="preserve">
+    <value>开始时间和结束时间不能为空。</value>
+    <comment>MRP\MrpPlanController</comment>
+  </data>
+  <data name="Con_StartToTimeCanNotBeEmpty" xml:space="preserve">
+    <value>开始时间必填！</value>
+    <comment>INV\TransceiversController</comment>
+  </data>
+  <data name="Con_StartToTimeCanNotGreaterWindowTime" xml:space="preserve">
+    <value>开始时间不能大于窗口时间</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_StartToWeekCanNotBeEmpty" xml:space="preserve">
+    <value>开始周不能为空。</value>
+    <comment>MRP\RccpPlanController</comment>
+  </data>
+  <data name="Con_StartUp" xml:space="preserve">
+    <value>启动</value>
+    <comment>SYS\TriggerController</comment>
+  </data>
+  <data name="Con_StartWeekAndEndWeekCanNotBeEmpty" xml:space="preserve">
+    <value>开始周和结束周不能为空。</value>
+    <comment>MRP\MrpPlanController</comment>
+  </data>
+  <data name="Con_StockTakeAdjustSuccessfully" xml:space="preserve">
+    <value>盘点{0}调整成功</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_StockTakeDetailSuccessfullyImport" xml:space="preserve">
+    <value>盘点明细成功导入</value>
+    <comment>INV\StockTakeController</comment>
+  </data>
+  <data name="Con_StockTransfer" xml:space="preserve">
+    <value>库存转储</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_Summary" xml:space="preserve">
+    <value>汇总</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_SummaryToCanNotBeEmpty" xml:space="preserve">
+    <value>汇总至为必选项！</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_Supplier" xml:space="preserve">
+    <value>供应商</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SupplierCanNotBeEmpty" xml:space="preserve">
+    <value>供应商为必填项。</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_SupplierIsWrong" xml:space="preserve">
+    <value>供应商填写有误。</value>
+    <comment>MD\SwitchTradingController</comment>
+  </data>
+  <data name="Con_SupplierName" xml:space="preserve">
+    <value>供应商名称</value>
+    <comment>Report\IOBController</comment>
+  </data>
+  <data name="Con_TheCustomerPartNumberAlreadyExists" xml:space="preserve">
+    <value>此客户零件号已经存在</value>
+    <comment>MD\ItemController</comment>
+  </data>
+  <data name="Con_TheDateLackCorrespondingAlreadyReleasedShiftPlan" xml:space="preserve">
+    <value>此日期没有对应的已释放班产计划。</value>
+    <comment>MRP\MrpPlanFiController</comment>
+  </data>
+  <data name="Con_TheDirectionAlreadyExits" xml:space="preserve">
+    <value>此HuTo已存在，请重新填写。</value>
+    <comment>MRP\HuToController</comment>
+  </data>
+  <data name="Con_TheFlowCorrespondingVersionAlreadyReleasedCanNotEdit" xml:space="preserve">
+    <value>此路线对应的版本已经释放，不能编辑。</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_TheHuToMappingAlreadyExits" xml:space="preserve">
+    <value>此HuToMapping已存在，请重新填写。</value>
+    <comment>MRP\HuToController</comment>
+  </data>
+  <data name="Con_TheIslandAlreadyExits" xml:space="preserve">
+    <value>此岛区已存在，请重新填写。</value>
+    <comment>MRP\IslandController</comment>
+  </data>
+  <data name="Con_TheItemIsNotInFlowNow" xml:space="preserve">
+    <value>此物料{0}不在路线{1}中</value>
+    <comment>MRP\MrpPlanMiController</comment>
+  </data>
+  <data name="Con_TheKitAlreadyExists" xml:space="preserve">
+    <value>此组套件已经存在。</value>
+    <comment>MD\ItemKitController</comment>
+  </data>
+  <data name="Con_TheMachineAlreadyExits" xml:space="preserve">
+    <value>此模具已存在，请重新填写。</value>
+    <comment>MRP\MrpSnapMachineController</comment>
+  </data>
+  <data name="Con_TheOrderIsNotProductionOrderCanNotBackFlush" xml:space="preserve">
+    <value>此订单{0}不是生产单不能投料</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_TheOrderNumberAlreadyCanNotModificate" xml:space="preserve">
+    <value>此订单号已经不能修改！</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_TheoreticalAmount" xml:space="preserve">
+    <value>理论用量</value>
+    <comment>PRD\ProdIOController</comment>
+  </data>
+  <data name="Con_TheProductionLineLackTheSection" xml:space="preserve">
+    <value>此生产线没有此断面{0}</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_TheProductionOrderAlreadyCancelledOrAlreadyClosedCanNotBackFlush" xml:space="preserve">
+    <value>此生产单{0}已取消或已关闭,不能投料</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_TheProductionOrderNoNeedBackFlush" xml:space="preserve">
+    <value>此生产单{0}无需投料</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_TheProductionOrderNotExits" xml:space="preserve">
+    <value>此生产单{0}不存在</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_TheRoleCodeCanNotBeEmpty" xml:space="preserve">
+    <value>角色代码不能为空</value>
+    <comment>ACC\RoleController</comment>
+  </data>
+  <data name="Con_TheSectionNotYetStartToProductionCanNotBeScrapted" xml:space="preserve">
+    <value>此断面{0}尚未开始生产,不能废品报工</value>
+    <comment>ORD\ProductionOrderController</comment>
+  </data>
+  <data name="Con_TheShipOrderAlreadyCanNotModificate" xml:space="preserve">
+    <value>此送货单已经不能修改！</value>
+    <comment>ORD\ProcurementIpMasterController</comment>
+  </data>
+  <data name="Con_TheVersionAlreadyOverTimeCanNotTrace" xml:space="preserve">
+    <value>此版本已过期,不能跟踪</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_TimeCanNotBeEmpty" xml:space="preserve">
+    <value>时间必填！</value>
+    <comment>INV\HistoryInventoryController</comment>
+  </data>
+  <data name="Con_TotalCount" xml:space="preserve">
+    <value>总数</value>
+    <comment>Report\InventoryController</comment>
+  </data>
+  <data name="Con_TotalInventory" xml:space="preserve">
+    <value>总库存</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_TrailDays" xml:space="preserve">
+    <value>试制天数</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_TrailHours" xml:space="preserve">
+    <value>试制时间(小时)</value>
+    <comment>MRP\RccpPlanMiController</comment>
+  </data>
+  <data name="Con_TrandformUom" xml:space="preserve">
+    <value>转换单位</value>
+    <comment>MRP\MrpSnapController</comment>
+  </data>
+  <data name="Con_TransferFlow" xml:space="preserve">
+    <value>移库路线:{0}</value>
+    <comment>CUST\SpecialBarCodeController</comment>
+  </data>
+  <data name="Con_TransferOrderNumber" xml:space="preserve">
+    <value>移库单号：</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_Type" xml:space="preserve">
+    <value>类型</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_UnFreeze" xml:space="preserve">
+    <value>解冻</value>
+    <comment>INV\HuLocationLotDetailController</comment>
+  </data>
+  <data name="Con_UnitcountQuantityMustGreater" xml:space="preserve">
+    <value>包装数必须大于0</value>
+    <comment>MD\ItemController</comment>
+  </data>
+  <data name="Con_UnPick" xml:space="preserve">
+    <value>下架</value>
+    <comment>INV\HuLocationLotDetailController</comment>
+  </data>
+  <data name="Con_Uom" xml:space="preserve">
+    <value>单位</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_UomCars" xml:space="preserve">
+    <value>单位:车 </value>
+    <comment>MRP\RccpPlanMiController</comment>
+  </data>
+  <data name="Con_UomComv" xml:space="preserve">
+    <value>单位转换</value>
+    <comment>CommonController</comment>
+  </data>
+  <data name="Con_UomHour" xml:space="preserve">
+    <value>单位:小时</value>
+    <comment>MRP\RccpPlanExController</comment>
+  </data>
+  <data name="Con_UomISMHourSelfMadeTConsignmentT" xml:space="preserve">
+    <value>单位:工时(小时) 自制(吨) 委外(吨) </value>
+    <comment>MRP\RccpPlanMiController</comment>
+  </data>
+  <data name="Con_UomLength" xml:space="preserve">
+    <value>单位长度</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_UomTenThousandM" xml:space="preserve">
+    <value>单位:万米</value>
+    <comment>MRP\RccpPlanExController</comment>
+  </data>
+  <data name="Con_UpdatedSuccessfully" xml:space="preserve">
+    <value>更新成功</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_UserFailToLogInSystem" xml:space="preserve">
+    <value>用户登录失败,错误密码:{0}</value>
+    <comment>AccountController</comment>
+  </data>
+  <data name="Con_UserSuccedToLogInSystem" xml:space="preserve">
+    <value>用户登录成功</value>
+    <comment>AccountController</comment>
+  </data>
+  <data name="Con_VersionStartTimeEndTime" xml:space="preserve">
+    <value>版本的开始时间是：{0},结束时间是：{1}</value>
+    <comment>MRP\MrpPlanFiController</comment>
+  </data>
+  <data name="Con_VersionTimeCanNotBeEmpty" xml:space="preserve">
+    <value>版本时间必填.</value>
+    <comment>MRP\MaterialPlanController</comment>
+  </data>
+  <data name="Con_WaitingForReceiving" xml:space="preserve">
+    <value>待收</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_WaitingForShipping" xml:space="preserve">
+    <value>待发</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_WBSCanNotBeEmpty" xml:space="preserve">
+    <value>WBS不能为空</value>
+    <comment>ConCtroller</comment>
+  </data>
+  <data name="Con_WindowTimeCanNotBeEmpty" xml:space="preserve">
+    <value>窗口时间不能为空！</value>
+    <comment>ORD\ProcurementOrderController</comment>
+  </data>
+  <data name="Con_WorkDays" xml:space="preserve">
+    <value>工作天数</value>
+    <comment>MRP\RccpPlanFiController</comment>
+  </data>
+  <data name="Con_WorkshopInventory" xml:space="preserve">
+    <value>车间库存</value>
+    <comment>MRP\MrpPlanExController</comment>
+  </data>
+  <data name="Con_ExistNonHalfFinishGoodsType" xml:space="preserve">
+    <value>不能报废非半制品类型的物料</value>
+    <comment>ORD\CostCenterController</comment>
+  </data>
+  <data name="Con_ExistNonFinishGoodsType" xml:space="preserve">
+    <value>不能报废非成品类型的物料</value>
+    <comment>ORD\ProductionFiScraptController</comment>
+  </data>
+  <data name="Con_ItemDetailsDuplicate" xml:space="preserve">
+    <value>物料明细重复:</value>
+    <comment>ORD\MiscOrderController</comment>
+  </data>
+</root>

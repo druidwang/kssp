@@ -1,0 +1,43 @@
+﻿@model IEnumerable<com.Sconit.Web.Models.INV.LocationTransactionView>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("LocationIOBGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.SumProcurementInQty);
+            columns.Bound(o => o.SumTransferInQty);
+            columns.Bound(o => o.SumProductionInQty);
+            columns.Bound(o => o.SumDistributionOutQty);
+            columns.Bound(o => o.SumTransferOutQty);
+            columns.Bound(o => o.SumProductionOutQty);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "LocationIOB"))
+                        .ClientEvents(events => events.OnDataBinding("LocationTransactionGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 50);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function LocationTransactionGrid_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                Location: $('#LocationFrom').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+            };
+        } 
+    </script>
+</fieldset>

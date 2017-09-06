@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BomDetail_Added" xml:space="preserve">
+    <value>Bom Detail added successfully.</value>
+    <comment>BomDetail新增成功。</comment>
+  </data>
+  <data name="BomDetail_BackFlushMethod" xml:space="preserve">
+    <value>BackFlush Method</value>
+    <comment>回冲方式</comment>
+  </data>
+  <data name="BomDetail_BackFlushStrategy" xml:space="preserve">
+    <value>BackFlush Strategy</value>
+    <comment>回冲策略</comment>
+  </data>
+  <data name="BomDetail_Bom" xml:space="preserve">
+    <value>Parent BOM Code</value>
+    <comment>父物料</comment>
+  </data>
+  <data name="BomDetail_BomMrpOption" xml:space="preserve">
+    <value>MRP Option</value>
+    <comment>Mrp选项</comment>
+  </data>
+  <data name="BomDetail_Deleted" xml:space="preserve">
+    <value>Bom Detail deleted successfully.</value>
+    <comment>BomDetail删除成功。</comment>
+  </data>
+  <data name="BomDetail_Edit_Title" xml:space="preserve">
+    <value>Update BOM Detail</value>
+    <comment>更新BOM Detail</comment>
+  </data>
+  <data name="BomDetail_EndDate" xml:space="preserve">
+    <value>End Date</value>
+    <comment>结束时间</comment>
+  </data>
+  <data name="BomDetail_FeedLocation" xml:space="preserve">
+    <value>Locfrom</value>
+    <comment>来源库位</comment>
+  </data>
+  <data name="BomDetail_FeedMethod" xml:space="preserve">
+    <value>Feed Method</value>
+    <comment>投料方法</comment>
+  </data>
+  <data name="BomDetail_FeedQty" xml:space="preserve">
+    <value>Feed Qty</value>
+    <comment>投料数</comment>
+  </data>
+  <data name="BomDetail_Id" xml:space="preserve">
+    <value>No.</value>
+    <comment>No.</comment>
+  </data>
+  <data name="BomDetail_IsAutoFeed" xml:space="preserve">
+    <value>Auto Feed</value>
+    <comment>自动投料</comment>
+  </data>
+  <data name="BomDetail_IsPrint" xml:space="preserve">
+    <value>Is Print</value>
+    <comment>打印</comment>
+  </data>
+  <data name="BomDetail_Item" xml:space="preserve">
+    <value>Chind BOM Code</value>
+    <comment>子物料</comment>
+  </data>
+  <data name="BomDetail_ItemDescription" xml:space="preserve">
+    <value>Item Desc</value>
+    <comment>物料描述</comment>
+  </data>
+  <data name="BomDetail_Location" xml:space="preserve">
+    <value>Location</value>
+    <comment>库位</comment>
+  </data>
+  <data name="BomDetail_ManufactureParty" xml:space="preserve">
+    <value>Manufactor</value>
+    <comment>制造商</comment>
+  </data>
+  <data name="BomDetail_MinUnitCount" xml:space="preserve">
+    <value>Prod UC</value>
+    <comment>上线包装</comment>
+  </data>
+  <data name="BomDetail_New_Title" xml:space="preserve">
+    <value>Add BOM Detail</value>
+    <comment>新增BOM Detail</comment>
+  </data>
+  <data name="BomDetail_Operation" xml:space="preserve">
+    <value>Operation</value>
+    <comment>工序</comment>
+  </data>
+  <data name="BomDetail_OpReference" xml:space="preserve">
+    <value>Ref</value>
+    <comment>参考</comment>
+  </data>
+  <data name="BomDetail_RateQty" xml:space="preserve">
+    <value>Rate Qty</value>
+    <comment>用量</comment>
+  </data>
+  <data name="BomDetail_ReferenceItemCode" xml:space="preserve">
+    <value>Ref Item Code</value>
+    <comment>参考物料号</comment>
+  </data>
+  <data name="BomDetail_ReturnLocation" xml:space="preserve">
+    <value>Locto</value>
+    <comment>目的库位</comment>
+  </data>
+  <data name="BomDetail_ReturnQty" xml:space="preserve">
+    <value>Return Qty</value>
+    <comment>退料数</comment>
+  </data>
+  <data name="BomDetail_ScrapPercentage" xml:space="preserve">
+    <value>Scrap Percent</value>
+    <comment>废品率</comment>
+  </data>
+  <data name="BomDetail_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+    <comment>开始时间</comment>
+  </data>
+  <data name="BomDetail_StructureType" xml:space="preserve">
+    <value>Structure Type</value>
+    <comment>类型</comment>
+  </data>
+  <data name="BomDetail_UnitCount" xml:space="preserve">
+    <value>UC</value>
+    <comment>单包装</comment>
+  </data>
+  <data name="BomDetail_UnitCountDescription" xml:space="preserve">
+    <value>UC Desc</value>
+    <comment>包装描述</comment>
+  </data>
+  <data name="BomDetail_Uom" xml:space="preserve">
+    <value>UOM</value>
+    <comment>单位</comment>
+  </data>
+  <data name="BomDetail_Updated" xml:space="preserve">
+    <value>Bom Detail updated successfully.</value>
+    <comment>BomDetail更新成功。</comment>
+  </data>
+  <data name="BomMaster_Added" xml:space="preserve">
+    <value>BOM added successfully.</value>
+    <comment>BOM新增成功。</comment>
+  </data>
+  <data name="BomMaster_Code" xml:space="preserve">
+    <value>Code</value>
+    <comment>代码</comment>
+  </data>
+  <data name="BomMaster_Deleted" xml:space="preserve">
+    <value>BOM deleted successfully.</value>
+    <comment>BOM删除成功。</comment>
+  </data>
+  <data name="BomMaster_Desc" xml:space="preserve">
+    <value>Description</value>
+    <comment>描述</comment>
+  </data>
+  <data name="BomMaster_Edit_Title" xml:space="preserve">
+    <value>Edit BOM</value>
+    <comment>更新BOM</comment>
+  </data>
+  <data name="BomMaster_IsActive" xml:space="preserve">
+    <value>Is Active</value>
+    <comment>有效</comment>
+  </data>
+  <data name="BomMaster_New_Title" xml:space="preserve">
+    <value>New BOM</value>
+    <comment>新增BOM</comment>
+  </data>
+  <data name="BomMaster_Qty" xml:space="preserve">
+    <value>Qty</value>
+    <comment>基本数量</comment>
+  </data>
+  <data name="BomMaster_Uom" xml:space="preserve">
+    <value>UOM</value>
+    <comment>单位</comment>
+  </data>
+  <data name="BomMaster_Updated" xml:space="preserve">
+    <value>BOM updated successfully.</value>
+    <comment>BOM更新成功。</comment>
+  </data>
+  <data name="Bom_TabTitle_Bom" xml:space="preserve">
+    <value>BOM</value>
+    <comment>BOM</comment>
+  </data>
+  <data name="Bom_TabTitle_Detail" xml:space="preserve">
+    <value>BOM Detail</value>
+    <comment>BOM明细</comment>
+  </data>
+  <data name="Bom_TabTitle_View" xml:space="preserve">
+    <value>BOM View</value>
+    <comment>Bom视图</comment>
+  </data>
+  <data name="Errors_BomDetailNotFound" xml:space="preserve">
+    <value>Bom {0} not maintain any children.</value>
+    <comment>Bom{0}没有维护子件。</comment>
+  </data>
+  <data name="Errors_ItemBomNotFound" xml:space="preserve">
+    <value>Not maintain bom for material {0}.</value>
+    <comment>没有维护零件{0}的Bom。</comment>
+  </data>
+</root>

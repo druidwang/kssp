@@ -1,0 +1,186 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpSnap_Machine" });
+}
+<script type="text/javascript">
+    function CodeMaster_Change(e) {
+    }
+
+    function DateIndex_DataBinding(e) {
+        if ($('#DateType').val() != 4) {
+            e.data = {
+                dateType: $('#DateType').val()
+            }
+        }
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("ExportMachine", "MrpSnap"))
+    { 
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MachineInstance.MachineInstance_DateType
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_CodeMasterComboBox", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+            includeBlankOption = true,
+            isRccpPlan = true,
+            //isMrp = true,
+            isChange = true,
+            controlName = "DateType"
+        });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpPlanMaster.RccpPlanMaster_SnapTime
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_MrpSnapMasterComboBox", "Common", new
+            {
+                controlName = "SnapTime",
+                includeBlankOption = true,
+                isRelease = true,
+                SnapType = com.Sconit.CodeMaster.SnapType.Rccp,
+                selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).SnapTime : null
+
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MachineInstance.MachineInstance_Island
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_IslandComboBox", "Common",
+            new
+            {
+                controlName = "Island",
+
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MachineInstance.MachineInstance_Code
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_MachineComboBox", "Common",
+            new
+            {
+                controlName = "Code"
+
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MachineInstance.MachineInstance_DisplayColumn
+            </label>
+        </div>
+        <div>
+            @Html.CheckBox("IsShiftQuota", true)@Resources.MRP.MachineInstance.MachineInstance_ShiftQuota &nbsp;
+            @Html.CheckBox("IsShiftPerDay", true)@Resources.MRP.MachineInstance.MachineInstance_ShiftPerDay &nbsp;
+            @Html.CheckBox("IsNormalWorkDayPerWeek", true)@Resources.MRP.MachineInstance.MachineInstance_NormalWorkDayPerWeek &nbsp;
+            @Html.CheckBox("IsMaxWorkDayPerWeek", true)@Resources.MRP.MachineInstance.MachineInstance_MaxWorkDayPerWeek &nbsp;
+            @Html.CheckBox("IsQty", true)@Resources.MRP.MachineInstance.MachineInstance_Qty &nbsp;
+            @Html.CheckBox("IsIslandQty", true)@Resources.MRP.MachineInstance.MachineInstance_IslandQty &nbsp;
+            @Html.CheckBox("IsShiftType", false)@Resources.MRP.MachineInstance.MachineInstance_ShiftType &nbsp;
+            @Html.CheckBox("IsMachineType", false)@Resources.MRP.MachineInstance.MachineInstance_MachineType &nbsp;
+        </div>
+    </div>
+    <br />
+    <div class="editor-footer">
+        <button type="button" id="Search" onclick="QueryMachineInstanceView()">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    }
+</fieldset>
+<div id="divMachineInstanceView">
+</div>
+<script type="text/javascript">
+
+    function QueryMachineInstanceView() {
+        if (parseInt($(':checkbox:checked').length) == 0) {
+            $message.error('显示字段必须大于等于1.');
+            return;
+        }
+
+
+        if ($('#DateType').val() == "") {
+            $message.error('计划类型为必填项。');
+            return;
+        }
+        else {
+            if ($('#SnapTime').val() == "") {
+                $message.error('快照时间为必填项。');
+                return;
+            }
+        }
+
+        var data = {
+            "dateType": $('#DateType').val(),
+            "snapTime": $('#SnapTime').val(),
+            "code": $('#Code').val(),
+            "island": $('#Island').val(),
+            "isShiftQuota": $("#IsShiftQuota").is(':checked'),
+            "isShiftPerDay": $("#IsShiftPerDay").is(':checked'),
+            "isNormalWorkDayPerWeek": $("#IsNormalWorkDayPerWeek").is(':checked'),
+            "isMaxWorkDayPerWeek": $("#IsMaxWorkDayPerWeek").is(':checked'),
+            "isQty": $("#IsQty").is(':checked'),
+            "isIslandQty": $("#IsIslandQty").is(':checked'),
+            "isShiftType": $("#IsShiftType").is(':checked'),
+            "isMachineType": $("#IsMachineType").is(':checked'),
+            "checkboxcheckedCount": $(':checkbox:checked').length
+        };
+
+        $("#divMachineInstanceView").html("Loading...");
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSnap/_GetMachineInstanceView/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divMachineInstanceView");
+                $(tabStrip).html(data);
+            }
+        });
+    }
+
+
+</script>
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+        if (parseInt($(':checkbox:checked').length) == 0) {
+            $message.error('显示字段必须大于等于1.');
+            return;
+        }
+        if ($('#DateType').val() == "") {
+            $message.error('计划类型为必填项。');
+            return;
+        }
+        else {
+            if ($('#SnapTime').val() == "") {
+                $message.error('快照时间为必填项。');
+                return;
+            }
+        }
+        //debugger
+        $('form').submit();
+    });
+</script>

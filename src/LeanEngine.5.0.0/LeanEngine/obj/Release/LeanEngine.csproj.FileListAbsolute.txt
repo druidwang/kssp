@@ -1,0 +1,6 @@
+D:\src\Les_parts\trunk\src\LeanEngine.5.0.0\LeanEngine\bin\Release\com.Sconit.LeanEngine.dll
+D:\src\Les_parts\trunk\src\LeanEngine.5.0.0\LeanEngine\bin\Release\com.Sconit.LeanEngine.pdb
+D:\src\Les_parts\trunk\src\LeanEngine.5.0.0\LeanEngine\bin\Release\AutoMapper.dll
+D:\src\Les_parts\trunk\src\LeanEngine.5.0.0\LeanEngine\obj\Release\LeanEngine.csprojResolveAssemblyReference.cache
+D:\src\Les_parts\trunk\src\LeanEngine.5.0.0\LeanEngine\obj\Release\com.Sconit.LeanEngine.dll
+D:\src\Les_parts\trunk\src\LeanEngine.5.0.0\LeanEngine\obj\Release\com.Sconit.LeanEngine.pdb

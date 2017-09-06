@@ -1,0 +1,58 @@
+﻿@model IEnumerable<com.Sconit.Entity.MD.Item>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ItemGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "_EditList", "Item", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.ReferenceCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            //columns.Bound(o => o.Weight);
+           // columns.Bound(o => o.ShortCode);
+            //columns.Bound(o => o.ItemPriorityDesc);
+            //columns.Bound(o => o.ItemCategory);
+            //columns.Bound(o => o.ItemCategoryDesc);
+            //columns.Bound(o => o.MaterialsGroup);
+            //columns.Bound(o => o.MaterialsGroupDesc);
+            //columns.Bound(o => o.Division);
+            //columns.Bound(o => o.WarnLeadTime);
+            //columns.Bound(o => o.Warranty);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+        })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Item"))
+                .ClientEvents(events => events.OnDataBinding("ItemGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ItemGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val(),
+                ReferenceCode: $('#ReferenceCode').val(),
+//                ItemCategory: $('#ItemCategory').val(),
+//                MaterialsGroup: $('#MaterialsGroup').val(),
+                IsActive: $('#IsActive').is(':checked')
+//                IsVirtual: $('#IsVirtual').is(':checked')
+            };
+        } 
+    </script>
+</fieldset>

@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btn_Cancel" xml:space="preserve">
+    <value>取消发货</value>
+  </data>
+  <data name="btn_Print" xml:space="preserve">
+    <value>打印</value>
+  </data>
+  <data name="Errors_IpDetailIsEmpty" xml:space="preserve">
+    <value>发货明细不能为空。</value>
+  </data>
+  <data name="IpDetail_Edit_Title" xml:space="preserve">
+    <value>送货单明细</value>
+  </data>
+  <data name="IpMaster_CreateDate" xml:space="preserve">
+    <value>创建日期</value>
+  </data>
+  <data name="IpMaster_CreateUserName" xml:space="preserve">
+    <value>创建用户</value>
+  </data>
+  <data name="IpMaster_Dock" xml:space="preserve">
+    <value>道口</value>
+  </data>
+  <data name="IpMaster_Edit_Title" xml:space="preserve">
+    <value>基本信息</value>
+  </data>
+  <data name="IpMaster_EndDate" xml:space="preserve">
+    <value>结束日期</value>
+  </data>
+  <data name="IpMaster_IpNo" xml:space="preserve">
+    <value>送货单号</value>
+  </data>
+  <data name="IpMaster_OrderType" xml:space="preserve">
+    <value>订单类型</value>
+  </data>
+  <data name="IpMaster_PartyFrom" xml:space="preserve">
+    <value>发货方</value>
+  </data>
+  <data name="IpMaster_PartyFromName" xml:space="preserve">
+    <value>发货方</value>
+  </data>
+  <data name="IpMaster_PartyTo" xml:space="preserve">
+    <value>收货方</value>
+  </data>
+  <data name="IpMaster_PartyToName" xml:space="preserve">
+    <value>收货方</value>
+  </data>
+  <data name="IpMaster_ReturnOrder_PartyFromName" xml:space="preserve">
+    <value>供应商</value>
+  </data>
+  <data name="IpMaster_ReturnOrder_PartyToName" xml:space="preserve">
+    <value>客户</value>
+  </data>
+  <data name="IpMaster_ShipFrom" xml:space="preserve">
+    <value>发货地址代码</value>
+  </data>
+  <data name="IpMaster_ShipFromAddress" xml:space="preserve">
+    <value>发货地址</value>
+  </data>
+  <data name="IpMaster_ShipTo" xml:space="preserve">
+    <value>收货地址代码</value>
+  </data>
+  <data name="IpMaster_ShipToAddress" xml:space="preserve">
+    <value>收货地址</value>
+  </data>
+  <data name="IpMaster_StartDate" xml:space="preserve">
+    <value>开始日期</value>
+  </data>
+  <data name="IpMaster_Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="IpMaster_Type" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="Errors_ReceiveQtyExcceedOrderQty" xml:space="preserve">
+    <value>ASN{0}零件{1}的收货数量超出了发货数量。</value>
+  </data>
+  <data name="IpMaster_BaseInfo" xml:space="preserve">
+    <value>基本信息</value>
+  </data>
+  <data name="IpMaster_Cancel" xml:space="preserve">
+    <value>送货单取消成功</value>
+  </data>
+  <data name="IpMaster_CloseDate" xml:space="preserve">
+    <value>关闭时间</value>
+  </data>
+  <data name="IpMaster_CloseUserName" xml:space="preserve">
+    <value>关闭人</value>
+  </data>
+  <data name="IpMaster_LastModifyDate" xml:space="preserve">
+    <value>修改时间</value>
+  </data>
+  <data name="IpMaster_LastModifyUserName" xml:space="preserve">
+    <value>修改人</value>
+  </data>
+  <data name="IpMaster_ShipFromContact" xml:space="preserve">
+    <value>发货方联系人</value>
+  </data>
+  <data name="IpMaster_ShipFromTel" xml:space="preserve">
+    <value>发货方固定电话</value>
+  </data>
+  <data name="IpMaster_ShipToContact" xml:space="preserve">
+    <value>收货方联系人</value>
+  </data>
+  <data name="IpMaster_ShipToTel" xml:space="preserve">
+    <value>收货方固定电话</value>
+  </data>
+  <data name="IpMaster_AsnTemplate" xml:space="preserve">
+    <value>打印送货单</value>
+  </data>
+  <data name="IpMaster_IsAsnUniqueReceive" xml:space="preserve">
+    <value>送货单一次性收货</value>
+  </data>
+  <data name="IpMaster_IsAutoReceive" xml:space="preserve">
+    <value>自动收货</value>
+  </data>
+  <data name="IpMaster_IsCheckPartyFromAuthority" xml:space="preserve">
+    <value>检查供应商权限</value>
+  </data>
+  <data name="IpMaster_IsCheckPartyToAuthority" xml:space="preserve">
+    <value>检查区域权限</value>
+  </data>
+  <data name="IpMaster_IsPrintReceipt" xml:space="preserve">
+    <value>送货单模板</value>
+  </data>
+  <data name="IpMaster_IsReceiveExceed" xml:space="preserve">
+    <value>允许超收</value>
+  </data>
+  <data name="IpMaster_IsReceiveFifo" xml:space="preserve">
+    <value>发货扫描条码</value>
+  </data>
+  <data name="IpMaster_IsReceiveFulfillUC" xml:space="preserve">
+    <value>整包装收货</value>
+  </data>
+  <data name="IpMaster_IsReceiveScanHu" xml:space="preserve">
+    <value>收货扫描条码</value>
+  </data>
+  <data name="IpMaster_IsShipScanHu" xml:space="preserve">
+    <value>收货先进先出</value>
+  </data>
+  <data name="IpMaster_Received" xml:space="preserve">
+    <value>送货单{0}收货成功,收货单号为{1}</value>
+  </data>
+  <data name="OrderMaster_Item" xml:space="preserve">
+    <value>物料代码</value>
+  </data>
+  <data name="IpMaster_IsCheckPartyFromAuthority_Procurement" xml:space="preserve">
+    <value>检查区域权限</value>
+  </data>
+  <data name="IpMaster_IsCheckPartyToAuthority_Procurement" xml:space="preserve">
+    <value>检查目的权限</value>
+  </data>
+  <data name="IpMaster_Adjusted" xml:space="preserve">
+    <value>调整成功</value>
+  </data>
+  <data name="IpMaster_OrderNo" xml:space="preserve">
+    <value>订单号</value>
+  </data>
+  <data name="IpMaster_WMSNo" xml:space="preserve">
+    <value>SAP号</value>
+  </data>
+  <data name="IpMaster_Flow" xml:space="preserve">
+    <value>路线代码</value>
+  </data>
+  <data name="IpMaster_FlowDescription" xml:space="preserve">
+    <value>路线描述</value>
+  </data>
+  <data name="IpMaster_FlowType" xml:space="preserve">
+    <value>路线类型</value>
+  </data>
+  <data name="IpMaster_ExternalIpNo" xml:space="preserve">
+    <value>回单号</value>
+  </data>
+</root>

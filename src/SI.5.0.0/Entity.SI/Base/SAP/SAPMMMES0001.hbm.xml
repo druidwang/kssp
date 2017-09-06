@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.SAP.SAPMMMES0001, com.Sconit.Entity.SI" table="SAP_Interface_MMMES0001" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="ZMESPO" column="ZMESPO" type="String" length="20"/>	
+		<property name="LIFNR" column="LIFNR" type="String" length="10"/>	
+		<property name="BSART" column="BSART" type="String" length="4"/>	
+		<property name="EKORG" column="EKORG" type="String" length="4"/>	
+		<property name="EKGRP" column="EKGRP" type="String" length="3"/>	
+		<property name="BUKRS" column="BUKRS" type="String" length="4"/>	
+		<property name="BWART_H" column="BWART_H" type="String" length="3"/>
+        <property name="LFSNR" column="LFSNR" type="String" length="10"/>
+		<property name="BUDAT" column="BUDAT" type="DateTime"/>	
+		<property name="BLDAT" column="BLDAT" type="DateTime"/>	
+		<property name="EBELP_I" column="EBELP_I" type="String" length="5"/>	
+		<property name="EPSTP" column="EPSTP" type="String" length="1"/>	
+		<property name="MATNR" column="MATNR" type="String" length="18"/>	
+		<property name="TARGET_QTY_I" column="TARGET_QTY_I" type="String" length="13"/>	
+		<property name="NETPR" column="NETPR" type="String" length="13"/>	
+		<property name="PEINH" column="PEINH" type="String" length="5"/>	
+		<property name="WAERS" column="WAERS" type="String" length="5"/>	
+		<property name="BPRME_I" column="BPRME_I" type="String" length="3"/>	
+		<property name="EINDT" column="EINDT" type="DateTime"/>	
+		<property name="WERKS" column="WERKS" type="String" length="4"/>	
+		<property name="LGORT" column="LGORT" type="String" length="4"/>	
+		<property name="RETPO" column="RETPO" type="String" length="1"/>	
+		<property name="BWART_C" column="BWART_C" type="String" length="3"/>	
+		<property name="MATNR_C" column="MATNR_C" type="String" length="18"/>	
+		<property name="TARGET_QTY_C" column="TARGET_QTY_C" type="String" length="13"/>	
+		<property name="BPRME_C" column="BPRME_C" type="String" length="3"/>	
+		<property name="ZMESGUID" column="ZMESGUID" type="String" length="36"/>	
+		<property name="ZCSRQSJ" column="ZCSRQSJ" type="DateTime"/>	
+		<property name="Status" column="Status" type="Int32"/>	
+		<property name="BatchNo" column="BatchNo" type="String" length="50"/>	
+		<property name="UniqueCode" column="UniqueCode" type="String" length="50"/>	
+  	</class>
+</hibernate-mapping>

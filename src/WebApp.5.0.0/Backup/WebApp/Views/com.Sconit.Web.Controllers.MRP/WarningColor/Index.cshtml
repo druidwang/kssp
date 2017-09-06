@@ -1,0 +1,129 @@
+﻿@model com.Sconit.Web.Models.MRP.WarningColor
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_MRP_WarningColor_View" });
+}
+<script type="text/javascript">
+   
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div>
+            <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"
+                width="100%">
+                <tr height="50">
+                    <td class="WarningColor_Black" height="50" width="38">
+                    </td>
+                    <td class="WarningColor_Black" width="38">
+                    </td>
+                    <td class="WarningColor_Black" width="38">
+                    </td>
+                    <td class="WarningColor_Red" width="38">
+                    </td>
+                    <td class="WarningColor_Red" width="38">
+                    </td>
+                    <td class="WarningColor_Red" width="38">
+                    </td>
+                    <td class="WarningColor_Yellow" width="38">
+                    </td>
+                    <td class="WarningColor_Yellow" width="38">
+                    </td>
+                    <td class="WarningColor_Yellow" width="38">
+                    </td>
+                    <td class="WarningColor_Green" width="38">
+                    </td>
+                    <td class="WarningColor_Green" width="38">
+                    </td>
+                    <td class="WarningColor_Green" width="38">
+                    </td>
+                    <td class="WarningColor_Yellow" width="38">
+                    </td>
+                    <td class="WarningColor_Yellow" width="38">
+                    </td>
+                    <td class="WarningColor_Yellow" width="38">
+                    </td>
+                    <td class="WarningColor_Red" width="38">
+                    </td>
+                    <td class="WarningColor_Red" width="38">
+                    </td>
+                    <td class="WarningColor_Red" width="38">
+                    </td>
+                    <td class="WarningColor_Black" width="38">
+                    </td>
+                    <td class="WarningColor_Black" width="38">
+                    </td>
+                    <td class="WarningColor_Black" width="38">
+                    </td>
+                </tr>
+                <tr height="33">
+                    <td class="style1" height="33">
+                    </td>
+                    <td class="style1">
+                    </td>
+                    <td class="style1" colspan="2">
+                        @Html.Telerik().NumericTextBoxFor(model => model.Range1).DecimalDigits(2).MinValue(0).MaxValue(100).InputHtmlAttributes(new { style = "width: 50px; " })
+                    </td>
+                    <td class="style1">
+                    </td>
+                    <td class="style1" colspan="2">
+                        @Html.Telerik().NumericTextBoxFor(model => model.Range2).DecimalDigits(2).MinValue(0).MaxValue(100).InputHtmlAttributes(new { style = "width: 50px; " })
+                    </td>
+                    <td class="style1">
+                    </td>
+                    <td class="style1" colspan="2">
+                        @Html.Telerik().NumericTextBoxFor(model => model.Range3).DecimalDigits(2).MinValue(0).MaxValue(100).InputHtmlAttributes(new { style = "width: 50px; " })
+                    </td>
+                    <td class="style1">
+                    </td>
+                    <td class="style1" colspan="2">
+                        @Html.Telerik().NumericTextBoxFor(model => model.Range4).DecimalDigits(2).MinValue(0).MaxValue(100).InputHtmlAttributes(new { style = "width: 50px; " })
+                    </td>
+                    <td class="style1">
+                    </td>
+                    <td class="style1" colspan="2">
+                        @Html.Telerik().NumericTextBoxFor(model => model.Range5).DecimalDigits(2).MinValue(0).MaxValue(100).InputHtmlAttributes(new { style = "width: 50px; " })
+                    </td>
+                    <td class="style1">
+                    </td>
+                    <td class="style1" colspan="2">
+                        @Html.Telerik().NumericTextBoxFor(model => model.Range6).DecimalDigits(2).MinValue(0).MaxValue(100).InputHtmlAttributes(new { style = "width: 50px; " })
+                    </td>
+                    <td class="style1">
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <br />
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnSave">
+                @Resources.SYS.Global.Button_Save</button>
+        </div>
+    </fieldset>
+}
+<style type="text/css">
+    .style1
+    {
+        height: 25.5pt;
+        width: 29pt;
+        color: white;
+        font-size: 10.0pt;
+        font-weight: 400;
+        font-style: normal;
+        text-decoration: none;
+        font-family: 宋体;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        border-style: none;
+        border-color: inherit;
+        border-width: medium;
+        padding: 0px;
+    }
+    table td
+    {
+        border-style: none;
+    }
+</style>

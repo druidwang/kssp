@@ -1,0 +1,26 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string Id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable == null ? true : ViewBag.Enable;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+}
+@{
+    if (enable)
+    {
+        @(Html.Telerik().DropDownList()
+            .Name(name)
+                         .DataBinding(binding => binding.Ajax().Select("_DefectCodeAjaxLoading", "Common"))
+                     .ClientEvents(events => events
+                                        .OnDataBinding("DefectCode_DataBinding")
+                    )
+            .HiddenInputHtmlAttributes(new { id = Id })
+            .BindTo(Model)
+            .Enable(enable))
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)     }
+    }
+}

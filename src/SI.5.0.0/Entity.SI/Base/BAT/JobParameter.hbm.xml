@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.BAT.JobParameter, com.Sconit.Entity.SI" table="BAT_JobParam" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="JobCode" column="JobCode" type="String" length="50" />	
+		<property name="Key" column="ParamKey" type="String" length="50" />	
+		<property name="Value" column="ParamValue" type="String" length="256"/>	
+  	</class>
+</hibernate-mapping>

@@ -1,0 +1,102 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.Hu>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("HuGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .Columns(columns =>
+        {
+            if (ViewBag.SearchCondition == 1 || ViewBag.SearchCondition == 3)
+            {
+                columns.Bound(o => o.Item);
+                columns.Bound(o => o.ItemDescription);
+                columns.Bound(o => o.MaterialsGroup);
+                columns.Bound(o => o.MaterialsGroupDesc);
+                if (ViewBag.SearchCondition == 3)
+                {
+                    columns.Bound(o => o.Qty0);
+                    columns.Bound(o => o.Qty2);
+                    columns.Bound(o => o.Qty1);
+                }
+                else
+                {
+                    columns.Bound(o => o.Qty);
+                }
+            }
+            else
+            {
+                columns.Bound(o => o.HuId);
+                columns.Bound(o => o.Item);
+                columns.Bound(o => o.Location);
+                columns.Bound(o => o.ReferenceItemCode);
+                columns.Bound(o => o.ItemDescription);
+                columns.Bound(o => o.MaterialsGroupDesc);
+                columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+                columns.Bound(o => o.UnitCount);
+                columns.Bound(o => o.Uom);
+                columns.Bound(o => o.Qty);
+                columns.Bound(o => o.RemindExpireDateValue);
+                columns.Bound(o => o.ExpireDateValue);
+            }
+            //columns.Bound(o => o.ExpireStatus).Title(@Resources.INV.Hu.Hu_HuStatusDescription);
+            //columns.Bound(o => o.ManufactureDate);
+            //columns.Bound(o => o.CreateUserName);
+            //columns.Bound(o => o.CreateDate);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxShelfLifeWarningList", "Hu"))
+        .ClientEvents(events => events.OnDataBinding("HuGrid_OnDataBinding")
+        .OnRowDataBound("OrderMasterGrid_OnRowDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize); ;
+        })
+        //.Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+<script type="text/javascript">
+    function OrderMasterGrid_OnRowDataBinding(e) {
+        var a = 0;
+        debugger
+            var row = $(e.row.childNodes);
+            if (e.dataItem.Qty0 != 0) {
+                $(row[4 + a]).css("background-color", "red");
+            }
+            if (e.dataItem.Qty2 != 0) {
+                $(row[5 + a]).css("background-color", "yellow");
+            }
+    }
+    function HuGrid_OnDataBinding(e) {
+    
+        var getType  
+        var searchCondition = $("input[type=radio][name=searchCondition]:checked").val();
+        if (searchCondition == "0") {
+            getType = "ByExpireTime"
+        } else if (searchCondition == "1") {
+            getType = "ByOutOfExpireTime"
+        }
+        else if (searchCondition == "2") {
+            getType = "ByRemindExpireTime"
+        }
+        else {
+            getType = "Summary";
+        }
+       //debugger
+        e.data = {
+            Item: $('#Item').val(),
+            Location: $('#Location').val(),
+            IsSumByItem: $("input[type=checkbox][name=IsSumByItem]:checked").val(),
+            getType: getType,
+            searchCondition: searchCondition
+        };
+    } 
+
+   
+
+</script>

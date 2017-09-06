@@ -1,0 +1,131 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Production_MaterialIn_FeedProductLine" });
+}
+@model com.Sconit.Entity.PRD.ProductLineLocationDetail
+<script type="text/javascript">
+    function Flow_Change(e) {
+        $("#ProductLineFacility").data("tComboBox").value('');
+        $("#ProductLineFacility").data("tComboBox").text('');
+        $("#ProductLineFacility").data("tComboBox").reload();
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+            $("#divFeedQtyDeatil").hide();
+        }
+        else {
+            var data = { "flow": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/ProductLine/_FeedQtyDetailList/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#divFeedQtyDeatil").html(data);
+                    $("#divFeedQtyDeatil").show();
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+
+    function ProductLineFacility_DataBinding(e) {
+        e.data = {
+            productLine: $("#ProductLine").val()
+        };
+    }
+
+    function onSubmit(e) {
+        var grid = $("#QtyBomDetail").data("tGrid");
+        if (grid == null) {
+            alert("请选择生产线");
+            return;
+        }
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+        var bomDetails = grid.changeLog.serialize(inserted, updated, deleted);
+        var productLineLocationDetail = {
+            "ProductLine": $("#ProductLine").val(),
+            "ProductLineFacility": $("#ProductLineFacility").val()
+        }
+        grid._convert(bomDetails);
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: $.extend(bomDetails, productLineLocationDetail),
+            url: "/ProductLine/FeedQty/",
+            cache: false,
+            success: function (data, textStatus) {
+                $message.success(data.SuccessMessage);
+               
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/ProductLine/_FeedQtyDetailList/",
+                    data: {
+                        "flow": $("#ProductLine").val()
+                    },
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#divFeedQtyDeatil");
+                        $($tGrid).html(data);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+  
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ProductLine)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new { controlName = "ProductLine", type = (int)com.Sconit.CodeMaster.OrderType.Production, isChange = true });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ProductLineFacility)
+            </div>
+            <div class="editor-field-2">
+                <div class="editor-field-2">
+                    @{
+    Html.RenderAction("_ProductLineFacilityComboBox", "Common",
+        new { controlName = "ProductLineFacility" });
+                    }
+                </div>
+            </div>
+         
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_MaterialIn, "Url_Production_MaterialIn_FeedProductLine", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnMaterialIn"},
+        {"needconfirm","true"},
+        {"onclick","onSubmit()"}
+	})
+        </div>
+    </fieldset>
+    <div id="divFeedQtyDeatil" style="display: none;">
+    </div>
+}

@@ -1,0 +1,114 @@
+﻿@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.BIL.ActingBill>
+<fieldset>
+    <script type="text/javascript">
+        $(function () {
+            $("#checkAllTo").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+                $("#btnBackPricing").attr("style", this.checked ? "display:inline" : "display:none");
+
+            });
+        });
+        function showToButtons() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#checkAllTo").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            $("#btnBackPricing").attr("style", showButton ? "display:inline" : "display:none");
+        }
+
+        function onCreateToCalculate() {
+            var grid = $("#ActingBill").data("tGrid");
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            var idStr = "";
+            var currentRecalculatePriceStr = "";
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var row = $(rows[rowIndex]);
+                if (row.find("#checkedRecords")[0].checked) {
+                    var id = row.find("#checkedRecords").val();
+                    var currentRecalculatePrice = row[0].childNodes[grid.columns.length - 1].innerText;
+                    if (idStr == "") {
+                        idStr = id;
+                        currentRecalculatePriceStr = currentRecalculatePrice;
+                    }
+                    else {
+                        idStr += "," + id;
+                        currentRecalculatePriceStr += "," + currentRecalculatePrice;
+                    }
+                }
+            }
+            if (idStr == "") {
+                $message.error('至少选择一行.');
+                return;
+            }
+
+            var data = {
+                "idStr": idStr,
+                "currentRecalculatePriceStr": currentRecalculatePriceStr
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                async: false,
+                url: "/ProcurementBill/_CreateReCalcuLate/",
+                cache: false,
+                success: function (data, textStatus) {
+                    $message.success(data.SuccessMessage);
+                    $("#btnBackPricing").attr("style", "display:none");
+                    ActBillQuery();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                }
+            });
+        }
+
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("ActingBill")
+       .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.CheckOrderNo)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>'   onClick='showToButtons()' />")
+                .HeaderTemplate("<input type='checkbox' id='checkAllTo' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            //columns.Bound(o => o.PartyName);
+            columns.Bound(o => o.ReceiptNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Currency);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.EffectiveDate).Format("{0:d}");
+            columns.Bound(o => o.BillQty);
+            columns.Bound(o => o.UnitPrice);
+            columns.Bound(o => o.RecPrice);
+            columns.Bound(o => o.CurrentRecalculatePrice);
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxCalculateDetailList", "ProcurementBill", new
+        {
+            Party = ViewBag.Party,
+            ReceiptNo = ViewBag.ReceiptNo,
+            Currency = ViewBag.Currency,
+            Item = ViewBag.Item,
+            StartTime = ViewBag.StartTime,
+            EndTime = ViewBag.EndTime,
+            //submitBill = ViewBag.submitBill,
+            Flow = ViewBag.Flow,
+                   IncludeNoEstPrice= ViewBag.IncludeNoEstPrice
+        }))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+   )
+</fieldset>

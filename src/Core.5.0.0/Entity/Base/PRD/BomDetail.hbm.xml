@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.PRD.BomDetail, com.Sconit.Entity" table="PRD_BomDet" lazy="false" dynamic-update="true">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Bom" column="Bom" type="String" length="50" />
+    <property name="Item" column="Item" type="String" length="50" />
+    <property name="OpReference" column="OpRef" type="String" length="50" />
+    <property name="Uom" column="Uom" type="String" length="5" />
+    <property name="Operation" column="Op" type="Int32"  />
+    <property name="StructureType" column="StruType"  />
+    <property name="StartDate" column="StartDate" type="DateTime"  />
+    <property name="EndDate" column="EndDate" type="DateTime"  />
+    <property name="RateQty" column="RateQty" type="Decimal"  />
+    <property name="ScrapPercentage" column="ScrapPct" type="Decimal"  />
+    <property name="BackFlushStrategy" column="BFStrategy" type="String" length="50" />
+    <property name="BackFlushMethod" column="BFMethod"    />
+    <property name="FeedMethod" column="FeedMethod"    />
+    <!--<property name="IsScanHu" column="IsScanHu" type="Boolean"  />-->
+    <property name="IsAutoFeed" column="IsAutoFeed" type="Boolean"  />
+    <!--<property name="BackFlushInShortHandle" column="BFShortHandle" type="Int32"  />-->
+    <property name="Location" column="Location" type="String" length="50" />
+    <property name="IsPrint" column="IsPrint" type="Boolean"  />
+
+    <property name="BomMrpOption" column="BomMrpOption"   />
+    
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,49 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MRP.ORD.TransitOrder>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("TransitOrderGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.OrderTypeDescription);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ShippedQty);
+            columns.Bound(o => o.ReceivedQty);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+        })
+       
+    .Scrollable(c => c.Enabled(false))
+    .EnableCustomBinding(true)
+    .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxTransitOrderList", "MrpSnap"))
+    .ClientEvents(events => events.OnDataBinding("TransitOrderGrid_OnDataBinding"))
+    .Pageable(settings =>
+    {
+    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+    settings.PageSize(ViewBag.PageSize);
+    })
+    .Sortable()
+    .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function TransitOrderGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                IpNo: $('#IpNo').val(),
+                Flow: $('#Flow').val(),
+                Item: $('#Item').val(),
+                Location: $('#Location').val(),
+                SnapTime: $('#SnapTime').val()
+            };
+        } 
+    </script>
+</fieldset>

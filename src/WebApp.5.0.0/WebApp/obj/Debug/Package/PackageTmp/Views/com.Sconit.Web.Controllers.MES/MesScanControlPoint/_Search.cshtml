@@ -1,0 +1,79 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.MES
+<fieldset>
+    @using (Html.BeginForm("List", "MesScanControlPoint"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label >
+                   设备号：
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ControlPoint", TempData["MesScanControlPointSearchModel"] != null ? ((MesScanControlPointSearchModel)TempData["MesScanControlPointSearchModel"]).ControlPoint : string.Empty)
+            </div>
+             <div class="search-label">
+                <label >
+                   追溯码：
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("TraceCode", TempData["MesScanControlPointSearchModel"] != null ? ((MesScanControlPointSearchModel)TempData["MesScanControlPointSearchModel"]).TraceCode : string.Empty)
+            </div>
+          
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+         
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_FacilityMaster_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+          
+              @Html.Button("涂胶机1运行", "Url_FacilityMaster_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnCreateOp1Scan"},
+        {"onclick","location.href='"+@Url.Content("~/MesScanControlPoint/CreateOp1Scan")+"'"}
+       
+	})
+      @Html.Button("涂胶机2运行", "Url_FacilityMaster_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnCreateOp2Scan"},
+        {"onclick","location.href='"+@Url.Content("~/MesScanControlPoint/CreateOp2Scan")+"'"}
+	})
+      @Html.Button("库卡机器人运行", "Url_FacilityMaster_View", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnCreateOp3Scan"},
+        {"onclick","location.href='"+@Url.Content("~/MesScanControlPoint/CreateOp3Scan")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+
+    $('#btnCreateOp1Scan').click(function () {
+        $('form').attr('action', "/MesScanControlPoint/CreateOp1Scan/");
+        $('form').attr('TraceCode',  $('TraceCode').val());
+        $('form').submit();
+    });
+
+    $('#btnCreateOp2Scan').click(function () {
+        $('form').attr('action', "/MesScanControlPoint/CreateOp2Scan/");
+        $('form').attr('TraceCode', $('TraceCode').val());
+        $('form').submit();
+    });
+
+
+    $('#btnCreateOp3Scan').click(function () {
+        $('form').attr('action', "/MesScanControlPoint/CreateOp3Scan/");
+        $('form').attr('TraceCode', $('TraceCode').val());
+        $('form').submit();
+    });
+
+</script>

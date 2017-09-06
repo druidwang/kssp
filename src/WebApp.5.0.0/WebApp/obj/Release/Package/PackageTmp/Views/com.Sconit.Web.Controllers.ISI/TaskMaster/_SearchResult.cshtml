@@ -1,0 +1,48 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISI.TaskMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("TaskMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "TaskMaster", new { code = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Subject);
+            columns.Bound(o => o.TaskSubType);
+            columns.Bound(o => o.TaskAddress);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.AssignStartUserName);
+            columns.Bound(o => o.PlanStartDate);
+            columns.Bound(o => o.PlanCompleteDate);
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "TaskMaster"))
+        .ClientEvents(events => events.OnDataBinding("TaskMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+        )
+    <script type="text/javascript">
+        function TaskMasterGrid_OnDataBinding(e) {
+
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val()
+            };
+        }
+    </script>
+</fieldset>

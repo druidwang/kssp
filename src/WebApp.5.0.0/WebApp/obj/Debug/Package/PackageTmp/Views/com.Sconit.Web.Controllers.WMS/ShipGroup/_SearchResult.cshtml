@@ -1,0 +1,45 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.WMS.PickGroup>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickGroupGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PickGroupCode);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PickGroupCode).ClientTemplate(Html.ActionLink("<#= PickGroupCode #>", "Edit", "ShipGroup", new { id = "<#= PickGroupCode #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.LastModifyUserName);
+            columns.Bound(o => o.LastModifyDate);
+                })
+      
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ShipGroup"))
+            .ClientEvents(events => events.OnDataBinding("PickGroupGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function PickGroupGrid_OnDataBinding(e) {
+            e.data = {
+                PickGroupNo: $('#PickGroupNo').val()
+            };
+        } 
+    </script>
+</fieldset>

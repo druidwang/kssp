@@ -1,0 +1,470 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Inventory_Hu_View" });
+}
+@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.INV.Hu
+<fieldset>
+    <legend>基本</legend>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuId)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuId)
+        @Html.HiddenFor(model => model.HuId)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.LotNo)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.LotNo)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.SupplierLotNo)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.SupplierLotNo)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.Item)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.Item)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.ItemDescription)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.ItemDescription)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.ReferenceItemCode)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.ReferenceItemCode)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.Uom)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.Uom)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.UnitCount)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.UnitCount)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.Qty)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.Qty)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.MaterialsGroup)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.MaterialsGroup)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.Direction)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.Direction)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.Flow)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.Flow)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.PrintCount)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.PrintCount)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.IsOdd)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.IsOdd)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.OrderNo)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.OrderNo)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.IpNo)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.IpNo)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.ReceiptNo)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.ReceiptNo)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.UnitCountDescription)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.UnitCountDescription)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuOption)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuOptionTypeDescription)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.ItemVersion)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.ItemVersion)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.Remark)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.Remark)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.Shift)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.Shift)
+    </div>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuTemplate)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.HuTemplate)
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>状态</legend>
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.Status)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuStatus.HuStatusDescription)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.Region)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuStatus.Region)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.Location)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuStatus.Location)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.Bin)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuStatus.Bin)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.IsConsignment)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuStatus.IsConsignment)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.QualityType)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuStatus.HuQualityTypeDescription)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.IsATP)
+    </div>
+    <div class="editor-field-3">
+        @if (Model.HuStatus.IsATP)
+        {
+            <input type='checkbox' disabled='disabled' id='IsATP' name='IsATP' value='true' checked="checked" style='background-color: blue' />
+        }
+        else
+        {
+            <input type='checkbox' disabled='disabled' id='IsATP' name='IsATP' value='true' />
+        }
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.OccupyType)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuStatus.HuStatusOccupyTypeDescription)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.OccupyReferenceNo)
+    </div>
+    <div class="editor-field-3">
+        @Html.DisplayFor(model => model.HuStatus.OccupyReferenceNo)
+    </div>
+
+    <div class="editor-label-3">
+        @Html.LabelFor(model => model.HuStatus.IsFreeze)
+    </div>
+    <div class="editor-field-3">
+        @if (Model.HuStatus.IsFreeze)
+        {
+            <input type='checkbox' disabled='disabled' id='IsFreeze' name='IsFreeze' value='true' checked="checked" style='background-color: red' />
+        }
+        else
+        {
+            <input type='checkbox' disabled='disabled' id='IsFreeze' name='IsFreeze' value='true' />
+        }
+    </div>
+    @if (Model.HuStatus.Status == com.Sconit.CodeMaster.HuStatus.Ip)
+    {
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.HuStatus.IpNo)
+        </div>
+        <div class="editor-field-3">
+            @Html.DisplayFor(model => model.HuStatus.IpNo)
+        </div>
+
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.HuStatus.LocationFrom)
+        </div>
+        <div class="editor-field-3">
+            @Html.DisplayFor(model => model.HuStatus.LocationFrom)
+        </div>
+
+        <div class="editor-label-3">
+            @Html.LabelFor(model => model.HuStatus.LocationTo)
+        </div>
+        <div class="editor-field-3">
+            @Html.DisplayFor(model => model.HuStatus.LocationTo)
+        </div>
+    }
+</fieldset>
+<fieldset>
+    <legend>审计</legend>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.FirstInventoryDate)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.FirstInventoryDate)
+    </div>
+
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.ConcessionCount)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.ConcessionCount)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.RemindExpireDate)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.RemindExpireDate)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.ExpireDate)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.ExpireDate)
+    </div>
+
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.AgingStartTime)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.AgingStartTime)
+    </div>
+
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.AgingEndTime)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.AgingEndTime)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.CreateUserName)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.CreateUserName)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.CreateDate)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.CreateDate)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.LastModifyUserName)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.LastModifyUserName)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.LastModifyDate)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.LastModifyDate)
+    </div>
+</fieldset>
+<div>
+    <a type="text/html" onclick="showMore()" href="#" id="more">More...</a>
+</div>
+<div id ="showMoreInfor" style="display: none;">
+<fieldset id ="huLoctransTrack">
+    <legend>@Resources.INV.Hu.Hu_Tab_Hu</legend>
+    @Html.LabelFor(model => model.RefHu)
+    @{
+        if (!string.IsNullOrWhiteSpace(Model.RefHu))
+        {
+        <text> <a href="/Hu/HuDetail/@Model.RefHu">@Model.RefHu</a></text>
+        }
+    }
+    <br />
+    <br />
+    @{
+        Html.RenderAction("_Loctrans", "Hu", new { HuId = Model.HuId });
+    }
+</fieldset>
+<div id ="newHuLoctransTrack">
+</div>
+<div id ="pickHuTransTrack">
+</div>
+<div id ="freezeHuTransTrack">
+</div>
+</div>
+<div>
+    <a type="text/html" onclick="hideMore()" href="#" id="hide"  style="display: none;">Hide</a>
+</div>
+<div class="search-footer">
+    @*<button type="button" id="btnNewHuTrack" onclick="showNewHuTrack()">
+        反查新条码</button>*@
+    <button type="button" id="btnPrint" onclick="Print()">
+        @Resources.SYS.Global.Button_Print</button>
+    <button type="button" id="btnExport" onclick="Export()">
+        @Resources.SYS.Global.Button_Export</button>
+    <button type="button" id="btnSearch" onclick="location.href='@ViewBag.BackUrl'">
+        @Resources.SYS.Global.Button_Back</button>
+</div>
+
+<form id="hiddenForm" action="/Hu/SaveToClient" target="_blank"
+    method="post">
+    <input id="huId" name="huId" type="hidden" />
+</form>
+<script type="text/javascript">
+    var alreadyLoaded;
+    alreadyLoaded = false;
+    function Export(e) {
+        $("#huId").val($("#HuId").val());
+        $("#hiddenForm").submit();
+    }
+
+    function Print(e) {
+        var data = {
+            "huId": $("#HuId").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/Hu/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+    function hideMore() {
+        $("#showMoreInfor").hide();
+        $("#hide").hide();
+        $("#more").show();
+    }
+    function showMore() {
+   //debugger
+        if (alreadyLoaded) {
+            $("#showMoreInfor").show();
+            $("#hide").show();
+            $("#more").hide();
+            return;
+        }
+            //track new huid by ref huid
+            var data = {
+                "huId": $("#HuId").val()
+            };
+            var url = "/Hu/_NewHuTrack/"
+            $("#divHuView").html("Loading...");
+            $.ajax({
+                type: "get",
+                dataType: "text",
+                url: url,
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    $("#newHuLoctransTrack").html(data);
+                }
+            });
+            //freeze hu trans
+                var data = {
+                    "huId": $('#HuId').val(),
+                    "searchType": "Freeze"
+                };
+
+                $("#freezeHuTransTrack").html("Loading...");
+                $.ajax({
+                    type: "get",
+                    dataType: "text",
+                    url: "/HuLocationLotDetail/_FreezeTrans/",
+                    cache: false,
+                    data: data,
+                    success: function (data, textStatus) {
+                        $("#freezeHuTransTrack").html(data);
+                    }
+                });
+           //pick hu trans
+                var data = {
+                    "huId": $('#HuId').val(),
+                    "searchType": "Pick"
+                };
+
+                $("#pickHuTransTrack").html("Loading...");
+                $.ajax({
+                    type: "get",
+                    dataType: "text",
+                    url: "/HuLocationLotDetail/_PickTrans/",
+                    cache: false,
+                    data: data,
+                    success: function (data, textStatus) {
+                        $("#pickHuTransTrack").html(data);
+                    }
+                });
+                $("#showMoreInfor").show();
+                $("#hide").show();
+                $("#more").hide();
+                alreadyLoaded = true;
+    }
+</script>

@@ -1,0 +1,131 @@
+﻿@using com.Sconit.Web.Controllers.MRP
+@model  IEnumerable<ExPlanAdjust>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onSaveItem(e) {
+        ;
+        var grid = $("#GridPlan").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            return;
+        }
+
+        var Ids = new Array();
+        var Sequences = new Array();
+        var CurrentQtys = new Array();
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var gridLength = grid.columns.length;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            Ids[rowIndex] = $.trim(row[0].childNodes[0].innerText);
+            Sequences[rowIndex] = $.trim(row[0].childNodes[1].innerText);
+            CurrentQtys[rowIndex] = $.trim(row[0].childNodes[gridLength - 1].innerText);
+        }
+
+        var details = {
+            "Ids": Ids,
+            "Sequences": Sequences,
+            "CurrentQtys": CurrentQtys
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/MrpPlanEx/_SaveItems/",
+            data: $.extend(details, null),
+            traditional: true,
+            success: function (data) {
+                DisplayJsonMessages(data);
+                var data1 = {
+                    flow: $('#Item_Flow').val(),
+                    planVersion: $('#Item_PlanVersion').val(),
+                    dateIndex: $('#Item_DateIndex').val(),
+                    section: $('#Item_Section').val()
+                };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/MrpPlanEx/_MrpItemPlanList/",
+                    data: data1,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $("#fdItem").html(data);
+                        $("#fdItem").show();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+
+    function SectionComboBox_DataBinding(e) {
+        if (e.value != "") {
+            e.data = {
+                "flow": "EX01"
+            }
+        }
+    }
+
+    function onSectionComboBoxChange(e) {
+
+    }
+
+    function onSave()
+    { }
+
+    function onDataBound(e) {
+        $("#GridPlan").tuiTableRowSpan("0");
+    }
+
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Flow);
+            keys.Add(p => p.Item1);
+            keys.Add(p => p.Item2);
+            keys.Add(p => p.Item3);
+            keys.Add(p => p.Item4);
+        })
+        .Name("GridPlan")
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+            //.ToolBar(commands =>
+            //{
+            //    commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSave()", href = "#" });
+            //})
+        .DataBinding(dataBinding => dataBinding.Ajax()
+           .Select("_SelectAdjustPlanList", "MrpPlanEx", new { planVersion = ViewBag.PlanVersion, dateIndex = ViewBag.DateIndex }))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Flow).ReadOnly(true).Title("路线"); ;
+            columns.Bound(o => o.Item1).EditorTemplateName("SectionFilterByFlow").Title("星期一");
+            columns.Bound(o => o.Qty1).Title("班数");
+            columns.Bound(o => o.Item2).EditorTemplateName("SectionFilterByFlow").Title("星期二");
+            columns.Bound(o => o.Qty2).Title("班数");
+            columns.Bound(o => o.Item3).EditorTemplateName("SectionFilterByFlow").Title("星期三");
+            columns.Bound(o => o.Qty3).Title("班数");
+            columns.Bound(o => o.Item4).EditorTemplateName("SectionFilterByFlow").Title("星期四");
+            columns.Bound(o => o.Qty4).Title("班数");
+            columns.Bound(o => o.Item5).EditorTemplateName("SectionFilterByFlow").Title("星期五");
+            columns.Bound(o => o.Qty5).Title("班数");
+            columns.Bound(o => o.Item6).EditorTemplateName("SectionFilterByFlow").Title("星期六");
+            columns.Bound(o => o.Qty6).Title("班数");
+            columns.Bound(o => o.Item0).EditorTemplateName("SectionFilterByFlow").Title("星期日");
+            columns.Bound(o => o.Qty0).Title("班数");
+            columns.Bound(o => o.Item7).EditorTemplateName("SectionFilterByFlow").Title("溢出");
+            columns.Bound(o => o.Qty7).Title("班数");
+        })
+        .ClientEvents(c => c.OnDataBound("onDataBound"))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+  )
+</fieldset>

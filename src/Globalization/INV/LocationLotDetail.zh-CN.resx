@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Bin" xml:space="preserve">
+    <value>库格</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>物料描述</value>
+  </data>
+  <data name="Errors_HuAlreadyInLocation" xml:space="preserve">
+    <value>条码{0}已经在库位{1}中存在，不能进行入库操作。</value>
+  </data>
+  <data name="Errors_HuFrozenCantShip" xml:space="preserve">
+    <value>条码{0}已经被冻结，不能发货。</value>
+  </data>
+  <data name="Errors_HuIsAlreadyInLocation" xml:space="preserve">
+    <value>条码{0}已经在库位{1}中，不能收货。</value>
+  </data>
+  <data name="Errors_HuNotInAnyLocation" xml:space="preserve">
+    <value>条码{0}不在任何库位中，不能进行出库操作。</value>
+  </data>
+  <data name="Errors_HuNotInSpecifiedLocation" xml:space="preserve">
+    <value>条码{0}在库位{1}中不存在，不能进行出库操作。</value>
+  </data>
+  <data name="Errors_HuNotOccupiedByInspectOrder" xml:space="preserve">
+    <value>条码{0}没有被检验单{1}占用，不能发货。</value>
+  </data>
+  <data name="Errors_HuNotOccupiedByMiscOrder" xml:space="preserve">
+    <value>条码{0}没有被计划外出入库单{1}占用，不能发货。</value>
+  </data>
+  <data name="Errors_HuNotOccupiedByPickList" xml:space="preserve">
+    <value>条码{0}没有被拣货单{1}占用，不能发货。</value>
+  </data>
+  <data name="Errors_HuNotOccupiedBySequenceOrder" xml:space="preserve">
+    <value>条码{0}没有被排序装箱单{1}占用，不能发货。</value>
+  </data>
+  <data name="Errors_HuOccupiedByInspectOrder" xml:space="preserve">
+    <value>条码{0}已经被检验单{1}占用，不能发货。</value>
+  </data>
+  <data name="Errors_HuOccupiedByMiscOrder" xml:space="preserve">
+    <value>条码{0}已经被计划外出入库单{1}占用，不能发货。</value>
+  </data>
+  <data name="Errors_HuOccupiedByPickList" xml:space="preserve">
+    <value>条码{0}已经被拣货单{1}占用，不能发货。</value>
+  </data>
+  <data name="Errors_HuOccupiedBySequenceOrder" xml:space="preserve">
+    <value>条码{0}已经被排序装箱单{1}占用，不能发货。</value>
+  </data>
+  <data name="Errors_HuQtyNotEqualShipQty" xml:space="preserve">
+    <value>条码{0}数量为{1}和出库数量{2}不匹配。</value>
+  </data>
+  <data name="Errors_KitItemCannotProcessInventory" xml:space="preserve">
+    <value>套零不能进行库存操作。</value>
+  </data>
+  <data name="Errors_NotEnoughInventory" xml:space="preserve">
+    <value>物料{0}在库位{1}中库存不足。</value>
+  </data>
+  <data name="Errors_VirtualItemCannotProcessInventory" xml:space="preserve">
+    <value>虚零件不能进行库存操作。</value>
+  </data>
+  <data name="Errors_VoidFailNotEnoughSpecifyInventory" xml:space="preserve">
+    <value>寄售库存已经结算，冲销失败。</value>
+  </data>
+  <data name="LocationLotDetail_CreateDate" xml:space="preserve">
+    <value>入库时间</value>
+  </data>
+  <data name="LocationLotDetail_Direction" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="LocationLotDetail_Freezed" xml:space="preserve">
+    <value>冻结成功</value>
+  </data>
+  <data name="LocationLotDetail_HuId" xml:space="preserve">
+    <value>条码</value>
+  </data>
+  <data name="LocationLotDetail_HuQty" xml:space="preserve">
+    <value>条码数量</value>
+  </data>
+  <data name="LocationLotDetail_HuUom" xml:space="preserve">
+    <value>单位</value>
+  </data>
+  <data name="LocationLotDetail_Id" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="LocationLotDetail_IsATP" xml:space="preserve">
+    <value>有效</value>
+  </data>
+  <data name="LocationLotDetail_IsConsignment" xml:space="preserve">
+    <value>寄售</value>
+  </data>
+  <data name="LocationLotDetail_IsFreeze" xml:space="preserve">
+    <value>冻结</value>
+  </data>
+  <data name="LocationLotDetail_IshideLotNo" xml:space="preserve">
+    <value>显示条码库存</value>
+  </data>
+  <data name="LocationLotDetail_IshideSupper" xml:space="preserve">
+    <value>显示供应商</value>
+  </data>
+  <data name="LocationLotDetail_IsOdd" xml:space="preserve">
+    <value>零头</value>
+  </data>
+  <data name="LocationLotDetail_Item" xml:space="preserve">
+    <value>物料代码</value>
+  </data>
+  <data name="LocationLotDetail_ItemDescription" xml:space="preserve">
+    <value>物料描述</value>
+  </data>
+  <data name="LocationLotDetail_ItemTo" xml:space="preserve">
+    <value>到</value>
+  </data>
+  <data name="LocationLotDetail_LastModifyDate" xml:space="preserve">
+    <value>修改时间</value>
+  </data>
+  <data name="LocationLotDetail_Level" xml:space="preserve">
+    <value>汇总至</value>
+  </data>
+  <data name="LocationLotDetail_Location" xml:space="preserve">
+    <value>库位</value>
+  </data>
+  <data name="LocationLotDetail_LocationTo" xml:space="preserve">
+    <value>到</value>
+  </data>
+  <data name="LocationLotDetail_LotNo" xml:space="preserve">
+    <value>批号</value>
+  </data>
+  <data name="LocationLotDetail_LotNoFrom" xml:space="preserve">
+    <value>批号</value>
+  </data>
+  <data name="LocationLotDetail_LotNoTo" xml:space="preserve">
+    <value>至</value>
+  </data>
+  <data name="LocationLotDetail_ManufactureDate" xml:space="preserve">
+    <value>制造时间</value>
+  </data>
+  <data name="LocationLotDetail_ManufactureParty" xml:space="preserve">
+    <value>制造商</value>
+  </data>
+  <data name="LocationLotDetail_Name" xml:space="preserve">
+    <value>库位名称</value>
+  </data>
+  <data name="LocationLotDetail_OccupyReferenceNo" xml:space="preserve">
+    <value>OccupyReferenceNo</value>
+  </data>
+  <data name="LocationLotDetail_OccupyType" xml:space="preserve">
+    <value>占用</value>
+  </data>
+  <data name="LocationLotDetail_PlanBill" xml:space="preserve">
+    <value>PlanBill</value>
+  </data>
+  <data name="LocationLotDetail_Qty" xml:space="preserve">
+    <value>库存数量</value>
+  </data>
+  <data name="LocationLotDetail_ReferenceItemCode" xml:space="preserve">
+    <value>参考物料号</value>
+  </data>
+  <data name="LocationLotDetail_Region" xml:space="preserve">
+    <value>区域</value>
+  </data>
+  <data name="LocationLotDetail_RegionTo" xml:space="preserve">
+    <value>到</value>
+  </data>
+  <data name="LocationLotDetail_SAPLocation" xml:space="preserve">
+    <value>SAP库位</value>
+  </data>
+  <data name="LocationLotDetail_SUMQty" xml:space="preserve">
+    <value>数量</value>
+  </data>
+  <data name="LocationLotDetail_TheFactory" xml:space="preserve">
+    <value>工厂</value>
+  </data>
+  <data name="LocationLotDetail_TheFactoryTo" xml:space="preserve">
+    <value>到</value>
+  </data>
+  <data name="LocationLotDetail_TypeLocation" xml:space="preserve">
+    <value>选择库位</value>
+  </data>
+  <data name="LocationLotDetail_UnFreezed" xml:space="preserve">
+    <value>解冻成功</value>
+  </data>
+  <data name="LocationLotDetail_UnitCount" xml:space="preserve">
+    <value>单包装</value>
+  </data>
+  <data name="LocationLotDetail_Uom" xml:space="preserve">
+    <value>单位</value>
+  </data>
+  <data name="LocationLotDetail_Version" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="LocationLotDetail_Workshop" xml:space="preserve">
+    <value>分厂</value>
+  </data>
+  <data name="LocationLotDetail_WorkshopTo" xml:space="preserve">
+    <value>到</value>
+  </data>
+  <data name="LocationLotDetail_Bin" xml:space="preserve">
+    <value>库格</value>
+  </data>
+  <data name="LocationLotDetail_BaseUom" xml:space="preserve">
+    <value>单位</value>
+  </data>
+  <data name="LocationLotDetail_QualityType" xml:space="preserve">
+    <value>质量</value>
+  </data>
+  <data name="LocationLotDetail_HuOption" xml:space="preserve">
+    <value>选项</value>
+  </data>
+  <data name="LocationLotDetail_ItemVersion" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="LocationLotDetail_IsHideManufactureParty" xml:space="preserve">
+    <value>显示制造商</value>
+  </data>
+</root>

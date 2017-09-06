@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_IOB_LocationDetailIOB" });
+}
+
+<fieldset>
+    @using (Html.BeginForm("Export", "IOB"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.Report.LocationDetailIOB.LocationDetailIOB_Location
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "Location",
+            selectedValue = string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.Report.LocationDetailIOB.LocationDetailIOB_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.BIL.ActingBill.ActingBill_StartTime
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Name("StartDate")
+                .Value(System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.BIL.ActingBill.ActingBill_EndTime
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Name("EndDate")
+                .Value(System.DateTime.Now)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="Search" onclick="_GetLocationDetailIOB()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+        </div>
+    }
+</fieldset>
+<div id="divLocationDetailIOB">
+</div>
+
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+        if ($('#Location').val() == "") {
+            $message.error('库位为必填项。');
+            return;
+        }
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+        if ($('#EndDate').val() == "") {
+            $message.error('结束时间为必填项。');
+            return;
+        }
+        $('form').submit();
+    });  
+    function _GetLocationDetailIOB() {
+        if ($('#Location').val() == "") {
+            $message.error('库位为必填项。');
+            return;
+        }
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+        if ($('#EndDate').val() == "") {
+            $message.error('结束时间为必填项。');
+            return;
+        }
+        var data = {
+            "Location": $('#Location').val(),
+            "Item": $('#Item').val(),
+            "StartDate": $('#StartDate').val(),
+            "EndDate": $('#EndDate').val()
+
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/IOB/_GetLocationDetailIOB/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divLocationDetailIOB");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 2,
+                    highlightrow: true
+                });
+            }
+        });
+    }
+</script>
+<style>
+    table th {
+        padding: 4px 1px;
+        text-align: center;
+    }
+</style>

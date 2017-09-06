@@ -1,0 +1,61 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset>
+    @using (Html.BeginForm("List", "ItemCategory"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ItemCategory_Code">
+                    @Resources.MD.ItemCategory.ItemCategory_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["ItemCategorySearchModel"] != null ? ((ItemCategorySearchModel)TempData["ItemCategorySearchModel"]).Code : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="ItemCategory_Description">
+                    @Resources.MD.ItemCategory.ItemCategory_Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["ItemCategorySearchModel"] != null ? ((ItemCategorySearchModel)TempData["ItemCategorySearchModel"]).Description : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="ItemCategory_Description">
+                    @Resources.MD.ItemCategory.ItemCategory_SubCategory
+                </label>
+            </div>
+            <div class="search-field">
+              @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common",
+        new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.SubCategory,
+            includeBlankOption = true,
+            controlName = "SubCategory",
+            selectedValue = TempData["ItemCategorySearchModel"] != null ? ((ItemCategorySearchModel)TempData["ItemCategorySearchModel"]).SubCategory : string.Empty
+        });
+                }
+        </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            @*<button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/ItemCategory/New")'">
+                @Resources.SYS.Global.Button_New</button>*@
+                @Html.Button(Resources.SYS.Global.Button_Search, "Url_ItemCategory_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_ItemCategory_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/ItemCategory/New")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>

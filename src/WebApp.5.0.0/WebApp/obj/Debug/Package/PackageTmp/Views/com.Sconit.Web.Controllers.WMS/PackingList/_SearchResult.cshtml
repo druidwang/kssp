@@ -1,0 +1,45 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.WMS.PackingList>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PackingListGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PackingListCode);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PackingListCode); //.ClientTemplate(Html.ActionLink("<#= Item #>", "Edit", "PackingList", new { id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.LastModifyUserName);
+            columns.Bound(o => o.LastModifyDate);
+                })
+      
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "PackingList"))
+                            .ClientEvents(events => events.OnDataBinding("PackingListGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function PackingListGrid_OnDataBinding(e) {
+            e.data = {
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                PackingListCode: $('#PackingListCode').val(),
+                PackUser: $('#PackUser').val()
+            };
+        } 
+    </script>
+</fieldset>

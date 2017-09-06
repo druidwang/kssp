@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.WMS.PickGroup, com.Sconit.Entity" table="WMS_PickGroup" lazy="false">
+		<id name="PickGroupCode" column="PickGroupCode" type="String" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<version name="Version" column="Version" type="Int32" />	
+		<property name="Type" column="Type" type="Int16"/>	
+		<property name="Description" column="Desc1" type="String" length="255"/>	
+		<property name="IsActive" column="IsActive" type="Boolean"/>	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+        <property name="IsAutoAssign" column="IsAutoAssign" type="Boolean"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "Bom_Change" : "EmptyChange";
+}
+@(Html.Telerik().ComboBox()
+      .HiddenInputHtmlAttributes(new { id = id })
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax().Select("_BomAjaxLoading", "Common",
+                  new
+                  {
+                      includeBlankOption = ViewBag.IncludeBlankOption,
+                      isIncludeInActinve = ViewBag.IsIncludeInActinve
+                  }))
+                .ClientEvents(events => events.OnChange(onChangeName))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                )

@@ -1,0 +1,186 @@
+﻿@model com.Sconit.Entity.INP.ConcessionMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ConcessionOrder_New" });
+}
+<script type="text/javascript">
+    function onSearch() {
+        var rejCombobox = $("#RejectNo").data("tComboBox");
+        if ((rejCombobox.selectedIndex == undefined || rejCombobox.selectedIndex == -1) && $("#InspectNo").val() == "") {
+            rejCombobox.value("");
+            $message.error("请输入报验单号");
+            return;
+        }
+        var data = {
+            "rejectNo": $("#RejectNo").val(),
+            "inspectNo": $("#InspectNo").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ConcessionOrder/_RejectDetailList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#fdRejectDetail").html(data);
+                $("#fdRejectDetail").show();
+                $("#btnNew").attr("style", "display:inline");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });
+        $("#btnNew").show();
+    }
+
+    function onSubmit(e) {
+
+        var rejCombobox = $("#RejectNo").data("tComboBox");
+        if ((rejCombobox.selectedIndex == undefined || rejCombobox.selectedIndex == -1) && $("#InspectNo").val() == "") {
+            rejCombobox.value("");
+            $message.error("请输入报验单号");
+            return;
+        }
+        var isInspect = true;
+        if ($("#InspectNo").val() == "") {
+            isInspect = false;
+        }
+
+        var location = $("#Location").val();
+        if (location == "") {
+            $message.error("请输入库位");
+            return;
+        }
+
+        var inspectType = $("#InspectType").val();
+        var grid = $("#ConcessionDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var idStr = "";
+        var qtyStr = "";
+
+        if (rows.length == 0) {
+            $message.error("没有可让步的明细");
+            return;
+        }
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var id = row.find("#Id").val();
+            var qty = row.find("#CurrentHandleQty").val();
+            if (inspectType == 1) {
+                if (qty != "" && !isNaN(qty) && parseFloat(qty) > 0) {
+                    if (idStr == "") {
+                        idStr = id;
+                        qtyStr = qty;
+                    } else {
+                        idStr += "," + id;
+                        qtyStr += "," + qty;
+                    }
+                }
+            } else {
+                var $checkRecords = $("input[name='checkedRecords']");
+                for (var i = 0; i < $checkRecords.length; i++) {
+                    if ($checkRecords[i].checked) {
+                        var id = $checkRecords[i].value;
+                        if (idStr == "") {
+                            idStr = id;
+                            qtyStr = qty;
+                        } else {
+                            idStr += "," + id;
+                            qtyStr += "," + qty;
+                        }
+                    }
+                }
+            }
+        }
+        var data = {
+            "idStr": idStr,
+            "qtyStr": qtyStr,
+            "isInspect": isInspect,
+            "location": location
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ConcessionOrder/Create/",
+            data: data,
+            success: function (data) {
+                if (data != "") {
+                    var orderData = {
+                        "id": data
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "/ConcessionOrder/Edit/",
+                        data: orderData,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+    function Location_DataBinding(e) {
+        e.data = {
+        };
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>@Resources.EXT.PageLan.InspectOrder</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("InspectNo")
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.EXT.PageLan.Location
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_LocationComboBox", "Common",
+        new
+        {
+            controlName = "Location",
+            checkRegion = true,
+        });
+                }
+            </div>
+            <div class="editor-label-2" style="display: none">
+                @Html.LabelFor(model => model.RejectNo)
+            </div>
+            <div class="editor-field-2" style="display: none">
+                @{
+    Html.RenderAction("_RejectComboBox", "Common", new
+    {
+        controlName = "RejectNo",
+        //isChange = true,
+        status = (int)com.Sconit.CodeMaster.RejectStatus.Submit,
+        handleResult = (int)com.Sconit.CodeMaster.HandleResult.Concession
+    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="btnSearch" onclick="onSearch()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="onSubmit()" style="display: none">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+    </fieldset>
+   
+    <div id="fdRejectDetail" style="display: none;">
+    </div>
+   
+}

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpLocationDetail>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+        });
+        var $checkedRecords = $("input[name='checkedRecords']");
+        $checkedRecords.click(function () {
+            $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        });
+    });
+</script>
+<fieldset>
+    <legend>@Resources.ORD.IpDetail.IpDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("AdjustHuIpDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id)
+              .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+              .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.IpDetail.OrderNo);
+            columns.Bound(o => o.IpDetail.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.IpDetail.ReferenceItemCode);
+            columns.Bound(o => o.IpDetail.ItemDescription);
+            columns.Bound(o => o.IpDetail.Uom);
+            columns.Bound(o => o.IpDetail.UnitCount).Format("{0:0.########}");
+            columns.Bound(o => o.IpDetail.LocationFromName);
+            columns.Bound(o => o.IpDetail.LocationToName);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.Qty).Format("{0:0.########}");
+
+        })
+                         .CellAction(cell =>
+                         {
+                             if (cell.Column.Member == "Id")
+                             {
+                                 cell.Text = string.Format("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='" + cell.DataItem.Id + "'/>");
+                             }
+                         })
+        .Scrollable(c => c.Enabled(false))
+                .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

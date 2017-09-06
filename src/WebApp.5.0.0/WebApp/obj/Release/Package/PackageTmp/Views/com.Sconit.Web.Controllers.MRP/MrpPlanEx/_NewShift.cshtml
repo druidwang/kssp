@@ -1,0 +1,192 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model com.Sconit.Entity.MRP.TRANS.MrpExShiftPlan
+@Html.Partial("_AjaxMessage")
+<fieldset>
+    <legend>@Resources.MD.Item.Item_New_Title</legend>
+    <div class="editor">
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Sequence)
+            @*@Html.HiddenFor(model => model.PlanDate)
+            @Html.HiddenFor(model => model.DateIndex)*@
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.Sequence).DecimalDigits(0).MinValue(1).MaxValue(10000)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ProductType)
+        </div>
+        <div class="editor-field-2">
+            @{
+            Html.RenderAction("_ProductTypeDropDownList", "Common", new
+                {
+                    controlName = "ProductType",
+                    selectedValue = Model != null ? Model.ProductType : string.Empty
+                });
+            }
+        </div>
+        @*<div class="editor-label-2">
+            @Html.LabelFor(model => model.Remark)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.Remark)
+        </div>*@
+
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Item)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_ItemComboBox", "Common",
+                new
+                {
+                    controlName = "Item",
+                    selectedValue = string.Empty,
+                    includeBlankOption = true,
+                    itemCategory = "ZHJC",
+                    coupled = true
+                });
+            }
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ItemDescription)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.ItemDescription)
+            @*@Html.ValidationMessageFor(model => model.ItemDescription)*@
+        </div>
+        @*<div class="editor-label-2">
+            @Html.LabelFor(model => model.UnitCount)
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.UnitCount).DecimalDigits(3).MinValue(0.001)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Uom)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_UomDropDownList", "Common", new { controlName = "Uom" });
+            }
+            @Html.ValidationMessageFor(model => model.Uom)
+        </div>*@
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Shift)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_ShiftComboBox", "Common", new
+                {
+                    controlName = "Shift",
+                    resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.EX,
+                    isChange = false
+                });
+            }
+            @Html.ValidationMessageFor(model => model.Shift)
+        </div>
+        <div class="editor-label-2">
+            <label>班次数</label>
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.ShiftQty).DecimalDigits(2).MinValue(0.01).MaxValue(3.00)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Qty)
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().NumericTextBoxFor(model => model.Qty).DecimalDigits(0).MinValue(1).MaxValue(10000)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.StartTime)
+        </div>
+        <div class="editor-field-2">
+            @Html.Telerik().TimePickerFor(model => model.StartTime)
+        </div>
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="btnNew" onclick="onNewShift()">
+            @Resources.SYS.Global.Button_New</button>
+        <button type="button" id="btnBack" onclick="onBack()">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+  
+    function onNewShift() {
+        
+        if ($('#Flow').val() == "") {
+            $message.error('生产线不能为空。');
+            return;
+        }
+
+        if ($('#PlanDate').val() == "") {
+            $message.error('计划时间不能为空。');
+            return;
+        }
+
+        if ($('#Sequence').val() == "") {
+            $message.error('序号不能为空。');
+            return;
+        }
+
+        if ($('#Remark').val() == "") {
+            $message.error('备注不能为空。');
+            return;
+        }
+
+        if ($('#ProductType').val() == "") {
+            $message.error('生产类型不能为空。');
+            return;
+        }
+
+        if ($('#Shift').val() == "") {
+            $message.error('班次不能为空。');
+            return;
+        }
+
+        if ($('#ShiftQty').val() == "") {
+            $message.error('班次数不能为空。');
+            return;
+        }
+
+        if ($('#Qty').val() == "") {
+            $message.error('数量不能为空。');
+            return;
+        }
+
+        if ($('#StartTime').val() == "") {
+            $message.error('开始时间不能为空。');
+            return;
+        }
+       //debugger
+        var param = {
+            ProductLine: $('#Flow').val(),
+            PlanDate: $('#PlanDate').val(),
+            Sequence: $('#Sequence').val(),
+            Remark: $('#Remark').val(),
+            ProductType: $('#ProductType').val(),
+            Item: $('#Item').val(),
+            ItemDescription: $('#ItemDescription').val(),
+            UnitCount: $('#UnitCount').val(),
+            Uom: $('#Uom').val(),
+            Shift: $('#Shift').val(),
+            ShiftQty: $('#ShiftQty').val(),
+            Qty: $('#Qty').val(),
+            StartTime: $('#StartTime').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/MrpPlanEx/_CreateNewShift/",
+            data: param,
+            success: function (data) {
+                DisplayTextMessages(data);
+                onBack();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,20 @@
+﻿     <div id="main">
+            <div id="content">
+                    <div class="validation-summary-errors">
+        <ul id="popErrorsul">
+        </ul>
+    </div>
+    <div class="validation-summary-warnings">
+        <ul id="warningsul">
+        </ul>
+    </div>
+    <div class="validation-summary-successes">
+        <ul id="popSuccesssul">
+        </ul>
+    </div>
+
+<div id="divExistLocHuIdChkList">
+    @{
+        Html.RenderAction("_ExistLocHuIdChkList", "StockTake", new { StNo = ViewBag.StNo });
+    }
+</div>

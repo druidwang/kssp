@@ -1,0 +1,33 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_PrintTC" });
+}
+@Html.Partial("_AjaxMessage")
+
+<fieldset>
+        @Html.Button("打印追溯码", "", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnPrinctTraceCode"},
+            {"onclick","PrintTraceCode(this)"}
+	    })
+</fieldset>
+
+<script type="text/javascript">
+    function PrintTraceCode(e) {
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/ProductionOrder/DoPrintTC/",
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>

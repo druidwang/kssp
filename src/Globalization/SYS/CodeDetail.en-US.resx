@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BarCodeFinishGoods" xml:space="preserve">
+    <value>BarCodeFinishGoods</value>
+  </data>
+  <data name="CodeDetail_BillTerm_BAB" xml:space="preserve">
+    <value>Built</value>
+    <comment>下线结算</comment>
+  </data>
+  <data name="CodeDetail_BillTerm_BAC" xml:space="preserve">
+    <value>Consignment</value>
+    <comment>寄售结算</comment>
+  </data>
+  <data name="CodeDetail_BillTerm_BAI" xml:space="preserve">
+    <value>Inspected</value>
+    <comment>检验结算</comment>
+  </data>
+  <data name="CodeDetail_BillTerm_BAR" xml:space="preserve">
+    <value>Receipt</value>
+    <comment>收货结算</comment>
+  </data>
+  <data name="CodeDetail_BillTerm_BBB" xml:space="preserve">
+    <value>Issued</value>
+    <comment>上线结算</comment>
+  </data>
+  <data name="CodeDetail_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_Enable" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_Envelop" xml:space="preserve">
+    <value>Envelop</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_FinishInspect" xml:space="preserve">
+    <value>FinishInspect</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_FinishMaintain" xml:space="preserve">
+    <value>FinishMaintain</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_FinishRepair" xml:space="preserve">
+    <value>FinishRepair</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_FinishUse" xml:space="preserve">
+    <value>FinishUse</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_Lend" xml:space="preserve">
+    <value>Lend</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_Lose" xml:space="preserve">
+    <value>Lose</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_Scrap" xml:space="preserve">
+    <value>Scrap</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_Sell" xml:space="preserve">
+    <value>Sell</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_StartInspect" xml:space="preserve">
+    <value>StartInspect</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_StartMaintain" xml:space="preserve">
+    <value>StartMaintain</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_StartRepair" xml:space="preserve">
+    <value>StartRepair</value>
+  </data>
+  <data name="CodeDetail_FacilityTransType_StartUse" xml:space="preserve">
+    <value>StartUse</value>
+  </data>
+  <data name="CodeDetail_InterfacePriceType_Consignment" xml:space="preserve">
+    <value>Consignment</value>
+  </data>
+  <data name="CodeDetail_InterfacePriceType_Purchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="CodeDetail_InterfacePriceType_Subconctract" xml:space="preserve">
+    <value>Subconctract</value>
+  </data>
+  <data name="CodeDetail_IsDefault" xml:space="preserve">
+    <value>IsDefault</value>
+  </data>
+  <data name="CodeDetail_MaintainPlanType_Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="CodeDetail_MaintainPlanType_Hour" xml:space="preserve">
+    <value>Hour</value>
+  </data>
+  <data name="CodeDetail_MaintainPlanType_Minute" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="CodeDetail_MaintainPlanType_Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="CodeDetail_MaintainPlanType_Once" xml:space="preserve">
+    <value>Once</value>
+  </data>
+  <data name="CodeDetail_MaintainPlanType_Second" xml:space="preserve">
+    <value>Second</value>
+  </data>
+  <data name="CodeDetail_MaintainPlanType_TIMES" xml:space="preserve">
+    <value>Times</value>
+  </data>
+  <data name="CodeDetail_MaintainPlanType_Week" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="CodeDetail_MaintainPlanType_Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_AfterInspection" xml:space="preserve">
+    <value>Bill as Inspected</value>
+    <comment>3</comment>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_LinearClearing" xml:space="preserve">
+    <value>Bill as Built</value>
+    <comment>5</comment>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_NA" xml:space="preserve">
+    <value>NA</value>
+    <comment>1</comment>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_OnlineBilling" xml:space="preserve">
+    <value>Bill as Issued</value>
+    <comment>4</comment>
+  </data>
+  <data name="CodeDetail_OrderBillTerm_ReceivingSettlement" xml:space="preserve">
+    <value>Bill as Receipt</value>
+    <comment>2</comment>
+  </data>
+  <data name="CodeDetail_OrderType_Distribution" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="CodeDetail_OrderType_Procurement" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="CodeDetail_PermissionCategoryType_Carrier" xml:space="preserve">
+    <value>Carrier</value>
+  </data>
+  <data name="CodeDetail_Sequence" xml:space="preserve">
+    <value>Sequence</value>
+  </data>
+  <data name="CodeDetail_TaskPriority_High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="CodeDetail_TaskPriority_Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="CodeDetail_TaskPriority_Major" xml:space="preserve">
+    <value>Major</value>
+  </data>
+  <data name="CodeDetail_TaskPriority_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="CodeDetail_TaskPriority_Urgent" xml:space="preserve">
+    <value>Urgent</value>
+  </data>
+  <data name="CodeDetail_TaskStatus_Assign" xml:space="preserve">
+    <value>Assign</value>
+  </data>
+  <data name="CodeDetail_TaskStatus_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CodeDetail_TaskStatus_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CodeDetail_TaskStatus_Complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="CodeDetail_TaskStatus_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CodeDetail_TaskStatus_InProcess" xml:space="preserve">
+    <value>InProcess</value>
+  </data>
+  <data name="CodeDetail_TaskStatus_Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="CodeDetail_TaskType_Audit" xml:space="preserve">
+    <value>Audit</value>
+  </data>
+  <data name="CodeDetail_TaskType_Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CodeDetail_TaskType_Ecn" xml:space="preserve">
+    <value>Ecn</value>
+  </data>
+  <data name="CodeDetail_TaskType_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="CodeDetail_TaskType_Improve" xml:space="preserve">
+    <value>Improve</value>
+  </data>
+  <data name="CodeDetail_TaskType_Issue" xml:space="preserve">
+    <value>Issue</value>
+  </data>
+  <data name="CodeDetail_TaskType_Plan" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="CodeDetail_TaskType_Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="CodeDetail_TaskType_PrjectIssue" xml:space="preserve">
+    <value>PrjectIssue</value>
+  </data>
+  <data name="CodeDetail_TaskType_Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="CodeDetail_TaskType_Response" xml:space="preserve">
+    <value>Response</value>
+  </data>
+  <data name="CodeDetail_TransportPricingMethod_Chartered" xml:space="preserve">
+    <value>Chartered</value>
+  </data>
+  <data name="CodeDetail_TransportPricingMethod_Distance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="CodeDetail_TransportPricingMethod_LadderVolume" xml:space="preserve">
+    <value>LadderVolume</value>
+  </data>
+  <data name="CodeDetail_TransportPricingMethod_Volume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="CodeDetail_TransportPricingMethod_Weight" xml:space="preserve">
+    <value>Weight</value>
+  </data>
+  <data name="CodeDetail_UserType_Supplier" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="CodeDetail_Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+</root>

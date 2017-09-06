@@ -1,0 +1,116 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@model IEnumerable<com.Sconit.Entity.INV.StockTakeLocation>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onLocationComboBoxChange(e) {
+        if (e.value != "" && $('#LocationBin').data('tComboBox') != undefined) {
+            $('#LocationBin').data('tComboBox').value('');
+            $('#LocationBin').data('tComboBox').text('');
+            $("#LocationBin").data("tComboBox").reload();
+        }
+
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                $(e.target).parent().parent().next().text("");
+                combobox.reload();
+            } else {
+                var data = {
+                    "Location": e.value
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/StockTake/_LocationDescription/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        $(e.target).parent().parent().next().text(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+
+    function onLocationDataBinding(e) {
+        //debugger;
+        e.data = {
+            "Region": $("#Region").val(),
+            "checkRegion": true
+        };
+    }
+    function onLocationDataBound() {
+        //debugger;
+        $("tr.t-no-data td").html("@Resources.GridLocalization.NoRecords");
+    }
+
+    function Location_DataBinding(e) {
+        //debugger;
+        e.data = {
+            "Region": $("#Region").val(),
+            "checkRegion": true
+        };
+    }
+    function Location_Change(e) {
+        onLocationComboBoxChange(e);
+    }
+</script>
+<fieldset>
+    <legend>@Resources.INV.StockTake.StockTakeDetail_Location</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("StockTakeLocation")
+         .ToolBar(commands =>
+         {
+             if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.Create)
+             {
+                 commands.Insert();
+             }
+         })
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_Select", "StockTake", new { stNo = ViewBag.StNo })
+                .Insert("_InsertAjaxEditing", "StockTake", new { stNo = ViewBag.StNo })
+                .Update("_UpdateLocation", "StockTake")
+                .Delete("_DeleteLocation", "StockTake", new { stNo = ViewBag.StNo }))
+        .Columns(columns =>
+        {
+            if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.Create)
+            {
+                // columns.ForeignKey(o => o.Location, (IEnumerable<Location>)ViewData["locations"], "Code", "Code");
+                columns.Bound(o => o.Location).EditorTemplateName("LocationGridForeignKey").Width(120);
+                columns.Bound(o => o.LocationName).ReadOnly();
+                columns.Bound(o => o.Bins);
+            }
+            else
+            {
+                columns.Bound(o => o.Location).ReadOnly();
+                columns.Bound(o => o.LocationName).ReadOnly();
+                columns.Bound(o => o.Bins).ReadOnly();
+            }
+            if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.Create)
+            {
+                columns.Command(commands =>
+                {
+                    commands.Edit();
+                    commands.Delete();
+                }).Width(150);
+            }
+        })
+        .NoRecordsTemplate("Loading...")
+        .ClientEvents(e => e.OnDataBound("onLocationDataBound"))
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+        .Footer(false)
+            )
+</fieldset>

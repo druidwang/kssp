@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Index";
+    string siteMapPath = ViewBag.ResourceGroup == null ? "Url_OrderMstr_Production_Receive" : "Url_OrderMstr_Production_Receive_MI";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = siteMapPath });
+}
+
+@{
+    Html.RenderAction("_ReceiveSearch", new { resourceGroup = ViewBag.ResourceGroup });
+}

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpDetail>
+           
+<fieldset>
+<legend>@Resources.ORD.IpMaster.IpDetail_Edit_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("IpDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.IpNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Flow).Title(Resources.ORD.IpMaster.IpMaster_Flow);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount).Format("{0:0.###}");
+        
+            columns.Bound(o => o.LocationToName);
+            columns.Bound(o => o.TypeDescription);
+            columns.Bound(o => o.Qty).Format("{0:0.###}");
+            columns.Bound(o => o.ReceivedQty).Format("{0:0.###}");
+            columns.Bound(o => o.GapQty).Format("{0:0.###}");
+            columns.Bound(o => o.IsClose).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsClose' <#= IsClose? checked='checked' : '' #> />");
+        })
+                    .DetailView(details => details.ClientTemplate(Html.Telerik().Grid<com.Sconit.Entity.ORD.IpLocationDetail>()
+                    .Name("IpLocationDetail_<#= Id #>")
+                    .Resizable(resizing => resizing.Columns(true))
+                    .Columns(columns =>
+                    {
+
+                        columns.Bound(o => o.IpNo);
+                        columns.Bound(o => o.Item);
+                        columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+                        columns.Bound(o => o.HuId);
+                        //columns.Bound(o => o.IsATP)
+                        //    .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsATP' name='IsATP' value='<#= IsATP #>' <#=IsATP? checked='checked' : '' #> />");
+                        //columns.Bound(o => o.IsFreeze)
+                        //    .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsFreeze' name='IsFreeze' value='<#= IsFreeze #>' <#=IsFreeze? checked='checked' : '' #> />");
+                        //columns.Bound(o => o.IsConsignment)
+                        //    .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsConsignment' name='IsConsignment' value='<#= IsConsignment #>' <#=IsConsignment? checked='checked' : '' #> />");
+                        //columns.Bound(o => o.IsClose)
+                        //    .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsClose' name='IsClose' value='<#= IsClose #>' <#=IsClose? checked='checked' : '' #> />");
+
+                        //columns.Bound(o => o.QualityType );
+                        columns.Bound(o => o.Qty);
+                        columns.Bound(o => o.ReceivedQty);
+                        //columns.Bound(o => o.RemainReceiveQty);
+
+                    })
+                    .DataBinding(dataBinding => dataBinding.Ajax()
+                            .Select("_AjaxIpLocDetList", "DistributionIpMaster", new { Id = "<#= Id #>" }))
+                    .Pageable(t => t.Enabled(false))
+                    .Footer(false)
+                    .ToHtmlString()
+
+                    ))
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxIpDetList", "DistributionIpMaster"))
+              //  .ClientEvents(events => events.OnDataBinding("IpDetailGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+   @* <script type="text/javascript">
+        function IpDetailGrid_OnDataBinding(e) {
+            e.data = {
+            };
+        } 
+    </script>*@
+</fieldset>

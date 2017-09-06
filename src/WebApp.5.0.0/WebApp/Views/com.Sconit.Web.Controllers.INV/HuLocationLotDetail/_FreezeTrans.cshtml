@@ -1,0 +1,37 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.FreezeTransaction>
+<fieldset>
+<legend>冻结/解冻事务</legend>
+    @(Html.Telerik().Grid(Model).Name("FreezeTransaction")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            //columns.Bound(o => o.MaterialsGroup);
+            columns.Bound(o => o.MaterialsGroupDesc);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.HuAction);
+            columns.Bound(o => o.ItemVersion);
+            columns.Bound(o => o.Reason);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxFreezeTransactionList", "HuLocationLotDetail",
+                            new { Item = @ViewBag.Item, Location = @ViewBag.Location, Bin = @ViewBag.Bin, HuId = @ViewBag.HuId, LotNo = @ViewBag.LotNo, LotNoTo = @ViewBag.LotNoTo, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate, SearchType = @ViewBag.SearchType }))
+        //.Footer(false)
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

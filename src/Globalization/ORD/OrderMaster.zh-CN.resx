@@ -1,0 +1,750 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Errors_BomInActive" xml:space="preserve">
+    <value>不能创建订单明细行，Bom{0}状态无效。</value>
+  </data>
+  <data name="Errors_ItemInActive" xml:space="preserve">
+    <value>不能创建订单明细行，零件{0}状态无效。</value>
+  </data>
+  <data name="Errors_ItemIsVirtual" xml:space="preserve">
+    <value>不能创建订单明细行，零件{0}是虚零件。</value>
+  </data>
+  <data name="Errors_ItemNotCustomerGoods" xml:space="preserve">
+    <value>不能创建客供品订单明细行，零件{0}不是客供品。</value>
+  </data>
+  <data name="Errors_ItemNotManufacture" xml:space="preserve">
+    <value>不能创建生产订单明细行，零件{0}不是制造件。</value>
+  </data>
+  <data name="Errors_ItemNotPurchase" xml:space="preserve">
+    <value>不能创建采购订单明细行，零件{0}不是采购件。</value>
+  </data>
+  <data name="Errors_ItemNotSales" xml:space="preserve">
+    <value>不能创建销售订单明细行，零件{0}不是销售件。</value>
+  </data>
+  <data name="Errors_ItemNotSubContract" xml:space="preserve">
+    <value>不能创建委外订单明细行，零件{0}不是委外加工件。</value>
+  </data>
+  <data name="Errors_OrderBomDetailIsEmpty" xml:space="preserve">
+    <value>零件{0}的Bom明细为空。</value>
+  </data>
+  <data name="Errors_OrderDetailIsEmpty" xml:space="preserve">
+    <value>订单明细不能为空。</value>
+  </data>
+  <data name="Errors_OrderQtyNotFulfillUnitCount" xml:space="preserve">
+    <value>零件{0}的订单数量不是包装数{1}的整数倍。</value>
+  </data>
+  <data name="Errors_RoutingInActive" xml:space="preserve">
+    <value>不能创建订单明细行，工艺流程{0}状态无效。</value>
+  </data>
+  <data name="Errors_ScanInActive" xml:space="preserve">
+    <value>不能创建订单明细行，防错代码{0}状态无效。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenAddOrderBinding" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能添加订单绑定。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenAddOrderBomDetail" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能添加Bom明细。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenAddOrderDetail" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能添加订单明细。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenAddOrderOperation" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能添加工序。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenDelete" xml:space="preserve">
+    <value>不能删除状态为{1}的订单{0}。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenDeleteOrderBinding" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能删除订单绑定。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenDeleteOrderBomDetail" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能删除Bom明细。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenDeleteOrderDetail" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能删除订单明细。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenDeleteOrderOperation" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能删除工序。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenModify" xml:space="preserve">
+    <value>不能修改状态为{1}的订单{0}。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenModifyOrderBomDetail" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能修改Bom明细。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenModifyOrderDetail" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能修改订单明细。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenModifyOrderOperation" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能修改工序。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenExpandOrderBomDetail" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能展开Bom。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenRelease" xml:space="preserve">
+    <value>不能释放状态为{1}的订单{0}。</value>
+  </data>
+  <data name="OrderMaster_Added" xml:space="preserve">
+    <value>订单{0}新增成功</value>
+  </data>
+  <data name="OrderMaster_AsnTemplate" xml:space="preserve">
+    <value>送货单模板</value>
+  </data>
+  <data name="OrderMaster_AutomaticControl" xml:space="preserve">
+    <value>自动选项</value>
+  </data>
+  <data name="OrderMaster_BarCodeOption" xml:space="preserve">
+    <value>条码选项</value>
+  </data>
+  <data name="OrderMaster_BaseInfo" xml:space="preserve">
+    <value>基本信息</value>
+  </data>
+  <data name="OrderMaster_BillAddress" xml:space="preserve">
+    <value>开票地址</value>
+  </data>
+  <data name="OrderMaster_BillAddressDescription" xml:space="preserve">
+    <value>开票地址描述</value>
+  </data>
+  <data name="OrderMaster_BillTerm" xml:space="preserve">
+    <value>结算方式</value>
+  </data>
+  <data name="OrderMaster_BindingOrder" xml:space="preserve">
+    <value>订单绑定</value>
+  </data>
+  <data name="OrderMaster_CancelDate" xml:space="preserve">
+    <value>取消日期</value>
+  </data>
+  <data name="OrderMaster_CancelReason" xml:space="preserve">
+    <value>取消原因</value>
+  </data>
+  <data name="OrderMaster_CancelUserName" xml:space="preserve">
+    <value>取消用户</value>
+  </data>
+  <data name="OrderMaster_CloseDate" xml:space="preserve">
+    <value>关闭日期</value>
+  </data>
+  <data name="OrderMaster_CloseUserName" xml:space="preserve">
+    <value>关闭用户</value>
+  </data>
+  <data name="OrderMaster_CreateDate" xml:space="preserve">
+    <value>创建日期</value>
+  </data>
+  <data name="OrderMaster_CreateHuOption" xml:space="preserve">
+    <value>条码选项</value>
+  </data>
+  <data name="OrderMaster_CreateUserName" xml:space="preserve">
+    <value>创建用户</value>
+  </data>
+  <data name="OrderMaster_Currency" xml:space="preserve">
+    <value>币种</value>
+  </data>
+  <data name="OrderMaster_DateFrom" xml:space="preserve">
+    <value>开始日期</value>
+  </data>
+  <data name="OrderMaster_DateTo" xml:space="preserve">
+    <value>结束日期</value>
+  </data>
+  <data name="OrderMaster_Deleted" xml:space="preserve">
+    <value>订单{0}删除成功</value>
+  </data>
+  <data name="OrderMaster_Dock" xml:space="preserve">
+    <value>道口</value>
+  </data>
+  <data name="OrderMaster_Edit_Title" xml:space="preserve">
+    <value>编辑订单</value>
+  </data>
+  <data name="OrderMaster_EffectiveDate" xml:space="preserve">
+    <value>生效日期</value>
+  </data>
+  <data name="OrderMaster_ExternalOrderNo" xml:space="preserve">
+    <value>外部订单号</value>
+  </data>
+  <data name="OrderMaster_Flow" xml:space="preserve">
+    <value>路线代码</value>
+  </data>
+  <data name="OrderMaster_HuTemplate" xml:space="preserve">
+    <value>条码模板</value>
+  </data>
+  <data name="OrderMaster_IsOpenOrder" xml:space="preserve">
+    <value>开口订单</value>
+  </data>
+  <data name="OrderMaster_IsAsnUniqueReceive" xml:space="preserve">
+    <value>送货单一次收货</value>
+  </data>
+  <data name="OrderMaster_IsAutoBill" xml:space="preserve">
+    <value>自动开票</value>
+  </data>
+  <data name="OrderMaster_IsAutoReceive" xml:space="preserve">
+    <value>自动收货</value>
+  </data>
+  <data name="OrderMaster_IsAutoRelease" xml:space="preserve">
+    <value>自动释放</value>
+  </data>
+  <data name="OrderMaster_IsAutoShip" xml:space="preserve">
+    <value>自动发货</value>
+  </data>
+  <data name="OrderMaster_IsAutoStart" xml:space="preserve">
+    <value>自动上线</value>
+  </data>
+  <data name="OrderMaster_IsCreatePickList" xml:space="preserve">
+    <value>创建拣货单</value>
+  </data>
+  <data name="OrderMaster_IsInspect" xml:space="preserve">
+    <value>是否检验</value>
+  </data>
+  <data name="OrderMaster_IsListPrice" xml:space="preserve">
+    <value>显示价格</value>
+  </data>
+  <data name="OrderMaster_IsManualCreateDetail" xml:space="preserve">
+    <value>手工创建明细</value>
+  </data>
+  <data name="OrderMaster_IsOrderFulfillUC" xml:space="preserve">
+    <value>整包下单</value>
+  </data>
+  <data name="OrderMaster_IsOrderPrinted" xml:space="preserve">
+    <value>已打印</value>
+  </data>
+  <data name="OrderMaster_IsPickFromBin" xml:space="preserve">
+    <value>库格拣货</value>
+  </data>
+  <data name="OrderMaster_IsPickListCreated" xml:space="preserve">
+    <value>已拣货</value>
+  </data>
+  <data name="OrderMaster_IsPrintAsn" xml:space="preserve">
+    <value>打印送货单</value>
+  </data>
+  <data name="OrderMaster_IsPrintOrder" xml:space="preserve">
+    <value>打印订单</value>
+  </data>
+  <data name="OrderMaster_IsPrintReceipt" xml:space="preserve">
+    <value>打印收货单</value>
+  </data>
+  <data name="OrderMaster_IsProductLinePause" xml:space="preserve">
+    <value>生产线暂停</value>
+  </data>
+  <data name="OrderMaster_IsReceiveExceed" xml:space="preserve">
+    <value>允许超收</value>
+  </data>
+  <data name="OrderMaster_IsReceiveFifo" xml:space="preserve">
+    <value>收货先进先出</value>
+  </data>
+  <data name="OrderMaster_IsReceiveFulfillUC" xml:space="preserve">
+    <value>整包收货</value>
+  </data>
+  <data name="OrderMaster_IsReceiveScanHu" xml:space="preserve">
+    <value>收货扫描条码</value>
+  </data>
+  <data name="OrderMaster_IsShipByOrder" xml:space="preserve">
+    <value>按订单发货</value>
+  </data>
+  <data name="OrderMaster_IsShipExceed" xml:space="preserve">
+    <value>允许超发</value>
+  </data>
+  <data name="OrderMaster_IsShipFulfillUC" xml:space="preserve">
+    <value>整包发货</value>
+  </data>
+  <data name="OrderMaster_IsShipScanHu" xml:space="preserve">
+    <value>发货扫描条码</value>
+  </data>
+  <data name="OrderMaster_LastModifyDate" xml:space="preserve">
+    <value>最后更新日期</value>
+  </data>
+  <data name="OrderMaster_LastModifyUserName" xml:space="preserve">
+    <value>最后更新用户</value>
+  </data>
+  <data name="OrderMaster_LocationFrom" xml:space="preserve">
+    <value>发货库位代码</value>
+  </data>
+  <data name="OrderMaster_LocationFromName" xml:space="preserve">
+    <value>发货库位</value>
+  </data>
+  <data name="OrderMaster_LocationTo" xml:space="preserve">
+    <value>收货库位代码</value>
+  </data>
+  <data name="OrderMaster_LocationToName" xml:space="preserve">
+    <value>收货库位</value>
+  </data>
+  <data name="OrderMaster_New_Title" xml:space="preserve">
+    <value>新建订单</value>
+  </data>
+  <data name="OrderMaster_OrderControl" xml:space="preserve">
+    <value>订单选项</value>
+  </data>
+  <data name="OrderMaster_OrderNo" xml:space="preserve">
+    <value>订单号</value>
+  </data>
+  <data name="OrderMaster_OrderTemplate" xml:space="preserve">
+    <value>订单模板</value>
+  </data>
+  <data name="OrderMaster_PartyFrom" xml:space="preserve">
+    <value>发货方代码</value>
+  </data>
+  <data name="OrderMaster_PartyFromName" xml:space="preserve">
+    <value>发货方</value>
+  </data>
+  <data name="OrderMaster_PartyTo" xml:space="preserve">
+    <value>收货方代码</value>
+  </data>
+  <data name="OrderMaster_PartyToName" xml:space="preserve">
+    <value>收货方</value>
+  </data>
+  <data name="OrderMaster_PauseTime" xml:space="preserve">
+    <value>暂停时间</value>
+  </data>
+  <data name="OrderMaster_PriceList" xml:space="preserve">
+    <value>价格单</value>
+  </data>
+  <data name="OrderMaster_PrintOption" xml:space="preserve">
+    <value>打印选项</value>
+  </data>
+  <data name="OrderMaster_Priority" xml:space="preserve">
+    <value>优先级</value>
+  </data>
+  <data name="OrderMaster_Procurement" xml:space="preserve">
+    <value>要货单</value>
+  </data>
+  <data name="OrderMaster_ReCalculatePriceOption" xml:space="preserve">
+    <value>重新计价选项</value>
+  </data>
+  <data name="OrderMaster_ReceiptTemplate" xml:space="preserve">
+    <value>收货单模板</value>
+  </data>
+  <data name="OrderMaster_ReceiveGapTo" xml:space="preserve">
+    <value>收货差异处理</value>
+  </data>
+  <data name="OrderMaster_ReferenceOrderNo" xml:space="preserve">
+    <value>参考订单号</value>
+  </data>
+  <data name="OrderMaster_ReleaseDate" xml:space="preserve">
+    <value>提交日期</value>
+  </data>
+  <data name="OrderMaster_ReleaseUserName" xml:space="preserve">
+    <value>提交用户</value>
+  </data>
+  <data name="OrderMaster_Routing" xml:space="preserve">
+    <value>工艺流程</value>
+  </data>
+  <data name="OrderMaster_Saved" xml:space="preserve">
+    <value>订单{0}保存成功</value>
+  </data>
+  <data name="OrderMaster_Sequence" xml:space="preserve">
+    <value>序号</value>
+  </data>
+  <data name="OrderMaster_Shift" xml:space="preserve">
+    <value>班次</value>
+  </data>
+  <data name="OrderMaster_ShipFrom" xml:space="preserve">
+    <value>发货地址代码</value>
+  </data>
+  <data name="OrderMaster_ShipFromAddress" xml:space="preserve">
+    <value>发货地址</value>
+  </data>
+  <data name="OrderMaster_ShipFromCell" xml:space="preserve">
+    <value>发货方移动电话</value>
+  </data>
+  <data name="OrderMaster_ShipFromContact" xml:space="preserve">
+    <value>发货方联系人</value>
+  </data>
+  <data name="OrderMaster_ShipFromFax" xml:space="preserve">
+    <value>发货方地址传真</value>
+  </data>
+  <data name="OrderMaster_ShipFromTel" xml:space="preserve">
+    <value>发货方固定电话</value>
+  </data>
+  <data name="OrderMaster_ShipTo" xml:space="preserve">
+    <value>收货地址代码</value>
+  </data>
+  <data name="OrderMaster_ShipToAddress" xml:space="preserve">
+    <value>收货地址</value>
+  </data>
+  <data name="OrderMaster_ShipToCell" xml:space="preserve">
+    <value>收货方移动电话</value>
+  </data>
+  <data name="OrderMaster_ShipToContact" xml:space="preserve">
+    <value>收货方联系人</value>
+  </data>
+  <data name="OrderMaster_ShipToFax" xml:space="preserve">
+    <value>收货方传真</value>
+  </data>
+  <data name="OrderMaster_ShipToTel" xml:space="preserve">
+    <value>收货方固定电话</value>
+  </data>
+  <data name="OrderMaster_StartDate" xml:space="preserve">
+    <value>上线日期</value>
+  </data>
+  <data name="OrderMaster_StartTime" xml:space="preserve">
+    <value>开始时间</value>
+  </data>
+  <data name="OrderMaster_StartUserName" xml:space="preserve">
+    <value>上线用户</value>
+  </data>
+  <data name="OrderMaster_Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="OrderMaster_Submited" xml:space="preserve">
+    <value>订单{0}提交成功</value>
+  </data>
+  <data name="OrderMaster_SubType" xml:space="preserve">
+    <value>子类型</value>
+  </data>
+  <data name="OrderMaster_Type" xml:space="preserve">
+    <value>订单类型</value>
+  </data>
+  <data name="OrderMaster_Version" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="OrderMaster_WindowTime" xml:space="preserve">
+    <value>窗口时间</value>
+  </data>
+  <data name="OrderMaster_Received" xml:space="preserve">
+    <value>订单{0}收货成功</value>
+  </data>
+  <data name="OrderMaster_Shipped" xml:space="preserve">
+    <value>订单{0}发货成功</value>
+  </data>
+  <data name="OrderMaster_Canceled" xml:space="preserve">
+    <value>订单{0}已取消</value>
+  </data>
+  <data name="OrderMaster_Completed" xml:space="preserve">
+    <value>订单{0}已完成</value>
+  </data>
+  <data name="Errors_StatusErrorWhenExpandOrderOperation" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能展开工艺流程。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenUpdateOrderBinding" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能修改订单绑定。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenExpandOrderOperationAndBomDetail" xml:space="preserve">
+    <value>状态为{1}的订单{0}不能展开工艺流程和Bom。</value>
+  </data>
+  <data name="OrderMaster_Distribution" xml:space="preserve">
+    <value>发货单</value>
+  </data>
+  <data name="Errors_StatusErrorWhenStart" xml:space="preserve">
+    <value>不能对状态为{1}的订单{0}上线。</value>
+  </data>
+  <data name="Errors_ExcceedMaxOnlineCount" xml:space="preserve">
+    <value>上线订单数量超过生产线{0}允许的最大上限。</value>
+  </data>
+  <data name="OrderMaster_Production" xml:space="preserve">
+    <value>生产单</value>
+  </data>
+  <data name="Errors_RecieveQtyNotFulfillUnitCount" xml:space="preserve">
+    <value>零件{0}的收货数量不是包装数{1}的整数倍。</value>
+  </data>
+  <data name="Errors_ShipDetailIsEmpty" xml:space="preserve">
+    <value>发货明细不能为空。</value>
+  </data>
+  <data name="Errors_ShipQtyExcceedOrderQty" xml:space="preserve">
+    <value>订单{0}零件{1}的发货数量超出了订单数量。</value>
+  </data>
+  <data name="Errors_ShipQtyNotFulfillUnitCount" xml:space="preserve">
+    <value>零件{0}的发货数量不是包装数{1}的整数倍。</value>
+  </data>
+  <data name="OrderMaster_Ship_Title" xml:space="preserve">
+    <value>发货</value>
+  </data>
+  <data name="Errors_ReceiveDetailIsEmpty" xml:space="preserve">
+    <value>收货明细不能为空。</value>
+  </data>
+  <data name="Errors_ReceiveQtyExcceedOrderQty" xml:space="preserve">
+    <value>订单{0}零件{1}的收货数量超出了订单数量。</value>
+  </data>
+  <data name="Errors_ReceiveQtyNotFulfillUnitCount" xml:space="preserve">
+    <value>零件{0}的收货数量不是包装数{1}的整数倍。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenReceive" xml:space="preserve">
+    <value>不能对状态为{1}的订单{0}收货。</value>
+  </data>
+  <data name="Errors_StatusErrorWhenShip" xml:space="preserve">
+    <value>不能对状态为{1}的订单{0}发货。</value>
+  </data>
+  <data name="Errors_CannotMixOrderTypeReceive" xml:space="preserve">
+    <value>订单类型不同不能合并收货。</value>
+  </data>
+  <data name="Errors_CannotMixOrderTypeShip" xml:space="preserve">
+    <value>订单类型不同不能合并发货。</value>
+  </data>
+  <data name="OrderMaster_Receive_Title" xml:space="preserve">
+    <value>收货</value>
+  </data>
+  <data name="Errors_CannotMixOrderTypePick" xml:space="preserve">
+    <value>订单类型不同不能合并拣货。</value>
+  </data>
+  <data name="OrderMaster_Tab_HuFeed" xml:space="preserve">
+    <value>按条码</value>
+  </data>
+  <data name="OrderMaster_Tab_QtyFeed" xml:space="preserve">
+    <value>按数量</value>
+  </data>
+  <data name="OrderMaster_Started" xml:space="preserve">
+    <value>订单{0}上线成功</value>
+  </data>
+  <data name="OrderMaster_IsPause" xml:space="preserve">
+    <value>暂停</value>
+  </data>
+  <data name="OrderMaster_Operation" xml:space="preserve">
+    <value>工序</value>
+  </data>
+  <data name="OrderMaster_OrderStrategy" xml:space="preserve">
+    <value>拉动方式</value>
+  </data>
+  <data name="OrderMaster_Procurement_Rtn" xml:space="preserve">
+    <value>退货单</value>
+  </data>
+  <data name="OrderMaster_Audit" xml:space="preserve">
+    <value>审计</value>
+  </data>
+  <data name="OrderMaster_OrderNoName" xml:space="preserve">
+    <value>协议号</value>
+  </data>
+  <data name="OrderMaster_BatchCanceled" xml:space="preserve">
+    <value>批处理取消</value>
+  </data>
+  <data name="OrderMaster_BatchClosed" xml:space="preserve">
+    <value>批处理完成</value>
+  </data>
+  <data name="OrderMaster_BatchDeleted" xml:space="preserve">
+    <value>批量删除完成</value>
+  </data>
+  <data name="OrderMaster_BatchStarted" xml:space="preserve">
+    <value>批量开始</value>
+  </data>
+  <data name="OrderMaster_BatchSubmited" xml:space="preserve">
+    <value>批量提交</value>
+  </data>
+  <data name="OrderMaster_Closed" xml:space="preserve">
+    <value>订单{0}关闭成功</value>
+  </data>
+  <data name="OrderMaster_Item" xml:space="preserve">
+    <value>物料代码</value>
+  </data>
+  <data name="OrderMaster_OrderNoReturn" xml:space="preserve">
+    <value>退货单号</value>
+  </data>
+  <data name="ScheduleLine_Shipped" xml:space="preserve">
+    <value>发货成功</value>
+  </data>
+  <data name="OrderMaster_LocationFromName_Production" xml:space="preserve">
+    <value>原材料库位</value>
+  </data>
+  <data name="OrderMaster_LocationToName_Production" xml:space="preserve">
+    <value>成品库位</value>
+  </data>
+  <data name="OrderMaster_Checked" xml:space="preserve">
+    <value>订单{0}可用性检查成功</value>
+  </data>
+  <data name="OrderMaster_RequisitionList_Created" xml:space="preserve">
+    <value>拉料单{0}创建成功</value>
+  </data>
+  <data name="OrderMaster_CurrentOperation" xml:space="preserve">
+    <value>当前工位</value>
+  </data>
+  <data name="OrderMaster_FlowDescription" xml:space="preserve">
+    <value>路线描述</value>
+  </data>
+  <data name="Errors_FlowIsNotCorrect" xml:space="preserve">
+    <value>输入路线不正确</value>
+  </data>
+  <data name="OrderMaster_WMSNO" xml:space="preserve">
+    <value>SAP单号</value>
+  </data>
+  <data name="OrderMaster_WmSSeq" xml:space="preserve">
+    <value>SAP序号</value>
+  </data>
+  <data name="OrderMaster_Paused" xml:space="preserve">
+    <value>生产单{0}暂停成功</value>
+  </data>
+  <data name="Errors_SEQOrderDetailMoreThanOne" xml:space="preserve">
+    <value>排序策略的订单明细只能为1条</value>
+  </data>
+  <data name="OrderMaster_Flow_Production" xml:space="preserve">
+    <value>生产线</value>
+  </data>
+  <data name="OrderMaster_FlowDescription_Production" xml:space="preserve">
+    <value>生产线描述</value>
+  </data>
+  <data name="OrderMaster_TraceCode" xml:space="preserve">
+    <value>追溯码</value>
+  </data>
+  <data name="OrderMaster_PauseSequence" xml:space="preserve">
+    <value>暂停序号</value>
+  </data>
+  <data name="OrderMaster_ProductLineFacility" xml:space="preserve">
+    <value>生产设备</value>
+  </data>
+  <data name="OrderMaster_ExternalOrderNo_Sap" xml:space="preserve">
+    <value>SAP生产单号</value>
+  </data>
+  <data name="OrderMaster_Imported" xml:space="preserve">
+    <value>生产单导入成功</value>
+  </data>
+  <data name="OrderMaster_CompleteDate" xml:space="preserve">
+    <value>完工时间</value>
+  </data>
+  <data name="OrderMaster_CompleteUserName" xml:space="preserve">
+    <value>完工用户</value>
+  </data>
+  <data name="OrderMaster_RequisitionList_ItemNotCreated" xml:space="preserve">
+    <value>物料{0}没有生成要货单</value>
+  </data>
+  <data name="OrderMaster_RequisitionList_NoOrderCreate" xml:space="preserve">
+    <value>物料已全部拉料完成</value>
+  </data>
+  <data name="OrderMaster_ExternalSeqImport_DateTime" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="OrderMaster_PartyFromName_Production" xml:space="preserve">
+    <value>区域名称</value>
+  </data>
+  <data name="OrderMaster_PartyFrom_Production" xml:space="preserve">
+    <value>区域代码</value>
+  </data>
+  <data name="OrderMaster_FZReceived" xml:space="preserve">
+    <value>分装生产单下线成功</value>
+  </data>
+  <data name="OrderMaster_ExternalOrderNo_Receipt" xml:space="preserve">
+    <value>交货单号</value>
+  </data>
+  <data name="OrderMaster_Checker" xml:space="preserve">
+    <value>保管员</value>
+  </data>
+  <data name="OrderMaster_CompleteAndFeed" xml:space="preserve">
+    <value>下线并投料</value>
+  </data>
+  <data name="OrderMaster_FZOrderNo" xml:space="preserve">
+    <value>分装订单号</value>
+  </data>
+  <data name="OrderMaster_Remarks" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="OrderMaster_IsIndepentDemand" xml:space="preserve">
+    <value>独立需求</value>
+  </data>
+  <data name="OrderMaster_DateType" xml:space="preserve">
+    <value>时间类型</value>
+  </data>
+  <data name="OrderMaster_QualityType" xml:space="preserve">
+    <value>质量状态</value>
+  </data>
+  <data name="OrderMaster_RefExtOrderNo" xml:space="preserve">
+    <value>参考/外部单号</value>
+  </data>
+</root>

@@ -1,0 +1,51 @@
+﻿@using com.Sconit.Entity.ISS
+@using com.Sconit.Web.Models.SearchModels.ISS
+@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+<fieldset>
+    @using (Html.BeginForm("List", "IssueAddress"))
+    {   
+        <div class="search">
+			<div class="search-label">
+                <label for="Code">
+                    @Resources.ISS.IssueAddress.Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["IssueAddressSearchModel"] != null ? ((IssueAddressSearchModel)TempData["IssueAddressSearchModel"]).Code : string.Empty)
+            </div>
+			<div class="search-label">
+                <label for="Description">
+                    @Resources.ISS.IssueAddress.Description
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Description", TempData["IssueAddressSearchModel"] != null ? ((IssueAddressSearchModel)TempData["IssueAddressSearchModel"]).Description : string.Empty)
+            </div>
+			<div class="editor-label-2">
+                <label for="ParentIssueAddress">
+                    @Resources.ISS.IssueAddress.ParentIssueAddress
+                </label>
+            </div>
+            <div class="editor-field-2">
+				@{
+                    Html.RenderAction("_IssueAddressDropDownList", "Common",
+                        new { controlName = "ParentIssueAddressCode", includeBlankOption = true,
+                              selectedValue = TempData["IssueAddressSearchModel"] != null ? ((IssueAddressSearchModel)TempData["IssueAddressSearchModel"]).ParentIssueAddressCode : string.Empty 
+                        });
+                }
+            </div>
+            <div class="search-label">
+            </div>
+            <div class="search-field">
+            </div>
+        </div>    
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+			<button type="button" id="btnNew" onclick="location.href='@Url.Content("~/IssueAddress/New")'">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+    }
+</fieldset>

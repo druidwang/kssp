@@ -1,0 +1,59 @@
+﻿@model com.Sconit.Entity.ORD.IpMaster
+@using com.Sconit.Web.Models.SearchModels.ORD
+@Html.Partial("_AjaxMessage") 
+<script type="text/javascript">
+    function IpLocationQuery() {
+        var data = {
+            "IpNo": $('#IpNo').val(),
+            "Item": $('#ItemScanHu').val()
+       };
+          $.ajax({
+              type: "post",
+              dataType: "html",
+              url: "/Hu/IpDetailList/",
+              cache: false,
+              data: data,
+              success: function (data, textStatus) {
+                  var tabStrip = $("#TabStrip");
+                  var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                  $(tabStripContent2).html(data);
+              }
+          });
+    }
+
+</script>
+
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label >
+                   @Resources.ORD.IpDetail.IpDetail_IpNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("IpNo", TempData["IpDetailSearchModel"] != null ? ((IpDetailSearchModel)TempData["IpDetailSearchModel"]).IpNo : string.Empty)
+            </div>
+            <div class="search-label">
+              <label >
+                     @Resources.ORD.IpDetail.IpDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                 @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "ItemScanHu",
+                selectedValue = TempData["IpDetailSearchModel"] != null ? ((IpDetailSearchModel)TempData["IpDetailSearchModel"]).Item : string.Empty
+            });   
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+                <button type="button" id="Search" onclick="IpLocationQuery()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnEdit" onclick="CheckedExport(false)"  style="display: none">@Resources.SYS.Global.Button_Print</button>
+            <button type="button" id="btnExport" onclick="CheckedExport(true)"  style="display: none">@Resources.SYS.Global.Button_Export</button>
+        </div>
+    </fieldset>
+

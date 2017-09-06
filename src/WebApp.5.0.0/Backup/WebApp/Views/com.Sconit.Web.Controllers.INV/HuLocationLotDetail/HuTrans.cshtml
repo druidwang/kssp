@@ -1,0 +1,226 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_HuTrans_View" });
+}
+<script type="text/javascript">
+    var searchType;
+    searchType="Pick"
+    var url = "/HuLocationLotDetail/_PickTrans/";
+    function doClick(bl) {
+        if (bl=="0") {
+            $("#divHuView").html("");
+            searchType = "Pick"
+            $("#SearchType").val(searchType);
+            url = "/HuLocationLotDetail/_PickTrans/"
+        }
+        else if (bl == "2") {
+            $("#divHuView").html("");
+            searchType = "EpChange"
+            $("#SearchType").val(searchType);
+            url = "/HuLocationLotDetail/_EpChangeTrans/"
+        }
+        else {
+            $("#divHuView").html("");
+            searchType = "Freeze"
+            $("#SearchType").val(searchType);
+            url = "/HuLocationLotDetail/_FreezeTrans/";
+        }
+    }
+
+    function QueryHuTransView() {
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+        if ($('#EndDate').val() == "") {
+            $message.error('结束时间为必填项。');
+            return;
+        }
+        var data = {
+            "location": $('#Location').val(),
+            "bin": $('#Bin').val(),
+            "item": $('#Item').val(),
+            "lotNo": $('#LotNo').val(),
+            "lotNoTo": $('#LotNoTo').val(),
+            "huId": $('#HuId').val(),
+            "createUserName": $('#CreateUserName').val(),
+            "startDate": $('#StartDate').val(),
+            "endDate": $('#EndDate').val(),
+            "searchType":searchType
+        };
+
+        $("#divHuView").html("Loading...");
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: url,
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                $("#divHuView").html(data);
+            }
+        });
+    }
+
+
+
+
+    function LocationBin_DataBinding(e) {
+        e.data = {
+            Location: $('#Location').val()
+        }
+    }
+
+    function Location_Change(e) {
+        if (e.value != "") {
+            $('#Bin').data('tComboBox').value('');
+            $('#Bin').data('tComboBox').text('');
+            $("#Bin").data("tComboBox").reload();
+        }
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("Export", "HuLocationLotDetail"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Location
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "Location",
+            isChange = true,
+            selectedValue = string.Empty
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="StockTakeDetail_Bin">
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Bin
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_LocationBinComboBox", "Common", new
+        {
+            controlName = "Bin",
+            selectedValue = string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = string.Empty
+
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_HuId
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("HuId", string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.Hu_manufacture_date
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LotNo", string.Empty)
+                <input id="SearchType" value="Pick"  name="SearchType" type="hidden" />
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.Hu_lotNoTo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LotNoTo", string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Hu_StartDate">
+                    @Resources.INV.Hu.Hu_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartDate")
+                .Value(System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_EndDate">
+                    @Resources.INV.Hu.Hu_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EndDate")
+            .Value(System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            
+            <div class="search-label">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("tabType", 0, true, new { onclick = "doClick(0)" })<span>@Resources.EXT.PageLan.PickUnpick</span><span
+                    style="margin: 4px"></span>
+                @Html.RadioButton("tabType", 1, true, new { onclick = "doClick(1)" })<span>@Resources.EXT.PageLan.FreezeUnfreeze</span><span
+                    style="margin: 4px"></span>
+                @Html.RadioButton("tabType", 2, false, new { onclick = "doClick(2)" })<span>@Resources.EXT.PageLan.ExpireDateChange</span>
+            </div>
+            
+            <div class="search-label">
+                <label for="Hu_CreateUserName">
+                    @Resources.INV.Hu.Hu_CreateUserName
+                </label>
+            </div>
+
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", string.Empty)
+            </div>
+            
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="Search" onclick="QueryHuTransView()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<div id="divHuView">
+</div>
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+    
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+        if ($('#EndDate').val() == "") {
+            $message.error('结束时间为必填项。');
+            return;
+        }
+
+        $('form').submit();
+    });
+</script>
+

@@ -1,0 +1,68 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.CUST
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("List", "VehicleInFactory"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.CUST.VehicleInFactoryMaster.VehicleInFactory_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["VehicleInFactorySearchModel"] != null ? ((VehicleInFactorySearchModel)TempData["VehicleInFactorySearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.VehicleInFactoryMaster.VehicleInFactory_VehicleNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("VehicleNo", TempData["VehicleInFactorySearchModel"] != null ? ((VehicleInFactorySearchModel)TempData["VehicleInFactorySearchModel"]).VehicleNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.VehicleInFactoryMaster.VehicleInFactory_Plant
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Plant", TempData["VehicleInFactorySearchModel"] != null ? ((VehicleInFactorySearchModel)TempData["VehicleInFactorySearchModel"]).Plant : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.VehicleInFactoryMaster.VehicleInFactory_IsInFactory
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsInFactory", TempData["VehicleInFactorySearchModel"] != null ? ((VehicleInFactorySearchModel)TempData["VehicleInFactorySearchModel"]).IsInFactory : true)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.VehicleInFactoryMaster.VehicleInFactory_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+.Value(TempData["VehicleInFactorySearchModel"] != null ? ((VehicleInFactorySearchModel)TempData["VehicleInFactorySearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.CUST.VehicleInFactoryMaster.VehicleInFactory_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+             .Value(TempData["VehicleInFactorySearchModel"] != null ? ((VehicleInFactorySearchModel)TempData["VehicleInFactorySearchModel"]).DateTo : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

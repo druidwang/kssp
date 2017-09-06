@@ -1,0 +1,126 @@
+﻿@model IEnumerable<com.Sconit.Entity.BIL.BillDetail>
+<fieldset>
+    <script type="text/javascript">
+        function BillActingDetailSearch() {
+            var data = {
+                Party: $('#Party').val(),
+                ReceiptNo: $('#ReceiptNo').val(),
+                Flow: $('#Flow').val(),
+                Item: $("#Item").val(),
+                StartTime: $("#StartTime").val(),
+                EndTime: $("#EndTime").val()
+               
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/BillMaster/_ActingBillGroupDetailList/",
+                cache: false,
+                data: data,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#divActingBilllList");
+                    $(tabStrip).html(data);
+                }
+            });
+        }
+    </script>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_PartyName_Distribution
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CustomerComboBox", "Common",
+                new
+                {
+                    controlName = "Party",
+                    selectedValue = ViewBag.Party != null ? ViewBag.Party : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_ReceiptNo
+            </label>
+        </div>
+        <div class="search-field">
+            @Html.TextBox("ReceiptNo", (string)ViewBag.ReceiptNo)
+             @Html.Hidden("BillNo", (string)ViewBag.BillNo)
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_Flow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    isSupplier = true,
+                    type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                    selectedValue = ViewBag.Flow != null ? ViewBag.Flow : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ItemComboBox", "Common",
+                    new
+                    {
+                        controlName = "Item",
+                        selectedValue = ViewBag.Item != null ? ViewBag.Item : string.Empty
+                    });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_StartTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("StartTime")
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_EndTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("EndTime")
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_Currency
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CurrencyDropDownList", "Common",
+                new
+                {
+                    controlName = "Currency",
+                    includeBlankOption = true,
+                    selectedValue = ViewBag.Currency != null ? ViewBag.Currency : string.Empty
+                });
+            }
+        </div>
+    </div>
+    <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="BillActingDetailSearch()">
+            @Resources.SYS.Global.Button_Search</button>
+             <button type="button" id="CreateActingDetailBill" onclick="CreateActingDetailBill()" style="display: none">@Resources.SYS.Global.Button_Create</button>
+    </div>
+</fieldset>
+<div id="divActingBilllList">
+</div>
+

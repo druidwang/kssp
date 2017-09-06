@@ -1,0 +1,64 @@
+﻿@using com.Sconit.Web.Models.SearchModels.BIL
+@using com.Sconit.Entity.SYS;
+<fieldset>
+    @using (Html.BeginForm("List", "ProcurementPriceList"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="PriceListMaster_Party">
+                    @Resources.BIL.PriceListMaster.PriceListMaster_Party
+                </label>
+            </div>
+            <div class="search-field">
+               @{
+               Html.RenderAction("_SupplierComboBox", "Common", 
+                   new { 
+                       controlName = "Party",
+                       selectedValue = TempData["PriceListMasterSearchModel"] != null ? ((PriceListMasterSearchModel)TempData["PriceListMasterSearchModel"]).Party : string.Empty
+               });
+            }
+            </div>
+            <div class="search-label">
+                <label for="PriceListMaster_Code">
+                    @Resources.BIL.PriceListMaster.PriceListMaster_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["PriceListMasterSearchModel"] != null ? ((PriceListMasterSearchModel)TempData["PriceListMasterSearchModel"]).Code : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="submit" id="btnExport">
+                @Resources.SYS.Global.Button_Export</button>
+
+             @Html.Button(Resources.SYS.Global.Button_New, "Url_ProcurementPriceList_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"onclick","location.href='"+Url.Content("~/ProcurementPriceList/New/") +"'"}
+	        })
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+
+        if (t == "") {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/ProcurementPriceList/Export/");
+        $('form').submit();
+    });
+</script>

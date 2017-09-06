@@ -1,0 +1,32 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MRP.MD.ProdLineEx>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ProductTypeGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).ClientTemplate(Html.ActionLink("<#= Item #>", "Edit", "MrpExPlanItemRate", new { Section = "<#= Item #>" }, null).ToString()).Title(Resources.MRP.MrpExPlanItemRate.MrpExPlanItemRate_Section);
+            columns.Bound(o => o.ItemDesc).Title(Resources.MRP.MrpExPlanItemRate.MrpExPlanItemRate_SectionDesc);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "MrpExPlanItemRate"))
+        .ClientEvents(events => events.OnDataBinding("MrpExPlanItemRateGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Pageable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function MrpExPlanItemRateGrid_OnDataBinding(e) {
+            e.data = {
+                Section: $('#Section').val(),
+                SectionDesc: $('#SectionDesc').val()
+            };
+        } 
+    </script>
+</fieldset>

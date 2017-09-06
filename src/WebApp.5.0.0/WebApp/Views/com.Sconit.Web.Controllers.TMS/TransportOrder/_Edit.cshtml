@@ -1,0 +1,958 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.ORD.OrderMaster
+<script type="text/javascript">
+    function ShipFrom_DataBinding(e) {
+        e.data = {
+            party: $("#PartyFrom").val()
+        };
+    }
+    function ShipTo_DataBinding(e) {
+        e.data = {
+            party: $("#PartyTo").val()
+        };
+    }
+    function LocationTo_DataBinding(e) {
+        e.data = {
+            region: $("#PartyTo").val()
+        };
+    }
+    function LocationFrom_DataBinding(e) {
+        e.data = {
+            region: $("#PartyFrom").val()
+        };
+    }
+
+    function BillAddress_DataBinding(e) {
+        e.data = {
+            party: $("#PartyTo").val()
+        };
+    }
+
+    function PriceList_Change(e) {
+        var data = { "value": e.value };
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            data: data,
+            url: "/ProcurementOrder/_CurrencyValue/",
+            cache: false,
+            success: function (data, textStatus) {
+                if (data == "") {
+                    alert("价格单不存在，请重新选择！");
+                    $('#Currency').data('tDropDownList').value('');
+                    $('#Currency').data('tDropDownList').text('');
+                }
+                $('#Currency').data('tDropDownList').value(data)
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });
+    }
+
+    function PriceList_DataBinding(e) {
+        e.data = {
+            party: $("#PartyTo").val()
+        };
+    }
+</script>
+@using (Html.BeginForm("_Edit", "DistributionOrder"))
+{
+    <fieldset>
+        <legend>@Resources.ORD.OrderMaster.OrderMaster_BaseInfo</legend>
+        <div class="editor">
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.OrderNo)
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.OrderNo)
+                @Html.HiddenFor(model => model.OrderNo)
+                @Html.HiddenFor(model => model.Version)
+                @Html.HiddenFor(model => model.IsCheckPartyFromAuthority)
+                @Html.HiddenFor(model => model.IsCheckPartyToAuthority)
+                @Html.HiddenFor(model => model.ReceiveGapTo)
+                @Html.HiddenFor(model => model.LocationFrom)
+                @Html.HiddenFor(model => model.LocationTo)
+                @Html.HiddenFor(model => model.ShipFrom)
+                @Html.HiddenFor(model => model.ShipTo)
+            </div>
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.Flow)
+                @Html.HiddenFor(model => model.Flow)
+                @Html.HiddenFor(model => model.OrderStrategy)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.Priority)
+            </div>
+            <div class="editor-field-3">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common",
+        new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.OrderPriority,
+            controlName = "Priority",
+            selectedValue = Model != null ? (int)Model.Priority : 0,
+            enable = ViewBag.isEditable
+        });
+                }
+            </div>
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.Type)
+            </div>
+            <div class="editor-field-3">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.OrderType,
+        controlName = "Type",
+        selectedValue = Model != null ? (int)Model.Type : 0,
+        enable = false
+    });
+                }
+                @Html.HiddenFor(model => model.Type)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.RefExtOrderNo)
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.RefExtOrderNo)
+            </div>
+            @* <div class="editor-label-3">
+                @Html.LabelFor(model => model.OrderStrategy)
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.OrderStrategy)
+            </div>*@
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.QualityType)
+            </div>
+            <div class="editor-field-3">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.QualityType,
+        controlName = "QualityType",
+        selectedValue = Model != null ? ((int)Model.QualityType).ToString() : null,
+        enable = (bool)ViewBag.isEditable
+    });
+                }
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.StartTime)
+            </div>
+            <div class="editor-field-3">
+                @Html.EditorFor(model => model.StartTime, (String)ViewBag.editorTemplate)
+            </div>
+
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.WindowTime)
+            </div>
+            <div class="editor-field-3">
+                @Html.EditorFor(model => model.WindowTime, (String)ViewBag.editorTemplate)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-3">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common",
+        new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.OrderStatus,
+            controlName = "Status",
+            selectedValue = Model != null ? (int)Model.Status : 0,
+            enable = false
+        });
+                }
+                @Html.HiddenFor(model => model.Status)
+            </div>
+            <hr />
+
+            <div class="editor-label-3">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_PartyFromName
+                </label>
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.PartyFromName)
+                @Html.HiddenFor(model => model.PartyFrom)
+                @Html.HiddenFor(model => model.PartyFromName)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.ShipFromAddress)
+            </div>
+            <div class="editor-field-3">
+                @{
+    Html.RenderAction("_AddressComboBox", "Common",
+        new
+        {
+            controlName = "ShipFrom",
+            type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+            selectedValue = Model.ShipFrom,
+            enable = false
+        });
+                }
+                @Html.HiddenFor(model => model.ShipFromAddress)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.ShipFromContact)
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.ShipFromContact)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.ShipFromTel)
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.ShipFromTel)
+                @Html.HiddenFor(model => model.ShipFromFax)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.LocationFromName)
+            </div>
+            <div class="editor-field-3">
+                @{
+    Html.RenderAction("_LocationComboBox", "Common",
+     new
+     {
+         controlId = "MasterLocation",
+         controlName = "LocationFrom",
+         selectedValue = Model.LocationFrom,
+         checkRegion = true,
+         enable = false
+     });
+                }
+                @Html.HiddenFor(model => model.LocationFromName)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.IsIndepentDemand)
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.IsIndepentDemand)
+                @Html.HiddenFor(model => model.IsIndepentDemand)
+            </div>
+
+            <hr />
+
+            <div class="editor-label-3">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_PartyToName
+                </label>
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.PartyToName)
+                @Html.HiddenFor(model => model.PartyTo)
+                @Html.HiddenFor(model => model.PartyToName)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.ShipToAddress)
+            </div>
+            <div class="editor-field-3">
+                @{
+    Html.RenderAction("_AddressComboBox", "Common",
+        new
+        {
+            controlName = "ShipTo",
+            type = (int)com.Sconit.CodeMaster.AddressType.ShipAddress,
+            selectedValue = Model.ShipTo,
+            enable = false
+        });
+                }
+                @Html.HiddenFor(model => model.ShipToAddress)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.ShipToContact)
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.ShipToContact)
+            </div>
+
+            <div class="editor-label-3">
+                @Html.LabelFor(model => model.ShipToTel)
+            </div>
+            <div class="editor-field-3">
+                @Html.DisplayFor(model => model.ShipToTel)
+                @Html.HiddenFor(model => model.ShipToFax)
+            </div>
+
+
+            @if (Model.Type != com.Sconit.CodeMaster.OrderType.SubContractTransfer && Model.Type != com.Sconit.CodeMaster.OrderType.Transfer)
+            {
+                
+                <div class="editor-label-3">
+                </div>
+                <div class="editor-field-3">
+                </div>        
+                <div class="editor-label-3">
+                </div>
+                <div class="editor-field-3">
+                </div>   
+                
+                <div class="editor-label-3">
+                    @Html.LabelFor(model => model.BillTerm)
+                </div>
+                <div class="editor-field-3">
+                    @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common",
+                    new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.OrderBillTerm,
+                        controlName = "BillTerm",
+                        isConsignment = true,
+                        selectedValue = Model != null ? (int)Model.BillTerm : -1,
+                        enable = ViewBag.isEditable
+                    });
+                    }
+                </div>
+                
+                <div class="editor-label-3">
+                    @Html.LabelFor(model => model.BillAddress)
+                </div>
+                <div class="editor-field-3">
+                    @{
+                Html.RenderAction("_AddressComboBox", "Common",
+                    new
+                    {
+                        controlName = "BillAddress",
+                        selectedValue = Model.BillAddress,
+                        checkParty = true,
+                        type = (int)com.Sconit.CodeMaster.AddressType.BillAddress,
+                        enable = ViewBag.isEditable
+                    });
+                    }
+                    @Html.HiddenFor(model => model.BillAddressDescription)
+                </div>
+                
+                <div class="editor-label-3">
+                    @Html.LabelFor(model => model.PriceList)
+                </div>
+                <div class="editor-field-3">
+                    @{
+                Html.RenderAction("_PriceListComboBox", "Common",
+                    new
+                    {
+                        controlName = "PriceList",
+                        selectedValue = Model.PriceList,
+                        checkParty = true,
+                        enable = ViewBag.isEditable,
+                        isChange = true
+                    });
+                    }
+                    @Html.HiddenFor(model => model.PriceList)
+                    @Html.DisplayFor(model => model.Currency)
+                </div>
+            }
+            else
+            {
+                
+                <div class="editor-label-3">
+                    @Html.LabelFor(model => model.LocationToName)
+                </div>
+                <div class="editor-field-3">
+                    @{
+                Html.RenderAction("_LocationComboBox", "Common",
+                 new
+                 {
+                     controlId = "MasterLocationTo",
+                     controlName = "LocationTo",
+                     selectedValue = Model.LocationTo,
+                     checkRegion = true,
+                     enable = false
+                 });
+                    }
+                    @Html.HiddenFor(model => model.LocationToName)
+                </div>
+                <div class="editor-label-3">
+                    @Html.LabelFor(model => model.Dock)
+                </div>
+                <div class="editor-field-3">
+                    @Html.EditorFor(model => model.Dock, (String)ViewBag.editorTemplate)
+                </div>
+            }
+        </div>
+    </fieldset>
+    <div id="divMore" style="display: none">
+        <fieldset>
+            <legend>@Resources.ORD.OrderMaster.OrderMaster_Audit</legend>
+            <div class="editor">
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.CreateUserName)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.CreateUserName)
+                    @Html.HiddenFor(model => model.CreateUserName)
+                    @Html.HiddenFor(model => model.CreateUserId)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.CreateDate)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.CreateDate)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.LastModifyUserName)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.LastModifyUserName)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.LastModifyDate)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.LastModifyDate)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.ReleaseUserName)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.ReleaseUserName)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.ReleaseDate)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.ReleaseDate)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.StartUserName)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.StartUserName)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.StartDate)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.StartDate)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.CloseUserName)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.CloseUserName)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.CloseDate)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.CloseDate)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.CancelUserName)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.CancelUserName)
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.CancelDate)
+                </div>
+                <div class="editor-field-4">
+                    @Html.DisplayFor(model => model.CancelDate)
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>@Resources.ORD.OrderMaster.OrderMaster_BarCodeOption</legend>
+            <div class="editor">
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.HuTemplate)
+                </div>
+                <div class="editor-field-2">
+                    @{
+            Html.RenderAction("_CodeMasterDropDownList", "Common",
+                new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.HuTemplate,
+                    controlName = "HuTemplate",
+                    selectedValue = Model.HuTemplate,
+                    enable = ViewBag.isEditable
+                });
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IsReceiveScanHu)
+                </div>
+                <div class="editor-field-2">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsReceiveScanHu)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsReceiveScanHu, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IsShipScanHu)
+                </div>
+                <div class="editor-field-2">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsShipScanHu)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsShipScanHu, new { disabled = true })
+            }
+                    }
+                </div>
+                @*<div class="editor-label-2">
+                    @Html.LabelFor(model => model.IsReceiveFifo)
+                </div>
+                <div class="editor-field-2">
+                    @{
+    if (ViewBag.isEditable)
+    {
+                        @Html.CheckBoxFor(model => model.IsReceiveFifo)
+    }
+    else
+    {
+                        @Html.CheckBoxFor(model => model.IsReceiveFifo, new { disabled = true })
+    }
+                    }
+                </div>*@
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>@Resources.ORD.OrderMaster.OrderMaster_PrintOption</legend>
+            <div class="editor">
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IsPrintOrder)
+                </div>
+                <div class="editor-field-2">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsPrintOrder)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsPrintOrder, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.OrderTemplate)
+                </div>
+                <div class="editor-field-2">
+                    @{
+            Html.RenderAction("_CodeMasterDropDownList", "Common",
+                new { code = com.Sconit.CodeMaster.CodeMaster.OrderTemplate, controlName = "OrderTemplate", selectedValue = Model.OrderTemplate, enable = ViewBag.isEditable });
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IsPrintAsn)
+                </div>
+                <div class="editor-field-2">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsPrintAsn)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsPrintAsn, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.AsnTemplate)
+                </div>
+                <div class="editor-field-2">
+                    @{
+            Html.RenderAction("_CodeMasterDropDownList", "Common",
+                new { code = com.Sconit.CodeMaster.CodeMaster.AsnTemplate, controlName = "AsnTemplate", selectedValue = Model.AsnTemplate, enable = ViewBag.isEditable });
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.IsPrintReceipt)
+                </div>
+                <div class="editor-field-2">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsPrintReceipt)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsPrintReceipt, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.ReceiptTemplate)
+                </div>
+                <div class="editor-field-2">
+                    @{
+            Html.RenderAction("_CodeMasterDropDownList", "Common",
+                new { code = com.Sconit.CodeMaster.CodeMaster.ReceiptTemplate, controlName = "ReceiptTemplate", selectedValue = Model.ReceiptTemplate, enable = ViewBag.isEditable });
+                    }
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>@Resources.ORD.OrderMaster.OrderMaster_OrderControl</legend>
+            <div class="editor">
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsOrderFulfillUC)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsOrderFulfillUC)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsOrderFulfillUC, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsShipFulfillUC)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsShipFulfillUC)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsShipFulfillUC, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsReceiveFulfillUC)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsReceiveFulfillUC)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsReceiveFulfillUC, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsManualCreateDetail)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsManualCreateDetail)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsManualCreateDetail, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsListPrice)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsListPrice)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsListPrice, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsCreatePickList)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsCreatePickList)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsCreatePickList, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsShipByOrder)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsShipByOrder)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsShipByOrder, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsReceiveExceed)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsReceiveExceed)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsReceiveExceed, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsShipExceed)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsShipExceed)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsShipExceed, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsAsnUniqueReceive)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsAsnUniqueReceive)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsAsnUniqueReceive, new { disabled = true })
+            }
+                    }
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>@Resources.ORD.OrderMaster.OrderMaster_AutomaticControl</legend>
+            <div class="editor">
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsAutoRelease)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsAutoRelease)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsAutoRelease, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsAutoStart)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsAutoStart)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsAutoStart, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsAutoShip)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsAutoShip)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsAutoShip, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsAutoReceive)
+                </div>
+                <div class="editor-field-4">
+                    @{
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsAutoReceive)
+            }
+            else
+            {
+                        @Html.CheckBoxFor(model => model.IsAutoReceive, new { disabled = true })
+            }
+                    }
+                </div>
+                <div class="editor-label-4">
+                    @Html.LabelFor(model => model.IsAutoBill)
+                </div>
+                <div class="editor-field-4">
+                    @{
+                       
+            if (ViewBag.isEditable)
+            {
+                        @Html.CheckBoxFor(model => model.IsAutoBill)
+            }
+            else
+            {
+  
+                        @Html.CheckBoxFor(model => model.IsAutoBill, new { disabled = true })
+            }
+ 
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div>
+        <a type="text/html" onclick="More(this)" href="#" id="more">More...</a>
+    </div>
+
+    <div class="editor-footer">
+        @{
+            if (Model.Status == com.Sconit.CodeMaster.OrderStatus.Create)
+            {
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_TransportOrder_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "submit"},
+	                {"id", "btnEdit"},
+                    {"needconfirm","false"},
+                    {"onclick","onSaveDetail()"}
+	            })
+            @Html.Button(Resources.SYS.Global.Button_Submit, "Url_TransportOrder_Submit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnSubmit"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/TransportOrder/Submit/" + Model.OrderNo) +"'"}
+	            })
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_TransportOrder_Delete", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnDelete"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/TransportOrder/Delete/" + Model.OrderNo) +"'"}
+	            })
+            }
+
+            if (Model.Status == com.Sconit.CodeMaster.OrderStatus.Submit)
+            {
+            @Html.Button(Resources.SYS.Global.Button_Start, "Url_TransportOrder_Start", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnStart"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/TransportOrder/Start/" + Model.OrderNo) +"'"}
+	            })
+            }
+
+            if (Model.Status == com.Sconit.CodeMaster.OrderStatus.InProcess)
+            {
+            @Html.Button(Resources.SYS.Global.Button_Close, "Url_TransportOrder_Close", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnClose"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/TransportOrder/Close/" + Model.OrderNo) +"'"}
+	            })
+            }
+              if (Model.Status == com.Sconit.CodeMaster.OrderStatus.Close)
+            {
+            @Html.Button(Resources.SYS.Global.Button_Calculate, "Url_TransportOrder_Calculate", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnCalculate"},
+                    {"needconfirm","true"},
+                    {"onclick","location.href='"+Url.Content("~/TransportOrder/Calculate/" + Model.OrderNo) +"'"}
+	            })
+            }
+
+              if (Model.Status != com.Sconit.CodeMaster.OrderStatus.Cancel && Model.Status != com.Sconit.CodeMaster.OrderStatus.Create)
+              {
+            <button type="button" id="btnPrint" onclick="Print()">
+                @Resources.SYS.Global.Button_Print</button>
+            <button type="button" id="btnExport" onclick="Export()">
+                @Resources.SYS.Global.Button_Export</button>
+              }
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/DistributionOrder/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        }
+    </div>
+}
+@{
+    Html.RenderAction("_OrderDetailList", "TransportOrder", new { flow = Model.Flow, orderNo = Model.OrderNo, orderSubType = (int)Model.SubType });
+}
+<form id="hiddenForm" action="/TransportOrder/SaveToClient" target="_blank" method="post">
+    <input id="orderNo" name="orderNo" type="hidden" />
+</form>
+<script type="text/javascript">
+    function Export(e) {
+        $("#orderNo").val($("#OrderNo").val());
+        $("#hiddenForm").submit();
+    }
+
+    function Print(e) {
+        var data = {
+            "orderNo": $("#OrderNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/TransportOrder/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.MD.SwitchTrading, com.Sconit.Entity" table="MD_SwitchTrading" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+		<property name="Flow" column="Flow" type="String" length="50" />
+    <property name="Supplier" column="Supplier" type="String" length="50" />
+    <property name="Customer" column="Customer" type="String" length="50" />
+    <property name="PurchaseGroup" column="PurchaseGroup" type="String" length="50" />
+    <property name="SalesOrg" column="SalesOrg" type="String" length="50" />
+    <property name="DistrChan" column="DistrChan" type="String" length="50" />
+    <property name="PriceList" column="PriceList" type="String" length="50" />
+    <property name="DIVISION" column="DIVISION" type="String" length="50" />
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />	
+  	</class>
+</hibernate-mapping>

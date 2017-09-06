@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://com.Sconit.WebService.SI.PUB_PrintOrderService/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://com.Sconit.WebService.SI.PUB_PrintOrderService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://com.Sconit.WebService.SI.PUB_PrintOrderService/">
+      <s:element name="GetPubPrintOrderList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPubPrintOrderListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPubPrintOrderListResult" type="tns:ArrayOfPubPrintOrder" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPubPrintOrder">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PubPrintOrder" nillable="true" type="tns:PubPrintOrder" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PubPrintOrder">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="ExcelTemplate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Printer" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Client" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsPrinted" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="PrintUrl" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreateUserId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreateUserName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreateDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifyUserId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastModifyUserName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifyDate" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityBase" abstract="true" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPubPrintOrderListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPubPrintOrderList" />
+  </wsdl:message>
+  <wsdl:message name="GetPubPrintOrderListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPubPrintOrderListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PUB_PrintOrderServiceSoap">
+    <wsdl:operation name="GetPubPrintOrderList">
+      <wsdl:input message="tns:GetPubPrintOrderListSoapIn" />
+      <wsdl:output message="tns:GetPubPrintOrderListSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PUB_PrintOrderServiceSoap" type="tns:PUB_PrintOrderServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPubPrintOrderList">
+      <soap:operation soapAction="http://com.Sconit.WebService.SI.PUB_PrintOrderService/GetPubPrintOrderList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PUB_PrintOrderServiceSoap12" type="tns:PUB_PrintOrderServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPubPrintOrderList">
+      <soap12:operation soapAction="http://com.Sconit.WebService.SI.PUB_PrintOrderService/GetPubPrintOrderList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PUB_PrintOrderService">
+    <wsdl:port name="PUB_PrintOrderServiceSoap" binding="tns:PUB_PrintOrderServiceSoap">
+      <soap:address location="http://mes.shenya-sealing.com/WebService/PUB/PrintOrderService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PUB_PrintOrderServiceSoap12" binding="tns:PUB_PrintOrderServiceSoap12">
+      <soap12:address location="http://mes.shenya-sealing.com/WebService/PUB/PrintOrderService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<com.Sconit.Entity.SYS.SNRuleExt>
+@{
+    var SNRuleExtList = (IList<com.Sconit.Entity.SYS.SNRuleExt>)Model;
+    }           
+<script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sortable").sortable();
+    });
+
+    function btnConfirm_onclick(e) {
+        var SelectedValue = "";
+        $("#sortable>Div").each(function (i) {
+            //var obj = $(this).children("label").attr("id");
+            //alert($(this).children("label").attr("id"));
+            //alert($(this).children("input").val());
+            $(this).find("input").each(function () {
+                //alert($(this).val());
+                if ($(this).val() == "True") {
+                    SelectedValue = SelectedValue + $(this).attr("id");
+                    //alert($(this).attr("id"))
+                }
+            });
+        });
+        alert(SelectedValue);
+        $("#SelectedValue").val() = SelectedValue;
+    };
+
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            var SelectedValue = "";
+            var UnSelectedValue = "";
+            $("#sortable>Div").each(function (i) {
+                $(this).find("input").each(function () {
+                    if ($(this).is(':checked')) {
+                        SelectedValue = SelectedValue + $(this).attr("id") + ";";
+                    }
+                    else {
+                        UnSelectedValue = UnSelectedValue + $(this).attr("id") + ";";
+                    }
+                });
+            });
+            $("#SelectedValue").attr("value", SelectedValue);
+            $("#UnSelectedValue").attr("value", UnSelectedValue);
+        });
+    });
+
+</script>
+<fieldset>
+<legend>@Resources.SYS.SNRule.SNRule_ExtRuleEdit</legend>
+@using (Html.BeginForm("ExtRuleEdit", "SNRule"))
+{
+    @Html.Hidden("ChoosedBlocks",(string)ViewBag.ChoosedBlocks)
+    @Html.Hidden("UnChoosedBlocks", (string)ViewBag.UnChoosedBlocks)
+    <div id="sortable" >
+    @foreach (var item in SNRuleExtList)
+    {   
+        <div style="border-style: groove; width:500px; height: 40px">
+            <label class="lbl" style="width: 100px; height: 20px;">
+               @item.Field
+            </label>
+            <input type="checkbox" name="@item.Id.ToString()" id="@item.Id.ToString()" value="@item.IsChoosed" @Html.Encode(item.IsChoosed ? "checked" : "") />
+           @* @Html.CheckBox(item.Field, item.IsChoosed)*@
+            @*<input type="hidden" name="@item.Id.ToString()" id="@item.Id.ToString()" value="@item.Id.ToString()" />*@  
+        </div>     
+    }
+    </div>   
+    
+    <div class="editor-footer"></div>
+    <div class="editor-footer">
+        <button type="submit" id="btnSubmit">
+            @Resources.SYS.Global.Button_Save</button>
+    </div>
+    
+    <input type="hidden" name="Code" id="Code" value="@SNRuleExtList[1].Code" /> 
+    <input type="hidden" name="SelectedValue" id="SelectedValue" value="" />  
+    <input type="hidden" name="UnSelectedValue" id="UnSelectedValue" value="" />  
+}
+</fieldset>

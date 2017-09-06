@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Inventory_Pallet_View" });
+}
+@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.Pallet
+<fieldset>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.Code)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.Code)
+        @Html.HiddenFor(model => model.Code)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.Description)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.Volume)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.Volume)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.Weight)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.Weight)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.CreateUserName)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.CreateUserName)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.CreateDate)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.CreateDate)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.LastModifyUserName)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.LastModifyUserName)
+    </div>
+    <div class="editor-label-2">
+        @Html.LabelFor(model => model.LastModifyDate)
+    </div>
+    <div class="editor-field-2">
+        @Html.DisplayFor(model => model.LastModifyDate)
+    </div>
+</fieldset>
+<div class="search-footer">
+    <button type="button" id="btnPrint" onclick="Print()">
+        @Resources.SYS.Global.Button_Print</button>
+    <button type="button" id="btnExport" onclick="Export()">
+        @Resources.SYS.Global.Button_Export</button>
+    <button type="button" id="btnSearch" onclick="location.href='@Url.Content("~/Pallet/List")'">
+        @Resources.SYS.Global.Button_Back</button>
+</div>
+<fieldset id="husList">
+    <legend>@Resources.INV.Pallet.Pallet_Tab_Hu</legend>
+    @{
+        Html.RenderAction("_PalletHuList", "Pallet", new { palletCode = Model.Code });
+    }
+</fieldset>
+<form id="hiddenForm" action="/Pallet/SaveToClient" target="_blank" method="post">
+<input id="huId" name="huId" type="hidden" />
+</form>
+<script type="text/javascript">
+    var alreadyLoaded;
+    alreadyLoaded = false;
+    function Export(e) {
+        $("#Code").val($("#Code").val());
+        $("#hiddenForm").submit();
+    }
+
+    function Print(e) {
+        var data = {
+            "code": $("#Code").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/Pallet/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+  
+</script>

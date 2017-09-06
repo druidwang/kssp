@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.FMS.MaintainPlan, com.Sconit.Entity" table="Fac_MaintainPlan" lazy="false">
+		<id name="Code" column="Code" type="String" unsaved-value="null" >
+			<generator class="assigned" />
+		</id>
+		<property name="Description" column="Description" type="String" length="100" />
+		<property name="Type" column="Type" />
+		<property name="Period" column="Period" type="Int32"  />
+		<property name="LeadTime" column="LeadTime" type="Int32"  />
+		<property name="TypePeriod" column="TypePeriod" type="Int32"  />
+		<property name="FacilityCategory" column="FacilityCategory" type="String" length="50" />
+		<property name="StartUpUser" column="StartUpUser" type="String" length="255" />
+	</class>
+</hibernate-mapping>

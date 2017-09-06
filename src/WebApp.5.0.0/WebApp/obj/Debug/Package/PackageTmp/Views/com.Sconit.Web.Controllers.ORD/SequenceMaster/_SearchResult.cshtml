@@ -1,0 +1,49 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.SequenceMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("SequenceMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.SequenceNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.SequenceNo).ClientTemplate(Html.ActionLink("<#= SequenceNo #>", "Edit", "SequenceMaster", new { SequenceNo = "<#= SequenceNo #>" }, null).ToString());
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.PartyFromName);
+            columns.Bound(o => o.PartyToName);
+            columns.Bound(o => o.SequenceMasterStatusDescription);
+            columns.Bound(o => o.OrderTypeDescription);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+          
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SequenceMaster"))
+                        .ClientEvents(events => events.OnDataBinding("SequenceMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null? ViewBag.Total :1);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SequenceMasterGrid_OnDataBinding(e) {
+            e.data = {
+                SequenceNo: $('#SequenceNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                StartTime: $('#StartTime').val(),
+                EndTime: $('#EndTime').val()
+            };
+        } 
+    </script>
+</fieldset>

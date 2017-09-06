@@ -1,0 +1,60 @@
+﻿@model IEnumerable<com.Sconit.Entity.WMS.PickRule>
+<fieldset>
+    <script type="text/javascript">
+        function PickRule_OnDataBinding(e) {
+            e.data = {
+                "PickGroupCode": $("#PickGroupCode").val(),
+                "Location": $("#Location").val(),
+                "isFromList": "true"
+            };
+        } 
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickRuleGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Location).ClientTemplate(string.Format("<a href=\"javascript:onPickRuleclick('{0}')\">{1}</a>", "<#=Id #>", "<#=Location #>"));
+            columns.Bound(o => o.Area);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.LastModifyDate);
+            columns.Bound(o => o.LastModifyUserName);
+        })
+       
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxPickRuleList", "PickGroup"))
+        .ClientEvents(events => events.OnDataBinding("PickRule_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+
+<script type="text/javascript">
+    function onPickRuleclick(code) {
+        var data = {
+            "Id": code
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/PickGroup/_PickRuleEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

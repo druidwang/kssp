@@ -1,0 +1,55 @@
+﻿@model IEnumerable<com.Sconit.Entity.ISS.IssueLevel>
+<fieldset>
+     @(Html.Telerik().Grid(Model)
+        .Name("IssueLevelGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "IssueLevel", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+			columns.Bound(o => o.Sequence);
+			columns.Bound(o => o.IsSubmit)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsSubmit' <#= IsSubmit? checked='checked' : '' #> />");
+			columns.Bound(o => o.IsInProcess)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsInProcess' <#= IsInProcess? checked='checked' : '' #> />");
+			columns.Bound(o => o.IsDefault)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDefault' <#= IsDefault? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "IssueLevel"))
+        .ClientEvents(events => events.OnDataBinding("IssueLevelGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function IssueLevelGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val(),
+				Sequence: $('#Sequence').val(),
+                IsSubmit: $('#IsSubmit').is(':checked'),
+				IsInProcess: $('#IsInProcess').is(':checked'),
+				IsDefault: $('#IsDefault').is(':checked'),
+				IsActive: $('#IsActive').is(':checked')
+            };
+        } 
+    </script>
+</fieldset>

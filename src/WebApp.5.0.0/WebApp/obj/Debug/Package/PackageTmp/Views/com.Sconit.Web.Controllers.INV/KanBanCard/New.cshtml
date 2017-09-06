@@ -1,0 +1,239 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+@model com.Sconit.Entity.INV.KanBanCard
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_KanBanCard_View" });
+}
+<script type="text/javascript">
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.INV.KanBanCard.KanBanCard_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(o => o.Flow)
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "Flow",
+            type = (int)com.Sconit.CodeMaster.OrderType.Transfer,
+            selectedValue=Model!=null?Model.Flow:string.Empty
+
+        });
+                }
+                @Html.ValidationMessageFor(model => model.Flow)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(o => o.LocationTo)
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_LocationComboBox", "Common", new
+         {
+             controlName = "LocationTo",
+             selectedValue = Model != null ? Model.LocationTo : string.Empty
+
+         });
+                }
+                @Html.ValidationMessageFor(model => model.LocationTo)
+            </div>
+          
+            <div class="editor-label-2">
+                @Html.LabelFor(o => o.Item)
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_ItemComboBox", "Common",
+        new
+        {
+            coupled=true,
+            controlName = "Item",
+            selectedValue = Model != null ? Model.Item : string.Empty
+        });
+                }
+                @Html.ValidationMessageFor(model => model.Item)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(o => o.ItemCategory)
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_ItemCategoryDropDownList", "Common", new
+    {
+        controlName = "ItemCategory",
+        includeBlankOption = true,
+        selectedValue = Model != null ? Model.ItemCategory : string.Empty
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReferenceItemCode)
+            </div>
+            <div class="editor-field-2">
+           @* @Html.EditorFor(model => model.ReferenceItemCode, new { disabled=true })*@
+                @Html.TextBox("ReferenceItemCode", string.Empty, new { disabled = true })
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(o => o.Uom)
+            </div>
+            <div class="search-field">
+            <div id="UomDropDownListDiv">
+                @{
+    Html.RenderAction("_UomDropDownList", "Common", new { controlName = "Uom",
+                                                          selectedValue = Model != null ? Model.Uom : string.Empty
+    
+    });
+                }
+            </div>
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(o => o.UnitCount)
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.UnitCount)
+                @Html.ValidationMessageFor(model => model.UnitCount)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(o => o.PackType)
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.PackType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(o => o.MultiStation)
+            </div>
+            <div class="search-field">
+                @Html.EditorFor(model => model.MultiStation)
+            </div>
+
+           
+           
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Note)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Note)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ThumbNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ThumbNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Qty)
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("Qty", Model!=null?Model.Qty:0, new { onblur = "Onblur(this)", onfocus = "OnFocus(this)" })
+             <span id="span" style="display:none" ><font color="red">数量输入错误，请重新输入。</font></span>
+            </div>
+             
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsEleKanBan)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBoxFor(model => model.IsEleKanBan)
+            </div>
+        </div>
+        <div class="editor-footer">
+           @* <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>*@
+             @Html.Button(Resources.SYS.Global.Button_New, "Url_KanBanCard_New", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"}
+	        })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/KanBanCard/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+        
+        <script type="text/javascript">
+            $(function () {
+                if ($("#Qty").val() == 0) {
+                    $("#Qty").val("");
+                }
+            });
+            function Onblur(e) {
+                if (e.value != null && e.value != "") {
+                    if (isNaN(e.value) || e.value == 0) {
+                        $("#span").attr("style", "display:inline");
+                        $("#Qty").val("");
+                    }
+                }
+            }
+            function OnFocus(e) {
+
+                $("#span").attr("style", "display:none");
+            }
+        function Item_Change(e) {
+            if (e.value != null) {
+
+                var combobox = $(this).data("tComboBox");
+                if (combobox == undefined) {
+                    return;
+                }
+                if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                    combobox.value("");
+                    combobox.reload();
+                    $("#Uom").val("");
+                    var data = {
+                        "selectedValue": "",
+                        "ControlName": "Uom"
+                    }
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "/Common/_UomDropDownList/",
+                        data: data,
+                        cache: false,
+                        success: function (data) {
+                            $("#UomDropDownListDiv").html(data);
+                        }
+                    });
+                    $("#UnitCount").val("");
+                    $("#ReferenceItemCode").val("");
+                } else {
+                    var data = {
+                        "itemCode": e.value
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "Json",
+                        url: "/Hu/_GetItemDetail/",
+                        data: data,
+                        success: function (data, textStatus) {
+                            if (data != "") {
+                                $("#Uom").val(data.Uom);
+                                $("#UnitCount").val(data.UnitCount);
+                                $("#ReferenceItemCode").val(data.ReferenceCode);
+                                var data = {
+                                    "selectedValue": data.Uom,
+                                    "ControlName": "Uom"
+                                }
+                                $.ajax({
+                                    type: "post",
+                                    dataType: "html",
+                                    url: "/Common/_UomDropDownList/",
+                                    data: data,
+                                    cache: false,
+                                    success: function (data) {
+                                        $("#UomDropDownListDiv").html(data);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+               
+            }
+        }
+        </script>
+    </fieldset>
+    
+    
+}

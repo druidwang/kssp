@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ISI.WFDetail, com.Sconit.Entity" table="ISI_WFDet" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="TaskCode" column="TaskCode" type="String" length="50" />
+    <property name="SrcStatus" column="SrcStatus" type="String" length="50" />
+    <property name="TargetStatus" column="TargetStatus" type="String" length="50" />
+    <property name="CreateDate" column="CreateDate" type="DateTime"  />
+    <property name="CreateUser" column="CreateUser" type="String" length="50" />
+    <property name="CreateUserNm" column="CreateUserNm" type="String" length="50" />
+    <property name="Content" column="Content" type="String" length="2000" />
+    <property name="TargetValue" column="TargetValue" type="String" length="2000" />
+    <property name="SrcValue" column="SrcValue" type="String" length="2000" />
+  </class>
+</hibernate-mapping>

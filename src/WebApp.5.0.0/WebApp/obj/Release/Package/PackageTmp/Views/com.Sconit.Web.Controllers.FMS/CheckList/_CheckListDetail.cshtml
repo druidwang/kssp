@@ -1,0 +1,34 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@model IEnumerable<com.Sconit.Entity.FMS.CheckListDetail>   
+
+<fieldset>
+    <legend>@Resources.FMS.CheckList.CheckListDetail_Title_View</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("CheckListDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            commands.Insert();
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+                                    .Select("_SelectBatchEditing", "CheckList", new { checkListCode = (String)ViewBag.CheckListCode })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).Title("编号工艺要求");
+            columns.Bound(o => o.Description).Title("描述");
+            columns.Bound(o => o.MinValue).Title("最小值");
+            columns.Bound(o => o.MaxValue).Title("最大值");
+            columns.Command(commands => commands.Delete());
+            
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+</fieldset>

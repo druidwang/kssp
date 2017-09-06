@@ -1,0 +1,45 @@
+﻿
+@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.ISS.IssueDetail>
+
+<fieldset>
+    <legend>@Resources.ISS.IssueDetail.IssueDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("UserResultGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+			columns.Bound(o => o.IssueLevel);
+			columns.Bound(o => o.UserCode);
+            columns.Bound(o => o.UserName);
+			columns.Bound(o => o.IsEmail)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsEmail' <#= IsEmail? checked='checked' : '' #> />");
+			columns.Bound(o => o.Email);
+			columns.Bound(o => o.EmailStatus);
+			columns.Bound(o => o.EmailStatusDescription);
+			columns.Bound(o => o.EmailCount);
+			columns.Bound(o => o.IsSMS)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsSMS' <#= IsSMS? checked='checked' : '' #> />");
+            columns.Bound(o => o.MobilePhone);
+			columns.Bound(o => o.SMSStatus);
+			columns.Bound(o => o.SMSStatusDescription);
+			columns.Bound(o => o.SMSCount);
+			columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+			columns.Bound(o => o.IsDefault)
+				.ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDefault' <#= IsDefault? checked='checked' : '' #> />");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        //.DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxUserResultList", "IssueTypeTo"))
+        
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+    @Html.Hidden("Code", (String)ViewBag.Code)
+</fieldset>

@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Url_Permission_Edit" xml:space="preserve">
+    <value>Edit Permission</value>
+  </data>
+  <data name="Url_Permission_View" xml:space="preserve">
+    <value>View Permission</value>
+  </data>
+  <data name="Url_Address_Delete" xml:space="preserve">
+    <value>Delete Address</value>
+  </data>
+  <data name="Url_Address_Edit" xml:space="preserve">
+    <value>Edit Address</value>
+  </data>
+  <data name="Url_Address_View" xml:space="preserve">
+    <value>View Address</value>
+  </data>
+  <data name="Url_Role_Delete" xml:space="preserve">
+    <value>Delete Role</value>
+  </data>
+  <data name="Url_Role_Edit" xml:space="preserve">
+    <value>Edit Role</value>
+  </data>
+  <data name="Url_Role_View" xml:space="preserve">
+    <value>View Role</value>
+  </data>
+  <data name="Url_Uom_Delete" xml:space="preserve">
+    <value>Delete Uom</value>
+  </data>
+  <data name="Url_Uom_Edit" xml:space="preserve">
+    <value>Edit Uom</value>
+  </data>
+  <data name="Url_Uom_View" xml:space="preserve">
+    <value>View Uom</value>
+  </data>
+  <data name="Url_User_Delete" xml:space="preserve">
+    <value>Delete User</value>
+  </data>
+  <data name="Url_User_Edit" xml:space="preserve">
+    <value>Edit User</value>
+  </data>
+  <data name="Url_Permission_Delete" xml:space="preserve">
+    <value>Delete  Permission</value>
+  </data>
+  <data name="Url_Currency_Delete" xml:space="preserve">
+    <value>Delete Currency</value>
+  </data>
+  <data name="Url_Currency_Edit" xml:space="preserve">
+    <value>Edit Currency</value>
+  </data>
+  <data name="Url_Currency_View" xml:space="preserve">
+    <value>View Currency</value>
+  </data>
+  <data name="Url_User_View" xml:space="preserve">
+    <value>View User</value>
+  </data>
+  <data name="Url_WorkingCalendar_Delete" xml:space="preserve">
+    <value>Delete WorkingCalendar</value>
+  </data>
+  <data name="Url_WorkingCalendar_Edit" xml:space="preserve">
+    <value>Edit WorkingCalendar</value>
+  </data>
+  <data name="Url_WorkingCalendar_View" xml:space="preserve">
+    <value>View WorkingCalendar</value>
+  </data>
+  <data name="Url_ItemCategory_Delete" xml:space="preserve">
+    <value>Delete ItemCategory</value>
+  </data>
+  <data name="Url_ItemCategory_Edit" xml:space="preserve">
+    <value>Edit ItemCategory</value>
+  </data>
+  <data name="Url_ItemCategory_View" xml:space="preserve">
+    <value>View ItemCategory</value>
+  </data>
+  <data name="Url_Item_Delete" xml:space="preserve">
+    <value>Delete Item</value>
+  </data>
+  <data name="Url_Item_Edit" xml:space="preserve">
+    <value>Edit Item</value>
+  </data>
+  <data name="Url_Item_View" xml:space="preserve">
+    <value>View Item</value>
+  </data>
+  <data name="Url_UserFav_Delete" xml:space="preserve">
+    <value>Delete UserFavorite</value>
+  </data>
+  <data name="Url_UserFav_Edit" xml:space="preserve">
+    <value>Edit UserFavorite</value>
+  </data>
+  <data name="Url_UserFav_View" xml:space="preserve">
+    <value>View UserFavorite</value>
+  </data>
+  <data name="Url_EntityPreference_Delete" xml:space="preserve">
+    <value>Delete EntityPreference</value>
+  </data>
+  <data name="Url_EntityPreference_Edit" xml:space="preserve">
+    <value>Edit EntityPreference</value>
+  </data>
+  <data name="Url_EntityPreference_View" xml:space="preserve">
+    <value>View EntityPreference</value>
+  </data>
+  <data name="Url_SCM_Flow_Procurement_Delete" xml:space="preserve">
+    <value>Procurement Flow Delete</value>
+  </data>
+  <data name="Url_SCM_Flow_Procurement_Edit" xml:space="preserve">
+    <value>Procurement Flow Edit</value>
+  </data>
+  <data name="Url_SCM_Flow_Procurement_View" xml:space="preserve">
+    <value>Procurement Flow View</value>
+  </data>
+  <data name="Url_FinanceCalendar_Delete" xml:space="preserve">
+    <value>Delete FinanceCalendar</value>
+  </data>
+  <data name="Url_FinanceCalendar_Edit" xml:space="preserve">
+    <value>Edit FinanceCalendar</value>
+  </data>
+  <data name="Url_FinanceCalendar_View" xml:space="preserve">
+    <value>View FinanceCalendar</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement_View" xml:space="preserve">
+    <value>View Procurement Order</value>
+  </data>
+  <data name="Url_Routing_Delete" xml:space="preserve">
+    <value>Delete Routing</value>
+  </data>
+  <data name="Url_Routing_Edit" xml:space="preserve">
+    <value>Edit Routing</value>
+  </data>
+  <data name="Url_Routing_View" xml:space="preserve">
+    <value>View Routing</value>
+  </data>
+  <data name="Url_Supplier_View" xml:space="preserve">
+    <value>Supplier view</value>
+  </data>
+  <data name="Url_Customer_Delete" xml:space="preserve">
+    <value>Delete Customer</value>
+  </data>
+  <data name="Url_Customer_Edit" xml:space="preserve">
+    <value>Edit Customer</value>
+  </data>
+  <data name="Url_Customer_View" xml:space="preserve">
+    <value>View Customer</value>
+  </data>
+  <data name="Url_Supplier_Delete" xml:space="preserve">
+    <value>Delete Supplier </value>
+  </data>
+  <data name="Url_Supplier_Edit" xml:space="preserve">
+    <value>Edit Supplier </value>
+  </data>
+  <data name="Url_StockTake_Delete" xml:space="preserve">
+    <value>Delete StockTake</value>
+  </data>
+  <data name="Url_StockTake_Edit" xml:space="preserve">
+    <value>Edit StockTake</value>
+  </data>
+  <data name="Url_StockTake_View" xml:space="preserve">
+    <value>View StockTake</value>
+  </data>
+  <data name="Url_DistributionFlow_Delete" xml:space="preserve">
+    <value>Delete Distribution Flow</value>
+  </data>
+  <data name="Url_DistributionFlow_Edit" xml:space="preserve">
+    <value>Edit Distribution Flow</value>
+  </data>
+  <data name="Url_DistributionFlow_View" xml:space="preserve">
+    <value>View Distribution Flow</value>
+  </data>
+  <data name="Url_SubconctractingFlow_Delete" xml:space="preserve">
+    <value>Delete Subconctracting Flow</value>
+  </data>
+  <data name="Url_SubconctractingFlow_Edit" xml:space="preserve">
+    <value>Edit Subconctracting Flow</value>
+  </data>
+  <data name="Url_SubconctractingFlow_View" xml:space="preserve">
+    <value>View Subconctracting Flow</value>
+  </data>
+  <data name="Url_CustomerGoodsFlow_Delete" xml:space="preserve">
+    <value>Delete CustomerGoods Flow</value>
+  </data>
+  <data name="Url_CustomerGoodsFlow_Edit" xml:space="preserve">
+    <value>Edit CustomerGoods Flow</value>
+  </data>
+  <data name="Url_CustomerGoodsFlow_View" xml:space="preserve">
+    <value>View CustomerGoods Flow </value>
+  </data>
+  <data name="Url_ProcurementFlow_Delete" xml:space="preserve">
+    <value>Delete Procurement Flow</value>
+  </data>
+  <data name="Url_ProcurementFlow_Edit" xml:space="preserve">
+    <value>Edit Procurement Flow</value>
+  </data>
+  <data name="Url_ProcurementFlow_View" xml:space="preserve">
+    <value>View Procurement Flow</value>
+  </data>
+  <data name="Url_TransferFlow_Delete" xml:space="preserve">
+    <value>Delete Transfer Flow</value>
+  </data>
+  <data name="Url_TransferFlow_Edit" xml:space="preserve">
+    <value>Edit Transfer Flow</value>
+  </data>
+  <data name="Url_TransferFlow_View" xml:space="preserve">
+    <value>View Transfer Flow</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement_New" xml:space="preserve">
+    <value>New OrderMaster</value>
+  </data>
+  <data name="Url_OrderMstr_Distribution_View" xml:space="preserve">
+    <value>Search Distribution Order</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement_Edit" xml:space="preserve">
+    <value>Edit Procurement Order</value>
+  </data>
+  <data name="Url_ProcurementPriceList_Delete" xml:space="preserve">
+    <value>Delete PriceList</value>
+  </data>
+  <data name="Url_ProcurementPriceList_Edit" xml:space="preserve">
+    <value>Edit PriceList</value>
+  </data>
+  <data name="Url_ProcurementPriceList_View" xml:space="preserve">
+    <value>View PriceList</value>
+  </data>
+  <data name="Url_DistributionPriceList_Delete" xml:space="preserve">
+    <value>Delete Distribution PriceList</value>
+  </data>
+  <data name="Url_DistributionPriceList_Edit" xml:space="preserve">
+    <value>Edit Distribution PriceList</value>
+  </data>
+  <data name="Url_DistributionPriceList_View" xml:space="preserve">
+    <value>View Distribution PriceList</value>
+  </data>
+  <data name="Url_ProductionFlow_Delete" xml:space="preserve">
+    <value>Delete Production Flow</value>
+  </data>
+  <data name="Url_ProductionFlow_Edit" xml:space="preserve">
+    <value>Edit Production Flow</value>
+  </data>
+  <data name="Url_ProductionFlow_View" xml:space="preserve">
+    <value>View Production Flow</value>
+  </data>
+  <data name="Url_ProcurementReceipt_View" xml:space="preserve">
+    <value>View GoodsReceipt</value>
+  </data>
+  <data name="Url_ProcurementIpMaster_View" xml:space="preserve">
+    <value>ProcurementOrderIssue</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement_batchProcess" xml:space="preserve">
+    <value>batch Process</value>
+  </data>
+  <data name="Url_InspectionOrder" xml:space="preserve">
+    <value>Inspection Order</value>
+  </data>
+  <data name="Url_InspectionOrder_New" xml:space="preserve">
+    <value>New Inspection Order</value>
+  </data>
+  <data name="Url_InspectionOrder_View" xml:space="preserve">
+    <value>View Inspection Order</value>
+  </data>
+  <data name="Url_OrderMstr_Procurement" xml:space="preserve">
+    <value>Procurement Order</value>
+  </data>
+  <data name="Url_RejectOrder_New" xml:space="preserve">
+    <value>New RejectOrder</value>
+  </data>
+  <data name="Url_Container_Delete" xml:space="preserve">
+    <value>Delete Container</value>
+  </data>
+  <data name="Url_Container_Edit" xml:space="preserve">
+    <value>Edit Container</value>
+  </data>
+  <data name="Url_Container_View" xml:space="preserve">
+    <value>View Container</value>
+  </data>
+  <data name="Url_RejectOrder_View" xml:space="preserve">
+    <value>View RejectOrder</value>
+  </data>
+  <data name="Url_PickList_View" xml:space="preserve">
+    <value>View PickList</value>
+  </data>
+  <data name="Url_DistributionIpMaster_View" xml:space="preserve">
+    <value>View IpMaster</value>
+  </data>
+  <data name="Url_ASNGap_View" xml:space="preserve">
+    <value>View ANSGap</value>
+  </data>
+  <data name="Menu_Issue_Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="Url_IssueAddress_Delete" xml:space="preserve">
+    <value>Delete IssueAddress</value>
+  </data>
+  <data name="Url_IssueAddress_Edit" xml:space="preserve">
+    <value>Edit IssueAddress</value>
+  </data>
+  <data name="Url_IssueAddress_View" xml:space="preserve">
+    <value>View IssueAddress</value>
+  </data>
+  <data name="Url_IssueDetail_View" xml:space="preserve">
+    <value>View IssueDetail</value>
+  </data>
+  <data name="Url_IssueLevel_Delete" xml:space="preserve">
+    <value>Delete IssueLevel</value>
+  </data>
+  <data name="Url_IssueLevel_Edit" xml:space="preserve">
+    <value>Edit IssueLevel</value>
+  </data>
+  <data name="Url_IssueLevel_View" xml:space="preserve">
+    <value>View IssueLevel</value>
+  </data>
+  <data name="Url_IssueLog_View" xml:space="preserve">
+    <value>View IssueLog</value>
+  </data>
+  <data name="Url_IssueNo_Delete" xml:space="preserve">
+    <value>Delete IssueNo</value>
+  </data>
+  <data name="Url_IssueNo_Edit" xml:space="preserve">
+    <value>Edit IssueNo</value>
+  </data>
+  <data name="Url_IssueNo_View" xml:space="preserve">
+    <value>View IssueNo</value>
+  </data>
+  <data name="Url_IssueTypeTo_Delete" xml:space="preserve">
+    <value>Delete IssueTypeTo</value>
+  </data>
+  <data name="Url_IssueTypeTo_Edit" xml:space="preserve">
+    <value>Edit IssueTypeTo</value>
+  </data>
+  <data name="Url_IssueTypeTo_View" xml:space="preserve">
+    <value>View IssueTypeTo</value>
+  </data>
+  <data name="Url_IssueType_Delete" xml:space="preserve">
+    <value>Delete IssueType</value>
+  </data>
+  <data name="Url_IssueType_Edit" xml:space="preserve">
+    <value>Edit IssueType</value>
+  </data>
+  <data name="Url_IssueType_View" xml:space="preserve">
+    <value>View IssueType</value>
+  </data>
+  <data name="Url_Issue_Batch" xml:space="preserve">
+    <value>Batch Issue</value>
+  </data>
+  <data name="Url_Issue_Delete" xml:space="preserve">
+    <value>Delete Issue</value>
+  </data>
+  <data name="Url_Issue_Edit" xml:space="preserve">
+    <value>Edit Issue</value>
+  </data>
+  <data name="Url_Issue_New" xml:space="preserve">
+    <value>New Issue</value>
+  </data>
+  <data name="Url_Issue_View" xml:space="preserve">
+    <value>View Issue</value>
+  </data>
+  <data name="Url_SMSRec_View" xml:space="preserve">
+    <value>View SMSRec</value>
+  </data>
+  <data name="Url_SMSStatus_View" xml:space="preserve">
+    <value>View SMSStatus</value>
+  </data>
+  <data name="Url_Inventory_OutMiscOrder_View" xml:space="preserve">
+    <value>View OutMiscOrder</value>
+  </data>
+</root>

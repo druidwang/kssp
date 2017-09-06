@@ -1,0 +1,68 @@
+﻿@model com.Sconit.Entity.ORD.IpMaster
+@using (Html.BeginForm("CancelIpMaster","SupplierIpMaster"))
+{
+    <fieldset>
+        <legend>@Resources.ORD.IpMaster.IpMaster_BaseInfo</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IpNo)
+                @Html.HiddenFor(model => model.IpNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.IpNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Type)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Type)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyFromName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyFromName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.PartyToName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.PartyToName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipFromAddress)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipFromAddress)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShipToAddress)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ShipToAddress)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Dock)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Dock)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Status)
+            </div>
+        </div>
+    </fieldset>
+   
+      
+    <div class="editor-footer">
+        <button type="submit" id="btnCancel" > @Resources.SYS.Global.Button_Cancel</button>
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/SupplierIpMaster/CancelIndex")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+}
+@{
+    Html.RenderAction("_IpDetailList", "SupplierIpMaster", new { ipNo = ViewBag.ipNo });
+}

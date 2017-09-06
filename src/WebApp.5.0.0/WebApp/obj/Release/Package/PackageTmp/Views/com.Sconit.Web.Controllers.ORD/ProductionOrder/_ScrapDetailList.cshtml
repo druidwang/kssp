@@ -1,0 +1,53 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpExOrder>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onRowDataBound(e) {
+//        var row = $(e.row.childNodes);
+//        var l = row.length;
+//        if (e.dataItem.Status == "0") {
+//            e.row.childNodes[l - 3].disabled = true;
+//            row.find("#RebindingId").text("上线");
+//        }
+//        else {
+//            e.row.childNodes[l - 4].disabled = true;
+//            row.find("#RebindingId").text("下线");
+//        }
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PlanNo);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+         .Select("_SelectScraps", "ProductionOrder", new { planNo = ViewBag.PlanNo, flow = ViewBag.Flow, dateIndex = ViewBag.DateIndex, section = ViewBag.Section })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence).Width(30).ReadOnly();
+            columns.Bound(o => o.PlanNo).Width(70).ReadOnly();
+            //columns.Bound(o => o.ProductLine).Width(40).ReadOnly();
+            //columns.Bound(o => o.DateIndex).Width(60).ReadOnly();
+            columns.Bound(o => o.Section).Width(50).ReadOnly();
+            columns.Bound(o => o.SectionDescription).ReadOnly();
+            //columns.Bound(o => o.PlanVersion).Format("{0:MM-dd HH:mm:ss}").Width(100).ReadOnly();
+            columns.Bound(o => o.StartTime).Format("{0:yyyy-MM-dd HH:mm}").Width(120).ReadOnly();
+            columns.Bound(o => o.WindowTime).Format("{0:yyyy-MM-dd HH:mm}").Width(120).ReadOnly();
+            columns.Bound(o => o.StartDate).Format("{0:yyyy-MM-dd HH:mm}").Width(120).ReadOnly();
+            columns.Bound(o => o.CloseDate).Format("{0:yyyy-MM-dd HH:mm}").Width(120).ReadOnly();
+            columns.Bound(o => o.OrderStatusDescription).Width(60).ReadOnly();
+            columns.ForeignKey(o => o.ScrapType, (SelectList)ViewData["ScrapType"]).Width(70);    
+            columns.Bound(o => o.CurrentQty).Width(60).Title("废品数");
+        })
+        //.ClientEvents(c => c.OnRowDataBound("onRowDataBound"))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

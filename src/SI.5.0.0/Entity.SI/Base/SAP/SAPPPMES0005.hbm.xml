@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.SAP.SAPPPMES0005, com.Sconit.Entity.SI" table="SAP_Interface_PPMES0005" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+    <property name="ZMESSC" column="ZMESSC" type="String" length="20"/>
+    <property name="ZMESLN" column="ZMESLN" type="String" length="4"/>
+    <property name="ZPTYPE" column="ZPTYPE" type="String" length="8"/>
+    <property name="AUFART" column="AUFART" type="String" length="4"/>
+    <property name="WERKS" column="WERKS" type="String" length="4"/>
+    <property name="GAMNG_H" column="GAMNG_H" type="String" length="13"/>
+    <property name="GMEIN_H" column="GMEIN_H" type="String" length="3"/>
+    <property name="GLTRP" column="GLTRP" type="DateTime"/>
+    <property name="GSTRP" column="GSTRP" type="DateTime"/>
+    <property name="BLDAT" column="BLDAT" type="DateTime"/>
+    <property name="BUDAT" column="BUDAT" type="DateTime"/>
+    <property name="BWART_I" column="BWART_I" type="String" length="3"/>
+    <property name="MATNR_I" column="MATNR_I" type="String" length="18"/>
+    <property name="ERFMG_I" column="ERFMG_I" type="String" length="13"/>
+    <property name="GMEIN_I" column="GMEIN_I" type="String" length="3"/>
+    <property name="LGORT_I" column="LGORT_I" type="String" length="5"/>
+    <property name="MATXT" column="MATXT" type="String" length="40"/>
+    <property name="ZMESGUID" column="ZMESGUID" type="String" length="40"/>
+    <property name="ZCSRQSJ" column="ZCSRQSJ" type="DateTime"/>
+    <property name="BatchNo" column="BatchNo" type="String" length="50"/>
+    <property name="UniqueCode" column="UniqueCode" type="String" length="4"/>
+    <property name="Status" column="Status" type="Int32"/>
+    <property name="TailQty" column="TailQty" type="String" length="50"/>
+  </class>
+</hibernate-mapping>

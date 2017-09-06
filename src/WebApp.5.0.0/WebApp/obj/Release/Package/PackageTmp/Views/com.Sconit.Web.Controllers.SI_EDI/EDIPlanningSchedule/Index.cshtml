@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SI_EDI_Ford_PlanningSchedule" });
+}
+
+@using System.Data;
+@using com.Sconit.Web.Models.SearchModels.SI
+@using com.Sconit.Entity.SI.EDI_Ford;
+@model com.Sconit.Web.Controllers.ViewModel
+<fieldset>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Name("StartDate").Format("yyyy-MM-dd HH:mm").Value(DateTime.Now.AddDays(-7)))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Name("EndDate").Format("yyyy-MM-dd HH:mm").Value(DateTime.Now))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+    }
+</fieldset>
+<fieldset>
+    @(Html.Telerik().Grid<PlanningScheduleMaster>()
+    .Name("OrderMaster")
+    .Columns(columns =>
+    {
+        columns.Bound(e => e.Id).Width(50);
+        columns.Bound(e => e.FileType).Width(100);
+        columns.Bound(e => e.SenderID).Width(100);
+        columns.Bound(e => e.ReceiverID).Width(100);
+        columns.Bound(e => e.FileName).ClientTemplate("<a href='" + Url.Content("~/DownLoad/EdiData/Inbox/Bak/") + "<#= FileName #>'> <#= FileName #> </a>");
+        columns.Bound(e => e.CreateDate).Format("{0:yyyy-MM-dd HH:mm}").Width(150);
+    })
+    .ClientEvents(events => events.OnRowDataBound("orderDetails_onRowDataBound"))
+    .DetailView(details => details.ClientTemplate(
+            Html.Telerik().Grid<PlanningScheduleDetail>()
+                .Name("OrderDetails_<#= Id #>")
+                .Resizable(resizing => resizing.Columns(true))
+                .Columns(columns =>
+                {
+                    columns.Bound(o => o.ReleaseDate).Width(100);
+                    columns.Bound(o => o.ReleaseNum).Width(100);
+                    //columns.Bound(o => o.Po).Width(100);
+                    columns.Bound(o => o.Item).Width(150);
+                    columns.Bound(o => o.Uom).Width(50);
+                    columns.Bound(o => o.ShipFrom).Width(80);
+                    columns.Bound(o => o.ShipTo).Width(80);
+                    //columns.Bound(o => o.ScheduleTiming).Width(50);
+                    columns.Bound(o => o.ScheduleWhen);
+                    columns.Bound(o => o.Qty).Width(70);
+                })
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_OrdersDetailHierarchyAjax", "EDIPlanningSchedule", new { Id = "<#= Id #>" }))
+                .Pageable(t => t.Enabled(false))
+                .Sortable()
+                .Filterable()
+                .ToHtmlString()
+    ))
+    .DataBinding(dataBinding => dataBinding.Ajax().Select("_OrderMasterHierarchyAjax", "EDIPlanningSchedule"))
+    .Pageable(paging => paging.PageSize(10))
+    .Scrollable(scrolling => scrolling.Height(580))
+    .Sortable()
+)
+    <script type="text/javascript">
+
+        function expandFirstRow(grid, row) {
+            if (grid.$rows().index(row) == 0) {
+                //    grid.expandRow(row);
+            }
+        }
+
+        function orderDetails_onRowDataBound(e) {
+            //var grid = $(this).data('tGrid');
+            //expandFirstRow(grid, e.row);
+        }
+
+    </script>
+</fieldset>

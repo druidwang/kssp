@@ -1,0 +1,96 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.MRP
+<script type="text/javascript">
+
+    function Item_DataBinding(e) {
+        if (e.value != "") {
+            e.data = {
+                "flow": $("#Flow").val()
+            }
+        }
+    }
+
+    function Flow_Change() {
+        $('#Item').data('tComboBox').value('');
+        $('#Item').data('tComboBox').text('');
+        $("#Item").data("tComboBox").reload();
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("HuToMappingList", "HuTo"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label >
+                    @Resources.MRP.HuToMapping.HuToMapping_HuTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_HuToComboBox", "Common", new
+        {
+            controlName = "HuTo",
+            selectedValue = TempData["HuToMappingSearchModel"] != null ? ((HuToMappingSearchModel)TempData["HuToMappingSearchModel"]).HuTo : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label >
+                    @Resources.MRP.HuToMapping.HuToMapping_Party
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_PartyDropDownList", "Common", new
+        {
+            controlName = "Party",
+            includeBlankOption = true,
+            selectedValue = TempData["HuToMappingSearchModel"] != null ? ((HuToMappingSearchModel)TempData["HuToMappingSearchModel"]).Party : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label >
+                    @Resources.MRP.HuToMapping.HuToMapping_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                isChange = true,
+                selectedValue = TempData["HuToMappingSearchModel"] != null ? ((HuToMappingSearchModel)TempData["HuToMappingSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label >
+                    @Resources.MRP.HuToMapping.HuToMapping_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["HuToMappingSearchModel"] != null ? ((HuToMappingSearchModel)TempData["HuToMappingSearchModel"]).Item : string.Empty
+            });
+                }
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_CUST_HuToMapping", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew"},
+            {"onclick","location.href='"+@Url.Content("~/HuTo/HuToMappingNew")+"'"}
+	    })
+        </div>
+    }
+</fieldset>

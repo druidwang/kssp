@@ -1,0 +1,82 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.MRP
+<fieldset>
+    @using (Html.BeginForm("List", "Machine"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Machine_Code">
+                    @Resources.MRP.Machine.Machine_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_MachineComboBox", "Common",
+            new
+            {
+                controlName = "Code",
+                includeBlankOption = true,
+                selectedValue = TempData["MachineSearchModel"] != null ? ((MachineSearchModel)TempData["MachineSearchModel"]).Code : string.Empty
+            });
+                }
+            </div>
+             <div class="search-label">
+                <label for="Machine_Description">
+                    @Resources.MRP.Machine.Machine_Description
+                </label>
+            </div>
+            <div class="search-field">
+                  @Html.TextBox("Description", TempData["MachineSearchModel"] != null ? ((MachineSearchModel)TempData["MachineSearchModel"]).Description : string.Empty)
+            </div>
+             <div class="search-label">
+             <label>
+                  @Resources.MRP.Machine.Machine_MachineType
+                  </label>
+            </div>
+             <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.MachineType,
+            includeBlankOption = true,
+            controlName = "MachineType",
+            selectedValue = TempData["MachineSearchModel"] != null ? ((MachineSearchModel)TempData["MachineSearchModel"]).MachineType : string.Empty
+        });
+                }
+            </div>
+
+              <div class="search-label">
+               <label>
+                  @Resources.MRP.Machine.Machine_ShiftType
+                  </label>
+            </div>
+             <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.ShiftType,
+            includeBlankOption = true,
+            controlName = "ShiftType",
+            selectedValue = TempData["MachineSearchModel"] != null ? ((MachineSearchModel)TempData["MachineSearchModel"]).ShiftType : string.Empty
+        });
+                }
+    
+            </div>
+
+
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+           <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+           
+          @Html.Button(Resources.SYS.Global.Button_New, "Url_MRP_Machine_View", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew"},
+            {"onclick","location.href='"+@Url.Content("~/Machine/New")+"'"}
+	    })
+        </div>
+
+    }
+</fieldset>

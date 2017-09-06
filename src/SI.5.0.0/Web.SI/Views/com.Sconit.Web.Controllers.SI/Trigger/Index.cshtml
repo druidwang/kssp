@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SI_BAT_Trigger_View" });
+}
+<script type="text/javascript">
+
+    function Grid_OnDataBinding(e) {
+    
+        if (e.dataItem.Status == 0) {
+            e.row.all[14].childNodes[1].style.display = "none";
+           
+        }
+        else {
+            e.row.all[14].childNodes[0].style.display = "none";
+        }
+
+    } 
+</script>
+<fieldset>
+    @(Html.Telerik().Grid<com.Sconit.Entity.BatchJob.BAT.Trigger>()
+  .Name("Grid")
+  .DataKeys(keys =>
+  {
+      keys.Add(p => p.Id);
+  })
+  .DataBinding(dataBinding =>
+  {
+      dataBinding.Ajax()
+         .Update("Index", "Trigger")
+         .Select("_Index", "Trigger");
+  })
+  .Columns(columns =>
+  {
+
+      columns.Bound(o => o.Id).ReadOnly().Title(@Resources.SI.Trigger.Trigger_Triggerid);
+      //columns.Bound(o => o.JobId).ReadOnly();
+      columns.Bound(o => o.Name).ReadOnly().Title(@Resources.SI.Trigger.Trigger_Name);
+      columns.Bound(o => o.Description).ReadOnly().Title(@Resources.SI.Trigger.Trigger_Description);
+      columns.Bound(o => o.PreviousFireTime).ReadOnly().Title(@Resources.SI.Trigger.Trigger_PreviousFireTime);
+      columns.Bound(o => o.NextFireTime).Title(@Resources.SI.Trigger.Trigger_NextFireTime);
+      columns.Bound(o => o.Status).Hidden(true);
+
+      columns.Bound(o => o.RepeatCount).ReadOnly().Title(@Resources.SI.Trigger.Trigger_RepeatCount);
+      columns.Bound(o => o.Interval).Title(@Resources.SI.Trigger.Trigger_Interval);
+      // columns.Bound(o => o.IntervalType, (IEnumerable<com.Sconit.Entity.SYS.CodeDetail>)ViewData["CodeDetail"], "Code", "Desc1").EditorTemplateName("GridComboxForeignKey"));
+      columns.ForeignKey(o => o.IntervalType, (IEnumerable<com.Sconit.Entity.SYS.CodeDetail>)ViewData["CodeDetail"], "Value", "Description").Title(@Resources.SI.Trigger.Trigger_IntervalType);
+      columns.Bound(o => o.TimesTriggered).ReadOnly().Title(@Resources.SI.Trigger.Trigger_TimesTriggered);
+      columns.Bound(o => o.StatusName).ReadOnly().Title(@Resources.SI.Trigger.Trigger_TriggerStatusName);
+      columns.Command(commands =>
+      {
+          commands.Edit().ButtonType(GridButtonType.ImageAndText);
+      });
+      columns.Command(
+             commands =>
+             {
+                 commands.Custom("StatusZt")
+                    .Text("暂停")
+                    .Action("TriggerUpdateStatus", "Trigger");
+
+                 commands.Custom("StatusQd")
+                  .Text("启动")
+                  .Action("TriggerUpdateStatusrecovery", "Trigger");
+             });
+  })
+  .ClientEvents(events => events.OnRowDataBound("Grid_OnDataBinding"))
+  .Editable(editing => editing.Mode(GridEditMode.InLine))
+    .Pageable(settings =>
+    {
+        settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+        settings.PageSize(20); ;
+    })
+  .Scrollable(c => c.Enabled(false))
+  .Sortable()
+  )
+</fieldset>

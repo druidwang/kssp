@@ -1,0 +1,47 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    AutoCompleteFilterMode flowFilterMode = Enum.Parse(typeof(AutoCompleteFilterMode), ViewBag.FlowFilterMode, true);
+    int flowFilterMinimumChars = ViewBag.FlowFilterMinimumChars;
+    int? type = ViewBag.Type;
+    string onChangeFunc = ViewBag.OnChangeFunc;
+    if (string.IsNullOrWhiteSpace(onChangeFunc))
+    {
+        onChangeFunc = "onComboBoxChange";
+    }
+}
+@if (ViewBag.IsChange != null)
+{
+    @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                .Select("_FlowAjaxLoading", "Common", new { type = type }).Cache(true))
+                .Filterable(filtering =>
+                {
+                    filtering.FilterMode(flowFilterMode);
+                    filtering.MinimumChars(flowFilterMinimumChars);
+                })
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                    .ClientEvents(events => events.OnChange(onChangeFunc))
+             )
+}
+else
+{
+    @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                .Select("_FlowAjaxLoading", "Common", new { type = type }).Cache(true))
+                .Filterable(filtering =>
+                {
+                    filtering.FilterMode(flowFilterMode);
+                    filtering.MinimumChars(flowFilterMinimumChars);
+                })
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+
+
+             )
+}

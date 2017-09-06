@@ -1,0 +1,175 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP;
+<fieldset>
+    @using (Html.BeginForm("ExList", "MrpSchedule"))
+    {   
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    类型
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("tabType", 0, true, new { onclick = "doClick(true)" })<span>查询</span><span
+                    style="margin: 4px"></span>
+                @Html.RadioButton("tabType", 1, false, new { onclick = "doClick(false)" })<span>运行</span>
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <hr style="border: 100% dashed black;" />
+            <div class="search-label">
+                <label>
+                    后加工计划版本
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+        {
+            controlName = "PlanVersion",
+            resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.FI,
+            includeBlankOption = true,
+            isRelease = true,
+            selectedValue = TempData["MrpPlanMasterSearchModel"] != null ? ((MrpPlanMasterSearchModel)TempData["MrpPlanMasterSearchModel"]).PlanVersion : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    周
+                </label>
+            </div>
+            <div class="search-field">
+                    @{
+        Html.RenderAction("_DateIndexComboBox", "Common", new
+            {
+                includeBlankOption = true,
+                controlName = "DateIndex",
+                selectedValue = TempData["MrpPlanMasterSearchModel"] != null ? ((MrpPlanMasterSearchModel)TempData["MrpPlanMasterSearchModel"]).DateIndex : string.Empty
+            });
+                    }
+            </div>
+            <div id="divSearch">
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpPlanMaster.MrpPlanMaster_Status
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.MessageType,
+            controlName = "Status",
+            includeBlankOption = true,
+            selectedValue = TempData["MrpPlanMasterSearchModel"] != null ? ((MrpPlanMasterSearchModel)TempData["MrpPlanMasterSearchModel"]).Status : null
+        });
+                    }
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpSnapMaster.MrpSnapMaster_IsRelease
+                    </label>
+                </div>
+                <div class="search-field">
+                    @Html.CheckBox("IsRelease", TempData["MrpPlanMasterSearchModel"] != null ? ((MrpPlanMasterSearchModel)TempData["MrpPlanMasterSearchModel"]).IsRelease : false)
+                </div>
+            </div>
+            <input type="hidden" id="ResourceGroup" name="ResourceGroup" value="Ex" />
+        </div>
+        <div class="editor-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnRun" onclick="RunMrpPlanMaster(this)" style="display: none">
+                @Resources.SYS.Global.Button_Run</button>
+        </div>
+    }
+</fieldset>
+<div id="divLog" style="display: none">
+</div>
+<script type="text/javascript">
+    var isShowLog = false;
+    function doClick(bl) {
+        if (bl) {
+            $("#divSearch").show();
+            $("#btnSearch").show();
+            $("#fldGrid").show();
+            $("#btnRun").hide();
+            $("#divLog").hide();
+            isShowLog = false;
+        }
+        else {
+            $("#divSearch").hide();
+            $("#btnSearch").hide();
+            $("#fldGrid").hide();
+            $("#btnRun").show();
+            $("#divLog").show();
+            isShowLog = false;
+        }
+    }
+
+    function RunMrpPlanMaster(e) {
+        doClick(false);
+        if ($('#PlanVersion').val() == "") {
+            $message.error('后加工计划版本为必选项');
+            return;
+        }
+        if ($('#DateIndex').val() == "") {
+            $message.error('周为必选项');
+            return;
+        }
+        var data = {
+            planVersion: $('#PlanVersion').val(),
+            resourceGroup: 20,
+            dateIndex: $('#DateIndex').val()
+        }
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: "/MrpSchedule/_RunMrpPlanMaster/",
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+        e.disabled = true;
+        isShowLog = true;
+        ShowLog();
+    }
+
+    function ShowLog() {
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSchedule/_GetRunLog/",
+            cache: false,
+            //data: null,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divLog");
+                $(tabStrip).html(data);
+            }
+        });
+        if (isShowLog) {
+            $("#divLog").show();
+            setTimeout(ShowLog, 1000);
+        }
+        else {
+            $("#divLog").hide();
+        }
+    }
+
+    function DateIndex_DataBinding(e) {
+        e.data = {
+            dateType: "5"
+        }
+    }
+
+</script>

@@ -1,0 +1,58 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MD
+
+<fieldset>
+    @using (Html.BeginForm("List", "Customer"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Customer_Code">
+                    @Resources.MD.Party.Party_Customer_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["CustomerSearchModel"] != null ? ((CustomerSearchModel)TempData["CustomerSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Customer_Name">
+                    @Resources.MD.Party.Party_Customer_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Name", TempData["CustomerSearchModel"] != null ? ((CustomerSearchModel)TempData["CustomerSearchModel"]).Name : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="submit" id="btnExport">
+                @Resources.SYS.Global.Button_Export</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_Customer_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"onclick","location.href='"+Url.Content("~/Customer/New/") +"'"}
+	        })
+
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+
+        if (t == "") {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/Customer/Export/");
+        $('form').submit();
+    });
+</script>

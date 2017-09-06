@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.ORD.IpLocationDetail, com.Sconit.Entity" table="VIEW_IpLocationDet" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<version name="Version" column="Version" type="Int32" />	
+		<property name="IpNo" column="IpNo" type="String" length="50"/>	
+		<property name="IpDetailId" column="IpDetId" type="Int32"/>
+        <property name="OrderType" column="OrderType"  />
+        <property name="OrderDetailId" column="OrderDetId" type="Int32"/>	
+		<property name="Item" column="Item" type="String" length="50"/>	
+		<property name="HuId" column="HuId" type="String" length="50"/>	
+		<property name="LotNo" column="LotNo" type="String" length="50"/>
+        <property name="IsCreatePlanBill" column="IsCreatePlanBill" type="Boolean"/>
+        <property name="IsConsignment" column="IsCS" type="Boolean"/>	
+		<property name="PlanBill" column="PlanBill" type="Int32"/>
+        <property name="ActingBill" column="ActBill" type="Int32"/>
+        <property name="QualityType" column="QualityType"/>	
+		<property name="IsFreeze" column="IsFreeze" type="Boolean"/>	
+		<property name="IsATP" column="IsATP" type="Boolean"/>
+        <property name="OccupyType" column="OccupyType"/>
+        <property name="OccupyReferenceNo" column="OccupyRefNo" type="String" length="50"/>
+        <property name="Qty" column="Qty" type="Decimal"/>	
+		<property name="ReceivedQty" column="RecQty" type="Decimal"/>
+        <property name="IsClose" column="IsClose" type="Boolean"/>
+        <property name="WMSSeq" column="WMSSeq" type="String" length="50" />
+		<property name="IsMatchHu" column="IsMatchHu" type="Boolean"/>
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+    <sql-insert>
+      exec USP_Split_IpLocationDet_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+    </sql-insert>
+    <sql-update>
+      exec USP_Split_IpLocationDet_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+    </sql-update>
+    <sql-delete>
+      exec USP_Split_IpLocationDet_Delete ?,?
+    </sql-delete>
+  </class>
+</hibernate-mapping>

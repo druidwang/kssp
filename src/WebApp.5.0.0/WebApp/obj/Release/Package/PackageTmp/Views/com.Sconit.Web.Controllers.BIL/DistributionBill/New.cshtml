@@ -1,0 +1,154 @@
+﻿@using com.Sconit.Web.Models.SearchModels.BIL
+@Html.Partial("_AjaxMessage")
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_DistributionBill_New" });
+}
+
+<script type="text/javascript">
+    function BillMasterQuery() {
+        if ($('#Party').val() == "") {
+            $message.error('客户为必填项。');
+            return;
+        }
+        var data = {
+            "Party": $('#Party').val(),
+            "ReceiptNo": $('#ReceiptNo').val(),
+            "Flow": $('#Flow').val(),
+            "Item": $('#Item').val(),
+            "StartTime": $('#StartTime').val(),
+            "EndTime": $('#EndTime').val(),
+            "ExtReceiptNo": $('#ExtReceiptNo').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/DistributionBill/_ActingBillList/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                $("#divActingBilllList").html(data);
+            }
+        });
+    }
+
+    function ExportClick() {
+        if ($('#Party').val() == "") {
+            $message.error('客户为必填项。');
+            return;
+        }
+        location.href = '/DistributionBill/ExportXLS/?Party=' + $('#Party').val() + '&ReceiptNo=' + $('#ReceiptNo').val()
+            + '&Flow=' + $('#Flow').val() + '&Item=' + $('#Item').val() + '&StartTime=' + $('#StartTime').val()
+            + '&EndTime=' + $('#EndTime').val() + '&ExtReceiptNo=' + $('#ExtReceiptNo').val();
+    }
+
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_PartyName_Distribution
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CustomerComboBox", "Common",
+                new
+                {
+                    controlName = "Party",
+                    selectedValue = TempData["ActingBillSearchModel"] != null ? ((ActingBillSearchModel)TempData["ActingBillSearchModel"]).Party : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_ReceiptNo
+            </label>
+        </div>
+        <div class="search-field">
+            @Html.TextBox("ReceiptNo", TempData["ActingBillSearchModel"] != null ? ((ActingBillSearchModel)TempData["ActingBillSearchModel"]).ReceiptNo : string.Empty)
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_Flow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    isSupplier = true,
+                    type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                    selectedValue = TempData["ActingBillSearchModel"] != null ? ((ActingBillSearchModel)TempData["ActingBillSearchModel"]).Flow : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ItemComboBox", "Common",
+                new
+                {
+                    controlName = "Item",
+                    selectedValue = TempData["ActingBillSearchModel"] != null ? ((ActingBillSearchModel)TempData["ActingBillSearchModel"]).Item : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_Currency
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CurrencyDropDownList", "Common",
+                    new
+                    {
+                        controlName = "Currency",
+                        includeBlankOption = true,
+                        selectedValue = TempData["ActingBillSearchModel"] != null ? ((ActingBillSearchModel)TempData["ActingBillSearchModel"]).Currency : string.Empty
+                    });
+            }
+        </div>
+        <div class="search-label">
+        <label for="ExternalReceiptNo">
+            @Resources.BIL.ActingBill.ActingBill_ExternalReceiptNo
+        </label>
+        </div>
+        <div class="search-field">
+            @Html.TextBox("ExtReceiptNo", TempData["ActingBillSearchModel"] != null ? ((ActingBillSearchModel)TempData["ActingBillSearchModel"]).ExtReceiptNo : string.Empty)
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_StartTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("StartTime")
+                                .Value(TempData["ActingBillSearchModel"] != null ? ((ActingBillSearchModel)TempData["ActingBillSearchModel"]).StartTime : System.DateTime.Today.AddMonths(-1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_EndTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("EndTime")
+                        .Value(TempData["ActingBillSearchModel"] != null ? ((ActingBillSearchModel)TempData["ActingBillSearchModel"]).EndTime : System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="btnSearch" onclick="BillMasterQuery()">@Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnCreateActingBill" onclick="CreateActingBill()" style="display: none">@Resources.SYS.Global.Button_Create</button>
+        <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+    </div>
+</fieldset>
+<div id="divActingBilllList">
+</div>

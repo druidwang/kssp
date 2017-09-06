@@ -1,0 +1,45 @@
+﻿@using com.Sconit.Web.Models.SearchModels.CUST
+
+@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ItemAverage_View" });
+}
+
+<fieldset>
+    @using (Html.BeginForm("New", "ItemAverage"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ItemTrace_Item">
+                    @Resources.CUST.ItemTrace.ItemTrace_Item
+
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new {
+                controlName = "Item",
+
+                selectedValue = TempData["ItemAverage"] != null ? ((ItemAverageSearchModel)TempData["ItemAverage"]).Item : string.Empty
+            });
+                }
+            </div>
+            
+        </div>
+        <div class="search-footer">
+                 @Html.Button(Resources.SYS.Global.Button_Add, "Url_ItemAverage_View", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnSearch"},
+                {"needconfirm","true"} 
+            })
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ItemAverage/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+                
+	       
+        </div>
+
+    }
+</fieldset>
+

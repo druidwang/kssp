@@ -1,0 +1,88 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpPlanMi_ShiftPlanSearch" });
+}
+<script type="text/javascript">
+
+    function PlanDate_Change(e) {
+        Flow_Change(e);
+    }
+    function Flow_Change(e) {
+//        $("#ShiftPlanDet").hide();
+    }
+    function onSearch() {
+    
+        if ($('#Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanDate').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        var data = {
+            flow: $('#Flow').val(),
+            planDate: $('#PlanDate').val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpPlanMi/_GetShiftPlanSearchView/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#ShiftPlanDet");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 2,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpMiShiftPlan.MrpMiShiftPlan_PlanDate
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("PlanDate")
+                        .ClientEvents(events => events.OnChange("PlanDate_Change")))
+            </div>
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpMiShiftPlan.MrpMiShiftPlan_ProductLine
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_FlowComboBox", "Common", new
+                    {
+                        controlName = "Flow",
+                        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                        resourceGroup = (int)com.Sconit.CodeMaster.ResourceGroup.MI
+                    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlanMi_ShiftView", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+        </div>
+    </fieldset>
+   
+    <div id="ShiftPlanDet">
+    </div>
+}

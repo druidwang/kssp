@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.MD.MrpFlowDetail, com.Sconit.Entity" table="MRP_FlowDetail" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Flow" column="Flow" type="String" length="50" />
+    <property name="DetailId" column="DetailId" type="Int32" />
+    <property name="Type" column="Type" />    
+    <property name="Item" column="Item" type="String" length="50" />
+    <property name="LocationFrom" column="LocationFrom" type="String" length="50" />
+    <property name="LocationTo" column="LocationTo" type="String" length="50" />
+    <property name="PartyFrom" column="PartyFrom" type="String" length="50" />
+    <property name="PartyTo" column="PartyTo" type="String" length="50" />
+    <property name="LeadTime" column="LeadTime" type="Double"  />   
+    <property name="MrpWeight" column="MrpWeight" type="Double" />   
+    <property name="MrpPriority" column="MrpPriority" type="Int32"  />  
+    <property name="Bom" column="Bom" type="String" length="50" />
+    <property name="MaxStock" column="MaxStock" type="Double"  />
+    <property name="SafeStock" column="SafeStock" type="Double"  />
+    <property name="SnapTime" column="SnapTime" type="DateTime"  />
+
+    <property name="Machine" column="Machine" type="String" length="50" />
+    <!--<property name="ShiftQuota" column="ShiftQuota" type="Double"  />-->
+    <property name="StartDate" column="StartDate" type="DateTime2"  />
+    <property name="EndDate" column="EndDate" type="DateTime2"  />
+     
+    <property name="Sequence" column="Sequence" type="Int32" />   
+    
+    <property name="ResourceGroup" column="ResourceGroup" />
+    <property name="UnitCount" column="UnitCount" type="Double" />
+    <property name="Uom" column="Uom" type="String" />
+    <!--<property name="Uom1" column="Uom1" type="String" />-->
+    <property name="BatchSize" column="BatchSize" type="Double" />
+    <property name="ExtraLocationTo" column="ExtraLocationTo" type="String" length="256"  />
+    <property name="ExtraLocationFrom" column="ExtraLocationFrom" type="String" length="256"  />
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_DistributionIpGap_Adjust" });
+}
+
+@Html.Partial("_AdjustSearch")
+
+@Html.Partial("_AdjustSearchResult")

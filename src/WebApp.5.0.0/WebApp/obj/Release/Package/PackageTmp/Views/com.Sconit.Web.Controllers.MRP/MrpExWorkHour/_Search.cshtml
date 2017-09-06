@@ -1,0 +1,57 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+<fieldset>
+    @using (Html.BeginForm("List", "MrpExWorkHour"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="MrpExWorkHour_Flow">
+                    @Resources.MRP.MrpExWorkHour.MrpExWorkHour_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Flow", TempData["MrpExWorkHourSearchModel"] != null ? ((MrpExWorkHourSearchModel)TempData["MrpExWorkHourSearchModel"]).Flow : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                </label>
+            </div>
+            <div class="search-field">
+            </div>
+
+            <div class="search-label">
+                <label for="MrpExWorkHour_DateFrom">
+                    @Resources.MRP.MrpExWorkHour.MrpExWorkHour_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+        .Value(TempData["MrpExWorkHourSearchModel"] != null ? ((MrpExWorkHourSearchModel)TempData["MrpExWorkHourSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="MrpExWorkHour_DateTo">
+                    @Resources.MRP.MrpExWorkHour.MrpExWorkHour_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+            .Value(TempData["MrpExWorkHourSearchModel"] != null ? ((MrpExWorkHourSearchModel)TempData["MrpExWorkHourSearchModel"]).DateTo : System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_MrpExWorkHour_View", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnSearch"}
+	        })
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_MrpExWorkHour_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"onclick","location.href='"+@Url.Content("~/MrpExWorkHour/New")+"'"}
+	        })
+        </div>
+    }
+</fieldset>

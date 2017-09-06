@@ -1,0 +1,80 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MD
+@model com.Sconit.Entity.MD.ItemDiscontinue
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ItemDiscontinue_View" });
+}
+@using (Html.BeginForm("_UpdateSave", "ItemDiscontinue"))
+{
+    <fieldset>
+        <legend>@Resources.MD.ItemDiscontinue.ItemDiscontinue_Edit_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model=>model.Item)
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Item)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.DiscontinueItem)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model=>model.DiscontinueItem)
+                @Html.HiddenFor(model => model.DiscontinueItem)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.UnitQty)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model=>model.UnitQty)
+                @Html.HiddenFor(model => model.UnitQty)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Priority)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model=>model.Priority)
+                @Html.HiddenFor(model => model.Priority)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model=>model.StartDate)
+                @Html.HiddenFor(model => model.StartDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="editor-field-2">
+                @(Html.Telerik().DatePicker().Name("EndDate").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:172px", }))
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Bom)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_BomComboBox", "Common", new
+    {
+        controlName = "Bom",
+        selectedValue = Model != null ? Model.Bom : string.Empty
+    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_Save</button>
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_ItemDiscontinue_Delete", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnDelete"},
+                {"needconfirm","true"},
+                {"onclick","location.href='"+@Url.Content("~/ItemDiscontinue/Delete/"+@Model.Id)+"'"}
+            })
+            <button type="button" id="btnBack"  onclick="location.href='@Url.Content("~/ItemDiscontinue/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

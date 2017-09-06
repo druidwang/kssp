@@ -1,0 +1,90 @@
+﻿
+@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.SYS
+
+<script type="text/javascript">
+    function onSearch(e) {
+        var data = {
+            "flow": e.value
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ProductionOrder/_PRReceiveOrderDetailList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#fdReciveOrderDetail").html(data);
+                $("#fdReciveOrderDetail").show();
+            }
+        });
+    }
+</script>
+
+<fieldset>
+    @using (Html.BeginForm("ReceiveList", "ProductionOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="">
+                    @Resources.ORD.OrderMaster.OrderMaster_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow_Production
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_PartyFrom">
+                    来源区域
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_RegionComboBox", "Common",
+            new
+            {
+                controlName = "PartyFrom",
+                checkPermission = true,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_PartyFrom">
+                   目的区域
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_RegionComboBox", "Common",
+            new
+            {
+                controlName = "PartyTo",
+                checkPermission = true,
+                selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+        </div>
+    }
+</fieldset>
+<div id="fdReciveOrderDetail" style="display: none;"></div>
+

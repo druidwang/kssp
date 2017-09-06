@@ -1,0 +1,87 @@
+﻿@using com.Sconit.Entity.WMS;
+@model IEnumerable<com.Sconit.Entity.WMS.ShipPlan>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+            $("#btnAssign").attr("style", this.checked ? "display:inline" : "display:none");
+        });
+    });
+
+    function showButtons() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var showButton = false;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                showButton = true;
+                break;
+            }
+        }
+        $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+    }
+
+    function onDataBound() {
+        $("tr.t-no-data td").html("@Resources.GridLocalization.NoRecords");
+    }
+</script>
+<fieldset>
+    <legend>@Resources.WMS.ShipPlan.ShipPlan_Assign_Title</legend>
+    <div class="search-footer">
+        <table>
+            <tr>
+                <td>
+                    <label>
+                        @Resources.WMS.ShipPlan.ShipPlan_AssignUser
+                    </label>
+                </td>
+                <td>
+                    @{
+                        Html.RenderAction("_PickUserComboBox", "Common",
+       new
+       {
+           controlName = "PickUser"
+       });
+                    }
+                </td>
+                <td id="tdCarrayOver">
+                    @Html.Button(Resources.SYS.Global.Button_Assign, "Url_ShipPlan_Assign", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnAssign"},
+                    {"needconfirm","true"},
+                    {"onclick","assignCheckedShipPlans()"}
+	            })
+                </td>
+            </tr>
+        </table>
+    </div>
+    @(Html.Telerik().Grid(Model)
+        .Name("ShipPlan")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+                                    .Select("_SelectAssignBatchEditing", "ShipPlan", new { shipGroupCode = ViewBag.PickGroupCode })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item)
+              .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>' onClick='showButtons()'  />")
+              .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+              .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.OrderQty);
+            columns.Bound(o => o.PickQty);
+        })
+        .ClientEvents(c => c.OnDataBound("onDataBound"))
+        .NoRecordsTemplate("Loading...")
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+</fieldset>

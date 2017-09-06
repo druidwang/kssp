@@ -1,0 +1,496 @@
+﻿/*----------------------------------------------------------
+    <!--[if IE]>
+       <style type="text/css">
+         #main form
+        {
+            margin-top: -10px;
+        }
+        </style>
+    <![endif]-->
+----------------------------------------------------------*/
+body {
+    background-color: #FFFFFF;
+    font-size: 75%;
+    font-family: Arial, Verdana, Tahoma, Helvetica, Sans-Serif;
+    margin: 0;
+    padding: 0;
+    color: #696969;
+}
+
+/* HEADINGS   
+----------------------------------------------------------*/
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1.5em;
+    color: #000;
+}
+
+h1 {
+    font-size: 2em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+h2 {
+    padding: 0 0 10px 0;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+h4 {
+    font-size: 1.1em;
+}
+
+h5, h6 {
+    font-size: 1em;
+}
+
+a {
+    color: #696969;
+}
+
+li {
+    line-height: 1.6;
+}
+
+/* this rule styles <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2 {
+    margin-top: 0;
+}
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+/* you can specify a greater or lesser percentage for the 
+page width. Or, you can specify an exact pixel width. */
+.page {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header {
+    position: relative;
+    margin-bottom: 0px;
+    color: #000;
+    padding: 0;
+    height: 92px;
+}
+
+    #header h1 {
+        font-weight: bold;
+        padding: 5px 0;
+        margin: 0;
+        color: #fff;
+        border: none;
+        line-height: 2em;
+        font-size: 32px !important;
+    }
+
+#main {
+    background: #fff; /*padding: 30px 30px 15px 30px;*/
+    margin-bottom: 0px;
+    _height: 1px; /* only IE6 applies CSS properties starting with an underscore */
+    padding: 0 10px 0 0; /*border:7px solid #b9cde5;     border-left:0;     border-bottom:0;*/
+}
+
+#footer {
+    color: #999;
+    padding: 10px 0;
+    text-align: center;
+    line-height: normal;
+    margin: 0;
+    font-size: .9em;
+}
+
+#left {
+    background: transparent url(../Content/Images/Page/left.png) no-repeat;
+    display: inline;
+    position: absolute;
+    top: 0px;
+    width: 184px;
+    height: 100%;
+    left: 0px;
+}
+/* MENU   
+----------------------------------------------------------*/
+#menu {
+    position: relative;
+    margin: 0;
+    text-align: right;
+}
+
+    #menu .t-item {
+        border-width: 0 0 0 1px;
+    }
+
+    #menu .t-link {
+        padding: 5px 20px;
+        font-weight: bold;
+        text-decoration: none;
+        line-height: 1.8em;
+    }
+
+/* FORM LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 5px 5px 5px 5px;
+    margin: 0 0 1.5em 0;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 75px;
+}
+
+input[type="text"] {
+    width: 198px;
+    border: 1px solid #828282;
+    height: 18px;
+}
+
+input[type="password"] {
+    width: 200px;
+    border: 1px solid #CCC;
+}
+
+/* TABLE
+----------------------------------------------------------*/
+
+table {
+    border: solid 1px #D4DBE5;
+    border-collapse: collapse;
+}
+
+    table td {
+        padding: 5px;
+        border: solid 1px #D4DBE5;
+    }
+
+    table th {
+        padding: 6px 5px;
+        text-align: left;
+        background-color: #e8eef4;
+        border: solid 1px #D4DBE5;
+    }
+
+/* MISC  
+----------------------------------------------------------*/
+.clear {
+    clear: both;
+}
+
+.error {
+    color: Red;
+}
+
+div#title {
+    display: block;
+    text-align: left;
+}
+
+#logindisplay {
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    margin: 10px;
+    color: White;
+}
+
+    #logindisplay a:link {
+        color: white;
+        text-decoration: underline;
+    }
+
+    #logindisplay a:visited {
+        color: white;
+        text-decoration: underline;
+    }
+
+    #logindisplay a:hover {
+        color: white;
+        text-decoration: none;
+    }
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #ff0000;
+    position: absolute;
+    background-color: Yellow;
+}
+
+
+    .field-validation-error span {
+        position: absolute;
+        white-space: nowrap;
+        color: red;
+        padding: 20px 1px 9px 5px;
+        background: transparent url('/Content/Common/validation-error-message.png') no-repeat 0 0;
+    }
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.validation-summary-successes {
+    font-weight: bold;
+    color: Green;
+}
+
+.validation-summary-warnings {
+    font-weight: bold;
+    color: Orange;
+}
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, .editor-label {
+    margin: 0 0 0 0;
+}
+
+.display-field, .editor-field {
+    margin: 0 0 0 0;
+}
+
+.text-box {
+    width: 30em;
+}
+
+    .text-box.multi-line {
+        height: 6.5em;
+    }
+
+.tri-state {
+    width: 6em;
+}
+
+/*-----------add by liqiuyun------------------------*/
+.editor, .search {
+    width: 100%;
+    padding: 0;
+}
+
+.editor-footer, .search-footer {
+    width: 50%;
+    text-align: right;
+}
+
+.editor-footer {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+/*----1列---*/
+.editor-label-1 {
+    float: left;
+    width: 15%;
+    text-align: right;
+    height: 25px;
+}
+
+.editor-field-1 {
+    float: left;
+    width: 85%;
+    height: 25px;
+}
+
+.editor-label-1 label {
+    padding: 0 10px 0 0;
+}
+
+.editor-field-1 input {
+    width: 75%;
+}
+
+
+.multilinetext-label-1 {
+    float: left;
+    width: 15%;
+    text-align: right;
+    height: 105%;
+}
+
+.multilinetext-field-1 {
+    float: left;
+    width: 85%;
+    height: 105%;
+}
+
+.multilinetext-label-1 label {
+    padding: 0 10px 0 0;
+}
+
+.multilinetext-field-1 input {
+    width: 80%;
+}
+
+/*----2列---*/
+.editor-label-2, .search-label {
+    float: left;
+    width: 10%;
+    text-align: right;
+    height: 25px;
+}
+
+.editor-field-2, .search-field {
+    float: left;
+    width: 40%;
+    height: 25px;
+}
+
+.editor-label-2 label, .search-label label {
+    padding: 0 10px 0 0;
+}
+/*----3列---*/
+.editor-label-3 {
+    float: left;
+    width: 10%;
+    text-align: right;
+    height: 25px;
+}
+
+.editor-field-3 {
+    float: left;
+    width: 23.3333333%;
+    height: 25px;
+}
+
+.editor-label-3 label {
+    padding: 0 10px 0 0;
+}
+/*----4列---*/
+.editor-label-4 {
+    float: left;
+    width: 10%;
+    text-align: right;
+    height: 25px;
+}
+
+.editor-field-4 {
+    float: left;
+    width: 15%;
+    height: 25px;
+}
+
+.editor-label-4 label {
+    padding: 0 10px 0 0;
+}
+
+
+.error-layout-message {
+    margin: 0 auto;
+    width: 778px;
+    min-height: 138px;
+    background: no-repeat scroll top transparent url("/Content/Images/error_1.gif");
+}
+
+.error-layout-summary {
+    margin: 0 auto;
+    width: 778px;
+    min-height: 101px;
+    padding-top: 40px;
+    background: no-repeat scroll top transparent url("/Content/Images/error_2.gif");
+}
+
+.error-layout-summary-content {
+    margin: 0 auto;
+    width: 95%;
+    background-color: #555555;
+    height: 25px;
+    font-size: 1.4em;
+    color: #FFFFFF;
+}
+
+.t-header {
+    background: none;
+}
+
+#TabStrip {
+    border: 0px;
+}
+
+.t-combobox, .t-dropdown, .t-selectbox {
+    width: 200px;
+}
+
+.mrp-warning {
+    color: #ff0000;
+    background-color: yellow;
+}
+
+.WarningColor_Yellow {
+    background-color: Yellow;
+}
+
+.WarningColor_Red {
+    background-color: Red;
+}
+
+.WarningColor_Black {
+    background-color: Black;
+    color: White;
+}
+
+.WarningColor_Green {
+    background-color: #92D050;
+}
+
+.WarningColor_Purple {
+    background-color: #CCC0DA;
+}
+
+.t-combobox {
+    margin: 0;
+}
+
+.t-dirty {
+    margin: -3px -0.5em 0.1em -8px;
+}
+
+.t-grid td {
+    line-height: 100%;
+    height: 22px;
+}
+
+.t-input {
+    height: 15px;
+}
+
+[type='text'].t-input {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.t-grid-header .t-header .t-link {
+    padding: .3em;
+}
+
+.t-grid-edit-row .text-box, .t-grid-edit-row .t-numerictextbox, .t-grid-edit-row .t-datepicker {
+    margin: 0;
+    width: 3em;
+}
+
+.t-grid tbody .t-button {
+    min-width: 30px;
+}

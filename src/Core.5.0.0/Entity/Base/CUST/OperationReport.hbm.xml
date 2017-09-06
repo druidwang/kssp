@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.CUST.OperationReport, com.Sconit.Entity" table="CUST_OpReport" lazy="false">
+    <composite-id>
+      <key-property name="OrderNo" column="OrderNo" type="String"  length="50" />
+      <key-property name="Operation" column="Op" type="Int32" />
+      <key-property name="WorkCenter" column="WorkCenter" type="String"  length="50" />
+    </composite-id>
+    <property name="ExternalOrderNo" column="ExtOrderNo" type="String"  length="50" />
+    <property name="VAN" column="VAN" type="String"  length="50" />
+    <property name="IsReport" column="IsReport" type="Boolean"/>
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+  </class>
+</hibernate-mapping>

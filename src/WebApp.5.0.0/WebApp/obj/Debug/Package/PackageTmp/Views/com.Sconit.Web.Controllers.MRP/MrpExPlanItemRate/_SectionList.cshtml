@@ -1,0 +1,33 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpExPlanItemRate>
+ 
+<fieldset>
+    <legend>@Resources.MRP.MrpExPlanItemRate.MrpExPlanItemRate_Item</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("SectionList")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_SelectSectionDet", "MrpExPlanItemRate", new
+            {
+                Section = ViewBag.Section,
+            })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();//0 
+            columns.Bound(o => o.Section).ReadOnly();
+            columns.Bound(o => o.SectionDesc).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.ItemDesc).ReadOnly();
+            columns.Bound(o => o.ItemRate);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+        //.ClientEvents(c => c.OnRowDataBound("onRowDataBound"))
+    )
+</fieldset>

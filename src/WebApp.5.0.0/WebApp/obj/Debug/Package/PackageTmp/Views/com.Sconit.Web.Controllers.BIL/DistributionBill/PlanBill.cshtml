@@ -1,0 +1,135 @@
+﻿@using com.Sconit.Web.Models.SearchModels.BIL
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_DistributionBill_SettlePlanBill" });
+}
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function PlanBillQuery() {
+        if ($('#Party').val() == "") {
+            $message.error('客户为必填项。');
+            return;
+        }
+        var data = {
+            "Party": $('#Party').val(),
+            "Flow": $('#Flow').val(),
+            "Item": $('#Item').val(),
+            "StartTime": $('#StartTime').val(),
+            "EndTime": $('#EndTime').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/DistributionBill/_PlanBillList/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divPlanBilllList");
+                $(tabStrip).html(data);
+                $("#btnSettleBill").show();
+            }
+        });
+    }
+    function ExportClick() {
+        
+        if ($('#Party').val() == "") {
+            $message.error('客户为必填项。');
+            return;
+        }
+        location.href = '/DistributionBill/ExportXLPlanBill/?Party=' + $('#Party').val() 
+            + '&Flow=' + $('#Flow').val() + '&Item=' + $('#Item').val() + '&StartTime=' + $('#StartTime').val()
+            + '&EndTime=' + $('#EndTime').val();
+    }
+</script>
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_PartyName_Distribution
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CustomerComboBox", "Common",
+                new
+                {
+                    controlName = "Party",
+                    selectedValue = TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).Party : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_Flow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "Flow",
+                    isSupplier = true,
+                    type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                    selectedValue = TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).Flow : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ItemComboBox", "Common",
+                new
+                {
+                    controlName = "Item",
+                    selectedValue = TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).Item : string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_Currency
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_CurrencyDropDownList", "Common",
+                    new
+                    {
+                        controlName = "Currency",
+                        includeBlankOption = true,
+                        selectedValue = TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).Currency : string.Empty
+                    });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_StartTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("StartTime")
+                .Value(TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).StartTime : System.DateTime.Today.AddMonths(-1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_EndTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("EndTime")
+                        .Value(TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).EndTime : System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="btnSearch" onclick="PlanBillQuery()">@Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnSettleBill" onclick="SettlePlanBill()" style="display: none">@Resources.SYS.Global.Button_Settle</button>
+        <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+    </div>
+</fieldset>
+<div id="divPlanBilllList">
+</div>

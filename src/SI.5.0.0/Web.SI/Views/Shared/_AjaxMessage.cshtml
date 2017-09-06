@@ -1,0 +1,46 @@
+﻿@using com.Sconit.Web.Util
+
+<script language="javascript" type="text/javascript">
+
+@{
+    string errorMessages = string.Empty;
+    if (TempData[WebConstants.ErrorMessages] != null)
+    {
+        foreach (string errorMessage in (IList<string>)TempData["ErrorMessages"])
+        {
+            errorMessages += "<li>" + errorMessage + "</li>";
+        }
+        <text>
+        $("#errorsul").html("@errorMessages");
+        </text>
+    }
+
+
+
+    string warningMessages = string.Empty;
+    if (TempData[WebConstants.WarningMessages] != null)
+    {
+        foreach (string warningMessage in (IList<string>)TempData["WarningMessages"])
+        {
+            warningMessages += "<li>" + warningMessage + "</li>";
+        }
+        <text>
+        $("#warningsul").html("@warningMessages");
+        </text>
+    }
+
+
+    string successMessages = string.Empty;
+    if (TempData[WebConstants.SuccessMessages] != null)
+    {
+        foreach (string successMessage in (IList<string>)TempData["SuccessMessages"])
+        {
+            successMessages += "<li>" + successMessage + "</li>";
+        }
+        <text>
+        $("#successesul").html("@successMessages"); 
+        </text>
+    }
+    
+}
+</script>

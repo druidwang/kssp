@@ -1,0 +1,25 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    //bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = "EmptyChange";
+    if (isChange)
+    {
+        if (id == "WorkshopTo")
+        {
+            onChangeName = "WorkshopTo_Change";
+        }
+    }
+}
+@(Html.Telerik().ComboBox()
+                        .Name(name)
+                        .AutoFill(true)
+                              .HiddenInputHtmlAttributes(new { id = id })
+                                    .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingRegionWorkShop", "Common").Cache(true))
+                                .ClientEvents(events => events.OnChange(onChangeName))
+                        .HighlightFirstMatch(true)
+                        .BindTo(Model)
+                       
+)

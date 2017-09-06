@@ -1,0 +1,129 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Inventory_InventoryLotNo" });
+}
+<fieldset>
+    @using (Html.BeginForm("ExportInventoryLotNoReport", "Inventory"))
+    {   
+    <div class="search">
+ 
+        <div class="search-label">
+            <label>
+                @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+            </label>
+        </div>
+        <div class="search-field">
+        @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "itemFrom"
+        });
+        }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.INV.LocationLotDetail.LocationLotDetail_ItemTo
+            </label>
+        </div>
+        <div class="search-field">
+        @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "itemTo"
+        });
+        }
+        </div>
+       <div class="search-label">
+            <label>
+                @Resources.MD.Item.Item_Location
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_LocationComboBox", "Common", new
+                {
+                    controlName = "Location",
+                    includeBlankOption = true,
+                    selectedValue = string.Empty
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.INV.LocationLotDetail.LocationLotDetail_ManufactureParty
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_HuManufacturePartyComboBox", "Common", new
+                {
+                    controlName = "ManufactureParty",
+                    selectedValue = TempData["LocationLotDetailSearchModel"] != null ? ((LocationLotDetailSearchModel)TempData["LocationLotDetailSearchModel"]).ManufactureParty : string.Empty
+
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+            </label>
+        </div>
+        @Html.RadioButton("sortType", 1, true)<span>@Resources.EXT.PageLan.SortByItem</span>
+        @Html.RadioButton("sortType", 2, false)<span>@Resources.EXT.PageLan.SortByBin</span>
+    </div>
+    <div class="search-footer">
+        <button type="button" id="btnSearch" onclick="doSearch(this)">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    }
+</fieldset>
+<div id="fdMonitorInventoryReport">
+</div>
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+        if ($('#Location').val() == "") {
+            $message.error('库位为必填项。');
+            return;
+        }
+        $('form').submit();
+    });
+
+    function HuManufactureParty_DataBinding(e) {
+    }
+
+    function doSearch() {
+        var data = {
+            Location: $('#Location').val(),
+            ItemFrom : $('#itemFrom').val(),
+            ItemTo : $('#itemTo').val(),
+            sortType: $("input[type=radio][name=sortType]:checked").val(),
+            manufactureParty: $('#ManufactureParty').val(),
+        };
+        if ($('#Location').val() == "") {
+            $message.error('库位为必填项。');
+            return;
+        }
+        $("#fdMonitorInventoryReport").html("Loading...");
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/Inventory/_GetInventoryLotNoReportView/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#fdMonitorInventoryReport");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>

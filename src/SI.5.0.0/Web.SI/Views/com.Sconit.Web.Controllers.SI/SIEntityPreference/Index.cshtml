@@ -1,0 +1,17 @@
+﻿@using System.Data;
+@using com.Sconit.Web.Models.SearchModels.SI.SAP
+@model com.Sconit.Web.Controllers.ViewModel
+
+<fieldset>
+    @(Html.Telerik().Grid<System.Data.DataRow>(Model.Data.Rows.Cast<System.Data.DataRow>())
+.Name("Grid")
+.Columns(columns =>
+{
+    columns.LoadSettings(Model.Columns as IEnumerable<GridColumnSettings>);
+})
+.Reorderable(resizing => resizing.Columns(true))
+.Resizable(resizing => resizing.Columns(true))
+.EnableCustomBinding(true)
+.Sortable()
+)
+</fieldset>

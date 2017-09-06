@@ -1,0 +1,333 @@
+<%@ CodeTemplate Language="C#" TargetLanguage="C#" Description="Generate the entity class." %>
+<%@ Property Name="NameSpace" Type="String" Default="com.Sconit" Category="EntityClass" Description="The assembly that contains the entity class." %>
+<%@ Property Name="ClassName" Type="String" Category="EntityClass" Description="The entity class name." %>
+<%@ Property Name="ModuleName" Type="String" Category="ModuleGroup" Description="The module group which contains the entity, for example, Security." %>
+<%@ Property Name="Mapping" Type="com.Sconit.CodeSmith.MappingProperty" Category="Mapping" Description="The O/R mapping settings." %>
+<%@ Assembly Name="com.Sconit.CodeSmith" %>
+<%@ Import Namespace="com.Sconit.CodeSmith" %>
+<%@ Import Namespace="System.Text" %>
+<script runat="template">
+  public string GenLowerCasePropertyName(string classPropertyName)
+  {
+    if (classPropertyName.Length == 0)
+      return string.Empty;
+
+    char firstChar = classPropertyName[0];
+    firstChar = char.ToLower(firstChar);
+
+    return firstChar + classPropertyName.Substring(1);
+  }
+
+  public string GenPKPara(string perfix, string suffix, string paraDivision, bool inculdeType, bool includeName, string typeNameDivision, bool isNameLowerCase, bool isEntity2Pk, string entity2PkDivision)
+  {
+    StringBuilder pkPara = new StringBuilder();
+    int i = 0;
+    foreach (MappingInfo mappingInfo in this.Mapping.MappingPKInfoCollection)
+    {
+      if (i == 0)
+      {
+        pkPara.Append(perfix + (inculdeType ? GetDataType(mappingInfo, isEntity2Pk) + typeNameDivision : string.Empty)
+          + (includeName ? GetClassPropertyName(mappingInfo, isNameLowerCase, isEntity2Pk, entity2PkDivision) : string.Empty) + suffix);
+      }
+      else
+      {
+        pkPara.Append(paraDivision + perfix + (inculdeType ? GetDataType(mappingInfo, isEntity2Pk) + typeNameDivision : string.Empty)
+          + (includeName ? GetClassPropertyName(mappingInfo, isNameLowerCase, isEntity2Pk, entity2PkDivision) : string.Empty) + suffix);
+      }
+      i++;
+    }
+    return pkPara.ToString();
+  }
+
+  public string GenUniquePara(string perfix, string suffix, string paraDivision, bool inculdeType, bool includeName, string typeNameDivision, bool isNameLowerCase, bool isEntity2Pk, string entity2PkDivision)
+  {
+    StringBuilder pkPara = new StringBuilder();
+    int i = 0;
+    foreach (MappingInfo mappingInfo in this.Mapping.MappingUniqueInfoCollection)
+    {
+      if (i == 0)
+      {
+        pkPara.Append(perfix + (inculdeType ? GetDataType(mappingInfo, isEntity2Pk) + typeNameDivision : string.Empty)
+          + (includeName ? GetClassPropertyName(mappingInfo, isNameLowerCase, isEntity2Pk, entity2PkDivision) : string.Empty) + suffix);
+      }
+      else
+      {
+        pkPara.Append(paraDivision + perfix + (inculdeType ? GetDataType(mappingInfo, isEntity2Pk) + typeNameDivision : string.Empty)
+          + (includeName ? GetClassPropertyName(mappingInfo, isNameLowerCase, isEntity2Pk, entity2PkDivision) : string.Empty) + suffix);
+      }
+      i++;
+    }
+    return pkPara.ToString();
+  }
+
+  public string GetDataType(MappingInfo mappingInfo, bool isEntity2Pk)
+  {
+    return isEntity2Pk ? (!Enum.IsDefined(typeof(com.Sconit.CodeSmith.DataType), mappingInfo.DataType) ? mappingInfo.PKMany2OnePropertyDataType : mappingInfo.DataType) : mappingInfo.DataType;
+  }
+
+  public string GetClassPropertyName(MappingInfo mappingInfo, bool isNameLowerCase, bool isEntity2Pk, string entity2PkDivision)
+  {
+    return isNameLowerCase? GenLowerCasePropertyName(
+      (isEntity2Pk ? (mappingInfo.ClassPropertyName + ((mappingInfo.PKMany2OnePropertyName != null && mappingInfo.PKMany2OnePropertyName != string.Empty) ? (entity2PkDivision + mappingInfo.PKMany2OnePropertyName) : string.Empty)) : mappingInfo.ClassPropertyName)) :
+      (isEntity2Pk ? (mappingInfo.ClassPropertyName + ((mappingInfo.PKMany2OnePropertyName != null && mappingInfo.PKMany2OnePropertyName != string.Empty) ? (entity2PkDivision + mappingInfo.PKMany2OnePropertyName) : string.Empty)) : mappingInfo.ClassPropertyName);
+  }
+</script>
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using Castle.Facilities.NHibernateIntegration;
+using NHibernate;
+using NHibernate.Type;
+using <%=this.NameSpace%>.Entity.<%=this.ModuleName%>;
+
+//TODO: Add other using statmens here.
+
+namespace <%=this.NameSpace%>.Persistence.<%=this.ModuleName%>.NH
+{
+    public class NH<%=ClassName%>BaseDao : NHDaoBase, I<%=ClassName%>BaseDao
+    {
+        public NH<%=ClassName%>BaseDao(ISessionManager sessionManager)
+            : base(sessionManager)
+        {
+        }
+
+        #region Method Created By CodeSmith
+
+        public virtual void Create<%=ClassName%>(<%=ClassName%> entity)
+        {
+            Create(entity);
+        }
+
+        public virtual IList<<%=ClassName%>> GetAll<%=ClassName%>()
+        {
+     <%
+      if(this.Mapping.IncludeIsActiveField)
+      {
+    %>
+            return GetAll<%=ClassName%>(false);
+    <%
+      }else{
+    %>
+            return FindAll<<%=ClassName%>>();
+    <%
+      }
+    %>
+        }
+
+    <%
+      if(this.Mapping.IncludeIsActiveField)
+      {
+    %>
+        public virtual IList<<%=ClassName%>> GetAll<%=ClassName%>(bool includeInactive)
+        {
+            string hql = @"from <%=ClassName%> entity";
+            if (!includeInactive)
+            {
+                hql += " where entity.IsActive = 1";
+            }
+            IList<<%=ClassName%>> result = FindAllWithCustomQuery<<%=ClassName%>>(hql);
+            return result;
+        }
+
+    <%
+    }
+    %>
+        public virtual <%=ClassName%> Load<%=ClassName%>(<%=GenPKPara(string.Empty, string.Empty, ", ", true, true, " ", true, false, string.Empty)%>)
+        {
+      <%
+        if (this.Mapping.MappingPKInfoCollectionCount == 1)
+        {
+      %>
+            return FindById<<%=ClassName%>>(<%=GenPKPara(string.Empty, string.Empty, ", ", false, true, string.Empty, true, false, string.Empty)%>);
+      <%
+        } else {
+      %>
+            string hql = @"from <%=ClassName%> entity where <%=GenPKPara("entity.", " = ?", " and ", false, true, string.Empty, false, true, ".")%>";
+            IList<<%=ClassName%>> result = FindAllWithCustomQuery<<%=ClassName%>>(hql, new object[] { <%=GenPKPara(string.Empty, string.Empty, ", ", false, true, string.Empty, true, true, ".")%> }, new IType[] { <%=GenPKPara("NHibernateUtil.", string.Empty, ", ", true, false, string.Empty, false, true, string.Empty)%> });
+            if (result != null && result.Count > 0)
+            {
+                return result[0];
+            }
+            else
+            {
+                return null;
+            }
+      <%
+        }
+      %>
+        }
+    <%
+      if (this.Mapping.MappingPKInfoCollectionCount > 1 && this.Mapping.IsMappingPKContainObject)
+      {
+    %>
+
+        public virtual <%=ClassName%> Load<%=ClassName%>(<%=GenPKPara(string.Empty, string.Empty, ", ", true, true, " ", true, true, string.Empty)%>)
+        {
+            string hql = @"from <%=ClassName%> entity where <%=GenPKPara("entity.", " = ?", " and ", false, true, string.Empty, false, true, ".")%>";
+            IList<<%=ClassName%>> result = FindAllWithCustomQuery<<%=ClassName%>>(hql, new object[] { <%=GenPKPara(string.Empty, string.Empty, ", ", false, true, string.Empty, true, true, string.Empty)%> }, new IType[] { <%=GenPKPara("NHibernateUtil.", string.Empty, ", ", true, false, string.Empty, false, true, string.Empty)%> });
+            if (result != null && result.Count > 0)
+            {
+                return result[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+    <%
+      }
+    %>
+
+        public virtual void Update<%=ClassName%>(<%=ClassName%> entity)
+        {
+            Update(entity);
+        }
+
+        public virtual void Delete<%=ClassName%>(<%=GenPKPara(string.Empty, string.Empty, ", ", true, true, " ", true, false, string.Empty)%>)
+        {
+            string hql = @"from <%=ClassName%> entity where <%=GenPKPara("entity.", " = ?", " and ", false, true, string.Empty, false, true, ".")%>";
+            Delete(hql, new object[] { <%=GenPKPara(string.Empty, string.Empty, ", ", false, true, string.Empty, true, true, ".")%> }, new IType[] { <%=GenPKPara("NHibernateUtil.", string.Empty, ", ", true, false, string.Empty, false, true, string.Empty)%> });
+        }
+    <%
+      if (this.Mapping.MappingPKInfoCollectionCount > 1)
+      {
+    %>
+
+        public virtual void Delete<%=ClassName%>(<%=GenPKPara(string.Empty, string.Empty, ", ", true, true, " ", true, true, string.Empty)%>)
+        {
+            string hql = @"from <%=ClassName%> entity where <%=GenPKPara("entity.", " = ?", " and ", false, true, string.Empty, false, true, ".")%>";
+            Delete(hql, new object[] { <%=GenPKPara(string.Empty, string.Empty, ", ", false, true, string.Empty, true, true, string.Empty)%> }, new IType[] { <%=GenPKPara("NHibernateUtil.", string.Empty, ", ", true, false, string.Empty, false, true, string.Empty)%> });
+        }
+    <%
+      }
+    %>
+
+        public virtual void Delete<%=ClassName%>(<%=ClassName%> entity)
+        {
+            Delete(entity);
+        }
+    <%
+      if (this.Mapping.MappingPKInfoCollectionCount == 1)
+      {
+    %>
+
+        public virtual void Delete<%=ClassName%>(IList<<%=GenPKPara(string.Empty, string.Empty, ", ", true, false, string.Empty, false, false, string.Empty)%>> pkList)
+        {
+            StringBuilder hql = new StringBuilder();
+            hql.Append("from <%=ClassName%> entity where entity.<%=GenPKPara(string.Empty, string.Empty, ", ", false, true, string.Empty, false, false, string.Empty)%> in (");
+            hql.Append(pkList[0]);
+            for (int i = 1; i < pkList.Count; i++)
+            {
+                hql.Append(",");
+                hql.Append(pkList[i]);
+            }
+            hql.Append(")");
+
+            Delete(hql.ToString());
+        }
+    <%
+      }
+    %>
+
+        public virtual void Delete<%=ClassName%>(IList<%= "<" + ClassName + ">" %> entityList)
+        {
+    <%
+      if (this.Mapping.MappingPKInfoCollectionCount == 1)
+      {
+    %>
+            IList<<%=GenPKPara(string.Empty, string.Empty, ", ", true, false, string.Empty, false, false, string.Empty)%>> pkList = new List<<%=GenPKPara(string.Empty, string.Empty, ", ", true, false, string.Empty, false, false, string.Empty)%>>();
+            foreach (<%=ClassName%> entity in entityList)
+            {
+                pkList.Add(entity.<%=GenPKPara(string.Empty, string.Empty, ", ", false, true, string.Empty, false, false, string.Empty)%>);
+            }
+
+            Delete<%=ClassName%>(pkList);
+    <%
+      }
+      else
+      {
+    %>
+            foreach (<%=ClassName%> entity in entityList)
+            {
+                Delete<%=ClassName%>(entity);
+            }
+    <%
+      }
+    %>
+        }
+
+    <%
+        if (this.Mapping.MappingUniqueInfoCollectionCount > 0)
+        {
+    %>
+
+        public virtual <%=ClassName%> Load<%=ClassName%>(<%=GenUniquePara(string.Empty, string.Empty, ", ", true, true, " ", true, false, string.Empty)%>)
+        {
+            string hql = @"from <%=ClassName%> entity where <%=GenUniquePara("entity.", " = ?", " and ", false, true, string.Empty, false, true, ".")%>";
+            IList<<%=ClassName%>> result = FindAllWithCustomQuery<<%=ClassName%>>(hql, new object[] { <%=GenUniquePara(string.Empty, string.Empty, ", ", false, true, string.Empty, true, true, ".")%> }, new IType[] { <%=GenUniquePara("NHibernateUtil.", string.Empty, ", ", true, false, string.Empty, false, true, string.Empty)%> });
+            if (result != null && result.Count > 0)
+            {
+                return result[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public virtual void Delete<%=ClassName%>(<%=GenUniquePara(string.Empty, string.Empty, ", ", true, true, " ", true, true, string.Empty)%>)
+        {
+            string hql = @"from <%=ClassName%> entity where <%=GenUniquePara("entity.", " = ?", " and ", false, true, string.Empty, false, true, ".")%>";
+            Delete(hql, new object[] { <%=GenUniquePara(string.Empty, string.Empty, ", ", false, true, string.Empty, true, true, string.Empty)%> }, new IType[] { <%=GenUniquePara("NHibernateUtil.", string.Empty, ", ", true, false, string.Empty, false, true, string.Empty)%> });
+        }
+    <%
+    }
+    %>
+    <%
+      if (this.Mapping.IsMappingUniqueContainObject)
+      {
+    %>
+
+        public virtual <%=ClassName%> Load<%=ClassName%>(<%=GenUniquePara(string.Empty, string.Empty, ", ", true, true, " ", true, true, string.Empty)%>)
+        {
+            string hql = @"from <%=ClassName%> entity where <%=GenUniquePara("entity.", " = ?", " and ", false, true, string.Empty, false, true, ".")%>";
+            IList<<%=ClassName%>> result = FindAllWithCustomQuery<<%=ClassName%>>(hql, new object[] { <%=GenUniquePara(string.Empty, string.Empty, ", ", false, true, string.Empty, true, true, string.Empty)%> }, new IType[] { <%=GenUniquePara("NHibernateUtil.", string.Empty, ", ", true, false, string.Empty, false, true, string.Empty)%> });
+            if (result != null && result.Count > 0)
+            {
+                return result[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+    <%
+      }
+    %>
+        <%
+      if (this.Mapping.MappingUniqueInfoCollectionCount == 1)
+      {
+    %>
+
+        public virtual void Delete<%=ClassName%>(IList<<%=GenUniquePara(string.Empty, string.Empty, ", ", true, false, string.Empty, false, false, string.Empty)%>> UniqueList)
+        {
+            StringBuilder hql = new StringBuilder();
+            hql.Append("from <%=ClassName%> entity where entity.<%=GenUniquePara(string.Empty, string.Empty, ", ", false, true, string.Empty, false, false, string.Empty)%> in (");
+            hql.Append(pkList[0]);
+            for (int i = 1; i < UniqueList.Count; i++)
+            {
+                hql.Append(",");
+                hql.Append(UniqueList[i]);
+            }
+            hql.Append(")");
+
+            Delete(hql.ToString());
+        }
+    <%
+      }
+    %>
+
+        #endregion Method Created By CodeSmith
+    }
+}

@@ -1,0 +1,80 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@model com.Sconit.Entity.CUST.ItemProperty
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "CUST_ItemProperty_View" });
+}
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.CUST.ItemProperty.ItemProperty_New_Title</legend>
+          <div class="editor">
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.RmItem)
+            </div>
+            <div class="editor-field-2">
+                      @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "RmItem",
+                selectedValue =Model!=null? Model.RmItem:string.Empty
+            });
+                    
+                }
+                  @Html.ValidationMessageFor(model => model.RmItem)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Viscosity)
+            </div>
+            <div class="editor-field-2">
+                  @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.Viscosity,
+                    includeBlankOption = true,
+                    controlName = "Viscosity",
+                    selectedValue = Model != null ? (int)Model.Viscosity : -1
+                });
+                }
+                 @Html.ValidationMessageFor(model => model.Viscosity)
+            </div>
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.SfgItem)
+            </div>
+            <div class="editor-field-2">
+                      @{
+                Html.RenderAction("_ItemComboBox", "Common",
+                    new
+                    {
+                        controlName = "SfgItem",
+                        selectedValue =Model!=null? Model.SfgItem:string.Empty
+                    });
+                    
+                }
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-2">
+                          @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                selectedValue = Model!=null?Model.Flow:string.Empty
+            });
+                }
+            </div>
+          
+            
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ItemProperty/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

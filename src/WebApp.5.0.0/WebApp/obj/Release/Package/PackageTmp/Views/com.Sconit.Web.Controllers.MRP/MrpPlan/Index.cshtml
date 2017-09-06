@@ -1,0 +1,238 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "MRP_MrpPlan_View" });
+}
+@using (Html.BeginForm())
+{
+    <script type="text/javascript">
+        function doClick(bl) {
+            if (bl) {
+                $("#divDaily").show();
+                $("#divWeek").hide();
+            }
+            else {
+                $("#divDaily").hide();
+                $("#divWeek").show();
+            }
+        }
+
+        function QueryMrpPlan() {
+            var flow;
+            var item;
+           
+            var ImportType = $("input[type=radio][name=ImportType]:checked").val();
+            if (ImportType == "0") {
+                if ($("#StartDate").val() == "") {
+                     $message.error('开始时间不能为空。');
+                    return;
+                }
+                if ($("#EndDate").val() == "") {
+                    $message.error('结束时间不能为空。');
+                    return;
+                }
+                if ($("#Flow").val() == "") {
+                    $message.error('路线不能为空。');
+                    return;
+                }
+                else {
+                    flow = $("#Flow").val();
+                    item = $("#Item").val();
+                }
+
+            }
+            else {
+                if ($("#WeekOfYearStart").val() == "") {
+                    $message.error('开始周不能为空。');
+                    return;
+                }
+                if ($("#WeekOfYearEnd").val() == "") {
+                    $message.error('结束周不能为空。');
+                    return;
+                }
+                if ($("#FlowTo").val() == "") {
+                    $message.error('路线不能为空。');
+                    return;
+                }
+                else {
+                    flow = $("#FlowTo").val();
+                    item = $("#ItemTo").val();
+                }
+            }
+
+            var data = {
+                ImportType: $("input[type=radio][name=ImportType]:checked").val(),
+                startWeek: $("#WeekOfYearStart").val(),
+                StartDate: $("#StartDate").val(),
+                EndDate: $("#EndDate").val(),
+                Flow: flow,
+                Item: item,
+                EndWeek: $("#WeekOfYearEnd").val()
+            }
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/MrpPlan/_GetMrpPlanList/",
+                data: data,
+                cache: false,
+                success: function (data) {
+                    $("#divMrpPlan").html(data);
+                }
+            });
+        }
+        function DateIndex_DataBinding(e) {
+
+            e.data = {
+                dateType: "5"
+            }
+        }
+      
+    </script>
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpPlan.MrpPlan_ImportType</label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("ImportType", 0, true, new { onclick = "doClick(true)" })<span> @Resources.MRP.MrpPlan.MrpPlan_ImportDayplan</span><span
+                    style="margin: 4px"></span>
+                @Html.RadioButton("ImportType", 1, false, new { onclick = "doClick(false)" })<span>
+                    @Resources.MRP.MrpPlan.MrpPlan_ImportWeekplan</span>
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <hr style="border: 100% dashed black;" />
+            <div id="divDaily">
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpPlan.MrpPlan_StartDate
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Name("StartDate").Min(DateTime.Today).Value(DateTime.Today)
+        .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpPlan.MrpPlan_EndDate
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Name("EndDate").Min(DateTime.Today).Value(DateTime.Today.AddDays(14))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+                <div class="search-label">
+                    <label f>
+                        @Resources.MRP.MrpPlan.MrpPlan_Flow
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "Flow",
+            type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+            selectedValue = string.Empty
+        });
+                    }
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpPlan.MrpPlan_Item
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_ItemComboBox", "Common",
+    new
+    {
+        controlName = "Item",
+        selectedValue = string.Empty
+    });
+                    }
+                </div>
+            </div>
+            <div id="divWeek" style="display: none">
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpPlan.MrpPlan_StartWeek
+                    </label>
+                </div>
+                <div class="search-field">
+                    <span id="WeekOfYearStartdiv">
+                        @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+    {
+        includeBlankOption = true,
+        controlName = "WeekOfYearStart",
+        isMrpPlan = true,
+        selectedValue = string.Empty
+    });
+                        }
+                    </span>&nbsp&nbsp<span id="startTime"></span>
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpPlan.MrpPlan_EndWeek
+                    </label>
+                </div>
+                <div class="search-field">
+                    <span id="WeekOfYearEnddiv">
+                        @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+    {
+        includeBlankOption = true,
+        controlName = "WeekOfYearEnd",
+        isMrpPlan = true,
+        selectedValue = string.Empty
+    });
+                        }
+                    </span>&nbsp&nbsp<span id="EndTime"></span>
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpPlan.MrpPlan_Flow
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "FlowTo",
+            type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+            selectedValue = string.Empty
+        });
+                    }
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.MrpPlan.MrpPlan_Item
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_ItemComboBox", "Common",
+    new
+    {
+        controlName = "ItemTo",
+        selectedValue = string.Empty
+    });
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch" onclick="QueryMrpPlan()">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+    </fieldset>
+    <div id="divMrpPlan">
+    </div>
+   
+}

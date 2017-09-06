@@ -1,0 +1,57 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.WMS.PickTask>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickTaskGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id); //.ClientTemplate(Html.ActionLink("<#= Item #>", "Edit", "PickTask", new { id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.UCDescription);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Area);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WinTime);
+            columns.Bound(o=> o.DiaplayOrderQty);
+            columns.Bound(o => o.PickUserName);
+                })
+      
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "PickTask"))
+                    .ClientEvents(events => events.OnDataBinding("ShipPlanMasterGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+                if (ViewBag.Page != null)
+                {
+                    settings.PageTo(ViewBag.Page);
+                }
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ShipPlanMasterGrid_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                Location: $('#Location').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                OrderNo: $('#OrderNo').val(),
+                IsActive: $('#IsActive').is(':checked')
+            };
+        } 
+    </script>
+</fieldset>

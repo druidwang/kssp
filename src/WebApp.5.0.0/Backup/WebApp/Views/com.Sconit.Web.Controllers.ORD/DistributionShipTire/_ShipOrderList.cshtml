@@ -1,0 +1,69 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+   <script type="text/javascript">
+
+       function showButtons(e) {
+
+           $("#btnEdit").attr("style", "display:inline");
+       }
+</script>
+<fieldset>
+    <legend>@Resources.ORD.OrderMaster.OrderMaster_Ship_Title</legend>
+    @(
+        Html.Telerik().Grid(Model)
+          .Name("OrderMasterGrid")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.OrderNo);
+          })
+          .Columns(columns =>
+          {
+              columns.Bound(o => o.OrderNo).ClientTemplate(Html.ActionLink("<#= OrderNo #>", "Edit", "DistributionShipTire", new { OrderNo = "<#= OrderNo #>", Status = "<#=Status #>" }, null).ToString());
+              columns.Bound(o => o.ExternalOrderNo);
+              columns.Bound(o => o.TraceCode);
+              columns.Bound(o => o.PartyFromName);
+              columns.Bound(o => o.PartyToName);
+              columns.Bound(o => o.CreateDate);
+              columns.Bound(o => o.Flow);
+              columns.Bound(o => o.CreateUserName);
+              columns.Bound(o => o.Dock);
+              columns.Bound(o => o.OrderTypeDescription).Width(50);
+              columns.Bound(o => o.OrderPriorityDescription).Width(50);
+              columns.Bound(o => o.OrderStatusDescription).Width(50);
+              columns.Bound(o => o.LocationToName);
+              columns.Bound(o => o.ShipFromAddress);
+              columns.Bound(o => o.ShipToAddress);
+            
+          })
+          .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "DistributionShipTire"))
+                 .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+<script type="text/javascript">
+     function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                Dock: $('#Dock').val(),
+                TraceCode:$("#TraceCode").val(),
+                ExternalOrderNo:$("#ExternalOrderNo").val()
+               
+             
+            };
+        } 
+
+</script>

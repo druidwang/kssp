@@ -1,0 +1,157 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_IOB_SupplierPlanBillIOB" });
+}
+
+<fieldset>
+    @using (Html.BeginForm("ExportSupplierPlan", "IOB"))
+    {   
+    <div class="search">
+
+        <div class="search-label">
+            <label>
+                @Resources.Report.BillIOB.BillIOB_Party
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_SupplierComboBox", "Common",
+            new
+            {
+                controlName = "Party",
+                selectedValue = string.Empty
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+            </label>
+        </div>
+        <div class="search-field">
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.Report.BillIOB.BillIOB_Location
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_LocationComboBox", "Common", new
+        {
+            controlName = "Location",
+            selectedValue = string.Empty
+        });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.Report.BillIOB.BillIOB_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = string.Empty
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_StartTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("StartDate")
+                .Value(System.DateTime.Today.AddMonths(-1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.BIL.ActingBill.ActingBill_EndTime
+            </label>
+        </div>
+        <div class="search-field">
+            @(Html.Telerik().DatePicker().Name("EndDate")
+                .Value(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+        </div>
+
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="Search" onclick="_GetBillIOB()">
+            @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    }
+</fieldset>
+<div id="divBillIOB">
+</div>
+
+<script type="text/javascript">
+    function _GetBillIOB() {
+
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+        if ($('#EndDate').val() == "") {
+            $message.error('结束时间为必填项。');
+            return;
+        }
+        if ($('#BillType').val() == "") {
+            $message.error('类型为必填。');
+            return;
+        }
+        if ($('#Location').val() == "" && $('#Party').val() == "") {
+            $message.error('库位或供应商必须填一个。');
+            return;
+        }
+        var data = {
+            "Location": $('#Location').val(),
+            "Item": $('#Item').val(),
+            "StartDate": $('#StartDate').val(),
+            "EndDate": $('#EndDate').val(),
+            "Party": $('#Party').val(),
+            "BillType": 0
+
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/IOB/_GetBillIOB/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divBillIOB");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            }
+        });
+    }
+    $('#btnExport').click(function () {
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+        if ($('#EndDate').val() == "") {
+            $message.error('结束时间为必填项。');
+            return;
+        }
+        if ($('#BillType').val() == "") {
+            $message.error('类型为必填。');
+            return;
+        }
+        if ($('#Location').val() == "" && $('#Party').val() == "") {
+            $message.error('库位或供应商必须填一个。');
+            return;
+        }
+        $('form').submit();
+    });  
+</script>

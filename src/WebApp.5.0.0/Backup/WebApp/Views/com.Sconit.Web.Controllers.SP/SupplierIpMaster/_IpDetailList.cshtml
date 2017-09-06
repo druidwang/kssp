@@ -1,0 +1,49 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpDetail>
+           
+<fieldset>
+<script type="text/javascript">
+    function IpDetailGrid_OnDataBinding(e) {
+        e.data = {
+        };
+    } 
+    </script>
+    <legend>@Resources.ORD.IpDetail.IpDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("IpDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            //columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Flow).Title(Resources.ORD.IpMaster.IpMaster_Flow);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount).Format("{0:0.########}");
+            columns.Bound(o => o.LocationToName);
+            //columns.Bound(o => o.Type)
+            //    .ClientTemplate(string.Format("<input type='checkbox' disabled='disabled' name='Type' <#= Type==(" + (int)com.Sconit.CodeMaster.IpDetailType.Gap + ")? checked='checked' : '' #> />"));
+            columns.Bound(o => o.TypeDescription);
+            columns.Bound(o => o.Qty).Format("{0:0.########}");
+            columns.Bound(o => o.ReceivedQty).Format("{0:0.########}");
+            columns.Bound(o => o.GapQty).Format("{0:0.########}");
+            columns.Bound(o => o.IsClose).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsClose' <#= IsClose? checked='checked' : '' #> />");
+        })
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxIpDetailList", "SupplierIpMaster"))
+                .ClientEvents(events => events.OnDataBinding("IpDetailGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+   
+    )
+
+     
+</fieldset>

@@ -1,0 +1,102 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<script type="text/javascript">
+    function onItemComboBoxChange(e) {
+        if (e.value != null) {
+            var data = {
+                "flow": $("#currentFlow").val().toString(),
+                "itemCode": e.value
+            };
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/SupplierOrder/_WebOrderDetail/",
+                data: data,
+                success: function (data, textStatus) {
+                    var $tGrid = $("#OrderDetail").data("tGrid");
+                    var oldData = $tGrid.dataItem($(e.target).parent().parent().parent());
+                    if (data.Sequence > 0) {
+                        $(e.target).parent().parent().prev().html('<span class="t-dirty"></span>' + data.Sequence);
+                    }
+                    $(e.target).parent().parent().next().html(data.ItemDescription);
+                    $(e.target).parent().parent().next().next().html('<span class="t-dirty"></span>' + data.UomDescription);
+                    $(e.target).parent().parent().next().next().next().html('<span class="t-dirty"></span>' + data.UnitCount);
+                    if (oldData != undefined) {
+                        oldData.Sequence = data.Sequence;
+                        oldData.ItemDescription = data.ItemDescription;
+                        oldData.Uom = data.Uom;
+                        oldData.UnitCount = data.UnitCount;
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+</script>
+<fieldset>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+                .Select("_SelectBatchEditing", "SupplierOrder", new { newOrEdit = ViewBag.newOrEdit, flow = ViewBag.flow, orderNo = ViewBag.orderNo })
+                //.Update("_SaveBatchEditing", "SupplierOrder", new { newOrEdit = ViewBag.newOrEdit, flow = ViewBag.flow, orderNo = ViewBag.orderNo })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription);
+            //columns.Bound(o => o.Sequence).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create);
+            //if (!ViewBag.isManualCreateDetail || ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create)
+            //{
+            //    columns.Bound(o => o.Item);
+            //}
+            //else
+            //{
+            //    //columns.ForeignKey(o => o.Item, (IEnumerable<Item>)ViewData["items"], "Code", "Code").EditorTemplateName("ItemGridForeignKey").Width(100);
+            //    columns.Bound(o => o.Item).EditorTemplateName("ItemGridForeignKey").Width(120);
+            //}
+            //if (ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create)
+            //{
+            //    columns.Bound(o => o.Uom).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create);
+            //}
+            //else
+            //{
+            //    columns.ForeignKey(o => o.Uom, (IEnumerable<Uom>)ViewData["uoms"], "Code", "Code").Width(100);
+            //}
+            //columns.Bound(o => o.LotNo);
+            //columns.Bound(o => o.UnitCount).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create).Format("{0:0.########}");
+            //if (ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create)
+            //{
+            //    columns.Bound(o => o.LocationTo).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create);
+            //}
+            //else
+            //{
+            //    columns.ForeignKey(o => o.LocationTo, (IEnumerable<Location>)ViewData["locationTos"], "Code", "Name").Width(100);
+            //}
+
+            columns.Bound(o => o.OrderedQty).ReadOnly().Width(50).Format("{0:0.########}");
+            if (ViewBag.status == com.Sconit.CodeMaster.OrderStatus.InProcess)
+            {
+                columns.Bound(o => o.ShippedQty).ReadOnly().Width(50).Format("{0:0.########}");
+                columns.Bound(o => o.ReceivedQty).ReadOnly().Width(50).Format("{0:0.########}");
+            }
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+        .Footer(false)
+    )
+    @Html.Hidden("currentFlow", (String)ViewBag.flow)
+</fieldset>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.MrpMiPlanDetail, com.Sconit.Entity" table="MRP_MrpMiPlanDetail" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="PlanId" column="PlanId" type="Int32"/>
+    <property name="ParentItem" column="ParentItem" type="String" length="50" />
+    <property name="SourceFlow" column="SourceFlow" type="String" length="50" />
+    <property name="SourceParty" column="SourceParty" type="String" length="50" />
+    <property name="Qty" column="Qty" type="Double"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = Resources.ORD.OrderMaster.OrderMaster_OrderNo;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Distribution_View" });
+}
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(
+               ViewBag.SubType == (int)com.Sconit.CodeMaster.OrderSubType.Return ? Resources.ORD.OrderMaster.OrderMaster_Procurement_Rtn :
+                Resources.ORD.OrderMaster.OrderMaster_Distribution
+               )
+                .LoadContentFrom("_Edit", "DistributionOrder", new { orderNo = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.ORD.OrderMaster.OrderMaster_BindingOrder)
+                               .LoadContentFrom("_OrderBinding", "OrderBinding", new { orderNo = Model, controlName = "DistributionOrder" })
+                               .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+        })
+
+        .Render();
+}
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+    @<text> var tabIndex = "@TempData["TabIndex"]"; var tabstrip = $("#TabStrip").data("tTabStrip");
+    var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0]; tabstrip.select(item);
+    </text>
+        );
+}

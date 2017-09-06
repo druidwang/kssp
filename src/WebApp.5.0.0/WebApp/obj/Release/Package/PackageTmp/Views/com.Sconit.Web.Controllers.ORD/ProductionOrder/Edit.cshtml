@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = Resources.ORD.OrderMaster.OrderMaster_OrderNo;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_View" });
+}
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.ORD.OrderMaster.OrderMaster_Production)
+                .LoadContentFrom("_Edit", "ProductionOrder", new { orderNo = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.ORD.OrderMaster.OrderMaster_BindingOrder   )
+                                .LoadContentFrom("_OrderBinding", "OrderBinding", new { orderNo = Model, controlName = "ProductionOrder" })
+                                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}

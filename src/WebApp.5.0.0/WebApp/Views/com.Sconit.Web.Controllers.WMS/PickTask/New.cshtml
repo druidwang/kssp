@@ -1,0 +1,132 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<script type="text/javascript">
+      function searchShipPlans() {
+            if($('#Flow').val() !="" || $('#OrderNo').val() != "")
+            {
+                   $("#fdShipPlan").show();
+            }else{
+                 $message.error("路线代码和要货单号不能同时为空");
+                 return;
+            }
+            var data = {
+             "flow": $('#Flow').val(),
+             "orderNo": $('#OrderNo').val()
+            };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/PickTask/_ShipPlanList/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#fdShipPlan").html(data);
+                    //$("#fdOrderDetail").show();
+                    $("tr.t-no-data").find("td").text("Loading...");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+      
+    }
+
+    function editCheckedShipPlans() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedShipPlans = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedShipPlans == "") {
+                    checkedShipPlans = $checkRecords[i].value;
+                } else {
+                    checkedShipPlans += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (checkedShipPlans == "") {
+            alert('Must Check One');
+            return;
+        }
+        var data = {
+            "checkedShipPlans": checkedShipPlans
+        };
+        $.ajax({
+            type: "Post",
+            dataType: "html",
+            url: "/PickTask/Create/",
+            data: data,
+            cache: false,
+             success: function (data, textStatus) {
+                if (data != "") {
+                    DisplayTextMessages(data);
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "@Url.Content("~/PickTask/New/")",
+                        data: "",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+</script>
+@using (Html.BeginForm("NewList", "PickTask"))
+{  
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="ShipPlan_Flow">
+                    @Resources.WMS.ShipPlan.ShipPlan_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "Flow",
+            type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+            selectedValue = TempData["ShipPlanSearchModel"] != null ? ((ShipPlanSearchModel)TempData["ShipPlanSearchModel"]).Flow : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="ShipPlan_OrderNo">
+                    @Resources.WMS.ShipPlan.ShipPlan_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["ShipPlanSearchModel"] != null ? ((ShipPlanSearchModel)TempData["ShipPlanSearchModel"]).OrderNo : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+           @Html.Button(Resources.SYS.Global.Button_Search, "Url_PickTask_New", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnSearch"},
+        {"onclick","searchShipPlans()"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_Create, "Url_PickTask_New", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","editCheckedShipPlans()"},
+        {"style","display:none"}
+	})
+        </div>
+        
+    </fieldset>
+
+    <div id="fdShipPlan" style="display: none;">
+    </div>
+}

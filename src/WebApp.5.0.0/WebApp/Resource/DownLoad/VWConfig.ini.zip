@@ -1,0 +1,15 @@
+[VWConfig]
+DumpConfig="0"
+
+[DEFAULT_APPLICATION]
+WindowName=NULL
+
+;;;Use CLIP for all chars 0-127; default above 128
+GlobalXmitMethod="CLIP"
+GlobalXmitType="PLAIN"
+
+;;;exceptions to the above for TAB and CR
+
+RegSeq="0x00 POST_ENH PLAIN 0x32 0x03 0x0000"
+RegSeq="0x09 POST PLAIN 0X09 0X00 0x0000"
+RegSeq="0x0D POST PLAIN 0X0D 0X00 0x0000"

@@ -1,0 +1,134 @@
+﻿@model IEnumerable<com.Sconit.Entity.PRD.RoutingDetail>
+@using com.Sconit.Web.Models.SearchModels.PRD
+<fieldset>
+    <script type="text/javascript">
+        function RoutingDetailGrid_OnDataBinding(e) {
+            e.data = {
+                RoutingMasterCode: $('#RoutingMasterCode').val(),
+                Operation: $('#Operation').val()
+            };
+        }
+        function searchClick() {
+            var data = {
+                RoutingMasterCode: $('#RoutingMasterCode').val(),
+                Operation: $('#Operation').val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                cache: false,
+                url: "/Routing/RoutingDetailResult/",
+                data: data,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#TabStrip");
+                    var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                    $(tabStripContent1).html(data);
+                }
+            });
+        }
+    </script>
+    <div class="search">
+        <div class="search-label">
+            <label for="RoutingMaster_Code">
+                @Resources.PRD.Routing.RoutingDetail_Op
+            </label>
+        </div>
+        <div class="search-field">
+            
+            @Html.TextBox("Operation", TempData["RoutingDetailSearchModel"] != null ? ((RoutingDetailSearchModel)TempData["RoutingDetailSearchModel"]).Operation : string.Empty)
+            @{string RoutingMasterCode = ViewBag.RoutingMasterCode;}
+            @Html.Hidden("RoutingMasterCode", RoutingMasterCode)
+        </div>  
+        @Html.Hidden("isFromList", true)
+        <div class="search-footer">
+            <button type="button" id="btnSearch" onclick="searchClick()">
+                @Resources.SYS.Global.Button_Search</button>
+             @Html.Button(Resources.SYS.Global.Button_New, "Url_Routing_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","btnNewRoutingDetail_Click()"}
+	})
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Routing/RoutingMasterList")'">
+            @Resources.SYS.Global.Button_Back</button>
+</div>
+    </div>
+    </fieldset>
+    <fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("RoutingDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Routing).Hidden();
+            columns.Bound(o => o.Operation).ClientTemplate(string.Format("<a href=\"javascript:onRoutingDetailLinkclick('{0}')\">{1}</a>", "<#= Id #>", "<#= Operation #>")); ;
+            columns.Bound(o => o.OpReference);
+            columns.Bound(o => o.LeadTime);
+            columns.Bound(o => o.TimeUnitDescription);
+            columns.Bound(o => o.StartDate);
+            columns.Bound(o => o.EndDate);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.WorkCenter);
+            columns.Bound(o => o.IsReport).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsReport' <#= IsReport? checked='checked' : '' #> />");
+            
+        })
+            //.CellAction(cell =>
+            //{
+            //    if (cell.Column.Member == "Routing")
+            //    {
+            //        cell.Text = string.Format("<a href=\"javascript:onRoutingDetailLinkclick('{0}')\">{1}</a>", cell.DataItem.Id, cell.DataItem.Routing);
+            //    }
+            //})
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxRoutingDetailList", "Routing"))
+        .ClientEvents(events => events.OnDataBinding("RoutingDetailGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize );
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+
+</fieldset>
+<script type="text/javascript">
+    function onRoutingDetailLinkclick(code) {
+        var data = {
+            "Id": code
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/Routing/RoutingDetailEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+    function btnNewRoutingDetail_Click() {
+        var data = {
+            "RoutingMasterCode": $("#RoutingMasterCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Routing/RoutingDetailNew/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

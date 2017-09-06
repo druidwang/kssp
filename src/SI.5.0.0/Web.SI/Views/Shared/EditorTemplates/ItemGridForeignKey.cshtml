@@ -1,0 +1,7 @@
+﻿@(Html.Telerik().ComboBox()
+      .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(""))
+      .BindTo((SelectList)ViewData[ViewData.TemplateInfo.GetFullHtmlFieldName("") + "_Data"])
+      .AutoFill(true)
+      .HighlightFirstMatch(true)
+      .ClientEvents(events => events.OnChange("onItemComboBoxChange"))
+)

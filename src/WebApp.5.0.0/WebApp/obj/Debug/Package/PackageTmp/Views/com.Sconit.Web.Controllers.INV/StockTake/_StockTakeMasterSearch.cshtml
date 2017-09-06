@@ -1,0 +1,99 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    @using (Html.BeginForm("StockTakeMasterList", "StockTake"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="StockTakeMaster_StNo">
+                    @Resources.INV.StockTake.StockTakeMaster_StNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("StNo", TempData["StockTakeMasterSearchModel"] != null ? ((StockTakeMasterSearchModel)TempData["StockTakeMasterSearchModel"]).StNo : string.Empty)
+            </div>
+             <div class="editor-label-2">
+                <label for="StockTakeMaster_Type">
+                    @Resources.INV.StockTake.StockTakeMaster_Type
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new { code = com.Sconit.CodeMaster.CodeMaster.StockTakeType,
+                                                                                 controlName = "Type",
+                                                                                 includeBlankOption = true,
+                                                                                 blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+                                                                                 blankOptionValue = "",
+                                                                                 selectedValue = TempData["StockTakeMasterSearchModel"]!=null ? ((StockTakeMasterSearchModel)TempData["StockTakeMasterSearchModel"]).Type:null
+                                                      
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="StockTakeMaster_Status">
+                    @Resources.INV.StockTake.StockTakeMaster_Status
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new { code = com.Sconit.CodeMaster.CodeMaster.StockTakeStatus,
+                                                                                 controlName = "Status",
+                                                                                 includeBlankOption = true,
+                                                                                 blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+                                                                                 blankOptionValue = "" ,
+                                                                                 selectedValue = TempData["StockTakeMasterSearchModel"] != null ? ((StockTakeMasterSearchModel)TempData["StockTakeMasterSearchModel"]).Status : null                             
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                <label for="StockTakeMaster_StartDate">
+                    @Resources.INV.StockTake.StockTakeMaster_Region
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_RegionCombobox", "Common", new
+                    {
+                        controlName = "Region",
+                        selectedValue = TempData["StockTakeMasterSearchModel"] != null ? ((StockTakeMasterSearchModel)TempData["StockTakeMasterSearchModel"]).Region : null                             
+                    });
+                }
+            </div>
+             <div class="editor-label-2">
+                <label for="StockTakeMaster_StartDate">
+                    @Resources.INV.StockTake.StockTakeMaster_StartDate
+                </label>
+            </div>
+            <div class="editor-field-2">
+                  @(Html.Telerik().DatePicker().Name("StockTakeStartDate")
+.Value(TempData["StockTakeMasterSearchModel"] != null ? ((StockTakeMasterSearchModel)TempData["StockTakeMasterSearchModel"]).StockTakeStartDate : System.DateTime.Today.AddDays(-7))
+                  .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px", }))
+            </div>
+             <div class="editor-label-2">
+                 <label for="StockTakeMaster_EndDate">
+                    @Resources.INV.StockTake.StockTakeMaster_EndDate
+                </label>
+            </div>
+            <div class="editor-field-2">
+                  @(Html.Telerik().DatePicker().Name("StockTakeEndDate")
+      .Value(TempData["StockTakeMasterSearchModel"] != null ? ((StockTakeMasterSearchModel)TempData["StockTakeMasterSearchModel"]).StockTakeEndDate : System.DateTime.Today.AddDays(1))
+                  .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px", }))
+            </div>
+            <div class="editor-label-2">
+                 <label for="StockTakeMaster_EndDate">
+                    @Resources.INV.StockTake.StockTakeMaster_CostCenter
+                </label>
+            </div>
+            <div class="editor-field-2">
+                  @Html.TextBox("CostCenter", TempData["StockTakeMasterSearchModel"] != null ? ((StockTakeMasterSearchModel)TempData["StockTakeMasterSearchModel"]).CostCenter : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

@@ -1,0 +1,121 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.Custodian
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Custodian_View" });
+}
+
+
+@using (Html.BeginForm())
+{
+    <script type="text/javascript">
+        function Item_Change(e) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            } else {
+                var ItemCodes = $("#ItemCodes").val();
+                if (ItemCodes == "") {
+                    $("#ItemCodes").val(e.value);
+                } else {
+                   
+                    var ItemCodeArray = ItemCodes.split(',');
+                    var bb = 0;
+                    for (var i = 0; i < ItemCodeArray.length; i++) {
+                        if (ItemCodeArray[i] == e.value) {
+                            
+                            $message.error("此物料已经选择，请重新选择。");
+                            bb = 1;
+                            return;
+                         }
+//                        else {
+//                            ItemCodes += "," + e.value;
+//                            $("#ItemCodes").val(ItemCodes);
+//                        }
+                    }
+                    if (bb == 0) {
+                        ItemCodes += "," + e.value;
+                        $("#ItemCodes").val(ItemCodes);
+                    }
+                    
+                   
+                }
+            }
+        }
+//        $(function () {
+//            $("#ItemCodes").attr("disabled",true);
+//        });
+ 
+    </script>
+    <fieldset>
+        <legend>@Resources.MD.Custodian.Custodian_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.UserCode)
+            </div>
+            <div class="editor-field-2">
+                @{
+        Html.RenderAction("_UserComboBox", "Common",
+         new
+         {
+             ControlName = "UserCode",
+             selectedValue = Model!=null?Model.UserCode:string.Empty
+         });
+                }
+                @Html.ValidationMessageFor(model => model.UserCode)
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="editor-field-2">
+                 @{
+    Html.RenderAction("_LocationComboBox", "Common",
+        new
+        {
+            controlName = "Location",
+            selectedValue = Model != null ? Model.Location : string.Empty
+        });
+                }
+                @Html.ValidationMessageFor(model => model.Location)
+            </div>
+
+            
+            <div class="editor-label-2">
+              @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+               @{
+    Html.RenderAction("_ItemComboBox", "Common", 
+        new { controlName = "ItemSelect", selectedValue = string.Empty, coupled = true });
+            }
+            </div>
+            <div class="multilinetext-label-1">
+
+            </div>
+            <div class="multilinetext-field-1">
+
+            </div>
+            <div class="multilinetext-label-1">
+                @Html.LabelFor(model => model.ItemCodes)
+            </div>
+            <div class="multilinetext-field-1">
+               @Html.TextArea("ItemCodes", Model != null ? Model.ItemCodes : string.Empty, new { rows = 3, style = "min-height:0;width:80%;" })
+            </div>
+
+      
+        </div>
+        <div class="editor-footer">
+             @Html.Button(Resources.SYS.Global.Button_New, "Url_Custodian_View", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnNew"},
+                {"needconfirm","true"}
+	        })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Custodian/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

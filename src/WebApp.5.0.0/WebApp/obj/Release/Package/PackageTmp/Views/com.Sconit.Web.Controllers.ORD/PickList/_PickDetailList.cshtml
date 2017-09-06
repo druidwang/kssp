@@ -1,0 +1,41 @@
+﻿@model IList<com.Sconit.Entity.ORD.PickListDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickDetailList")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.LocationFromName);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.LotNo);
+           
+            columns.Bound(o => o.IsOdd).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsOdd' <#= IsOdd? checked='checked' : '' #> />"); ;
+            columns.Bound(o => o.IsDevan).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDevan' <#= IsDevan? checked='checked' : '' #> />"); ;
+            columns.Bound(o => o.IsInventory).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsInventory' <#= IsInventory? checked='checked' : '' #> />"); ;
+            columns.Bound(o => o.Qty).Format("{0:0.###}");
+            columns.Bound(o => o.CurrentPickQty).Format("{0:0.###}").Title("发货数")
+             .ClientTemplate("<input type='text' id='CurrentPickQty' name='CurrentPickQty' style='width:70px'  />").Format("{0:0.###}"); 
+        })
+            .CellAction(cell =>
+                {
+                    if (cell.Column.Member == "CurrentPickQty")
+                    {
+                        cell.Text = string.Format("<input type='text' id='CurrentPickQty' name='CurrentPickQty' style='width:70px'  />");
+                    }
+                })
+        .Resizable(resizing => resizing.Columns(true))
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+            )
+ </fieldset>
+

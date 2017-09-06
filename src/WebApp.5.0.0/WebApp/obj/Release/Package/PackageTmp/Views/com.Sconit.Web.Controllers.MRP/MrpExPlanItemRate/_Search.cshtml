@@ -1,0 +1,34 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset>
+    @using (Html.BeginForm("List", "MrpExPlanItemRate"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="MrpExPlanItemRate_Section">
+                    @Resources.MRP.MrpExPlanItemRate.MrpExPlanItemRate_Section
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Section", TempData["MrpExPlanItemRateSearchModel"] != null ? ((MrpExPlanItemRateSearchModel)TempData["MrpExPlanItemRateSearchModel"]).Section : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="MrpExPlanItemRate_Description">
+                    @Resources.MRP.MrpExPlanItemRate.MrpExPlanItemRate_SectionDesc
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("SectionDesc", TempData["MrpExPlanItemRateSearchModel"] != null ? ((MrpExPlanItemRateSearchModel)TempData["MrpExPlanItemRateSearchModel"]).SectionDesc : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_MrpExPlanItemRate_View", new Dictionary<string, string>()
+	        {
+	            {"type", "submit"},
+	            {"id", "btnSearch"}
+	        })
+        </div>
+
+    }
+</fieldset>

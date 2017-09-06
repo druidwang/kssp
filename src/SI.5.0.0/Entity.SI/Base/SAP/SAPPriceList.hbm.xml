@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.SAP.SAPPriceList, com.Sconit.Entity.SI" table="SAP_PriceList" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="LIFNR" column="LIFNR" type="String" length="10"/>	
+		<property name="WAERS" column="WAERS" type="String" length="5"/>	
+		<property name="MATNR" column="MATNR" type="String" length="18"/>	
+		<property name="BPRME" column="BPRME" type="String" length="3"/>	
+		<property name="NETPR" column="NETPR" type="String" length="11"/>	
+		<property name="MWSKZ" column="MWSKZ" type="String" length="2"/>	
+		<property name="ERDAT" column="ERDAT" type="String" length="8"/>	
+		<property name="PRDAT" column="PRDAT" type="String" length="8"/>	
+		<property name="NORMB" column="NORMB" type="String" length="5"/>	
+		<property name="BatchNo" column="BatchNo" type="String" length="50"/>	
+		<property name="Status" column="Status" type="Int32"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+  	</class>
+</hibernate-mapping>

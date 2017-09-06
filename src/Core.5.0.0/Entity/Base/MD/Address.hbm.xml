@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.MD.Address, com.Sconit.Entity" table="MD_Address" lazy="false">
+		<id name="Code" column="Code" type="String" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<!--<property name="Type" column="Type"  />-->	
+		<property name="AddressContent" column="Address" type="String" length="256" />	
+		<property name="PostCode" column="PostCode" type="String" length="50" />	
+		<property name="TelPhone" column="TelPhone" type="String" length="50" />	
+		<property name="MobilePhone" column="MobilePhone" type="String" length="50" />	
+		<property name="Fax" column="Fax" type="String" length="50" />	
+		<property name="Email" column="Email" type="String" length="50" />	
+		<property name="ContactPersonName" column="ContactPsnNm" type="String" length="50" />	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />	
+  	</class>
+</hibernate-mapping>

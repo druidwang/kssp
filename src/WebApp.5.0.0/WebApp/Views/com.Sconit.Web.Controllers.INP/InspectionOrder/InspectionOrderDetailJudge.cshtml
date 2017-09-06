@@ -1,0 +1,59 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@using com.Sconit.Entity.SYS;
+@model IEnumerable<com.Sconit.Entity.INP.InspectDetail>
+<fieldset>
+    <legend>@Resources.INP.InspectDetail.InspectDetail_Title_View</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("InspectDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+                    .Select("_SelectJudgeBatchEditing", "InspectionOrder", new { inspectNo = ViewBag.inspectNo, inspectType = ViewBag.inspectType })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.ItemFullDescription).ReadOnly();
+            columns.Bound(o => o.Uom).ReadOnly();
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly(true);
+            columns.Bound(o => o.UnitCount).Format("{0:0.###}").ReadOnly();
+            columns.Bound(o => o.HuId).ReadOnly(true);
+            columns.Bound(o => o.LotNo).ReadOnly(true).Title(Resources.INV.Hu.Hu_manufacture_date);
+            columns.Bound(o => o.SupplierLotNo).ReadOnly(true);
+            columns.Bound(o => o.ExpireDate).ReadOnly(true).Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.CurrentLocation);
+            columns.Bound(o => o.InspectQty).Format("{0:0.###}").ReadOnly();
+            columns.Bound(o => o.QualifyQty).Format("{0:0.###}").ReadOnly();
+            columns.Bound(o => o.RejectQty).Format("{0:0.###}").ReadOnly();
+            columns.Bound(o => o.CurrentQty).Format("{0:0.###}").Title("判定数").Width(100);//7
+            //columns.Bound(o => o.CurrentRejectQty).Format("{0:0.########}");
+            columns.Bound(o => o.JudgeFailCode).EditorTemplateName("FailCodeIncludeQualifyGridComboBox").Width(100);
+            columns.Bound(o => o.CurrentInspectResultNote);
+
+            // columns.Bound(o => o.Defect).EditorTemplateName("DefectGridComboBox");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .NoRecordsTemplate("Loading...")
+        .ClientEvents(e => e.OnDataBound("onDataBound").OnRowDataBound("onRowDataBound"))
+        .Footer(false)
+     )
+</fieldset>
+<script type="text/javascript">
+    function onDataBound(e) {
+        $("tr.t-no-data td").html("@Resources.GridLocalization.NoRecords");
+    }
+
+    function onRowDataBound(e) {
+        if ($("#Type").val() == "2") {
+            var row = $(e.row.childNodes);
+            $(e.row).find("td")[7].onclick = function (e) {
+                e.stopPropagation();
+            };
+        }
+    }
+</script>

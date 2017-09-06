@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.ISI.TaskSubType, com.Sconit.Entity" table="ISI_TaskSubType" lazy="false">
+		<id name="Code" column="Code" type="String" unsaved-value="null" >
+			<generator class="assigned" />
+		</id>
+		<version name="Version" column="Version" type="Int32" />
+		<property name="Description" column="Desc_" type="String" length="50" />
+		<property name="Organization" column="Org" type="String" length="50" />
+		<property name="Type" column="Type"  />
+		<property name="IsActive" column="IsActive" type="Boolean"  />
+		<property name="Seq" column="Seq" type="Int32"  />
+		<property name="AssignUser" column="AssignUser" type="String" length="300" />
+		<property name="IsAutoAssign" column="IsAutoAssign" type="Boolean"  />
+		<property name="IsAutoStart" column="IsAutoStart" type="Boolean"  />
+		<property name="IsAutoComplete" column="IsAutoComplete" type="Boolean"  />
+		<property name="IsAutoStatus" column="IsAutoStatus" type="Boolean"  />
+		<property name="IsAutoClose" column="IsAutoClose" type="Boolean"  />
+		<property name="IsPublic" column="IsPublic" type="Boolean"  />
+		<property name="StartUser" column="StartUser" type="String" length="300" />
+		<property name="IsAssignUp" column="IsAssignUp" type="Boolean"  />
+		<property name="AssignUpTime" column="AssignUpTime" type="Decimal"  />
+		<property name="AssignUpUser" column="AssignUpUser" type="String" length="300" />
+		<property name="IsStartUp" column="IsStartUp" type="Boolean"  />
+		<property name="StartUpTime" column="StartUpTime" type="Decimal"  />
+		<property name="StartUpUser" column="StartUpUser" type="String" length="300" />
+		<property name="IsCloseUp" column="IsCloseUp" type="Boolean"   />
+		<property name="CloseUpTime" column="CloseUpTime" type="Decimal"  />
+		<property name="CloseUpUser" column="CloseUpUser" type="String" length="300" />
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="50" update="false"/>
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32" />
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="50" />
+		<property name="IsStart" column="IsStart" type="Boolean" />
+		<property name="StartPercent" column="StartPercent" type="Decimal"  />
+		<property name="ECType" column="ECType" type="String" length="20"  />
+		<property name="ECUser" column="ECUser" type="String" length="300" />
+		<property name="IsEC" column="IsEC" type="Boolean"  />
+		<property name="ProjectType" column="ProjectType" type="String" length="20"  />
+		<property name="IsQuote" column="IsQuote" type="Boolean"  />
+		<property name="IsInitiation" column="IsInitiation" type="Boolean"  />
+		<property name="IsCompleteUp" column="IsCompleteUp" type="Boolean"  />
+		<property name="IsReport" column="IsReport" type="Boolean"  />
+		<property name="CompleteUpTime" column="CompleteUpTime" type="Decimal"  />
+		<property name="ViewUser" column="ViewUser" type="String" length="300" />
+		<property name="IsOpen" column="IsOpen" type="Boolean"   />
+		<property name="IsWF" column="IsWF" type="Boolean"   />
+		<property name="Amount" column="Amount" type="Decimal"  />
+		<property name="OpenTime" column="OpenTime" type="Decimal"  />
+		<property name="RegisterNo" column="RegisterNo" type="String" length="50"  />
+		<property name="ExtNo" column="ExtNo" type="String" length="255"  />
+
+
+	</class>
+</hibernate-mapping>

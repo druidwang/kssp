@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = Resources.ORD.OrderDetail.OrderDetail_OrderDetail;
+}
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.ORD.OrderDetail.OrderDetail_Bom)
+                .LoadContentFrom("_OrderBomDetailList", "ProductionOrder", new { id = Model });
+
+            tabstrip.Add()
+                .Text(Resources.ORD.OrderDetail.OrderDetail_Routing)
+                .LoadContentFrom("_OrderOperationList", "ProductionOrder", new { id = Model });
+        })
+        .Render();
+        
+        
+}
+<button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ProductionOrder/Edit?orderNo=" + ViewBag.OrderNo)'">
+    @Resources.SYS.Global.Button_Back</button>
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+    @<text> var tabIndex = "@TempData["TabIndex"]"; var tabstrip = $("#TabStrip").data("tTabStrip");
+    var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0]; tabstrip.select(item);
+    </text>
+        );
+}

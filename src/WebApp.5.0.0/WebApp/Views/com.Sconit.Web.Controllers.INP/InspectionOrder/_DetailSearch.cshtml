@@ -1,0 +1,112 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INP
+@using com.Sconit.Entity.SYS
+<fieldset>
+    @using (Html.BeginForm("DetailList", "InspectionOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="InspectMaster_InspectNo">
+                    @Resources.INP.InspectDetail.InspectDetail_InpNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("InspectNo", TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).InspectNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_Status">
+                    @Resources.INP.InspectDetail.InspectDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_ItemComboBox", "Common", new
+                    {
+                        controlName = "Item",
+                        selectedValue = TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).Item : null
+                    });
+                }
+            </div>
+            @*<div class="search-label">
+                <label for="InspectMaster_StartDate">
+                    @Resources.INP.InspectMaster.InspectMaster_CreateDate
+                </label>
+            </div>
+            <div class="search-field">
+                  @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("CreateDate").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>*@
+
+            <div class="search-label">
+                <label for="InspectMaster_IpNo">
+                    @Resources.INP.InspectMaster.InspectMaster_IpNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("IpNo", TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).IpNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_ReceiptNo">
+                    @Resources.INP.InspectMaster.InspectMaster_ReceiptNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ReceiptNo", TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).ReceiptNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_StartDate">
+                    @Resources.INP.InspectDetail.InspectDetail_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).CreateUserName : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_WMSNo">
+                    @*@Resources.INP.InspectMaster.InspectMaster_WMSNo*@
+                </label>
+            </div>
+            <div class="search-field">
+                @*@Html.TextBox("WMSNo", TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).WMSNo : string.Empty)*@
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_StartDate">
+                    @Resources.INP.InspectMaster.InspectMaster_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("StartDate")
+                  .Value(TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                  .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="InspectMaster_EndDate">
+                    @Resources.INP.InspectMaster.InspectMaster_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("EndDate")
+                 .Value(TempData["InspectMasterSearchModel"] != null ? ((InspectMasterSearchModel)TempData["InspectMasterSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                 .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    function ExportClick() {
+        location.href = '/InspectionOrder/ExportXLS/?InspectNo=' + $('#InspectNo').val()
+            + '&CreateUserName=' + $('#CreateUserName').val()
+            + '&CreateDate=' + $('#CreateDate').val()
+            + '&Item=' + $('#Item').val()
+            + '&IpNo=' + $('#IpNo').val()
+            //+ '&WMSNo=' + $('#WMSNo').val()
+            + '&ReceiptNo=' + $('#ReceiptNo').val()
+            + '&StartDate=' + $('#StartDate').val()
+            + '&EndDate=' + $('#EndDate').val();
+    }
+</script>

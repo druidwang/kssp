@@ -1,0 +1,99 @@
+﻿@model com.Sconit.Entity.MD.Supplier  
+@Html.Partial("_AjaxMessage")
+    <fieldset>
+        <legend>@Resources.MD.Party.Party_CurrentParty:@ViewBag.PartyCode </legend>
+        <div class="editor">
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+                <input type="hidden" name="Supplier_Code" id="Supplier_Code" value="@Model.Code" />
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.LastModifyUserName)
+                @Html.HiddenFor(model => model.LastModifyDate)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShortCode)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ShortCode)
+            </div>
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.PurchaseGroup)
+            </div>
+            <div class="editor-field-2">
+               @Html.EditorFor(model => model.PurchaseGroup)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsActive)
+            </div>
+
+        </div>
+        <div class="editor-footer">
+            @*<button type="button" id="btnSave_Supplier" onclick="btnSave_Supplier_Click()">
+                @Resources.SYS.Global.Button_Save</button>
+            <button type="button" id="btnDelete_Supplier" onclick="location.href='@Url.Content("~/Supplier/Delete/" + @Model.Code)'">
+                @Resources.SYS.Global.Button_Delete</button>*@
+     @Html.Button(Resources.SYS.Global.Button_Save, "Url_Supplier_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnSave_Supplier"},
+        {"needconfirm","true"},
+        {"onclick","btnSave_Supplier_Click()"}
+        
+	})
+    @Html.Button(Resources.SYS.Global.Button_Delete, "Url_Supplier_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDelete_Supplier"},
+        {"needconfirm","true"},
+        {"onclick","location.href='"+Url.Content("~/Supplier/Delete/" +Model.Code)+"'"}
+	})
+            <button type="button" id="btnBack_Supplier" onclick="location.href='@Url.Content("~/Supplier/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+
+<script type="text/javascript">
+    function btnSave_Supplier_Click() {
+        var data = {
+            "Code": $("#Supplier_Code").val(),
+            "Name": $("#Name").val(),
+            "ShortCode": $("#ShortCode").val(),
+            "PurchaseGroup": $("#PurchaseGroup").val(),
+            "IsActive": $("#IsActive").is(':checked')
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Supplier/_Edit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+            }
+        });
+    }
+</script>

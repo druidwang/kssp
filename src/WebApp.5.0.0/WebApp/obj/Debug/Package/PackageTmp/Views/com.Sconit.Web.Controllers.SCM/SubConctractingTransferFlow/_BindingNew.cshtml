@@ -1,0 +1,90 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.SCM.FlowBinding
+@Html.Partial("_AjaxMessage") 
+@using (Html.BeginForm("_BindingNew", "SubConctractingTransferFlow"))
+{
+    <fieldset>
+    <legend>@Resources.SCM.FlowBinding.FlowBinding_NewFlowBind</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MasterFlow)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.MasterFlow.Code)
+                @Html.HiddenFor(model => model.MasterFlow.Code)
+                @Html.HiddenFor(model => model.MasterFlow.Description)
+                @Html.HiddenFor(model => model.MasterFlow.Type)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MasterFlow.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.MasterFlow.Description)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BindedFlow)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_FlowComboBox", "Common", new
+           {
+               controlName = "BindedFlowCode",
+               selectedValue = Model.BindedFlow != null ? Model.BindedFlow.Code : string.Empty
+           });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BindType)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_CodeMasterDropDownList", "Common", new
+           {
+               code = com.Sconit.CodeMaster.CodeMaster.BindType,
+               includeBlankOption = true,
+               controlName = "BindType",
+               selectedValue = Model != null ? (int)Model.BindType : 0
+           });
+                }
+
+                @Html.ValidationMessageFor(model => model.BindType)
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="editor-footer">
+        <button type="submit" id="btnNew">@Resources.SYS.Global.Button_New</button>
+        <button type="button" id="btnBack" onclick="btnBackBinding_Click()">@Resources.SYS.Global.Button_Back</button>
+    </div>
+}
+<script language="javascript" type="text/javascript">
+    function btnBackBinding_Click() {
+        var data = {
+            "id": $("#MasterFlow_Code").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/SubConctractingTransferFlow/_Binding/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(data);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("form[action$='_BindingNew']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(response);
+            });
+            return false;
+        });
+    });
+
+</script>

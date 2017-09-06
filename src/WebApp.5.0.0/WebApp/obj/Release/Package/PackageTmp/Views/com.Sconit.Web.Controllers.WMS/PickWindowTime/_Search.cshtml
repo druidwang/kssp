@@ -1,0 +1,40 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<fieldset>
+    @using (Html.BeginForm("List", "PickWindowTime"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="PickWindowTime_Code">
+                    @Resources.WMS.PickWindowTime.PickWindowTime_PickScheduleNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("PickScheduleNo", TempData["PickWindowTimeSearchModel"] != null ? ((PickWindowTimeSearchModel)TempData["PickWindowTimeSearchModel"]).PickScheduleNo : string.Empty)
+            </div>
+              <div class="search-label">
+                <label for="PickWindowTime_Code">
+                    @Resources.WMS.PickWindowTime.PickWindowTime_ShiftCode
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ShiftCode", TempData["PickWindowTimeSearchModel"] != null ? ((PickWindowTimeSearchModel)TempData["PickWindowTimeSearchModel"]).ShiftCode : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+                @Html.Button(Resources.SYS.Global.Button_Search, "Url_PickWindowTime_View", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSearch"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_PickWindowTime_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"onclick","location.href='"+@Url.Content("~/PickWindowTime/New")+"'"}
+	})
+        </div>
+
+    }
+</fieldset>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.WMS.BufferInventory, com.Sconit.Entity" table="WMS_BuffInv" lazy="false">
+        <id name="UUID" column="UUID" type="String" unsaved-value="null" >
+            <generator class="assigned" />
+        </id>
+		<version name="Version" column="Version" type="Int32" />
+        <property name="Location" column="Loc" type="String" length="50"/>	
+		<property name="Dock" column="Dock" type="String" length="50"/>	
+		<property name="IOType" column="IOType" type="Int16"/>	
+		<property name="Item" column="Item" type="String" length="50"/>	
+		<property name="Uom" column="Uom" type="String" length="5"/>	
+		<property name="UnitCount" column="UC" type="Decimal"/>	
+		<property name="Qty" column="Qty" type="Decimal"/>	
+		<property name="LotNo" column="LotNo" type="String" length="50"/>
+        <property name="HuId" column="HuId" type="String" length="50"/>
+        <property name="IsLock" column="IsLock" type="Boolean"/>
+		<property name="IsPack" column="IsPack" type="Boolean"/>
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>	
+  	</class>
+</hibernate-mapping>

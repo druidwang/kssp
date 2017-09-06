@@ -1,0 +1,32 @@
+﻿@using com.Sconit.Entity.MD
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    IList<com.Sconit.Entity.SYS.CodeDetail> codeDetails = ViewBag.CodeDetails;
+    IList<string> checkedValues = ViewBag.CheckedValues;
+}
+<select id="@id" name="@name" multiple="multiple">
+    @{
+        if (codeDetails != null)
+        {
+            foreach (com.Sconit.Entity.SYS.CodeDetail c in codeDetails)
+            {
+                if (checkedValues != null && checkedValues.Count > 0)
+                {
+                    if (checkedValues.Where(cv => cv == c.Value).Count() > 0)
+                    {
+                        <option value="@c.Value" selected ="selected">@c.Description</option>
+                    }
+                    else
+                    {
+                        <option value="@c.Value" >@c.Description</option>
+                    }
+                }
+                else
+                {
+                     <option value="@c.Value" >@c.Description</option>
+                }
+            }
+        }
+    }
+</select>

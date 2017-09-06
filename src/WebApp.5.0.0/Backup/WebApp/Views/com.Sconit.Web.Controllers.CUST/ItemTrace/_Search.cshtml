@@ -1,0 +1,33 @@
+﻿@using com.Sconit.Web.Models.SearchModels.CUST
+@using com.Sconit.Entity.CUST
+<fieldset>
+    @using (Html.BeginForm("List", "ItemTrace"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="FailCode_Code">
+                    @Resources.CUST.ItemTrace.ItemTrace_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new {
+                controlName = "Item", 
+
+                selectedValue = TempData["ItemTrace"] != null ? ((ItemTraceSearchModel)TempData["ItemTrace"]).Item : string.Empty
+            });
+                }
+            </div>
+            
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+                <button type="button" id="btnAdd" onclick="location.href='@Url.Content("~/ItemTrace/New")'">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+
+    }
+</fieldset>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.INP.InspectDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ProcurementPPMGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.IpNo);
+           
+           
+            columns.Bound(o => o.Item).Width(100)
+             .Aggregate(aggregates => aggregates.Count())
+            // .GroupFooterTemplate(@<text>Count: @item.Count</text>)
+             .GroupHeaderTemplate(@<text>@item.Title: @item.Key (Count: @item.Count)</text>);
+            columns.Bound(o => o.ItemDescription);
+
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+
+            columns.Bound(o => o.RejectQty)
+              .Aggregate(aggreages => aggreages.Sum())
+                .GroupFooterTemplate(@<text>合计: @item.Sum.Format("{0:0.########}")</text>);
+            columns.Bound(o => o.InspectQty)
+                .Aggregate(aggreages => aggreages.Sum())
+                .GroupFooterTemplate(@<text>合计: @item.Sum.Format("{0:0.########}")</text>);
+         
+        })
+        .Footer(false)
+         .Groupable(settings => settings.Groups(groups => groups.Add(o => o.Item)))
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function Procurement_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                Supplier: $('#Supplier').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val()
+            };
+        } 
+    </script>
+</fieldset>

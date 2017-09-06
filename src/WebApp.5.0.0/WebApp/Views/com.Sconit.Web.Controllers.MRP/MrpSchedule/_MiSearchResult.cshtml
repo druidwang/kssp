@@ -1,0 +1,43 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpPlanMaster>
+<fieldset id="fldGrid">
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpPlanMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PlanVersion);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PlanVersion).ClientTemplate(Html.ActionLink("<#= PlanVersionShow #>", "Edit", "MrpSchedule", new { planVersion = "<#= PlanVersionShow #>" }, null).ToString());
+            columns.Bound(o => o.SnapTime);
+            columns.Bound(o => o.SourcePlanVersion).Title("挤出计划版本");
+            columns.Bound(o => o.StatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.IsRelease).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsRelease' <#= IsRelease? checked='checked' : '' #> />"); ;
+
+        })
+
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "MrpSchedule"))
+                .ClientEvents(events => events.OnDataBinding("MrpPlanMasterGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function MrpPlanMasterGrid_OnDataBinding(e) {
+            e.data = {
+                PlanVersion: $('#PlanVersion').val(),
+                Status: $('#Status').val(),
+                ResourceGroup: 10,
+                IsRelease: $("input[type=checkbox][name=IsRelease]:checked").val()
+            };
+        }
+    </script>
+</fieldset>

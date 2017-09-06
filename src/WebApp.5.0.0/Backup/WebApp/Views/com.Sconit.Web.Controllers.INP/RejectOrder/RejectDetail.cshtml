@@ -1,0 +1,214 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.CUST;
+@model IList<com.Sconit.Entity.INP.RejectDetail>
+<div id="DivRejectDetail">
+    <fieldset>
+        @(Html.Telerik().Grid(Model)
+        .Name("RejectDetail")
+        .ToolBar(commands =>
+        {
+            if (ViewBag.Status == (int)com.Sconit.CodeMaster.RejectStatus.Create)
+            {
+                commands.Custom().Text(@Resources.SYS.Global.Button_AddDetail)
+                  .HtmlAttributes(new { onClick = "onAddDetail()", href = "#" });
+                if (ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Quantity)
+                {
+                    commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail)
+                        .HtmlAttributes(new { onClick = "onSaveDetail()", href = "#" });
+                }
+                commands.Custom().Text(@Resources.SYS.Global.Button_DeleteDetail)
+                   .HtmlAttributes(new { onClick = "onDeleteDetail()", href = "#" });
+            }
+        })
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Visible(ViewBag.status == (int)com.Sconit.CodeMaster.RejectStatus.Create)
+               .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>'  />")
+               .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+               .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.InspectNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount).Format("{0:0.########}");
+            columns.Bound(o => o.HuId).Visible(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Barcode);
+            //columns.Bound(o => o.LotNo).Visible(ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Barcode);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.ReceiptNo);
+            //columns.Bound(o => o.WMSNo);
+            columns.Bound(o => o.CurrentLocation);
+            columns.Bound(o => o.HandleQty).ClientTemplate("<input type='text' id='HandleQty' name='HandleQty' style='width:70px' value='<#= HandleQty #>'/>").Visible(ViewBag.Status == (int)com.Sconit.CodeMaster.RejectStatus.Create && ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Quantity).Format("{0:0.########}");
+            columns.Bound(o => o.HandleQty).Visible(ViewBag.Status != (int)com.Sconit.CodeMaster.RejectStatus.Create || ViewBag.InspectType == (int)com.Sconit.CodeMaster.InspectType.Barcode).Format("{0:0.########}");;
+            columns.Bound(o => o.FailCode);
+            columns.Bound(o => o.JudgeUserName);
+            columns.Bound(o => o.JudgeDate);
+            //if (ViewBag.status == com.Sconit.CodeMaster.RejectStatus.Create)
+            //{
+            //    columns.Command(commands => commands.Delete());
+            //}
+        })
+                // .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                    .Select("_AjaxRejectDetail", "RejectOrder", new { rejectNo = (string)ViewBag.RejectNo })
+                //.Update("_SaveRejectDetailBatchEditing", "RejectOrder", new { rejectNo = (string)ViewBag.RejectNo }))
+                      )
+        .Footer(false).Resizable(resizing => resizing.Columns(true)))
+        @Html.Hidden("RejectNo", (string)ViewBag.RejectNo)
+        @Html.Hidden("InspectType", (int)ViewBag.InspectType)
+        @Html.Hidden("Status", (int)ViewBag.Status)
+        @{ Html.Telerik().Window()
+        .Name("Window")
+        .Title("选择报验单结果")
+        .Draggable(true)
+        .Scrollable(false)
+        .Resizable()
+        .Width(850)
+        .Height(420)
+        .Modal(true)
+               // .LoadContentFrom("ChooseInspectResult", "RejectOrder", new { rejectNo = (string)Model.RejectNo })
+        .Visible(false)
+        .Scrollable(true)
+        .Render();
+        }
+    </fieldset>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+            });
+            var $checkedRecords = $("input[name='checkedRecords']");
+            $checkedRecords.click(function () {
+                $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            });
+        });
+        function onAddDetail(e) {
+            var detailWindow = $("#Window").data("tWindow");
+            detailWindow.ajaxRequest("/RejectOrder/ChooseInspectResult/", { rejectNo: $("#RejectNo").val(), inspectType: $("#InspectType").val(), status: $("#Status").val() })
+            detailWindow.center().open();
+        }
+
+        function onSaveDetail(e) {
+
+            var grid = $("#RejectDetail").data("tGrid");
+
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            var idStr = "";
+            var qtyStr = "";
+
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var row = $(rows[rowIndex]);
+                var id = row.find("#checkedRecords").val();
+                var qty = row.find("#HandleQty").val();
+                if (qty != "" && !isNaN(qty) && parseFloat(qty) > 0) {
+                    if (idStr == "") {
+                        idStr = id;
+                        qtyStr = qty;
+                    } else {
+                        idStr += "," + id;
+                        qtyStr += "," + qty;
+                    }
+                }
+            }
+
+            var data = {
+                "rejectNo": $("#RejectNo").val(),
+                "idStr": idStr,
+                "qtyStr": qtyStr
+            };
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                url: "/RejectOrder/_BatchSaveRejectDetail/",
+                data: data,
+                success: function (data) {
+                   
+                    $message.success(data.SuccessMessage);
+                        var orderData = {
+                            "rejectNo": $("#RejectNo").val(),
+                            "status": $("#Status").val(),
+                            "inspectType": $("#InspectType").val()
+                        };
+
+                        $.ajax({
+                            type: "Get",
+                            dataType: "Html",
+                            url: "/RejectOrder/RejectDetail/",
+                            data: orderData,
+                            cache: false,
+                            success: function (datas, textStatus) {
+                                var $tGrid = $("#RejectDetailDiv");
+                                $($tGrid).html(datas);
+                            }
+                        });
+                  
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    
+                    $message.error(errorMessages);
+                }
+            });
+        }
+
+        function onDeleteDetail(e) {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var idStr = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    var id = $checkRecords[i].value;
+                    if (idStr == "") {
+                        idStr = id;
+                    } else {
+                        idStr += "," + id;
+                    }
+                }
+            }
+            var data = {
+                "rejectNo": $("#RejectNo").val(),
+                "idStr": idStr
+            };
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                url: "/RejectOrder/_BatchDeleteRejectDetail/",
+                data: data,
+                success: function (data) {
+                   
+                    $message.success(data.SuccessMessage);
+                   
+                        var orderData = {
+                            "rejectNo": $("#RejectNo").val(),
+                            "status": $("#Status").val(),
+                            "inspectType": $("#InspectType").val()
+                        };
+
+                        $.ajax({
+                            type: "Get",
+                            dataType: "Html",
+                            url: "/RejectOrder/RejectDetail/",
+                            data: orderData,
+                            cache: false,
+                            success: function (datas, textStatus) {
+                                var $tGrid = $("#RejectDetailDiv");
+                                $($tGrid).html(datas);
+                            }
+                        });
+                   
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    
+                    $message.error(errorMessages);
+                }
+            });
+        }
+    </script>
+</div>

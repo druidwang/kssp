@@ -1,0 +1,59 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.ReceiptMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ReturnReceiptGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.ReceiptNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ReceiptNo).ClientTemplate(Html.ActionLink("<#= ReceiptNo #>", "Edit", "SupplierReturnReceipt", new { ReceiptNo = "<#= ReceiptNo #>" }, null).ToString());
+            //columns.Bound(o => o.WMSNo);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.Flow);
+            //columns.Bound(o => o.PartyFromName).ClientTemplate("<div title=<#=PartyFromName #>><#=PartyFrom #></div>");
+            columns.Bound(o => o.PartyToName).ClientTemplate("<div title=<#=PartyToName #>><#=PartyTo #></div>");
+            //columns.Bound(o => o.ShipFromAddress);
+            columns.Bound(o => o.ShipToAddress);
+            columns.Bound(o => o.ReceiptMasterStatusDescription);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.CreateUserName);
+                 })
+                .Scrollable(c => c.Enabled(false))
+                         .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SupplierReturnReceipt"))
+                .ClientEvents(events => events.OnDataBinding("ReceiptMasterGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total!=null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ReceiptMasterGrid_OnDataBinding(e) {
+            e.data = {
+                ReceiptNo: $('#ReceiptNo').val(),
+                IpNo: $('#IpNo').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                ShipFrom: $('#ShipFrom').val(),
+                ShipTo: $('#ShipTo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                CreateDate: $('#CreateDate').val(),
+                GoodsReceiptOrderType: $('#GoodsReceiptOrderType').val(),
+                Status:$('#Status').val(),
+                //WMSNo: $('#WMSNo').val(),
+                Flow:$("#Flow").val()
+
+            };
+        }
+    </script>
+</fieldset>

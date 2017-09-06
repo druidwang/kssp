@@ -1,0 +1,102 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.UomConversion
+@Html.Partial("_AjaxMessage")
+@using (Html.BeginForm("_UomConvertNew", "Uom"))
+{
+    <fieldset>
+    <legend>@Resources.MD.UomConvert.UomConvert_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ItemCode)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_ItemComboBox", "Common", new
+           {
+               controlName = "ItemCode",
+               selectedValue = Model != null ? Model.ItemCode : string.Empty
+           });
+                    }
+                @Html.ValidationMessageFor(model => model.ItemCode)
+            </div>
+             <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+             <div class="editor-label-2">
+                @Html.LabelFor(model => model.BaseUom)
+            </div>
+            <div class="editor-field-2">
+                @{
+           Html.RenderAction("_UomDropDownList", "Common", new
+           {
+               controlName = "BaseUom",
+               selectedValue = Model != null ? Model.BaseUom : string.Empty
+           });
+                }
+                @Html.ValidationMessageFor(model => model.BaseUom)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.AlterUom)
+            </div>
+            <div class="editor-field-2">
+                 @{
+           Html.RenderAction("_UomDropDownList", "Common", new
+           {
+               controlName = "AlterUom",
+               selectedValue = Model != null ? Model.AlterUom : string.Empty
+           });
+                }
+                @Html.ValidationMessageFor(model => model.AlterUom)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.BaseQty)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.BaseQty)
+                @Html.ValidationMessageFor(model => model.BaseQty)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.AlterQty)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.AlterQty)
+                @Html.ValidationMessageFor(model => model.AlterQty)
+            </div>
+        </div>
+        <div class="editor-footer">
+             <input type="submit" value="@Resources.SYS.Global.Button_New" />
+           <button type="button" id="btnBack" onclick="btnBackEditUomConv_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+
+<script language="javascript" type="text/javascript">
+    function btnBackEditUomConv_Click() {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Uom/_UomConvertList/",
+            data: "",
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("form[action$='_UomConvertNew']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(response);
+            });
+            return false;
+        });
+    });
+
+</script>

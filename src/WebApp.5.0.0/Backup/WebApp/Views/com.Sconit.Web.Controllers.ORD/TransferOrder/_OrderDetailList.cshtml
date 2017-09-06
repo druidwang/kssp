@@ -1,0 +1,129 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+           
+<script type="text/javascript">
+    function onLocationComboBoxChange(e) {
+      
+    }
+    function onItemComboBoxChange(e) {
+      
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                $(e.target).parent().parent().next().html('');
+                $(e.target).parent().parent().next().next().html('');
+                combobox.value("");
+                combobox.reload();
+            }
+            else {
+                var data = {
+                    "itemCode": e.value
+                }
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/TransferOrder/_WebInserintDetail/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        $(e.target).parent().parent().next().html('<span class="t-dirty"></span>'+ data.Description);
+                        $(e.target).parent().parent().next().next().html('<span class="t-dirty"></span>' + data.Uom);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+
+        }
+    }
+        function onLocationDataBinding(e) {
+                e.data = {
+                    "Region": $("#PartyFrom").val(),
+                    "checkRegion": false
+                };
+          
+        }
+        function onLocationFromComboBoxChange(e) {
+            if (e.value != null) {
+                var combobox = $(this).data("tComboBox");
+                if (combobox == undefined) {
+                    return;
+                }
+                if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                    combobox.value("");
+                    combobox.reload();
+                }
+            }
+        }
+
+        function onLocationFromDataBinding(e) {
+            e.data = {
+                "Region": $("#PartyFrom").val(),
+                "checkRegion": false
+            };
+        }
+
+        function onLocationToComboBoxChange(e) {
+            if (e.value != null) {
+                var combobox = $(this).data("tComboBox");
+                if (combobox == undefined) {
+                    return;
+                }
+                if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                    combobox.value("");
+                    combobox.reload();
+                }
+            }
+        }
+
+        function onLocationToDataBinding(e) {
+            var Region = $("#PartyFrom").val();
+            if ($("#PartyTo").val() != "") {
+                Region = $("#PartyTo").val();
+            }
+            e.data = {
+                "Region": Region,
+                "checkRegion": true
+            };
+        }
+
+</script>
+<fieldset>
+    <legend>@Resources.INV.StockTake.StockTakeDetail_Location</legend>
+   @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+                commands.Insert();
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+           .Select("_Select", "TransferOrder")
+           
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).EditorTemplateName("ItemGridForeignKey").Width(120);
+                columns.Bound(o => o.ItemDescription);
+                columns.ForeignKey(o => o.Uom, (IEnumerable<Uom>)ViewData["uoms"], "Code", "Code").Width(100);
+                columns.Bound(o => o.LocationFrom).EditorTemplateName("LocationFromGridForeignKey").Width(120);
+                columns.Bound(o => o.LocationTo).EditorTemplateName("LocationToGridForeignKey").Width(120);
+                columns.Bound(o => o.OrderedQty);
+        
+                columns.Command(commands => commands.Delete());
+         
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+            )
+</fieldset>

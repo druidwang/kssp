@@ -1,0 +1,43 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.LocationLotDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model).Name("LocationLotDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.ManufactureDate).Format("{0:yyyyMMdd}");
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.LastModifyDate);
+            columns.Bound(o => o.IsFreeze)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsFreeze' name='IsFreeze' value='<#= IsFreeze #>' <#=IsFreeze? checked='checked' : '' #> />");
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "InventoryFreeze"))
+                                .ClientEvents(events => events.OnDataBinding("LocationLotDetailGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize :50);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+     <script type="text/javascript">
+         function LocationLotDetailGrid_OnDataBinding(e) {
+             e.data = {
+                 Item: $('#Item').val(),
+                 Location: $('#Location').val(),
+                 LotNo: $('#LotNo').val(),
+                 IsFreeze: $("input[type=checkbox][name=IsFreeze]:checked").val(),
+             };
+         } 
+    </script>
+</fieldset>

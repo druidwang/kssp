@@ -1,0 +1,101 @@
+﻿@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.BIL.PlanBill>
+<fieldset>
+    <script type="text/javascript">
+        function SettlePlanBill() {
+            var grid = $("#PlanBill").data("tGrid");
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            var itemStr = "";
+            var qtyStr = "";
+            var uomStr = "";
+            var currencyStr = "";
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var row = $(rows[rowIndex]);
+                var qty = row.find("#CurrentQty").val();
+                if (qty != "" && qty != 0) {
+                    var item = row[0].childNodes[0].innerText;
+                    var uom = row[0].childNodes[3].innerText;
+                    var currency = row[0].childNodes[4].innerText;
+                    if (itemStr == "") {
+                        itemStr = item;
+                        qtyStr = qty;
+                        uomStr = uom;
+                        currencyStr = currency;
+                    } else {
+                        itemStr += "," + item;
+                        qtyStr += "," + qty;
+                        uomStr += "," + uom;
+                        currencyStr += "," + currency;
+                    }
+                }
+            }
+            if (itemStr == "") {
+                $message.error('至少选择一行.');
+                return;
+            }
+
+            var searchModel = {
+                "Party": $('#currentParty').val(),
+                "Flow": $('#currentFlow').val(),
+                "Item": $('#currentItem').val(),
+                "StartTime": $('#currentStartTime').val(),
+                "EndTime": $('#currentEndTime').val()
+            };
+
+            var data = {
+                "searchModel": searchModel,
+                "itemStr": itemStr,
+                "qtyStr": qtyStr,
+                "uomStr": uomStr,
+                "currencyStr": currencyStr
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                async: false,
+                url: "/DistributionBill/SettlePlanBill/",
+                cache: false,
+                success: function (data, textStatus) {
+                    $message.success("结算成功");
+                    PlanBillQuery();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                }
+            });
+        }
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("PlanBill")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Currency);
+            columns.Bound(o => o.CurrentActingQty);
+            columns.Bound(o => o.CurrentQty).ClientTemplate("<input type='text' style='width:60px;' id='CurrentQty' name='CurrentQty' value='<#= CurrentQty #>' />").Width(80);
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxPlanBillList", "DistributionBill", new
+        {
+            Party = ViewBag.Party,
+            Flow = ViewBag.Flow,
+            Item = ViewBag.Item,
+            StartTime = ViewBag.StartTime,
+            EndTime = ViewBag.EndTime,
+            Currency = ViewBag.Currency
+        }))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+    @Html.Hidden("currentFrom", (string)ViewBag.Party)
+    @Html.Hidden("currentFlow", (string)ViewBag.Flow)
+    @Html.Hidden("currentItem", (string)ViewBag.Item)
+    @Html.Hidden("currentStartTime", (DateTime?)ViewBag.StartTime)
+    @Html.Hidden("currentEndTime", (DateTime?)ViewBag.EndTime)
+    @Html.Hidden("currentCurrency", (string)ViewBag.Currency)
+</fieldset>

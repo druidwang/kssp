@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="StockTakeMaster_Added" xml:space="preserve">
+    <value>StockTakeMaster has been added successfully.</value>
+  </data>
+  <data name="StockTakeMaster_Deleted" xml:space="preserve">
+    <value>StockTakeMaster has been deleted successfully.</value>
+  </data>
+  <data name="StockTakeMaster_Edit_Title" xml:space="preserve">
+    <value>Edit StockTakeMaster</value>
+  </data>
+  <data name="StockTakeMaster_EffectiveStartDate" xml:space="preserve">
+    <value>EffDate</value>
+  </data>
+  <data name="StockTakeMaster_IsScanHu" xml:space="preserve">
+    <value>IsScan</value>
+  </data>
+  <data name="StockTakeMaster_Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="StockTakeMaster_New_Title" xml:space="preserve">
+    <value>New StockTakeMaster</value>
+  </data>
+  <data name="StockTakeMaster_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="StockTakeMaster_StNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="StockTakeMaster_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="StockTakeMaster_Updated" xml:space="preserve">
+    <value>StockTakeMaster has been updated successfully.</value>
+  </data>
+  <data name="StockTakeResult_Tab_Title" xml:space="preserve">
+    <value>StockTake Result</value>
+  </data>
+  <data name="StockTake_Tab_Title" xml:space="preserve">
+    <value>StockTake</value>
+  </data>
+  <data name="StockTakeResult_Bin" xml:space="preserve">
+    <value>Bin</value>
+  </data>
+  <data name="StockTakeResult_Detail_Title" xml:space="preserve">
+    <value>StockTake Result Detail</value>
+  </data>
+  <data name="StockTakeResult_DifferenceQty" xml:space="preserve">
+    <value>Difference Qty</value>
+  </data>
+  <data name="StockTakeResult_HuId" xml:space="preserve">
+    <value>HuId</value>
+  </data>
+  <data name="StockTakeResult_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="StockTakeResult_IsAdj" xml:space="preserve">
+    <value>IsAdjust</value>
+  </data>
+  <data name="StockTakeResult_Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="StockTakeResult_ItemDesc" xml:space="preserve">
+    <value>ItemDesc</value>
+  </data>
+  <data name="StockTakeResult_Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="StockTakeResult_LotNo" xml:space="preserve">
+    <value>LotNo</value>
+  </data>
+  <data name="StockTakeResult_Qty" xml:space="preserve">
+    <value>Qty</value>
+  </data>
+  <data name="StockTakeResult_StNo" xml:space="preserve">
+    <value>StNo</value>
+  </data>
+  <data name="StockTakeResult_IsBreakEven" xml:space="preserve">
+    <value>IsBreakEven</value>
+  </data>
+  <data name="StockTakeResult_IsLoss" xml:space="preserve">
+    <value>IsLoss</value>
+  </data>
+  <data name="StockTakeResult_IsProfit" xml:space="preserve">
+    <value>IsProfit</value>
+  </data>
+  <data name="StockTakeMaster_EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="StockTakeMaster_StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="StockTakeMaster_DsType" xml:space="preserve">
+    <value>Dynamic or Static</value>
+  </data>
+  <data name="Error_StatusErrorWhenDelete" xml:space="preserve">
+    <value>Can not delete stocktake {0} which status is {1}.</value>
+  </data>
+  <data name="Error_StatusErrorWhenStart" xml:space="preserve">
+    <value>Can not start stocktake {0} which status is {1}.</value>
+  </data>
+  <data name="Error_StatusErrorWhenSubmit" xml:space="preserve">
+    <value>Can not submit stocktake {0} which status is {1}.</value>
+  </data>
+  <data name="StockTakeItem_Items" xml:space="preserve">
+    <value>Items</value>
+  </data>
+  <data name="StockTake_Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="StockTake_ItemDescription" xml:space="preserve">
+    <value>Item Description</value>
+  </data>
+  <data name="StockTakeMaster_EffectiveDate" xml:space="preserve">
+    <value>EffectiveDate</value>
+  </data>
+  <data name="StockTakeMaster_Cancel" xml:space="preserve">
+    <value>StockTakeMaster has been cancel successfully.</value>
+  </data>
+  <data name="StockTakeMaster_Close" xml:space="preserve">
+    <value>StockTakeMaster has been close successfully.</value>
+  </data>
+  <data name="StockTakeMaster_Complete" xml:space="preserve">
+    <value>StockTakeMaster has been complete successfully.</value>
+  </data>
+  <data name="StockTakeMaster_Start" xml:space="preserve">
+    <value>StockTakeMaster has been start successfully.</value>
+  </data>
+  <data name="StockTakeMaster_Submit" xml:space="preserve">
+    <value>StockTakeMaster has been submit successfully.</value>
+  </data>
+  <data name="StockTakeDetail_Tab_Title" xml:space="preserve">
+    <value>StockTake Detail</value>
+  </data>
+  <data name="StockTakeResult_InventoryQty" xml:space="preserve">
+    <value>Inventory Qty</value>
+  </data>
+  <data name="StockTakeMaster_BaseInventoryDate" xml:space="preserve">
+    <value>BaseInventoryDate</value>
+  </data>
+  <data name="StockTakeDetail_Uom" xml:space="preserve">
+    <value>Uom</value>
+  </data>
+  <data name="StockTakeDetail_Saved" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="StockTakeResult_Uom" xml:space="preserve">
+    <value>Uom</value>
+  </data>
+  <data name="StockTakeResult_IsShowAdjust" xml:space="preserve">
+    <value>Is Show only Adjust</value>
+  </data>
+  <data name="StockTakeResult_BreakEvenCount" xml:space="preserve">
+    <value>BreakEvenCount</value>
+  </data>
+  <data name="StockTakeResult_LossCount" xml:space="preserve">
+    <value>LossCount</value>
+  </data>
+  <data name="StockTakeResult_ProfitCount" xml:space="preserve">
+    <value>ProfitCount</value>
+  </data>
+  <data name="StockTakeResult_StockTakeQty" xml:space="preserve">
+    <value>StockTakeQty</value>
+  </data>
+  <data name="StockTakeMaster_CostCenter" xml:space="preserve">
+    <value>CostCenter</value>
+  </data>
+  <data name="StockTakeDetailImported" xml:space="preserve">
+    <value>StockTakeDetailImported</value>
+  </data>
+  <data name="StockTakeMaster_Remark" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="StockTakeMaster_CancelDate" xml:space="preserve">
+    <value>CancelDate</value>
+  </data>
+  <data name="StockTakeMaster_CancelReason" xml:space="preserve">
+    <value>CancelReason</value>
+  </data>
+  <data name="StockTakeMaster_CancelUserName" xml:space="preserve">
+    <value>CancelUserName</value>
+  </data>
+  <data name="StockTakeMaster_CloseDate" xml:space="preserve">
+    <value>CloseDate</value>
+  </data>
+  <data name="StockTakeMaster_CloseUserName" xml:space="preserve">
+    <value>CloseUserName</value>
+  </data>
+  <data name="StockTakeMaster_CompleteDate" xml:space="preserve">
+    <value>CompleteDate</value>
+  </data>
+  <data name="StockTakeMaster_CompleteUserName" xml:space="preserve">
+    <value>CompleteUserName</value>
+  </data>
+  <data name="StockTakeMaster_CreateDate" xml:space="preserve">
+    <value>CreateDate</value>
+  </data>
+  <data name="StockTakeMaster_CreateUserName" xml:space="preserve">
+    <value>CreateUserName</value>
+  </data>
+  <data name="StockTakeMaster_LastModifyDate" xml:space="preserve">
+    <value>LastModifyDate</value>
+  </data>
+  <data name="StockTakeMaster_LastModifyUserName" xml:space="preserve">
+    <value>LastModifyUserName</value>
+  </data>
+  <data name="StockTakeMaster_ReleaseDate" xml:space="preserve">
+    <value>ReleaseDate</value>
+  </data>
+  <data name="StockTakeMaster_ReleaseUserName" xml:space="preserve">
+    <value>ReleaseUserName</value>
+  </data>
+  <data name="StockTakeMaster_StartUserDate" xml:space="preserve">
+    <value>StartUserDate</value>
+  </data>
+  <data name="StockTakeMaster_StartUserName" xml:space="preserve">
+    <value>StartUserName</value>
+  </data>
+</root>

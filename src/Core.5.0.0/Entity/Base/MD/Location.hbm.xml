@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.MD.Location, com.Sconit.Entity" table="MD_Location" lazy="false">
+        <cache usage="read-write" />
+        <id name="Code" column="Code" type="String" unsaved-value="null" >
+            <generator class="assigned" />
+        </id>
+        <property name="Name" column="Name" type="String" length="50" />
+        <property name="Region" column="Region" type="String" length="50" />
+        <!--<property name="Type" column="Type"  />-->
+        <property name="IsActive" column="IsActive" type="Boolean"  />
+        <property name="AllowNegative" column="AllowNegaInv" type="Boolean"  />
+        <property name="EnableAdvanceWarehouseManagment" column="EnableAdvWM" type="Boolean"  />
+        <property name="IsSpread" column="IsSpread" type="Boolean"  />
+        <property name="PickBy" column="PickBy"  />
+        <property name="IsConsignment" column="IsCS" type="Boolean"  />
+        <property name="IsMRP" column="IsMRP" type="Boolean"  />
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+        <property name="IsInventoryFreeze" column="IsInvFreeze" type="Boolean"  />
+        <property name="SAPLocation" column="SAPLocation" type="String" length="50" />
+        <property name="PartSuffix" column="PartSuffix" type="String" length="10" />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<com.Sconit.Entity.PRD.ProductLineLocationDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("MaterialInGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ProductLine);
+            columns.Bound(o => o.ProductLineFacility);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.BackFlushQty);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.IsClose).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsClose' <#= IsClose? checked='checked' : '' #> />"); ;
+
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxMaterialInList", "ProductLine"))
+                        .ClientEvents(events => events.OnDataBinding("MaterialInGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize );
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function MaterialInGrid_OnDataBinding(e) {
+            e.data = {
+                ProductLine: $('#ProductLine').val(),
+                ProductLineFacility: $('#ProductLineFacility').val(),
+                Item: $('#Item').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                IncludeClose: $('#IncludeClose').val(),
+            };
+        } 
+    </script>
+</fieldset>

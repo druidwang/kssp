@@ -1,0 +1,115 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.PurchasePlan>
+<script type="text/javascript">
+    function PurchasePlanGrid_OnDataBinding(e) {
+        var dateType = $("#DateType:checked").val() == undefined ? "4" : $("#DateType:checked").val();
+        var planDate = '';
+        if (dateType == 4) {
+            planDate = $("#PlanDate").val().format("yyyy-MM-dd");
+        }
+        else {
+            planDate = $("#DateIndex").val();
+        }
+        e.data = {
+            PlanVersion: $("#PlanVersion").val(),
+            Flow: $("#Flow").val(),
+            Item: $("#Item").val(),
+            PlanDate: planDate,
+            IsStartTime: $("#IsStartTime:checked").val() == "0"
+        };
+    }
+
+    function onSaveDetail(e) {
+        var grid = $("#PurchasePlanGrid").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            alert("明细不能为空。");
+            return;
+        }
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+        var purchaseDetails = grid.changeLog.serialize(inserted, updated, deleted);
+        grid._convert(purchaseDetails);
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/MaterialPlan/_SaveBatchEditing/",
+            data: $.extend(purchaseDetails, null),
+            success: function (data) {
+                DisplayJsonMessages(data);
+                var data1 = {
+                    flow: $('#Flow').val(),
+                    planVersion: $('#PlanVersion').val(),
+                    planDate: $('#PlanDate').val(),
+                    shift: $('#Shift').val()
+                };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/MaterialPlan/_GetPurchasePlanList/",
+                    data: data1,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $("#fdOrderDetail").html(data);
+                        $("#fdOrderDetail").show();
+                        $("tr.t-no-data").find("td").text("Loading...");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+<fieldset>
+ 
+    @(Html.Telerik().Grid(Model)
+                .Name("PurchasePlanGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            //commands.Insert();
+            commands.Custom().Text("保存编辑").HtmlAttributes(new { onClick = "onSaveDetail()", href = "#" });
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_AjaxList", "MaterialPlan", new {
+                planVersion = ViewBag.PlanVersion,
+                planDate = ViewBag.PlanDate,
+                planDateTo = ViewBag.PlanDateTo,
+                flow = ViewBag.Flow,
+                item = ViewBag.Item,
+                isStartTime = ViewBag.IsStartTime,
+                DateType = ViewBag.DateType
+            })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).Hidden(true);
+            columns.Bound(o => o.DateType).Hidden(true);
+            columns.Bound(o => o.Flow).Hidden(true);
+            columns.Bound(o => o.Flow).Width(150).ReadOnly(true);
+            columns.Bound(o => o.Item).Width(150).ReadOnly(true);
+            columns.Bound(o => o.ItemDescription).ReadOnly(true).Width(250);
+            columns.Bound(o => o.Uom).ReadOnly(true);
+            columns.Bound(o => o.UnitCount).ReadOnly(true);
+            columns.Bound(o => o.DateIndexValue).Title("时间").ReadOnly(true).Width(100);
+            columns.Bound(o => o.CurrentQty).Width(150).Format("{0:0.##}");
+            //columns.Bound(o => o.PlanVersion).ReadOnly(true).Width(150);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+
+</fieldset>

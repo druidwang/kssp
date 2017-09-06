@@ -1,0 +1,15 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    int? orderType = ViewBag.OrderType;
+    bool? isActive = ViewBag.IsActive;
+}
+@(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                    .Select("_OrderAjaxLoading", "Common", new { orderType = orderType, isActive = isActive }).Cache(true))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                .ClientEvents(events => events.OnChange("onOrderChange"))
+             )

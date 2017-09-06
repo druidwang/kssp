@@ -1,0 +1,30 @@
+﻿@using com.Sconit.Entity.INV;
+@model IEnumerable<com.Sconit.Entity.INV.LocationTransaction>
+@(Html.Telerik().Grid(Model).Name("_Loctrans")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.TransactionTypeFullDescription);
+            columns.Bound(o => o.QualityTypeDescription);
+            columns.Bound(o => o.IOTypeDescription);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.ReceiptNo);
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.Qty);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+<script type="text/javascript">
+    window.onload = function () {
+        $("tr.t-no-data").find("td").text("@Resources.GridLocalization.NoRecords");
+    }
+</script>

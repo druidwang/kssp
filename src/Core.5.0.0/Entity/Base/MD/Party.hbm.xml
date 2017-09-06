@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.MD.Party, com.Sconit.Entity" table="MD_Party" lazy="false">
+        <cache usage="read-write" />
+        <id name="Code" column="Code" type="String" unsaved-value="null" >
+            <generator class="assigned" />
+        </id>
+        <property name="Name" column="Name" type="String" length="100" />
+        <property name="LongName" column="LongName" type="String" length="500" />
+        <property name="IsActive" column="IsActive" type="Boolean"  />
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+        <joined-subclass name="com.Sconit.Entity.MD.Customer, com.Sconit.Entity" table="MD_Customer" lazy="false">
+            <key column="Code"/>
+        </joined-subclass>
+        <joined-subclass name="com.Sconit.Entity.MD.Supplier, com.Sconit.Entity" table="MD_Supplier" lazy="false">
+            <key column="Code"/>
+			<property name="ShortCode" column="ShortCode" type="String" length="50" />
+			<property name="PurchaseGroup" column="PurchaseGroup" type="String" length="50" />
+        </joined-subclass>
+        <joined-subclass name="com.Sconit.Entity.MD.Region, com.Sconit.Entity" table="MD_Region" lazy="false">
+            <key column="Code"/>
+            <property name="Plant" column="Plant" type="String" length="50" />
+            <property name="Workshop" column="Workshop" type="String" length="50" />
+        </joined-subclass>
+		<joined-subclass name="com.Sconit.Entity.MD.Carrier, com.Sconit.Entity" table="MD_Carrier" lazy="false">
+			<key column="Code"/>
+		</joined-subclass>
+    </class>
+</hibernate-mapping>

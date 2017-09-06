@@ -1,0 +1,171 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Procurement_QuickNew" });
+}
+<script type="text/javascript">
+    function Flow_Change(e) {
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+                $("#fdOrderDetail").hide();
+            } else {
+                var data = { "flow": e.value };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/ProcurementOrder/_OrderDetailList/",
+                    data: data,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $("#fdOrderDetail").html(data);
+                        $("#fdOrderDetail").show();
+
+                        $("tr.t-no-data").find("td").text("Loading...");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+
+    function onQuickCreate() {
+
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error('订单明细不能为空。');
+            return;
+        }
+
+        if ($("#onsumitType").val() == 0) {
+            var Sequences = new Array();
+            var Items = new Array();
+            var ReferenceItemCodes = new Array();
+            var ItemDescriptions = new Array();
+            var UnitCounts = new Array();
+            var UnitCountDescriptions = new Array();
+            var Uoms = new Array();
+            var LocationFroms = new Array();
+            var LocationTos = new Array();
+            var OrderedQtys = new Array();
+            var HuTos = new Array();
+            var Remarks = new Array();
+            var isProcurement = ($("#IsProcurement").val().toUpperCase() == "TRUE");
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            var i = 0;
+            var orderedIndex = grid.columns.length - 3;
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var row = $(rows[rowIndex]);
+                if ($.trim(row[0].childNodes[1].innerText) != "" && parseFloat($.trim(row[0].childNodes[orderedIndex].innerText)) > 0) {
+                    Sequences[i] = $.trim(row[0].childNodes[1].innerText);
+                    Items[i] = $.trim(row[0].childNodes[2].innerText);
+                    UnitCounts[i] = $.trim(row[0].childNodes[5].innerText);
+                    Uoms[i] = $.trim(row[0].childNodes[6].innerText);
+                    if (!isProcurement) {
+                        LocationFroms[i] = $.trim(row[0].childNodes[8].innerText);
+                        LocationTos[i] = $.trim(row[0].childNodes[9].innerText);
+                    }
+                    else {
+                        LocationTos[i] = $.trim(row[0].childNodes[8].innerText);
+                    }
+                    HuTos[i] = $.trim(row[0].childNodes[orderedIndex - 1].innerText);
+                    OrderedQtys[i] = $.trim(row[0].childNodes[orderedIndex].innerText);
+                    Remarks[i] = $.trim(row[0].childNodes[orderedIndex + 1].innerText);
+                    i++;
+                }
+            }
+            var ordermstr = {
+                "Flow": $("#Flow").val(),
+                "EffectiveDate": $("#EffectiveDate").val(),
+                "ReferenceOrderNo": $("#ReferenceOrderNo").val(),
+                "ExternalOrderNo": $("ExternalOrderNo").val(),
+                "IsQuick": true
+            }
+            var made = {
+                "Sequences": Sequences,
+                "Items": Items,
+                "UnitCounts": UnitCounts,
+                "Uoms": Uoms,
+                "LocationFroms": LocationFroms,
+                "LocationTos": LocationTos,
+                "OrderedQtys": OrderedQtys,
+                "HuTos": HuTos,
+                "Remarks": Remarks
+            }
+
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "/ProcurementOrder/NewOrder/",
+                data: $.extend(made, ordermstr),
+                traditional: true,
+                success: function (data, ordermstr) {
+                    //debugger
+                    if (data != null && data.Data != null && data.Data.OrderNo != undefined) {
+                        window.location.href = "/ProcurementOrder/Edit/?orderNo=" + data.Data.OrderNo;
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new { controlName = "Flow", type = (int)com.Sconit.CodeMaster.OrderType.Procurement, isChange = true, isCreateOrder = true });
+                }
+                @Html.ValidationMessageFor(model => model.Flow)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EffectiveDate)
+            </div>
+            <div class="editor-field-2">
+                <div class="editor-field-2">
+                    @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm")
+                .Name("EffectiveDate")
+                        )
+                </div>
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReferenceOrderNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ReferenceOrderNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ExternalOrderNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ExternalOrderNo)
+            </div>
+        </div>
+        <div class="editor-footer">
+     @Html.Button(Resources.SYS.Global.Button_New, "Url_OrderMstr_Procurement_Submit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNew"},
+        {"needconfirm","true"},
+        {"onclick","onQuickCreate()"}
+	})
+        </div>
+    </fieldset>
+   
+    <div id="fdOrderDetail" style="display: none;">
+    </div>
+   
+}

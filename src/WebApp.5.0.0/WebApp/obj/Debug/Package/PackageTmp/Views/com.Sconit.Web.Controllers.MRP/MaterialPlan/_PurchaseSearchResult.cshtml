@@ -1,0 +1,68 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.PurchasePlan>
+<script type="text/javascript">
+    function PurchasePlanGrid_OnDataBinding(e) {
+        var dateType = $("#DateType:checked").val() == undefined ? "4" : $("#DateType:checked").val();
+        var planDate = '';
+        if (dateType == 4) {
+            planDate = $("#PlanDate").val().format("yyyy-MM-dd");
+        }
+        else {
+            planDate = $("#DateIndex").val();
+        }
+        e.data = {
+            PlanVersion: $("#PlanVersion").val(),
+            Flow: $("#Flow").val(),
+            Item: $("#Item").val(),
+            PlanDate: planDate,
+            IsStartTime: $("#IsStartTime:checked").val() == "0"
+        };
+    } 
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PurchasePlanGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InLine))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).Hidden(true);
+            columns.Bound(o => o.DateType).Hidden(true); 
+            columns.Bound(o => o.Flow).Hidden(true);
+            columns.Bound(o => o.Flow).Width(150).ReadOnly(true);
+            columns.Bound(o => o.Item).Width(150).ReadOnly(true);
+            columns.Bound(o => o.Item).ReadOnly(true).Width(150);
+            columns.Bound(o => o.CurrentQty).Width(150).Format("{0:0.##}");
+            columns.Bound(o => o.PlanVersion).ReadOnly(true).Width(150);
+
+            columns.Command(commands =>
+            {
+                commands.Edit();
+            });
+        })
+        .DataBinding(dataBinding =>
+        {
+            dataBinding.Ajax()
+                .Update("_Update", "MaterialPlan", new
+                {
+                    planVersion = ViewBag.PlanVersion,
+                    planDate = ViewBag.PlanDate,
+                    flow = ViewBag.Flow,
+                    item = ViewBag.Item,
+                    isStartTime = ViewBag.IsStartTime
+                })
+                .Select("_AjaxList", "MaterialPlan");
+        })
+        .ClientEvents(events => events.OnDataBinding("PurchasePlanGrid_OnDataBinding"))
+
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+    )
+</fieldset>

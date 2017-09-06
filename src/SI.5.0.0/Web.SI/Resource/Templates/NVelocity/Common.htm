@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>$Title </title>
+    <style type="text/css">
+        body
+        {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 8pt;
+            color: black;
+        }
+        h2
+        {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 14pt;
+            color: maroon;
+        }
+        pre
+        {
+            font-family: "Lucida Console";
+            font-size: 8pt;
+            whitewhite-space: pre-wrap; /* css-3 */
+            whitewhite-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+            whitewhite-space: -pre-wrap; /* Opera 4-6 */
+            whitewhite-space: -o-pre-wrap; /* Opera 7 */
+            word-wrap: break-word; /* Internet Explorer 5.5+ */
+            whitewhite-space: normal; /* Internet Explorer 5.5+ */
+        }
+    </style>
+</head>
+<body bgcolor="white">
+    <h2>
+        <i>$Title</i>
+    </h2>
+    #foreach($itemError in $ItemErrors)
+    <hr width="100%" size="1" style="color: silver" />
+    <pre>
+    $!itemError.Message
+</pre>
+    <pre>
+    $!itemError.Exception.HelpLink
+</pre>
+    #end
+    <hr width="100%" size="1" style="color: silver" />
+</body>
+</html>

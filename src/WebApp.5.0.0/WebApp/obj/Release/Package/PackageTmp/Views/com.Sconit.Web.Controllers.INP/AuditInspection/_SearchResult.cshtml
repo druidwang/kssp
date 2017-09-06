@@ -1,0 +1,130 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.LocationLotDetail>
+   <script type="text/javascript">
+       $(function () {
+           $("#checkAll").click(function () {
+               $('input[name="checkedRecords"]').attr("checked", this.checked);
+               $("#btnSumitInspectionHuId").attr("style", this.checked ? "display:inline" : "display:none");
+           });
+       });
+       function showButtons() {
+           var $checkRecords = $("input[name='checkedRecords']");
+           var showButton = false;
+           for (var i = 0; i < $checkRecords.length; i++) {
+               if ($checkRecords[i].checked) {
+                   showButton = true;
+                   break;
+               }
+           }
+           $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+           $("#btnSumitInspectionHuId").attr("style", showButton ? "display:inline" : "display:none");
+       }
+</script>
+<fieldset>
+    <legend>@Resources.ORD.OrderMaster.OrderMaster_Ship_Title</legend>
+    @(
+        Html.Telerik().Grid(Model)
+          .Name("OrderMasterGrid")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.Id);
+          })
+          .Columns(columns =>
+          {
+              columns.Bound(o=> o.CheckOrderNo)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>'   onClick='showButtons()' />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+
+              columns.Bound(o => o.HuId);
+              columns.Bound(o => o.HuQty);
+              columns.Bound(o => o.Location);
+              columns.Bound(o => o.Item);
+              columns.Bound(o => o.ItemDescription);
+              columns.Bound(o => o.UnitCount);
+              columns.Bound(o => o.LotNo);
+              columns.Bound(o => o.IsFreeze).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsFreeze' <#= IsFreeze? checked='checked' : '' #> />"); ; ;
+              columns.Bound(o => o.IsConsignment).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsConsignment' <#= IsConsignment? checked='checked' : '' #> />"); ;
+             
+              columns.Bound(o => o.CreateDate);
+          })
+                   .CellAction(cell =>
+                   {
+                       if (cell.Column.Member == "CheckOrderNo")
+                       {
+                           cell.Text = string.Format("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='{0}'  />", cell.DataItem.Id);
+                       }
+                   })
+          .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "AuditInspection"))
+        .ClientEvents(events => events.OnDataBinding("LocationDetailGrid_OnDataBinding"))
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+ @Html.Hidden("Region_Value", (string)ViewBag.Region)
+<script type="text/javascript">
+
+    function CheckedSumitInspectionHuId() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var checkedIds = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedIds == "") {
+                    checkedIds =$checkRecords[i].value;
+                } else {
+                    checkedIds += "," + $checkRecords[i].value;
+                }
+            }
+        }
+        if (checkedIds == "") {
+            alert('Must Check One');
+            return;
+        }
+
+        var data = {
+            "checkedIds": checkedIds,
+            "Region": $('#Region_Value').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            data: data,
+            url: "/AuditInspection/New/",
+            cache: false,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        data: { id: data },
+                        url: "/InspectionOrder/Edit/",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+
+    }
+
+    function LocationDetailGrid_OnDataBinding(e) {
+        e.data = {
+            Location: $('#Location').val(),
+            Item: $('#Item').val(),
+            LotNoFrom: $('#LotNoFrom').val(),
+            LotNoTo: $('#LotNoTo').val(),
+            IsFreeze: $("input[type=checkbox][name=IsFreeze]:checked").val(),
+            IsConsignment: $("input[type=checkbox][name=IsConsignment]:checked").val()
+        };
+    } 
+
+</script>

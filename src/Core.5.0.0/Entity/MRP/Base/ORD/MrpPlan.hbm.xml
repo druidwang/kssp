@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="com.Sconit.Entity.MRP.ORD.MrpPlan, com.Sconit.Entity" table="MRP_MrpPlan" lazy="false">
+    <composite-id>
+      <key-property name="PlanDate" column="PlanDate" type="DateTime"/>
+      <key-property name="Item" column="Item" type="String" length="50" />
+      <key-property name="Flow" column="Flow" type="String" length="50" />
+      <key-property name="Location" column="Location" type="String" length="50"  />
+    </composite-id>
+		<property name="Qty" column="Qty" type="Double"  />
+		<property name="OrderType" column="OrderType"   />
+		<property name="Party" column="Party" type="String" length="50" />
+    <property name="PlanVersion" column="PlanVersion" type="Int32"  />
+		<property name="OrderQty" column="OrderQty" type="Double"  />
+		<property name="ShippedQty" column="ShippedQty" type="Double"  />
+    <property name="ReceivedQty" column="ReceivedQty" type="Double"  />
+    
+  </class>
+</hibernate-mapping>

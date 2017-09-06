@@ -1,0 +1,141 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.LocationLotDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model).Name("HuLocationLotDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id)
+              .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' onClick='showButtons();' value='<#= Id #>'   />")
+              .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+              .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemFullDescription).Sortable(false);
+            columns.Bound(o => o.HuStatusOccupyTypeDescription);
+            //columns.Bound(o => o.HuOptionDesc);
+            //columns.Bound(o => o.ItemVersion);
+            columns.Bound(o => o.ManufactureParty);
+            columns.Bound(o => o.QualityTypeDescription);
+            columns.Bound(o => o.IsConsignment)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsConsignment' name='IsConsignment' value='<#= IsConsignment #>' <#=IsConsignment? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsFreeze)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsFreeze' name='IsFreeze' value='<#= IsFreeze #>' <#=IsFreeze? checked='checked' : '' #> style=<#=IsFreeze? 'background-color:red' : '' #> />");
+            columns.Bound(o => o.IsATP)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsATP' name='IsATP' value='<#= IsATP #>' <#=IsATP? checked='checked' : '' #> style=<#=IsATP? 'background-color:blue' : '' #> />");
+            columns.Bound(o => o.HuQty);
+            columns.Bound(o => o.HuUom);
+            columns.Bound(o => o.Qty);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .Sortable()
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "MauallySettleCsBill"))
+        .ClientEvents(events => events.OnDataBinding("HuLocationLotDetailGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(50);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function HuLocationLotDetailGrid_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                Location: $('#Location').val(),
+                Party: $('#Party').val(),
+                HuId: $('#HuId').val()
+            };
+        }
+
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+                //$("#btnSettleBill").attr("style", this.checked ? "display:inline" : "display:none");
+            });
+        });
+
+        function showButtons() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            //$("#btnSettleBill").attr("style", showButton ? "display:inline" : "display:none");
+        }
+
+
+        function HuMasterGrid_OnDataBinding(e) {
+            e.data = {
+                HuId: $('#HuId').val(),
+                Item: $('#Item').val(),
+                lotNo: $('#lotNo').val(),
+                lotNoTo: $('#LotNoTo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+            }
+        }
+
+
+        function SettleBill(isExport) {
+            var $checkRecords = $("input[name='checkedRecords']");
+
+            var checkedLocDetId = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    if (checkedLocDetId == "") {
+                        checkedLocDetId = $checkRecords[i].value;
+                    } else {
+                        checkedLocDetId += "," + $checkRecords[i].value;
+                    }
+                }
+            }
+            if (checkedLocDetId == "") {
+                alert('Must Check One');
+                return;
+            }
+
+            var data = {
+                "checkedLocDetId": checkedLocDetId
+            };
+
+            if (isExport) {
+                $.ajax({
+                    type: "post",
+                    dataType: "Json",
+                    url: "/MauallySettleCsBill/SettleCsBill/",
+                    data: data,
+                    cache: false,
+                    success: function (data, textStatus) {
+
+                        if (data.Message != "结算成功") {
+                            $message.error(data.Message)
+                        }
+                        else {
+                            $message.success(data.Message)
+                            $("#checkedLocDetId").val(checkedLocDetId);
+                            $('form').submit();
+                        }
+
+                    }
+                });
+            }
+        }
+
+    </script>
+</fieldset>
+

@@ -1,0 +1,99 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.LocationArea
+@Html.Partial("_AjaxMessage")
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MD.LocationArea.LocationArea_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label for="Location_Code">
+                    @Resources.MD.Location.Location_Code
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @ViewBag.LocationCode
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+                 <label for="LocationArea_Code">
+                    @Resources.MD.LocationArea.LocationArea_Code
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model => model.Code, new { id = "AreaCode" })
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                 <label for="LocationArea_Name">
+                    @Resources.MD.LocationArea.LocationArea_Name
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBoxFor(model => model.Name, new { id = "AreaName" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="editor-label-2">
+                 <label for="LocationArea_IsActive">
+                    @Resources.MD.LocationArea.LocationArea_IsActive
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("AreaIsActive", true)
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="btnNew" onclick="btnNewLocationArea2_Click()">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="btnBackLocationArea_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+
+<script language="javascript" type="text/javascript">
+    function btnBackLocationArea_Click() {
+        var data = {
+            "locationCode": $("#LocationCode").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/location/_LocationAreaList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnNewLocationArea2_Click() {        
+        var data = {
+            "locationCode": $("#LocationCode").val(),
+            "Code": $("#AreaCode").val(),
+            "Name": $("#AreaName").val(),
+            "IsActive": $("#AreaIsActive").is(':checked')
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/location/_LocationAreaNew/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+</script>

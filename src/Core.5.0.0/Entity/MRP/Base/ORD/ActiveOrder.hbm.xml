@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.ORD.ActiveOrder, com.Sconit.Entity" table="MRP_ActiveOrder" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="OrderNo" column="OrderNo" type="String" length="50" />
+    <property name="OrderDetId" column="OrderDetId" type="Int32" />
+    <property name="Flow" column="Flow" type="String" length="50" />
+    <property name="OrderType" column="OrderType" />
+    <property name="LocationFrom" column="LocationFrom" type="String" length="50" />
+    <property name="LocationTo" column="LocationTo" type="String" length="50" />
+    <property name="Item" column="Item" type="String" length="50" />
+    <property name="StartTime" column="StartTime" type="DateTime"  />
+    <property name="WindowTime" column="WindowTime" type="DateTime"  />
+    <property name="OrderQty" column="OrderQty" type="Double"  />
+    <property name="ShippedQty" column="ShippedQty" type="Double"  />
+    <property name="ReceivedQty" column="ReceivedQty" type="Double"  />
+    <!--<property name="TransitQty" column="TransitQty" type="Double"  />-->
+    <property name="SnapTime" column="SnapTime" type="DateTime"  />
+    <property name="PartyTo" column="PartyTo" type="String" length="50" />
+    <property name="PartyFrom" column="PartyFrom" type="String" length="50" />
+    <property name="IsIndepentDemand" column="IsIndepentDemand" type="Boolean"  />
+    <property name="ResourceGroup" column="ResourceGroup"  />
+    <property name="Shift" column="Shift"  type="String" length="50"  />
+    <property name="Bom" column="Bom"  type="String" length="50"  />
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,111 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.INP.RejectMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_RejectOrder_View" });
+}
+<div id="DivEdit">
+    @using (Html.BeginForm("Submit", "RejectOrder"))
+    {
+        <fieldset>
+            <div class="editor">
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.RejectNo)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.RejectNo)
+                    @Html.HiddenFor(model => model.RejectNo)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Status)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.RejectMasterStatusDescription)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.HandleResult)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.RejectMasterHandleResultDescription)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.InspectTypeDescription)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.InspectTypeDescription)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CreateUserName)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CreateUserName)
+                </div>
+                <div class="editor-label-2">
+                    @Html.LabelFor(model => model.CreateDate)
+                </div>
+                <div class="editor-field-2">
+                    @Html.DisplayFor(model => model.CreateDate)
+                </div>
+            </div>
+            <div class="editor-footer">
+                @{if (Model.Status == com.Sconit.CodeMaster.RejectStatus.Create)
+                  {
+                    @Html.Button(Resources.SYS.Global.Button_Submit, "Url_RejectOrder_New", new Dictionary<string, string>()
+	                {
+	                    {"type", "submit"},
+	                    {"id", "btnSubmit"},
+                        {"needconfirm","true"}
+	                })
+                  }
+                }
+                @{if (Model.Status == com.Sconit.CodeMaster.RejectStatus.InProcess || Model.Status == com.Sconit.CodeMaster.RejectStatus.Submit)
+                  {
+                    @Html.Button(Resources.SYS.Global.Button_Close, "Url_RejectOrder_New", new Dictionary<string, string>()
+	                {
+	                    {"type", "button"},
+	                    {"id", "btnClose"},
+                        {"needconfirm","true"},
+                        {"onclick","location.href='"+Url.Content("~/RejectOrder/Close/" + Model.RejectNo) +"'"}
+	                })
+                  }
+                }
+                 @Html.Button(Resources.SYS.Global.Button_Print, "Url_RejectOrder_View", new Dictionary<string, string>()
+	                {
+	                    {"type", "button"},
+	                    {"id", "btnPrint"},
+                        {"needconfirm","true"},
+                        {"onclick","Print()"}
+	                })
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/RejectOrder/List")'">
+                    @Resources.SYS.Global.Button_Back</button>
+            </div>
+            @Html.Hidden("RejectNo", Model.RejectNo)
+        </fieldset>
+    }
+</div>
+<div id="RejectDetailDiv">
+    @{
+        Html.RenderAction("RejectDetail", "RejectOrder", new { rejectNo = Model.RejectNo, status = (int)Model.Status, inspectType = (int)Model.InspectType });
+    }
+</div>
+<script type="text/javascript">
+    function Print(e) {
+        var data = {
+            "rejectNo": $("#RejectNo").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "/RejectOrder/Print/",
+            data: data,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    PrintOrder(data);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>

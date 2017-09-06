@@ -1,0 +1,60 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpDetail>
+<fieldset>
+    <legend>@Resources.ORD.IpDetail.IpDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("IpDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden()
+                .ClientTemplate(string.Format("<input type='text' id='Id' name='Id' style='display:none' value='<#=Id #>'/>"));
+
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount).Format("{0:0.###}");
+     
+
+            columns.Bound(o => o.LocationToName);
+
+            columns.Bound(o => o.Qty).Format("{0:0.###}");
+            columns.Bound(o => o.ReceivedQty).Format("{0:0.###}");
+            columns.Bound(o => o.CurrentReceiveQty)
+                .ClientTemplate(string.Format("<input type='text' id='CurrentReceiveQty' name='CurrentReceiveQty' style='width:70px' value='<#=Qty-ReceivedQty #>'/>"));
+            
+            
+            
+        })
+                 .CellAction(cell =>
+                 {
+                     if (cell.Column.Member == "Id")
+                     {
+                         cell.Text = string.Format("<input type='text' id='Id' name='Id' style='display:none' value='" + cell.DataItem.Id + "'/>");
+                     }
+                     //if (cell.Column.Member == "CurrentReceiveQty")
+                     //{
+                     //    cell.Text = string.Format("<input type='text' id='CurrentReceiveQty' name='CurrentReceiveQty' style='width:70px' value='" + cell.DataItem.CurrentReceiveQty + "'/>");
+                     //}
+                 })
+                 .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxReceiveIpDetailList", "ProcurementIpMaster"))
+                .ClientEvents(events => events.OnDataBinding("IpMasterGrid_OnDataBinding"))
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+    @Html.Hidden("ipNo",(string)ViewBag.ipNo)
+</fieldset>
+<script type="text/javascript">
+    function IpMasterGrid_OnDataBinding(e) {
+        e.data = {
+            "ipNo":$("#ipNo").val()
+        }
+    }
+</script>

@@ -1,0 +1,56 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset>
+    @using (Html.BeginForm("List", "Region"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Region_Code">
+                    @Resources.MD.Region.Region_Code 
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["PartySearchModel"] != null ? ((PartySearchModel)TempData["PartySearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Region_Name">
+                    @Resources.MD.Region.Region_Name 
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Name", TempData["PartySearchModel"] != null ? ((PartySearchModel)TempData["PartySearchModel"]).Name : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="Region_Plant">
+                    @Resources.MD.Region.Region_Plant
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Plant", TempData["PartySearchModel"] != null ? ((PartySearchModel)TempData["PartySearchModel"]).Plant : string.Empty)
+            </div>
+            @*<div class="search-label">
+                <label for="Region_Workshop">
+                    @Resources.MD.Region.Region_Workshop
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Workshop", TempData["PartySearchModel"] != null ? ((PartySearchModel)TempData["PartySearchModel"]).Workshop : string.Empty)
+            </div>*@
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+           @* <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/Region/New")'">
+                @Resources.SYS.Global.Button_New</button>*@
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_Region_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnNew"},
+                {"onclick","location.href='"+@Url.Content("~/Region/New")+"'"}
+	        })
+        </div>
+
+    }
+</fieldset>

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderBinding>
+
+<fieldset>
+<legend>@Resources.ORD.OrderBinding.OrderBinding_BindedOrder</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderBinded")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.BindFlowStrategyDescription);
+            columns.Bound(o => o.BindTypeDescription);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxOrderBinded", "OrderBinding", new { orderNo = ViewBag.orderNo }))
+       .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

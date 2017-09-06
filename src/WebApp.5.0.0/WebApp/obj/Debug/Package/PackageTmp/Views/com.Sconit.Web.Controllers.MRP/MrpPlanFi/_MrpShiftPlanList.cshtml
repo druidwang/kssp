@@ -1,0 +1,148 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpFiShiftPlan>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onSaveDetail(e) {
+        var grid = $("#OrderDetail").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            alert("明细不能为空。");
+            return;
+        }
+        var inserted = grid.changeLog.inserted;
+        var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+        var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+        var orderDetails = grid.changeLog.serialize(inserted, updated, deleted);
+        grid._convert(orderDetails);
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/MrpPlanFi/_SaveBatchEditing/",
+            data: $.extend(orderDetails, null),
+            success: function (data) {
+                DisplayJsonMessages(data);
+                var data1 = {
+                    flow: $('#Flow').val(),
+                    planVersion: $('#PlanVersion').val(),
+                    planDate: $('#PlanDate').val(),
+                    shift: $('#Shift').val()
+                };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/MrpPlanFi/_MrpShiftPlanList/",
+                    data: data1,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $("#fdOrderDetail").html(data);
+                        $("#fdOrderDetail").show();
+                        $("tr.t-no-data").find("td").text("Loading...");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function onCreate() {
+        if ($('#Flow').val() == "") {
+            $message.error('路线不能为空。');
+            return;
+        }
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        if ($('#PlanDate').val() == "") {
+            $message.error('计划时间不能为空。');
+            return;
+        }
+        if ($('#Shift').val() == "") {
+            $message.error('班次不能为空。');
+            return;
+        }
+        var data = {
+            flow: $('#Flow').val(),
+            planVersion: $('#PlanVersion').val(),
+            planDate: $('#PlanDate').val(),
+            shift: $('#Shift').val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/MrpPlanFi/_CreateOrder/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                DisplayJsonMessages(data);
+                
+                if (data != null && data.Data != null) {
+                    window.location.href = "/ProductionOrder/Edit/?orderNo=" + data.Data;
+                }
+                $("#fdOrderDetail").hide();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @if (ViewBag.IsRelease)
+    {
+        <fieldset>
+            <div class="editor-footer">
+                @Html.Button(Resources.SYS.Global.Button_Create, "Url_Mrp_MrpPlanFi_Shift", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnCreate"},
+                    {"needconfirm","true"},
+                    {"onclick","onCreate()"},
+	            })
+            </div>
+        </fieldset>
+    }
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.GetHashCode());
+        })
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            //commands.Insert();
+            commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSaveDetail()", href = "#" });
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_SelectBatchEditing", "MrpPlanFi", new { planVersion = ViewBag.PlanVersion, flow = ViewBag.Flow, planDate = ViewBag.PlanDate, shift = ViewBag.Shift })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence).Width(57);
+            columns.Bound(o => o.Island).ReadOnly();
+            columns.Bound(o => o.IslandDescription).ReadOnly();
+            columns.Bound(o => o.Machine).ReadOnly();
+            columns.Bound(o => o.MachineDescription).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly().ReadOnly();
+            columns.Bound(o => o.ItemDescription).ReadOnly().ReadOnly();
+            //columns.Bound(o => o.ReferenceItemCode).Width(80).ReadOnly().ReadOnly();
+            columns.Bound(o => o.Uom).Width(30).ReadOnly();
+            columns.Bound(o => o.UnitCount).Width(60);
+            columns.Bound(o => o.Qty).Width(60);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+
+</fieldset>

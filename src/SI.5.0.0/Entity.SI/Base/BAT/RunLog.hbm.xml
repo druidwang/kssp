@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.BAT.RunLog, com.Sconit.Entity.SI" table="BAT_RunLog" lazy="false">
+		<id name="Id" column="Id" type="Decimal" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="JobCode" column="JobCode" type="String" length="50"/>	
+		<property name="TriggerName" column="TriggerName" type="String" length="50"/>	
+		<property name="StartTime" column="StartTime" type="DateTime"/>	
+		<property name="EndTime" column="EndTime" type="DateTime"/>	
+		<property name="Status" column="Status"/>	
+		<property name="Message" column="Message" type="String" length="2000"/>	
+  	</class>
+</hibernate-mapping>

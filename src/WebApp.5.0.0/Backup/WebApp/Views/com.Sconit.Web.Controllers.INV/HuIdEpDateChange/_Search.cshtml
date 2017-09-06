@@ -1,0 +1,92 @@
+﻿@using com.Sconit.Web.Models.SearchModels.INV
+<fieldset>
+    @using (Html.BeginForm("List", "HuIdEpDateChange"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Location
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_LocationComboBox", "Common", new
+                    {
+                        controlName = "Location",
+                        selectedValue = TempData["HuTransSearchModel"] != null ? ((HuTransSearchModel)TempData["HuTransSearchModel"]).Location : string.Empty
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.LocationLotDetail.LocationLotDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_ItemComboBox", "Common", new
+                    {
+                        controlName = "Item",
+                        selectedValue = TempData["HuTransSearchModel"] != null ? ((HuTransSearchModel)TempData["HuTransSearchModel"]).Item : string.Empty
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.Hu_lotNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LotNo", string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.INV.Hu.Hu_lotNoTo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("LotNoTo", string.Empty)
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsIncludeAll", TempData["HuTransSearchModel"] != null ? (((HuTransSearchModel)TempData["HuTransSearchModel"]).IsIncludeAll == true ? true : false) : false)@Resources.EXT.PageLan.AllBarCodes
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+                
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    function LocationBin_DataBinding(e) {
+        e.data = {
+            Location: $('#Location').val()
+        }
+    }
+
+    function Location_Change(e) {
+        if (e.value != "") {
+            $('#Bin').data('tComboBox').value('');
+            $('#Bin').data('tComboBox').text('');
+            $("#Bin").data("tComboBox").reload();
+        }
+    }
+    var t = "";
+    $('#btnSearch').click(function () {
+
+        if ($('#LotNo').val()=="" || $('#LotNoTo').val()=="")
+        {
+             $message.error('开始和结束制造日期为必填项。');
+            return;
+        }
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+</script>

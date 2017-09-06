@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Production_ProdIO" });
+}
+@Html.Partial("_Search")
+@if (ViewBag.DisplayType == (int)com.Sconit.CodeMaster.GridDisplayType.Detail)
+{
+    @Html.Partial("_SearchResult");
+}
+else if (ViewBag.DisplayType == (int)com.Sconit.CodeMaster.GridDisplayType.Summary)
+{
+    @Html.Partial("_SummarySearchResult");
+}

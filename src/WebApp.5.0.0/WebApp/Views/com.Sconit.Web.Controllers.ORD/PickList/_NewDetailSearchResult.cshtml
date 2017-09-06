@@ -1,0 +1,113 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    <script type="text/javascript">
+        function OrderDetailGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                PartyTo: $('#PartyTo').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                Item: $('#Item').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                LocationTo: $('#LocationTo').val(),
+                LocationToTo: $('#LocationToTo').val(),
+                LocationFrom: $('#LocationFrom').val(),
+                LocationFromTo: $('#LocationFromTo').val()
+            }
+        }
+
+
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+                $("#btnCreate").attr("style", this.checked ? "display:inline" : "display:none");
+            });
+            j = 1;
+        });
+        var j = 1;
+        function OrderDetailGrid_OnRowDataBound(e) {
+            if (j > 1) { return; }
+            j++;
+            var $checkRecords = $("input[name='checkedRecords']");
+            $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+
+            $checkRecords.each(function (a, b) {
+                var WindowTime = $(b).parent().parent().children().eq(10).text();
+                var WindowTimes = WindowTime.split(' ');
+                var dates = WindowTimes[0].split('/');
+                winMonth = parseInt(dates[1]) > 9 ? dates[1] : "0" + dates[1];
+                winDay = parseInt(dates[2]) > 9 ? dates[2] : "0" + dates[2];
+                var newWindowTime = winMonth + '-' + winDay + '-' + dates[0] + ' ' + WindowTimes[1];
+
+                var date = new Date();
+                var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : "0" + (date.getMonth() + 1);
+                var day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+                var currentDate = date.getFullYear() + "-" + month + "-" + day + ' ' + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                currentDate = month + '-' + day + '-' + date.getFullYear() + ' ' + ' ' + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
+                //   alert(Date.parse(currentDate) + "   " + currentDate + "=====" + newWindowTime + "  " + Date.parse(newWindowTime));
+                var a = (Date.parse(currentDate) - Date.parse(newWindowTime)) / 3600 / 1000;
+                if (a > 0) {
+                    $(b).parent().parent().children().eq(10).html("<font color='red'>" + WindowTime + "</font>");
+                }
+
+            });
+        }
+
+        function showButtons(e) {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            $("#btnCreate").attr("style", showButton ? "display:inline" : "display:none");
+        }
+
+    </script>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords'  value='<#= Id #>'  onClick='showButtons(this)' />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll'  />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.DirectionDescription);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.CurrentPickListQty).Format("{0:0.##}");
+            columns.Bound(o => o.LocationQty).Format("{0:0.##}");
+            columns.Bound(o => o.CurrentPickQty)
+                .ClientTemplate("<input type='text' id='CurrentPickQty' name='CurrentPickQty' style='width:70px'    value='<#= CurrentPickListQty #>'/>").Format("{0:0.########}");
+        })
+                 .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxNewDetail", "PickList"))
+                       .ClientEvents(events => events.OnDataBinding("OrderDetailGrid_OnDataBinding")
+                      .OnRowDataBound("OrderDetailGrid_OnRowDataBound"))
+       .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);//ViewBag.PageSize == null ? 20 : ViewBag.PageSize
+        })
+        .Scrollable(c => c.Enabled(false))
+           .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+        .Footer(true)
+    )
+</fieldset>

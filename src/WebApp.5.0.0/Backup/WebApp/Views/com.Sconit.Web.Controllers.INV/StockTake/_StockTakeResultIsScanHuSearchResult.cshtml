@@ -1,0 +1,61 @@
+﻿@model IList<com.Sconit.Entity.INV.StockTakeResultSummary>
+@* @model IEnumerable<com.Sconit.Entity.INV.NewStockTakeResult>*@
+<script type="text/javascript">
+    function StockTakeResultIsScanHuGridView_OnDataBinding(e) {
+        e.data = {
+            Item: $('#Item').val(),
+            stNo: $("#StNo").val(),
+            Location: $("#Location").val(),
+            LocationBin: $("#LocationBin").val(),
+            IsLoss: $("#IsLoss").is(':checked'),
+            IsProfit: $("#IsProfit").is(':checked'),
+            IsBreakEven: $("#IsBreakEven").is(':checked'),
+            isFromList: "true",
+            IsAdjust: $("#IsAdjust").is(':checked')
+        };
+    }
+    function onComplete(location, item, stNo, bin, isShortage, isProfit, isMatch) {
+
+        var detailWindow = $("#StockTakeResultDetailGridWindow").data("tWindow");
+        detailWindow.ajaxRequest("/StockTake/_StockTakeResultDetail/", { Location: location, Item: item, LocationBin: bin, StNo: $("#StNo").val(), listShortage: isShortage, listProfit: isProfit, listMatch: isMatch })
+        detailWindow.center().open();
+    }
+
+
+</script>
+@(Html.Telerik().Grid(Model)
+                .Name("StockTakeResultIsScanHuGridView")
+        .Columns(columns =>
+        {
+
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.ShortageQty).ClientTemplate(string.Format("<a href=\"javascript:onComplete({0},{1},{2},{3},true,false,false)\">{4}</a>", "'<#=Location #>'", "'<#=Item #>'", "'<#=StNo #>'", "'<#=Bin #>'", "<#=ShortageQty==0?null:ShortageQty#>"));
+            columns.Bound(o => o.ProfitQty).ClientTemplate(string.Format("<a href=\"javascript:onComplete({0},{1},{2},{3},false,true,false)\">{4}</a>", "'<#=Location #>'", "'<#=Item #>'", "'<#=StNo #>'", "'<#=Bin #>'", "<#=ProfitQty==0?null:ProfitQty#>"));
+            columns.Bound(o => o.MatchQty).ClientTemplate(string.Format("<a href=\"javascript:onComplete({0},{1},{2},{3},false,false,true)\">{4}</a>", "'<#=Location #>'", "'<#=Item #>'", "'<#=StNo #>'", "'<#=Bin #>'", "<#=MatchQty==0?null:MatchQty#>"));
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxStockTakeResultIsScanHu", "StockTake"))
+        .ClientEvents(events => events.OnDataBinding("StockTakeResultIsScanHuGridView_OnDataBinding"))
+        .Sortable()
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+   )
+@{Html.Telerik().Window()
+        .Name("StockTakeResultDetailGridWindow")
+        .Title("盘点结果明细")
+        .Draggable(true)
+        .Scrollable(true)
+      //  .LoadContentFrom("_StockTakeResultDetail", "StockTake")
+        .Resizable()
+        .Width(900)
+       .Height(520)
+        .Visible(false)
+           .Modal(true)
+
+       .Render();
+}

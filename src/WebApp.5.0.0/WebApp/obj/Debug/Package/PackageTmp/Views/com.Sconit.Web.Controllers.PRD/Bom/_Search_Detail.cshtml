@@ -1,0 +1,184 @@
+﻿@using com.Sconit.Entity.PRD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.PRD
+@model com.Sconit.Entity.PRD.BomMaster
+@Html.Partial("_AjaxMessage")
+<fieldset>
+    @using (Html.BeginForm("Export", "Bom"))
+    {  
+    <legend>@Resources.PRD.Bom.BomMaster_Edit_Title</legend>
+    <div class="search">
+        <div class="search-label">
+            <label for="BomDetail_Code">
+                @Resources.PRD.Bom.BomDetail_Bom
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @{
+           Html.RenderAction("_BomComboBox", "Common", new
+           {
+               controlName = "BomDetail_Bom",
+               isIncludeInActinve = true,
+               selectedValue = TempData["BomDetailSearchModel"] != null ? ((BomDetailSearchModel)TempData["BomDetailSearchModel"]).BomDetail_Bom : string.Empty
+           });
+            }
+        </div>
+
+        <div class="search-label">
+            <label for="BomDetail_Item">
+                @Resources.PRD.Bom.BomDetail_Item
+            </label>
+        </div>
+        <div class="editor-field-2">
+            @{
+           Html.RenderAction("_ItemComboBox", "Common", new { controlName = "BomDetail_Item", selectedValue = TempData["BomDetailSearchModel"] != null ? ((BomDetailSearchModel)TempData["BomDetailSearchModel"]).BomDetail_Item : string.Empty });
+            }
+        </div>
+        @*    <div class="search-label">
+            <label for="BomDetail_Item">
+                @Resources.PRD.Bom.BomDetail_BomMrpOption
+            </label>
+        </div>
+            <div class="editor-field-2">
+           
+             @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.BomMrpOption,
+                    controlName = "BomMrpOption",
+                    selectedValue = TempData["BomDetailSearchModel"] != null ? ((BomDetailSearchModel)TempData["BomDetailSearchModel"]).BomMrpOption : 0
+                });
+            }
+             </div>*@
+
+        <div class="editor" style="display: none" id="Det">
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+                @Html.HiddenFor(model => model.Code)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.LastModifyUserName)
+                @Html.HiddenFor(model => model.LastModifyDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                <span id="BomCode"></span>
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                <span id="CodeDescription"></span>
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Qty)
+            </div>
+            <div class="editor-field-2">
+                <span id="BomQty"></span>
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Uom)
+            </div>
+            <div class="editor-field-2">
+                <span id="BomUom"></span>
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                <input type="checkbox" id="BomIsActive" disabled="disabled" />
+            </div>
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch_Detail" onclick="btnSearch_Detail_Click()">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport">
+                @Resources.SYS.Global.Button_Export</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_Bom_Edit", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew_Detail"},
+            {"onclick","btnNew_Detail_Click()"}
+	    })
+        </div>
+    </div>
+    }
+</fieldset>
+
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+    debugger
+        $('form').submit();
+    });
+    function btnSearch_Detail_Click() {
+        var data = {
+            "BomDetail_Bom": $("#BomDetail_Bom").val(),
+            "BomDetail_Item": $("#BomDetail_Item").val(),
+            //"BomMrpOption":$("#BomMrpOption").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/Bom/List_Detail/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+                var data2 = {
+                    "Id": $("#BomDetail_Bom").val()
+                };
+                if ($.trim($("#BomDetail_Bom").val()) != "") {
+                    $.ajax({
+                        type: "post",
+                        dataType: "json",
+                        url: "/Bom/_SearchResult_Master/",
+                        data: data2,
+                        cache: false,
+                        success: function (data, textStatus) {
+                            // //debugger
+                            $("#BomCode").html(data.Code);
+                            $("#CodeDescription").html(data.CodeDescription);
+                            $("#BomQty").html(data.Qty);
+                            $("#BomUom").html(data.Uom);
+                            if (data.IsActive == true) {
+                                $("#BomIsActive").attr("checked", true);
+                            }
+                            $("#Det").show();
+
+                        }
+                    });
+                } else {
+                    //alert("主物料不能为空");
+                }
+            }
+        });
+
+    }
+
+    function btnNew_Detail_Click() {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Bom/_New_Detail/",
+            data: "",
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

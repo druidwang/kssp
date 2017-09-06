@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ORD.OrderTracer, com.Sconit.Entity" table="ORD_OrderTracer" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Code" column="Code" type="String" length="50"/>
+    <property name="ReqTime" column="ReqTime" type="DateTime"/>
+    <property name="Item" column="Item" type="String" length="50"/>
+    <property name="OrderedQty" column="OrderedQty" type="Decimal"/>
+    <property name="FinishedQty" column="FinishedQty" type="Decimal"/>
+    <property name="Qty" column="Qty" type="Decimal"/>
+    <property name="RefId" column="RefId" type="Int32"/>
+    <property name="OrderDetailId" column="OrderDetailId" type="Int32"/>
+  </class>
+</hibernate-mapping>

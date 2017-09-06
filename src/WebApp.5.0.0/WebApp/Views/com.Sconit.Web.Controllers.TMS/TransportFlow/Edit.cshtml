@@ -1,0 +1,264 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.TMS.TransportFlowMaster
+@{
+    ViewBag.Title = "运输路线";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_TransportFlow_View" });
+}
+
+@Html.Partial("_AjaxMessage")
+
+<form action="/TransportFlow/_Edit" method="post">
+    <fieldset>
+        <legend>@Resources.SCM.FlowMaster.FlowMaster_LegendBaseInfo</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Code)
+                @*@Html.HiddenFor(model=>model.Code)*@
+                @Html.Hidden("Code", Model != null ? Model.Code : string.Empty)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MinLoadRate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.MinLoadRate).DecimalDigits(2).MinValue(0)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsActive)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MultiSitePick)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.MultiSitePick)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsAutoStart)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsAutoStart)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsAutoRelease)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.IsAutoRelease)
+            </div>
+        </div>
+    </fieldset>
+</form>
+    <fieldset>
+        <legend>@Resources.TMS.TransportFlow.TransportFlow_FlowCarrier</legend>
+        <div class="editor">
+            @(Html.Telerik().Grid<com.Sconit.Entity.TMS.TransportFlowCarrier>()
+                .Name("FlowCarrierGrid")
+                .ToolBar(commands =>
+                {
+                    commands.Insert();
+                })
+                .DataKeys(keys =>
+                {
+                    keys.Add(p => p.Id);
+                })
+                .Columns(columns =>
+                {
+                    columns.Bound(o => o.Sequence);
+                    columns.Bound(o => o.Carrier).EditorTemplateName("CarrierGridForeignKey").Width(120);
+                    columns.Bound(o => o.CarrierName).Hidden();
+                    columns.Bound(o => o.CarrierName).ReadOnly();
+                    columns.Bound(o => o.TransportModeDescription);
+                    columns.Bound(o => o.BillAddress);
+                    columns.Bound(o => o.PriceList);
+                    columns.Command(commands =>
+                    {
+                        commands.Edit();
+                        commands.Delete();
+                    }).Width(150);
+                })
+                .ClientEvents(events => events.OnError("FlowCarrierGrid_OnError"))
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                        .Select("_AjaxFlowCarrierList", "TransportFlow", new { Flow = Model.Code })
+                        .Insert("_InsertFlowCarrier", "TransportFlow", new { Flow = Model.Code })
+                        .Update("_UpdateFlowCarrier", "TransportFlow", new { Flow = Model.Code })
+                        .Delete("_DeleteFlowCarrier", "TransportFlow", new { Flow = Model.Code }))
+                .Sortable()
+
+            )
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>@Resources.TMS.TransportFlow.TransportFlow_FlowStation</legend>
+        <div class="editor">
+                        @(Html.Telerik().Grid<com.Sconit.Entity.TMS.TransportFlowRoute>()
+                .Name("FlowRouteGrid")
+                .ToolBar(commands =>
+                {
+                    commands.Insert();
+                })
+                .DataKeys(keys =>
+                {
+                    keys.Add(p => p.Id);
+                })
+                .Columns(columns =>
+                {
+                    columns.Bound(o => o.Sequence);
+                    columns.Bound(o => o.ShipAddress).EditorTemplateName("AddressGridTemplater").Width(300);
+                    columns.Bound(o => o.ShipAddressDescription).Hidden();
+                    columns.Bound(o => o.ShipAddressDescription).ReadOnly().Width(800);
+                    columns.Command(commands =>
+                    {
+                        commands.Edit();
+                        commands.Delete();
+                    }).Width(300);
+                })
+                .ClientEvents(events => events.OnError("FlowRouteGridView_OnError"))
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                        .Select("_AjaxFlowRouteList", "TransportFlow", new { flow=Model.Code })
+                        .Insert("_InsertFlowRoute", "TransportFlow", new { flow = Model.Code })
+                        .Update("_UpdateFlowRoute", "TransportFlow", new { flow = Model.Code })
+                        .Delete("_DeleteFlowRoute", "TransportFlow", new { flow = Model.Code }))
+                .Sortable()
+
+            )
+        </div>
+    </fieldset>
+    <div class="editor-footer">
+        @*<button type="submit" id="btnEdit">
+            @Resources.SYS.Global.Button_Save</button>
+        <button type="button" id="btnDel" onclick="location.href='@Url.Content("~/TransferFlow/FlowDel/" + Model.Code)'">
+            @Resources.SYS.Global.Button_Delete</button>*@
+    @Html.Button(Resources.SYS.Global.Button_Save, "Url_TransferFlow_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnEdit"},
+        {"needconfirm","true"}
+	})
+    @Html.Button(Resources.SYS.Global.Button_Delete, "Url_TransferFlow_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDel"},
+        {"needconfirm","true"},
+        {"onclick","location.href='"+Url.Content("~/TransportFlow/FlowDel/" +Model.Code)+"'"}
+	})
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/TransportFlow/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("form[action$='_Edit']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(response);
+            });
+            return false;
+        });
+    });
+
+    function onCarrierComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                $(e.target).parent().parent().next().next().text("")
+                combobox.reload();
+            } else {
+                var data = {
+                    "carrier": e.value
+                };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/TransportFlow/_GetCarrierName/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        $(e.target).parent().parent().next().children().val(data)
+                        $(e.target).parent().parent().next().next().text(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+
+    function onCarrierDataBinding(e) {
+        e.data = {
+            "checkPermission": false
+        };
+    }
+
+    function onAddressComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                $(e.target).parent().parent().next().text("");
+                combobox.reload();
+            } else {
+                var data = {
+                    "address": e.value
+                };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/TransportFlow/_GetAddressName/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        $(e.target).parent().parent().next().children().val(data)
+                        $(e.target).parent().parent().next().next().text(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+
+    function onAddressDataBinding(e) {
+        e.data = {
+            type: 0,
+            checkParty:false
+        };
+    }
+
+    function FlowCarrierGrid_OnError(e) {
+        if (e.XMLHttpRequest.status === 200) {
+            var grid = $("#FlowCarrierGrid").data("tGrid");
+            grid.ajaxRequest();
+        }
+        else {
+            DisplayTextMessages(e.XMLHttpRequest.responseText);
+        }
+    }
+    function FlowRouteGridView_OnError(e) {
+        if (e.XMLHttpRequest.status === 200) {
+            var grid = $("#FlowRouteGrid").data("tGrid");
+            grid.ajaxRequest();
+        }
+        else {
+            DisplayTextMessages(e.XMLHttpRequest.responseText);
+        }
+    }
+</script>

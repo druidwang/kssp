@@ -1,0 +1,63 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset>
+    @using (Html.BeginForm("List", "ItemKit"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ItemKit_KitItem">
+                    @Resources.MD.ItemKit.ItemKit_KitItem
+                </label>
+            </div>
+            <div class="search-field">
+               @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+                               {
+                                   controlName = "KitItem",
+                                   selectedValue = TempData["ItemKitSearchModel"] != null ? ((ItemKitSearchModel)TempData["ItemKitSearchModel"]).KitItem : null 
+                                });
+                }
+            </div>
+             <div class="search-label">
+                <label for="ItemKit_ChildItem">
+                    @Resources.MD.ItemKit.ItemKit_ChildItem
+                </label>
+            </div>
+            <div class="search-field">
+
+                  @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+                               {
+                                   controlName = "ChildItem",
+                                   selectedValue = TempData["ItemKitSearchModel"] != null ? ((ItemKitSearchModel)TempData["ItemKitSearchModel"]).ChildItem : null
+                                });
+                }
+            </div>
+             <div class="search-label">
+                <label for="ItemKit_CreateUserName">
+                    @Resources.MD.ItemKit.ItemKit_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("CreateUserName", TempData["ItemKitSearchModel"] != null ? ((ItemKitSearchModel)TempData["ItemKitSearchModel"]).CreateUserName : string.Empty)
+            </div>
+              <div class="search-label">
+                <label for="ItemKit_IsActive">
+                    @Resources.MD.ItemKit.ItemKit_IsActive
+                </label>
+            </div>
+            <div class="search-field">
+                  @Html.CheckBox("IsActive", TempData["ItemKitSearchModel"] != null ? ((ItemKitSearchModel)TempData["ItemKitSearchModel"]).IsActive : true)
+            </div>
+
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/ItemKit/New")'">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+
+    }
+</fieldset>

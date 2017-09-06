@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.RccpMiPlan, com.Sconit.Entity" table="MRP_RccpMiPlan" lazy="false" dynamic-update="true">
+    <composite-id>
+      <key-property name="ProductLine" column="ProductLine" type="String" length="50" />
+      <key-property name="Item" column="Item" type="String" length="50" />
+      <key-property name="DateIndex" column="DateIndex" type="String" length="50" />
+      <key-property name="DateType" column="DateType"   />
+      <key-property name="PlanVersion" column="PlanVersion" type="DateTime"  />
+    </composite-id>
+
+    <property name="WorkHour" column="WorkHour" type="Double"  />
+    <property name="CheRateQty" column="CheRateQty" type="Double"  />
+    
+    <property name="Qty" column="Qty" type="Double"  />
+    <property name="SubQty" column="SubQty" type="Double"  />
+    <property name="HaltTime" column="HaltTime" type="Double"  />
+    <property name="TrialProduceTime" column="TrialProduceTime" type="Double"  />
+    <property name="Holiday" column="Holiday" type="Double"  />
+    <property name="UpTime" column="UpTime" type="Double"  />
+  </class>
+</hibernate-mapping>

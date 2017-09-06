@@ -1,0 +1,61 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@model IEnumerable<com.Sconit.Entity.FMS.FacilityOrderDetail>   
+
+<fieldset>
+    <legend>@Resources.FMS.FacilityOrderDetail.FacilityOrderDetail_Title_View</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("FacilityOrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+     
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();
+            columns.Bound(o => o.FacilityId).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+
+            columns.Bound(o => o.Uom).ReadOnly();
+            columns.Bound(o => o.PlanQty).ReadOnly();
+            columns.Bound(o => o.ActualQty);
+            columns.Bound(o => o.Note);
+            
+        })
+                  .CellAction(cell =>
+                  {
+                      if (cell.Column.Member == "Id")
+                      {
+                          cell.Text = string.Format("<input type='text' id='Id' name='Id' style='display:none' value='" + cell.DataItem.Id + "'/>");
+                      }
+                      if (cell.Column.Member == "ActualQty")
+                      {
+                          if (ViewBag.IsEndable)
+                          {
+                              cell.Text = string.Format("<input type='text' id='ActualQty' name='ActualQty' value='" + cell.DataItem.ActualQty.ToString("F2") + "'/>");
+                          }
+                          else
+                          {
+                              cell.Text = string.Format("<input type='text' id='ActualQty' name='ActualQty' disabled value='" + cell.DataItem.ActualQty.ToString("F2") + "'/>");
+                          }
+                      }
+
+                      if (cell.Column.Member == "Note")
+                      {
+                          if (ViewBag.IsEndable)
+                          {
+                              cell.Text = string.Format("<input type='text' id='Note' name='Note'  value='" + cell.DataItem.Note + "'/>");
+                          }
+                          else
+                          {
+                              cell.Text = string.Format("<input type='text' id='Note' name='Note' disabled value='" + cell.DataItem.Note + "'/>");
+                          }
+                      }
+                  })
+            
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+</fieldset>

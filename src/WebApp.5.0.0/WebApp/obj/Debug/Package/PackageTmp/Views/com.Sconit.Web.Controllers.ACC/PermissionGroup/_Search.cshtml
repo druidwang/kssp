@@ -1,0 +1,25 @@
+﻿@using System.Collections
+@using com.Sconit.Entity.ACC
+@model IEnumerable<com.Sconit.Entity.ACC.PermissionGroup>
+<fieldset>
+    @using (Html.BeginForm("List", "PermissionGroup"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="PermissionGroup_Code">
+                    @Resources.ACC.PermissionGroup.PermissionGroup_Code 
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["PermissionGroup"] != null ? ((PermissionGroup)TempData["PermissionGroup"]).Code : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnNew" onclick="location.href='@Url.Content("~/PermissionGroup/New")'">
+                @Resources.SYS.Global.Button_New</button>
+        </div>
+    }
+</fieldset>

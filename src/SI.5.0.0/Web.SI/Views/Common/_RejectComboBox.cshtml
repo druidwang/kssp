@@ -1,0 +1,29 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    int? status = ViewBag.Status;
+    bool? isChange = ViewBag.IsChange;
+}
+@if (isChange != null && (bool)isChange)
+{
+    @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                        .Select("_RejectAjaxLoading", "Common", new { status = status }).Cache(true))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                .ClientEvents(events => events.OnChange("onRejectChange"))
+             )
+}
+else
+{
+    @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                        .Select("_RejectAjaxLoading", "Common", new { status = status }).Cache(true))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+             )
+}

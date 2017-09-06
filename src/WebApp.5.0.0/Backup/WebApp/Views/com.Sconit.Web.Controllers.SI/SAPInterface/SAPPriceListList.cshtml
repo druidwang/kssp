@@ -1,0 +1,6 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_SAPPriceList_View" });
+}
+@Html.Partial("_SAPPriceListSearch")
+@Html.Partial("_SAPPriceListSearchResult")

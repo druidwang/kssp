@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProcurementBill_ActingBillGroup" });
+}
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label for="OrderMaster_OrderNo">
+                @Resources.BIL.PlanBill.PlanBill_Party
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_SupplierComboBox", "Common", new
+                {
+                    controlName = "Party",
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label for="OrderMaster_Flow">
+                @Resources.BIL.PlanBill.PlanBill_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @Html.TextBox("Item")
+        </div>
+    </div>
+    <div class="search-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="btnSearch">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+    </div>
+</fieldset>
+<div id="fdOrderDetail">
+</div>
+<script type="text/javascript">
+    $("#btnSearch").click(function (event) {
+        $("#fdOrderDetail").load("/ProcurementBill/_ActingBillGroupList/", {
+            Item: $('#Item').val(),
+            Party: $('#Party').val()
+        });
+        $("tr.t-no-data").find("td").text("Loading...");
+    });
+
+    function ExportClick() {
+        location.href = '/ProcurementBill/ExportXLS/?Item=' + $('#Item').val() + '&Party=' + $('#Party').val()
+    }
+</script>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetailGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Flow).Title(Resources.ORD.IpMaster.IpMaster_Flow);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.IpMasterTypeDescription);
+            columns.Bound(o => o.SubTypeDescription);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.ReceivedQty);
+            columns.Bound(o => o.Type).ClientTemplate("<input type='checkbox' disabled='disabled' name='IpDetailType' <#=Type ==" + (int)com.Sconit.CodeMaster.IpDetailType.Gap + "? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsInspect).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsInspect' <#= IsInspect? checked='checked' : '' #> />");
+            columns.Bound(o => o.CreateUserName );
+            columns.Bound(o => o.IsClose).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsClose' <#= IsClose? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsCancel).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsCancel' <#= IsCancel? checked='checked' : '' #> />");
+        })
+
+                                    .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxIpDetailList", "ProcurementIpMaster"))
+                            .ClientEvents(events => events.OnDataBinding("IpMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable(c => c.Enabled(false))
+         .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function IpMasterGrid_OnDataBinding(e) {
+            e.data = {
+                IpNo: $('#IpNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                IpOrderType: $('#IpOrderType').val(),
+                OrderSubType: $('#OrderSubType').val(),
+                Item: $('#Item').val(),
+                OrderNo: $('#OrderNo').val(),
+                CreateUserName: $("#CreateUserName").val(),
+                WMSNo: $('#WMSNo').val(),
+                ManufactureParty: $('#ManufactureParty').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                Status: $('#Status').val()
+            };
+        }
+    </script>
+</fieldset>

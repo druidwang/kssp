@@ -1,0 +1,12 @@
+﻿@(Html.Telerik().ComboBox().HtmlAttributes(new { style = "width: 80px" })
+.DropDownHtmlAttributes(new { style = "width: 300px; " })
+      .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(""))
+          .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingPriceList", "Common",
+          new
+          {
+              checkParty=false
+          }).Cache(true))
+      .AutoFill(true)
+      .HighlightFirstMatch(true)
+          .ClientEvents(events => events.OnChange("onPriceListComboBoxChange"))
+)

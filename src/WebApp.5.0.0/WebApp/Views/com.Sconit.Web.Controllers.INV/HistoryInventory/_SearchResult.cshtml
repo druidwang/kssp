@@ -1,0 +1,53 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.HistoryInventory>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("HuGrid")
+     
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.Location);
+          
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.CsQty) ;
+            columns.Bound(o => o.QualifyQty);
+            columns.Bound(o => o.InspectQty);
+            columns.Bound(o => o.RejectQty);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                 .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "HistoryInventory"))
+                 .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize );
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    ) 
+  <script type="text/javascript">
+      function OrderMasterGrid_OnDataBinding(e) {
+ 
+             e.data = {
+                 plantFrom: $('#plantFrom').val(),
+                 plantTo: $('#plantTo').val(),
+                 regionFrom: $('#regionFrom').val(),
+                 regionTo: $('#regionTo').val(),
+                 locationFrom: $('#locationFrom').val(),
+                 locationTo: $('#locationTo').val(),
+                 itemFrom: $('#itemFrom').val(),
+                 itemTo: $('#itemTo').val(),
+                 Level: $('#Level').val(),
+                 TheFactory: $('#TheFactory').val(),
+                 TheFactoryTo: $('#TheFactoryTo').val(),
+                 TypeLocation: $("input[type=radio][name=TypeLocation]:checked").val(),
+                 SAPLocation: $('#SAPLocation').val(),
+                 HistoryDate: $('#HistoryDate').val()
+               
+             };
+         } 
+    </script>
+</fieldset>
+;

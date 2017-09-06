@@ -1,0 +1,63 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.ReceiptMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ReceiptMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.ReceiptNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ReceiptNo).ClientTemplate(Html.ActionLink("<#= ReceiptNo #>", "Edit", "DistributionReceipt", new { receiptNo = "<#= ReceiptNo #>" }, null).ToString());
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.PartyFromName).ClientTemplate("<div title=<#=ShipFromAddress #>><#=PartyFromName #></div>");
+            columns.Bound(o => o.PartyToName).ClientTemplate("<div title=<#=ShipToAddress #>><#=PartyToName #></div>");
+            //columns.Bound(o => o.ShipFromAddress);
+            //columns.Bound(o => o.ShipToAddress);
+            columns.Bound(o => o.ReceiptMasterStatusDescription);
+            columns.Bound(o => o.OrderSubTypeDescription);
+            columns.Bound(o => o.ExternalReceiptNo);
+            //columns.Bound(o => o.Type)
+            //    .ClientTemplate(string.Format("<input type='checkbox' disabled='disabled' name='Type' <#= Type==(" + (int)com.Sconit.CodeMaster.IpDetailType.Gap + ")? checked='checked' : '' #> />"));
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+
+        })
+        .Scrollable(c => c.Enabled(false))
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "DistributionReceipt"))
+        .ClientEvents(events => events.OnDataBinding("ReceiptMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .EnableCustomBinding(true)
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ReceiptMasterGrid_OnDataBinding(e) {
+            //debugger
+            e.data = {
+                ReceiptNo: $('#ReceiptNo').val(),
+                IpNo: $('#IpNo').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                //Dock: $('#Dock').val(),
+                ExternalReceiptNo: $('#ExternalReceiptNo').val(),
+                OrderSubType: $('#OrderSubType').val(),
+                IpDetailType: $('#IpDetailType').val(),
+                GoodsReceiptOrderType: $('#GoodsReceiptOrderType').val(),
+                Status: $("#Status").val(),
+                Flow: $("#Flow").val()
+            };
+        }
+    </script>
+</fieldset>

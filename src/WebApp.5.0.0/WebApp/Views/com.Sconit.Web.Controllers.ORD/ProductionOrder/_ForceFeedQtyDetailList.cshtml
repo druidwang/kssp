@@ -1,0 +1,94 @@
+﻿@using com.Sconit.Entity.ORD;
+@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderBomDetail>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onItemComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            } else {
+                var data = {
+                    "itemCode": e.value
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/ProductionOrder/_WebOrderDetail/",
+                    data: data,
+                    success: function (data, textStatus) {
+
+                        var $tGrid = $("#OrderBomDetail").data("tGrid");
+                        var $itemCell = $(e.target).parent().parent();
+                        $itemCell.next().html(data.ReferenceItemCode);
+                        $itemCell.next().next().html(data.ItemDescription);
+                        $itemCell.next().next().next().html(data.Uom);
+                        $itemCell.next().next().next().next().html(data.UnitCount);
+
+                        $itemCell.next().next().next().next().next().html(data.LocationTo);
+
+                        var oldData = $tGrid.dataItem($itemCell.parent());
+                        if (oldData != undefined) {
+                            oldData.Uom = data.Uom;
+                            oldData.LocationTo = data.LocationTo;
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            }
+        }
+    }
+    function onLocationDataBinding(e) {
+        e.data = {
+            "Region": $("#Region").val(),
+            "checkRegion": true
+        };
+    }
+</script>
+@if (!ViewBag.HasError)
+{
+    <fieldset>
+        <legend>投料明细</legend>
+        @(Html.Telerik().Grid(Model)
+        .Name("OrderBomDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            commands.Insert();
+        })
+            .DataBinding(dataBinding => dataBinding.Ajax()
+            .Select("_SelectForceFeedQtyBatchEditing", "ProductionOrder", new { OrderNo = ViewBag.OrderNo, HasError = ViewBag.HasError })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item).EditorTemplateName("ItemGridForeignKey").Width(120);
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly();
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            columns.Bound(o => o.Uom).ReadOnly();
+            columns.Bound(o => o.UnitCount).ReadOnly();
+            columns.Bound(o => o.FeedLocation).ReadOnly();
+            //columns.Bound(o => o.Operation);
+            //columns.Bound(o => o.OpReference);
+            columns.Bound(o => o.FeedQty).Width(80);
+            columns.Command(commands => commands.Delete()).Width(80);
+        })
+        .Scrollable(c => c.Enabled(false))
+                .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+    </fieldset>
+}
+
+@Html.Hidden("Region", (string)ViewBag.Region)
+@Html.Hidden("HasError", (bool)ViewBag.HasError)

@@ -1,0 +1,39 @@
+﻿@using com.Sconit.Entity.SYS
+
+
+<fieldset>
+    @using (Html.BeginForm("List", "CodeMaster"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="Item_Code">
+                    @Resources.SYS.CodeMaster.CodeMaster_Code
+                </label>
+            </div>
+            <div class="search-field">
+                
+                @Html.TextBox("Code", TempData["ItemSearchModel"] != null ? ((CodeMaster)TempData["ItemSearchModel"]).Code : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="Item_Description">
+                    @Resources.SYS.CodeMaster.CodeMaster_Description
+                </label>
+            </div>
+            <div class="search-field">
+                
+                @Html.TextBox("Description", TempData["ItemSearchModel"] != null ? ((CodeMaster)TempData["ItemSearchModel"]).Description : string.Empty)
+            </div>
+        
+
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+         
+         
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+          
+        </div>
+
+    }
+</fieldset>

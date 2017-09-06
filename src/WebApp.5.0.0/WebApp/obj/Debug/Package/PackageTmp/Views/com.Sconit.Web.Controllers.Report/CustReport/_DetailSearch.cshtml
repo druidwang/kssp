@@ -1,0 +1,104 @@
+﻿@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.ReportModels
+@Html.Partial("_AjaxMessage")
+<fieldset>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            @* <div class="search-label">
+                <label for="ProductType_Code">
+                    @Resources.Report.CustReport.CustReport_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Code", TempData["CustReportModel"] != null ? ((CustReportModel)TempData["CustReportModel"]).Code : string.Empty)
+            </div>*@
+            <div class="search-label">
+                <label>
+                @Resources.Report.CustReport.CustReport_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.Display("Name", (string)ViewBag.Name)
+            </div>
+             @*<div class="search-label">
+                <label for="ProductType_Description">
+                    @Resources.Report.CustReport.CustReport_ParamType
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ParamType", TempData["CustReportModel"] != null ? ((CustReportModel)TempData["CustReportModel"]).ParamType : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="ProductType_Description">
+                    @Resources.Report.CustReport.CustReport_ParamKey
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ParamKey", TempData["CustReportModel"] != null ? ((CustReportModel)TempData["CustReportModel"]).ParamKey : string.Empty)
+            </div>
+             <div class="search-label">
+                <label for="ProductType_Description">
+                    @Resources.Report.CustReport.CustReport_ParamText
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ParaText", TempData["CustReportModel"] != null ? ((CustReportModel)TempData["CustReportModel"]).ParaText : string.Empty)
+            </div>*@
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+         @Html.Hidden("Code", (string)ViewBag.Code)
+         <button type="button" id="btnSearch" onclick="btnSearchDetail_Click();">@Resources.SYS.Global.Button_Search</button>
+               @* <button type="button" id="btnNewDetail" onclick="btnNewDetail_Click();">@Resources.SYS.Global.Button_New</button>*@
+                @Html.Button(Resources.SYS.Global.Button_New, "Url_ProductionFlow_Edit", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnNewDetail"},
+                    {"onclick","btnNewDetail_Click()"}
+	            })
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/CustReport/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+        </div>
+
+    }
+</fieldset>
+<script language="javascript" type="text/javascript">
+
+    function btnNewDetail_Click() {
+        var data = {
+            "Id": $("#Code").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/CustReport/_DetailNew/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+
+    function btnSearchDetail_Click() {
+        var data = {
+            "Code": $("#code").val(),
+            "isFromList": "true"
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/CustReport/_Detail/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

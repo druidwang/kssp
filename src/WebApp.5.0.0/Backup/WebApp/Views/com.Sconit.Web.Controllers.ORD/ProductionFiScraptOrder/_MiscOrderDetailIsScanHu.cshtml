@@ -1,0 +1,131 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.MiscOrderLocationDetail>
+<fieldset>
+        <script type="text/javascript">
+            function onSave(e) {
+
+                var grid = $("#MiscOrderDetailIsScanHu").data("tGrid");
+                if (grid == null) {
+                    alert("明细不能为空");
+                    return;
+                }
+               //debugger
+                var inserted = grid.changeLog.inserted;
+                var updated = $.grep(grid.changeLog.updated, function (value) { return value != undefined });
+                var deleted = $.grep(grid.changeLog.deleted, function (value) { return value != undefined });
+
+                var oderDetails = grid.changeLog.serialize(inserted, updated, deleted);
+                var ordermstr = {
+
+                    "MiscOrderNo": $("#MiscOrderNo").val(),
+                    "moveType": $("#MoveType").val()
+                }
+
+                grid._convert(oderDetails);
+                $.ajax({
+                    type: "post",
+                    dataType: "text",
+                    url: "/ProductionFiScraptOrder/_SaveMiscOrderDetail/",
+                    data: $.extend(oderDetails, ordermstr),
+                    success: function (data, ordermstr) {
+                        if (data != "") {
+                            var orderData = {
+                                "id": data
+                            };
+                            $.ajax({
+                                type: "get",
+                                dataType: "html",
+                                url: "/ProductionFiScraptOrder/Edit/",
+                                data: orderData,
+                                cache: false,
+                                success: function (data, textStatus) {
+                                    var $tGrid = $("#content");
+                                    $($tGrid).html(data);
+                                }
+                            });
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        $message.error(errorMessages);
+                    }
+                });
+            }
+    </script>
+    <legend>库位条码明细</legend>
+    @(Html.Telerik().Grid(Model)
+                .Name("MiscOrderDetailIsScanHu")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+                .ToolBar(commands =>
+                {
+                    if (ViewBag.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create.ToString())
+                    {
+                        commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSave()", href = "#" });
+                    }
+                })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+        .Select("_SelectMiscOrderLocationDetail", "ProductionFiScraptOrder")
+        )
+      .Columns(columns =>
+        {
+            columns.Bound(o => o.MiscOrderDetailSequence).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_Sequence).ReadOnly();
+            columns.Bound(o => o.HuId).Title(Resources.ORD.IpLocationDetail.IpLocationDetail_HuId).ReadOnly().Width(130);
+            columns.Bound(o => o.LotNo).Title(Resources.ORD.IpLocationDetail.IpLocationDetail_LotNo).ReadOnly();
+            columns.Bound(o => o.Item).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_Item).ReadOnly();
+            columns.Bound(o => o.ItemDescription).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_ItemDescription).ReadOnly();
+            columns.Bound(o => o.ReferenceItemCode).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_ReferenceItemCode).ReadOnly();
+            columns.Bound(o => o.Uom).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_Uom).ReadOnly();
+            columns.Bound(o => o.UnitCount).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_UnitCount).ReadOnly();
+            columns.Bound(o => o.Location).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_Location).ReadOnly();
+           
+            if (ViewBag.Status == com.Sconit.CodeMaster.MiscOrderStatus.Create.ToString())
+            {
+                //if (ViewBag.ReserveNo)
+                //{
+                //    columns.Bound(o => o.ReserveNo).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_ReserveNo);
+                //}
+                //if (ViewBag.ReserveLine)
+                //{
+                //    columns.Bound(o => o.ReserveLine).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_ReserveLine);
+                //}
+                //if (ViewBag.EBELN)
+                //{
+                //    columns.Bound(o => o.EBELN).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_EBELN);
+                //}
+                //if (ViewBag.EBELP)
+                //{
+                //    columns.Bound(o => o.EBELP).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_EBELP);
+                //}
+                columns.Bound(o => o.Qty).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_Qty).ReadOnly();
+                columns.Command(commands => commands.Delete()).Width(100);
+            }
+            else
+            {
+                //if (ViewBag.ReserveNo)
+                //{
+                //    columns.Bound(o => o.ReserveNo).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_ReserveNo).ReadOnly();
+                //}
+                //if (ViewBag.ReserveLine)
+                //{
+                //    columns.Bound(o => o.ReserveLine).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_ReserveLine).ReadOnly();
+                //}
+                //if (ViewBag.EBELN)
+                //{
+                //    columns.Bound(o => o.EBELN).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_EBELN).ReadOnly();
+                //}
+                //if (ViewBag.EBELP)
+                //{
+                //    columns.Bound(o => o.EBELP).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_EBELP).ReadOnly();
+                //}
+                columns.Bound(o => o.Qty).Title(Resources.ORD.MiscOrderDetail.MiscOrderDetail_Qty).ReadOnly();
+            }
+            
+        })
+        .Scrollable()
+        .Footer(false)
+    )
+</fieldset>

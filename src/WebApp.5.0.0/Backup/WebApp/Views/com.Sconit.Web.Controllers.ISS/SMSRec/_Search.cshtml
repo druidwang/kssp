@@ -1,0 +1,62 @@
+﻿@using com.Sconit.Entity.ISS
+@using com.Sconit.Web.Models.SearchModels.ISS
+<fieldset>
+    @using (Html.BeginForm("List", "SMSRec"))
+    {   
+        <div class="search">
+			<div class="search-label">
+                <label for="Issue">
+                    @Resources.ISS.SMSRec.Issue
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Issue", TempData["SMSRecSearchModel"] != null ? ((SMSRecSearchModel)TempData["SMSRecSearchModel"]).Issue : string.Empty)
+            </div>
+			<div class="search-label">
+                <label for="Content">
+                    @Resources.ISS.SMSRec.Content
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Content", TempData["SMSRecSearchModel"] != null ? ((SMSRecSearchModel)TempData["SMSRecSearchModel"]).Content : string.Empty)
+            </div>
+			<div class="search-label">
+                <label for="DestID">
+                    @Resources.ISS.SMSRec.SrcID
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("SrcID", TempData["SMSRecSearchModel"] != null ? ((SMSRecSearchModel)TempData["SMSRecSearchModel"]).SrcID : string.Empty)
+            </div>
+			<div class="search-label">
+                <label for="MsgId">
+                    @Resources.ISS.SMSRec.MsgID
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("MsgID", TempData["SMSRecSearchModel"] != null ? ((SMSRecSearchModel)TempData["SMSRecSearchModel"]).MsgID : string.Empty)
+            </div>
+			<div class="search-label">
+                <label for="DateFrom">
+                    @Resources.ISS.SMSRec.DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="DateTo">
+                    @Resources.ISS.SMSRec.DateTo
+                </label>
+            </div>
+            <div class="search-field">
+               @(Html.Telerik().DatePicker().Name("DateTo").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>		
+        </div>    
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+    }
+</fieldset>

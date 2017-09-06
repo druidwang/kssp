@@ -1,0 +1,140 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+           
+<script type="text/javascript">
+    function RebindingOrderClick(e) {
+        //$(this).attr("href", "#");
+        $(e).attr("href", "#");
+        if(e.childNodes[0].data.toString()=="收货")
+        {
+            var CurrentRow = $(e).parent().parent();
+            var id = $(e).parent().parent().children().eq(0).text();
+            var currentReceiveQty = CurrentRow.find("#CurrentReceiveQty").val();
+            var remark = CurrentRow.find("#Remark").val();
+
+            var data = {
+                "id": id,
+                "currentReceiveQty": currentReceiveQty,
+                "remark": remark
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                url: "/ProductionOrder/_EXReceiveOrderDetail",
+                cache: false,
+                success: function (data, textStatus) {
+                    //debugger;
+                    if (data != "") {
+                        if (data.status == "close") {
+                            CurrentRow.Remove();
+                        }
+                        else {
+                            var ReceivedQtyText = CurrentRow.find("#CurrentReceiveQty").parent().prev().prev();
+                            var ReceivedQty = parseFloat(ReceivedQtyText.text()) + parseFloat(currentReceiveQty);
+                            ReceivedQtyText.text(ReceivedQty.toFixed(2));
+                        }
+                        PrintOrder(data.PrintUrl);
+                       
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    
+                    $message.error(errorMessages);
+                }
+            });
+        }
+        else {
+            
+            var orderNo = $(e).parent().parent().children().eq(2).text();
+            var data = {
+                "orderNo": orderNo
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                url: "/ProductionOrder/StartOrder",
+                cache: false,
+                success: function (data, textStatus) {
+                        e.childNodes[0].data = "收货";
+                        $message.success(data.SuccessMessage);
+                       
+
+                        var currentUnitcount = $(e).parent().parent().children().eq(8).text();
+                        $(e).parent().prev().html("<input type='text' id='CurrentReceiveQty' name='CurrentReceiveQty' style='width:70px' value=" + currentUnitcount + ">");
+                        $(e).parent().prev().prev().html("<input type='text' id='Remark' name='Remark' style='width:70px' value='' />");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    
+                    $message.error(errorMessages);
+                }
+            });
+        }
+    }
+  
+    var i=0;
+    function RecDetailGrid_OnRowDataBound(e) {
+        if (i != 0) {
+            return;
+        }
+        var rows = $("tbody").children("tr:not(.t-no-data)");
+        // var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var status = row.children().eq(1).text() ;
+            if (status == "2") {
+                row.find("#RebindingId").text("收货");
+                var currentUnitcount = row.children().eq(8).text();
+                row.children().eq(11).html("<input type='text' id='Remark' name='Remark' style='width:70px' value='' />");
+                row.children().eq(12).html("<input type='text' id='CurrentReceiveQty' name='CurrentReceiveQty' style='width:70px' value=" + currentUnitcount + ">");
+            }
+            else {
+                row.find("#RebindingId").text("开始");
+            }
+        }
+        i = rows.length;
+
+    }
+ </script>
+<fieldset>
+    
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+                .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+                .Columns(columns =>
+                {
+                    columns.Bound(o => o.Id).Hidden();
+                    columns.Bound(o => o.Status).Hidden();
+                    columns.Bound(o => o.OrderNo);
+                    columns.Bound(o => o.OrderStatusDescription);
+                    columns.Bound(o => o.Item);
+                    columns.Bound(o => o.ItemDescription);
+                    columns.Bound(o => o.Uom);
+                    columns.Bound(o => o.Bom);
+                    columns.Bound(o => o.UnitCount).Format("{0:0.########}");
+                    columns.Bound(o => o.OrderedQty).Format("{0:0.########}");
+                    columns.Bound(o => o.ReceivedQty).Format("{0:0.########}");
+                    columns.Bound(o => o.Remark);//.ClientTemplate("<input type='text' id='Remark' name='Remark' style='width:70px' value=''/>");
+                    columns.Bound(o => o.CurrentReceiveQty).ClientTemplate("<text><#=UnitCount #></text>");
+                    columns.Command(commands => commands.Custom("Rebinding")
+                        .Text("收货")
+                        .HtmlAttributes(new { onClick = "RebindingOrderClick(this)", id = "RebindingId", href = "#" })
+                    );
+                })
+                    .DataBinding(dataBinding =>
+                        dataBinding.Ajax()
+                        .Select("_EXReceiveOrderDetailListAjax", "ProductionOrder", new { flow = ViewBag.Flow, orderNo = ViewBag.orderNo })
+                )
+                .ClientEvents(c => c.OnRowDataBound("RecDetailGrid_OnRowDataBound"))
+                .Scrollable(c => c.Enabled(false))
+                        .Resizable(resizing => resizing.Columns(true))
+                .Footer(false)
+    )
+</fieldset>
+

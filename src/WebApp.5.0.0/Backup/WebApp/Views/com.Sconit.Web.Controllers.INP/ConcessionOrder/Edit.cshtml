@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ConcessionOrder_View" });
+}
+
+@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.INP.ConcessionMaster
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.INP.ConcessionMaster.ConcessionMaster_BaseInfo</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ConcessionNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ConcessionNo)
+                @Html.HiddenFor(model => model.ConcessionNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.RejectNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.RejectNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Region)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Region)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReferenceNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ReferenceNo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ConcessionStatusDescription)
+            </div>
+        </div>
+        <div class="editor-footer">
+            @{if (Model.Status == com.Sconit.CodeMaster.ConcessionStatus.Create)
+              {
+                <button type="button" id="btnDelete" onclick="location.href='@Url.Content("~/ConcessionOrder/Delete/" + @Model.ConcessionNo)'">@Resources.SYS.Global.Button_Delete</button>
+                <button type="button" id="btnSubmit" onclick="location.href='@Url.Content("~/ConcessionOrder/Submit/" + @Model.ConcessionNo)'">@Resources.SYS.Global.Button_Submit</button>
+              }
+              else if (Model.Status == com.Sconit.CodeMaster.ConcessionStatus.Submit)
+              {
+                <button type="button" id="btnClose" onclick="location.href='@Url.Content("~/ConcessionOrder/Close/" + @Model.ConcessionNo)'">@Resources.SYS.Global.Button_Close</button>
+                @*<button type="button" id="btnCommossion" onclick="location.href='@Url.Content("~/ConcessionOrder/Commossion/" + @Model.ConcessionNo)'">@Resources.SYS.Global.Button_Concession</button>*@
+              }
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ConcessionOrder/List")'">@Resources.SYS.Global.Button_Back</button>
+            }
+        </div>
+    </fieldset>
+}
+@{
+    Html.RenderAction("_ConcessionDetailList", "ConcessionOrder", new { concessionNo = Model.ConcessionNo });
+}

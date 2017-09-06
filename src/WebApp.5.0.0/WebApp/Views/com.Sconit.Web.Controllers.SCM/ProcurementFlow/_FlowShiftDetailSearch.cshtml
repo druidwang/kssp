@@ -1,0 +1,81 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SCM
+@Html.Partial("_AjaxMessage")
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label for="Item_Code">
+                @Resources.PRD.ShiftMaster.ShiftMaster_Shift
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_ShiftMasterComboBox", "Common", new
+                    {
+                        controlName = "Shift",
+                        //isChange=true,
+                        selectedValue = ViewBag.Shift != null ? ViewBag.Shift : string.Empty
+                    });
+            }
+        </div>
+        <input  type="hidden" name="FlowCode" id="FlowCode" value="@ViewBag.Flow"/>
+    </div>
+    <div class="editor-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="btnSearch" onclick="btnSearchDetail_Click();">
+            @Resources.Global.Button_Search</button>
+        <button type="button" id="btnBackDetail" onclick="location.href='@Url.Content("~/ProcurementFlow/List")'">
+            @Resources.Global.Button_Back</button>
+    </div>
+</fieldset>
+<script language="javascript" type="text/javascript">
+    function btnNewDetail_Click() {
+        var data = {
+            "FlowCode": $("#FlowCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "@Url.Content("~/ProcurementFlow/_FlowShiftDetailNew/")",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent3 = tabStrip.data("tTabStrip").getContentElement(3);
+                $(tabStripContent3).html(data);
+            }
+        });
+    }
+
+    function btnSearchDetail_Click() {
+    debugger
+        var data = {
+            "Shift": $("#Shift").val(),
+            "FlowCode": $("#FlowCode").val()
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "@Url.Content("~/ProcurementFlow/_FlowShiftDetailList/")",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+            debugger
+                var tabStrip = $("#TabStrip");
+                var tabStripContent4 = tabStrip.data("tTabStrip").getContentElement(4);
+                $(tabStripContent4).html(data);
+            }
+        });
+    }
+
+
+//    $(function () {
+//        if ($("#IsReturn").val() == "False") {
+//            $("#btnBackDetail").show();
+//            $("#btnIsReturn1").hide();
+//        }
+//        else {
+//            $("#btnBackDetail").hide();
+//            $("#btnIsReturn1").show();
+//        }
+//    });
+</script>

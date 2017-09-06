@@ -1,0 +1,32 @@
+﻿@using com.Sconit.Entity.INV;
+@model IEnumerable<com.Sconit.Entity.INV.Hu>
+<fieldset>
+    <legend>反查新条码</legend>
+
+    @(Html.Telerik().Grid(Model).Name("_NewHuTrack")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId).ClientTemplate(Html.ActionLink("<#= HuId #>", "HuDetail", "Hu", new { Id = "<#= HuId #>" }, null).ToString());
+            columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.Uom).Width(40);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        window.onload = function () {
+            $("tr.t-no-data").find("td").text("@Resources.GridLocalization.NoRecords");
+    }
+    </script>
+</fieldset>

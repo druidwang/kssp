@@ -1,0 +1,9 @@
+D:\src\Les_parts\trunk\src\Core.5.0.0\Entity\bin\Debug\com.Sconit.Entity.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Entity\bin\Debug\com.Sconit.Entity.pdb
+D:\src\Les_parts\trunk\src\Core.5.0.0\Entity\bin\Debug\com.Sconit.Globalization.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Entity\bin\Debug\com.Sconit.Globalization.pdb
+D:\src\Les_parts\trunk\src\Core.5.0.0\Entity\bin\Debug\en-US\com.Sconit.Globalization.resources.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Entity\bin\Debug\zh-CN\com.Sconit.Globalization.resources.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
+D:\src\Les_parts\trunk\src\Core.5.0.0\Entity\obj\Debug\com.Sconit.Entity.dll
+D:\src\Les_parts\trunk\src\Core.5.0.0\Entity\obj\Debug\com.Sconit.Entity.pdb

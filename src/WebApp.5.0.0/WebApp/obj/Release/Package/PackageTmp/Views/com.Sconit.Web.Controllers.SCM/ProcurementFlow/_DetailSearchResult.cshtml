@@ -1,0 +1,71 @@
+﻿@using com.Sconit.Web.Models.SearchModels.SCM
+@model IEnumerable<com.Sconit.Entity.SCM.FlowDetail>
+
+<script language="javascript" type="text/javascript">
+    function DetailGrid_OnDataBinding(e) {
+        e.data = {
+            "flowCode": $("#flow").val(),
+            Item: $('#Item').val()
+        };
+    }
+
+    function onDetailclick(Id) {
+        var data = {
+            "Id": Id
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/ProcurementFlow/_DetailEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>
+
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("FlowDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item).ClientTemplate(string.Format("<a href=\"javascript:onDetailclick('{0}')\">{1}</a>", "<#= Id #>", "<#= Item #>")); ;
+            //columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription);
+            columns.Bound(o => o.SafeStock);
+            columns.Bound(o => o.MaxStock);
+            columns.Bound(o => o.StartDate);
+            columns.Bound(o => o.EndDate);
+            //columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.IsAutoCreate)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsAutoCreate' <#= IsAutoCreate? checked='checked' : '' #> />");
+             columns.Bound(o => o.IsChangeUnitCount)
+                  .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsChangeUnitCount' <#= IsChangeUnitCount? checked='checked' : '' #> />");
+        })
+
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxDetailList", "ProcurementFlow"))
+                .ClientEvents(events => events.OnDataBinding("DetailGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>

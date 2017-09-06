@@ -1,0 +1,89 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.FMS.MaintainPlan
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_MaintainPlan_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.FMS.MaintainPlan.MaintainPlan_Edit_Title</legend>
+        <div class="editor">
+            @Html.HiddenFor(model => model.Code)
+           <div class="editor-label-2">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Code)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Description)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Period)
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.MaintainPlanType,
+                        selectedValue = (int)Model.Type,
+                        controlName = "Type"
+                    });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.TypePeriod)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.TypePeriod)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Period)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.Period)
+            </div>
+               <div class="editor-label-2">
+                @Html.LabelFor(model => model.LeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.LeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.FacilityCategory)
+            </div>
+            <div class="editor-field-2">
+               @{
+    Html.RenderAction("_FacilityCategoryComboBox", "Common",
+                    new
+                    {
+                        controlName = "FacilityCategory"
+                    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Save, "Url_MaintainPlan_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSave"},
+        {"needconfirm","true"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_MaintainPlan_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDelete"},
+        {"needconfirm","true"},
+        {"onclick","location.href='"+@Url.Content("~/MaintainPlan/Delete/"+@Model.Code)+"'"}
+    })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/MaintainPlan/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+<div id="divMaintainPlanItem">
+    @{Html.RenderAction("_MaintainPlanItem", "MaintainPlan", new { maintainPlanCode = Model.Code });}
+</div>

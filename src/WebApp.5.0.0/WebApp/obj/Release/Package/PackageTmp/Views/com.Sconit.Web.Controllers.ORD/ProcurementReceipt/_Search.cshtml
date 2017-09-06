@@ -1,0 +1,243 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Web.Models.SearchModels.ORD
+<fieldset>
+    @using (Html.BeginForm("List", "ProcurementReceipt"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ReceiptMaster_ReceiptNo">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_ReceiptNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ReceiptNo", TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).ReceiptNo : string.Empty)
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_FlowComboBox", "Common",
+                        new
+                        {
+                            controlName = "Flow",
+                            type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                            selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).Flow : string.Empty
+                        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Type">
+                    @Resources.ORD.OrderMaster.OrderMaster_Type
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.OrderType,
+                        controlName = "GoodsReceiptOrderType",
+                        orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                        includeBlankOption = true,
+                        blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+                        blankOptionValue = "",
+                        selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).GoodsReceiptOrderType : 0
+                    });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_Status">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_Status
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.ReceiptStatus,
+                        controlName = "Status",
+                        includeBlankOption = true,
+                        selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).Status : null
+                    });
+                }
+            </div>
+
+            <div class="editor-label-2">
+
+                <label id="lableFrom">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_PartyFrom
+                </label>
+
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+                        new
+                        {
+                            controlName = "PartyFrom",
+                            orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                            selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).PartyFrom : string.Empty
+                        });
+                }
+            </div>
+            <div class="editor-label-2">
+
+                <label id="lableTo">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_PartyTo
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+                    Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+                                    new
+                                    {
+                                        controlName = "PartyTo",
+                                        orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                                        selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).PartyTo : string.Empty
+                                    });
+                }
+            </div>
+
+
+            @* <div class="search-label">
+                <label for="ReceiptMaster_Dock">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_WMSNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("WMSNo", TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).WMSNo : string.Empty)
+            </div>*@
+               @*<div class="search-label">
+                <label for="OrderMaster_Pirority">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_OrderSubType
+                </label>
+            </div>*@
+            @*<div class="search-field">
+                @{ 
+        var aa = ViewBag.OrderSubType != null ? (ViewBag.OrderSubType == 0 ? true : false) : true;
+                }
+                @Html.RadioButton("OrderSubType", (int)com.Sconit.CodeMaster.OrderSubType.Normal, aa, new { onclick = "doClick(true)" })@Resources.SYS.CodeDetail.CodeDetail_OrderSubType_Normal <span style="margin: 4px"></span>
+
+                @Html.RadioButton("OrderSubType", (int)com.Sconit.CodeMaster.OrderSubType.Return, !aa, new { onclick = "doClick(false)" })@Resources.SYS.CodeDetail.CodeDetail_OrderSubType_Return
+            </div>*@
+            @*<div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                    {
+                        code = com.Sconit.CodeMaster.CodeMaster.OrderSubType,
+                        controlName = "OrderSubType",
+                        selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).OrderSubType : null
+                    });
+                }
+            </div>*@
+            <div class="search-label">
+                <label for="ReceiptMaster_IpNo">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_IpNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("IpNo", TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).IpNo : string.Empty)
+            </div>
+            <div class="editor-label-2">
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("IsReturn", TempData["ReceiptMasterSearchModel"] != null ? (((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).OrderSubType ==1 ? true : false) : false, new { onclick = "doClick(true)" })<span>@Resources.SYS.CodeDetail.CodeDetail_OrderSubType_Return</span><span style="margin: 4px"></span>
+                @Html.CheckBox("IsDiff", TempData["ReceiptMasterSearchModel"] != null ? (((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).IpDetailType == 1 ? true : false) : false, new { onclick = "doClick(true)" })@Resources.SYS.CodeDetail.CodeDetail_IpDetailType_Gap
+                @Html.Hidden("OrderSubType", TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).OrderSubType : 0)
+                @Html.Hidden("IpDetailType", TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).IpDetailType : 0)
+            </div>
+            @*<div class="search-label">
+                <label for="ReceiptMaster_Dock">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_Dock
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Dock", TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).Dock : string.Empty)
+            </div>*@
+
+
+         
+
+            <div class="search-label">
+                <label for="ReceiptMaster_StartDate">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("StartDate")
+                .Value(TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="ReceiptMaster_EndDate">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd").Name("EndDate")
+                .Value(TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport">
+                @Resources.SYS.Global.Button_Export</button>
+        </div>
+    }
+    <script type="text/javascript">
+        function doClick(isNorma) {
+            if (isNorma) {
+                $("#lableFrom").text("@Resources.ORD.ReceiptMaster.ReceiptMaster_PartyFrom");
+                $("#lableTo").html("@Resources.ORD.ReceiptMaster.ReceiptMaster_PartyTo");
+            }
+            else {
+                $("#lableFrom").html("@Resources.ORD.ReceiptMaster.ReceiptMaster_PartyTo");
+                $("#lableTo").html("@Resources.ORD.ReceiptMaster.ReceiptMaster_PartyFrom");
+            }
+        }
+    </script>
+</fieldset>
+<script type="text/javascript">
+    var t = "";
+    $('#btnSearch').click(function () {
+
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+
+        if (t == "") {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/ProcurementReceipt/ExportMstr/");
+        $('form').submit();
+    });
+
+    function doClick(bl) {
+        //debugger
+        if ($('#IsReturn').is(":checked")) {
+            $('#OrderSubType').attr("value", "1")
+        }
+        else if (!$('#IsReturn').is(":checked")) {
+            $('#OrderSubType').attr("value", "0")
+        }
+        if ($('#IsDiff').is(":checked")) {
+            $('#IpDetailType').attr("value", "1")
+        }
+        else if (!$('#IsDiff').is(":checked")) {
+            $('#IpDetailType').attr("value", "0")
+        }
+    }
+</script>

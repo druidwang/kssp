@@ -1,0 +1,37 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "Shift_Change" : "EmptyChange";
+    bool enable = ViewBag.Enable == null ? true : ViewBag.Enable;
+    bool coupled = ViewBag.Coupled != null ? ViewBag.Coupled : false;
+    string onBindingName = coupled ? "Shift_DataBinding" : "EmptyDataBinding";
+}
+@{
+    if (enable)
+    {
+    @(Html.Telerik().ComboBox()
+        .HiddenInputHtmlAttributes(new { id = id })
+        .Name(name)
+        .AutoFill(true)
+        .DataBinding(binding => binding.Ajax().Select("_ShiftAjaxLoading", "Common", new
+        {
+            resourceGroup = ViewBag.ResourceGroup,
+            includeBlankOption = ViewBag.IncludeBlankOption,
+            coupled = ViewBag.Coupled,
+            flow = ViewBag.Flow
+        }))
+        .ClientEvents(events => events.OnChange(onChangeName).OnDataBinding(onBindingName))
+        .HighlightFirstMatch(true)
+        .BindTo(Model)
+      )
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     
+    @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)
+        }
+    }
+}

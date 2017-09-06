@@ -1,0 +1,53 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.FMS.FacilityTrans>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("FacilityTransGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.FCID).ClientTemplate(Html.ActionLink("<#= FCID #>", "Edit", "FacilityTrans", new { ID = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.FacilityName);
+            columns.Bound(o => o.AssetNo);
+            columns.Bound(o => o.FacilityCategory);
+            columns.Bound(o => o.TransTypeDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            
+                 })   
+                .Scrollable(c => c.Enabled(false))
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "FacilityTrans"))
+                        .ClientEvents(events => events.OnDataBinding("FacilityTransGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function FacilityTransGrid_OnDataBinding(e) {
+            e.data = {
+                FCID: $('#FCID').val(),
+                Name: $('#Name').val(),
+                ChargePersonId: $('#ChargePersonId').val(),
+                ChargeOrganization: $('#ChargeOrganization').val(),
+                ChargeSite: $('#ChargeSite').val(),
+                AssetNo: $('#AssetNo').val(),
+                Category: $('#Category').val(),
+                TransType: $('#TransType').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val()
+            };
+        }
+    </script>
+</fieldset>

@@ -1,0 +1,125 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpSnap_MrpPlanView" });
+}
+<script type="text/javascript">
+
+    function QueryMrpPlanView() {
+        //debugger
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+        if ($('#Flow').val() == "") {
+            //$message.error('路线为必填项。');
+            //return;
+        }
+        if ($('#SnapTime').val() == "") {
+            $message.error('版本为必填项.');
+            return;
+        }
+        var data = {
+            "flow": $('#Flow').val(),
+            "snapTime": $('#SnapTime').val(),
+            "item": $('#Item').val()
+        };
+
+        $("#divMrpPlanView").html("Loading...");
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpSnap/_GetMrpPlanView/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                //debugger
+                var tabStrip = $("#divMrpPlanView");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    highlightrow: true
+                });
+            }
+        });
+    }
+ 
+</script>
+<fieldset>
+    @using (Html.BeginForm("ExportMrpPlanSnapView", "MrpSnap"))
+    { 
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpPlanMaster.RccpPlanMaster_SnapTime
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_MrpSnapMasterComboBox", "Common", new
+            {
+                controlName = "SnapTime",
+                //includeBlankOption = true,
+                isRelease = true,
+                SnapType = com.Sconit.CodeMaster.SnapType.Mrp,
+                selectedValue = TempData["RccpPlanMasterSearchModel"] != null ? ((RccpPlanMasterSearchModel)TempData["RccpPlanMasterSearchModel"]).SnapTime : null
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MrpPlan.MrpPlan_Flow
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                isSupplier = true,
+                isChange = false,
+                includeBlankOption = true,
+                type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["MrpPlanSearchModel"] != null ? ((MrpPlanSearchModel)TempData["MrpPlanSearchModel"]).Flow : null
+            });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.MrpPlan.MrpPlan_Item
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = TempData["MrpPlanSearchModel"] != null ? ((MrpPlanSearchModel)TempData["MrpPlanSearchModel"]).Item : null
+        });
+            }
+        </div>
+    </div>
+    <div class="editor-footer">
+        @Html.Hidden("isFromList", true)
+        <button type="button" id="Search" onclick="QueryMrpPlanView()">
+            @Resources.SYS.Global.Button_Search</button>
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+    </div>
+    }
+</fieldset>
+<script type="text/javascript">
+    $('#btnExport').click(function () {
+        if ($('#StartDate').val() == "") {
+            $message.error('开始时间为必填项。');
+            return;
+        }
+ 
+        if ($('#SnapTime').val() == "") {
+            $message.error('版本为必填项.');
+            return;
+        }
+        $('form').submit();
+    });
+</script>
+<div id="divMrpPlanView">
+</div>

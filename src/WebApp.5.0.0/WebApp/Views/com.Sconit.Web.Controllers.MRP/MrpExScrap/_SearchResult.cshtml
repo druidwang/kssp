@@ -1,0 +1,48 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.ORD.MrpExScrap>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpExScrapGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).ClientTemplate(Html.ActionLink("<#= Id #>", "Edit", "MrpExScrap", new { ID = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.EffectDate).Format("{0:yyyy-MM-dd}");
+            columns.Bound(o => o.Shift);
+            columns.Bound(o => o.ScrapTypeDescription);
+            columns.Bound(o => o.ScrapQty);
+            columns.Bound(o => o.RefOrderNo);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.EffectDate).Title("生效日期");
+            columns.Bound(o => o.CreateDate).Title(@Resources.EXT.PageLan.CreateTime);
+            columns.Bound(o => o.IsVoid)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsVoid' name='IsVoid' value='<#= IsVoid #>' <#=IsVoid? checked='checked' : '' #> />");
+        })
+            .Scrollable(c => c.Enabled(false))
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "MrpExScrap"))
+            .ClientEvents(events => events.OnDataBinding("MrpExScrapGrid_OnDataBinding"))
+            .Pageable(settings =>
+            {
+                settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+            })
+            .Sortable()
+            .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function MrpExScrapGrid_OnDataBinding(e) {
+            e.data = {
+                Flow: $('#Flow').val(),
+                Id: $('#Id').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val()
+            };
+        }
+    </script>
+</fieldset>

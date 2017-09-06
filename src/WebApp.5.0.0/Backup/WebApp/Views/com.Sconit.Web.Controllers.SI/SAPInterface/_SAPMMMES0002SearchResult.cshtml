@@ -1,0 +1,46 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPMMMES0002>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("SAPMMMES002Grid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ZMESPO);
+            columns.Bound(o => o.ZMESGUID);
+            columns.Bound(o => o.ZCSRQSJ);
+            columns.Bound(o => o.Status);
+            columns.Bound(o => o.CancelDate);
+            //columns.Bound(o => o.BatchNo);
+            //columns.Bound(o => o.UniqueCode);
+        })
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSAPMMMES0002List", "SAPInterface"))
+        .ClientEvents(events => events.OnDataBinding("SAPMMMES0002_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAPMMMES0002_OnDataBinding(e) {
+            e.data = {
+                BatchNo: $('#BatchNo').val(),
+                ZMESPO: $('#ZMESPO').val(),
+                TransStartDate: $('#TransStartDate').val(),
+                TransEndDate: $("#TransEndDate").val(),
+                Status: $("input[name='Status']:checked").val()
+            }; 
+        } 
+    </script>
+</fieldset>

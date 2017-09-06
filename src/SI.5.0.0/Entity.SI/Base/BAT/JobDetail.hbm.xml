@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.BAT.JobDetail, com.Sconit.Entity.SI" table="BAT_Job" lazy="false">
+		<id name="Code" column="Code" type="string" unsaved-value="0" >
+      		<generator class="assigned" />
+        </id>
+		<property name="Description" column="Desc1" type="String" length="256"/>	
+		<property name="ServiceType" column="ServiceType" type="String" length="512"/>	
+  	</class>
+</hibernate-mapping>

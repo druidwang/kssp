@@ -1,0 +1,31 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool checkVehicle = ViewBag.CheckVehicle != null ? ViewBag.CheckVehicle : false;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "Tonnage_Change" : "EmptyChange";
+    string onBindingName = checkVehicle ? "Tonnage_DataBinding" : "EmptyDataBinding";
+}
+@{
+    if (enable)
+    {
+        @(Html.Telerik().ComboBox()
+.DropDownHtmlAttributes(new { style = "width: 300px; " })
+        .Name(name)
+        .AutoFill(true)
+        .HiddenInputHtmlAttributes(new { id = id })
+        .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingTonnage", "Common", new 
+        { includeBlankOption = ViewBag.IncludeBlankOption}).Cache(true))
+            .ClientEvents(events => events.OnChange(onChangeName).OnDataBinding(onBindingName))
+        .HighlightFirstMatch(true)
+                .Enable(enable)
+        .BindTo(Model))
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)  }
+    }
+}

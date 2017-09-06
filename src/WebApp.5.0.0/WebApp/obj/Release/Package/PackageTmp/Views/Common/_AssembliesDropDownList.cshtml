@@ -1,0 +1,18 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string Id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable == null ? true : ViewBag.Enable;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+}
+@(Html.Telerik().DropDownList()
+    .Name(name)
+             .DataBinding(binding => binding.Ajax().Select("_AssembliesAjaxLoading", "Common"))
+             .ClientEvents(events => events
+                            .OnChange("Assemblies_Change")
+                                .OnDataBinding("Assemblies_DataBinding")
+            )
+    .HiddenInputHtmlAttributes(new { id = Id })
+    .BindTo(Model)
+    .Enable(enable)
+)

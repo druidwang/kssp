@@ -1,0 +1,98 @@
+﻿@model IList<com.Sconit.Entity.INV.StockTakeResultSummary>
+<fieldset>
+    <script type="text/javascript">
+        function StockTakeResultGridView_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                stNo: $("#StNo").val(),
+                Location: $("#Location").val(),
+                IsLoss: $("#IsLoss").is(':checked'),
+                IsProfit: $("#IsProfit").is(':checked'),
+                IsBreakEven: $("#IsBreakEven").is(':checked'),
+                isFromList: "true",
+                IsAdjust: $("#IsAdjust").is(':checked')
+            };
+        }
+
+        function StockTakeResultGrid_OnRowDataBound(e) {
+            var row = $(e.row.childNodes);
+            if (e.dataItem.IsAdjust || e.dataItem.QualityType != 0) {
+                $(row.first()).html("");
+                //$(row.first()).attr("disabled", true);
+            }
+        }
+
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+                $('input[name="checkedRecords"]').each(function (a, b) {
+                    if ($(b).attr("IsAdjust").toString() == "true") {
+                        $(b).attr("checked", false);
+                        $(b).attr("disabled", true);
+                    }
+                });
+                showButtons();
+            });
+            var $checkedRecords = $("input[name='checkedRecords']");
+            $checkedRecords.click(function () {
+                $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            });
+        });
+
+        function showButtons() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#btnAdjust").attr("style", showButton ? "display:inline" : "display:none");
+        }
+    </script>
+    @(Html.Telerik().Grid(Model)
+        .Name("StockTakeResultGridView")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            if (ViewBag.Status == com.Sconit.CodeMaster.StockTakeStatus.Complete.ToString())
+            {
+                columns.Bound(o => o.Id)
+                    .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>' onclick='showButtons()' IsAdjust='<#=IsAdjust #>' />")
+                    .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                    .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            }
+            else
+            {
+                columns.Bound(o => o.Id).Hidden();
+            }
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Location);
+            //columns.Bound(o => o.QualityType);
+            columns.Bound(o => o.QualityTypeDescription);
+            columns.Bound(o => o.StockTakeQty);
+            columns.Bound(o => o.InventoryQty);
+            columns.Bound(o => o.DifferenceQty);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxStockTakeResult", "StockTake"))
+        .ClientEvents(events => events.OnDataBinding("StockTakeResultGridView_OnDataBinding")
+        .OnRowDataBound("StockTakeResultGrid_OnRowDataBound"))
+            //.Pageable(settings =>
+            //{
+            //    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            //    settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 50);
+            //})
+        .Sortable()
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+     )
+</fieldset>
+

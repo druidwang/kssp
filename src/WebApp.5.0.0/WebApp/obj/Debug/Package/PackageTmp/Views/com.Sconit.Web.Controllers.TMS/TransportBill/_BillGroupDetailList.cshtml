@@ -1,0 +1,49 @@
+﻿@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.BIL.BillDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ActingBill")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitPrice);
+            columns.Bound(o => o.Currency);
+            columns.Bound(o => o.BillQty);//待开数
+            columns.Bound(o => o.BilledQty);//已开数
+            columns.Bound(o => o.CurrentBillQty);//本次开票数
+            columns.Bound(o => o.CurrentBillAmount);//本次开票金额
+        })
+        .CellAction(cell =>
+        {
+            if (cell.Column.Member == "BillAmount")
+            {
+                //cell.Text = string.Format("<input type='text'  style='width:40px;'  id='BillAmount'  name='Amount' value='{0}' width='80px' />", cell.DataItem.BilledQty * cell.DataItem.UnitPrice);
+            }
+        })
+    .Scrollable(c => c.Enabled(false))
+    .Resizable(resizing => resizing.Columns(true))
+    .Footer(false)
+        )
+        
+        <table width="100%" border="0">
+    <tr>
+        <td style="width: 20%">
+ 
+        </td>
+        <td style="width: 50%">
+        </td>
+        <td style="width: 10%" align="right">
+            金额合计:
+        </td>
+        <td style="width: 20%" align="left">
+            <input name="TotalDetailAmount" type="text" value="@ViewBag.BilledAmount" id="TotalDetailAmount"
+                onfocus="this.blur();" style="width: 150px;" />
+        </td>
+    </tr>
+</table>
+</fieldset>
+
+

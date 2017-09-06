@@ -1,0 +1,91 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#btnEdit").attr("style", showButton ? "display:inline" : "display:none");
+        });
+    });
+
+
+
+    function showButtons() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var showButton = false;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                showButton = true;
+                break;
+            }
+        }
+        $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        $("#btnEdit").attr("style", showButton ? "display:inline" : "display:none");
+    }
+
+    function OrderMasterGrid_OnDataBinding(e) {
+        e.data = {
+            OrderNo: $('#OrderNo').val(),
+            Flow: $('#Flow').val(),
+            PartyFrom: $('#PartyFrom').val(),
+            PartyTo: $('#PartyTo').val(),
+            Dock: $('#Dock').val(),
+            ExternalOrderNo: $("#ExternalOrderNo").val(),
+            SubType: $("#SubType").val()
+        };
+    }
+
+</script>
+<fieldset>
+    <legend>@Resources.ORD.OrderMaster.OrderMaster_Ship_Title</legend>
+    @(
+ Html.Telerik().Grid(Model)
+          .Name("OrderMasterGrid")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.OrderNo);
+          })
+          .Columns(columns =>
+          {
+              columns.Bound(o => o.CheckOrderNo)
+                .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= OrderNo #>'  onClick='showButtons()'   />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+
+              columns.Bound(o => o.OrderNo);
+              columns.Bound(o => o.Flow).ClientTemplate("<div title=<#=FlowDescription #>><#=Flow #></div>");
+              //columns.Bound(o => o.ExternalOrderNo);
+              //columns.Bound(o => o.PartyFromName).ClientTemplate("<div title=<#=PartyFromName #>><#=PartyFrom #></div>");
+              columns.Bound(o => o.OrderSubTypeDescription);
+              columns.Bound(o => o.OrderTypeDescription).Width(50);
+              columns.Bound(o => o.OrderPriorityDescription).Width(50);
+              columns.Bound(o => o.OrderStatusDescription).Width(60);
+              columns.Bound(o => o.LocationToName).ClientTemplate("<div title=<#=LocationToName #>><#=LocationTo #></div>");
+              //columns.Bound(o => o.ShipFromAddress);
+              columns.Bound(o => o.PartyToName).ClientTemplate("<div title=<#=PartyToName #>><#=PartyToName #></div>");
+              columns.Bound(o => o.ShipToAddress);
+              columns.Bound(o => o.CreateUserName);
+              columns.Bound(o => o.CreateDate);
+          })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxShipOrderList", "DistributionOrder"))
+                 .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+                 .Pageable(settings =>
+                 {
+                     settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                     settings.PageSize(ViewBag.PageSize);
+                 })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+   
+</fieldset>

@@ -1,0 +1,82 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.BIL
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("SupplierConsignmentList", "ViewLocationLotDetail"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.BIL.PlanBill.PlanBill_Party
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_SupplierComboBox", "Common", new
+        {
+            controlName = "Party",
+            selectedValue = TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).Party : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.BIL.PlanBill.PlanBill_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).Item : string.Empty
+            });
+                }
+            </div>
+            @*<div class="search-label">
+                <label for="OrderMaster_PartyFrom">
+                   @Resources.BIL.PlanBill.PlanBill_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+              @Html.TextBox("OrderNo", TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                     @Resources.BIL.PlanBill.PlanBill_ReceiptNo
+                </label>
+            </div>
+            <div class="search-field">
+            @Html.TextBox("ReceiptNo", TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).ReceiptNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.BIL.PlanBill.PlanBill_CreateDate_start
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("CreateDate_start")
+.Value(TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).CreateDate_start : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.BIL.PlanBill.PlanBill_CreateDate_End
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("CreateDate_End")
+        .Value(TempData["PlanBillSearchModel"] != null ? ((PlanBillSearchModel)TempData["PlanBillSearchModel"]).CreateDate_End : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>*@
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

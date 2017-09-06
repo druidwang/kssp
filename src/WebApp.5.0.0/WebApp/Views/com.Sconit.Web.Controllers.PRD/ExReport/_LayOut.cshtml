@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Telerik Extensions for ASP.NET MVC Demos</title>
+    @(Html.Telerik().StyleSheetRegistrar()
+                      .DefaultGroup(group => group
+                          .Add("telerik.examples.css")
+                          .Add("telerik.common.css")
+                          .Add("telerik.windows7.css")
+                          .Add("telerik.rtl.css")
+                          .Combined(true)
+                          .Compress(true))
+                     )
+    @RenderSection("HeadContent", required:false)
+    @Html.Partial("_Header")
+</head>
+<body>
+    <div id="page">
+        <h1 id="title">@Html.ActionLink("Telerik Extensions for ASP.NET MVC", "FirstLook", "Home") </h1>
+@*        <a id="version"
+            href="http://www.telerik.com/products/aspnet-mvc/whats-new/release-history.aspx">@Html.ProductVersion()</a>*@
+        <div id="main">
+            @RenderBody()
+        
+            <div class="corner rc-bottomleft"></div>
+            <div class="corner rc-bottomright"></div>
+        </div>
+@*        @Html.Partial("_LeftNavigation")
+        @Html.Partial("_TopNavigation")
+        @Html.Partial("_Footer")*@
+    </div>
+    @(Html.Telerik().ScriptRegistrar()
+                     .DefaultGroup(group => group
+                         .Add("telerik.examples.js")
+                         .Compress(true))
+                     .OnDocumentReady(
+                     @<text>
+                         prettyPrint();
+                     </text>)
+    )
+    @Html.Partial("_GoogleAnalytics")
+</body>
+</html> 

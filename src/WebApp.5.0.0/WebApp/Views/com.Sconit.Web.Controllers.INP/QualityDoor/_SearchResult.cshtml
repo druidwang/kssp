@@ -1,0 +1,52 @@
+﻿@using com.Sconit.Entity.ISS
+@model IEnumerable<com.Sconit.Entity.ISS.IssueMaster>
+<fieldset>
+      @(Html.Telerik().Grid<IssueMaster>()
+        .Name("QualityDoorGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "QualityDoor", new { id = "<#=Code #>" }, null).ToString());
+            columns.Bound(o => o.BackYards);
+   			columns.Bound(o => o.StatusDescription);
+			columns.Bound(o => o.UserName);
+            columns.Bound(o => o.FailCode);
+            columns.Bound(o => o.DefectCode);
+			columns.Bound(o => o.Content);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+
+                .ClientEvents(events => events.OnDataBinding("QualityDoorGrid_OnDataBinding"))
+		
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total!=null?ViewBag.Total:0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .EnableCustomBinding(true)
+        .Resizable(resizing => resizing.Columns(true))
+		.DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "QualityDoor"))
+		.Sortable()
+    )
+    <script type="text/javascript">
+        function QualityDoorGrid_OnDataBinding(e) {
+            
+            e.data = {
+                Code: $('#Code').val(),
+                IssueSubject: $('#IssueSubject').val(),
+                BackYards: $('#BackYards').val(),
+                MobilePhone: $('#MobilePhone').val(),
+                Content: $('#Content').val(),
+				Status: $('#Status').val(),
+				FailCode: $('#FailCode').val(),
+				DefectCode: $('#DefectCode').val(),
+				DateFrom: $('#DateFrom').val(),
+				DateTo: $('#DateTo').val()
+            };
+        } 
+    </script>
+</fieldset>

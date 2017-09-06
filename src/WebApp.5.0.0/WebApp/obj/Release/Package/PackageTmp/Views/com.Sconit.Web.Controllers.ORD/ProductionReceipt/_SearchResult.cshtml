@@ -1,0 +1,53 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.ReceiptMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ReceiptMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.ReceiptNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ReceiptNo).ClientTemplate(Html.ActionLink("<#= ReceiptNo #>", "Edit", "ProductionReceipt", new { receiptNo = "<#= ReceiptNo #>" }, null).ToString());
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.OrderSubTypeDescription);
+            columns.Bound(o => o.PartyFromName).Title(@Resources.ORD.ReceiptMaster.ReceiptMaster_PartyFrom_Procurement);
+            columns.Bound(o => o.ReceiptMasterStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ProductionReceipt"))
+        .ClientEvents(events => events.OnDataBinding("ReceiptMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .EnableCustomBinding(true)
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ReceiptMasterGrid_OnDataBinding(e) {
+            e.data = {
+                ReceiptNo: $('#ReceiptNo').val(),
+                IpNo: $('#IpNo').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                Dock: $('#Dock').val(),
+                OrderSubType: $('#OrderSubType').val(),
+               // OrderSubType: $('#OrderSubType :checked').val(),
+                OrderSubType:$("input[type=radio][checked]").val(),
+                Status:$("#Status").val(),
+                Flow:$("#Flow").val()
+            };
+        }
+    </script>
+</fieldset>

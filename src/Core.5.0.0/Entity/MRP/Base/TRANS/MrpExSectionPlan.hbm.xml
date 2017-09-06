@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.MrpExSectionPlan, com.Sconit.Entity" table="MRP_MrpExSectionPlan" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="ProductLine" column="ProductLine" type="String"  length="50" />
+    <property name="Section" column="Section" type="String"  length="50" />
+    <property name="DateIndex" column="DateIndex" type="String"  length="10" />
+    <property name="PlanDate" column="PlanDate" type="DateTime"  />
+    <property name="PlanVersion" column="PlanVersion" type="DateTime"  />
+    <property name="Sequence" column="Sequence" type="Int32"/>
+    <property name="Qty" column="Qty" type="Double"/>
+    <property name="CorrectionQty" column="CorrectionQty" type="Double"/>
+    <property name="AdjustQty" column="AdjustQty" type="Double"/>
+    <!--<property name="RateQty" column="RateQty" type="Double"/>-->
+    <property name="Speed" column="Speed" type="Double"/>
+    <property name="ApsPriority" column="ApsPriority" />
+    <property name="SwitchTime" column="SwitchTime" type="Double"/>
+    <property name="SpeedTimes" column="SpeedTimes" type="Int32"/>
+    <property name="Quota" column="Quota" type="Double"/>
+    <property name="MinLotSize" column="MinLotSize" type="Double"/>
+    <property name="EconomicLotSize" column="EconomicLotSize" type="Double"/>
+    <property name="MaxLotSize" column="MaxLotSize" type="Double"/>
+    <property name="TurnQty" column="TurnQty" type="Int32"/>
+    <property name="Correction" column="Correction" type="Double"/>
+    <property name="ShiftType" column="ShiftType" />
+    <!--<property name="IsRelease" column="IsRelease" type="Boolean"/>
+    <property name="IsManualCreate" column="IsManualCreate" type="Boolean"/>-->
+    <property name="TotalAps" column="TotalAps" type="Int32"/>
+    <property name="TotalQuota" column="TotalQuota" type="Double"/>
+    <property name="StartTime" column="StartTime" type="DateTime2"/>
+    <property name="WindowTime" column="WindowTime" type="DateTime2"/>
+    <property name="UpTime" column="UpTime" type="Double"/>
+    <property name="PlanNo" column="PlanNo" type="String"  length="50" />
+    <property name="ShiftQty" column="ShiftQty" type="Double"/>
+    <property name="ProductType" column="ProductType"  type="String"  length="5" />
+    <property name="LatestStartTime" column="LatestStartTime" type="DateTime2"/>
+    <property name="Logs" column="Logs" type="String" length="4000"/>
+    <property name="IsEconomic" column="IsEconomic"  type="Boolean"/>
+    <property name="Remark" column="Remark" type="String"  length="50"/>
+    <!--<property name="Shift" column="Shift" type="String"  length="50"/>-->
+    <property name="CurrentSwitchTime" column="CurrentSwitchTime" type="Double"/>
+    <property name="SectionDescription" column="SectionDescription" type="String"  length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+    <property name="IsOld" column="IsOld" type="Boolean"/>
+
+  </class>
+</hibernate-mapping>

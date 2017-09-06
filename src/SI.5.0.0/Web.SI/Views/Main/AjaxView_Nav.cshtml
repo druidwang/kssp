@@ -1,0 +1,39 @@
+﻿@model IEnumerable<MenuModel>
+@{
+    //Page.Title = "在此处显示标题";
+    Layout = "~/Views/Shared/_Default.cshtml";
+}
+@section HeadContent {
+    <base target="right" />
+}
+<style type="text/css">
+    .t-link
+    {
+        padding-left: 0em;
+    }
+</style>
+@{
+    if (Model != null) {
+         @(Html.Telerik().TreeView()
+        .Name("TreeView")
+        .BindTo(Model, mappings =>
+        {
+            mappings.For<MenuModel>(binding => binding
+                    .ItemDataBound((item, menu) =>
+                    {
+                        item.Text = menu.Name;
+                        item.ImageUrl = menu.ImageUrl;
+                        
+                        if (!string.IsNullOrWhiteSpace(menu.PageUrl))
+                        {
+                            item.Url = menu.PageUrl;
+                        }
+                    })
+                    .Children(menu => menu.ChildrenMenu)
+                    );
+        })
+    )
+    }
+        
+}
+ 

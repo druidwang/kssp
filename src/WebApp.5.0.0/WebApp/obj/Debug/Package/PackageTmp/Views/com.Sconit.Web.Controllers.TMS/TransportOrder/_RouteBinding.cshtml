@@ -1,0 +1,74 @@
+﻿<div class="editor">
+    <input type="hidden" name="Guid" id="Guid" value="@ViewBag.Guid" />
+      @(Html.Telerik().Grid<com.Sconit.Entity.TMS.TransportOrderRoute>()
+                .Name("OrderRouteGrid")
+              //.Editable(editing => editing.Mode(GridEditMode.InCell))
+                .ToolBar(commands =>
+                {
+                    commands.Insert();
+                })
+                .DataKeys(keys =>
+                {
+                    keys.Add(p => p.Id);
+                })
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_LoadOrderRoute", "TransportOrder")
+                            .Insert("_InsertOrderRoute", "TransportOrder", new { guid = @ViewBag.Guid })
+                            .Update("_UpdateOrderRoute", "TransportOrder", new { guid = @ViewBag.Guid })
+                            .Delete("_DeleteOrderRoute", "TransportOrder", new { guid = @ViewBag.Guid }))
+                .Columns(columns =>
+                {
+                    columns.Bound(o => o.Sequence).Width(50);
+                    columns.Bound(o => o.ShipAddress).EditorTemplateName("AddressGridTemplater").Width(300);
+                    columns.Bound(o => o.ShipAddressDescription).Hidden();
+                    columns.Bound(o => o.ShipAddressDescription).ReadOnly(true);
+                    columns.Bound(o => o.TempId).Hidden();
+                    columns.Command(commands =>
+                    {
+                        commands.Edit();
+                        commands.Delete();
+                    }).Width(150);
+                })
+
+                .ClientEvents(events => events.OnError("TelerikGridView_OnError").OnDataBinding("OrderRouteGridDateBinding"))
+
+                            )
+</div>
+<script>
+    function onAddressComboBoxChange(e) {
+        if (e.value != null) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                $(e.target).parent().parent().next().text("");
+                combobox.reload();
+            } else {
+                var data = {
+                    "address": e.value
+                };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/TransportFlow/_GetAddressName/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        $(e.target).parent().parent().next().children().val(data)
+                        $(e.target).parent().parent().next().next().text(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+    }
+
+    function onAddressDataBinding(e) {
+        e.data = {
+            type: 0,
+            checkParty: false
+        };
+    }
+</script>

@@ -1,0 +1,40 @@
+﻿
+<meta http-equiv="Refresh" content="300">
+@{
+    @(Html.Telerik().ScriptRegistrar().Globalization(true)
+        .DefaultGroup(group => group.Combined(true).Compress(true)))
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+<style type="text/css">
+    body
+    {
+        background-color: #FFFFFF;
+    }
+</style>
+<script language="javascript" type="text/javascript">
+    var flag = false;
+    function shift_status() {
+        //alert("aaa");
+        var mainFrame = top.document.getElementsByName("mainframeset")[0];
+        if (flag) {
+            if (screen.width > 1024) {
+                mainFrame.cols = "220,12,*";
+            } else if (screen.width > 800) {
+                mainFrame.cols = "220,12,*";
+            } else {
+                mainFrame.cols = "200,12,*";
+            }
+            //document.getElementById("menuSwitch1").src='Images/Nav/Spacer.gif';
+            //document.getElementById("menuSwitch1").title='隐藏';
+        }
+        else {
+            //parent.main.cols = "0,9,*";
+            mainFrame.cols = "0,12,*";
+            //document.getElementById("menuSwitch1").src='Images/Nav/Spacer.gif';
+            //document.getElementById("menuSwitch1").title='显示';
+        }
+        flag = !flag;
+    }
+    jQuery(document).click(function () { shift_status(); });
+    //$("#main").hide();
+</script>

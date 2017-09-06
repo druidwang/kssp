@@ -1,0 +1,129 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.MiscOrderDetail>
+<fieldset>
+    <script type="text/javascript">
+        function onItemComboBoxChange(e) {
+            if (e.value != null && e.value != "") {
+                var combobox = $(this).data("tComboBox");
+                if (combobox == undefined) {
+                    return;
+                }
+                if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                    combobox.value("");
+                    var $itemCell = $(e.target).parent().parent();
+                    $itemCell.next().html("");
+                    $itemCell.next().next().html("");
+                    $itemCell.next().next().next().html("");
+                    $itemCell.next().next().next().next().html("");
+                    combobox.reload();
+                }
+                else {
+                    var data = {
+                        "Code": e.value
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "json",
+                        url: "/ProductionReworkMiscOrder/_WebOrderDetail/",
+                        data: data,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#MiscOrderDetailGrid").data("tGrid");
+                            var oldData = $tGrid.dataItem($(e.target).parent().parent().parent());
+                            var $itemCell = $(e.target).parent().parent();
+                            if (data.Sequence > 0) {
+                                $itemCell.prev().html('<span class="t-dirty"></span>' + data.Sequence);
+                            }
+                            $itemCell.next().html(data.ItemDescription);
+                            $itemCell.next().next().html(data.ReferenceItemCode);
+                            $itemCell.next().next().next().html('<span class="t-dirty"></span>' + data.Uom);
+                            if (oldData != undefined) {
+                                oldData.Sequence = data.Sequence;
+                                oldData.ItemDescription = data.ItemDescription;
+                                oldData.Uom = data.Uom;
+                                oldData.UnitCount = data.UnitCount;
+                                oldData.ReferenceItemCode = data.ReferenceItemCode;
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            DisplayTextMessages(XMLHttpRequest.responseText);
+                        }
+                    });
+                }
+            }
+        }
+
+        function ItemComboBox_DataBinding(e) {
+            if (e.value != "") {
+                e.data = {
+                    "flow": $("#Flow").val(),
+                    "isBomDetial": false
+                }
+            }
+        }
+
+        function onLocationComboBoxChange(e) {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                combobox.reload();
+            }
+        }
+
+        function onLocationDataBinding(e) {
+            e.data = {
+                "Region": $("#Region").val(),
+                "checkRegion": true
+            };
+        }
+    </script>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_OrderDetails</legend>
+    @(Html.Telerik().Grid(Model)
+       .Name("MiscOrderDetailGrid")
+       .Editable(editing => editing.Mode(GridEditMode.InCell))
+         .ToolBar(commands =>
+         {
+             if (ViewBag.IsCreate)
+             {
+                 commands.Insert();
+             }
+         })
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax()
+        .Select("_SelectMiscOrderDetail", "ProductionReworkMiscOrder", new { miscOrderNo = ViewBag.miscOrderNo, flow = ViewBag.Flow })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence).Width(30);
+            if (ViewBag.IsCreate)
+            {
+                columns.Bound(o => o.Item).EditorTemplateName("ItemFilterByFlow").Width(100);
+            }
+            else
+            {
+                columns.Bound(o => o.Item).ReadOnly(true).Width(100);
+            }
+            columns.Bound(o => o.ItemDescription).ReadOnly(true).Width(150);
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly(true).Width(100);
+            columns.Bound(o => o.Uom).Width(60).ReadOnly(true);
+            if (ViewBag.IsCreate)
+            {
+                columns.Bound(o => o.Qty).Width(100);
+                columns.Bound(o => o.Location).EditorTemplateName("LocationGridForeignKey").Width(120).Hidden();
+                columns.Command(commands => commands.Delete()).Width(100);
+            }
+            else
+            {
+                columns.Bound(o => o.Qty).Width(50).ReadOnly();
+                columns.Bound(o => o.Location).EditorTemplateName("LocationGridForeignKey").Width(120).Hidden();
+            }
+        })
+        .Scrollable()
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+            )
+</fieldset>

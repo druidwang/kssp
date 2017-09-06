@@ -1,0 +1,111 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.BIL.PriceListMaster
+@Html.Partial("_AjaxMessage")
+<form action="/DistributionPriceList/_Edit" method="post">
+<fieldset>
+    <legend>@Resources.BIL.PriceListMaster.PriceListMaster_Edit_Title</legend>
+    <div class="editor">
+        @Html.HiddenFor(model => model.CreateUserName)
+        @Html.HiddenFor(model => model.CreateDate)
+        @Html.HiddenFor(model => model.LastModifyUserName)
+        @Html.HiddenFor(model => model.LastModifyDate)
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Code)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.Code)
+            @Html.HiddenFor(model => model.Code)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Type)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CodeMasterDropDownList", "Common", new
+                {
+                    code = com.Sconit.CodeMaster.CodeMaster.PriceListType,
+                    controlName = "Type",
+                    selectedValue = (int)Model.Type,
+                    enable = false
+                });
+            }
+            @Html.ValidationMessageFor(model => model.Type)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelForModel(Resources.BIL.PriceListMaster.PriceListMaster_DistributionParty)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.Party)
+            @Html.HiddenFor(model => model.Party)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelForModel(Resources.BIL.PriceListMaster.PriceListMaster_DistributionPartyName)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.PartyName )
+            @Html.HiddenFor(model => model.PartyName)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Currency)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_CurrencyDropDownList", "Common",
+                    new { controlName = "Currency", selectedValue = Model.Currency });
+            }
+            @Html.ValidationMessageFor(model => model.Currency)
+        </div>
+        @*<div class="editor-label-2">
+            @Html.LabelFor(model => model.Tax)
+        </div>
+        <div class="editor-field-2">
+            @{
+                Html.RenderAction("_TaxDropDownList", "Common",
+                    new { controlName = "Tax", selectedValue = Model.Tax, includeBlankOption = true });
+            }
+            @Html.ValidationMessageFor(model => model.Tax)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsIncludeTax)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsIncludeTax)
+        </div>*@
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.IsActive)
+        </div>
+        <div class="editor-field-2">
+            @Html.EditorFor(model => model.IsActive)
+        </div>
+    </div>
+    <div class="editor-footer">
+        @Html.Button(Resources.SYS.Global.Button_Save, "Url_DistributionPriceList_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSave"},
+        {"needconfirm","true"}
+	})
+    @Html.Button(Resources.SYS.Global.Button_Delete, "Url_DistributionPriceList_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDelete"},
+        {"needconfirm","true"},
+        {"onclick","location.href='"+Url.Content("~/DistributionPriceList/Delete/" +Model.Code)+"'"}
+	})
+        <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/DistributionPriceList/List")'">
+            @Resources.SYS.Global.Button_Back</button>
+    </div>
+</fieldset>
+</form>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("form[action$='_Edit']").submit(function () {
+            $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(response);
+            });
+            return false;
+        });
+    });
+</script>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.VehicleInFactoryDetail>
+<fieldset>
+    <legend>@Resources.CUST.VehicleInFactoryDetail.VehicleInFactoryDetail_Title_View</legend>
+    @(
+ Html.Telerik().Grid(Model)
+          .Name("VehicleInFactoryDetail")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.IpNo);
+          })
+          
+          .Columns(columns =>
+          {
+              columns.Bound(o => o.IpNo).ReadOnly();
+              columns.Command(commands => commands.Delete());
+          })
+          .Scrollable()
+        .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax()
+                                    .Select("_SelectVehicleInFactoryDetail", "VehicleInFactory")
+                                            .Delete("_DeleteVehicleInFactoryDetail", "VehicleInFactory"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 50 : ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>

@@ -1,0 +1,218 @@
+﻿@model IEnumerable<com.Sconit.Entity.SCM.FlowDetail>
+<fieldset>
+    @using (Html.BeginForm("Save", "Quota")){
+    @(Html.Telerik().Grid(Model)
+        .Name("FlowDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Width(0).ClientTemplate("<input type='text' id='Id' name='Id'  style='display:none' value='<#= Id #>'/>");
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.MrpWeight).ClientTemplate("<label class='item'><#= MrpWeight #></label>");
+            columns.Bound(o => o.MrpTotal).ClientTemplate("<label class='item'><#= MrpTotal #></label>");//.Format("{0:0.########}");
+            columns.Bound(o => o.MrpTotalAdjust).ClientTemplate("<input type='text' id='MrpTotalAdjust' name='MrpTotalAdjust' style='width:70px' value='<#= MrpTotalAdjust #>'/>");
+        })
+                 .CellAction(cell =>
+                 {
+                     if (cell.Column.Member == "Id")
+                     {
+                         cell.Text = string.Format("<input type='text' id='Id' name='Id' style='display:none' value='" + cell.DataItem.Id + "'/>");
+                     }
+                     if (cell.Column.Member == "MrpTotalAdjust")
+                     {
+                         cell.Text = string.Format("<input type='text' id='MrpTotalAdjust' name='MrpTotalAdjust' style='width:70px' value='" + cell.DataItem.MrpTotalAdjust + "'/>");
+                     }
+                 })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Quota"))
+        .ClientEvents(events => events.OnDataBinding("FlowDetailGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize == null ? 50 : ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+        <label></label>
+      <p>
+        <button type="button" id="btnInproportion" onclick="onbtnInproportionClick()">@Resources.MRP.Quota.Quota_Button_Inproportion</button>
+        <button type="button" id="btnClear" onclick="onbtnClear()">@Resources.MRP.Quota.Quota_Button_Clear</button>
+        <button type="submit" id="btnSave">@Resources.SYS.Global.Button_Save</button>
+    </p>
+    }
+</fieldset>
+<script type="text/javascript">
+    function FlowDetailGrid_OnDataBinding(e) {
+        e.data = {
+            Location: $('#Location').val(),
+            Item: $('#Item').val()
+        };
+    }
+
+    function onbtnInproportionClick(e) {
+        var grid = $("#FlowDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var idStr = "";
+//        var adjQtyStr = "";
+//        var weightStr = "";
+//        var totalQtyStr=""
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var id = row.find("input:first").val();
+//            var adjQty = row.find("input:last").val();
+//            var weight = row.find("label:first").html().toString();
+//            var totalQty = row.find("label:last").html().toString();
+            if (id != undefined && id != null && id != "") {
+                if (idStr == "") {
+                    idStr = id;
+//                    adjQtyStr = adjQty;
+//                    weightStr = weight;
+//                    totalQtyStr = totalQty;
+                } else {
+                    idStr += "," + id;
+//                    adjQtyStr += "," + adjQty;
+//                    weightStr += "," + weight;
+//                    totalQtyStr += "," + totalQty;
+                }      
+            }
+        }
+        var data = {
+            "Location": $("#Location").val(),
+            "Item": $("#Item").val(),
+            "idStr": idStr
+//            "adjQtyStr": adjQtyStr,
+//            "weightStr":weightStr,
+//            "totalQtyStr":totalQtyStr
+        }
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            data: data,
+            url: "/Quota/Inproportion/",
+            cache: false,
+            success: function (data, textStatus) {
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/Quota/List/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#content");
+                        $($tGrid).html(data);
+                    }
+                });
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function onbtnClear(e) {
+        var grid = $("#FlowDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var idStr = "";
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var id = row.find("input:first").val();
+            if (id != undefined && id != null && id != "") {
+                if (idStr == "") {
+                    idStr = id;
+                } else {
+                    idStr += "," + id;
+                }
+            }
+        }
+        var data = {
+            "Location": $("#Location").val(),
+            "Item": $("#Item").val(),
+            "idStr": idStr
+        }
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            data: data,
+            url: "/Quota/Clear/",
+            cache: false,
+            success: function (data, textStatus) {
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/Quota/List/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#content");
+                        $($tGrid).html(data);
+                    }
+                });
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function onbtnSave(e) {
+        var grid = $("#FlowDetail").data("tGrid");
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var idStr = "";
+        var adjQtyStr = "";
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            var id = row.find("input:first").val();
+            var adjQty = row.find("input:last").val();
+            if (id != undefined && id != null && id != "") {
+                if (idStr == "") {
+                    idStr = id;
+                    adjQtyStr = adjQty;
+                } else {
+                    idStr += "," + id;
+                    adjQtyStr += "," + adjQty;
+
+                }
+            }
+        }
+        var data = {
+            "Location": $("#Location").val(),
+            "Item": $("#Item").val(),
+            "idStr": idStr,
+            "adjQtyStr": adjQtyStr
+        }
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            data: data,
+            url: "/Quota/Inproportion/",
+            cache: false,
+            success: function (data, textStatus) {
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/Quota/List/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#content");
+                        $($tGrid).html(data);
+                    }
+                });
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>

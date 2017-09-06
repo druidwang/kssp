@@ -1,0 +1,41 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+                        .Select("_SelectBatchEditing", "ProcurementOrder", new { newOrEdit = ViewBag.newOrEdit, flow = ViewBag.flow, orderNo = ViewBag.orderNo, orderSubType = ViewBag.orderSubType })
+            // .Update("_SaveBatchEditing", "ProcurementOrder", new { newOrEdit = ViewBag.newOrEdit, flow = ViewBag.flow, orderNo = ViewBag.orderNo })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create);
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly();
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            columns.Bound(o => o.MinUnitCount).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create).Format("{0:0.########}");
+            columns.Bound(o => o.UnitCount).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create).Format("{0:0.########}");
+            columns.Bound(o => o.Uom).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create);
+            columns.Bound(o => o.UnitCountDescription).ReadOnly();
+            columns.Bound(o => o.LocationFrom).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create);
+            columns.Bound(o => o.LocationTo).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create);
+            columns.Bound(o => o.OrderedQty).ReadOnly(ViewBag.status != com.Sconit.CodeMaster.OrderStatus.Create).Format("{0:0.########}");
+
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+            )
+    @Html.Hidden("currentFlow", (String)ViewBag.flow)
+    @Html.Hidden("PartyFrom", (string)ViewBag.PartyFrom)
+    @Html.Hidden("PartyTo", (string)ViewBag.PartyTo)
+    @Html.Hidden("orderSubType", (int)ViewBag.orderSubType)
+</fieldset>

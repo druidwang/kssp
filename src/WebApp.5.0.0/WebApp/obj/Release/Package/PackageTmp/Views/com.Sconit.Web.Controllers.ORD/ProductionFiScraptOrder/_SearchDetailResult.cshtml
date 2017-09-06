@@ -1,0 +1,59 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.MiscOrderDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("MiscOrderGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.MiscOrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.MiscOrderNo);
+            columns.Bound(o => o.EffectiveDate);
+            //columns.Bound(o => o.Location);
+            columns.Bound(o => o.MoveType);
+            columns.Bound(o => o.CostCenter);
+            columns.Bound(o => o.Note);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Qty);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxDetailList", "ProductionFiScraptOrder"))
+        .ClientEvents(events => events.OnDataBinding("MiscOrderGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function MiscOrderGrid_OnDataBinding(e) {
+            e.data = {
+                MiscOrderNo: $('#MiscOrderNo').val(),
+                Status: $('#Status').val(),
+                MoveType: $('#MoveType').val(),
+                CostCenter: $('#CostCenter').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                GeneralLedger: $('#GeneralLedger').val(),
+                Note: $('#Note').val(),
+                Item: $('#Item').val(),
+                Location: $("#Location").val(),
+                SearchType: $("#SearchType").val()
+            }
+        }
+    </script>
+</fieldset>

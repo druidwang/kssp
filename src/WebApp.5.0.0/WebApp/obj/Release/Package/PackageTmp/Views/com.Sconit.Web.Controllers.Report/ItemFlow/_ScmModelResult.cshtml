@@ -1,0 +1,26 @@
+﻿@model IEnumerable<com.Sconit.Entity.SCM.FlowDetail>
+<fieldset>
+    @(Html.Telerik().TreeView()
+      .Name("TransTreeView")
+              .BindTo(Model, (item, flowDetail) =>
+              {
+                  //物料:{0}[{1}]; 需求数量:{2};                  
+                  item.Text = string.Format("{7}路线:{0}[{1}]; 物料:{2}[{3}]; 来源库位:{4}; 目的库位:{5}; MRP权重:{6}",
+                      flowDetail.Flow, flowDetail.CurrentFlowMaster.Description, flowDetail.Item, flowDetail.ItemDescription,
+                      flowDetail.LocationFrom, flowDetail.LocationTo, flowDetail.MrpWeight, flowDetail.CurrentFlowMaster.FlowTypeDescription);
+                  item.Value = string.Format("{0};{1};{2};{3}",
+                     flowDetail.Item, flowDetail.LocationFrom, flowDetail.Flow, flowDetail.Bom);
+                  item.LoadOnDemand = true;
+              })
+      .DataBinding(dataBinding => dataBinding
+      .Ajax().Select("_AjaxLoadingTree", "ItemFlow"))
+     )
+
+    <script type="text/javascript">
+        function ExpandAll() {
+            var treeView = $("#TransTreeView").data("tTreeView");
+            var item = $("> ul > li", treeView.element);
+            treeView.expand(item);
+        }
+    </script>
+</fieldset>

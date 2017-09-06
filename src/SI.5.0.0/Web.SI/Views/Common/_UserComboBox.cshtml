@@ -1,0 +1,26 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    var selectedValue = ViewBag.SelectedValue;
+    AutoCompleteFilterMode userFilterMode = Enum.Parse(typeof(AutoCompleteFilterMode), ViewBag.UserFilterMode, true);
+    int userFilterMinimumChars = ViewBag.UserFilterMinimumChars;
+    bool enable = true;
+    if (ViewBag.Enable != null)
+    {
+        enable = ViewBag.Enable;
+    }
+}
+@(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax().Select("_UserAjaxLoading", "Common").Cache(true))
+                .Filterable(filtering =>
+                {
+                    filtering.FilterMode(userFilterMode);
+                    filtering.MinimumChars(userFilterMinimumChars);
+                })
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                .Value(selectedValue)
+                .Enable(enable)
+        )

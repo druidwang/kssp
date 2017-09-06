@@ -1,0 +1,264 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.ISS.IssueMaster
+@{
+    ViewBag.Title = Resources.ISS.IssueMaster.Edit_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Issue_View" });
+}
+<script type="text/javascript">
+    $(function () {
+        var issueAddress = ("#IssueAddress-input");
+
+        if (issueAddress.length > 0) {
+            $("#IssueAddress-input").change(function () {
+
+                $("#IssueAddress").val($("#IssueAddress-input").val());
+            });
+        }
+    });
+
+    function IssueType_Change(e) {
+    }
+
+    function IssueNo_Change(e) {
+    }
+
+    function IssueNo_DataBinding(e) {
+
+    }
+
+//    function More(va) {
+//        if (va.innerHTML == "More...") {
+
+//            document.getElementById("divMore").style.display = 'inline'
+//            document.getElementById("more").innerHTML = "Hide...";
+//        }
+//        else {
+//            document.getElementById("divMore").style.display = 'none'
+//            document.getElementById("more").innerHTML = "More...";
+//        }
+//    }
+</script>
+
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <div class="search">
+            
+            <div class="editor-label-2">
+           
+                @Html.LabelFor(model => model.BackYards)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.BackYards)
+                  @Html.Hidden("Code", Model.Code)
+            </div>
+              <div class="editor-label-2">
+                    @Html.LabelFor(model => model.Status)
+                </div>
+                <div class="editor-field-2">
+                    @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common",
+            new
+            {
+                code = com.Sconit.CodeMaster.CodeMaster.IssueStatus,
+                controlName = "Status",
+                selectedValue = Model != null ? (int)Model.Status : 0,
+                enable = false
+            });
+                    }
+                    @Html.HiddenFor(model => model.Status)
+                </div>
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.FailCode)
+            </div>
+            <div class="editor-field-2">
+                 @{
+        Html.RenderAction("_FailCodeComboBox", "Common", new
+        {
+            controlName = "FailCode",
+            selectedValue = Model != null ? Model.FailCode : string.Empty,
+            enable = false
+        });
+                }
+                @Html.ValidationMessageFor(model => model.FailCode)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.DefectCode)
+            </div>
+            <div class="editor-field-2">
+                  @{
+        Html.RenderAction("_DefectCodeComboBox", "Common", new
+        {
+            controlName = "DefectCode",
+            selectedValue = Model != null ? Model.DefectCode : string.Empty,
+            enable = false
+        });
+                }
+                @Html.ValidationMessageFor(model => model.DefectCode)
+            </div>
+          
+             <div class="multilinetext-label-1">
+                @Html.LabelFor(model => model.Content)
+            </div>
+            <div class="multilinetext-field-1">
+                @Html.TextAreaFor(model => model.Content, new { rows = 3, style = "min-height:0;width:80%" })
+                @Html.ValidationMessageFor(model => model.Content)
+            </div>
+            <div class="editor-label-2">
+                   
+                </div>
+                <div class="editor-field-2">
+                    
+                </div>
+            </div>
+           
+          
+        </fieldset>
+        
+        <div id="divMore" style="display: none">
+        <fieldset>
+        <legend>@Resources.ORD.OrderMaster.OrderMaster_Audit</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CreateUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateUserId)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CreateDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.CreateDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.LastModifyUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.LastModifyUserName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.LastModifyDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.LastModifyDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReleaseUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ReleaseUserName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ReleaseDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ReleaseDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.StartUserName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.StartDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CloseUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CloseUserName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CloseDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CloseDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CancelUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CancelUserName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CancelDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CancelDate)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CompleteUserName)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CompleteUserName)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.CompleteDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.CompleteDate)
+            </div>
+        </div>
+    </fieldset>
+    </div>
+    <div>
+        <a type="text/html" onclick="More()" href="#" id="more">More...</a>
+    </div>
+        
+       <div class="editor-footer">
+                @{
+        if (Model.Status == com.Sconit.CodeMaster.IssueStatus.Create)
+        {
+                    <button type="submit" id="btnEdit">@Resources.SYS.Global.Button_Save</button>
+  
+                    <button type="button" id="btnRelease" onclick="location.href='@Url.Content("~/QualityDoor/Submit/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Submit</button>
+                     <button type="button" id="btnDelete" onclick="location.href='@Url.Content("~/QualityDoor/Delete/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Delete</button>
+        }
+                }
+                @{
+        if (Model.Status == com.Sconit.CodeMaster.IssueStatus.Submit)
+        {
+                    
+                    <button type="button" id="btnStart" onclick="location.href='@Url.Content("~/QualityDoor/Start/" + @Model.Code)'">
+                        @Resources.ISS.IssueMaster.Button_Start</button>
+                    
+                     <button type="button" id="btnCancel" onclick="location.href='@Url.Content("~/QualityDoor/Cancel/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Cancel</button>
+        }
+                }
+                @{
+        if (Model.Status == com.Sconit.CodeMaster.IssueStatus.InProcess)
+        {
+                    <button type="button" id="btnComplete" onclick="location.href='@Url.Content("~/QualityDoor/Complete/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Complete</button>
+        }
+                }
+                @{
+        if (Model.Status == com.Sconit.CodeMaster.IssueStatus.Complete)
+        {
+                    <button type="button" id="btnClose" onclick="location.href='@Url.Content("~/QualityDoor/Close/" + @Model.Code)'">
+                        @Resources.SYS.Global.Button_Close</button>
+        }
+                }
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/QualityDoor/List")'">
+                    @Resources.SYS.Global.Button_Back</button>
+            </div>
+    }
+
+    <div id="IssueDetailListDiv">
+    @{
+        Html.RenderAction("_IssueDetailList", "QualityDoor", new { Code = ViewBag.Code });
+      }
+
+    </div>

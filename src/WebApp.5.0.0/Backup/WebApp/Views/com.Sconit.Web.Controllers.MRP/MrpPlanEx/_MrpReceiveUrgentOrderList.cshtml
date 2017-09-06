@@ -1,0 +1,100 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.SCM.FlowDetail>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function RebindingOrderClick(e) {
+        var currentRow = $(e).parent().parent().children();
+
+        $(e).attr("href", "#");
+        $(e).hide();//页面加载后禁用按钮
+        setTimeout(function () {
+            $(e).show();
+            currentRow.eq(8).text('0')
+        }, 10000);//10秒后启用
+
+        var r = true;//confirm("前一个未收完,确认收货吗?");
+        if (r == true) {
+            var id = currentRow.eq(0).text();
+            var item = currentRow.eq(2).text();
+            var remark = currentRow.eq(6).text();
+            var isFreeze = currentRow.eq(7).find("input")[0].checked;
+            var qty = currentRow.eq(8).text();
+            var shift = $('#Shift').val();
+            if (remark=="") {
+                $message.error("生产类型不能为空");
+                return;
+            }
+            var data = {
+                "id": id,
+                "qty": qty,
+                "remark": remark,
+                "isFreeze": isFreeze,
+                "shift": shift
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                url: "/MrpPlanEx/_ReceiveUrgentOrder",
+                cache: false,
+                success: function (data, textStatus) {
+                    //$message.success("物料 " + item + " 收货成功,本次收货数:" + qty);
+                    DisplayJsonMessages(data);
+                    try {
+                        PrintOrder(data.Data.PrintUrl);
+                    }
+                    catch (e) {
+                        $message.error("打印失败,请重新打印");
+                    }
+                    //onSearch();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    DisplayTextMessages(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    }
+
+    function onRowDataBound(e) {
+        var row = $(e.row.childNodes);
+        //e.row.childNodes[11].disabled  //children
+        if (e.dataItem.Item == "299999") {
+            row[2].innerHTML = e.dataItem.Remark;
+            row.last()[0].innerHTML = "";
+        }
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_SelectReceiveUrgentOrders", "MrpPlanEx", new { flow = ViewBag.Flow })
+        )
+        .Columns(columns =>
+        {
+            //序号	物料	物料描述	单位	单包装	备注	本次收货数	操作
+            columns.Bound(o => o.Id).Hidden();//0
+            columns.Bound(o => o.Sequence).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            columns.Bound(o => o.Uom).ReadOnly();
+            columns.Bound(o => o.UnitCount).Format("{0:0.##}").ReadOnly();
+            columns.Bound(o => o.ProductType).EditorTemplateName("ProductTypeGridForeignKey").Width(130).Title("生产类型");
+            columns.Bound(o => o.IsFreeze).Hidden()
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsFreeze' <#= IsFreeze? checked='checked' : '' #> />");
+            columns.Bound(o => o.CurrentQty).Width(60);
+            columns.Command(commands => commands.Custom("Rebinding").Text("收货")
+                   .HtmlAttributes(new { onClick = "RebindingOrderClick(this)", id = "RebindingId", href = "#" })).Title("操作");
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+</fieldset>

@@ -1,0 +1,116 @@
+﻿@using com.Sconit.Entity.WMS
+@using com.Sconit.Web.Models.SearchModels.WMS
+<script type="text/javascript">
+    function PickGroup_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            $("#fdPlanList").hide();
+        } else {
+            $("#fdPlanList").html("Loading...");
+            $("#fdPlanList").show();
+            var data = { "pickGroupCode": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/ShipPlan/_ShipPlanList/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#fdPlanList").html(data);
+                    //$("#fdOrderDetail").show();
+                    $("tr.t-no-data").find("td").text("Loading...");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+
+    function assignCheckedShipPlans() {
+        var $checkRecords = $("input[name='checkedRecords']");
+
+        var checkedShipPlans = "";
+        var assignUser = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                if (checkedShipPlans == "") {
+                    checkedShipPlans = $checkRecords[i].value;
+                } else {
+                    checkedShipPlans += "," + $checkRecords[i].value;
+                }
+            }
+        }
+
+        assignUser = $("#PickUser").val();
+        if (checkedShipPlans == "") {
+            alert('请选择一条记录');
+            return;
+        }
+
+        if (assignUser == "") {
+            alert('分派用户不能为空');
+            return;
+        }
+        var data = {
+            "checkedShipPlans": checkedShipPlans,
+            "assignUser": assignUser
+        };
+        $.ajax({
+            type: "Post",
+            dataType: "html",
+            url: "/ShipPlan/AssignShipPlan/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    DisplayTextMessages(data);
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "@Url.Content("~/ShipPlan/Assign/")",
+                        data: "",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm("AssignList", "ShipPlan"))
+{  
+    <fieldset>
+        <div class="search">
+            <div class="search-label">
+                <label for="ShipPlan_Item">
+                    @Resources.WMS.ShipPlan.ShipPlan_ShipGroupCode
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_PickGroupComboBox", "Common",
+        new
+        {
+            controlName = "PickGroup",
+            type = (int)com.Sconit.CodeMaster.PickGroupType.Ship,
+            isChange = true
+        });
+                }
+            </div>
+        </div>
+    </fieldset>
+
+    <div id="fdPlanList" style="display: none;">
+    </div>
+}

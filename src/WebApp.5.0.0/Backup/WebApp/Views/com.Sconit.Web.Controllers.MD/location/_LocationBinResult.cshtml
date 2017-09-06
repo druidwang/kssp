@@ -1,0 +1,77 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MD.LocationBin>
+<fieldset>
+  <script type="text/javascript">
+      function LocationBinGrid_OnDataBinding(e) {
+     //debugger
+          e.data = {
+              locationCode: $("#LocationCode").val(),
+              Code: $('#BinCode').val(),
+              Name: $('#BinName').val(),
+              Area: $('#Area').val(),
+              Sequence : $("#BinSequence").val(),
+              IsActive: $("#IsActive1").is(":checked")
+          };
+      } 
+    </script>
+
+    @(Html.Telerik().Grid(Model)
+                .Name("LocationBinGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(string.Format("<a href=\"javascript:onLocationBinclick('{0}')\">{1}</a>", "<#= Code #>", "<#= Code #>")); ;
+            columns.Bound(o => o.Name);
+            columns.Bound(o => o.Area).Title("库区");
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+                 })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"javascript:onLocationBinclick('{0}')\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxLocationBinList", "Location"))
+                        .ClientEvents(events => events.OnDataBinding("LocationBinGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize != 0 && ViewBag.PageSize != null ? ViewBag.PageSize : 20);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+  
+</fieldset>
+
+<script type="text/javascript">
+    function onLocationBinclick(code) {
+        var data = {
+            "Id": code
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/location/_LocationBinEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>

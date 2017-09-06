@@ -1,0 +1,134 @@
+﻿@using com.Sconit.Entity.ORD;
+@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.PRD.ProductLineLocationDetail>
+<script type="text/javascript">
+    //    function onItemComboBoxChange(e) {
+    //        if (e.value != null) {
+    //            var combobox = $(this).data("tComboBox");
+    //            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+    //                combobox.value("");
+    //                combobox.reload();
+    //            } else {
+    //                var data = {
+    //                    "itemCode": e.value
+    //                };
+    //                $.ajax({
+    //                    type: "post",
+    //                    dataType: "json",
+    //                    url: "/ProductionOrder/_WebOrderDetail/",
+    //                    data: data,
+    //                    success: function (data, textStatus) {
+
+    //                        var $tGrid = $("#ReturnOrderBomDetail").data("tGrid");
+    //                        var $itemCell = $(e.target).parent().parent();
+    //                        $itemCell.next().html(data.ReferenceItemCode);
+    //                        $itemCell.next().next().html(data.ItemDescription);
+    //                        $itemCell.next().next().next().html(data.Uom);
+    //                        $itemCell.next().next().next().next().html(data.UnitCount);
+
+    //                        $itemCell.next().next().next().next().next().html(data.LocationTo);
+
+    //                        var oldData = $tGrid.dataItem($itemCell.parent());
+    //                        if (oldData != undefined) {
+    //                            oldData.Uom = data.Uom;
+    //                            oldData.LocationTo = data.LocationTo;
+    //                        }
+    //                    },
+    //                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //                        alert(errorThrown);
+    //                    }
+    //                });
+    //            }
+    //        }
+    //    }
+//    function onLocationDataBinding(e) {
+//        e.data = {
+//            "Region": $("#Region").val(),
+//            "checkRegion": true
+//        };
+//    }
+
+    function OnReturnDet_DataBinding(e) {
+        e.data = {
+            "OrderNo": $("#OrderNo").val(),
+            "LocationFrom": $("#LocationFrom").val(),
+            "Operation": $("#Operation").val(),
+            "Item": $("#Item").val()
+        };
+    }
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+            $("#btnReturn").attr("style", this.checked ? "display:inline" : "display:none");
+        });
+    });
+
+    function showButtons(e) {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var showButton = false;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                showButton = true;
+                break;
+            }
+        }
+        $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        $("#btnReturn").attr("style", showButton ? "display:inline" : "display:none");
+    }
+</script>
+<fieldset>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("ReturnOrderBomDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+            //.Editable(editing => editing.Mode(GridEditMode.InCell))
+            //.ToolBar(commands =>
+            //{
+
+        //    commands.Insert();
+
+        //})
+
+                .Columns(columns =>
+                {
+                    columns.Bound(o=>o.Id)
+                         .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords'  value='<#= Id #>'  onClick='showButtons(this)' />")
+                .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll'  />")
+                .Width(36).HtmlAttributes(new { style = "text-align:center" });
+                    columns.Bound(o => o.ProductLine);
+                    columns.Bound(o => o.OrderNo);
+                    columns.Bound(o => o.Item).EditorTemplateName("ItemGridForeignKey").Width(120);
+                    columns.Bound(o => o.ReferenceItemCode).ReadOnly();
+                    columns.Bound(o => o.ItemDescription).ReadOnly();
+                    columns.Bound(o => o.Uom).ReadOnly();
+                    //columns.ForeignKey(o => o.Uom, (IEnumerable<com.Sconit.Entity.MD.Uom>)ViewData["uoms"], "Code", "Code");
+                    columns.Bound(o => o.UnitCount).ReadOnly();
+                    columns.Bound(o => o.LocationFrom);
+                   // columns.Bound(o => o.FeedLocation).EditorTemplateName("LocationGridComboBox").Title(Resources.ORD.OrderBomDetail.OrderBomDetail_ReturnLocation);
+                    columns.Bound(o => o.Operation);
+                    columns.Bound(o => o.OpReference);
+                    columns.Bound(o => o.Qty).Format("{0:0.########}");
+                    columns.Bound(o => o.VoidQty).Format("{0:0.########}");
+                    columns.Bound(o => o.BackFlushQty).Format("{0:0.########}");
+                    columns.Bound(o => o.CurrentReturnQty).ClientTemplate("<input type='text' name='CurrentReturnQty' id='CurrentReturnQty' value='<#=Qty-BackFlushQty-VoidQty #>' style='width:50px;' />");
+                  
+                })
+                .DataBinding(dataBinding =>
+                    dataBinding.Ajax()
+                   .Select("_SelectReturnQtyBatchEditing", "ProductionOrder")
+                )
+                .ClientEvents(events => events.OnDataBinding("OnReturnDet_DataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Scrollable(c => c.Enabled(false))
+                        .Resizable(resizing => resizing.Columns(true))
+
+    )
+    @Html.Hidden("Region", (string)ViewBag.Region)
+</fieldset>

@@ -1,0 +1,71 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MD.LocationArea>
+<fieldset>
+<script type="text/javascript">
+    function LocationAreaGrid_OnDataBinding(e) {
+        e.data = {
+            locationCode: $('#LocationCode').val(),
+            Code: $('#AreaCode').val(),
+            Name: $('#AreaName').val()
+        };
+    } 
+    </script>
+
+    @(Html.Telerik().Grid(Model)
+                .Name("LocationAreaGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(string.Format("<a href=\"javascript:onLocationAreaLinkclick('{0}')\">{1}</a>", "<#= Code #>", "<#= Code #>"));
+            columns.Bound(o => o.Name);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />");
+                 })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"javascript:onLocationAreaLinkclick('{0}')\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxLocationAreaList", "Location"))
+                        .ClientEvents(events => events.OnDataBinding("LocationAreaGrid_OnDataBinding"))
+        .Pageable(settings => 
+        {
+            settings.Total(ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize != 0 && ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    
+</fieldset>
+
+<script type="text/javascript">
+    function onLocationAreaLinkclick(code) {
+        var data = {
+            "Id": code
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/location/_LocationAreaEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent1).html(data);
+            }
+        });
+    }
+</script>

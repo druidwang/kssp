@@ -1,0 +1,177 @@
+﻿@using com.Sconit.Entity.SI
+@using com.Sconit.Web.Models.SearchModels.SI
+@using com.Sconit.Web.Models.SearchModels.SI.SAP
+<fieldset>
+    @using (Html.BeginForm("List", "SAPTrans"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.SI.InvTrans.InvTrans_BWART
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BWART", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).BWART : string.Empty)
+            </div>
+            <div class="search-label">
+                <label >
+                    @Resources.SI.InvTrans.InvTrans_BUDAT
+                </label>
+            </div>
+            <div class="search-field">
+             @Html.TextBox("BUDAT", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).BWART : string.Empty)
+            </div>
+            <div class="editor-label-2">
+                <label >
+                    @Resources.SI.InvTrans.InvTrans_EBELN
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("EBELN", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).EBELN : string.Empty)
+            </div>
+            <div class="editor-label-2">
+                <label >
+                    @Resources.SI.InvTrans.InvTrans_EBELP
+                </label>
+            </div>
+            <div class="editor-field-2">
+              @Html.TextBox("EBELP", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).EBELP : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="ReceiptMaster_StartDate">
+                     @Resources.SI.InvTrans.InvTrans_FRBNR
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("FRBNR", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).FRBNR : string.Empty)
+            </div>
+
+                     <div class="search-label">
+                <label>
+                      @Resources.SI.InvTrans.InvTrans_SGTXT
+                </label>
+            </div>
+            <div class="search-field">
+                  @Html.TextBox("SGTXT", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).SGTXT : string.Empty) 
+            </div>
+
+
+          
+            <div class="search-label">
+                <label >
+                    @Resources.SI.InvTrans.InvTrans_LIFNR
+                </label>
+            </div>
+            <div class="search-field">
+               @{
+                Html.RenderAction("_SupplierComboBox", "Common",
+                    new
+                    {
+                        controlName = "LIFNR",
+                        selectedValue = TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).LIFNR : string.Empty
+                       
+                    });
+               }
+            </div>
+            <div class="search-label">
+                <label >
+                    @Resources.SI.InvTrans.InvTrans_MATNR
+                </label>
+            </div>
+            <div class="search-field">
+             @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "MATNR",
+            selectedValue = TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).MATNR : null
+        });
+                    } 
+            </div>
+            <div class="search-label">
+                <label>
+                      @Resources.SI.InvTrans.InvTrans_RSNUM
+                </label>
+            </div>
+            <div class="search-field">
+                  @Html.TextBox("RSNUM", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).RSNUM : string.Empty) 
+            </div>
+
+
+             <div class="search-label">
+                <label >
+                    @Resources.SI.InvTrans.InvTrans_RSPOS
+                </label>
+            </div>
+            <div class="search-field">
+            @Html.TextBox("RSPOS", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).RSPOS : string.Empty) 
+            </div>
+             <div class="search-label">
+                <label >
+                     @Resources.SI.InvTrans.InvTrans_LGORT
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.TextBox("LGORT", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).LGORT : string.Empty) 
+            </div>
+             <div class="search-label">
+                <label >
+                    @Resources.SI.InvTrans.InvTrans_XABLN
+                </label>
+            </div>
+            <div class="search-field">
+            @Html.TextBox("XABLN", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).XABLN : string.Empty) 
+            </div>
+            <div class="search-label">
+                <label>
+                      @Resources.SI.InvTrans.InvTrans_XBLNR
+                </label>
+            </div>
+            <div class="search-field">
+                  @Html.TextBox("XBLNR", TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).XBLNR : string.Empty) 
+            </div>
+              <div class="search-label">
+                <label>
+                      @Resources.SI.InvTrans.InvTrans_Status
+                </label>
+            </div>
+            <div class="search-field">
+                 @Html.RadioButton("Status", "",true )所有
+                @Html.RadioButton("Status", 0,TempData["InvTransSearchModel"] != null ? (((InvTransSearchModel)TempData["InvTransSearchModel"]).Status=="0"?true:false):false )执行中
+                @Html.RadioButton("Status", 1,TempData["InvTransSearchModel"] != null ? (((InvTransSearchModel)TempData["InvTransSearchModel"]).Status=="1"?true:false):false)成功
+                @Html.RadioButton("Status", 2, TempData["InvTransSearchModel"] != null ? (((InvTransSearchModel)TempData["InvTransSearchModel"]).Status == "2" ? true : false) : false)失败
+                @Html.RadioButton("Status", 3, TempData["InvTransSearchModel"] != null ? (((InvTransSearchModel)TempData["InvTransSearchModel"]).Status == "3" ? true : false) : false)异常
+            </div>
+
+             <div class="search-label">
+                <label >
+                    @Resources.SI.InvTrans.InvTrans_StartTime
+                </label>
+            </div>
+            <div class="search-field">
+           <div class="search-field">
+                @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("StartTime")
+.Value(TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).StartTime : System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            </div>
+            <div class="search-label">
+                <label>
+                      @Resources.SI.InvTrans.InvTrans_EndTime
+                </label>
+            </div>
+            <div class="search-field">
+                  @(Html.Telerik().DatePicker().Format("yyyy-MM-dd ").Name("EndTime")
+.Value(TempData["InvTransSearchModel"] != null ? ((InvTransSearchModel)TempData["InvTransSearchModel"]).EndTime : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.Global.Button_Search</button>
+           <button type="button" id="btnEdit" onclick="editCheckedOrders()" style="display: none">@Resources.Global.Button_Confirm</button>
+        </div>
+    }
+</fieldset>

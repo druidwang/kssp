@@ -1,0 +1,69 @@
+﻿@model IEnumerable<com.Sconit.Entity.PRD.BomMaster>
+<fieldset>
+ <script type="text/javascript">
+     function BomMasterGrid_OnDataBinding(e) {
+         e.data = {
+             BomMaster_Code:$("#BomMaster_Code").val()
+         };
+     }
+    </script>
+
+    @(Html.Telerik().Grid(Model)
+        .Name("BomMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(string.Format("<a href=\"javascript:onBomMasterLinkclick('{0}')\">{1}</a>", "<#= Code #>", "<#= Code #>"));
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.IsActive).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />"); 
+        })
+                .CellAction(cell =>
+                {
+                    if (cell.Column.Member == "Code")
+                    {
+                        cell.Text = string.Format("<a href=\"javascript:onBomMasterLinkclick('{0}')\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                    }
+                })
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList_Master", "Bom"))
+                .ClientEvents(events => events.OnDataBinding("BomMasterGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+</fieldset>
+
+<script type="text/javascript">
+    function onBomMasterLinkclick(code) {
+        var data = {
+            "Id": code
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/Bom/_Edit_Master/",
+            data: data,
+            cache:false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent0 = tabStrip.data("tTabStrip").getContentElement(0);
+                $(tabStripContent0).html(data);
+
+            }
+        });
+    }
+</script>

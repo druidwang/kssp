@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = Resources.ACC.User.User_Edit_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_User_View" });
+}
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.ACC.User.User_Tab_Users)
+                .LoadContentFrom("_Edit", "User", new { id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+
+            tabstrip.Add()
+                .Text(Resources.ACC.User.User_Tab_UsersRole)
+                .LoadContentFrom("_UserRoles", "User", new { id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+            
+            tabstrip.Add()
+                .Text(Resources.ACC.User.User_Tab_UsersPermissionGroups)
+       .LoadContentFrom("_UserPermissionGroups", "User", new { id = Model });
+
+
+            tabstrip.Add()
+                .Text(Resources.ACC.User.User_Tab_UsersPermissions)
+                .LoadContentFrom("_UserPermissions", "User", new { id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+    @<text> var tabIndex = "@TempData["TabIndex"]"; var tabstrip = $("#TabStrip").data("tTabStrip");
+    var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0]; tabstrip.select(item);
+    </text>
+        );
+}

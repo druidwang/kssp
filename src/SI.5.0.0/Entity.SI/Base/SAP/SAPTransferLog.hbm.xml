@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.SAP.SAPTransferLog, com.Sconit.Entity.SI" table="SAP_TransLog" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="BatchNo" column="BatchNo" type="String" length="50"/>	
+		<property name="SysCode" column="SysCode" type="String" length="50"/>	
+		<property name="Interface" column="Interface" type="String" length="50"/>
+    <property name="Status" column="Status" type="Int32"/>
+    <property name="RowCounts" column="RowCounts" type="Int32"/>	
+		<property name="ErrorMsg" column="ErrorMsg" type="String" length="255"/>
+    <property name="TransDate" column="TransDate" type="DateTime"/>
+    <property name="TransStartDate" column="TransStartDate	" type="DateTime"/>
+    <property name="DataFromDate" column="DataFromDate	" type="DateTime"/>
+    <property name="DataToDate" column="DataToDate" type="DateTime"/>	
+  	</class>
+</hibernate-mapping>

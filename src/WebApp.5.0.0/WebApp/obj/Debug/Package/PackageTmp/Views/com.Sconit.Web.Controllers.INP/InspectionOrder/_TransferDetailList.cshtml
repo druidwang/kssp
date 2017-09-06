@@ -1,0 +1,49 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.ORD;
+@model IEnumerable<com.Sconit.Entity.INP.InspectDetail>
+<script type="text/javascript">
+
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+        });
+        var $checkedRecords = $("input[name='checkedRecords']");
+        $checkedRecords.click(function () {
+            $("#checkAll").attr("checked", $checkedRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+        });
+    });
+</script>
+<fieldset>
+    <legend>@Resources.INP.InspectDetail.InspectDetail_Title</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("TransferDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Title("<input type='checkbox' id='checkAll' name='checkAll' />");
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.LotNo);
+            columns.Bound(o => o.CurrentLocation);
+            columns.Bound(o => o.InspectQty);
+            columns.Bound(o => o.QualifyQty);
+            columns.Bound(o => o.RejectQty);
+        })
+                  .CellAction(cell =>
+                  {
+                      if (cell.Column.Member == "Id")
+                      {
+                          cell.Text = string.Format("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='" + cell.DataItem.Id + "' />");
+                      }
+                  })
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+</fieldset>

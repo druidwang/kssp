@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.PRD.SmallSparePartChk, com.Sconit.Entity" table="INP_SmallPartSparePart_Chk" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+
+    <property name="Huid" column="Huid" type="String" length="50" />
+    <property name="HuItem" column="HuItem" type="String" length="50" />
+    <property name="HuQty" column="HuQty"  type="Decimal" />
+    <property name="HuItemDesc" column="HuItemDesc" type="String" length="50" />
+    <property name="SpareItem" column="SpareItem" type="String" length="50" />
+    <property name="SpareItemDesc" column="SpareItemDesc" type="String" length="50" />
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+  </class>
+</hibernate-mapping>

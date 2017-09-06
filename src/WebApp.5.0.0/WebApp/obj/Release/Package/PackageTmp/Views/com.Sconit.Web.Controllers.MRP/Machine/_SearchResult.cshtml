@@ -1,0 +1,45 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.MD.Machine>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                        .Name("MachineGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "Machine", new { Id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.ShiftQuota);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.ShiftTypeDescription);
+            columns.Bound(o => o.MachineTypeDescription);
+            columns.Bound(o => o.Island);
+            columns.Bound(o => o.NormalWorkDayPerWeek);
+            columns.Bound(o => o.MaxWorkDayPerWeek);
+            columns.Bound(o => o.StartDate);
+            columns.Bound(o => o.EndDate);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Machine"))
+                        .ClientEvents(events => events.OnDataBinding("MachineGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function MachineGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val(),
+                ShiftType: $('#ShiftType').val(),
+                MachineType: $('#MachineType').val()
+            };
+        }
+    </script>
+</fieldset>

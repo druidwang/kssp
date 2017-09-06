@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = Resources.ACC.PermissionGroup.PermissionGroup_Edit_Title;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PermissionGroup_View" });
+}
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.ACC.PermissionGroup.PermissionGroup_Tab_PermissionGroup)
+                .LoadContentFrom("_Edit", "PermissionGroup", new { id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+            tabstrip.Add()
+              .Text(Resources.ACC.PermissionGroup.PermissionGroup_Tab_PermissionGroupUsers)
+              .LoadContentFrom("_PermissionGroupUsers", "PermissionGroup", new { id = Model })
+               .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.ACC.PermissionGroup.PermissionGroup_Tab_PermissionGroupRole)
+                .LoadContentFrom("_PermissionGroupRole", "PermissionGroup", new { Id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.ACC.PermissionGroup.PermissionGroup_Tab_PermissionGroupPermission)
+                .LoadContentFrom("_PermissionGroupPermission", "PermissionGroup", new { id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+    @<text> var tabIndex = "@TempData["TabIndex"]"; var tabstrip = $("#TabStrip").data("tTabStrip");
+    var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0]; tabstrip.select(item);
+    </text>
+        );
+}

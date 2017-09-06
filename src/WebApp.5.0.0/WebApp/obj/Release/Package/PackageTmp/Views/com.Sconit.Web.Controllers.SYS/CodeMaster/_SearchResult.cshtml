@@ -1,0 +1,39 @@
+﻿@model IEnumerable<com.Sconit.Entity.SYS.CodeMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("Grid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#=Code#>", "Edit", "CodeMaster", new { ID = "<#=Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+        })
+
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "CodeMaster"))
+                                                .ClientEvents(events => events.OnDataBinding("CodeMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function CodeMasterGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                Description: $('#Description').val()
+            };
+        } 
+    </script>
+</fieldset>

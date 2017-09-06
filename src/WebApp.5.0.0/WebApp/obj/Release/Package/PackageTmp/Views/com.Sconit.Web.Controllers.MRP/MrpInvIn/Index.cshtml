@@ -1,0 +1,145 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpInvIn_Index" });
+}
+<script type="text/javascript">
+    function onSearch() {
+        if ($('#ResourceGroup').val() == "") {
+            $message.error('资源组不能为空。');
+            return;
+        }
+        if ($('#PlanVersion').val() == "") {
+            $message.error('计划版本不能为空。');
+            return;
+        }
+        var data = {
+            PlanVersion: $('#PlanVersion').val(),
+            ResourceGroup: $('#ResourceGroup').val(),
+            Flow: $('#Flow').val(),
+            IsShowDetail: true
+        };
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/MrpInvIn/_GetList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#fdOrderDetail");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function Flow_DataBinding(e) {
+        e.data = {
+            resourceGroup: $("#ResourceGroup").val()
+        }
+    }
+
+    function PlanVersion_DataBinding(e) {
+        e.data = {
+            resourceGroup: $("#ResourceGroup").val()
+        }
+    }
+
+    function CodeMaster_Change(e) {
+        if (e.value != "") {
+            $('#Flow').data('tComboBox').value('');
+            $('#Flow').data('tComboBox').text('');
+            $("#Flow").data("tComboBox").reload();
+
+            $('#PlanVersion').data('tComboBox').value('');
+            $('#PlanVersion').data('tComboBox').text('');
+            $("#PlanVersion").data("tComboBox").reload();
+        }
+    }
+
+    function onDataBound() {
+        $("tr.t-no-data td").html("@Resources.GridLocalization.NoRecords");
+    }
+</script>
+    <fieldset>
+    @using (Html.BeginForm("Export", "MrpInvIn"))
+{
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    资源组
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_CodeMasterComboBox", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.ResourceGroup,
+        controlName = "ResourceGroup",
+        isChange = true,
+    });
+                }
+            </div>
+
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.MrpFiShiftPlan.MrpFiShiftPlan_PlanVersion
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+    Html.RenderAction("_MrpPlanMasterComboBox", "Common", new
+     {
+         controlName = "PlanVersion",
+         isRelease = true,
+         coupled = true
+     });
+                }
+            </div>
+
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.MrpFiShiftPlan.MrpFiShiftPlan_ProductLine
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common", new
+    {
+        controlName = "Flow",
+        coupled = true,
+        type = (int)com.Sconit.CodeMaster.OrderType.Production
+    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_Mrp_MrpPlan_Simulation", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnSearch"},
+                {"needconfirm","false"},
+                {"onclick","onSearch()"},
+	        })
+        <button type="button" id="btnExport">@Resources.SYS.Global.Button_Export</button>        
+        </div>
+        }
+    </fieldset>
+   
+    <div id="fdOrderDetail">
+    </div>
+    <script type="text/javascript">
+        $('#btnExport').click(function () {
+            if ($('#ResourceGroup').val() == "") {
+                $message.error('资源组不能为空。');
+                return;
+            }
+            if ($('#PlanVersion').val() == "") {
+                $message.error('计划版本不能为空。');
+                return;
+            }
+            $('form').submit();
+        }); 
+    </script>
+ 

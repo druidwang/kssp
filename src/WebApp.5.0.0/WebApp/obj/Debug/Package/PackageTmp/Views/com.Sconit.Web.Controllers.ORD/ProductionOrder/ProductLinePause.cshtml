@@ -1,0 +1,112 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Production_ProductLine_Pause" });
+}
+<script type="text/javascript">
+    function onSearch(e) {
+        var data = { "flow": $("#Flow").val() };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/ProductionOrder/_PauseFlowList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                $("#divFlow").html(data);
+                $("#divFlow").show();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });
+    }
+   
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_Flow_Production
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common",
+    new
+    {
+        controlName = "Flow",
+        type = (int)com.Sconit.CodeMaster.OrderType.Production,
+        selectedValue=Model!=null?Model.Flow:null
+    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="button" id="btnSearch" onclick="onSearch()">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_Pause, "Url_Production_ProductLine_Pause", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnPause"},
+        {"needconfirm","true"},
+        {"style","display:none"},
+        {"onclick","pauseCheckedFlows()"}
+	})
+     @Html.Button(Resources.SYS.Global.Button_Resume, "Url_Production_ProductLine_Pause", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnResume"},
+        {"needconfirm","true"},
+        {"style","display:none"},
+        {"onclick","resumeCheckedFlows()"}
+	})
+
+        </div>
+    </fieldset>
+   
+    <div id="divFlow" style="display: none;">
+    </div>
+   
+}
+<script type="text/javascript">
+     function pauseCheckedFlows() {
+         batchPauseFlows(true);
+     }
+
+     function resumeCheckedFlows() {
+         batchPauseFlows(false);
+     }
+
+     function batchPauseFlows(isPause) {
+         var $checkRecords = $("input[name='checkedRecords']");
+         var flowStr = "";
+         for (var i = 0; i < $checkRecords.length; i++) {
+             if ($checkRecords[i].checked) {
+                 var code = $checkRecords[i].value;
+                 if (flowStr == "") {
+                     flowStr = code;
+                 } else {
+                     flowStr += "," + code;
+                 }
+             }
+         }
+         var data = {
+             "flowStr": flowStr,
+             "isPause": isPause,
+             "flow": $("#Flow").val()
+         };
+         $.ajax({
+             type: "post",
+             dataType: "html",
+             url: "/ProductionOrder/BatchPause/",
+             data: data,
+             cache: false,
+             success: function (data, textStatus) {
+                 var $tGrid = $("#content");
+                 $($tGrid).html(data);
+             }
+         });
+     }
+</script>

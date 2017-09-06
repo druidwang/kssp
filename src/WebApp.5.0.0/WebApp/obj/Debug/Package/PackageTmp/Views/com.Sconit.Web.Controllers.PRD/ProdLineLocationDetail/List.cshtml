@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PRD_ProdLineLocationDet" });
+}
+
+@Html.Partial("_Search")
+
+@Html.Partial("_SearchResult")

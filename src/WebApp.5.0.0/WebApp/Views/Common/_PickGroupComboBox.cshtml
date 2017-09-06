@@ -1,0 +1,25 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : true;
+    string onChangeName = isChange ? "PickGroup_Change" : "EmptyChange";
+
+    
+    @(Html.Telerik().ComboBox()
+        .DropDownHtmlAttributes(new { style = "width: 300px; " })
+        .Name(name)
+        .HiddenInputHtmlAttributes(new { id = id })
+        .AutoFill(true)
+                .DataBinding(binding => binding.Ajax().Select("_PickGroupAjaxLoading", "Common", new
+        {
+            type = ViewBag.Type,         
+            includeBlankOption = ViewBag.IncludeBlankOption
+        }))
+        .ClientEvents(events => events.OnChange(onChangeName))
+        .HighlightFirstMatch(true)
+        .BindTo(Model)
+        .Enable(enable))
+   
+}

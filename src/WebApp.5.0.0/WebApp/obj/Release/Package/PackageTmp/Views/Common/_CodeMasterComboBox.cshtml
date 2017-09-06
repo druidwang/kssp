@@ -1,0 +1,37 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "CodeMaster_Change" : "EmptyChange";
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool isMrp = ViewBag.isMrp != null ? ViewBag.isMrp : false;
+    bool isRccpPlan = ViewBag.isRccpPlan != null ? ViewBag.isRccpPlan : false;
+        
+}
+@{
+    if (enable)
+    {
+    @(Html.Telerik().ComboBox()
+        //.DropDownHtmlAttributes(new { style = "width: 300px; " })
+        .Name(name)
+        .HiddenInputHtmlAttributes(new { id = id })
+        .AutoFill(true)
+        .DataBinding(binding => binding.Ajax().Select("_CodeMasterAjaxLoading", "Common", new
+        {
+            code = ViewBag.Code,
+            isMrp = isMrp,
+            isRccpPlan = isRccpPlan,
+            includeBlankOption = ViewBag.IncludeBlankOption
+        }).Cache(true))
+        .ClientEvents(events => events.OnChange(onChangeName))
+        .HighlightFirstMatch(true)
+        .BindTo(Model)
+        .Enable(enable))
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Value)    <text>[</text>@Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)<text>]</text>        }
+    }
+}

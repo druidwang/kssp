@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.ORD.OrderBinding, com.Sconit.Entity" table="ORD_OrderBinding" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+        <version name="Version" column="Version" type="Int32" />
+        <property name="OrderNo" column="OrderNo" type="String" length="50" />
+		<property name="BindFlow" column="BindFlow" type="String" length="50" />
+        <property name="BindFlowStrategy" column="BindFlowStrategy" />
+		<property name="BindOrderNo" column="BindOrderNo" type="String" length="50" />
+        <!--<property name="BindOrderDetailId" column="BindOrderDet" type="Int32" />-->
+        <property name="BindType" column="BindType"  />
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />	
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />	
+  	</class>
+</hibernate-mapping>

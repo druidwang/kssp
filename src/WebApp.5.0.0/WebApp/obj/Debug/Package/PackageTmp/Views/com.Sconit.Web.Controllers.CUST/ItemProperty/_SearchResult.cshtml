@@ -1,0 +1,40 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.ItemProperty>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                 .Name("ItemPropertyGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.RmItem).ClientTemplate(Html.ActionLink("<#= RmItem #>", "Edit", "ItemProperty", new { id = "<#= Id #>" }, null).ToString());
+            columns.Bound(o => o.ViscosityDescription);
+            columns.Bound(o => o.SfgItem);
+            columns.Bound(o => o.Flow);
+
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+
+                .Scrollable(c => c.Enabled(false))
+                .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ItemProperty"))
+                .ClientEvents(events => events.OnDataBinding("ItemPropertyGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function ItemPropertyGrid_OnDataBinding(e) {
+            e.data = {
+                CFlowode: $('#Flow').val(),
+                RmItem: $('#RmItem').val()
+            };
+        } 
+    </script>
+</fieldset>

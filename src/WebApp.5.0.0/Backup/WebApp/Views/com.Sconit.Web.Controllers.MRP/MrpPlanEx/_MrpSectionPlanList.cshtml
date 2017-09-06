@@ -1,0 +1,183 @@
+﻿@using com.Sconit.Entity.MRP.TRANS;
+@model IEnumerable<com.Sconit.Entity.MRP.TRANS.MrpExSectionPlan>
+@Html.Partial("_AjaxMessage")
+<script type="text/javascript">
+    function onSaveDetail(e) {
+        ;
+        var grid = $("#MrpExSectionPlan").data("tGrid");
+        if (grid == null) {
+            $message.error('明细不能为空。');
+            return;
+        }
+
+        var Ids = new Array();
+        var Sequences = new Array();
+        var Sections = new Array();
+        var ShiftQtys = new Array();
+        var Remarks = new Array();
+
+        var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+        var gridLength = grid.columns.length;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var row = $(rows[rowIndex]);
+            Ids[rowIndex] = $.trim(row[0].childNodes[0].innerText);
+            Sequences[rowIndex] = $.trim(row[0].childNodes[2].innerText);
+            Sections[rowIndex] = $.trim(row[0].childNodes[3].innerText);
+            ShiftQtys[rowIndex] = $.trim(row[0].childNodes[gridLength - 3].innerText);
+            Remarks[rowIndex] = $.trim(row[0].childNodes[gridLength - 2].innerText);
+        }
+
+        var details = {
+            "Ids": Ids,
+            "Sequences": Sequences,
+            "Sections": Sections,
+            "ShiftQtys": ShiftQtys,
+            "Remarks": Remarks
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/MrpPlanEx/_SaveSections/",
+            data: $.extend(details, null),
+            traditional: true,
+            success: function (data) {
+                DisplayJsonMessages(data);
+                var data1 = {
+                    flow: $('#Flow').val(),
+                    planVersion: $('#PlanVersion').val(),
+                    dateIndex: $('#DateIndex').val()
+                };
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    url: "/MrpPlanEx/_MrpSectionPlanList/",
+                    data: data1,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $("#fdSection").html(data);
+                        $("#fdSection").show();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+
+    function onSectionComboBoxChange(e) {
+        if (e.value != null && e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");
+                var $itemCell = $(e.target).parent().parent();
+                $itemCell.next().html("");
+                $itemCell.next().next().html("");
+                $itemCell.next().next().next().next().next().next().next().next().next().next().html("");
+                combobox.reload();
+            }
+            else {
+                var data = {
+                    "itemCode": e.value,
+                    "flow": $("#Flow").val(),
+                    "dateIndex": $("#DateIndex").val(),
+                    "planVersion": $("#PlanVersion").val()
+                };
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    url: "/MrpPlanEx/_WebMrpExSectionPlan/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#MrpExSectionPlan").data("tGrid");
+                        var oldData = $tGrid.dataItem($(e.target).parent().parent().parent());
+                        var $itemCell = $(e.target).parent().parent();
+                        $itemCell.prev().prev().html(data.PlanNo);
+                        $itemCell.next().html(data.SectionDescription);
+                        $itemCell.next().next().html("<div>" + data.Speed + " × " + data.SpeedTimes + "</div>");
+                        $itemCell.next().next().next().next().next().next().next().next().next().html(data.Remark);
+                        if (oldData != undefined) {
+                            oldData.SectionDescription = data.SectionDescription;
+                            oldData.Speed = data.Speed;
+                            oldData.SpeedTimes = data.SpeedTimes;
+                            oldData.Remark = data.Remark;
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        DisplayTextMessages(XMLHttpRequest.responseText);
+                    }
+                });
+            }
+        }
+    }
+
+    function SectionComboBox_DataBinding(e) {
+        if (e.value != "") {
+            e.data = {
+                "flow": $("#Flow").val()
+            }
+        }
+    }
+
+    function onRowDataBound(e) {
+        var row = $(e.row.childNodes);
+        if (e.dataItem.Id != "0") {
+            row.last().text("");
+            $(e.row).find("td")[3].onclick = function (e) {
+                e.stopPropagation();
+            };
+        }
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("MrpExSectionPlan")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .ClientEvents(events => events.OnError("TelerikGridView_OnError"))
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+        .ToolBar(commands =>
+        {
+            commands.Insert();
+            //commands.SubmitChanges();
+            //commands.Custom().Text(@Resources.SYS.Global.Button_SaveDetail).HtmlAttributes(new { onClick = "onSaveDetail()", href = "#" });
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+            .Select("_SelectSections", "MrpPlanEx", new { planVersion = ViewBag.PlanVersion, flow = ViewBag.Flow, dateIndex = ViewBag.DateIndex })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();//0
+            columns.Bound(o => o.PlanNo).ReadOnly();//1
+            columns.Bound(o => o.Sequence).Width(60);//2
+            columns.Bound(o => o.Section).EditorTemplateName("SectionFilterByFlow").Width(90);//3
+            columns.Bound(o => o.SectionDescription).ReadOnly();
+            columns.Bound(o => o.Speed).ClientTemplate("<div><#=Speed #> × <#=SpeedTimes #></div>").ReadOnly();
+            columns.Bound(o => o.StartTime).Format("{0:MM-dd HH:mm}").ReadOnly().ReadOnly();
+            //columns.Bound(o => o.WindowTime).Format("{0:MM-dd HH:mm}").ReadOnly().ReadOnly();
+            columns.Bound(o => o.Qty).Format("{0:0.##}").ReadOnly();
+            columns.Bound(o => o.CorrectionQty).Format("{0:0.##}").ReadOnly();
+            columns.Bound(o => o.AdjustQty).Format("{0:0.##}").ReadOnly();
+            columns.Bound(o => o.TotalQty).Format("{0:0.##}").ReadOnly();
+            columns.Bound(o => o.CurrentQty).Format("{0:0.##}").Width(60).Title("班数");//12
+            columns.Bound(o => o.Remark).Width(80);//13
+            columns.Command(commands => commands.Delete()).HtmlAttributes(new { id = "btnDelete" }).Title("操作");
+        })
+        .ClientEvents(c => c.OnRowDataBound("onRowDataBound"))
+        .Scrollable(c => c.Enabled(false))
+        .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+    @Html.Hidden("DateIndex", (string)ViewBag.DateIndex)
+    @Html.Hidden("PlanVersion", (DateTime)ViewBag.PlanVersion)
+</fieldset>

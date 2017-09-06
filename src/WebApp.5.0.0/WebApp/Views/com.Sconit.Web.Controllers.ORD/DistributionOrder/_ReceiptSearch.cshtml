@@ -1,0 +1,153 @@
+﻿@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.SYS
+<fieldset>
+    @using (Html.BeginForm("ReceiptList", "DistributionOrder"))
+    {   
+        <div class="search">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_ExternalOrderNo_Receipt
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextArea("ExternalOrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).ExternalOrderNo : string.Empty, new { rows = 3, style = "min-height:0;width:80%" })
+            </div>
+            <div class="editor-label-2">
+                           <span style="color:Green"> 请注意：每个交货单号之间必须以逗号(,)或者按回车进行区分，否则将无法查询出您想要的信息！！</span>
+
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_Receive_Distrabution, "Url_OrderMstr_Distribution_Receipt", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnEdit"},
+            {"style", "display: none"},
+            {"needconfirm","true"},
+            {"onclick","onReceive()"}
+	    })
+        </div>
+
+    }
+    <script type="text/javascript">
+
+        function onReceive() {  
+            
+           
+            var grid = $("#OrderDetail").data("tGrid");
+            var rows = grid.$tbody.children("tr:not(.t-no-data)").filter("tr:visible");
+            var idStr = "";
+            var qtyStr = "";
+            var orderNoStr = "";
+            var errorStr = "";
+            var b = true;
+            for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+                var row = $(rows[rowIndex]);
+                var id = row.find("#Id").val();
+                var orderNo = row.find("#Id").parent().next().text();
+                var currentReceiveQty = row.find("#CurrentReceiveQty").val();
+                if (row.find("#Id").get(0).checked) {
+                    if (currentReceiveQty == null||currentReceiveQty=="") {
+                       // $message.error("第" + (rowIndex + 1) + "行过账数为空，请填写。");
+                        errorStr += "第" + (rowIndex + 1) + "行过账数为空，请填写。"
+                        b = false;
+                    }
+                    if (isNaN(currentReceiveQty) || parseFloat(currentReceiveQty) <= 0) {
+                      //  $message.error("第" + (rowIndex + 1) + "行过账数必须为大于0的数字。");
+                        errorStr += "第" + (rowIndex + 1) + "行过账数必须为大于0的数字。"
+                        b = false;
+                    }
+                    if (parseFloat(currentReceiveQty) > parseFloat(row.find("#CurrentReceiveQty").parent().prev().text())) {
+                       // $message.error("第" + (rowIndex + 1) + "行过账数不能大于订单数。");
+                        errorStr += "第" + (rowIndex + 1) + "行过账数不能大于订单数。"
+                        b=false
+                    }
+                    if (idStr == "") {
+                        idStr = id;
+                        qtyStr = parseFloat(currentReceiveQty);
+                        orderNoStr = orderNo;
+                    } else {
+                        idStr += "," + id;
+                        qtyStr += "," + parseFloat(currentReceiveQty);
+                        orderNoStr +=","+ orderNo;
+                    }
+
+                }
+                else {
+                    continue;
+                }
+            }
+           
+            if (!b) {
+                $message.error(errorStr);
+                return;
+            }
+
+            if (idStr == "") {
+                $message.error("过账明细不能为空");
+                return;
+            }
+            var data = {
+                "idStr": idStr,
+                "qtyStr": qtyStr,
+                "orderNoStr": orderNoStr
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                data: data,
+                url: "/DistributionOrder/ReceiveOrder/",
+                cache: false,
+                success: function (data, textStatus) {
+                   
+                    var successMessage = data.SuccessMessage;
+                    if (data != "") {
+                        $.ajax({
+                            type: "get",
+                            dataType: "html",
+                            // data: { orderNoStr: data.orderNoStr },
+                            url: "/DistributionOrder/ReceiptList",
+                            cache: false,
+                            success: function (data, textStatus) {
+                                var $tGrid = $("#content");
+                                $($tGrid).html(data);
+                                $message.success('' + successMessage + '');
+                            }
+                        });
+                    }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages =  + XMLHttpRequest.responseText;
+                    var errorMessagesObj = errorMessages.split('*');
+                    
+                    $.ajax({
+                        type: "get",
+                        dataType: "html",
+                        // data: { orderNoStr: data.orderNoStr },
+                        url: "/DistributionOrder/ReceiptList",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                            $message.success(errorMessagesObj[1]);
+                            $message.error(errorMessagesObj[0]);
+                        }
+                    });
+                }
+            });
+
+        }
+    </script>
+</fieldset>

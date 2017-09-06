@@ -1,0 +1,147 @@
+﻿@using com.Sconit.Entity.WMS;
+@model IEnumerable<com.Sconit.Entity.INV.Hu>
+<script type="text/javascript">
+    $(function () {
+        $("#HuId").keydown(function () {
+
+            if (event.keyCode == 13) {
+                var data = {
+                    "repackTaskId": $("#Id").val(),
+                    "huId": $(this).val(),
+                    "huType": $("#huType").val(),
+                    "repackInHu": $("#repackInHu").val(),
+                    "repackOutHu": $("#repackOutHu").val(),
+                    "inQty": $("#inQty").val()
+                }
+                $(this).val("");
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    url: "/RepackTask/HuIdScan/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var huData = {
+                            "RepackInHu": data.RepackInHu,
+                            "RepackOutHu": data.RepackOutHu,
+                            "HuType": data.HuType,
+                            "InQty": data.InQty
+                        }
+                        $.ajax({
+                            type: "get",
+                            dataType: "html",
+                            data: huData,
+                            url: "/RepackTask/_RepackHuList/",
+                            cache: false,
+                            success: function (data, textStatus) {
+
+                                var $tGrid = $("#divRepackHuList");
+                                $($tGrid).html(data);
+                                $($tGrid).show();
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                                var errorMessages = XMLHttpRequest.responseText;
+                                $message.error(errorMessages);
+                            }
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        $message.error(errorMessages);
+
+                    }
+                });
+            }
+        });
+
+    });
+
+     function doClick(v) {
+         $("#huType").val(v);
+    }
+</script>
+<fieldset>
+    <legend>@Resources.WMS.RepackTask.RepackTask_Repack_Title</legend>
+    <div class="search-footer">
+        <table>
+            <tr>
+                <td>
+                    <label>
+                        @Html.RadioButton("inOrOut", 0, (bool)(ViewBag.huType == null || ViewBag.huType == "0"), new { onclick = "doClick(0)" })<span>翻包前</span>
+                        @Html.RadioButton("inOrOut", 1, (bool)(ViewBag.huType == "1"), new { onclick = "doClick(1)" })<span>翻包后</span>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                        条码
+                    </label>
+                </td>
+                <td>
+                    @Html.TextBox("HuId")
+                </td>
+            </tr>
+        </table>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>翻包条码</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("RepackInHu")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+                    .Select("_SelectRepackInHu", "RepackTask", new { repackInHu = ViewBag.repackInHu })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.UnitCountDescription);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Qty);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+</fieldset>
+<fieldset>
+    <legend>翻包后条码</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("RepackOutHu")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .DataBinding(dataBinding =>
+            dataBinding.Ajax()
+                    .Select("_SelectRepackOutHu", "RepackTask", new { repackOutHu = ViewBag.repackOutHu })
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.UnitCountDescription);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Qty);
+
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+    @Html.Hidden("repackInHu", (String)ViewBag.repackInHu)
+    @Html.Hidden("repackOutHu", (String)ViewBag.repackOutHu)
+    @Html.Hidden("huType", (String)ViewBag.huType)
+    @Html.Hidden("inQty", (String)ViewBag.inQty)
+</fieldset>

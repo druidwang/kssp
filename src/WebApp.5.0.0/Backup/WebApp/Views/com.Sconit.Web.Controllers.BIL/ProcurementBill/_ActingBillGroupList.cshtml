@@ -1,0 +1,23 @@
+﻿@model IEnumerable<com.Sconit.Entity.BIL.ActingBill>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Party).Title("供应商");
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.CurrentBillQty).Title("数量");
+            columns.Bound(o => o.CurrentBillAmount).Title("金额");
+            columns.Bound(o => o.Currency);
+            columns.Bound(o => o.Uom);
+        })
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+
+</fieldset>

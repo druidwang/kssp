@@ -1,0 +1,114 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@using com.Sconit.Entity.SYS
+<fieldset>
+    @using (Html.BeginForm("TraceList", "MrpPlanTrace"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    资源组
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterComboBox", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.ResourceGroup,
+            controlName = "ResourceGroup",
+            enable = true,
+            isChange = true,
+            selectedValue = TempData["MrpPlanTraceSearchModel"] != null ? ((MrpPlanTraceSearchModel)TempData["MrpPlanTraceSearchModel"]).ResourceGroup : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    生产线
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common", new
+        {
+            controlName = "ProductLine",
+            isChange = true,
+            coupled = true,
+            type = (int)com.Sconit.CodeMaster.OrderType.Production,
+            isMrp = true,
+            //ResourceGroup=30,
+            selectedValue = TempData["MrpPlanTraceSearchModel"] != null ? ((MrpPlanTraceSearchModel)TempData["MrpPlanTraceSearchModel"]).ProductLine : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    物料
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowItemComboBox", "Common",
+               new
+               {
+                   controlName = "Item",
+                   selectedValue = TempData["MrpPlanTraceSearchModel"] != null ? ((MrpPlanTraceSearchModel)TempData["MrpPlanTraceSearchModel"]).Item : null
+               });
+                }
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="submit" id="btnExport">@Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    function Item_DataBinding(e) {
+        e.data = {
+            flow: $("#ProductLine").val()
+        }
+    }
+
+    function ProductLine_DataBinding(e) {
+        e.data = {
+            resourceGroup: $("#ResourceGroup").val()
+        }
+    }
+
+    function CodeMaster_Change(e) {
+        if (e.value != "") {
+            $('#ProductLine').data('tComboBox').value('');
+            $('#ProductLine').data('tComboBox').text('');
+            $("#ProductLine").data("tComboBox").reload();
+        }
+    }
+
+    function ProductLine_Change(e) {
+        if (e.value != "") {
+            $('#Item').data('tComboBox').value('');
+            $('#Item').data('tComboBox').text('');
+            $("#Item").data("tComboBox").reload();
+        }
+    }
+    var t="";
+    $('#btnSearch').click(function () {
+        
+        if (t != "") {
+            $('form').attr('action', t);
+        }
+        $('form').submit();
+    });
+    $('#btnExport').click(function () {
+        
+        if (t=="")
+        {
+            t = $('form').attr('action');
+        }
+        $('form').attr('action', "/MrpPlanTrace/ExportTraceList/");
+        $('form').submit();
+        //$('form').attr('action', t);
+        });
+</script>

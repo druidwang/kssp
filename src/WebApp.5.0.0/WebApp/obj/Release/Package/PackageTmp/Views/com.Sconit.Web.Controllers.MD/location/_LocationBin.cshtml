@@ -1,0 +1,138 @@
+﻿@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.MD
+@using com.Sconit.Web.Models.SearchModels.MD
+<fieldset>
+    @using (Html.BeginForm())
+    {   
+        <div class="search">
+            <div class="search-label">
+            <label for="Location_Code">
+                @Resources.MD.Location.Location_Code
+                 </label>
+            </div>
+            <div class="search-field">
+                 @ViewBag.LocationCode
+            </div>
+            <div class="search-label">
+            <label for="LocationArea_Code">
+                @Resources.MD.LocationArea.LocationArea_Code
+                 </label>
+            </div>
+            <div class="search-field">
+             @{
+                    Html.RenderAction("_LocationAreaDropDownList", "Common", 
+                        new { controlName = "Area", includeBlankOption = true, 
+                            LocationCode = ViewBag.LocationCode,
+                            selectedValue =TempData["LocationBinSearchModel"] != null ? ((LocationBinSearchModel)TempData["LocationBinSearchModel"]).Area : string.Empty });
+                }
+            </div>
+            <div class="search-label">
+                <label for="LocationBin_Code">
+                    @Resources.MD.LocationBin.LocationBin_Code
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BinCode", TempData["LocationBinSearchModel"] != null ? ((LocationBinSearchModel)TempData["LocationBinSearchModel"]).Code : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="LocationBin_Name">
+                    @Resources.MD.LocationBin.LocationBin_Name
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("BinName", TempData["LocationBinSearchModel"] != null ? ((LocationBinSearchModel)TempData["LocationBinSearchModel"]).Name : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                @Resources.MD.LocationBin.LocationBin_Sequence
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.TextBox("BinSequence", TempData["LocationBinSearchModel"] != null ? ((LocationBinSearchModel)TempData["LocationBinSearchModel"]).Sequence : null)
+            </div>
+             <div class="search-label">
+                <label for="Location_AllowNegaInv">
+                有效
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IsActive1", TempData["LocationBinSearchModel"] != null ? ((LocationBinSearchModel)TempData["LocationBinSearchModel"]).IsActive : true)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnBinSearch" onclick="btnSearchLocationBin_Click();">
+                @Resources.SYS.Global.Button_Search</button>
+            <button type="button" id="btnExport" onclick="ExportBinClick();">
+                @Resources.SYS.Global.Button_Export</button>
+            @*<button type="button" id="btnBinNew" onclick="btnNewLocationBin_Click();">
+                @Resources.SYS.Global.Button_New</button>*@
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_LocationAreaBin_Edit", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnAreaNew"},
+                {"onclick","btnNewLocationBin_Click()"}
+	        })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Location/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+
+    }
+</fieldset>
+
+<script language="javascript" type="text/javascript">
+    function ExportBinClick() {
+
+        location.href = '/Location/ExportBin/?locationCode=' + $('#LocationCode').val()
+            + '&Code=' + $('#BinCode').val()
+            + '&Name=' + $('#BinName').val()
+            + '&Area=' + $('#Area').val()
+            + '&Sequence=' + $('#BinSequence').val()
+            + '&MaterialsGroup=' + $('#MaterialsGroup').val()
+            + '&IsActive=' + $("#IsActive1").is(":checked")
+
+    }
+    function btnNewLocationBin_Click() {
+        var data = {
+            "locationCode": $("#LocationCode").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/location/_LocationBinNew/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2 = tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+
+    function btnSearchLocationBin_Click() {
+   //debugger
+        var data = {
+            "locationCode":$("#LocationCode").val(),
+            "Code": $("#BinCode").val(),
+            "Name": $("#BinName").val(),
+            "Area": $("#Area").val(),
+            "Sequence": $("#BinSequence").val(),
+            "isFromList": "true",
+            //"IsActive": $("input[type=checkbox][name=IsActive]:checked").val()
+            "IsActive": $("#IsActive1").is(":checked")
+        };
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/location/_LocationBinList/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent2= tabStrip.data("tTabStrip").getContentElement(2);
+                $(tabStripContent2).html(data);
+            }
+        });
+    }
+</script>

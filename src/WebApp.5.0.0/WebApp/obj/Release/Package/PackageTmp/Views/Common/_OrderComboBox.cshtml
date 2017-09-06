@@ -1,0 +1,20 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    int? orderType = ViewBag.OrderType;
+    int? resourceGroup = ViewBag.ResourceGroup;
+    bool? canFeed = ViewBag.CanFeed;
+    bool isSupplier = ViewBag.IsSupplier != null ? ViewBag.IsSupplier : false;
+    bool isCreateHu = ViewBag.IsCreateHu != null ? ViewBag.IsCreateHu : false;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    string onChangeName = isChange ? "onOrderChange" : "EmptyChange";
+}
+@(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                                        .Select("_OrderAjaxLoading", "Common", new { orderType = orderType, resourceGroup = resourceGroup, canFeed = canFeed, isSupplier = isSupplier, isCreateHu = isCreateHu }).Cache(true))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                    .ClientEvents(events => events.OnChange(onChangeName))
+             )

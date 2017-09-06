@@ -1,0 +1,30 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    bool? isChange = ViewBag.IsChange;
+}
+@{
+    if (ViewBag.IsChange != null)
+    {
+    @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                .Select("_TraceCodeAjaxLoading", "Common").Cache(true))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+                .ClientEvents(events => events.OnChange("onTraceCodeChange"))
+             )
+    }
+    else
+    {
+    @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax()
+                .Select("_TraceCodeAjaxLoading", "Common").Cache(true))
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+             )
+    }
+}

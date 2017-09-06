@@ -1,0 +1,47 @@
+﻿@model IEnumerable<com.Sconit.Entity.BIL.PlanBill>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            //columns.Bound(o => o.OrderNo);
+            //columns.Bound(o => o.IpNo);
+            //columns.Bound(o => o.ReceiptNo);
+            columns.Bound(o => o.Party);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.MaterialsGroupDesc);
+            columns.Bound(o => o.CurrentActingQty).Title("数量");
+            columns.Bound(o => o.Uom);
+            //columns.Bound(o => o.CreateDate).Format("{0:yyyy-MM-dd}");
+            //columns.Bound(o => o.ActingQty);
+
+        })
+        .EnableCustomBinding(true).DataBinding(dataBinding => dataBinding.Ajax().Select("_ConsignmentAjaxList", "ViewLocationLotDetail"))
+        .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+            //.Pageable(settings =>
+            //{
+            //    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            //    settings.PageSize(ViewBag.PageSize);
+            //})
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                Party: $('#Party').val(),
+                Type: 0
+                //OrderNo: $('#OrderNo').val(),
+                //ReceiptNo: $('#ReceiptNo').val(),
+                //CreateDate_start: $('#CreateDate_start').val(),
+                //CreateDate_End: $('#CreateDate_End').val(),
+            };
+        }
+    </script>
+</fieldset>

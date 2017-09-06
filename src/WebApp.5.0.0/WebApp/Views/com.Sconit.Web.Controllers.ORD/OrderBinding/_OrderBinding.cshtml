@@ -1,0 +1,169 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderBinding>
+<script language="javascript" type="text/javascript">
+
+    function btnNewOrderBinding_Click() {
+        var data = {
+            "id": $("#orderNo").val(),
+            "controlName": $("#controlName").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/OrderBinding/_OrderBindingNew/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent).html(data);
+            }
+        });
+    }
+
+    function onOrderBindingClick(Id) {
+        var data = {
+            "Id": Id,
+            "controlName": $("#controlName").val()
+        };
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            cache: false,
+            url: "/OrderBinding/_OrderBindingEdit/",
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#TabStrip");
+                var tabStripContent = tabStrip.data("tTabStrip").getContentElement(1);
+                $(tabStripContent).html(data);
+            }
+        });
+    }
+    function onComplete(e) {
+        if (e.name == "Rebinding") {
+            var data = {
+                orderNo: e.response.orderNo,
+                controlName: "ProductionOrder"
+                //                                BindFlowStrategyDescription: $('#BindFlowStrategyDescription').val(),
+                //                                BindOrderNo: $('#BindOrderNo').val(),
+                //                                BindTypeDescription: $('#BindTypeDescription').val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/OrderBinding/_OrderBinding/",
+                data: data,
+                success: function (data, textStatus) {
+                    var $tGrid = $("#content");
+                    $($tGrid).html(data);
+                    //                                    $message.success(e.response.successMessage);
+                    //                                    $message.error(e.response.errorMessage);
+                }
+            });
+        }
+    }
+    function RebindingOrderClick(e) {
+        $(e).attr("href", "#");
+        if (confirm("确定重新绑定吗？")) {
+            var data = {
+                Id: $(e).parent().parent().children().eq(0).text()
+            }
+            $.ajax({
+                type: "post",
+                dataType: "Json",
+                url: "/OrderBinding/RebindingOrder/",
+                data: data,
+                success: function (data, ordermstr) {
+                    $message.success(' 订单' + data.orderNo + '重绑定成功');
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    
+                    $message.error(errorMessages);
+                }
+            });
+        }
+
+
+    }
+</script>
+<fieldset>
+    <legend>@Resources.ORD.OrderBinding.OrderBinding_BindingOrder</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderBinding")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();
+            if (ViewBag.status == com.Sconit.CodeMaster.OrderStatus.Create)
+            {
+                columns.Bound(o => o.BindFlow).ClientTemplate(string.Format("<a href=\"javascript:onOrderBindingClick('{0}')\">{1}</a>", "<#= Id #>", "<#= BindFlow #>"));
+            }
+            else
+            {
+                columns.Bound(o => o.BindFlow);
+            }
+            columns.Bound(o => o.BindFlowStrategyDescription);
+            columns.Bound(o => o.BindOrderNo);
+            columns.Bound(o => o.BindTypeDescription);
+            
+            
+            if (ViewBag.status == com.Sconit.CodeMaster.OrderStatus.Create)
+            {
+                columns.Command(commands => commands.Delete());
+            }
+            if (ViewBag.status == com.Sconit.CodeMaster.OrderStatus.Submit || ViewBag.status == com.Sconit.CodeMaster.OrderStatus.InProcess)
+            {
+                columns.Command(commands => commands.Custom("Rebinding")
+               .Text("重新绑定")
+                 .HtmlAttributes(new { onClick = "RebindingOrderClick(this)", id = "RebindingId", href = "#" })
+                 );
+               // commands.Custom().Text(@Resources.SYS.Global.Button_StartEmptyVanOrder).HtmlAttributes(new { onClick = "onStartEmptyVanOrder()", href = "#" });
+                //columns.Command(
+                //commands =>
+                //{
+                //    commands.Custom("Rebinding")
+                //        .Text("重新绑定")
+                //        .DataRouteValues(route => route.Add(o => o.Id).RouteKey("Id"))
+                //        .Ajax(true)
+                //        .Action("RebindingOrder", "OrderBinding");
+                //});
+            }
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "BindFlow")
+                {
+                    cell.Text = string.Format("<a href=\"javascript:onOrderBindingClick('{0}')\">{1}</a>", cell.DataItem.Id, cell.DataItem.BindFlow);
+                }
+            })
+        .ClientEvents(events => events.OnComplete("onComplete"))
+        .Scrollable(c => c.Enabled(false))
+                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxOrderBinding", "OrderBinding", new { id = ViewBag.orderNo })
+                                    .Delete("_AjaxOrderBindingDelete", "OrderBinding", new { orderNo = ViewBag.orderNo }))
+        .Footer(false)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    @Html.Hidden("orderNo",ViewBag.orderNo!=null?(string)ViewBag.orderNo:string.Empty)
+</fieldset>
+@{
+    Html.RenderAction("_OrderBinded", "OrderBinding", new { id = ViewBag.orderNo });
+}
+<div class="editor-footer">
+    @if (ViewBag.status == com.Sconit.CodeMaster.OrderStatus.Create)
+    {
+        @Html.Button(Resources.SYS.Global.Button_New, "Url_OrderMstr_Production_Edit,Url_OrderMstr_Procurement_Edit,Url_OrderMstr_Distribution_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnNewOrderBinding"},
+        {"onclick","btnNewOrderBinding_Click()"}
+	})
+
+    }
+    <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/" + ViewBag.controlName + "/List")'">
+        @Resources.SYS.Global.Button_Back</button>
+    @Html.Hidden("orderNo", (string)ViewBag.orderNo)
+    @Html.Hidden("controlName", (string)ViewBag.controlName)
+</div>

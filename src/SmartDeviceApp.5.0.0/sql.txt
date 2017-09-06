@@ -1,0 +1,2 @@
+
+update SYS_SNRule set yearCode = null,monthcode = null,daycode = null,seqlength = 4,blockseq = 15

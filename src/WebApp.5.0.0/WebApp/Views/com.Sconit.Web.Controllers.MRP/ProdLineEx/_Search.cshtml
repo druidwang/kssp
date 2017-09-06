@@ -1,0 +1,55 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.MRP
+<fieldset>
+    @using (Html.BeginForm("List", "ProdLineEx"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ProdLineEx_ProductLine">
+                    @Resources.MRP.ProdLineEx.ProdLineEx_ProductLine
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "ProductLine",
+                resourceGroup = 20,
+                type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                selectedValue = TempData["ProdLineExSearchModel"] != null ? ((ProdLineExSearchModel)TempData["ProdLineExSearchModel"]).ProductLine : string.Empty
+            });
+                }
+            </div>
+             <div class="search-label">
+                <label for="ItemCategory_Description">
+                    @Resources.MRP.ProdLineEx.ProdLineEx_Item
+                </label>
+            </div>
+            <div class="search-field">
+                 @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = TempData["ProdLineExSearchModel"] != null ? ((ProdLineExSearchModel)TempData["ProdLineExSearchModel"]).Item : null
+        });
+                }
+            </div>
+             
+
+        </div>
+        <div class="search-footer">
+         @Html.Hidden("isFromList", true)
+           <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+           
+          @Html.Button(Resources.SYS.Global.Button_New, "Url_MRP_ProdLineEx_View", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew"},
+            {"onclick","location.href='"+@Url.Content("~/ProdLineEx/New")+"'"}
+	    })
+        </div>
+
+    }
+</fieldset>

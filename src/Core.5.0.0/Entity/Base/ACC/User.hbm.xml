@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.ACC.User, com.Sconit.Entity" table="ACC_User" lazy="false">
+    <!--<cache usage="read-write" />-->
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="Code" column="Code" type="String" length="50" />	
+		<property name="Password" column="Password" type="String" length="50" />	
+		<property name="FirstName" column="FirstName" type="String" length="50" />	
+		<property name="LastName" column="LastName" type="String" length="50" />	
+		<property name="Type" column="Type"  />	
+		<property name="Email" column="Email" type="String" length="50" />	
+		<property name="TelPhone" column="TelPhone" type="String" length="50" />	
+		<property name="MobilePhone" column="MobilePhone" type="String" length="50" />	
+		<property name="Language" column="Language" type="String" length="50" />	
+		<property name="IsActive" column="IsActive" type="Boolean"  />	
+		<property name="AccountLocked" column="AccountLocked" type="Boolean"  />	
+		<property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />	
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />	
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />	
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+    <property name="LastPasswordModifyDate" column="LastPasswordModifyDate" type="DateTime"  />
+    <property name="DomainUser" column="DomainUser" type="String" length="50" />
+		<property name="AccountExpired" column="AccountExpired" type="DateTime"  />	
+		<property name="PasswordExpired" column="PasswordExpired" type="DateTime"  />
+    <property name="Depart" column="Depart" type="String" length="50" />
+    <property name="IpAddress" column="IpAddress" type="String" length="50" />
+    <property name="Position" column="Position" type="String" length="50" />
+    <property name="LastAccessDate" column="LastAccessDate" type="DateTime"  /> 
+  </class>
+</hibernate-mapping>

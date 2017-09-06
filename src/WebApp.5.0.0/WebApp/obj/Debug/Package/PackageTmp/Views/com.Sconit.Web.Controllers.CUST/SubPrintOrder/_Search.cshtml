@@ -1,0 +1,139 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.CUST
+@using com.Sconit.Web.Models.SearchModels.SCM
+<script type="text/javascript">
+
+    function Region_Change(e) {
+        if (e.value != "") {
+            var combobox = $(this).data("tComboBox");
+            if (combobox == undefined) {
+                return;
+            }
+            if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+                combobox.value("");d
+                combobox.reload();
+            }
+            $('#Location').data('tComboBox').value('');
+            $('#Location').data('tComboBox').text('');
+            $("#Location").data("tComboBox").reload();
+        }
+    }
+
+    function Location_DataBinding(e) {
+        e.data = {
+            region: $("#Region").val()
+        };
+    }
+
+</script>
+<fieldset>
+    @using (Html.BeginForm("List", "SubPrintOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.SubPrintOrder.UserId
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("UserCode", TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).UserCode : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.SubPrintOrder.Region
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_RegionComboBox", "Common", new
+                    {
+                        controlName = "Region",
+                        coupled = true,
+                        isChange = true,
+                        selectedValue = TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).Region : string.Empty
+                    });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.SubPrintOrder.Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_FlowComboBox", "Common", new
+                    {
+                        controlName = "Flow",
+                        isSupplier = true,
+                        type = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                        selectedValue = TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).Flow : string.Empty
+                    });
+                }
+
+                @*@Html.TextBox("Flow", TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).Flow : string.Empty)*@
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.SubPrintOrder.Location
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_LocationComboBox", "Common",
+                        new
+                        {
+                            controlName = "Location",
+                            checkRegion = true,
+                            selectedValue = TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).Location : string.Empty
+                        });
+                }
+                @*@Html.TextBox("Location", TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).Location : string.Empty)*@
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.SubPrintOrder.ExcelTemplate
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+                    Html.RenderAction("_CodeMasterDropDownList", "Common",
+                        new
+                        {
+                            code = com.Sconit.CodeMaster.CodeMaster.AsnTemplate,
+                            controlName = "ExcelTemplate",
+                            includeBlankOption=true,
+                            selectedValue = TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).ExcelTemplate : string.Empty
+                        });
+                }
+                @*@Html.TextBox("ExcelTemplate", TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).ExcelTemplate : string.Empty)*@
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.SubPrintOrder.Printer
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Printer", TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).Printer : string.Empty)
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.CUST.SubPrintOrder.Client
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("Client", TempData["SubPrintOrderSearchModel"] != null ? ((SubPrintOrderSearchModel)TempData["SubPrintOrderSearchModel"]).Client : string.Empty)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_SubPrintOrder_View", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew"},
+            {"onclick","location.href='"+@Url.Content("~/SubPrintOrder/New")+"'"}
+	    })
+        </div>
+    }
+</fieldset>

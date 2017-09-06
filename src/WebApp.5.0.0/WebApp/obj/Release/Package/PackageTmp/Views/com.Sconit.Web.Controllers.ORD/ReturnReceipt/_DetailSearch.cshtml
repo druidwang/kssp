@@ -1,0 +1,139 @@
+﻿@using com.Sconit.Entity.ACC
+@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.SYS
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("DetailList", "ReturnReceipt"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_ReceiptNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("ReceiptNo", TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).ReceiptNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Flow">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_Flow
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "Flow",
+                type = (int)com.Sconit.CodeMaster.OrderType.Distribution,
+                selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).Flow : string.Empty
+            });
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="OrderMaster_PartyFrom">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_PartyFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyFromComboBox", "Common",
+            new
+            {
+                controlName = "PartyFrom",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).PartyFrom : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_PartyTo">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_PartyTo
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_OrderMasterPartyToComboBox", "Common",
+            new
+            {
+                controlName = "PartyTo",
+                orderType = (int)com.Sconit.CodeMaster.OrderType.Procurement,
+                selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).PartyTo : string.Empty
+            });
+                }
+            </div>
+
+            @*<div class="search-label">
+                <label for="">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_WMSNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("WMSNo", TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).WMSNo : string.Empty)
+            </div>*@
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new
+            {
+                controlName = "Item",
+                selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).Item : string.Empty
+            });
+                    
+                }
+            </div>
+
+            <div class="search-label">
+                <label for="ReceiptMaster_Status">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_Status
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.ReceiptStatus,
+            controlName = "Status",
+            includeBlankOption = true,
+            blankOptionDescription = CodeDetail.SpecialValueEnum.BlankValue,
+            selectedValue = TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).Status : null
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartDate")
+.Value(TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).StartDate : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.ReceiptMaster.ReceiptMaster_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EndDate")
+             .Value(TempData["ReceiptMasterSearchModel"] != null ? ((ReceiptMasterSearchModel)TempData["ReceiptMasterSearchModel"]).EndDate : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

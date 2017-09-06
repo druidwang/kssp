@@ -1,0 +1,76 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            //columns.Bound(o => o.OrderNo).ClientTemplate(Html.ActionLink("<#= OrderNo #>", "Edit", "ProcurementOrder", new { OrderNo = "<#= OrderNo #>", SubType = "<#= SubType #>" }, new { id = "aEdit", OrderNo = "<#= OrderNo #>", SubType = "<#= SubType #>" }).ToString());
+            columns.Bound(o => o.OrderNo).ClientTemplate("<a href='#' onclick ='edit(\"<#=OrderNo #>\",\"<#=SubType #>\")'><#=OrderNo #></a>");
+            columns.Bound(o => o.Flow).ClientTemplate("<div title=<#=FlowDescription #>><#=Flow #></div>");
+            //columns.Bound(o => o.WMSNo);
+            columns.Bound(o => o.OrderTypeDescription);
+            columns.Bound(o => o.OrderPriorityDescription);
+            columns.Bound(o => o.PartyFromName).ClientTemplate("<div title=<#=PartyFromName #>><#=PartyFrom #></div>");
+            columns.Bound(o => o.PartyToName).ClientTemplate("<div title=<#=PartyToName #>><#=PartyTo #></div>");
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o => o.OrderStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_ReturnAjaxList", "ProcurementOrder"))
+                .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                Status: $('#Status').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                SubType: $('#SubType').val(),
+                Type: $('#Type').val(),
+                WMSNo: $('#WMSNo').val()
+            };
+        }
+
+        function edit(orderNo, subType)
+        {
+            var orderData = {
+                "orderNo": orderNo,
+                "subType": subType
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/ProcurementOrder/Edit/",
+                data: orderData,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#content").html(data);
+                }
+            });
+        }
+    </script>
+</fieldset>

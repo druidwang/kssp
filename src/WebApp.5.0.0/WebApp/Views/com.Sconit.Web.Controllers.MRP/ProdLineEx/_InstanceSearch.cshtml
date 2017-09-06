@@ -1,0 +1,275 @@
+﻿@using com.Sconit.Entity.MRP.MD
+@using com.Sconit.Web.Models.SearchModels.MRP
+<fieldset>
+    @using (Html.BeginForm("InstanceList", "ProdLineEx"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateType
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterComboBox", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+            includeBlankOption = true,
+            isRccpPlan = true,
+            isChange = true,
+            controlName = "DateType",
+            selectedValue = TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).DateType : -1
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_ProductLine
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common",
+            new
+            {
+                controlName = "ProductLine",
+                resourceGroup = 20,
+                type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                selectedValue = TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).ProductLine : string.Empty
+            });
+                }
+            </div>
+
+            @{
+        if (ViewBag.DateType != "4" || ViewBag.DateType == null)
+        {
+                <div class="search-label" id="Dateindexlabel">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndex
+                    </label>
+                </div>
+                <div class="search-field" id="Dateindexfield">
+                    @{
+            Html.RenderAction("_DateIndexComboBox", "Common", new
+            {
+                includeBlankOption = true,
+                controlName = "DateIndex",
+                selectedValue = TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).DateIndex : string.Empty
+            });
+                    }
+                </div>
+                <div class="search-label" id="DateindexTolabel">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndexTo
+                    </label>
+                </div>
+                <div class="search-field" id="DateindexTofield">
+                    @{
+            Html.RenderAction("_DateIndexComboBox", "Common", new
+            {
+                includeBlankOption = true,
+                controlName = "DateIndexTo",
+                selectedValue = TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).DateIndexTo : string.Empty
+            });
+                    }
+                </div>
+
+
+                <div class="search-label" id="DateIndexDatelabel" style="display: none">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndex
+                    </label>
+                </div>
+                <div class="search-field" id="DateIndexDatefield" style="display: none">
+                    @(Html.Telerik().DatePicker().Name("DateIndexDate")
+            .Value(TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).DateIndexDate : System.DateTime.Today).Min(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+
+                <div class="search-label" id="DateindexToDatelabel" style="display: none">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndexTo
+                    </label>
+                </div>
+                <div class="search-field" id="DateIndexToDatefield" style="display: none">
+                    @(Html.Telerik().DatePicker().Name("DateIndexToDate")
+            .Value(TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).DateIndexToDate : System.DateTime.Today.AddDays(14)).Min(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+        }
+        else
+        {
+                <div class="search-label" id="Dateindexlabel" style="display: none">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndex
+                    </label>
+                </div>
+                <div class="search-field" id="Dateindexfield" style="display: none">
+                    @{
+            Html.RenderAction("_DateIndexComboBox", "Common", new
+            {
+                includeBlankOption = true,
+                controlName = "DateIndex",
+                selectedValue = TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).DateIndex : string.Empty
+            });
+                    }
+                </div>
+                <div class="search-label" id="DateindexTolabel" style="display: none">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndexTo
+                    </label>
+                </div>
+                <div class="search-field" id="DateindexTofield" style="display: none">
+                    @{
+            Html.RenderAction("_DateIndexComboBox", "Common", new
+            {
+                includeBlankOption = true,
+                controlName = "DateIndexTo",
+                selectedValue = TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).DateIndexTo : string.Empty
+            });
+                    }
+                </div>
+
+
+                <div class="search-label" id="DateIndexDatelabel">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndex
+                    </label>
+                </div>
+                <div class="search-field" id="DateIndexDatefield">
+                    @(Html.Telerik().DatePicker().Name("DateIndexDate")
+.Value(TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).DateIndexDate : System.DateTime.Today).Min(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+
+                <div class="search-label" id="DateindexToDatelabel">
+                    <label>
+                        @Resources.MRP.ProdLineExInstance.ProdLineExInstance_DateIndexTo
+                    </label>
+                </div>
+                <div class="search-field" id="DateIndexToDatefield">
+                    @(Html.Telerik().DatePicker().Name("DateIndexToDate")
+    .Value(TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).DateIndexToDate : System.DateTime.Today.AddDays(14)).Min(System.DateTime.Today)
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+        }
+               
+            }
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            itemCategory = "ZHDM",
+            selectedValue = TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).Item : null
+        });
+                }
+            </div>
+
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_ShiftType
+                </label>
+            </div>
+            <div class="search-field">
+
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.ShiftType,
+            includeBlankOption = true,
+            controlName = "ShiftType",
+            selectedValue = TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).ShiftType : -1
+        });
+                }
+            </div>
+
+            <div class="search-label">
+                <label>
+                    @Resources.MRP.ProdLineExInstance.ProdLineExInstance_ApsPriority
+                </label>
+            </div>
+            <div class="search-field">
+
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.ApsPriorityType,
+            includeBlankOption = true,
+            controlName = "ApsPriority",
+            selectedValue = TempData["ProdLineExInstanceSearchModel"] != null ? ((ProdLineExInstanceSearchModel)TempData["ProdLineExInstanceSearchModel"]).ApsPriority : -1
+        });
+                }
+            </div>
+
+
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+
+            @Html.Button(Resources.SYS.Global.Button_New, "Url_MRP_ProdLineExInstance_View", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnNew"},
+            {"onclick","location.href='"+@Url.Content("~/ProdLineEx/InstanceNew")+"'"}
+	    })
+            <button type="button" id="btnExport" onclick="ExportClick()">@Resources.SYS.Global.Button_Export</button>
+        </div>
+
+    }
+</fieldset>
+<script type="text/javascript">
+    function CodeMaster_Change(e) {
+        if (e.value == 4) {
+            document.getElementById("Dateindexlabel").style.display = 'none';
+            document.getElementById("Dateindexfield").style.display = 'none';
+            document.getElementById("DateindexTolabel").style.display = 'none';
+            document.getElementById("DateindexTofield").style.display = 'none';
+            document.getElementById("DateIndexDatelabel").style.display = 'inline';
+            document.getElementById("DateIndexDatefield").style.display = 'inline';
+            document.getElementById("DateindexToDatelabel").style.display = 'inline';
+            document.getElementById("DateIndexToDatefield").style.display = 'inline';
+
+        }
+        else {
+            document.getElementById("Dateindexlabel").style.display = 'inline';
+            document.getElementById("Dateindexfield").style.display = 'inline';
+            document.getElementById("DateindexTolabel").style.display = 'inline';
+            document.getElementById("DateindexTofield").style.display = 'inline';
+            document.getElementById("DateIndexDatelabel").style.display = 'none';
+            document.getElementById("DateIndexDatefield").style.display = 'none';
+            document.getElementById("DateindexToDatelabel").style.display = 'none';
+            document.getElementById("DateIndexToDatefield").style.display = 'none';
+            $('#DateIndex').data('tComboBox').value('');
+            $('#DateIndex').data('tComboBox').text('');
+            $("#DateIndex").data("tComboBox").reload();
+            $('#DateIndexTo').data('tComboBox').value('');
+            $('#DateIndexTo').data('tComboBox').text('');
+            $("#DateIndexTo").data("tComboBox").reload();
+        }
+
+    }
+
+    function DateIndex_DataBinding(e) {
+        if ($('#DateType').val() != 4) {
+            e.data = {
+                dateType: $('#DateType').val()
+            }
+        }
+    }
+    function ExportClick() {
+        //debugger
+        location.href = '/ProdLineEx/ExportXLS/?ProductLine=' + $('#ProductLine').val() + '&Item=' + $('#Item').val()
+            + '&DateType=' + $('#DateType').val() + '&ShiftType=' + $('#ShiftType').val() + '&DateIndex=' + $('#DateIndex').val()
+            + '&DateIndexTo=' + $('#DateIndexTo').val() + '&DateIndexDate=' + $('#DateIndexDate').val()
+            + '&DateIndexToDate=' + $('#DateIndexToDate').val() + '&ApsPriority=' + $('#ApsPriority').val()
+
+    }
+</script>

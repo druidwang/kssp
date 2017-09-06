@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.ORD.ShipmentMaster, com.Sconit.Entity" table="ORD_ShipmentMstr" lazy="false">
+    <id name="ShipmentNo" column="ShipmentNo" type="String"  unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <property name="VehicleNo" column="VehicleNo" type="String" length="200" />
+    <property name="WorkShop" column="WorkShop" type="String" length="50" />
+    <property name="AddressTo" column="AddressTo" type="String" length="70" />
+    <property name="Driver" column="Driver" type="String" length="50" />
+    <property name="CaseQty" column="CaseQty" type="Int32"/>
+    <property name="Shipper" column="Shipper" type="String" length="50" />
+    <property name="Status" column="Status"  />
+    <property name="SubmitUserId" column="SubmitUser" type="Int32"/>
+    <property name="SubmitUserName" column="SubmitUserNm" type="String" length="100" />
+    <property name="SubmitDate" column="SubmitDate" type="DateTime"/>
+    <property name="PassDate" column="PassDate" type="DateTime"/>
+    <property name="PassPerson" column="PassPerson" type="String" length="100" />
+    <property name="PassUserId" column="PassUser" type="Int32"/>
+    <property name="CreateUserId" column="CreateUser" type="Int32" update="false"/>
+    <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false"/>
+    <property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+    <property name="LastModifyUserId" column="LastModifyUser" type="Int32"/>
+    <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100"/>
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+  </class>
+</hibernate-mapping>

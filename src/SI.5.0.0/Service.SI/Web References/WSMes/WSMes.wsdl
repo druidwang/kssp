@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://pandora.realtech.com" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="WSMes" targetNamespace="http://pandora.realtech.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types />
+  <wsdl:message name="SYNC_POResponse">
+    <wsdl:part name="sync_po_res" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SYNC_SUPPLIERResponse">
+    <wsdl:part name="sync_supplier_res" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SYNC_CUSTOMERResponse">
+    <wsdl:part name="sync_customer_res" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SYNC_PO">
+    <wsdl:part name="sync_po_req" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="MATERIAL_IO_BOUND">
+    <wsdl:part name="material_io_bound_req" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="MATERIAL_IO_BOUNDResponse">
+    <wsdl:part name="material_io_bound_res" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="RELEASE_MPP">
+    <wsdl:part name="release_mpp_req" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SYNC_SUPPLIER">
+    <wsdl:part name="sync_supplier_req" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SYNC_MATERIAL">
+    <wsdl:part name="sync_material_req" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="RELEASE_MPPResponse">
+    <wsdl:part name="release_mpp_res" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SYNC_MATERIALResponse">
+    <wsdl:part name="sync_material_res" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SYNC_CUSTOMER">
+    <wsdl:part name="sync_customer_req" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:portType name="MESWebService">
+    <wsdl:operation name="SYNC_PO">
+      <wsdl:input name="SYNC_PO" message="tns:SYNC_PO" />
+      <wsdl:output name="SYNC_POResponse" message="tns:SYNC_POResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="MATERIAL_IO_BOUND">
+      <wsdl:input name="MATERIAL_IO_BOUND" message="tns:MATERIAL_IO_BOUND" />
+      <wsdl:output name="MATERIAL_IO_BOUNDResponse" message="tns:MATERIAL_IO_BOUNDResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="RELEASE_MPP">
+      <wsdl:input name="RELEASE_MPP" message="tns:RELEASE_MPP" />
+      <wsdl:output name="RELEASE_MPPResponse" message="tns:RELEASE_MPPResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SYNC_SUPPLIER">
+      <wsdl:input name="SYNC_SUPPLIER" message="tns:SYNC_SUPPLIER" />
+      <wsdl:output name="SYNC_SUPPLIERResponse" message="tns:SYNC_SUPPLIERResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SYNC_MATERIAL">
+      <wsdl:input name="SYNC_MATERIAL" message="tns:SYNC_MATERIAL" />
+      <wsdl:output name="SYNC_MATERIALResponse" message="tns:SYNC_MATERIALResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="SYNC_CUSTOMER">
+      <wsdl:input name="SYNC_CUSTOMER" message="tns:SYNC_CUSTOMER" />
+      <wsdl:output name="SYNC_CUSTOMERResponse" message="tns:SYNC_CUSTOMERResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSMesSoapBinding" type="tns:MESWebService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="SYNC_PO">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="SYNC_PO">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:input>
+      <wsdl:output name="SYNC_POResponse">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MATERIAL_IO_BOUND">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="MATERIAL_IO_BOUND">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:input>
+      <wsdl:output name="MATERIAL_IO_BOUNDResponse">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SYNC_SUPPLIER">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="SYNC_SUPPLIER">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:input>
+      <wsdl:output name="SYNC_SUPPLIERResponse">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RELEASE_MPP">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="RELEASE_MPP">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:input>
+      <wsdl:output name="RELEASE_MPPResponse">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SYNC_MATERIAL">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="SYNC_MATERIAL">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:input>
+      <wsdl:output name="SYNC_MATERIALResponse">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SYNC_CUSTOMER">
+      <soap:operation soapAction="" style="rpc" />
+      <wsdl:input name="SYNC_CUSTOMER">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:input>
+      <wsdl:output name="SYNC_CUSTOMERResponse">
+        <soap:body use="literal" namespace="http://pandora.realtech.com" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSMes">
+    <wsdl:port name="WSMesPort" binding="tns:WSMesSoapBinding">
+      <soap:address location="http://10.136.3.28:9000/ws" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

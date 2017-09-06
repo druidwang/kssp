@@ -1,0 +1,74 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    //AutoCompleteFilterMode itemFilterMode = Enum.Parse(typeof(AutoCompleteFilterMode), ViewBag.ItemFilterMode, true);
+    //int itemFilterMinimumChars = ViewBag.ItemFilterMinimumChars;
+}
+ @if (ViewBag.Coupled!=null)
+    {
+        if (name == "PartyFrom")
+        {
+         @(Html.Telerik().ComboBox()
+                        .Name(name)
+                        .AutoFill(true)
+                        .DataBinding(binding => binding.Ajax().Select("_RegionAjaxLoading", "Common").Cache(true))
+                        .ClientEvents(events => events.OnChange("Region_Change"))
+                        //.Filterable(filtering =>
+                        //{
+                        //    filtering.FilterMode(itemFilterMode);
+                        //    filtering.MinimumChars(itemFilterMinimumChars);
+                        //})
+                        .HighlightFirstMatch(true)
+                        .BindTo(Model)
+                )
+
+        }
+        else if (name == "PartyTo")
+        { 
+            @(Html.Telerik().ComboBox()
+                        .Name(name)
+                        .AutoFill(true)
+                        .DataBinding(binding => binding.Ajax().Select("_RegionAjaxLoading", "Common").Cache(true))
+                        .ClientEvents(events => events.OnChange("PartyTo_Change"))
+                        //.Filterable(filtering =>
+                        //{
+                        //    filtering.FilterMode(itemFilterMode);
+                        //    filtering.MinimumChars(itemFilterMinimumChars);
+                        //})
+                        .HighlightFirstMatch(true)
+                        .BindTo(Model)
+                )
+        }
+        else if (name == "Region")
+        { 
+            @(Html.Telerik().ComboBox()
+                        .Name(name)
+                        .AutoFill(true)
+                        .DataBinding(binding => binding.Ajax().Select("_RegionAjaxLoading", "Common").Cache(true))
+                            .ClientEvents(events => events.OnChange("RegionCombox_Change"))
+                        //.Filterable(filtering =>
+                        //{
+                        //    filtering.FilterMode(itemFilterMode);
+                        //    filtering.MinimumChars(itemFilterMinimumChars);
+                        //})
+                        .HighlightFirstMatch(true)
+                        .BindTo(Model)
+                )
+        }
+}
+else
+{ 
+    @(Html.Telerik().ComboBox()
+                .Name(name)
+                .AutoFill(true)
+                .DataBinding(binding => binding.Ajax().Select("_RegionAjaxLoading", "Common").Cache(true))
+                //.Filterable(filtering =>
+                //{
+                //    filtering.FilterMode(itemFilterMode);
+                //    filtering.MinimumChars(itemFilterMinimumChars);
+                //})
+                .HighlightFirstMatch(true)
+                .BindTo(Model)
+        )
+}
+    

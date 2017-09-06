@@ -1,0 +1,57 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.InventoryBalance>
+<script type="text/javascript">
+    function InventoryBalanceGrid_OnDataBinding(e) {
+
+        e.data = {
+            Location: $("#Location").val(),
+            Item:$("#Item").val(),
+            SnapTime:$("#SnapTime").val()
+        };
+    } 
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+         .Name("InventoryBalanceGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InLine))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id).Hidden();
+            columns.Bound(o => o.Location).ReadOnly(true).Width(150);
+            columns.Bound(o => o.Item).ReadOnly(true).Width(150);
+            columns.Bound(o => o.ItemDescription).ReadOnly(true).Width(150);
+       
+            columns.Bound(o => o.SafeStock).ReadOnly(true).Width(150);
+            columns.Bound(o => o.MaxStock).ReadOnly(true).Width(150);
+            columns.Bound(o => o.Qty).Width(150);
+            columns.Command(commands =>
+            {
+                commands.Edit();
+            });
+        })
+        .DataBinding(dataBinding =>
+        {
+            dataBinding.Ajax()
+                .Update("_Update", "MrpSnap", new
+                {
+                   
+                    itemTo=ViewBag.Item,
+                    locationTo = ViewBag.Location,
+                    snapTimeTo = ViewBag.SnapTime
+                })
+                .Select("_AjaxInventoryBalanceList", "MrpSnap");
+        })
+                        .ClientEvents(events => events.OnDataBinding("InventoryBalanceGrid_OnDataBinding"))
+
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .Sortable()
+    )
+</fieldset>

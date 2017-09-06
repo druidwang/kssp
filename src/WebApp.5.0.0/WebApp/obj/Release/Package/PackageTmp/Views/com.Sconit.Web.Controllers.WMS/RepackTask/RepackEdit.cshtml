@@ -1,0 +1,128 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.WMS.RepackTask
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_RepackTask_Repack" });
+}
+
+<script type="text/javascript">
+    function repack() {
+       
+         var data = {
+                    "repackTaskId": $("#Id").val(),
+                    "repackInHu": $("#repackInHu").val(),
+                    "repackOutHu": $("#repackOutHu").val()
+                }
+        $.ajax({
+            type: "Post",
+            dataType: "html",
+            url: "/RepackTask/RepackTaskRepack/",
+            data: data,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data != "") {
+                    DisplayTextMessages(data);
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "@Url.Content("~/RepackTask/RepackList/")",
+                        data: "",
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                DisplayTextMessages(XMLHttpRequest.responseText);
+            }
+        });
+    }
+</script>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.WMS.RepackTask.RepackTask_Repack_Title</legend>
+        <div class="editor">
+            @Html.HiddenFor(model => model.CreateUserName)
+            @Html.HiddenFor(model => model.CreateDate)
+            @Html.HiddenFor(model => model.LastModifyUserName)
+            @Html.HiddenFor(model => model.LastModifyDate)
+            @Html.HiddenFor(model => model.Id)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Item)
+            </div>
+           
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ItemDescription)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ItemDescription)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.UnitCount)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.UnitCount)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.UCDescription)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.UCDescription)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Location)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Location)
+            </div>
+              <div class="editor-label-2">
+                @Html.LabelFor(model => model.Uom)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Uom)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Qty)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Qty)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.RepackQty)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.RepackQty)
+            </div>
+            <div class="editor-label-2" style="color:Blue">
+                建议条码:
+            </div>
+            <div class="editor-field-2" style="color:Blue">
+                @Html.DisplayFor(model => model.Remark)
+            </div>
+        </div>
+        <div class="editor-footer">
+                    @Html.Button(Resources.SYS.Global.Button_Repack, "Url_RepackTask_Repack", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnRepack"},
+                    {"needconfirm","true"},
+                    {"onclick","repack()"}
+	            })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/RepackTask/RepackList")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+    
+}
+<div id="divRepackHuList">
+@{
+    Html.RenderAction("_RepackHuList", "RepackTask");
+}
+</div>

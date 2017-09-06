@@ -1,0 +1,104 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MD.ItemReference
+@Html.Partial("_AjaxMessage")
+@using (Html.BeginForm("_ItemRefEdit","Item"))
+{
+    <script language="javascript" type="text/javascript">
+        function btnDeleteItemRef_Click() {
+            var data = {
+                "Id": $("#Id").val(),
+                "item": $("#Item").val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/Item/ItemRefDelete/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#TabStrip");
+                    var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                    $(tabStripContent1).html(data);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $("form[action$='_ItemRefEdit']").submit(function () {
+                $.post($(this).attr("action"), $(this).serialize(), function (response) {
+                    var tabStrip = $("#TabStrip");
+                    var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                    $(tabStripContent1).html(response);
+                });
+                return false;
+            });
+        });
+
+        function btnBackItemRef_Click() {
+            var data = {
+                "Id": $("#Item").val()
+            };
+            $.ajax({
+                type: "post",
+                dataType: "html",
+                url: "/Item/ItemRefResult/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    var tabStrip = $("#TabStrip");
+                    var tabStripContent1 = tabStrip.data("tTabStrip").getContentElement(1);
+                    $(tabStripContent1).html(data);
+                }
+            });
+        }
+</script>
+    
+    <fieldset>
+        <legend>@Resources.MD.ItemRef.ItemRef_Edit_Title</legend>
+            <div class="editor">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Item)
+                @Html.HiddenFor(model => model.Party)
+                @Html.HiddenFor(model => model.ReferenceCode)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.LastModifyUserName)
+                @Html.HiddenFor(model => model.LastModifyDate)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Item)
+            </div>
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.Party)
+            </div>
+             <div class="editor-field-2">
+                @Html.DisplayFor(model => model.Party)
+            </div>
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.ReferenceCode)
+            </div>
+             <div class="editor-field-2">
+                @Html.DisplayFor(model => model.ReferenceCode)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.IsActive)
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBoxFor(model => model.IsActive,new{id="ItemRefIsActive"})
+            </div>
+        </div>
+        <div class="editor-footer">
+            <input type="submit" value="@Resources.SYS.Global.Button_Save"/>
+            <button type="button" id="btnDelete" onclick="btnDeleteItemRef_Click()">
+                @Resources.SYS.Global.Button_Delete</button>
+            <button type="button" id="btnBack" onclick="btnBackItemRef_Click()">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}
+
+
+
+

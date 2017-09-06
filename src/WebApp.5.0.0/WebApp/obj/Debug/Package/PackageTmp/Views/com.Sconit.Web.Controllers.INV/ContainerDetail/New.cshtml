@@ -1,0 +1,40 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.INV.ContainerDetail
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Container_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MD.Container.Container_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+               容器类型
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_ContainerDropDownList", "Common",
+    new
+    {
+        controlName = "Container",
+        includeBlankOption = true,
+        selectedValue = ViewBag.Currency != null ? ViewBag.Currency : string.Empty
+    });
+                }
+            </div>
+            <div class="editor-label-2">
+                数量
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.CreateQty).DecimalDigits(2).MinValue(1)
+            </div>
+         
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ContainerDetail/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

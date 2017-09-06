@@ -1,0 +1,49 @@
+﻿@model IEnumerable<com.Sconit.Entity.SCM.FlowDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ItemFlowGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Flow); 
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCountDescription);
+            columns.Bound(o => o.MinUnitCount);
+            columns.Bound(o => o.PartyFrom);
+            columns.Bound(o => o.PartyTo);
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.LocationTo);
+            columns.Bound(o => o.MaxStock);
+            columns.Bound(o => o.SafeStock);
+            columns.Bound(o => o.FlowStrategy);
+            
+            columns.Bound(o => o.IsChangeUnitCount).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsChangeUnitCount' <#= IsChangeUnitCount? checked='checked' : '' #> />").Width(80);
+
+        })
+
+        //.Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ItemFlow"))
+                                        .ClientEvents(events => events.OnDataBinding("ItemFlowGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+     <script type="text/javascript">
+         function ItemFlowGrid_OnDataBinding(e) {
+             e.data = {
+                 Item: $('#Item').val()
+             };
+         } 
+    </script>
+</fieldset>

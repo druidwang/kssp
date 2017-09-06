@@ -1,0 +1,51 @@
+﻿@using com.Sconit.Entity.SAP.TRANS;
+@model IEnumerable<com.Sconit.Entity.CUST.OperationReport>
+ 
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                        .Name("SAP_OpReportGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ExternalOrderNo).Title(@Resources.CUST.OperationReport.OpReport_ExtOrderNo);
+            columns.Bound(o => o.VAN).Title(@Resources.CUST.OperationReport.OpReport_VAN);
+            columns.Bound(o => o.OrderNo).Title(@Resources.CUST.OperationReport.OpReport_OrderNo).Hidden();
+            columns.Bound(o => o.Operation).Title(@Resources.CUST.OperationReport.OpReport_Operation);
+            columns.Bound(o => o.WorkCenter).Title(@Resources.CUST.OperationReport.OpReport_WorkCenter);
+            columns.Bound(o => o.IsReport).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsReport' <#= IsReport? checked='checked' : '' #> />").Title(@Resources.CUST.OperationReport.OpReport_IsReport);
+            columns.Bound(o => o.CreateUserId).Title(@Resources.CUST.OperationReport.OpReport_CreateUser);
+            columns.Bound(o => o.CreateUserName).Title(@Resources.CUST.OperationReport.OpReport_CreateUserNm);
+            columns.Bound(o => o.CreateDate).Title(@Resources.CUST.OperationReport.OpReport_CreateDate);
+            columns.Bound(o => o.LastModifyUserId).Title(@Resources.CUST.OperationReport.OpReport_LastModifyUser);
+            columns.Bound(o => o.LastModifyUserName).Title(@Resources.CUST.OperationReport.OpReport_LastModifyUserNm);
+            columns.Bound(o => o.LastModifyDate).Title(@Resources.CUST.OperationReport.OpReport_LastModifyDate);
+        })
+           
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "SAPOpReport"))
+                                .ClientEvents(events => events.OnDataBinding("SAP_OpReportGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAP_OpReportGrid_OnDataBinding(e) {
+          
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                ExtOrderNo: $("ExtOrderNo").val(),
+                Operation: $('#Operation').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+                
+            };
+        }
+     
+
+    </script>
+</fieldset>

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderBomDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                                .Name("ProductLineLocationDetaiFeedlGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo).Title(Resources.ORD.OrderMaster.OrderMaster_OrderNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+          
+            columns.Bound(o => o.Operation);
+            columns.Bound(o => o.OpReference);
+            columns.Bound(o => o.HuId);
+            columns.Bound(o => o.OrderedQty).Title(Resources.ORD.OrderBomDetail.OrderBomDetail_OrderedQty_Feed);
+            columns.Bound(o => o.FeedQty);
+
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .Resizable(resizing => resizing.Columns(true))
+         .Footer(false)
+    )
+
+</fieldset>

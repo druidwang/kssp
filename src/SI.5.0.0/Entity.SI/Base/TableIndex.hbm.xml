@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.SI.TableIndex, com.Sconit.Entity.SI" table="SI_SAP_TableIndex" lazy="false">
+    <id name="TableName" column="TableName" type="string" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <property name="Id" column="Id" type="Int64" />
+    <property name="LastModifyDate" column="LastModifyDate" type="DateTime"/>
+  </class>
+</hibernate-mapping>

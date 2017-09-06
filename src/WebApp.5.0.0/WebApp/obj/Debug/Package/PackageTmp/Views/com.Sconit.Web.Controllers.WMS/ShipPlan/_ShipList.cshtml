@@ -1,0 +1,77 @@
+﻿@model IEnumerable<com.Sconit.Entity.WMS.ShipPlan>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="checkedRecords"]').attr("checked", this.checked);
+        });
+    });
+
+    function showButtons() {
+        var $checkRecords = $("input[name='checkedRecords']");
+        var showButton = false;
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                showButton = true;
+                break;
+            }
+        }
+        $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+    }
+
+    function ShipPlanGrid_OnDataBinding(e) {
+        e.data = {
+          
+            Location: $('#Location').val(),
+            DateFrom: $('#DateFrom').val(),
+            DateTo: $('#DateTo').val(),
+            OrderNo: $('#OrderNo').val()
+        };
+    }
+</script>
+<fieldset>
+    <legend>@Resources.WMS.ShipPlan.ShipPlan_Ship_Title</legend>
+ <div class="search-footer">
+       
+    </div>
+    @(   
+ Html.Telerik().Grid(Model)
+          .Name("ShipPlanGrid")
+          .DataKeys(keys =>
+          {
+              keys.Add(p => p.Id);
+          })
+                 .Columns(columns =>
+                 {
+                     columns.Bound(o => o.Item)
+                      .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' value='<#= Id #>' onClick='showButtons()'  />")
+                      .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+                      .Width(36).HtmlAttributes(new { style = "text-align:center" });
+                     columns.Bound(o => o.Flow);
+                     columns.Bound(o => o.PartyFromName);
+                     columns.Bound(o => o.PartyToName);
+                     columns.Bound(o => o.Item);
+                     columns.Bound(o => o.ItemDescription);
+                     columns.Bound(o => o.Uom);
+                     columns.Bound(o => o.UnitCount);
+                     columns.Bound(o => o.UnitCountDescription);
+                     columns.Bound(o => o.StartTime);
+                     columns.Bound(o => o.WindowTime);
+                     columns.Bound(o => o.DiaplayOrderQty);
+                     columns.Bound(o => o.DiaplayPickQty);         
+                 })
+
+          .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxShipList", "ShipPlan"))
+                                          .ClientEvents(events => events.OnDataBinding("ShipPlanGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+
+   
+</fieldset>

@@ -1,0 +1,7 @@
+﻿@{
+    ViewBag.Title = "Index";
+    ViewBag.Type = com.Sconit.CodeMaster.MiscOrderType.GI;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ProductionAdjustMiscOrder_View" });
+}
+
+@Html.Partial("_Search")

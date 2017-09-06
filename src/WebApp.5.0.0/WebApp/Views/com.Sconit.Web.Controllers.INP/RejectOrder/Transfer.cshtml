@@ -1,0 +1,138 @@
+﻿@model com.Sconit.Entity.INP.RejectMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_RejectOrder_Transfer" });
+}
+<script type="text/javascript">
+    function Reject_Change(e) {
+        var combobox = $(this).data("tComboBox");
+        if (combobox == undefined) {
+            return;
+        }
+        if (combobox.selectedIndex == undefined || combobox.selectedIndex == -1) {
+            combobox.value("");
+            combobox.reload();
+            $("#fdTransferDetail").hide();
+        } else {
+            var data = { "rejectNo": e.value };
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/RejectOrder/_TransferDetailList/",
+                data: data,
+                cache: false,
+                success: function (data, textStatus) {
+                    $("#fdTransferDetail").html(data);
+                    $("#fdTransferDetail").show();
+                    $("#btnTransfer").attr("style", "display:inline");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+    }
+
+    function onSubmit(e) {
+        
+       
+        var locationCombobox = $("#Location").data("tComboBox");
+        var rejCombobox = $("#RejectNo").data("tComboBox");
+        if (rejCombobox.selectedIndex == undefined || rejCombobox.selectedIndex == -1) {
+            rejCombobox.value("");
+            $message.error("不合格品处理单不能为空");
+            return;
+        }
+        if (locationCombobox.selectedIndex == undefined || locationCombobox.selectedIndex == -1) {
+            locationCombobox.value('');
+            $message.error("目的库位不能为空");
+            return;
+        }
+        var $checkRecords = $("input[name='checkedRecords']");
+        var idStr = "";
+        for (var i = 0; i < $checkRecords.length; i++) {
+            if ($checkRecords[i].checked) {
+                var id = $checkRecords[i].value;
+                if (idStr == "") {
+                    idStr = id;
+                } else {
+                    idStr += "," + id;
+                }
+            }
+        }
+
+        var data = {
+            "location": $("#Location").val(),
+            "idStr": idStr
+        }
+
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/RejectOrder/CreateRejectTransfer/",
+            data: data,
+            success: function (data) {
+                var rejectNo = { "rejectNo": $("#RejectNo").val() };
+                $message.success(data.SuccessMessage);
+               
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/RejectOrder/_TransferDetailList/",
+                    data: rejectNo,
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#fdTransferDetail");
+                        $($tGrid).html(data);
+                    }
+                });
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                
+                $message.error(errorMessages);
+            }
+        });
+
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.RejectNo)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_RejectComboBox", "Common", new { controlName = "RejectNo", status = (int)com.Sconit.CodeMaster.RejectStatus.Submit, isChange = true });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelForModel(Resources.ORD.OrderMaster.OrderMaster_LocationTo)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_LocationComboBox", "Common", new
+                    {
+                        controlName = "Location",
+                    });
+                }
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Transfer, "Url_RejectOrder_Transfer", new Dictionary<string, string>()
+	            {
+	                {"type", "button"},
+	                {"id", "btnTransfer"},
+                    {"needconfirm","true"},
+                    {"onclick","onSubmit()"},
+                    {"style","display:none"}
+	            })
+        </div>
+    </fieldset>
+   
+    <div id="fdTransferDetail" style="display: none;">
+    </div>
+   
+}

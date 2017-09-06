@@ -1,0 +1,61 @@
+﻿@model IEnumerable<com.Sconit.Entity.SCM.FlowMaster>
+@{
+    Layout = null;
+}
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("FlowMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "ProductionFlow", new { ID = "<#= Code #>" }, null).ToString());
+            columns.Bound(o => o.Description);
+            //columns.Bound(o=>o.DAUAT);
+            columns.Bound(o => o.PartyFrom).Title(Resources.SCM.FlowMaster.FlowMaster_ProductionPartyFrom);
+            columns.Bound(o => o.LocationFrom).Title(Resources.SCM.FlowMaster.FlowMaster_ProductionLocationFrom);
+            columns.Bound(o => o.LocationTo).Title(Resources.SCM.FlowMaster.FlowMaster_ProductionLocationTo);
+            columns.Bound(o => o.IsActive)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsActive' <#= IsActive? checked='checked' : '' #> />"); ;
+        })
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "Code")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.Code, cell.DataItem.Code);
+                }
+            })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+         .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ProductionFlow"))
+        .ClientEvents(events => events.OnDataBinding("UserGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function UserGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                LocationFrom: $('#LocationFrom').val(),
+                LocationTo: $('#LocationTo').val(),
+                IsActive: $('#IsActive').is(':checked'),
+                Description: $('#Description').val(),
+                Supplier: $('#Supplier').val(),
+                Region: $('#Region').val(),
+                DAUAT: $('#DAUAT').val()
+            };
+        } 
+    </script>
+</fieldset>

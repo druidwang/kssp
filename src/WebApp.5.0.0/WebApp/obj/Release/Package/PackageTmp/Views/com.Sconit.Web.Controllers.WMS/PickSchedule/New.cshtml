@@ -1,0 +1,68 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.WMS.PickSchedule
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PickSchedule_View" });
+}
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.WMS.PickSchedule.PickSchedule_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.PickScheduleNo)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.PickScheduleNo)
+                @Html.ValidationMessageFor(model => model.PickScheduleNo)
+            </div>
+             <div class="editor-label-2">
+              </div>
+            <div class="editor-field-2">
+            </div>
+           <div class="editor-label-2">
+                @Html.LabelFor(model => model.PickLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.PickLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EmergentPickLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.EmergentPickLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.RepackLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.RepackLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EmergentRepackLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.EmergentRepackLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.SpreadLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.SpreadLeadTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EmergentSpreadLeadTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.EmergentSpreadLeadTime)
+            </div>
+      
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/PickSchedule/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

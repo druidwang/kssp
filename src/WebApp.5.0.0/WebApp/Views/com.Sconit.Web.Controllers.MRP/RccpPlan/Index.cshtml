@@ -1,0 +1,268 @@
+﻿@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_RccpPlan_Edit" });
+}
+@using (Html.BeginForm())
+{
+    <script type="text/javascript">
+        function doClick(bl) {
+            if (bl == 4) {
+                $("#divDay").show()
+                $("#divWeek").hide();
+                $("#divMonth").hide();
+            }
+            else if (bl == 5) {
+                $("#divDay").hide()
+                $("#divWeek").show();
+                $("#divMonth").hide();
+            }
+            else if (bl == 6) {
+                $("#divDay").hide()
+                $("#divWeek").hide();
+                $("#divMonth").show();
+            }
+        }
+
+        function QueryRccpPlan() {
+            var item;
+
+            var ImportType = $("input[type=radio][name=ImportType]:checked").val();
+
+            if (ImportType == "4") {
+                if ($("#startDate").val() == "") {
+                    $message.error("开始天不能为空");
+                    return;
+                }
+                if ($("#endDate").val() == "") {
+                    $message.error("结束天不能为空");
+                    return;
+                }
+                item = $("#ItemDay").val();
+            }
+            if (ImportType == "5") {
+                if ($("#WeekStart").val() == "") {
+                    $message.error("开始周不能为空");
+                    return;
+                }
+                if ($("#WeekEnd").val() == "") {
+                    $message.error("结束周不能为空");
+                    return;
+                }
+                item = $("#Item").val();
+            }
+            else if (ImportType == "6") {
+                if ($("#MonthStart").val() == "") {
+                    $message.error("开始月不能为空");
+                    return;
+                }
+                if ($("#MonthEnd").val() == "") {
+                    $message.error("结束月不能为空");
+                    return;
+                }
+                else {
+                    item = $("#ItemTo").val();
+                }
+            }
+
+            var data = {
+                ImportType: $("input[type=radio][name=ImportType]:checked").val(),
+                StartWeek: $("#WeekStart").val(),
+                StartMonth: $("#MonthStart").val(),
+                EndMonth: $("#MonthEnd").val(),
+                EndWeek: $("#WeekEnd").val(),
+                StartDate: $("#startDate").val(),
+                EndDate: $("#endDate").val(),
+                Item: item
+            }
+
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/RccpPlan/_GetRccpPlanList/",
+                data: data,
+                cache: false,
+                success: function (data) {
+                    $("#divRccpPlan").html(data);
+                }
+            });
+        }
+
+        function DateIndex_DataBinding(e) {
+            e.data = {
+                dateType: $("input[type=radio][name=ImportType]:checked").val()
+            }
+        }
+    </script>
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.MRP.RccpPlan.RccpPlan_QueryType
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.RadioButton("ImportType", 4, true, new { onclick = "doClick(4)" })<span>天计划</span>
+                <span style="margin: 4px"></span>
+                @Html.RadioButton("ImportType", 5, false, new { onclick = "doClick(5)" })<span>周计划</span>
+                <span style="margin: 4px"></span>
+                @Html.RadioButton("ImportType", 6, false, new { onclick = "doClick(6)" })<span>月计划</span>
+            </div>
+            <div class="editor-label-2">
+                <label>
+                </label>
+            </div>
+            <div class="editor-field-2">
+            </div>
+            <hr style="border: 100% dashed black;" />
+
+            <div id="divDay">
+                <div class="search-label">
+                    <label>
+                        开始天
+                    </label>
+                </div>
+
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Name("startDate").Min(DateTime.Today).Format("yyyy-MM-dd")
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+                <div class="search-label">
+                    <label>
+                        结束天
+                    </label>
+                </div>
+                <div class="search-field">
+                    @(Html.Telerik().DatePicker().Name("endDate").Min(DateTime.Today).Format("yyyy-MM-dd")
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_Item
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_ItemComboBox", "Common",
+    new
+    {
+        controlName = "ItemDay",
+        selectedValue = string.Empty,
+        itemCategory = "MODEL"
+    });
+                    }
+                </div>
+            </div>
+
+
+            <div id="divWeek" style="display: none">
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_StartWeek
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "WeekStart",
+            isMrpPlan = true,
+            selectedValue = string.Empty
+        });
+                    }
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_EndWeek
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "WeekEnd",
+            isMrpPlan = true,
+            selectedValue = string.Empty
+        });
+                    }
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_Item
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_ItemComboBox", "Common",
+    new
+    {
+        controlName = "Item",
+        selectedValue = string.Empty,
+        itemCategory = "MODEL"
+    });
+                    }
+                </div>
+            </div>
+
+            <div id="divMonth" style="display: none">
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_StartMonth
+                    </label>
+                </div>
+                <div class="search-field">
+                    <span id="WeekOfYearStartdiv">
+                        @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "MonthStart",
+            isMrpPlan = true,
+            selectedValue = string.Empty
+        });
+                        }
+                    </span>&nbsp&nbsp<span id="startTime"></span>
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_EndMonth
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_DateIndexComboBox", "Common", new
+        {
+            includeBlankOption = true,
+            controlName = "MonthEnd",
+            isMrpPlan = true,
+            selectedValue = string.Empty
+        });
+                    }
+                </div>
+                <div class="search-label">
+                    <label>
+                        @Resources.MRP.RccpPlan.RccpPlan_Item
+                    </label>
+                </div>
+                <div class="search-field">
+                    @{
+    Html.RenderAction("_ItemComboBox", "Common",
+    new
+    {
+        controlName = "ItemTo",
+        selectedValue = string.Empty,
+        itemCategory = "MODEL"
+    });
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="button" id="btnSearch" onclick="QueryRccpPlan()">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+    </fieldset>
+    <div id="divRccpPlan">
+    </div>
+}

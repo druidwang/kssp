@@ -1,0 +1,150 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+<script type="text/javascript">
+//    function OrderMasterGrid_OnRowDataBound(e) {
+//        if (e.dataItem.IsPause) {
+//            $(e.row.cells[13]).find("a:first").attr("style", "display:none");
+//        } 
+//        else {
+//            $(e.row.cells[13]).find("a:last").attr("style", "display:none");
+//        }
+//    }
+    function OrderMasterGrid_OnDataBinding(e) {
+        e.data = {
+            OrderNo: $('#OrderNo').val(),
+            Flow: $('#Flow').val(),
+            DateFrom: $('#DateFrom').val(),
+            DateTo: $('#DateTo').val(),
+            CreateUserName: $('#CreateUserName').val()
+        };
+    }
+    function onComplete(e) {
+
+  if (e.name == "Resume") {
+            $("#popResumeErrorsul").html('');
+            $("#sequence").find("#ResumeSequence").val('');
+            var detailWindow = $("#ResumeOrder").data("tWindow");
+            var orderNo = e.response.orderNo;
+            $("#sequence").find("input#ResumeOrderNo").val(orderNo);
+            detailWindow.center().open();
+        }
+    }
+
+    function popResume(e) {
+        var data = {
+            "orderNo": $("#ResumeOrderNo").val(),
+            "sequence": $("#ResumeSequence").val()
+        };
+
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "/ProductionOrder/Resume/",
+            data: data,
+            cache: false,
+            success: function (data) {
+                if (data != "") {
+                    $('#ResumeOrder').data('tWindow').close();
+                   var data = {
+                        OrderNo: $('#OrderNo').val(),
+                        Flow: $('#Flow').val(),
+                        DateFrom: $('#DateFrom').val(),
+                        DateTo: $('#DateTo').val(),
+                        CreateUserName: $('#CreateUserName').val()
+                    };
+                    $.ajax({
+                        type: "post",
+                        dataType: "html",
+                        url: "/ProductionOrder/PauseList/",
+                        data: data,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $("#popResumeErrorsul").html(errorMessages);
+            }
+        });
+    }
+</script>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Flow).Title(@Resources.ORD.OrderMaster.OrderMaster_Flow_Production);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.ReferenceOrderNo);
+            columns.Bound(o => o.ExternalOrderNo);
+            columns.Bound(o => o.OrderPriorityDescription);
+            columns.Bound(o => o.PartyFromName);
+            columns.Bound(o => o.CurrentOperation);
+            columns.Bound(o => o.StartTime);
+            columns.Bound(o => o.WindowTime);
+            columns.Bound(o=>o.PauseTime);
+            columns.Bound(o => o.OrderStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            columns.Command(
+                commands =>
+                {
+                    //commands.Custom("Pause")
+                    //    .Text("暂停")
+                    //    .DataRouteValues(route => route.Add(o => o.OrderNo).RouteKey("orderNo"))
+                    //    .Ajax(true)
+                    //    .Action("PopPauseOrder", "ProductionOrder");
+                    commands.Custom("Resume")
+                     .Text("恢复")
+                     .DataRouteValues(route => route.Add(o => o.OrderNo).RouteKey("orderNo"))
+                     .Ajax(true)
+                     .Action("PopResumeOrder", "ProductionOrder");
+                });
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxResumeOrderList", "ProductionOrder"))
+        .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding")
+                   // .OnRowDataBound("OrderMasterGrid_OnRowDataBound")
+            .OnComplete("onComplete"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    @{ Html.Telerik().Window()
+        .Name("ResumeOrder")
+        .Title("恢复序号")
+        .Draggable(true)
+        .Scrollable(false)
+        .Resizable()
+        .Height(100)
+        .Width(300)
+        .Modal(true)
+        .Content(@<text>
+        <div class="validation-summary-errors">
+            <ul id="popResumeErrorsul">
+            </ul>
+        </div>
+        <div id="sequence">
+            @Resources.ORD.OrderMaster.OrderMaster_Sequence
+            <input id="ResumeSequence" type="text" />
+            <input id="ResumeOrderNo" type="hidden" />
+            <button type="button" id="btnResume" onclick="popResume();">
+                @Resources.SYS.Global.Button_Resume</button>
+        </div>
+        </text>)
+        .Visible(false)
+        .Render();
+    }
+</fieldset>

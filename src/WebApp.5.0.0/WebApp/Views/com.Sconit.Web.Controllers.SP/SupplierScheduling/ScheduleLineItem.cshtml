@@ -1,0 +1,36 @@
+﻿@model IEnumerable<com.Sconit.Entity.CUST.ScheduleLineItem>
+<fieldset>
+
+    @(Html.Telerik().Grid(Model)
+                .Name("ScheduleLineItemGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+           
+            columns.Bound(o => o.Supplier).Title("供应商");
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceCode);
+            columns.Bound(o => o.Description);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount);
+           
+                 })
+                    
+                .Scrollable(c => c.Enabled(false))
+                                                                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxScheduleLineItem", "SupplierScheduling"))
+                     // .ClientEvents(events => events.OnDataBinding("ScheduleLineItemGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0); ;
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+            @Html.Hidden("Supplier",(string)ViewBag.Supplier)
+    
+</fieldset>

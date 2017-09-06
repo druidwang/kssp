@@ -1,0 +1,51 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.ReceiptDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("ReceiptDetailGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.ReceiptNo);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.Flow).Title(Resources.ORD.ReceiptMaster.ReceiptMaster_Flow);
+            //columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.CreateDate);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            //columns.Bound(o => o.LocationTo);
+            //columns.Bound(o => o.IpDetailType)
+            // .ClientTemplate(string.Format("<input type='checkbox' disabled='disabled' name='IpDetailType' <#= IpDetailType==(" + (int)com.Sconit.CodeMaster.IpDetailType.Gap + ")? checked='checked' : '' #> />"));
+            columns.Bound(o => o.ReceivedQty);
+        })
+             .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxRecDetList", "SupplierReceipt"))
+             .ClientEvents(events => events.OnDataBinding("SupplierReceiptGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable(c => c.Enabled(false))
+         .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function SupplierReceiptGrid_OnDataBinding(e) {
+            e.data = {
+                ReceiptNo: $('#ReceiptNo').val(),
+                Flow: $('#Flow').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                Item: $('#Item').val(),
+                WMSNo: $('#WMSNo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                OrderNo: $('#OrderNo').val(),
+                Status: $('#Status').val()
+            };
+        }
+    </script>
+</fieldset>

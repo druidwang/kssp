@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.SAP.SAPBom, com.Sconit.Entity.SI" table="SAP_Bom" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="MATNR" column="MATNR" type="String" length="18"/>	
+		<property name="MAKTX" column="MAKTX" type="String" length="60"/>	
+		<property name="BMENG" column="BMENG" type="String" length="13"/>	
+		<property name="BMEIN" column="BMEIN" type="String" length="3"/>	
+		<property name="IDNRK" column="IDNRK" type="String" length="18"/>	
+		<property name="MEINS" column="MEINS" type="String" length="3"/>	
+		<property name="MENGE" column="MENGE" type="String" length="13"/>	
+		<property name="AUSCH" column="AUSCH" type="String" length="5"/>
+    <property name="DATUV" column="DATUV" type="String" length="8"/>
+    <property name="VORNR" column="VORNR" type="String" length="50"/>
+    <property name="BatchNo" column="BatchNo" type="String" length="50"/>	
+		<property name="Status" column="Status" type="Int32"/>	
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>	
+  	</class>
+</hibernate-mapping>

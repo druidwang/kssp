@@ -1,0 +1,214 @@
+﻿@using com.Sconit.Web.Models.SearchModels.ORD
+@using com.Sconit.Entity.ORD
+<fieldset>
+    @using (Html.BeginForm("List", "ProcurementSQOrder"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.OrderMaster.OrderMaster_Checker
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_UserComboBox", "Common",
+         new
+         {
+             ControlName = "Checker",
+             selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Checker : string.Empty
+         });
+                }
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_OrderNo">
+                    @Resources.ORD.OrderMaster.OrderMaster_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateFrom">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateFrom
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateFrom")
+.Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateFrom : System.DateTime.Today.AddDays(-7))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_DateTo">
+                    @Resources.ORD.OrderMaster.OrderMaster_DateTo
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DatePicker().Name("DateTo")
+         .Value(TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).DateTo : System.DateTime.Today.AddDays(1))
+                .HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="OrderMaster_Pirority">
+                    @Resources.ORD.OrderMaster.OrderMaster_Priority
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_CodeMasterDropDownList", "Common", new
+        {
+            code = com.Sconit.CodeMaster.CodeMaster.OrderPriority,
+            controlName = "Priority",
+            includeBlankOption = true,
+            selectedValue = TempData["OrderMasterSearchModel"] != null ? ((OrderMasterSearchModel)TempData["OrderMasterSearchModel"]).Priority : null
+        });
+                }
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+            @Html.Button(Resources.SYS.Global.Button_Print, "Url_SQOrderMstr_Procurement_View", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnPrint"},
+            {"needconfirm","true"},
+            {"style", "display: none"},
+            {"onclick","Printonclick()"}
+	    })
+            @Html.Button(Resources.SYS.Global.Button_DistributionLabel_Print, "Url_SQOrderMstr_Procurement_View", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnDistributionLabel_Print"},
+                {"needconfirm","true"},
+                {"style", "display: none"},
+                {"onclick","Distributionclick(false)"}
+	        })
+        @*@Html.Button(Resources.SYS.Global.Button_DistributionLabel_Export, "Url_SQOrderMstr_Procurement_View", new Dictionary<string, string>()
+	    {
+	        {"type", "button"},
+	        {"id", "btnDistributionLabel_Export"},
+            {"needconfirm","true"},
+            {"style", "display: none"},
+            {"onclick","Distributionclick(true)"}
+	    })*@
+        </div>
+    }
+   
+<form id="hiddenForm" action="/ProcurementSQOrder/SaveToClientTo/" target="_blank"
+method="post">
+<input id="orders" name="orders" type="hidden" />
+<input id="ids" name="ids" type="hidden" />
+</form>
+    <script type="text/javascript">
+        function Distributionclick(bb) {
+
+            var idStr = "";
+            var orderStr = "";
+            var $checkRecords = $("input[name='checkedRecords']");
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    idStr += $($checkRecords[i]).val() + ",";
+                    orderStr += $($checkRecords[i]).parent().next().text() + ",";
+
+                }
+            }
+            if (idStr == "") {
+                $message.error('请选择打印明细。');
+                return;
+            }
+            idStr = idStr.substr(0, idStr.length - 1);
+            orderStr = orderStr.substr(0, orderStr.length - 1);
+            var data = {
+                "ids": idStr,
+                "orders": orderStr
+            };
+            if (bb) {
+                $.ajax({
+                    type: "post",
+                    dataType: "Json",
+                    url: "/ProcurementSQOrder/SaveToClient/",
+                    data: data,
+                    success: function (data, textStatus) {
+
+                       
+                        $message.success("条码导出成功。");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        
+                        $message.error(errorMessages);
+                    }
+                });
+                $("#hiddenForm").submit();
+
+            }
+            else {
+
+                $.ajax({
+                    type: "post",
+                    dataType: "Json",
+                    url: "/ProcurementSQOrder/PrintDistributeLabel/",
+                    data: data,
+                    success: function (data, textStatus) {
+                        if (data != "") {
+                            PrintOrder(data.printUrl);
+                        }
+                       
+                        $message.success("条码打印成功。");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+                        var errorMessagesObj = errorMessages.split('*');
+                        if (errorMessagesObj[1] != "") {
+                            PrintOrder(errorMessagesObj[1]);
+                        }
+                        
+                        $message.error(errorMessagesObj[0]);
+                    }
+                });
+            }
+        }
+
+        function Printonclick(e) {
+            var idStr = "";
+            var orderStr = "";
+            var $checkRecords = $("input[name='checkedRecords']");
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    idStr += $($checkRecords[i]).val() + ",";
+                    orderStr += $($checkRecords[i]).parent().next().text() + ",";
+                }
+            }
+            idStr = idStr.substr(0, idStr.length - 1);
+            orderStr = orderStr.substr(0, orderStr.length - 1);
+
+            var data = {
+                "ids": idStr,
+                "orders": orderStr
+            };
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                url: "/ProcurementSQOrder/Print/",
+                data: data,
+                success: function (data, textStatus) {
+                    if (data != "") {
+                        var printUrl = data.split(',');
+                        var i = 0;
+                        for (; i < printUrl.length; i++) {
+                            PrintOrder(printUrl[i]);
+                        }
+                       
+                        $message.success("条码打印成功，共打印了" + i + "张。");
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                    
+                }
+            });
+        }
+    </script>
+</fieldset>

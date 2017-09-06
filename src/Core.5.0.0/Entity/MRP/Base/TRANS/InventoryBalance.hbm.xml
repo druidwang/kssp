@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.Sconit.Entity.MRP.TRANS.InventoryBalance, com.Sconit.Entity" table="MRP_InventoryBalance" lazy="false">
+    <id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Location" column="Location" type="String" length="50" />
+    <property name="Item" column="Item" type="String" length="50" />
+    <property name="Qty" column="Qty" type="Double"  />
+    <property name="SnapTime" column="SnapTime" type="DateTime"  />
+    <property name="SafeStock" column="SafeStock" type="Double"  />
+    <property name="MaxStock" column="MaxStock" type="Double"  />
+  </class>
+</hibernate-mapping>

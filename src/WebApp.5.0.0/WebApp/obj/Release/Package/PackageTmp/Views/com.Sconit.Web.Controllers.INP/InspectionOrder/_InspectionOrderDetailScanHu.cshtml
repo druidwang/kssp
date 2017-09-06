@@ -1,0 +1,63 @@
+﻿@using com.Sconit.Entity.MD;
+@using com.Sconit.Entity.INV;
+@model IEnumerable<com.Sconit.Entity.INP.InspectDetail>   
+<script type="text/javascript">
+    function onComplete(e) {
+        if (e.name == "Delete") {
+            $.ajax({
+                type: "get",
+                dataType: "html",
+                url: "/InspectionOrder/_InspectionOrderDetailScanHu/",
+                cache: false,
+                success: function (data, textStatus) {
+                    var $tGrid = $("#DivInspectDetailScanHu");
+                    $($tGrid).html(data);
+                    $($tGrid).show();
+                }
+            });
+        }
+    }
+
+</script>
+<fieldset>
+    <legend>@Resources.INP.InspectDetail.InspectDetail_Title_View</legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("InspectDetailScanHu")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .Editable(editing => editing.Mode(GridEditMode.InCell))
+
+        .Columns(columns =>
+        {
+            //columns.ForeignKey(o => o.Item, (IEnumerable<Item>)ViewData["items"], "Code", "Code").EditorTemplateName("ItemGridForeignKey");
+            columns.Bound(o => o.HuId).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.ReferenceItemCode).ReadOnly();
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            columns.Bound(o => o.Uom).ReadOnly();
+            columns.Bound(o => o.UnitCount).Format("{0:0.########}").ReadOnly();
+            columns.Bound(o => o.CurrentLocation).ReadOnly();
+            columns.Bound(o => o.InspectQty).Format("{0:0.########}").ReadOnly();
+            columns.Bound(o => o.FailCode).EditorTemplateName("FailCodeGridComboBox").Width(120).Hidden();
+            columns.Bound(o => o.Note).Hidden();
+            columns.Command(commands =>
+            {
+                commands.Custom("Delete")
+                .Text("删除")
+                .DataRouteValues(route => route.Add(o => o.HuId).RouteKey("HuId"))
+                .Ajax(true)
+                .Action("_DeleteInspectionDetail", "InspectionOrder");
+            });
+
+        })
+            .EnableCustomBinding(true)
+            .DataBinding(dataBinding => dataBinding.Ajax()
+            .Select("_SelectInspectionOrderDetail", "InspectionOrder"))
+            .ClientEvents(events => events.OnComplete("onComplete"))
+            //.Delete("_DeleteInspectionDetail", "InspectionOrder")
+        .Scrollable(c => c.Enabled(false))
+        .Footer(false)
+    )
+</fieldset>

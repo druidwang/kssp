@@ -1,0 +1,39 @@
+﻿@using com.Sconit.Web.Models.SearchModels.CUST
+@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_ItemTrace_View" });
+}
+
+<fieldset>
+    @using (Html.BeginForm("New", "ItemTrace"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ItemTrace_Item">
+                    @Resources.CUST.ItemTrace.ItemTrace_Item
+
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common",
+            new {
+                controlName = "Item",
+
+                selectedValue = TempData["ItemTrace"] != null ? ((ItemTraceSearchModel)TempData["ItemTrace"]).Item : string.Empty
+            });
+                }
+            </div>
+            
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Add</button>
+                <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ItemTrace/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+
+    }
+</fieldset>
+

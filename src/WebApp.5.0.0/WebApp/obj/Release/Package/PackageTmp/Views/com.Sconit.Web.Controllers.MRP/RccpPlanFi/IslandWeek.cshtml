@@ -1,0 +1,137 @@
+﻿@using com.Sconit.Web.Models.SearchModels.MRP
+@{
+    ViewBag.Title = "Index";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_RccpPlanFi_IslandWeek" });
+}
+<fieldset>
+    <div class="search">
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpFiPlan.RccpFiPlan_PlanVersion
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_RccpPlanMasterComboBox", "Common", new
+                {
+                    controlName = "PlanVersion",
+                    IsRelease = true
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpFiPlan.RccpFiPlan_ProductLine
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_FlowComboBox", "Common", new
+                {
+                    controlName = "ProductLine",
+                    type = (int)com.Sconit.CodeMaster.OrderType.Production,
+                    ResourceGroup = 30
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpFiPlan.RccpFiPlan_StartWeek
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_DateIndexComboBox", "Common", new
+                {
+                    includeBlankOption = true,
+                    controlName = "DateIndex",
+                    selectedValue = (string)ViewBag.DateIndex
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpFiPlan.RccpFiPlan_EndWeek
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_DateIndexComboBox", "Common", new
+                {
+                    includeBlankOption = true,
+                    controlName = "DateIndexTo",
+                    selectedValue = (string)ViewBag.DateIndexTo
+                });
+            }
+        </div>
+        <div class="search-label">
+            <label>
+                @Resources.MRP.RccpFiPlan.RccpFiPlan_Island
+            </label>
+        </div>
+        <div class="search-field">
+            @{
+                Html.RenderAction("_IslandComboBox", "Common",
+                    new
+                    {
+                        controlName = "Island",
+                    });
+            }
+        </div>
+    </div>
+    <div class="editor-footer">
+        <button type="button" id="Search" onclick="QueryRccpFiWeekView()">
+            @Resources.SYS.Global.Button_Search</button>
+    </div>
+</fieldset>
+<div id="divRccpFiPlanWeekView">
+</div>
+
+<script type="text/javascript">
+    function QueryRccpFiWeekView() {
+        if ($('#PlanVersion').val() == "") {
+            $message.error('版本时间为必填项');
+            return;
+        }
+        //if ($('#ProductLine').val() == "") {
+        //    $message.error('生产线为必填项');
+        //    return;
+        //}
+
+        var data = {
+            "planVersion": $('#PlanVersion').val(),
+            "dateIndex": $('#DateIndex').val(),
+            "dateIndexTo": $('#DateIndexTo').val(),
+            "island": $('#Island').val(),
+            "productLine": $('#ProductLine').val()
+        };
+
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: "/RccpPlanFi/_GetRccpFiPlanWeekView/",
+            cache: false,
+            data: data,
+            success: function (data, textStatus) {
+                var tabStrip = $("#divRccpFiPlanWeekView");
+                $(tabStrip).html(data);
+                $("#datatable").fixedtableheader({
+                    headerrowsize: 1,
+                    highlightrow: true
+                });
+            }
+        });
+    }
+
+    function PlanVersion_DataBinding(e) {
+        e.data = {
+            timeUnit: "5"
+        }
+    }
+
+    function DateIndex_DataBinding(e) {
+        e.data = {
+            dateType: "5"
+        }
+    }
+</script>

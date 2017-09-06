@@ -1,0 +1,51 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.MD.Address>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("AddressGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Code);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Code).ClientTemplate(Html.ActionLink("<#= Code #>", "Edit", "Address", new { ID = "<#= Code #>" }, null).ToString());
+            //columns.Bound(o => o.AddressTypeDescription);
+            columns.Bound(o => o.AddressContent);
+            columns.Bound(o => o.TelPhone);
+            columns.Bound(o => o.MobilePhone);
+            columns.Bound(o => o.Fax);
+            columns.Bound(o => o.ContactPersonName);
+                 })   
+                .Scrollable(c => c.Enabled(false))
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "Address"))
+                .ClientEvents(events => events.OnDataBinding("AddressGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+    <script type="text/javascript">
+        function AddressGrid_OnDataBinding(e) {
+            e.data = {
+                Code: $('#Code').val(),
+//                Type: $('#Type').val(),
+                AddressContent: $('#AddressContent').val(),
+                TelPhone: $('#TelPhone').val(),
+                MobilePhone: $('#MobilePhone').val(),
+                Fax: $('#Fax').val(),
+                PostCode: $('#PostCode').val(),
+                Email: $('#Email').val(),
+                ContactPersonName: $('#ContactPersonName').val()
+            };
+        }
+    </script>
+</fieldset>

@@ -1,0 +1,144 @@
+﻿
+@model com.Sconit.Entity.ORD.ShipmentMaster
+<fieldset>
+    <legend>@Resources.ORD.ShipmentMaster.ShipmentMaster_Title</legend>
+    <div class="editor">
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.ShipmentNo)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.ShipmentNo)
+            @Html.HiddenFor(model => model.ShipmentNo)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.Driver)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.Driver)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.VehicleNo)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.VehicleNo)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.StatusDescription)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.StatusDescription)
+        </div>
+           <div class="editor-label-2">
+            @Html.LabelFor(model => model.Shipper)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.Shipper)
+        </div>
+        <div class="editor-label-2">
+            @Html.LabelFor(model => model.CaseQty)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.CaseQty)
+        </div>
+          <div class="editor-label-2">
+            @Html.LabelFor(model => model.AddressTo)
+        </div>
+        <div class="editor-field-2">
+            @Html.DisplayFor(model => model.AddressTo)
+        </div>
+
+
+        <div class="search-footer">
+            @{
+                if (Model.Status == com.Sconit.CodeMaster.BillMasterStatus.Create)
+                {
+                @Html.Button(Resources.SYS.Global.Button_Delete, "Url_ShipmentMaster_Close", new Dictionary<string, string>()
+	                {
+	                    {"type", "button"},
+	                    {"id", "Delete"},
+                        {"needconfirm","true"},
+                        {"onclick","location.href='"+Url.Content("~/ShipmentMaster/_Delete/" + Model.ShipmentNo) +"'"}
+	                })
+                    @Html.Button(Resources.SYS.Global.Button_Submit, "Url_ShipmentMaster_Close", new Dictionary<string, string>()
+	                {
+	                    {"type", "button"},
+	                    {"id", "Delete"},
+                        {"needconfirm","true"},
+                        {"onclick","location.href='"+Url.Content("~/ShipmentMaster/_Submit/" + Model.ShipmentNo) +"'"}
+	                })
+
+
+                }
+
+                if (Model.Status == com.Sconit.CodeMaster.BillMasterStatus.Submit)
+                {
+                     @Html.Button(Resources.SYS.Global.Button_OutToDetermine, "Url_ShipmentMaster_Close", new Dictionary<string, string>()
+	                {
+	                    {"type", "button"},
+	                    {"id", "OutToDetermine"},
+                        {"needconfirm","true"},
+                        {"onclick","onUpdateOrderBillofLadingMasterClose()"}
+	                })
+                }
+                if (Model.Status == com.Sconit.CodeMaster.BillMasterStatus.Close)
+                {
+                     @Html.Button(Resources.SYS.Global.Button_Cancel, "Url_ShipmentMaster_Close", new Dictionary<string, string>()
+	                {
+	                    {"type", "button"},
+	                    {"id", "Cancel"},
+                        {"needconfirm","true"},
+                        {"onclick","location.href='"+Url.Content("~/ShipmentMaster/_Cancel/" + Model.ShipmentNo) +"'"}
+	                })
+                }
+                
+            }
+           @* <button type="button" id="btnPrint" onclick="Print()">@Resources.SYS.Global.Button_Print</button>*@
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/ShipmentMaster/GooutList")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+</fieldset>
+@{
+    Html.RenderAction("_BillofLadingDetailList", "ShipmentMaster", new { ShipmentNo = Model.ShipmentNo });
+}
+<script type="text/javascript">
+    function onUpdateOrderBillofLadingMasterClose() {
+        var successesul;
+
+        var data = {
+            "ShipmentNo": $("#ShipmentNoTo").val(),
+            "PassPerson": $("#ShipmentNo").val()
+        }
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: data,
+            url: "/ShipmentMaster/ShipmentMasterClose/",
+            cache: false,
+            success: function (data, textStatus) {
+                successesul =  data.Alter ;
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "/ShipmentMaster/ShipmentIndex/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#content");
+                        $($tGrid).html(data);
+                        $($tGrid).show();
+                          $message.success(successesul);
+                    }
+                });
+               
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+
+
+    }
+
+   
+
+</script>

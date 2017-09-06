@@ -1,0 +1,21 @@
+﻿@model IEnumerable<com.Sconit.Entity.MRP.TRANS.RccpLog>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("HuGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ErrorLevel);
+            columns.Bound(o => o.Logger);
+            columns.Bound(o => o.PlanVersion);
+            columns.Bound(o => o.Message);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .Resizable(resizing => resizing.Columns(true))
+    )
+</fieldset>
+<style>
+    .t-grid td {
+        line-height: 18px;
+    }
+</style>

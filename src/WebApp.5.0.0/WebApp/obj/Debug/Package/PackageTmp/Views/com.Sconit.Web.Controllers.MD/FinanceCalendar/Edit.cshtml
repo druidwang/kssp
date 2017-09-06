@@ -1,0 +1,69 @@
+﻿@model com.Sconit.Entity.MD.FinanceCalendar
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_FinanceCalendar_View" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MD.FinanceCalendar.FinanceCalendar_Edit_Title</legend>
+            <div class="editor">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.FinanceYear)
+                @Html.HiddenFor(model => model.FinanceMonth)
+                @Html.HiddenFor(model => model.CreateUserName)
+                @Html.HiddenFor(model => model.CreateDate)
+                @Html.HiddenFor(model => model.LastModifyUserName)
+                @Html.HiddenFor(model => model.LastModifyDate)
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.FinanceYear)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.FinanceYear)
+            </div>  
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.FinanceMonth)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.FinanceMonth)
+            </div>    
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.StartDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DateTimePickerFor(model => model.StartDate)
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </div>
+            <div class="editor-label-2">
+               @Html.LabelFor(model => model.EndDate)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().DateTimePickerFor(model => model.EndDate)
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
+        </div>
+        <div class="editor-footer">
+            @*<button type="submit" id="btnSave">
+                @Resources.SYS.Global.Button_Save</button>
+            <button type="button" id="btnDelete" onclick="location.href='@Url.Content("~/FinanceCalendar/Delete/" + @Model.Id)'">
+                @Resources.SYS.Global.Button_Delete</button>*@
+                @Html.Button(Resources.SYS.Global.Button_Save, "Url_FinanceCalendar_Edit", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnSave"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_FinanceCalendar_Delete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnDelete"},
+        {"needconfirm","true"},
+        {"onclick","location.href='"+@Url.Content("~/FinanceCalendar/Delete/"+@Model.Id)+"'"}
+    })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/FinanceCalendar/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+
+      
+    </fieldset>
+}
+
+

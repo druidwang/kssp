@@ -1,0 +1,54 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.MiscOrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("InMiscOrderGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.MiscOrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.MiscOrderNo).ClientTemplate(Html.ActionLink("<#= MiscOrderNo #>", "Edit", "InMiscOrder", new { id = "<#= MiscOrderNo #>" }, null).ToString());
+            columns.Bound(o => o.EffectiveDate);
+            columns.Bound(o => o.Region);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.MoveType);
+            columns.Bound(o => o.CostCenter);
+            columns.Bound(o => o.StatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "InMiscOrder"))
+                .ClientEvents(events => events.OnDataBinding("InMiscOrderGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+   
+    <script type="text/javascript">
+        function InMiscOrderGrid_OnDataBinding(e) {
+            e.data = {
+                MiscOrderNo: $('#MiscOrderNo').val(),
+                Status: $('#Status').val(),
+                Region: $('#PartyTo').val(),
+                Location: $('#Location').val(),
+                MoveType: $('#MoveType').val(),
+                CostCenter: $('#CostCenter').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                CreateUserName: $('#CreateUserName').val()
+            }
+        }
+    </script>
+</fieldset>

@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_PickList_View" });
+}
+
+@Html.Partial("_Search")
+
+@Html.Partial("_SearchResult")

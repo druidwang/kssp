@@ -1,0 +1,50 @@
+﻿@using com.Sconit.Entity.Exception
+@using NHibernate
+@using System.Data.SqlClient
+<div style="margin-top: 50px; width: 100%;">
+    <div class="error-layout-message">
+        <ul class="validation-summary-errors" style="padding-top: 15px; padding-left: 250px;font-size: 1.2em;">
+            @{
+                ViewBag.Title = "500";
+
+                if (Model != null && Model.Exception != null)
+                {
+                    string actionName = Model.ActionName;
+                    IList<Type> exceptionTypeList = new List<Type>();
+                    Exception ex = Model.Exception;
+                    exceptionTypeList.Add(ex.GetType());
+                    while (ex.InnerException != null)
+                    {
+                        ex = ex.InnerException;
+                        exceptionTypeList.Add(ex.GetType());
+                    }
+
+                    if (exceptionTypeList.Contains(typeof(BusinessException)))
+                    {
+                <li>@Model.Exception.Message</li>
+                    }
+                    else if (exceptionTypeList.Contains(typeof(ObjectNotFoundException)))
+                    {
+                <li>@Resources.SYS.ErrorMessage.Errors_ObjectNotFound</li>
+                    }
+                    else if (exceptionTypeList.Contains(typeof(StaleObjectStateException)))
+                    {
+                <li>@Resources.SYS.ErrorMessage.Errors_StaleRecordException</li>
+                    }
+                    else if (exceptionTypeList.Contains(typeof(SqlException)) && actionName != null && actionName.IndexOf("delete") > 0)
+                    {
+                <li>@Resources.SYS.ErrorMessage.Errors_Delete_FK_Conflict</li>
+                    }
+                    else
+                    {
+                <li>@Resources.SYS.ErrorMessage.Errors_UnhandledException</li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+    <div class="error-layout-summary">
+        <div class="error-layout-summary-content">
+            服务器错误 500</div>
+    </div>
+</div>

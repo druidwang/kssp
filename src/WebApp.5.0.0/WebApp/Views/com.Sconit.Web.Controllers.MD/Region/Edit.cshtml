@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = Resources.MD.Region .Region_Edit_Title ;
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Region_View" });
+    //TempData["ParrtyCode"] = Model;
+    Session["ParrtyCode"] = Model;
+}
+<input type="hidden" name="PartyCode" id="PartyCode" value="@Model" />
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.MD.Region.Region_TabTitle_Region)
+                .LoadContentFrom("_Edit", "Region", new { Id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.Region.Region_TabTitle_BillAddress)
+                .LoadContentFrom("_BillAddress", "Region", new { Id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.Region.Region_TabTitle_ShipAddress)
+                .LoadContentFrom("_ShipAddress", "Region", new { Id = Model })
+                 .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}
+
+

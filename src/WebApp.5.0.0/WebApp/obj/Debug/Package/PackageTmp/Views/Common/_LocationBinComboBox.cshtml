@@ -1,0 +1,34 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string Id = ViewBag.ControlId;
+    if (string.IsNullOrWhiteSpace(Id))
+    {
+        Id = name;
+    }
+    bool enable = true;
+    if (ViewBag.Enable != null)
+    {
+        enable = ViewBag.Enable;
+    }
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+}
+@{
+    if (enable)
+    {
+    @(Html.Telerik().ComboBox()
+        .Name(name)
+        .HiddenInputHtmlAttributes(new { id = Id })
+        .DataBinding(binding => binding.Ajax().Select("_LocationBinAjaxLoading", "Common"))
+        .ClientEvents(events => events.OnDataBinding("LocationBin_DataBinding"))
+        .BindTo(Model)
+        .Enable(enable)
+        .AutoFill(true)
+        ) 
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)   }
+    }
+}

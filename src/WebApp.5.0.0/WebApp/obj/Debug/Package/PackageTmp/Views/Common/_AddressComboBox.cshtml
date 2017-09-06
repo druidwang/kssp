@@ -1,0 +1,59 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+    string id = string.IsNullOrWhiteSpace(ViewBag.ControlId) ? name : ViewBag.ControlId;
+    bool enable = ViewBag.Enable != null ? ViewBag.Enable : true;
+    bool checkParty = ViewBag.CheckParty != null ? ViewBag.CheckParty : false;
+    bool isChange = ViewBag.IsChange != null ? ViewBag.IsChange : false;
+    int type = ViewBag.Type;
+    string onChangeName = "EmptyChange";
+    string onBindingName = "EmptyDataBinding";
+    if (type == (int)com.Sconit.CodeMaster.AddressType.BillAddress)
+    {
+        onChangeName = isChange ? "BillAddress_Change" : onChangeName;
+        onBindingName = checkParty ? "BillAddress_DataBinding" : onBindingName;
+    }
+    else if (type == (int)com.Sconit.CodeMaster.AddressType.ShipAddress)
+    {
+        if (name == "ShipFrom")
+        {
+            onChangeName = isChange ? "ShipFrom_Change" : onChangeName;
+            onBindingName = checkParty ? "ShipFrom_DataBinding" : onBindingName;
+        }
+        else if (name == "ShipTo")
+        {
+            onChangeName = isChange ? "ShipTo_Change" : onChangeName;
+            onBindingName = checkParty ? "ShipTo_DataBinding" : onBindingName;
+        }
+        else
+        {
+            onChangeName = isChange ? "ShipAddress_Change" : onChangeName;
+            onBindingName = checkParty ? "ShipAddress_DataBinding" : onBindingName;
+        }
+    }
+ 
+}
+@{
+    if (enable)
+    {
+    @(Html.Telerik().ComboBox()
+        .DropDownHtmlAttributes(new { style = "width: 300px; " })
+            .Name(name)
+                    .HiddenInputHtmlAttributes(new { id = id })
+                .DataBinding(binding => binding.Ajax().Select("_AjaxLoadingAddress", "Common", 
+                    new { type = type, checkParty = checkParty }))
+            .ClientEvents(events => events
+                            .OnChange(onChangeName)
+                            .OnDataBinding(onBindingName)
+            )
+            .BindTo(Model)
+            .Enable(enable)
+                 .AutoFill(true))
+
+    }
+    else
+    {
+        if (Model != null && Model.Count() > 0)
+        {     @Html.DisplayFor(model => model.OrderBy(m => m.Selected).Last().Text)     }
+    }
+}

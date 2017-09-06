@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="com.Sconit.Entity.INV.StockTakeMaster, com.Sconit.Entity" table="INV_StockTakeMstr" lazy="false">
+        <id name="StNo" column="StNo" type="String" unsaved-value="null" >
+            <generator class="assigned" />
+        </id>
+        <property name="Type" column="Type"  />
+        <property name="Region" column="Region" type="String" length="50" />
+        <property name="CostCenter" column="CostCenter" type="String" length="50" />
+        <property name="Status" column="Status"  />
+        <property name="IsScanHu" column="IsScanHu" type="Boolean"  />
+        <property name="EffectiveDate" column="EffDate" type="DateTime"  />
+        <property name="BaseInventoryDate" column="BaseInvDate" type="DateTime"/>
+        <property name="CreateUserId" column="CreateUser" type="Int32" update="false"  />
+        <property name="CreateUserName" column="CreateUserNm" type="String" length="100" update="false" />
+        <property name="CreateDate" column="CreateDate" type="DateTime" update="false"  />
+        <property name="LastModifyUserId" column="LastModifyUser" type="Int32"  />
+        <property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="100" />
+        <property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+        <property name="ReleaseUserId" column="ReleaseUser" type="Int32"  />
+        <property name="ReleaseUserName" column="ReleaseUserNm" type="String" length="100" />
+        <property name="ReleaseDate" column="ReleaseDate" type="DateTime"  />
+        <property name="StartUserId" column="StartUser" type="Int32"  />
+        <property name="StartUserName" column="StartUserNm" type="String" length="100" />
+        <property name="StartDate" column="StartDate" type="DateTime"  />
+        <property name="CompleteUserId" column="CompleteUser" type="Int32"  />
+        <property name="CompleteUserName" column="CompleteUserNm" type="String" length="100" />
+        <property name="CompleteDate" column="CompleteDate" type="DateTime"  />
+        <property name="CloseUserId" column="CloseUser" type="Int32"  />
+        <property name="CloseUserName" column="CloseUserNm" type="String" length="100" />
+        <property name="CloseDate" column="CloseDate" type="DateTime"  />
+        <property name="CancelUserId" column="CancelUser" type="Int32"  />
+        <property name="CancelUserName" column="CancelUserNm" type="String" length="100" />
+        <property name="CancelDate" column="CancelDate" type="DateTime"  />
+        <property name="CancelReason" column="CancelReason" type="String" length="256" />
+        <property name="Version" column="Version" type="Int32"  />
+        <property name="Remark" column="Remark" type="String" length="256" />
+    </class>
+</hibernate-mapping>

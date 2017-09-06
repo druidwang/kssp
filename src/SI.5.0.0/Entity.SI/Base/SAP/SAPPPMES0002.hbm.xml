@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.SI.SAP.SAPPPMES0002, com.Sconit.Entity.SI" table="SAP_Interface_PPMES0002" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+    <property name="ZMESSC" column="ZMESSC" type="String" length="20"/>
+    <property name="ZMESLN" column="ZMESLN" type="String" length="4"/>
+    <property name="ZPTYPE" column="ZPTYPE" type="String" length="8"/>
+    <property name="ZComnum" column="ZComnum" type="String" length="12"/>
+    <property name="ZMESGUID" column="ZMESGUID" type="String" length="40"/>
+    <property name="ZCSRQSJ" column="ZCSRQSJ" type="DateTime"/>
+    <property name="BatchNo" column="BatchNo" type="String" length="50"/>
+    <property name="OrderType" column="OrderType" type="String" length="20"/>
+    <property name="UniqueCode" column="UniqueCode" type="String" length="40"/>
+    <property name="CancelDate" column="CancelDate" type="DateTime"/>
+    <property name="Status" column="Status" type="Int32"/>
+  </class>
+</hibernate-mapping>

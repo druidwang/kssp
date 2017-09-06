@@ -1,0 +1,30 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.LocationTransaction>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("HuGrid")
+
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.PartyFrom);
+            columns.Bound(o => o.PartyTo);
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.LocationTo);
+            
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+
+        .Resizable(resizing => resizing.Columns(true))
+    )
+   
+</fieldset>
+ <div class="search-footer">
+ <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/Transceivers/List")'">
+                @Resources.SYS.Global.Button_Back</button>
+                </div>

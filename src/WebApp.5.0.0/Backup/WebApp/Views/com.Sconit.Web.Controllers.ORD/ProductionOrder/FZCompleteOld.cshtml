@@ -1,0 +1,114 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_FZComplete" });
+
+}
+<script type="text/javascript">
+
+    function onOrderNoScan(e) {
+        var data = {
+            "OrderNo": $("#OrderNo").val()
+        }
+        $.ajax({
+            type: "post",
+            dataType: "text",
+            data: data,
+            url: "/ProductionOrder/OrdeNoScan/",
+            cache: false,
+            success: function (data, textStatus) {
+                $.ajax({
+                    type: "get",
+                    dataType: "html",
+                    data: {
+                        "OrderNo": $("#OrderNo").val()
+                    },
+                    url: "/ProductionOrder/_FZOrderDetailList/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        var $tGrid = $("#divFZOrderDetailList");
+                        $($tGrid).html(data);
+                        $($tGrid).show();
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+
+    function onComplete() {
+        $.ajax({
+            type: "post",
+            dataType: "Json",
+            url: "/ProductionOrder/FZOrderComplete/",
+            data: {
+                "orderNo": $("#OrderNo").val()
+            },
+            success: function (data, ordermstr) {
+                if (data != "") {
+                    $message.success(data.SuccessMessage);
+                   
+
+                    $.ajax({
+                        type: "get",
+                        dataType: "html",
+                        url: "/ProductionOrder/Edit/",
+                        data: { orderNo: data.SuccessData },
+                        cache: false,
+                        success: function (data, textStatus) {
+                            var $tGrid = $("#content");
+                            $($tGrid).html(data);
+                        }
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var errorMessages = XMLHttpRequest.responseText;
+                $message.error(errorMessages);
+            }
+        });
+    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_OrderNo
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.OrderNo)
+            </div>
+             <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_CompleteAndFeed
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.CheckBox("CompleteAndFeed",true)
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Search, "Url_OrderMstr_Production_FZComplete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnFZSearch"},
+        {"onClick","onOrderNoScan()"}
+	})
+            @Html.Button(Resources.SYS.Global.Button_OffLine, "Url_OrderMstr_Production_FZComplete", new Dictionary<string, string>()
+	{
+	    {"type", "button"},
+	    {"id", "btnFZComplete"},
+        {"needconfirm","true"},
+        {"onClick","onComplete()"}
+	})
+        </div>
+    </fieldset>
+   
+    <div id="divFZOrderDetailList" style="display: none;">
+    </div>
+}

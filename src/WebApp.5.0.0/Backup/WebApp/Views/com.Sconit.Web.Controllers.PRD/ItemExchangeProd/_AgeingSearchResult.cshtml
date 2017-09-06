@@ -1,0 +1,73 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.Hu>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("AgeingHuGrid")
+
+        .Columns(columns =>
+        {
+            if (ViewBag.HuOption == 4)
+            {
+                columns.Bound(o => o.Item);
+                columns.Bound(o => o.ItemDescription);
+                columns.Bound(o => o.TotalQty);
+                columns.Bound(o => o.UnAgingQty);
+                columns.Bound(o => o.AgingQty);
+                columns.Bound(o => o.AgedQty);
+                columns.Bound(o => o.SQty);
+                columns.Bound(o => o.NoNeedAgingQty);
+                columns.Bound(o => o.FreezedQty);
+                //columns.Bound(o => o.NonFreezeQty);
+                //columns.Bound(o => o.QulifiedQty);
+                columns.Bound(o => o.InspectQty);
+                columns.Bound(o => o.InQulifiedQty);
+            }
+            else
+            {
+                columns.Bound(o => o.HuId);
+                columns.Bound(o => o.Bin);
+                columns.Bound(o => o.Item);
+                columns.Bound(o => o.ItemDescription);
+                columns.Bound(o => o.ReferenceItemCode);
+                columns.Bound(o => o.LotNo).Title(Resources.INV.Hu.Hu_manufacture_date);
+                columns.Bound(o => o.IsFreeze)
+                    .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsFreeze' name='IsFreeze' value='<#= IsFreeze #>' <#=IsFreeze? checked='checked' : '' #> />");
+                columns.Bound(o => o.QualityTypeDescription);
+                columns.Bound(o => o.Uom);
+                columns.Bound(o => o.Qty);
+                if (ViewBag.HuOption == 2)
+                {
+                    columns.Bound(o => o.AgingEndTime);
+                }
+                if (ViewBag.HuOption == 3)
+                {
+                    columns.Bound(o => o.AgingStartTime);
+                }
+            }
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ItemExchangeProd"))
+                         .ClientEvents(events => events.OnDataBinding("AgeingGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+            //.Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    ) 
+  <script type="text/javascript">
+      function AgeingGrid_OnDataBinding(e) {
+          e.data = {
+              Location: $('#Location').val(),
+              Item: $('#Item').val(),
+              LotNo: $('#LotNo').val(),
+              HuOption: $("input[type=radio][name=HuOption]:checked").val(),
+              IsIncludeEmptyStock: $("#IsIncludeEmptyStock").is(":checked"),
+              IsIncludeNoNeedAging: $("#IsIncludeNoNeedAging").is(":checked")
+              
+          };
+      } 
+    </script>
+</fieldset>

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("OrderMasterGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.OrderNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.OrderNo).ClientTemplate(Html.ActionLink("<#= OrderNo #>", "Edit", "ProcurementOrder",
+                new { OrderNo = "<#= OrderNo #>", SubType = "<#= SubType #>" }, null).ToString());
+            columns.Bound(o => o.Flow).ClientTemplate("<div title=<#= FlowDescription #>><#= Flow #></div>");
+            //columns.Bound(o => o.FlowDescription);
+            columns.Bound(o => o.RefExtOrderNo);
+            columns.Bound(o => o.OrderTypeDescription);
+            columns.Bound(o => o.OrderPriorityDescription);
+            columns.Bound(o => o.PartyFrom).ClientTemplate("<div title=<#= PartyFromName #>><#= PartyFrom #></div>");
+            columns.Bound(o => o.PartyTo).ClientTemplate("<div title=<#= PartyToName #>><#= PartyTo #></div>");
+            columns.Bound(o => o.WindowTime).ClientTemplate("<div style='<#=ColorStyle #>'><#= WindowTimeFromat #></div>"); 
+            columns.Bound(o => o.OrderStatusDescription);
+            columns.Bound(o => o.IsIndepentDemand)
+                 .ClientTemplate("<input type='checkbox' disabled='disabled' name='IsDefault' <#= IsIndepentDemand? checked='checked' : '' #> />");
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+        })
+
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "ProcurementOrder"))
+                .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+            e.data = {
+                OrderNo: $('#OrderNo').val(),
+                Flow: $('#Flow').val(),
+                Priority: $('#Priority').val(),
+                PartyFrom: $('#PartyFrom').val(),
+                PartyTo: $('#PartyTo').val(),
+                DateFrom: $('#DateFrom').val(),
+                DateTo: $('#DateTo').val(),
+                Status: $('#Status').val(),
+                CreateUserName: $('#CreateUserName').val(),
+                Type: $('#Type').val(),
+                //SubType: $('#SubType').val(),
+                ReferenceOrderNo: $('#ReferenceOrderNo').val(),
+                ExternalOrderNo: $('#ExternalOrderNo').val(),
+                Sequence: $('#Sequence').val(),
+                TraceCode: $('#TraceCode').val(),
+                QueryOrderType: $('#QueryOrderType').val(),
+                DateType: $("input[type=radio][name=DateType]:checked").val(),
+                MultiStatus: $('#MultiStatus').val()
+            };
+        }
+    </script>
+</fieldset>

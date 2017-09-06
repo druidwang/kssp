@@ -1,0 +1,221 @@
+﻿@using com.Sconit.Entity.SYS
+@model com.Sconit.Entity.MRP.TRANS.SnapProdLineEx
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Mrp_MrpSnap_ProdLineExAdjust" });
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MRP.ProdLineExInstance.ProdLineExInstance_Edit_Title</legend>
+        <div class="editor">
+            @Html.HiddenFor(model => model.ProductLine)
+            @Html.HiddenFor(model => model.Item)
+            @Html.HiddenFor(model => model.DateIndex)
+            @Html.HiddenFor(model => model.DateType)
+@*            @Html.HiddenFor(model => model.IsManualCreate)
+            @Html.HiddenFor(model => model.IsRelease)
+            @Html.HiddenFor(model => model.CreateUserName)
+            @Html.HiddenFor(model => model.CreateDate)
+            @Html.HiddenFor(model => model.CreateUserId)*@
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ProductLine)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "ProductLineTo",
+            enable = false,
+            type = (int)com.Sconit.CodeMaster.OrderType.Production,
+            selectedValue = Model != null ? Model.ProductLine : string.Empty
+        });
+                }
+                @Html.ValidationMessageFor(model => model.ProductLine)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_ItemComboBox", "Common", new
+    {
+        controlName = "ItemTo",
+        enable = false,
+        selectedValue = Model != null ? Model.Item : string.Empty
+    });
+                }
+                @Html.ValidationMessageFor(model => model.Item)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.DateType)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterComboBox", "Common", new
+      {
+          code = com.Sconit.CodeMaster.CodeMaster.TimeUnit,
+          includeBlankOption = true,
+          enable = false,
+          controlName = "DateType",
+          selectedValue = (int)Model.DateType
+      });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.SnapTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.SnapTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.DateIndex)
+            </div>
+            <div class="editor-field-2">
+                @Html.DisplayFor(model => model.DateIndex)
+            </div>
+
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ShiftType)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.ShiftType,
+        //includeBlankOption = true,
+        controlName = "ShiftType",
+        selectedValue = Model != null ? (int)Model.ShiftType : -1
+    });
+                }
+                @Html.ValidationMessageFor(model => model.ShiftType)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ApsPriority)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_CodeMasterDropDownList", "Common", new
+    {
+        code = com.Sconit.CodeMaster.CodeMaster.ApsPriorityType,
+        //includeBlankOption = true,
+        controlName = "ApsPriority",
+        selectedValue = Model != null ? (int)Model.ApsPriority : -1
+    });
+                }
+                @Html.ValidationMessageFor(model => model.ApsPriority)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.ProductType)
+            </div>
+            <div class="editor-field-2">
+                @{
+                Html.RenderAction("_ProductTypeDropDownList", "Common", new
+                    {
+                        controlName = "ProductType",
+                        selectedValue = Model != null ? Model.ProductType : string.Empty
+                    });
+                }
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MrpSpeed)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.MrpSpeed).DecimalDigits(2).MinValue(0) 米/分钟
+                @Html.ValidationMessageFor(model => model.MrpSpeed)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.RccpSpeed)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.RccpSpeed).DecimalDigits(2).MinValue(0) 米/分钟
+                @Html.ValidationMessageFor(model => model.RccpSpeed)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.SwitchTime)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.SwitchTime).DecimalDigits(2).MinValue(0) 分钟
+                @Html.ValidationMessageFor(model => model.SwitchTime)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.SpeedTimes)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.SpeedTimes).DecimalDigits(0).MinValue(0)
+                @Html.ValidationMessageFor(model => model.SpeedTimes)
+            </div>
+
+            @*             <div class="editor-label-2">
+                @Html.LabelFor(model => model.ScrapPercent)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.ScrapPercent).DecimalDigits(2).MinValue(0) 
+                @Html.ValidationMessageFor(model => model.ScrapPercent)
+            </div>*@
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Quota)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.Quota).DecimalDigits(2).MinValue(0)
+                @Html.ValidationMessageFor(model => model.Quota)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MinLotSize)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.MinLotSize).DecimalDigits(2).MinValue(0)
+                @Html.ValidationMessageFor(model => model.MinLotSize)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.MaxLotSize)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.MaxLotSize).DecimalDigits(2).MinValue(0)
+                @Html.ValidationMessageFor(model => model.MaxLotSize)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.EconomicLotSize)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.EconomicLotSize).DecimalDigits(2).MinValue(0)
+                @Html.ValidationMessageFor(model => model.EconomicLotSize)
+            </div>
+
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.TurnQty)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.TurnQty).DecimalDigits(0).MinValue(0)
+                @Html.ValidationMessageFor(model => model.TurnQty)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Correction)
+            </div>
+            <div class="editor-field-2">
+                @Html.Telerik().NumericTextBoxFor(model => model.Correction).DecimalDigits(2).MinValue(0)
+                @Html.ValidationMessageFor(model => model.Correction)
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnSave">
+                @Resources.SYS.Global.Button_Save</button>
+
+            @Html.Button(Resources.SYS.Global.Button_Delete, "Url_MRP_ProdLineExInstance_View", new Dictionary<string, string>()
+	        {
+	            {"type", "button"},
+	            {"id", "btnDelete"},
+                {"needconfirm","true"},
+                {"onclick","location.href='"+@Url.Content("~/MrpSnapProdLineEx/InstanceDelete/?id="+@Model.Id)+"'"}
+            })
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/MrpSnapProdLineEx/InstanceList")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

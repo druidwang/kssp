@@ -1,0 +1,121 @@
+﻿@using com.Sconit.Entity.MD;
+@model IEnumerable<com.Sconit.Entity.INV.ItemExchange>
+<fieldset>
+    <legend></legend>
+    @(Html.Telerik().Grid(Model)
+        .Name("AgeingList")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Id);
+            columns.Bound(o => o.ItemFrom);
+            columns.Bound(o => o.LocationFrom);
+            columns.Bound(o => o.OldHu);
+            columns.Bound(o => o.NewHu);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.QualityTypeDescription);
+            columns.Bound(o => o.EffectiveDate);
+            columns.Bound(o => o.IsVoid).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsVoid' <#= IsVoid? checked='checked' : '' #> />"); 
+
+
+            columns.Command(commands => commands.Custom("重新打印")
+                  .Text("重新打印")
+                    .HtmlAttributes(new { onClick = "RePrintClick(this)", id = "RePrint", href = "#" })
+                    );
+            columns.Command(commands => commands.Custom(Resources.SYS.Global.Button_Cancel)
+                  .Text(Resources.SYS.Global.Button_Cancel)
+                    .HtmlAttributes(new { onClick = "onCancelClick(this)", name="onCancel", id = "onCancel", href = "#" })
+                    );
+        })
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+                    settings.PageSize(ViewBag.PageSize);
+                })
+                .DataBinding(dataBinding =>
+                    dataBinding.Ajax()
+                                .Select("_AjaxAging", "ItemExchangeProd")
+                )
+                        .ClientEvents(events => events.OnDataBinding("AgeingListGrid_OnDataBinding")
+                                        .OnRowDataBound("AgeingListGrid_OnRowDataBound"))
+               .Scrollable(c => c.Enabled(false))
+            .Resizable(resizing => resizing.Columns(true))
+            //.Footer(false)
+    )
+</fieldset>
+<script type="text/javascript">
+
+    function RePrintClick(e) {
+        $(e).attr("href", "#");
+        if (confirm("确定重新打印吗？")) {
+            
+            var Id = $(e).parent().parent().children().eq(4).text();
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                data: { "huId": Id },
+                url: "/ItemExchangeProd/PrintTo/",
+                cache: false,
+                success: function (data, textStatus) {
+                    if (data != null && data != "") {
+                        PrintOrder(data);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                    
+                }
+            });
+        }
+    }
+
+    function onCancelClick(e) {
+        $(e).attr("href", "#");
+        if (confirm("确定要取消吗？")) {
+            var Id = $(e).parent().parent().children().eq(0).text();
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                data: { "id": Id },
+                url: "/ItemExchangeProd/CancelAging/",
+                cache: false,
+                success: function (data, textStatus) {
+                    if (data != "" && data != null) {
+                        $(e).hide();
+                        $(e).parent().parent().children().eq(9).children().attr("checked","checked");
+                        $message.error("");
+                        $message.success("取消成功。");
+
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    var errorMessages = XMLHttpRequest.responseText;
+                    $message.error(errorMessages);
+                    
+                }
+            });
+        }
+    }
+    var j = 1;
+    function AgeingListGrid_OnDataBinding(e) {
+        j = 1;
+    }
+    
+    function AgeingListGrid_OnRowDataBound(e) {      
+     if (j > 1) { return; }
+        var $checkRecords = $("a[name='onCancel']");
+
+        $checkRecords.each(function (a, b) {
+            if ($(b).parent().parent().children().eq(9).children().is(':checked')) {
+                $(b).hide();
+            }
+        });
+        j++;
+    }
+</script>

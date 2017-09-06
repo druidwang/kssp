@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Customer_Consignment_Inventory" });
+}
+
+@Html.Partial("_CustomerConsignmentSearch")
+
+@Html.Partial("_CustomerConsignmentSearchResult")

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Edit Location";
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_Location_View" });
+}
+<input type="hidden" name="LocationCode" id="LocationCode" value="@Model" />
+@{ Html.Telerik().TabStrip()
+        .Name("TabStrip")
+        .Items(tabstrip =>
+        {
+            tabstrip.Add()
+               .Text(Resources.MD.Location.Location_Tab_Title)
+               .LoadContentFrom("_Edit", "Location", new { id = Model })
+               .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+               
+            tabstrip.Add()
+                .Text(Resources.MD.LocationArea.LocationArea_Tab_Title)
+                .LoadContentFrom("_LocationArea", "Location", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+
+            tabstrip.Add()
+                .Text(Resources.MD.LocationBin.LocationBin_Tab_Title)
+                .LoadContentFrom("_LocationBin", "Location", new { id = Model })
+                .HtmlAttributes(new { onclick = "CleanTabMessage()" });
+        })
+        .Render();
+}
+
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(
+            @<text>
+                var tabIndex = "@TempData["TabIndex"]";
+                var tabstrip = $("#TabStrip").data("tTabStrip");
+                var item = $("li", tabstrip.element)[tabIndex != "" ? tabIndex : 0];
+                tabstrip.select(item);
+            </text>
+        );
+}

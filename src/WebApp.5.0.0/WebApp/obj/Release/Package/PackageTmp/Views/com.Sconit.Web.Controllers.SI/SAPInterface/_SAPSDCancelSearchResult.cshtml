@@ -1,0 +1,45 @@
+﻿@model IEnumerable<com.Sconit.Entity.SI.SAP.SAPSDMES0002>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("SAPSDCancelGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.ZMESGUID);
+            columns.Bound(o => o.ZMESSO);
+            columns.Bound(o => o.ZCSRQSJ);
+            columns.Bound(o => o.Status);
+            columns.Bound(o => o.BatchNo);
+            columns.Bound(o => o.UniqueCode);
+        })
+        .Scrollable(c => c.Height(265))
+        .EnableCustomBinding(true)
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxSAPSDCancelList", "SAPInterface"))
+        .ClientEvents(events => events.OnDataBinding("SAPSDCancel_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function SAPSDCancel_OnDataBinding(e) {
+            e.data = {
+                BatchNo: $('#BatchNo').val(),
+                ZMESSO: $('#ZMESSO').val(),
+                TransStartDate: $('#TransStartDate').val(),
+                TransEndDate: $("#TransEndDate").val(),
+                Status: $("input[name='Status']:checked").val()
+            }; 
+        } 
+    </script>
+</fieldset>

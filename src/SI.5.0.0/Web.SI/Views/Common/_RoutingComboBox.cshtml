@@ -1,0 +1,17 @@
+﻿@model System.Web.Mvc.SelectList
+@{
+    string name = ViewBag.ControlName;
+
+    bool enable = true;
+    if (ViewBag.Enable != null)
+    {
+        enable = ViewBag.Enable;
+    }
+}
+@(Html.Telerik().ComboBox()
+        .Name(name)
+        .DataBinding(binding => binding.Ajax().Select("_RoutingAjaxLoading", "Common").Cache(true))
+        .BindTo(Model)
+        .Enable(enable)
+        .AutoFill(true)
+        )

@@ -1,0 +1,188 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.LocationLotDetail>
+<fieldset>
+    @(Html.Telerik().Grid(Model).Name("HuLocationLotDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.HuId);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.HuId)
+              .ClientTemplate("<input type='checkbox' id='checkedRecords' name='checkedRecords' onClick='showButtons();' value='<#= HuId #>'   />")
+              .HeaderTemplate("<input type='checkbox' id='checkAll' name='checkAll' />")
+              .Width(36).HtmlAttributes(new { style = "text-align:center" });
+            columns.Bound(o => o.HuId).ClientTemplate(Html.ActionLink("<#= HuId #>", "HuDetail", "Hu", new { Id = "<#= HuId #>", BackUrl = "/HuLocationLotDetail/List" }, null).ToString());
+            columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+            columns.Bound(o => o.Location);
+            columns.Bound(o => o.Bin);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemFullDescription).Sortable(false);
+            columns.Bound(o => o.ManufactureParty);
+            //columns.Bound(o => o.MaterialsGroup);
+            //columns.Bound(o => o.MaterialsGroupDesc);
+            //columns.Bound(o => o.ReferenceItemCode).Sortable(false);
+            //columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.HuStatusOccupyTypeDescription);
+            columns.Bound(o => o.HuOptionDesc);
+            columns.Bound(o => o.ItemVersion);
+            columns.Bound(o => o.Remark);
+            columns.Bound(o => o.QualityTypeDescription);
+            //columns.Bound(o => o.IsOdd)
+            //    .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsOdd' name='IsOdd' value='<#= IsOdd #>' <#=IsOdd? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsConsignment)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsConsignment' name='IsConsignment' value='<#= IsConsignment #>' <#=IsConsignment? checked='checked' : '' #> />");
+            columns.Bound(o => o.IsFreeze)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsFreeze' name='IsFreeze' value='<#= IsFreeze #>' <#=IsFreeze? checked='checked' : '' #> style=<#=IsFreeze? 'background-color:red' : '' #> />");
+            columns.Bound(o => o.IsATP)
+                .ClientTemplate("<input type='checkbox' disabled='disabled' id='IsATP' name='IsATP' value='<#= IsATP #>' <#=IsATP? checked='checked' : '' #> style=<#=IsATP? 'background-color:blue' : '' #> />");
+            //columns.Bound(o => o.DirectionDescription);
+            columns.Bound(o => o.HuQty);
+            columns.Bound(o => o.HuUom);
+            columns.Bound(o => o.Qty);
+            columns.Bound(o => o.BaseUom);
+        })
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+        .Sortable()
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "HuLocationLotDetail"))
+        .ClientEvents(events => events.OnDataBinding("HuLocationLotDetailGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(20);
+            if (ViewBag.Page != null)
+            {
+                settings.PageTo(ViewBag.Page);
+            }
+        })
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function HuLocationLotDetailGrid_OnDataBinding(e) {
+            e.data = {
+                Item: $('#Item').val(),
+                Location: $('#Location').val(),
+                HuId: $('#HuId').val(),
+                LotNo: $('#LotNo').val(),
+                LotNoFrom: $('#LotNoFrom').val(),
+                LotNoTo: $('#LotNoTo').val(),
+                Bin: $('#Bin').val(),
+                OccupyType: $('#OccupyType').val(),
+                //                IsFreeze: $("input[type=checkbox][name=IsFreeze]:checked").val(),
+                //                IsConsignment: $("input[type=checkbox][name=IsConsignment]:checked").val()
+                IsFreeze2: $('#IsFreeze2').val(),
+                IsConsignment2: $('#IsConsignment2').val(),
+                HuOptionHuLot: $('#HuOptionHuLot').val(),
+                QualityType: $('#QualityType').val(),
+                ManufactureParty: $('#ManufactureParty').val()
+            };
+        }
+
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input[name="checkedRecords"]').attr("checked", this.checked);
+                $("#btnPrintHu").attr("style", this.checked ? "display:inline" : "display:none");
+                $("#btnExportHu").attr("style", this.checked ? "display:inline" : "display:none");
+            });
+        });
+
+        function showButtons() {
+            var $checkRecords = $("input[name='checkedRecords']");
+            var showButton = false;
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    showButton = true;
+                    break;
+                }
+            }
+            $("#checkAll").attr("checked", $checkRecords.length == $("input[name='checkedRecords']:checked").length ? true : false);
+            $("#btnPrintHu").attr("style", showButton ? "display:inline" : "display:none");
+            $("#btnExportHu").attr("style", showButton ? "display:inline" : "display:none");
+        }
+
+
+        function HuMasterGrid_OnDataBinding(e) {
+            e.data = {
+                HuId: $('#HuId').val(),
+                Item: $('#Item').val(),
+                lotNo: $('#lotNo').val(),
+                lotNoTo: $('#LotNoTo').val(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val()
+            }
+        }
+
+
+        function CheckedExport(isExport) {
+            var $checkRecords = $("input[name='checkedRecords']");
+
+            var checkedOrders = "";
+            for (var i = 0; i < $checkRecords.length; i++) {
+                if ($checkRecords[i].checked) {
+                    if (checkedOrders == "") {
+                        checkedOrders = $checkRecords[i].value;
+                    } else {
+                        checkedOrders += "," + $checkRecords[i].value;
+                    }
+                }
+            }
+            if (checkedOrders == "") {
+                alert('Must Check One');
+                return;
+            }
+
+            var data = {
+                "checkedOrders": checkedOrders
+            };
+
+            if (isExport) {
+                $.ajax({
+                    type: "post",
+                    dataType: "Json",
+                    url: "/Hu/CheckExportTemplate/",
+                    data: data,
+                    cache: false,
+                    success: function (data, textStatus) {
+
+                        if (data.Message != "OK") {
+                            $message.error(data.Message)
+                        }
+                        else {
+                            $("#checkedOrders").val(checkedOrders);
+                            $("#hiddenForm").submit();
+                        }
+
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: "post",
+                    dataType: "Json",
+                    data: data,
+                    async: false,
+                    url: "/Hu/_PrintHuList/",
+                    cache: false,
+                    success: function (data, textStatus) {
+                        $message.success("条码打印成功");
+
+                        for (var i = 0; i < data.PrintUrl.length; i++) {
+                            PrintOrder(data.PrintUrl[i]);
+                        }
+                        //if (data.PrintUrl != "") {
+                        //PrintOrder(data.PrintUrl);
+                        //}
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        var errorMessages = XMLHttpRequest.responseText;
+
+                        $message.error(errorMessages);
+                    }
+                });
+            }
+        }
+
+    </script>
+</fieldset>
+<form id="hiddenForm" action="/Hu/SaveToClientTo" target="_blank" method="post">
+<input id="checkedOrders" name="checkedOrders" type="hidden" />
+</form>

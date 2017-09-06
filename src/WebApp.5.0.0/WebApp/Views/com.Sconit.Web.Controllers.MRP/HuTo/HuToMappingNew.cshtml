@@ -1,0 +1,102 @@
+﻿@using com.Sconit.Entity.MRP
+@model com.Sconit.Entity.MRP.MD.HuToMapping
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_CUST_HuToMapping" });
+}
+<script type="text/javascript">
+//    function FlowItem_DataBinding(e) {
+//        if (e.value != "") {
+//            e.data = {
+//                "flow": $("#Flow").val()
+//            }
+//        }
+//    }
+
+//    function Flow_Change() {
+//        $('#FlowItem').data('tComboBox').value('');
+//        $('#FlowItem').data('tComboBox').text('');
+//        $("#FlowItem").data("tComboBox").reload();
+//    }
+</script>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>@Resources.MRP.HuToMapping.HuToMapping_New_Title</legend>
+        <div class="editor">
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.HuTo)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_HuToComboBox", "Common", new
+    {
+        controlName = "HuTo",
+        selectedValue = Model != null && Model.HuTo != null ? Model.HuTo : string.Empty
+    });
+                }
+                @Html.ValidationMessageFor(model => model.HuTo)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Party)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_PartyDropDownList", "Common", new
+    {
+        controlName = "Party",
+        selectedValue = Model != null ? Model.Party : string.Empty
+    });
+                }
+                @Html.ValidationMessageFor(model => model.Party)
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Flow)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_FlowComboBox", "Common",
+        new
+        {
+            controlName = "Flow",
+            //isChange = true,
+            selectedValue = Model != null ? Model.Flow : string.Empty
+        });
+                }
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Item)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_ItemComboBox", "Common",
+        new
+        {
+            controlName = "Item",
+            selectedValue = Model != null ? Model.Item : string.Empty
+        });
+                }
+                @*@Html.ValidationMessageFor(model => model.Item)*@
+            </div>
+            <div class="editor-label-2">
+                @Html.LabelFor(model => model.Fg)
+            </div>
+            <div class="editor-field-2">
+                @{
+    Html.RenderAction("_ItemComboBox", "Common",
+        new
+        {
+            controlName = "Fg",
+            selectedValue = Model != null ? Model.Fg : string.Empty
+        });
+                }
+                @*@Html.ValidationMessageFor(model => model.Fg)*@
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button type="submit" id="btnNew">
+                @Resources.SYS.Global.Button_New</button>
+            <button type="button" id="btnBack" onclick="location.href='@Url.Content("~/HuTo/HuToMappingList")'">
+                @Resources.SYS.Global.Button_Back</button>
+        </div>
+    </fieldset>
+}

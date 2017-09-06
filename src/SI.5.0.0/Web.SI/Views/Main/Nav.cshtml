@@ -1,0 +1,70 @@
+﻿@model IEnumerable<MenuModel>
+@{
+    Layout = "~/Views/Shared/_Main.cshtml";
+    
+    <style type="text/css">
+        body
+        {
+            background-color: #FFFFFF;
+        }
+        div.t-treeview
+        {
+            overflow: visible;
+        }
+    </style>
+}
+@section HeadContent {
+    <base target="right" />
+    <script type="text/javascript">
+        window.onload = function () {
+            $("#one").height(getTotalHeight() - 30);
+        }
+
+        function getTotalHeight() {
+            if ($.browser.msie) {
+                return document.compatMode == "CSS1Compat" ? document.documentElement.clientHeight : document.body.clientHeight;
+            }
+            else {
+                return self.innerHeight;
+            }
+        }
+        window.onresize = function () {
+            $("#one").height(getTotalHeight() - 30);
+        } 
+    </script>
+}
+<div style="width: 219px; margin: 0px; height: 24px; background-color: White; border-bottom: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;">
+    <div style="padding-left: 19px; padding-top: 5px;">
+        @ViewBag.UserCode
+    </div>
+</div>
+<div style="overflow-y: auto; padding-left: 0px; padding-bottom: 0px; width: 214px;
+    background-color: White; padding-top: 5px; letter-spacing: 1px; text-align: left;
+    border-left: 5px solid #FFFFFF; border-right: 1px solid #CCCCCC;" id="one">
+    @{
+        if (Model != null)
+        {
+        @(Html.Telerik().TreeView()
+        .Name("TreeView")
+        .BindTo(Model, mappings =>
+        {
+            mappings.For<MenuModel>(binding => binding
+                    .ItemDataBound((item, menu) =>
+                    {
+                        item.Text = menu.Name;
+                        item.ImageUrl = menu.ImageUrl;
+
+                        if (!string.IsNullOrWhiteSpace(menu.PageUrl))
+                        {
+                            item.Url = menu.PageUrl;
+                        }
+                    })
+                    .Children(menu => menu.ChildrenMenu)
+                    );
+        })
+    )
+        }
+        
+    }
+</div>

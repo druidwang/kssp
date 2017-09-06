@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.Sconit.Entity.TMS.Driver, com.Sconit.Entity" table="TMS_Driver" lazy="false">
+		<id name="Code" column="Code" type="String" unsaved-value="null" >
+      		<generator class="assigned" />
+        </id>
+		<property name="Name" column="Name" type="String" length="255" />	
+        <property name="Phone" column="Phone" type="String" length="50" />	
+		<property name="MobilePhone" column="MobilePhone" type="String" length="50" />	
+		<property name="Email" column="Email" type="String" length="50" />	
+		<property name="Address" column="Address" type="String" length="255" />	
+		<property name="PostCode" column="PostCode" type="String" length="50" />	
+		<property name="Fax" column="Fax" type="String" length="50" />
+        <property name="IdNumber" column="IdNumber" type="String" length="50" />
+        <property name="LicenseNo" column="LicenseNo" type="String" length="50" />
+		<property name="CreateDate" column="CreateDate" type="DateTime" update="false"/>
+		<property name="CreateUserId" column="CreateUser" type="Int32"/>
+		<property name="CreateUserName" column="CreateUserNm" type="String" length="50" update="false"/>
+		<property name="LastModifyDate" column="LastModifyDate" type="DateTime"  />
+		<property name="LastModifyUserId" column="LastModifyUser" type="Int32" />
+		<property name="LastModifyUserName" column="LastModifyUserNm" type="String" length="50" />
+  	</class>
+</hibernate-mapping>

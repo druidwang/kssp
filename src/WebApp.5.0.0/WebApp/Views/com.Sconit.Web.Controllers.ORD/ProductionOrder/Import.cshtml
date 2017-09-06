@@ -1,0 +1,29 @@
+﻿@model com.Sconit.Entity.ORD.OrderMaster
+@{
+    Html.RenderAction("_SiteMapPath", "Common", new { MenuContent = "Url_OrderMstr_Production_Import" });
+
+}
+@using (Html.BeginForm("ImportSapOrder", "ProductionOrder"))
+{
+    <fieldset>
+        <div class="editor">
+            <div class="editor-label-2">
+                <label>
+                    @Resources.ORD.OrderMaster.OrderMaster_ExternalOrderNo_Sap
+                </label>
+            </div>
+            <div class="editor-field-2">
+                @Html.EditorFor(model => model.ExternalOrderNo)
+            </div>
+        </div>
+        <div class="editor-footer">
+            @Html.Button(Resources.SYS.Global.Button_Import, "Url_OrderMstr_Production_Import", new Dictionary<string, string>()
+	{
+	    {"type", "submit"},
+	    {"id", "btnImport"},
+        {"needconfirm","true"}
+	})
+        </div>
+    </fieldset>
+   
+}

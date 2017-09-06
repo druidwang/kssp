@@ -1,0 +1,33 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.OrderDetail>
+<fieldset>
+    <legend>@Resources.ORD.OrderDetail.OrderDetail_Title</legend>
+    @using (Html.BeginForm())
+    { 
+        @(Html.Telerik().Grid(Model)
+        .Name("OrderDetail")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.UnitCount).Format("{0:0.########}");
+   
+            columns.Bound(o => o.LocationToName);
+            columns.Bound(o => o.OrderedQty).Format("{0:0.########}");
+        })
+
+        .Scrollable(c => c.Enabled(false))
+                .Resizable(resizing => resizing.Columns(true))
+        .Footer(false)
+    )
+      
+    }
+</fieldset>

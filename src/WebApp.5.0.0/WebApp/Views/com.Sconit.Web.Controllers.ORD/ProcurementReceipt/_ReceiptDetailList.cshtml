@@ -1,0 +1,61 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.ReceiptDetail>
+
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("ReceiptDetailGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+        .Columns(columns =>
+        {
+             columns.Bound(o => o.Sequence);
+            columns.Bound(o => o.ReceiptNo);
+            columns.Bound(o => o.OrderNo);
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.Flow).Title(Resources.ORD.ReceiptMaster.ReceiptMaster_Flow);
+            columns.Bound(o => o.Item).Width(100);
+            columns.Bound(o => o.ReferenceItemCode);
+            columns.Bound(o => o.ItemDescription);
+            columns.Bound(o => o.UnitCount);
+            columns.Bound(o => o.Uom);
+            columns.Bound(o => o.LocationTo);
+            //columns.Bound(o => o.IpDetailType);
+            columns.Bound(o => o.ReceivedQty).Width(100);
+           })
+            //.CellAction(cell =>
+            //{
+            //    if (cell.Column.Member == "IpDetailType")
+            //    {
+            //        if (cell.DataItem.IpDetailType == com.Sconit.CodeMaster.IpDetailType.Normal)
+            //        {
+            //            cell.Text = string.Format("<input type='checkbox' disabled='disabled' name='IpDetailType'  />");
+            //        }
+            //        else
+            //        {
+            //            cell.Text = string.Format("<input type='checkbox' disabled='disabled' name='IpDetailType' checked='checked' />");
+            //        }
+            //    }
+            //})
+                .DetailView(detailView => detailView.Template(
+                            @<text>
+                @(Html.Telerik().Grid(item.ReceiptLocationDetails)
+                        .Name("Orders_" + item.Id)
+                        .Columns(columns =>
+                        {
+                            columns.Bound(o => o.ReceiptNo);
+                            columns.Bound(o => o.Item);
+                            columns.Bound(o => o.LotNo).Title(@Resources.INV.Hu.Hu_manufacture_date);
+                            columns.Bound(o => o.HuId);
+                            columns.Bound(o => o.Qty);
+                        })
+                )
+            </text>
+                ))
+                .Scrollable(c => c.Enabled(false))
+                //.Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+                .Footer(false)
+            )
+</fieldset>
+

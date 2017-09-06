@@ -1,0 +1,105 @@
+﻿@using com.Sconit.Web.Models.SearchModels.PRD
+<script type="text/javascript">
+    function ProductLineFacility_DataBinding(e) {
+        e.data = {
+            productLine: $("#ProductLine").val()
+        };
+    }
+</script>
+<fieldset>
+    @using (Html.BeginForm("MaterialInList", "ProductLine"))
+    {   
+        <div class="search">
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_ProductLine">
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_ProductLine
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_FlowComboBox", "Common", new
+        {
+            controlName = "ProductLine",
+            type = (int)com.Sconit.CodeMaster.OrderType.Production,
+            selectedValue = TempData["ProductLineLocationDetailSearchModel"] != null ? ((ProductLineLocationDetailSearchModel)TempData["ProductLineLocationDetailSearchModel"]).ProductLine : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_ProductLineFacility">
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_ProductLineFacility
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ProductLineFacilityComboBox", "Common",
+            new
+            {
+                controlName = "ProductLineFacility",
+                selectedValue = TempData["ProductLineLocationDetailSearchModel"] != null ? ((ProductLineLocationDetailSearchModel)TempData["ProductLineLocationDetailSearchModel"]).ProductLineFacility : string.Empty
+            });
+                }
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_OrderNo">
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_OrderNo
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("OrderNo", TempData["ProductLineLocationDetailSearchModel"] != null ? ((ProductLineLocationDetailSearchModel)TempData["ProductLineLocationDetailSearchModel"]).OrderNo : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_Item">
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_Item
+                </label>
+            </div>
+            <div class="search-field">
+                @{
+        Html.RenderAction("_ItemComboBox", "Common", new
+        {
+            controlName = "Item",
+            selectedValue = TempData["ProductLineLocationDetailSearchModel"] != null ? ((ProductLineLocationDetailSearchModel)TempData["ProductLineLocationDetailSearchModel"]).Item : string.Empty
+        });
+                }
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_StartDate">
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_StartDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("StartDate").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_EndDate">
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_EndDate
+                </label>
+            </div>
+            <div class="search-field">
+                @(Html.Telerik().DateTimePicker().Format("yyyy-MM-dd HH:mm").Name("EndDate").HtmlAttributes(new { style = "margin-bottom: 1.3em;width:200px" }))
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_CreateUserName">
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_CreateUserName
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.TextBox("CreateUserName", TempData["ProductLineLocationDetailSearchModel"] != null ? ((ProductLineLocationDetailSearchModel)TempData["ProductLineLocationDetailSearchModel"]).CreateUserName : string.Empty)
+            </div>
+            <div class="search-label">
+                <label for="ProductLineLocationDetail_IncludeClose">
+                    @Resources.PRD.ProductLineLocationDetail.ProductLineLocationDetail_IncludeClose
+                </label>
+            </div>
+            <div class="search-field">
+                @Html.CheckBox("IncludeClose", TempData["ProductLineLocationDetailSearchModel"] != null ? ((ProductLineLocationDetailSearchModel)TempData["ProductLineLocationDetailSearchModel"]).IncludeClose : true)
+            </div>
+        </div>
+        <div class="search-footer">
+            @Html.Hidden("isFromList", true)
+            <button type="submit" id="btnSearch">
+                @Resources.SYS.Global.Button_Search</button>
+        </div>
+
+    }
+</fieldset>

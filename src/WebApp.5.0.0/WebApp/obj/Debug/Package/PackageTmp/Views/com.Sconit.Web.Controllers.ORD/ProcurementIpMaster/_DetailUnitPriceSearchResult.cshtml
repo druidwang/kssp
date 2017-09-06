@@ -1,0 +1,61 @@
+﻿@model IEnumerable<com.Sconit.Entity.ORD.IpDetail>
+<fieldset>
+    <script type="text/javascript">
+        function onEdit(e) {
+            if (e.mode == "edit") {
+                $(e.form).find("#Code").attr("disabled", true);
+            }
+        }
+    </script>
+    @(Html.Telerik().Grid(Model)
+       .Name("IpDetail_Grid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.Id);
+        })
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_DetailUnitPriceAjaxList", "ProcurementIpMaster")
+                .Update("_DetailUnitPriceUpdate", "ProcurementIpMaster", new { Item = ViewBag.Item, IpNo = ViewBag.IpNo }))
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Sequence).ReadOnly();
+            columns.Bound(o => o.IpNo).ReadOnly();
+            columns.Bound(o => o.OrderNo).ReadOnly();
+            columns.Bound(o => o.Flow).Title(Resources.ORD.IpMaster.IpMaster_Flow).ReadOnly();
+            columns.Bound(o => o.Item).ReadOnly();
+            columns.Bound(o => o.ReferenceItemCode).Width(100);
+            columns.Bound(o => o.ItemDescription).ReadOnly();
+            columns.Bound(o => o.Uom).ReadOnly();
+            columns.Bound(o => o.Qty).ReadOnly();
+            columns.Bound(o => o.UnitPrice).Width(80);
+            columns.Bound(o => o.IsProvisionalEstimate).ClientTemplate("<input type='checkbox' disabled='disabled' name='IsProvisionalEstimate' <#= IsProvisionalEstimate? checked='checked' : '' #> />").Width(60);
+            columns.Command(commands =>
+            {
+                commands.Edit();
+            });
+        }).ClientEvents(events =>
+        {
+            events
+                .OnEdit("onEdit")
+                //.OnRowDataBound("ProductLineFacilityGrid_OnRowDataBound");
+                .OnDataBinding("IpDetail_OnDataBinding");
+        })
+        .EnableCustomBinding(true)
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total == null ? 0 : ViewBag.Total);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Scrollable()
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function IpDetail_OnDataBinding(e) {
+            e.data = {
+                IpNo: $('#IpNo').val(),
+                Item: $('#Item').val()
+            };
+        }
+    </script>
+</fieldset>

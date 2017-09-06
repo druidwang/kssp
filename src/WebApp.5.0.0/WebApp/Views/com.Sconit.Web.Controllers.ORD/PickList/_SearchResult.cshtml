@@ -1,0 +1,62 @@
+﻿
+@model IEnumerable<com.Sconit.Entity.ORD.PickListMaster>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+        .Name("PickListGrid")
+        .DataKeys(keys =>
+        {
+            keys.Add(p => p.PickListNo);
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.PickListNo).ClientTemplate(Html.ActionLink("<#= PickListNo #>", "Edit", "PickList", new { ID = "<#= PickListNo #>" }, null).ToString());
+            columns.Bound(o => o.IpNo);
+            columns.Bound(o => o.Flow);
+            columns.Bound(o => o.OrderTypeDescription);
+            columns.Bound(o => o.PartyFromName);
+            columns.Bound(o => o.PartyToName);
+            columns.Bound(o => o.OrderStatusDescription);
+            columns.Bound(o => o.CreateUserName);
+            columns.Bound(o => o.CreateDate);
+            
+                 })
+                    
+        .CellAction(cell =>
+            {
+                if (cell.Column.Member == "PickListNo")
+                {
+                    cell.Text = string.Format("<a href=\"Edit/{0}\">{1}</a>", cell.DataItem.PickListNo, cell.DataItem.PickListNo);
+                }
+            })
+                .Scrollable(c => c.Enabled(false))
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "PickList"))
+                        .ClientEvents(events => events.OnDataBinding("PickListGrid_OnDataBinding"))
+                .Pageable(settings =>
+                {
+                    settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+                    settings.PageSize(ViewBag.PageSize != null ? ViewBag.PageSize : 10);
+                    if (ViewBag.Page != null)
+                    {
+                        settings.PageTo(ViewBag.Page);
+                    }
+                })
+                .EnableCustomBinding(true)
+                .Sortable()
+                .Resizable(resizing => resizing.Columns(true))
+            )
+             <script type="text/javascript">
+                 function PickListGrid_OnDataBinding(e) {
+                     e.data = {
+                         PickListNo: $('#PickListNo').val(),
+                         Status: $('#Status').val(),
+                         StartTime: $('#StartTime').val(),
+                         EndTime: $('#EndTime').val(),
+                         Flow:$("#Flow").val(),
+                         PartyFrom: $('#PartyFrom').val(),
+                         PartyTo: $("#PartyTo").val(),
+                         IpNo: $("#IpNo").val()
+
+                     }
+                 }
+    </script>
+</fieldset>

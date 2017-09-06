@@ -1,0 +1,73 @@
+﻿@model IEnumerable<com.Sconit.Entity.INV.InventoryAge>
+<fieldset>
+    @(Html.Telerik().Grid(Model)
+                .Name("HuGrid")
+
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.Item);
+            columns.Bound(o => o.ItemFromDesc);
+            columns.Bound(o => o.MaterialsGroupDesc);            
+            columns.Bound(o => o.Location).Title(ViewBag.Location);
+            columns.Bound(o => o.Range0).Format("{0:0.########}").Title("0-"+@ViewBag.Range1);
+            columns.Bound(o => o.Range1).Format("{0:0.########}").Title(@ViewBag.Range1+"-" + @ViewBag.Range2+"天");
+            columns.Bound(o => o.Range2).Format("{0:0.########}").Title(@ViewBag.Range2 + "-" + @ViewBag.Range3 + "天");
+            columns.Bound(o => o.Range3).Format("{0:0.########}").Title(@ViewBag.Range3 + "-" + @ViewBag.Range4 + "天");
+            columns.Bound(o => o.Range4).Format("{0:0.########}").Title(@ViewBag.Range4 + "-" + @ViewBag.Range5 + "天");
+            columns.Bound(o => o.Range5).Format("{0:0.########}").Title(@ViewBag.Range5 + "-" + @ViewBag.Range6 + "天");
+            columns.Bound(o => o.Range6).Format("{0:0.########}").Title(@ViewBag.Range6 + "-" + @ViewBag.Range7 + "天");
+            columns.Bound(o => o.Range7).Format("{0:0.########}").Title(@ViewBag.Range7 + "-" + @ViewBag.Range8 + "天");
+            columns.Bound(o => o.Range8).Format("{0:0.########}").Title(@ViewBag.Range8 + "-" + @ViewBag.Range9 + "天");
+            columns.Bound(o => o.Range9).Format("{0:0.########}").Title(@ViewBag.Range9 + "-" + @ViewBag.Range10 + "天");
+            columns.Bound(o => o.Range10).Format("{0:0.########}").Title(@ViewBag.Range10 + "-" + @ViewBag.Range11 + "天");
+            columns.Bound(o => o.Range11).Format("{0:0.########}").Title(@ViewBag.Range11 + "天以上");
+            
+        })
+
+        .Scrollable(c => c.Enabled(false))
+        .EnableCustomBinding(true)
+                         .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxList", "LibraryAgeStatements"))
+                 .ClientEvents(events => events.OnDataBinding("OrderMasterGrid_OnDataBinding"))
+        .Pageable(settings =>
+        {
+            settings.Total(ViewBag.Total != null ? ViewBag.Total : 0);
+            settings.PageSize(ViewBag.PageSize);
+        })
+        .Sortable()
+        .Resizable(resizing => resizing.Columns(true))
+    )
+    <script type="text/javascript">
+        function OrderMasterGrid_OnDataBinding(e) {
+
+            e.data = {
+                plantFrom: $('#plantFrom').val(),
+                plantTo: $('#plantTo').val(),
+                regionFrom: $('#regionFrom').val(),
+                regionTo: $('#regionTo').val(),
+                locationFrom: $('#locationFrom').val(),
+                locationTo: $('#locationTo').val(),
+                itemFrom: $('#itemFrom').val(),
+                itemTo: $('#itemTo').val(),
+                Level: $('#Level').val(),
+                TheFactoryFrom: $('#TheFactoryFrom').val(),
+                TheFactoryTo: $('#TheFactoryTo').val(),
+                SAPLocation: $('#SAPLocation').val(),
+                TypeLocation: $("input[type=radio][name=TypeLocation]:checked").val(),
+                Range1: $('#Range1').val(),
+                Range2: $('#Range2').val(),
+                Range3: $('#Range3').val(),
+                Range4: $('#Range4').val(),
+                Range5: $('#Range5').val(),
+                Range6: $('#Range6').val(),
+                Range7: $('#Range7').val(),
+                Range8: $('#Range8').val(),
+                Range9: $('#Range9').val(),
+                Range10: $('#Range10').val(),
+                Range11: $('#Range11').val()
+
+
+            };
+        } 
+    </script>
+</fieldset>
+;
