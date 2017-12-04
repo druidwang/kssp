@@ -3827,7 +3827,7 @@ namespace com.Sconit.Service.Impl
             #endregion
         }
 
-        private void RecordLocationTransaction(InventoryUnPack inventoryUnPack, DateTime effectiveDate, IList<InventoryTransaction> inventoryTransactionList, bool isIssue,string repackNo)
+        private void RecordLocationTransaction(InventoryUnPack inventoryUnPack, DateTime effectiveDate, IList<InventoryTransaction> inventoryTransactionList, bool isIssue, string repackNo)
         {
             DateTime dateTimeNow = DateTime.Now;
 
@@ -5602,37 +5602,37 @@ namespace com.Sconit.Service.Impl
             List<string> oldHuList = new List<string>();
             List<string> newHuList = new List<string>();
 
-           oldHuList.Add(hu.HuId);
-           decimal remainQty = hu.Qty;
-           string[] qtyStrArray = hu.DevanningQtyStr.Split(',');
+            oldHuList.Add(hu.HuId);
+            decimal remainQty = hu.Qty;
+            string[] qtyStrArray = hu.DevanningQtyStr.Split(',');
 
-           foreach (string qtyStr in qtyStrArray)
-           {
-               Hu newHu = huMgr.CloneHu(hu, Convert.ToDecimal(qtyStr));
-               genericMgr.Create(newHu);
-               newHuList.Add(newHu.HuId);
-               remainQty -= newHu.Qty;
+            foreach (string qtyStr in qtyStrArray)
+            {
+                Hu newHu = huMgr.CloneHu(hu, Convert.ToDecimal(qtyStr));
+                genericMgr.Create(newHu);
+                newHuList.Add(newHu.HuId);
+                remainQty -= newHu.Qty;
 
-               if (remainQty < 0)
-               {
-                   throw new BusinessException("拆箱数总和大于原条码数");
-               }
+                if (remainQty < 0)
+                {
+                    throw new BusinessException("拆箱数总和大于原条码数");
+                }
 
-               devanningHuList.Add(newHu);
-           }
+                devanningHuList.Add(newHu);
+            }
 
-           #region 剩余打一张条码
-           if (remainQty > 0)
-           {
-               Hu remainHu = huMgr.CloneHu(hu, remainQty);
-               genericMgr.Create(remainHu);
-               newHuList.Add(remainHu.HuId);
-               devanningHuList.Add(remainHu);
-           }
-           #endregion
+            #region 剩余打一张条码
+            if (remainQty > 0)
+            {
+                Hu remainHu = huMgr.CloneHu(hu, remainQty);
+                genericMgr.Create(remainHu);
+                newHuList.Add(remainHu.HuId);
+                devanningHuList.Add(remainHu);
+            }
+            #endregion
 
 
-           genericMgr.FlushSession();
+            genericMgr.FlushSession();
 
             var inventoryPackList = new List<Entity.INV.InventoryRePack>();
             foreach (var huId in oldHuList)
@@ -6236,6 +6236,39 @@ namespace com.Sconit.Service.Impl
             return newHuList;
 
         }
+
+
+
+        #region 删库格,同时把架位上的东西全部下架
+        [Transaction(TransactionMode.Requires)]
+        public void DeleteLocationBin(string id)
+        {
+
+            LocationBin locationBin = genericMgr.FindById<LocationBin>(id);
+
+            #region 先下架
+            IList<LocationLotDetail> binLocationLotDetails = this.genericMgr.FindAll<LocationLotDetail>("from LocationLotDetail where Bin = ? ", locationBin.Code);
+            if (binLocationLotDetails != null && binLocationLotDetails.Count > 0)
+            {
+                foreach (LocationLotDetail locationLotDetail in binLocationLotDetails)
+                {
+                    if (!string.IsNullOrEmpty(locationLotDetail.HuId))
+                    {
+                        var inventoryPickList = new List<Entity.INV.InventoryPick>();
+                        var inventoryPick = new Entity.INV.InventoryPick();
+                        inventoryPick.HuId = locationLotDetail.HuId;
+                        inventoryPickList.Add(inventoryPick);
+                        this.InventoryPick(inventoryPickList);
+                    }
+                }
+            }
+            #endregion
+
+            #region 后删除
+            genericMgr.DeleteById<LocationBin>(id);
+            #endregion
+        }
+        #endregion
 
         #endregion
 

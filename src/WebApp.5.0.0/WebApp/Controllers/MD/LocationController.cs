@@ -28,6 +28,7 @@ namespace com.Sconit.Web.Controllers.MD
         /// Gets or sets the this.GeneMgr which main consider the Location security 
         /// </summary>
         //public IGenericMgr genericMgr { get; set; }
+        public ILocationDetailMgr locationDetailMgr { get; set; }
         #endregion
 
         #region hql
@@ -592,6 +593,7 @@ namespace com.Sconit.Web.Controllers.MD
             else
             {
                 //this.genericMgr.DeleteById<LocationBin>(id);
+                locationDetailMgr.DeleteLocationBin(id);
                 SaveSuccessMessage(Resources.MD.LocationBin.LocationBin_Deleted);
                 return new RedirectToRouteResult(new RouteValueDictionary  
                                                    { 

@@ -132,5 +132,8 @@ namespace com.Sconit.Service
         IList<Hu> Repack(string huId, IList<ProductBarCode> checkedProductBarCodeList, IList<ProductBarCode> uncheckedProductBarCodeList);
 
         List<Hu> DevanningHu(Hu hu);
+
+
+        void DeleteLocationBin(string id);
     }
 }
